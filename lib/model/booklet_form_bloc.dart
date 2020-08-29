@@ -1,0 +1,128 @@
+/*
+       _ _           _ 
+      | (_)         | |
+   ___| |_ _   _  __| |
+  / _ \ | | | | |/ _` |
+ |  __/ | | |_| | (_| |
+  \___|_|_|\__,_|\__,_|
+                       
+ 
+ booklet_form_bloc.dart
+                       
+ This code is generated. This is read only. Don't touch!
+
+*/
+
+import 'dart:async';
+
+import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
+
+import 'package:eliud_core/tools/enums.dart';
+import 'package:eliud_core/tools/types.dart';
+
+import 'package:eliud_core/model/rgb_model.dart';
+
+import 'package:eliud_core/tools/string_validator.dart';
+
+// import the main classes
+import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
+
+// import the shared classes
+import 'package:eliud_core/model/abstract_repository_singleton.dart';
+import 'package:eliud_core/model/repository_export.dart';
+import 'package:eliud_core/model/model_export.dart';
+import 'package:eliud_core/tools/action_model.dart';
+import 'package:eliud_core/model/entity_export.dart';
+  
+// import the classes of this package:
+import '../model/abstract_repository_singleton.dart';
+import '../model/repository_export.dart';
+import 'package:eliud_core/model/repository_export.dart';
+import '../model/model_export.dart';
+import 'package:eliud_core/model/model_export.dart';
+import '../model/entity_export.dart';
+import 'package:eliud_core/model/entity_export.dart';
+
+import 'booklet_form_event.dart';
+import 'booklet_form_state.dart';
+
+class BookletFormBloc extends Bloc<BookletFormEvent, BookletFormState> {
+  final BookletRepository _bookletRepository = bookletRepository();
+  final FormAction formAction;
+
+  BookletFormBloc({ this.formAction }): super(BookletFormUninitialized());
+  @override
+  Stream<BookletFormState> mapEventToState(BookletFormEvent event) async* {
+    final currentState = state;
+    if (currentState is BookletFormUninitialized) {
+      if (event is InitialiseNewBookletFormEvent) {
+        BookletFormLoaded loaded = BookletFormLoaded(value: BookletModel(
+                                               documentID: "",
+                                 appId: "",
+                                 name: "",
+                                 sections: [],
+
+        ));
+        yield loaded;
+        return;
+
+      }
+
+
+      if (event is InitialiseBookletFormEvent) {
+        // Need to re-retrieve the document from the repository so that I get all associated types
+        BookletFormLoaded loaded = BookletFormLoaded(value: await _bookletRepository.get(event.value.documentID));
+        yield loaded;
+        return;
+      } else if (event is InitialiseBookletFormNoLoadEvent) {
+        BookletFormLoaded loaded = BookletFormLoaded(value: event.value);
+        yield loaded;
+        return;
+      }
+    } else if (currentState is BookletFormInitialized) {
+      BookletModel newValue = null;
+      if (event is ChangedBookletDocumentID) {
+        newValue = currentState.value.copyWith(documentID: event.value);
+        if (formAction == FormAction.AddAction) {
+          yield* _isDocumentIDValid(event.value, newValue).asStream();
+        } else {
+          yield SubmittableBookletForm(value: newValue);
+        }
+
+        return;
+      }
+      if (event is ChangedBookletName) {
+        newValue = currentState.value.copyWith(name: event.value);
+        yield SubmittableBookletForm(value: newValue);
+
+        return;
+      }
+      if (event is ChangedBookletSections) {
+        newValue = currentState.value.copyWith(sections: event.value);
+        yield SubmittableBookletForm(value: newValue);
+
+        return;
+      }
+    }
+  }
+
+
+  DocumentIDBookletFormError error(String message, BookletModel newValue) => DocumentIDBookletFormError(message: message, value: newValue);
+
+  Future<BookletFormState> _isDocumentIDValid(String value, BookletModel newValue) async {
+    if (value == null) return Future.value(error("Provide value for documentID", newValue));
+    if (value.length == 0) return Future.value(error("Provide value for documentID", newValue));
+    Future<BookletModel> findDocument = _bookletRepository.get(value);
+    return await findDocument.then((documentFound) {
+      if (documentFound == null) {
+        return SubmittableBookletForm(value: newValue);
+      } else {
+        return error("Invalid documentID: already exists", newValue);
+      }
+    });
+  }
+
+
+}
+

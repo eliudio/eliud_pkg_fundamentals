@@ -1,0 +1,113 @@
+{
+  "id": "Document",
+  "isAppModel": true,
+  "generate": {
+    "generateComponent": true,
+    "generateRepository": true,
+    "generateCache": true,
+    "generateFirestoreRepository": true,
+    "generateModel": true,
+    "generateEntity": true,
+    "generateForm": true,
+    "generateList": true,
+    "generateDropDownButton": true,
+    "generateInternalComponent": true,
+    "generateEmbeddedComponent": false,
+    "isExtension": true
+  },
+  "fields": [
+    {
+      "fieldName": "documentID",
+      "displayName": "Document ID",
+      "fieldType": "String",
+      "iconName": "vpn_key",
+      "group": "general"
+    },
+    {
+      "fieldName": "appId",
+      "displayName": "App ID",
+      "fieldType": "String",
+      "iconName": "vpn_key",
+      "hidden": true,
+      "group": "general"
+    },
+    {
+      "fieldName": "name",
+      "displayName": "Name",
+      "fieldType": "String",
+      "iconName": "text_format",
+      "group": "general"
+    },
+    {
+      "fieldName": "documentRenderer",
+      "displayName": "Document Renderer",
+      "remark": "Document renderer. Different renderers offer different functionality",
+      "fieldType": "enum",
+      "enumName": "DocumentRenderer",
+      "group": "renderer",
+      "enumValues" : [ "flutter_html", "flutter_widget_from_html_not_web", "webview_flutter_no_list_not_web", "flutter_markdown", "dynamic_widget" ]
+    },
+    {
+      "fieldName": "content",
+      "displayName": "Contents",
+      "remark": "Document content",
+      "fieldType": "String",
+      "iconName": "text_format",
+      "bespokeFormField": "DocumentTextField('Document', state.value.documentRenderer, state.value.content, state.value.images, state.value.background, _onContentChanged)",
+      "group": "contents"
+    },
+    {
+      "fieldName": "padding",
+      "displayName": "Padding",
+      "remark": "Left, right, top and bottom padding.",
+      "fieldType": "double",
+      "iconName": "border_style",
+      "group": "layout"
+    },
+    {
+      "fieldName": "images",
+      "displayName": "Images",
+      "group": "documentItems",
+      "fieldType": "DocumentItem",
+      "arrayType": "Array"
+    },
+    {
+      "fieldName": "background",
+      "displayName": "Background",
+      "fieldType": "Background",
+      "association": true,
+      "optional": true,
+      "group": "background"
+    }
+  ],
+  "groups": [
+    {
+        "group": "general",
+        "description": "General"
+    },
+    {
+        "group": "contents",
+        "description": "Contents"
+    },
+    {
+        "group": "renderer",
+        "description": "Renderer"
+    },
+    {
+        "group": "layout",
+        "description": "Layout"
+    },
+    {
+        "group": "documentItems",
+        "description": "Images"
+    },
+    {
+        "group": "background",
+        "description": "Background"
+    }
+ ],
+  "listFields": {
+    "title": "documentID",
+    "subTitle": "name"
+  }
+}
