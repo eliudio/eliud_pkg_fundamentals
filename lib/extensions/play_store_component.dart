@@ -1,9 +1,10 @@
+import 'package:eliud_core/core/global_data.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/play_store_component.dart';
 import 'package:eliud_pkg_fundamentals/model/play_store_model.dart';
 import 'package:eliud_pkg_fundamentals/model/play_store_repository.dart';
-import 'package:eliud_core/core/eliud.dart';
-import 'package:eliud_core/core/navigate/router.dart';
+import 'package:eliud_core/eliud.dart';
+import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/tools/action_model.dart';
@@ -80,11 +81,11 @@ class PlayStoreState extends State<PlayStore> {
     double size = 150;
     List<Widget> components = List();
     apps.forEach((model) {
-      if (model.documentID != Eliud.playStoreApp) {
+      if (model.documentID != GlobalData.playStoreApp) {
         List<Widget> children = List();
         children.add(new GestureDetector(
             onTap: () async {
-              Router.navigateTo(context, SwitchApp(appID: model.documentID));
+              EliudRouter.Router.navigateTo(context, SwitchApp(appID: model.documentID));
             },
             child: _buildStack(
                 size - 40,

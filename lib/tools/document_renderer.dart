@@ -1,6 +1,6 @@
 import 'package:dynamic_widget/dynamic_widget.dart';
 import 'package:eliud_core/core/tools/document_processor.dart';
-import 'package:eliud_core/core/navigate/router.dart';
+import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
 import 'package:eliud_core/tools/action_model.dart';
 import 'package:eliud_core/model/background_model.dart';
 import 'package:eliud_core/tools/etc.dart';
@@ -30,7 +30,7 @@ class ActionListener implements ClickListener {
     if (scheme == "page") {
       // todo, check if access rights to this page, if not... show "???!!!"
       ActionModel action = GotoPage(pageID: authority); // construct from event
-      Router.navigateTo(context, action);
+      EliudRouter.Router.navigateTo(context, action);
     }
   }
 }

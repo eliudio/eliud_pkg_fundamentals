@@ -5,7 +5,7 @@ import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/section_model.dart';
 import 'package:eliud_core/core/global_data.dart';
-import 'package:eliud_core/core/navigate/router.dart';
+import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
 import 'package:eliud_core/platform/platform.dart';
 import 'package:eliud_core/model/image_model.dart';
 import 'package:eliud_core/tools/component_constructor.dart';
@@ -153,7 +153,7 @@ class BookletComponent extends AbstractBookletComponent {
                 style: FontTools.textStyle(GlobalData.app().fontLink),
               ),
               onPressed: () {
-                Router.navigateTo(context, link.action);
+                EliudRouter.Router.navigateTo(context, link.action);
               },
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(30.0))));

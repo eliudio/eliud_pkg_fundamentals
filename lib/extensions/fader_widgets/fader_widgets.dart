@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:eliud_core/core/navigate/router.dart';
+import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
 import 'package:eliud_core/tools/action_model.dart';
 import 'package:eliud_core/model/pos_size_model.dart';
 import 'package:eliud_core/tools/etc.dart';
@@ -258,7 +258,7 @@ class FaderHelper {
     if (action != null) {
       return GestureDetector(
           onTap: () {
-            Router.navigateTo(context, action);
+            EliudRouter.Router.navigateTo(context, action);
           },
           child: aligned,
           key: ValueKey<int>(index)
