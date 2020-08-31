@@ -24,9 +24,9 @@ import 'package:eliud_core/platform/platform.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 
-import 'presentation_list_bloc.dart';
-import 'presentation_list_state.dart';
-import 'presentation_model.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_list_state.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_model.dart';
 
 
 typedef PresentationChanged(String value);

@@ -29,10 +29,10 @@ import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/enums.dart';
 import 'package:eliud_core/eliud.dart';
 
-import 'document_list_event.dart';
-import 'document_list_state.dart';
-import 'document_list_bloc.dart';
-import 'document_model.dart';
+import 'package:eliud_pkg_fundamentals/model/document_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/document_list_state.dart';
+import 'package:eliud_pkg_fundamentals/model/document_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/document_model.dart';
 
 import 'document_form.dart';
 class DocumentListWidget extends StatefulWidget with HasFab {

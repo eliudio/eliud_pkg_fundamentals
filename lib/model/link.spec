@@ -1,5 +1,6 @@
 {
   "id": "Link",
+  "packageName": "eliud_pkg_fundamentals",
   "generate": {
     "generateComponent": false,
     "generateRepository": true,

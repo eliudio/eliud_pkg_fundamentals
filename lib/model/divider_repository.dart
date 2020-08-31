@@ -14,7 +14,7 @@
 */
 
 import 'dart:async';
-import 'divider_model.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_model.dart';
 
 typedef DividerModelTrigger(List<DividerModel> list);
 

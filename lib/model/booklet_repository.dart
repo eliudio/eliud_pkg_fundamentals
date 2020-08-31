@@ -14,7 +14,7 @@
 */
 
 import 'dart:async';
-import 'booklet_model.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
 
 typedef BookletModelTrigger(List<BookletModel> list);
 

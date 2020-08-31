@@ -14,7 +14,7 @@
 */
 
 import 'package:equatable/equatable.dart';
-import 'simple_image_model.dart';
+import 'package:eliud_pkg_fundamentals/model/simple_image_model.dart';
 
 abstract class SimpleImageState extends Equatable {
   const SimpleImageState();

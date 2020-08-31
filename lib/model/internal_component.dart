@@ -22,146 +22,146 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eliud_core/tools/has_fab.dart';
 
 
-import '../model/booklet_list_bloc.dart';
-import '../model/booklet_list.dart';
-import '../model/booklet_dropdown_button.dart';
-import '../model/booklet_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_list.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_dropdown_button.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_list_event.dart';
 
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import '../model/abstract_repository_singleton.dart';
-import 'repository_export.dart';
+import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
 import 'package:eliud_core/tools/action_model.dart';
-import '../model/model_export.dart';
+import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 import 'package:eliud_core/tools/action_entity.dart';
-import '../model/entity_export.dart';
+import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-import '../model/divider_list_bloc.dart';
-import '../model/divider_list.dart';
-import '../model/divider_dropdown_button.dart';
-import '../model/divider_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_list.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_dropdown_button.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_list_event.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import '../model/abstract_repository_singleton.dart';
-import 'repository_export.dart';
+import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
 import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_core/tools/action_model.dart';
-import '../model/model_export.dart';
+import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 import 'package:eliud_core/model/entity_export.dart';
 import 'package:eliud_core/tools/action_entity.dart';
-import '../model/entity_export.dart';
+import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-import '../model/document_list_bloc.dart';
-import '../model/document_list.dart';
-import '../model/document_dropdown_button.dart';
-import '../model/document_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/document_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/document_list.dart';
+import 'package:eliud_pkg_fundamentals/model/document_dropdown_button.dart';
+import 'package:eliud_pkg_fundamentals/model/document_list_event.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import '../model/abstract_repository_singleton.dart';
-import 'repository_export.dart';
+import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
 import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_core/tools/action_model.dart';
-import '../model/model_export.dart';
+import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 import 'package:eliud_core/model/entity_export.dart';
 import 'package:eliud_core/tools/action_entity.dart';
-import '../model/entity_export.dart';
+import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-import '../model/fader_list_bloc.dart';
-import '../model/fader_list.dart';
-import '../model/fader_dropdown_button.dart';
-import '../model/fader_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_list.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_dropdown_button.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_list_event.dart';
 
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import '../model/abstract_repository_singleton.dart';
-import 'repository_export.dart';
+import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
 import 'package:eliud_core/tools/action_model.dart';
-import '../model/model_export.dart';
+import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 import 'package:eliud_core/tools/action_entity.dart';
-import '../model/entity_export.dart';
+import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-import '../model/grid_list_bloc.dart';
-import '../model/grid_list.dart';
-import '../model/grid_dropdown_button.dart';
-import '../model/grid_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/grid_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/grid_list.dart';
+import 'package:eliud_pkg_fundamentals/model/grid_dropdown_button.dart';
+import 'package:eliud_pkg_fundamentals/model/grid_list_event.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import '../model/abstract_repository_singleton.dart';
-import 'repository_export.dart';
+import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
 import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_core/tools/action_model.dart';
-import '../model/model_export.dart';
+import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 import 'package:eliud_core/model/entity_export.dart';
 import 'package:eliud_core/tools/action_entity.dart';
-import '../model/entity_export.dart';
+import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-import '../model/play_store_list_bloc.dart';
-import '../model/play_store_list.dart';
-import '../model/play_store_dropdown_button.dart';
-import '../model/play_store_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/play_store_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/play_store_list.dart';
+import 'package:eliud_pkg_fundamentals/model/play_store_dropdown_button.dart';
+import 'package:eliud_pkg_fundamentals/model/play_store_list_event.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import '../model/abstract_repository_singleton.dart';
-import 'repository_export.dart';
+import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
 import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_core/tools/action_model.dart';
-import '../model/model_export.dart';
+import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 import 'package:eliud_core/model/entity_export.dart';
 import 'package:eliud_core/tools/action_entity.dart';
-import '../model/entity_export.dart';
+import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-import '../model/presentation_list_bloc.dart';
-import '../model/presentation_list.dart';
-import '../model/presentation_dropdown_button.dart';
-import '../model/presentation_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_list.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_dropdown_button.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_list_event.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import '../model/abstract_repository_singleton.dart';
-import 'repository_export.dart';
+import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
 import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_core/tools/action_model.dart';
-import '../model/model_export.dart';
+import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 import 'package:eliud_core/model/entity_export.dart';
 import 'package:eliud_core/tools/action_entity.dart';
-import '../model/entity_export.dart';
+import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-import '../model/simple_image_list_bloc.dart';
-import '../model/simple_image_list.dart';
-import '../model/simple_image_dropdown_button.dart';
-import '../model/simple_image_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/simple_image_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/simple_image_list.dart';
+import 'package:eliud_pkg_fundamentals/model/simple_image_dropdown_button.dart';
+import 'package:eliud_pkg_fundamentals/model/simple_image_list_event.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import '../model/abstract_repository_singleton.dart';
-import 'repository_export.dart';
+import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
 import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_core/tools/action_model.dart';
-import '../model/model_export.dart';
+import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 import 'package:eliud_core/model/entity_export.dart';
 import 'package:eliud_core/tools/action_entity.dart';
-import '../model/entity_export.dart';
+import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-import '../model/tutorial_list_bloc.dart';
-import '../model/tutorial_list.dart';
-import '../model/tutorial_dropdown_button.dart';
-import '../model/tutorial_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_list.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_dropdown_button.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_list_event.dart';
 
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import '../model/abstract_repository_singleton.dart';
-import 'repository_export.dart';
+import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
 import 'package:eliud_core/tools/action_model.dart';
-import '../model/model_export.dart';
+import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 import 'package:eliud_core/tools/action_entity.dart';
-import '../model/entity_export.dart';
+import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class ListComponentFactory implements ComponentConstructor {
   Widget createNew({String id, Map<String, String> parameters}) {

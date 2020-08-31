@@ -14,7 +14,7 @@
 */
 
 import 'dart:async';
-import 'listed_item_model.dart';
+import 'package:eliud_pkg_fundamentals/model/listed_item_model.dart';
 
 typedef ListedItemModelTrigger(List<ListedItemModel> list);
 

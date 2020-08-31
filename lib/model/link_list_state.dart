@@ -14,7 +14,7 @@
 */
 
 import 'package:equatable/equatable.dart';
-import 'link_model.dart';
+import 'package:eliud_pkg_fundamentals/model/link_model.dart';
 
 abstract class LinkListState extends Equatable {
   const LinkListState();

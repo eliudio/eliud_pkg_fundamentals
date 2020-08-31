@@ -24,9 +24,9 @@ import 'package:eliud_core/platform/platform.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 
-import 'booklet_list_bloc.dart';
-import 'booklet_list_state.dart';
-import 'booklet_model.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_list_state.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
 
 
 typedef BookletChanged(String value);

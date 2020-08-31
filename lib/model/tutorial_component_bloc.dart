@@ -16,10 +16,10 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 
-import 'tutorial_model.dart';
-import 'tutorial_component_event.dart';
-import 'tutorial_component_state.dart';
-import 'tutorial_repository.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_model.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_component_event.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_component_state.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_repository.dart';
 class TutorialBloc extends Bloc<TutorialEvent, TutorialState> {
   final TutorialRepository tutorialRepository;
 

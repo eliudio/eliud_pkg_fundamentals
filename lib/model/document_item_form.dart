@@ -29,8 +29,8 @@ import 'package:intl/intl.dart';
 import 'package:eliud_core/eliud.dart';
 
 import 'package:eliud_core/model/internal_component.dart';
-import '../model/embedded_component.dart';
-import '../tools/bespoke_formfields.dart';
+import 'package:eliud_pkg_fundamentals/model/embedded_component.dart';
+import 'package:eliud_pkg_fundamentals/tools/bespoke_formfields.dart';
 import 'package:eliud_core/tools/bespoke_formfields.dart';
 
 import 'package:eliud_core/tools/enums.dart';
@@ -39,23 +39,23 @@ import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import '../model/abstract_repository_singleton.dart';
-import 'repository_export.dart';
+import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
 import 'package:eliud_core/model/embedded_component.dart';
-import '../model/embedded_component.dart';
+import 'package:eliud_pkg_fundamentals/model/embedded_component.dart';
 import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_core/tools/action_model.dart';
-import '../model/model_export.dart';
+import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 import 'package:eliud_core/model/entity_export.dart';
 import 'package:eliud_core/tools/action_entity.dart';
-import '../model/entity_export.dart';
+import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-import 'document_item_list_bloc.dart';
-import 'document_item_list_event.dart';
-import 'document_item_model.dart';
-import 'document_item_form_bloc.dart';
-import 'document_item_form_event.dart';
-import 'document_item_form_state.dart';
+import 'package:eliud_pkg_fundamentals/model/document_item_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/document_item_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/document_item_model.dart';
+import 'package:eliud_pkg_fundamentals/model/document_item_form_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/document_item_form_event.dart';
+import 'package:eliud_pkg_fundamentals/model/document_item_form_state.dart';
 
 
 class DocumentItemForm extends StatelessWidget {

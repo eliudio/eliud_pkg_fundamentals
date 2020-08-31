@@ -14,7 +14,7 @@
 */
 
 import 'dart:async';
-import 'fader_model.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_model.dart';
 
 typedef FaderModelTrigger(List<FaderModel> list);
 

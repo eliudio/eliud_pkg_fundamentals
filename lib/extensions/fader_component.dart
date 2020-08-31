@@ -13,7 +13,7 @@ import 'package:eliud_core/model/pos_size_model.dart';
 import 'package:eliud_core/tools/component_constructor.dart';
 import 'package:flutter/material.dart';
 
-import 'fader_widgets/fader_widgets.dart';
+import 'package:eliud_pkg_fundamentals/extensions/fader_widgets/fader_widgets.dart';
 
 class FaderComponentConstructorDefault implements ComponentConstructor {
   Widget createNew({String id, Map<String, String> parameters}) {

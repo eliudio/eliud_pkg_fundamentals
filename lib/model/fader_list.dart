@@ -29,10 +29,10 @@ import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/enums.dart';
 import 'package:eliud_core/eliud.dart';
 
-import 'fader_list_event.dart';
-import 'fader_list_state.dart';
-import 'fader_list_bloc.dart';
-import 'fader_model.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_list_state.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_model.dart';
 
 import 'fader_form.dart';
 class FaderListWidget extends StatefulWidget with HasFab {

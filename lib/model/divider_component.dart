@@ -16,11 +16,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'divider_component_bloc.dart';
-import 'divider_component_event.dart';
-import 'divider_model.dart';
-import 'divider_repository.dart';
-import 'divider_component_state.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_component_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_component_event.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_model.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_repository.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_component_state.dart';
 
 abstract class AbstractDividerComponent extends StatelessWidget {
   static String componentName = "dividers";

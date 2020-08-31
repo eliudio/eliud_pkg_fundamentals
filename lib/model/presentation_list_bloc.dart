@@ -17,9 +17,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import 'presentation_repository.dart';
-import 'presentation_list_event.dart';
-import 'presentation_list_state.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_repository.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_list_state.dart';
 
 
 class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListState> {

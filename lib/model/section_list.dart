@@ -29,10 +29,10 @@ import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/enums.dart';
 import 'package:eliud_core/eliud.dart';
 
-import 'section_list_event.dart';
-import 'section_list_state.dart';
-import 'section_list_bloc.dart';
-import 'section_model.dart';
+import 'package:eliud_pkg_fundamentals/model/section_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/section_list_state.dart';
+import 'package:eliud_pkg_fundamentals/model/section_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/section_model.dart';
 
 import 'section_form.dart';
 class SectionListWidget extends StatefulWidget with HasFab {

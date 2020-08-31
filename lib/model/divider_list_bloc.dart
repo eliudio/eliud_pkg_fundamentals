@@ -17,9 +17,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import 'divider_repository.dart';
-import 'divider_list_event.dart';
-import 'divider_list_state.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_repository.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_list_state.dart';
 
 
 class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {

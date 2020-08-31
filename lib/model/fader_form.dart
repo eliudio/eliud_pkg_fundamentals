@@ -29,28 +29,28 @@ import 'package:intl/intl.dart';
 import 'package:eliud_core/eliud.dart';
 
 import 'package:eliud_core/model/internal_component.dart';
-import '../model/embedded_component.dart';
-import '../tools/bespoke_formfields.dart';
+import 'package:eliud_pkg_fundamentals/model/embedded_component.dart';
+import 'package:eliud_pkg_fundamentals/tools/bespoke_formfields.dart';
 import 'package:eliud_core/tools/bespoke_formfields.dart';
 
 import 'package:eliud_core/tools/enums.dart';
 import 'package:eliud_core/tools/etc.dart';
 
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import '../model/abstract_repository_singleton.dart';
-import 'repository_export.dart';
-import '../model/embedded_component.dart';
+import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
+import 'package:eliud_pkg_fundamentals/model/embedded_component.dart';
 import 'package:eliud_core/tools/action_model.dart';
-import '../model/model_export.dart';
+import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 import 'package:eliud_core/tools/action_entity.dart';
-import '../model/entity_export.dart';
+import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-import 'fader_list_bloc.dart';
-import 'fader_list_event.dart';
-import 'fader_model.dart';
-import 'fader_form_bloc.dart';
-import 'fader_form_event.dart';
-import 'fader_form_state.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_model.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_form_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_form_event.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_form_state.dart';
 
 
 class FaderForm extends StatelessWidget {

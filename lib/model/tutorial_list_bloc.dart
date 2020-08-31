@@ -17,9 +17,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import 'tutorial_repository.dart';
-import 'tutorial_list_event.dart';
-import 'tutorial_list_state.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_repository.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_list_state.dart';
 
 
 class TutorialListBloc extends Bloc<TutorialListEvent, TutorialListState> {

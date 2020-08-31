@@ -29,10 +29,10 @@ import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/enums.dart';
 import 'package:eliud_core/eliud.dart';
 
-import 'booklet_list_event.dart';
-import 'booklet_list_state.dart';
-import 'booklet_list_bloc.dart';
-import 'booklet_model.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_list_state.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
 
 import 'booklet_form.dart';
 class BookletListWidget extends StatefulWidget with HasFab {

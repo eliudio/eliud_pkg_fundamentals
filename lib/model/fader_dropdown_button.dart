@@ -24,9 +24,9 @@ import 'package:eliud_core/platform/platform.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 
-import 'fader_list_bloc.dart';
-import 'fader_list_state.dart';
-import 'fader_model.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_list_state.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_model.dart';
 
 
 typedef FaderChanged(String value);

@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart' as wv;
 import 'package:flutter_markdown/flutter_markdown.dart';
 
-import 'document_processor_extended.dart';
+import 'package:eliud_pkg_fundamentals/tools/document_processor_extended.dart';
 
 class ActionListener implements ClickListener {
   final BuildContext context;

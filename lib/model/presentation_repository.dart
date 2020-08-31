@@ -14,7 +14,7 @@
 */
 
 import 'dart:async';
-import 'presentation_model.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_model.dart';
 
 typedef PresentationModelTrigger(List<PresentationModel> list);
 

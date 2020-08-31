@@ -29,10 +29,10 @@ import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/enums.dart';
 import 'package:eliud_core/eliud.dart';
 
-import 'link_list_event.dart';
-import 'link_list_state.dart';
-import 'link_list_bloc.dart';
-import 'link_model.dart';
+import 'package:eliud_pkg_fundamentals/model/link_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/link_list_state.dart';
+import 'package:eliud_pkg_fundamentals/model/link_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/link_model.dart';
 
 import 'link_form.dart';
 class LinkListWidget extends StatefulWidget with HasFab {

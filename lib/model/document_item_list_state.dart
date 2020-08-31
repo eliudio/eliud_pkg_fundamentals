@@ -14,7 +14,7 @@
 */
 
 import 'package:equatable/equatable.dart';
-import 'document_item_model.dart';
+import 'package:eliud_pkg_fundamentals/model/document_item_model.dart';
 
 abstract class DocumentItemListState extends Equatable {
   const DocumentItemListState();

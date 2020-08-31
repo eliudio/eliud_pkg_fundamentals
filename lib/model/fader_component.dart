@@ -16,11 +16,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'fader_component_bloc.dart';
-import 'fader_component_event.dart';
-import 'fader_model.dart';
-import 'fader_repository.dart';
-import 'fader_component_state.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_component_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_component_event.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_model.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_repository.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_component_state.dart';
 
 abstract class AbstractFaderComponent extends StatelessWidget {
   static String componentName = "faders";

@@ -14,7 +14,7 @@
 */
 
 import 'dart:async';
-import 'section_model.dart';
+import 'package:eliud_pkg_fundamentals/model/section_model.dart';
 
 typedef SectionModelTrigger(List<SectionModel> list);
 

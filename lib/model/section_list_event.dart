@@ -14,7 +14,7 @@
 */
 
 import 'package:equatable/equatable.dart';
-import 'section_model.dart';
+import 'package:eliud_pkg_fundamentals/model/section_model.dart';
 
 abstract class SectionListEvent extends Equatable {
   const SectionListEvent();

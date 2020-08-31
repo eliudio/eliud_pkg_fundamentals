@@ -14,7 +14,7 @@
 */
 
 import 'dart:async';
-import 'document_item_model.dart';
+import 'package:eliud_pkg_fundamentals/model/document_item_model.dart';
 
 typedef DocumentItemModelTrigger(List<DocumentItemModel> list);
 

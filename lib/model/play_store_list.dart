@@ -29,10 +29,10 @@ import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/enums.dart';
 import 'package:eliud_core/eliud.dart';
 
-import 'play_store_list_event.dart';
-import 'play_store_list_state.dart';
-import 'play_store_list_bloc.dart';
-import 'play_store_model.dart';
+import 'package:eliud_pkg_fundamentals/model/play_store_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/play_store_list_state.dart';
+import 'package:eliud_pkg_fundamentals/model/play_store_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/play_store_model.dart';
 
 import 'play_store_form.dart';
 class PlayStoreListWidget extends StatefulWidget with HasFab {

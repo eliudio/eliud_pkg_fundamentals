@@ -14,7 +14,7 @@
 */
 
 import 'package:equatable/equatable.dart';
-import 'tutorial_entry_model.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_entry_model.dart';
 
 abstract class TutorialEntryListState extends Equatable {
   const TutorialEntryListState();

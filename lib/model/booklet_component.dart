@@ -16,11 +16,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'booklet_component_bloc.dart';
-import 'booklet_component_event.dart';
-import 'booklet_model.dart';
-import 'booklet_repository.dart';
-import 'booklet_component_state.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_component_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_component_event.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_repository.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_component_state.dart';
 
 abstract class AbstractBookletComponent extends StatelessWidget {
   static String componentName = "booklets";

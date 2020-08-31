@@ -16,10 +16,10 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 
-import 'grid_model.dart';
-import 'grid_component_event.dart';
-import 'grid_component_state.dart';
-import 'grid_repository.dart';
+import 'package:eliud_pkg_fundamentals/model/grid_model.dart';
+import 'package:eliud_pkg_fundamentals/model/grid_component_event.dart';
+import 'package:eliud_pkg_fundamentals/model/grid_component_state.dart';
+import 'package:eliud_pkg_fundamentals/model/grid_repository.dart';
 
 class GridBloc extends Bloc<GridEvent, GridState> {
   final GridRepository gridRepository;

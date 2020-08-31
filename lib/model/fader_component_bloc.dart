@@ -16,10 +16,10 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 
-import 'fader_model.dart';
-import 'fader_component_event.dart';
-import 'fader_component_state.dart';
-import 'fader_repository.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_model.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_component_event.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_component_state.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_repository.dart';
 class FaderBloc extends Bloc<FaderEvent, FaderState> {
   final FaderRepository faderRepository;
 

@@ -16,11 +16,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'presentation_component_bloc.dart';
-import 'presentation_component_event.dart';
-import 'presentation_model.dart';
-import 'presentation_repository.dart';
-import 'presentation_component_state.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_component_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_component_event.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_model.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_repository.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_component_state.dart';
 
 abstract class AbstractPresentationComponent extends StatelessWidget {
   static String componentName = "presentations";

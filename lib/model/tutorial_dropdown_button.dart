@@ -24,9 +24,9 @@ import 'package:eliud_core/platform/platform.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 
-import 'tutorial_list_bloc.dart';
-import 'tutorial_list_state.dart';
-import 'tutorial_model.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_list_state.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_model.dart';
 
 
 typedef TutorialChanged(String value);

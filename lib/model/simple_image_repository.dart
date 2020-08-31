@@ -14,7 +14,7 @@
 */
 
 import 'dart:async';
-import 'simple_image_model.dart';
+import 'package:eliud_pkg_fundamentals/model/simple_image_model.dart';
 
 typedef SimpleImageModelTrigger(List<SimpleImageModel> list);
 

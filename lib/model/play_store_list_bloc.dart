@@ -17,9 +17,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import 'play_store_repository.dart';
-import 'play_store_list_event.dart';
-import 'play_store_list_state.dart';
+import 'package:eliud_pkg_fundamentals/model/play_store_repository.dart';
+import 'package:eliud_pkg_fundamentals/model/play_store_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/play_store_list_state.dart';
 
 
 class PlayStoreListBloc extends Bloc<PlayStoreListEvent, PlayStoreListState> {

@@ -4,7 +4,7 @@ import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/member_model.dart';
 import 'package:flutter_bloc/src/bloc_provider.dart';
 
-import 'model/component_registry.dart';
+import 'package:eliud_pkg_fundamentals/model/component_registry.dart';
 
 abstract class FundamentalsPlugin extends Plugin {
   @override

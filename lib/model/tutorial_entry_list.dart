@@ -29,10 +29,10 @@ import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/enums.dart';
 import 'package:eliud_core/eliud.dart';
 
-import 'tutorial_entry_list_event.dart';
-import 'tutorial_entry_list_state.dart';
-import 'tutorial_entry_list_bloc.dart';
-import 'tutorial_entry_model.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_entry_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_entry_list_state.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_entry_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_entry_model.dart';
 
 import 'tutorial_entry_form.dart';
 class TutorialEntryListWidget extends StatefulWidget with HasFab {

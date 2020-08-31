@@ -14,7 +14,7 @@
 */
 
 import 'package:equatable/equatable.dart';
-import 'document_model.dart';
+import 'package:eliud_pkg_fundamentals/model/document_model.dart';
 
 abstract class DocumentListEvent extends Equatable {
   const DocumentListEvent();

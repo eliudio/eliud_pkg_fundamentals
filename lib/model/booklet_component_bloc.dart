@@ -16,10 +16,10 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 
-import 'booklet_model.dart';
-import 'booklet_component_event.dart';
-import 'booklet_component_state.dart';
-import 'booklet_repository.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_component_event.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_component_state.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_repository.dart';
 class BookletBloc extends Bloc<BookletEvent, BookletState> {
   final BookletRepository bookletRepository;
 

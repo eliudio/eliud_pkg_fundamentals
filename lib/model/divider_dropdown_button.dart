@@ -24,9 +24,9 @@ import 'package:eliud_core/platform/platform.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 
-import 'divider_list_bloc.dart';
-import 'divider_list_state.dart';
-import 'divider_model.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_list_state.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_model.dart';
 
 
 typedef DividerChanged(String value);

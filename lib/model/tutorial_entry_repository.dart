@@ -14,7 +14,7 @@
 */
 
 import 'dart:async';
-import 'tutorial_entry_model.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_entry_model.dart';
 
 typedef TutorialEntryModelTrigger(List<TutorialEntryModel> list);
 

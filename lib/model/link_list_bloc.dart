@@ -17,9 +17,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import 'link_repository.dart';
-import 'link_list_event.dart';
-import 'link_list_state.dart';
+import 'package:eliud_pkg_fundamentals/model/link_repository.dart';
+import 'package:eliud_pkg_fundamentals/model/link_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/link_list_state.dart';
 
 
 class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {

@@ -29,10 +29,10 @@ import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/enums.dart';
 import 'package:eliud_core/eliud.dart';
 
-import 'divider_list_event.dart';
-import 'divider_list_state.dart';
-import 'divider_list_bloc.dart';
-import 'divider_model.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_list_state.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_model.dart';
 
 import 'divider_form.dart';
 class DividerListWidget extends StatefulWidget with HasFab {

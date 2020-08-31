@@ -8,7 +8,7 @@ import 'package:eliud_pkg_fundamentals/model/document_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'document_renderer.dart';
+import 'package:eliud_pkg_fundamentals/tools/document_renderer.dart';
 
 
 typedef DocumentTextFieldTrigger(String value);

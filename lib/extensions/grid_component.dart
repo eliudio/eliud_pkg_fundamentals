@@ -6,7 +6,7 @@ import 'package:eliud_pkg_fundamentals/model/grid_repository.dart';
 import 'package:eliud_core/tools/component_constructor.dart';
 import 'package:eliud_core/tools/registry.dart';
 import 'package:flutter/material.dart';
-import '../model/grid_component.dart';
+import 'package:eliud_pkg_fundamentals/model/grid_component.dart';
 
 class GridComponentConstructorDefault implements ComponentConstructor {
   @override

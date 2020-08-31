@@ -14,7 +14,7 @@
 */
 
 import 'package:equatable/equatable.dart';
-import 'presentation_model.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_model.dart';
 
 abstract class PresentationState extends Equatable {
   const PresentationState();

@@ -14,16 +14,16 @@
 */
 
 import 'dart:async';
-import 'link_model.dart';
-import 'link_repository.dart';
+import 'package:eliud_pkg_fundamentals/model/link_model.dart';
+import 'package:eliud_pkg_fundamentals/model/link_repository.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import '../model/abstract_repository_singleton.dart';
-import 'repository_export.dart';
-import '../model/cache_export.dart';
+import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
+import 'package:eliud_pkg_fundamentals/model/cache_export.dart';
 import 'package:eliud_core/tools/action_model.dart';
-import '../model/model_export.dart';
+import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 import 'package:eliud_core/tools/action_entity.dart';
-import '../model/entity_export.dart';
+import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class LinkCache implements LinkRepository {
 

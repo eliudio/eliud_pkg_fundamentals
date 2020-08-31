@@ -14,7 +14,7 @@
 */
 
 import 'dart:async';
-import 'play_store_model.dart';
+import 'package:eliud_pkg_fundamentals/model/play_store_model.dart';
 
 typedef PlayStoreModelTrigger(List<PlayStoreModel> list);
 

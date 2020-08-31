@@ -17,9 +17,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import 'document_repository.dart';
-import 'document_list_event.dart';
-import 'document_list_state.dart';
+import 'package:eliud_pkg_fundamentals/model/document_repository.dart';
+import 'package:eliud_pkg_fundamentals/model/document_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/document_list_state.dart';
 
 
 class DocumentListBloc extends Bloc<DocumentListEvent, DocumentListState> {

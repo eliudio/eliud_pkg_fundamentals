@@ -14,7 +14,7 @@
 */
 
 import 'package:equatable/equatable.dart';
-import 'play_store_model.dart';
+import 'package:eliud_pkg_fundamentals/model/play_store_model.dart';
 
 abstract class PlayStoreListState extends Equatable {
   const PlayStoreListState();

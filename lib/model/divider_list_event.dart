@@ -14,7 +14,7 @@
 */
 
 import 'package:equatable/equatable.dart';
-import 'divider_model.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_model.dart';
 
 abstract class DividerListEvent extends Equatable {
   const DividerListEvent();

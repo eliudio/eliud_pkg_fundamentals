@@ -28,18 +28,18 @@ import 'package:eliud_core/tools/string_validator.dart';
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import '../model/abstract_repository_singleton.dart';
-import 'repository_export.dart';
+import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
 import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_core/tools/action_model.dart';
-import '../model/model_export.dart';
+import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 import 'package:eliud_core/model/entity_export.dart';
 import 'package:eliud_core/tools/action_entity.dart';
-import '../model/entity_export.dart';
+import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-import 'presentation_form_event.dart';
-import 'presentation_form_state.dart';
-import 'presentation_repository.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_form_event.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_form_state.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_repository.dart';
 
 class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormState> {
   final PresentationRepository _presentationRepository = presentationRepository();

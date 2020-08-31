@@ -16,10 +16,10 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 
-import 'presentation_model.dart';
-import 'presentation_component_event.dart';
-import 'presentation_component_state.dart';
-import 'presentation_repository.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_model.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_component_event.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_component_state.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_repository.dart';
 
 class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
   final PresentationRepository presentationRepository;

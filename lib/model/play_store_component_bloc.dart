@@ -16,10 +16,10 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 
-import 'play_store_model.dart';
-import 'play_store_component_event.dart';
-import 'play_store_component_state.dart';
-import 'play_store_repository.dart';
+import 'package:eliud_pkg_fundamentals/model/play_store_model.dart';
+import 'package:eliud_pkg_fundamentals/model/play_store_component_event.dart';
+import 'package:eliud_pkg_fundamentals/model/play_store_component_state.dart';
+import 'package:eliud_pkg_fundamentals/model/play_store_repository.dart';
 
 class PlayStoreBloc extends Bloc<PlayStoreEvent, PlayStoreState> {
   final PlayStoreRepository playStoreRepository;

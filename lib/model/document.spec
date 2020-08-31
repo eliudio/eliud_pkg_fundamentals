@@ -1,5 +1,6 @@
 {
   "id": "Document",
+  "packageName": "eliud_pkg_fundamentals",
   "isAppModel": true,
   "generate": {
     "generateComponent": true,

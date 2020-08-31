@@ -29,10 +29,10 @@ import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/enums.dart';
 import 'package:eliud_core/eliud.dart';
 
-import 'presentation_list_event.dart';
-import 'presentation_list_state.dart';
-import 'presentation_list_bloc.dart';
-import 'presentation_model.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_list_state.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_model.dart';
 
 import 'presentation_form.dart';
 class PresentationListWidget extends StatefulWidget with HasFab {

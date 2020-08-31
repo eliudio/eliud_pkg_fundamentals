@@ -14,7 +14,7 @@
 */
 
 import 'package:equatable/equatable.dart';
-import 'booklet_model.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
 
 abstract class BookletListEvent extends Equatable {
   const BookletListEvent();

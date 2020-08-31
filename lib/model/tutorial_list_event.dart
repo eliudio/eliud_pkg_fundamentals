@@ -14,7 +14,7 @@
 */
 
 import 'package:equatable/equatable.dart';
-import 'tutorial_model.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_model.dart';
 
 abstract class TutorialListEvent extends Equatable {
   const TutorialListEvent();

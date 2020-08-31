@@ -14,7 +14,7 @@
 */
 
 import 'dart:async';
-import 'grid_model.dart';
+import 'package:eliud_pkg_fundamentals/model/grid_model.dart';
 
 typedef GridModelTrigger(List<GridModel> list);
 

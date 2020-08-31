@@ -16,10 +16,10 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 
-import 'divider_model.dart';
-import 'divider_component_event.dart';
-import 'divider_component_state.dart';
-import 'divider_repository.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_model.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_component_event.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_component_state.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_repository.dart';
 class DividerBloc extends Bloc<DividerEvent, DividerState> {
   final DividerRepository dividerRepository;
 

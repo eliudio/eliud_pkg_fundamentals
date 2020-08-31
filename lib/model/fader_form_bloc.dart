@@ -26,16 +26,16 @@ import 'package:eliud_core/model/rgb_model.dart';
 import 'package:eliud_core/tools/string_validator.dart';
 
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import '../model/abstract_repository_singleton.dart';
-import 'repository_export.dart';
+import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
 import 'package:eliud_core/tools/action_model.dart';
-import '../model/model_export.dart';
+import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 import 'package:eliud_core/tools/action_entity.dart';
-import '../model/entity_export.dart';
+import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-import 'fader_form_event.dart';
-import 'fader_form_state.dart';
-import 'fader_repository.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_form_event.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_form_state.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_repository.dart';
 
 class FaderFormBloc extends Bloc<FaderFormEvent, FaderFormState> {
   final FaderRepository _faderRepository = faderRepository();

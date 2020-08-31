@@ -14,7 +14,7 @@
 */
 
 import 'package:equatable/equatable.dart';
-import 'grid_model.dart';
+import 'package:eliud_pkg_fundamentals/model/grid_model.dart';
 
 abstract class GridListEvent extends Equatable {
   const GridListEvent();

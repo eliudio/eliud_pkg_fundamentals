@@ -16,10 +16,10 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 
-import 'document_model.dart';
-import 'document_component_event.dart';
-import 'document_component_state.dart';
-import 'document_repository.dart';
+import 'package:eliud_pkg_fundamentals/model/document_model.dart';
+import 'package:eliud_pkg_fundamentals/model/document_component_event.dart';
+import 'package:eliud_pkg_fundamentals/model/document_component_state.dart';
+import 'package:eliud_pkg_fundamentals/model/document_repository.dart';
 
 class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
   final DocumentRepository documentRepository;

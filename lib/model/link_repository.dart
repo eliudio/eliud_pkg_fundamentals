@@ -14,7 +14,7 @@
 */
 
 import 'dart:async';
-import 'link_model.dart';
+import 'package:eliud_pkg_fundamentals/model/link_model.dart';
 
 typedef LinkModelTrigger(List<LinkModel> list);
 

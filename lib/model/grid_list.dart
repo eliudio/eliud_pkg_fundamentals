@@ -29,10 +29,10 @@ import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/enums.dart';
 import 'package:eliud_core/eliud.dart';
 
-import 'grid_list_event.dart';
-import 'grid_list_state.dart';
-import 'grid_list_bloc.dart';
-import 'grid_model.dart';
+import 'package:eliud_pkg_fundamentals/model/grid_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/grid_list_state.dart';
+import 'package:eliud_pkg_fundamentals/model/grid_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/grid_model.dart';
 
 import 'grid_form.dart';
 class GridListWidget extends StatefulWidget with HasFab {

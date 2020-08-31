@@ -17,9 +17,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import 'booklet_repository.dart';
-import 'booklet_list_event.dart';
-import 'booklet_list_state.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_repository.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_list_event.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_list_state.dart';
 
 
 class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {

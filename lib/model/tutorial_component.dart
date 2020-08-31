@@ -16,11 +16,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'tutorial_component_bloc.dart';
-import 'tutorial_component_event.dart';
-import 'tutorial_model.dart';
-import 'tutorial_repository.dart';
-import 'tutorial_component_state.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_component_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_component_event.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_model.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_repository.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_component_state.dart';
 
 abstract class AbstractTutorialComponent extends StatelessWidget {
   static String componentName = "tutorials";
