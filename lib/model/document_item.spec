@@ -43,5 +43,6 @@
     "title": "image",
     "imageTitle": true,
     "subTitle": "reference"
-  }
+  },
+  "depends": ["eliud_core"]
 }
