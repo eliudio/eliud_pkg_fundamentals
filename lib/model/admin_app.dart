@@ -14,6 +14,7 @@
 */
 
 
+import 'package:eliud_core/tools/admin_app_base.dart';
 import 'package:eliud_core/tools/action_model.dart';
 
 import 'package:eliud_core/model/menu_def_model.dart';
@@ -36,7 +37,7 @@ import 'package:eliud_core/model/entity_export.dart';
 import 'package:eliud_core/tools/action_entity.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-class AdminApp {
+class AdminApp extends AdminAppInstallerBase {
   final String appID;
   final DrawerModel _drawer;
   final DrawerModel _endDrawer;
@@ -360,26 +361,32 @@ class AdminApp {
     ;
   }
 
-  static Future<void> deleteAll(String appID) async {
-    return await imageRepository().deleteAll()
-        .then((_) => bookletRepository().deleteAll())
-        .then((_) => dividerRepository().deleteAll())
-        .then((_) => documentRepository().deleteAll())
-        .then((_) => faderRepository().deleteAll())
-        .then((_) => gridRepository().deleteAll())
-        .then((_) => playStoreRepository().deleteAll())
-        .then((_) => presentationRepository().deleteAll())
-        .then((_) => simpleImageRepository().deleteAll())
-        .then((_) => tutorialRepository().deleteAll())
-    ;
-  }
-
-  static Future<MenuDefModel> menu(String appID) async {
+  Future<MenuDefModel> menu(String appID) async {
     return _setupMenuDef(appID);
   }
 
+  @override
   Future<void> run() async {
     return _setupAdminPages();
+  }
+
+
+}
+
+class AdminAppWhiper extends AdminAppWhiperBase {
+
+  @override
+  Future<void> deleteAll(String appID) async {
+    await bookletRepository().deleteAll();
+    await dividerRepository().deleteAll();
+    await documentRepository().deleteAll();
+    await faderRepository().deleteAll();
+    await gridRepository().deleteAll();
+    await playStoreRepository().deleteAll();
+    await presentationRepository().deleteAll();
+    await simpleImageRepository().deleteAll();
+    await tutorialRepository().deleteAll();
+    ;
   }
 
 
