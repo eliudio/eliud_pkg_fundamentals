@@ -50,7 +50,7 @@ class AdminApp extends AdminAppInstallerBase {
   AdminApp(this.appID, this._drawer, this._endDrawer, this._appBar, this._homeMenu, this.menuItemColor, this.selectedMenuItemColor, this.backgroundColor);
 
 
-  static MenuDefModel _adminMenuDef(String appID) {
+  Future<MenuDefModel> menu(String appID) async {
     List<MenuItemModel> menuItems = List<MenuItemModel>();
 
     menuItems.add(
@@ -145,16 +145,13 @@ class AdminApp extends AdminAppInstallerBase {
 
     MenuDefModel menu = MenuDefModel(
       admin: true,
-      documentID: "ADMIN_MENU_DEF_1",
+      documentID: "eliud_pkg_fundamentals_admin_menu",
       appId: appID,
       name: "Menu Definition 1",
       menuItems: menuItems
     );
+    await menuDefRepository().add(menu);
     return menu;
-  }
-
-  Future<MenuDefModel> _setupMenuDef(String appID) async {
-    return await menuDefRepository().add(_adminMenuDef(appID));
   }
 
 
@@ -359,10 +356,6 @@ class AdminApp extends AdminAppInstallerBase {
         .then((_) => pageRepository().add(_tutorialsPages()))
 
     ;
-  }
-
-  Future<MenuDefModel> menu(String appID) async {
-    return await _setupMenuDef(appID);
   }
 
   @override
