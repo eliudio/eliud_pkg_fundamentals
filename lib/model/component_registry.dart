@@ -34,7 +34,7 @@ class ComponentRegistry {
   void init() {
     Registry.registry().addInternalComponents(["booklets", "dividers", "documents", "faders", "grids", "playStores", "presentations", "simpleImages", "tutorials", ]);
 
-    Registry.registry().register(componentName: "internalWidgets", componentConstructor: ListComponentFactory());
+    Registry.registry().register(componentName: "eliud_pkg_fundamentals_internalWidgets", componentConstructor: ListComponentFactory());
     Registry.registry().register(componentName: "booklets", componentConstructor: BookletComponentConstructorDefault());
     Registry.registry().register(componentName: "dividers", componentConstructor: DividerComponentConstructorDefault());
     Registry.registry().register(componentName: "documents", componentConstructor: DocumentComponentConstructorDefault());

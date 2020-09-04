@@ -158,7 +158,7 @@ class AdminApp extends AdminAppInstallerBase {
   PageModel _bookletsPages() {
     List<BodyComponentModel> components = List();
     components.add(BodyComponentModel(
-      documentID: "internalWidget-booklets", componentName: "internalWidgets", componentId: "booklets"));
+      documentID: "internalWidget-booklets", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "booklets"));
     PageModel page = PageModel(
         conditional: PageCondition.AdminOnly,
         appId: appID,
@@ -178,7 +178,7 @@ class AdminApp extends AdminAppInstallerBase {
   PageModel _dividersPages() {
     List<BodyComponentModel> components = List();
     components.add(BodyComponentModel(
-      documentID: "internalWidget-dividers", componentName: "internalWidgets", componentId: "dividers"));
+      documentID: "internalWidget-dividers", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "dividers"));
     PageModel page = PageModel(
         conditional: PageCondition.AdminOnly,
         appId: appID,
@@ -198,7 +198,7 @@ class AdminApp extends AdminAppInstallerBase {
   PageModel _documentsPages() {
     List<BodyComponentModel> components = List();
     components.add(BodyComponentModel(
-      documentID: "internalWidget-documents", componentName: "internalWidgets", componentId: "documents"));
+      documentID: "internalWidget-documents", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "documents"));
     PageModel page = PageModel(
         conditional: PageCondition.AdminOnly,
         appId: appID,
@@ -218,7 +218,7 @@ class AdminApp extends AdminAppInstallerBase {
   PageModel _fadersPages() {
     List<BodyComponentModel> components = List();
     components.add(BodyComponentModel(
-      documentID: "internalWidget-faders", componentName: "internalWidgets", componentId: "faders"));
+      documentID: "internalWidget-faders", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "faders"));
     PageModel page = PageModel(
         conditional: PageCondition.AdminOnly,
         appId: appID,
@@ -238,7 +238,7 @@ class AdminApp extends AdminAppInstallerBase {
   PageModel _gridsPages() {
     List<BodyComponentModel> components = List();
     components.add(BodyComponentModel(
-      documentID: "internalWidget-grids", componentName: "internalWidgets", componentId: "grids"));
+      documentID: "internalWidget-grids", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "grids"));
     PageModel page = PageModel(
         conditional: PageCondition.AdminOnly,
         appId: appID,
@@ -258,7 +258,7 @@ class AdminApp extends AdminAppInstallerBase {
   PageModel _playStoresPages() {
     List<BodyComponentModel> components = List();
     components.add(BodyComponentModel(
-      documentID: "internalWidget-playStores", componentName: "internalWidgets", componentId: "playStores"));
+      documentID: "internalWidget-playStores", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "playStores"));
     PageModel page = PageModel(
         conditional: PageCondition.AdminOnly,
         appId: appID,
@@ -278,7 +278,7 @@ class AdminApp extends AdminAppInstallerBase {
   PageModel _presentationsPages() {
     List<BodyComponentModel> components = List();
     components.add(BodyComponentModel(
-      documentID: "internalWidget-presentations", componentName: "internalWidgets", componentId: "presentations"));
+      documentID: "internalWidget-presentations", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "presentations"));
     PageModel page = PageModel(
         conditional: PageCondition.AdminOnly,
         appId: appID,
@@ -298,7 +298,7 @@ class AdminApp extends AdminAppInstallerBase {
   PageModel _simpleImagesPages() {
     List<BodyComponentModel> components = List();
     components.add(BodyComponentModel(
-      documentID: "internalWidget-simpleImages", componentName: "internalWidgets", componentId: "simpleImages"));
+      documentID: "internalWidget-simpleImages", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "simpleImages"));
     PageModel page = PageModel(
         conditional: PageCondition.AdminOnly,
         appId: appID,
@@ -318,7 +318,7 @@ class AdminApp extends AdminAppInstallerBase {
   PageModel _tutorialsPages() {
     List<BodyComponentModel> components = List();
     components.add(BodyComponentModel(
-      documentID: "internalWidget-tutorials", componentName: "internalWidgets", componentId: "tutorials"));
+      documentID: "internalWidget-tutorials", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "tutorials"));
     PageModel page = PageModel(
         conditional: PageCondition.AdminOnly,
         appId: appID,
