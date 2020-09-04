@@ -50,111 +50,6 @@ class AdminApp extends AdminAppInstallerBase {
   AdminApp(this.appID, this._drawer, this._endDrawer, this._appBar, this._homeMenu, this.menuItemColor, this.selectedMenuItemColor, this.backgroundColor);
 
 
-  Future<MenuDefModel> menu(String appID) async {
-    List<MenuItemModel> menuItems = List<MenuItemModel>();
-
-    menuItems.add(
-      MenuItemModel(
-        documentID: "Booklets",
-        text: "Booklets",
-        description: "Booklets",
-        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
-        action: GotoPage(pageID: "eliud_pkg_fundamentals_booklets_page"))
-    );
-
-
-    menuItems.add(
-      MenuItemModel(
-        documentID: "Dividers",
-        text: "Dividers",
-        description: "Dividers",
-        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
-        action: GotoPage(pageID: "eliud_pkg_fundamentals_dividers_page"))
-    );
-
-
-    menuItems.add(
-      MenuItemModel(
-        documentID: "Documents",
-        text: "Documents",
-        description: "Documents",
-        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
-        action: GotoPage(pageID: "eliud_pkg_fundamentals_documents_page"))
-    );
-
-
-    menuItems.add(
-      MenuItemModel(
-        documentID: "Faders",
-        text: "Faders",
-        description: "Faders",
-        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
-        action: GotoPage(pageID: "eliud_pkg_fundamentals_faders_page"))
-    );
-
-
-    menuItems.add(
-      MenuItemModel(
-        documentID: "Grids",
-        text: "Grids",
-        description: "Grids",
-        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
-        action: GotoPage(pageID: "eliud_pkg_fundamentals_grids_page"))
-    );
-
-
-    menuItems.add(
-      MenuItemModel(
-        documentID: "PlayStores",
-        text: "PlayStores",
-        description: "PlayStores",
-        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
-        action: GotoPage(pageID: "eliud_pkg_fundamentals_playstores_page"))
-    );
-
-
-    menuItems.add(
-      MenuItemModel(
-        documentID: "Presentations",
-        text: "Presentations",
-        description: "Presentations",
-        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
-        action: GotoPage(pageID: "eliud_pkg_fundamentals_presentations_page"))
-    );
-
-
-    menuItems.add(
-      MenuItemModel(
-        documentID: "SimpleImages",
-        text: "SimpleImages",
-        description: "SimpleImages",
-        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
-        action: GotoPage(pageID: "eliud_pkg_fundamentals_simpleimages_page"))
-    );
-
-
-    menuItems.add(
-      MenuItemModel(
-        documentID: "Tutorials",
-        text: "Tutorials",
-        description: "Tutorials",
-        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
-        action: GotoPage(pageID: "eliud_pkg_fundamentals_tutorials_page"))
-    );
-
-
-    MenuDefModel menu = MenuDefModel(
-      admin: true,
-      documentID: "eliud_pkg_fundamentals_admin_menu",
-      appId: appID,
-      name: "eliud_pkg_fundamentals admin menu",
-      menuItems: menuItems
-    );
-    await menuDefRepository().add(menu);
-    return menu;
-  }
-
-
   PageModel _bookletsPages() {
     List<BodyComponentModel> components = List();
     components.add(BodyComponentModel(
@@ -364,6 +259,113 @@ class AdminApp extends AdminAppInstallerBase {
   }
 
 
+}
+
+class AdminMenu extends AdminAppMenuInstallerBase {
+
+  Future<MenuDefModel> menu(String appID) async {
+    List<MenuItemModel> menuItems = List<MenuItemModel>();
+
+    menuItems.add(
+      MenuItemModel(
+        documentID: "Booklets",
+        text: "Booklets",
+        description: "Booklets",
+        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
+        action: GotoPage(pageID: "eliud_pkg_fundamentals_booklets_page"))
+    );
+
+
+    menuItems.add(
+      MenuItemModel(
+        documentID: "Dividers",
+        text: "Dividers",
+        description: "Dividers",
+        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
+        action: GotoPage(pageID: "eliud_pkg_fundamentals_dividers_page"))
+    );
+
+
+    menuItems.add(
+      MenuItemModel(
+        documentID: "Documents",
+        text: "Documents",
+        description: "Documents",
+        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
+        action: GotoPage(pageID: "eliud_pkg_fundamentals_documents_page"))
+    );
+
+
+    menuItems.add(
+      MenuItemModel(
+        documentID: "Faders",
+        text: "Faders",
+        description: "Faders",
+        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
+        action: GotoPage(pageID: "eliud_pkg_fundamentals_faders_page"))
+    );
+
+
+    menuItems.add(
+      MenuItemModel(
+        documentID: "Grids",
+        text: "Grids",
+        description: "Grids",
+        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
+        action: GotoPage(pageID: "eliud_pkg_fundamentals_grids_page"))
+    );
+
+
+    menuItems.add(
+      MenuItemModel(
+        documentID: "PlayStores",
+        text: "PlayStores",
+        description: "PlayStores",
+        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
+        action: GotoPage(pageID: "eliud_pkg_fundamentals_playstores_page"))
+    );
+
+
+    menuItems.add(
+      MenuItemModel(
+        documentID: "Presentations",
+        text: "Presentations",
+        description: "Presentations",
+        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
+        action: GotoPage(pageID: "eliud_pkg_fundamentals_presentations_page"))
+    );
+
+
+    menuItems.add(
+      MenuItemModel(
+        documentID: "SimpleImages",
+        text: "SimpleImages",
+        description: "SimpleImages",
+        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
+        action: GotoPage(pageID: "eliud_pkg_fundamentals_simpleimages_page"))
+    );
+
+
+    menuItems.add(
+      MenuItemModel(
+        documentID: "Tutorials",
+        text: "Tutorials",
+        description: "Tutorials",
+        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
+        action: GotoPage(pageID: "eliud_pkg_fundamentals_tutorials_page"))
+    );
+
+
+    MenuDefModel menu = MenuDefModel(
+      admin: true,
+      documentID: "eliud_pkg_fundamentals_admin_menu",
+      appId: appID,
+      name: "eliud_pkg_fundamentals admin menu",
+      menuItems: menuItems
+    );
+    await menuDefRepository().add(menu);
+    return menu;
+  }
 }
 
 class AdminAppWiper extends AdminAppWiperBase {
