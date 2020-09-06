@@ -172,9 +172,24 @@ class ListComponentFactory implements ComponentConstructor {
 
 typedef DropdownButtonChanged(String value);
 
-class DropdownButtonComponentFactory implements ComponentConstructor {
+class DropdownButtonComponentFactory implements ComponentDropDown {
+
+  bool supports(String id) {
+
+    if (id == "booklets") return true;
+    if (id == "dividers") return true;
+    if (id == "documents") return true;
+    if (id == "faders") return true;
+    if (id == "grids") return true;
+    if (id == "playStores") return true;
+    if (id == "presentations") return true;
+    if (id == "simpleImages") return true;
+    if (id == "tutorials") return true;
+    return false;
+  }
+
   Widget createNew({String id, Map<String, String> parameters, String value, DropdownButtonChanged trigger, bool optional}) {
-  
+
     if (id == "booklets")
       return DropdownButtonComponent(componentId: id, value: value, trigger: trigger, optional: optional);
 
