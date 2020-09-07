@@ -78,7 +78,7 @@ static Widget documentItemsList(List<DocumentItemModel> values, DocumentItemList
           )..add(LoadDocumentItemList()),
         )
         ],
-    child: DocumentItemListWidget(),
+    child: DocumentItemListWidget(isEmbedded: true),
   );
 }
 
@@ -95,7 +95,7 @@ static Widget linksList(List<LinkModel> values, LinkListChanged trigger) {
           )..add(LoadLinkList()),
         )
         ],
-    child: LinkListWidget(),
+    child: LinkListWidget(isEmbedded: true),
   );
 }
 
@@ -112,7 +112,7 @@ static Widget listedItemsList(List<ListedItemModel> values, ListedItemListChange
           )..add(LoadListedItemList()),
         )
         ],
-    child: ListedItemListWidget(),
+    child: ListedItemListWidget(isEmbedded: true),
   );
 }
 
@@ -129,7 +129,7 @@ static Widget sectionsList(List<SectionModel> values, SectionListChanged trigger
           )..add(LoadSectionList()),
         )
         ],
-    child: SectionListWidget(),
+    child: SectionListWidget(isEmbedded: true),
   );
 }
 
@@ -146,7 +146,7 @@ static Widget tutorialEntrysList(List<TutorialEntryModel> values, TutorialEntryL
           )..add(LoadTutorialEntryList()),
         )
         ],
-    child: TutorialEntryListWidget(),
+    child: TutorialEntryListWidget(isEmbedded: true),
   );
 }
 

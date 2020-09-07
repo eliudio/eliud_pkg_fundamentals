@@ -39,8 +39,9 @@ class TutorialEntryListWidget extends StatefulWidget with HasFab {
   bool readOnly;
   String form;
   TutorialEntryListWidgetState state;
+  bool isEmbedded;
 
-  TutorialEntryListWidget({ Key key, this.readOnly, this.form }): super(key: key);
+  TutorialEntryListWidget({ Key key, this.readOnly, this.form, this.isEmbedded }): super(key: key);
 
   @override
   TutorialEntryListWidgetState createState() {
@@ -101,30 +102,65 @@ class TutorialEntryListWidgetState extends State<TutorialEntryListWidget> {
         );
       } else if (state is TutorialEntryListLoaded) {
         final values = state.values;
-        return Container(
-                 decoration: BoxDecorationHelper.boxDecoration(GlobalData.app().listBackground),
-                 child: ListView.separated(
-                   separatorBuilder: (context, index) => Divider(
-                     color: RgbHelper.color(rgbo: GlobalData.app().dividerColor)
-                   ),
-                   shrinkWrap: true,
-                   physics: ScrollPhysics(),
-                   itemCount: values.length,
-                   itemBuilder: (context, index) {
-                     final value = values[index];
-                     return TutorialEntryListItem(
-                       value: value,
-                       onDismissed: (direction) {
-                         BlocProvider.of<TutorialEntryListBloc>(context)
-                             .add(DeleteTutorialEntryList(value: value));
-                         Scaffold.of(context).showSnackBar(DeleteSnackBar(
-                           message: "TutorialEntry " + value.documentID,
-                           onUndo: () => BlocProvider.of<TutorialEntryListBloc>(context)
-                               .add(AddTutorialEntryList(value: value)),
-                         ));
-                       },
-                       onTap: () async {
-                                             final removedItem = await Navigator.of(context).push(
+        if ((widget.isEmbedded != null) && (widget.isEmbedded)) {
+          List<Widget> children = List();
+          children.add(theList(context, values));
+          children.add(RaisedButton(
+                  color: RgbHelper.color(rgbo: GlobalData.app().formSubmitButtonColor),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                              pageRouteBuilder(page: BlocProvider.value(
+                                  value: bloc,
+                                  child: TutorialEntryForm(
+                                      value: null,
+                                      formAction: FormAction.AddAction)
+                              )),
+                            );
+                  },
+                  child: Text('Add', style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formSubmitButtonTextColor))),
+                ));
+          return ListView(
+            padding: const EdgeInsets.all(8),
+            physics: ScrollPhysics(),
+            shrinkWrap: true,
+            children: children
+          );
+        } else {
+          return theList(context, values);
+        }
+      } else {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      }
+    });
+  }
+  
+  Widget theList(BuildContext context, values) {
+    return Container(
+      decoration: BoxDecorationHelper.boxDecoration(GlobalData.app().listBackground),
+      child: ListView.separated(
+        separatorBuilder: (context, index) => Divider(
+          color: RgbHelper.color(rgbo: GlobalData.app().dividerColor)
+        ),
+        shrinkWrap: true,
+        physics: ScrollPhysics(),
+        itemCount: values.length,
+        itemBuilder: (context, index) {
+          final value = values[index];
+          return TutorialEntryListItem(
+            value: value,
+            onDismissed: (direction) {
+              BlocProvider.of<TutorialEntryListBloc>(context)
+                  .add(DeleteTutorialEntryList(value: value));
+              Scaffold.of(context).showSnackBar(DeleteSnackBar(
+                message: "TutorialEntry " + value.documentID,
+                onUndo: () => BlocProvider.of<TutorialEntryListBloc>(context)
+                    .add(AddTutorialEntryList(value: value)),
+              ));
+            },
+            onTap: () async {
+                                   final removedItem = await Navigator.of(context).push(
                         pageRouteBuilder(page: BlocProvider.value(
                               value: BlocProvider.of<TutorialEntryListBloc>(context),
                               child: getForm(value, FormAction.UpdateAction))));
@@ -138,17 +174,12 @@ class TutorialEntryListWidgetState extends State<TutorialEntryListWidget> {
                         );
                       }
 
-                       },
-                     );
-                   }
-               ));
-      } else {
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      }
-    });
+            },
+          );
+        }
+      ));
   }
+  
   
   Widget getForm(value, action) {
     if (widget.form == null) {
