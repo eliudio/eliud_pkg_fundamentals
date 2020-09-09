@@ -44,7 +44,7 @@ class FaderFirestore implements FaderRepository {
   }
 
   Future<FaderModel> _populateDocPlus(DocumentSnapshot doc) async {
-    return await FaderModel.fromEntityPlus(doc.documentID, FaderEntity.fromMap(doc.data));  }
+    return FaderModel.fromEntityPlus(doc.documentID, FaderEntity.fromMap(doc.data));  }
 
   Future<FaderModel> get(String id) {
     return FaderCollection.document(id).get().then((doc) {
