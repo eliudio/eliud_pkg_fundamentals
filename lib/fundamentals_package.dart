@@ -6,12 +6,12 @@ import 'package:flutter_bloc/src/bloc_provider.dart';
 
 import 'package:eliud_pkg_fundamentals/model/component_registry.dart';
 
-abstract class FundamentalsPlugin extends Plugin {
+abstract class FundamentalsPackage extends Package {
   @override
   BlocProvider createMainBloc(NavigatorBloc navigatorBloc) => null;
 
   @override
-  Future<bool> isConditionOk(String pluginCondition, AppModel app, MemberModel member, bool isOwner) async => null;
+  Future<bool> isConditionOk(String packageCondition, AppModel app, MemberModel member, bool isOwner) async => null;
 
   @override
   void init() {

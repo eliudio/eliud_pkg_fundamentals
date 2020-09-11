@@ -4,7 +4,7 @@ import 'package:eliud_pkg_fundamentals/model/repository_singleton.dart';
 
 import 'model/component_registry.dart';
 
-class FundamentalsMobilePlugin extends FundamentalsPlugin {
+class FundamentalsMobilePackage extends FundamentalsPackage {
   @override
   void initRepository(String appID) {
     AbstractRepositorySingleton.singleton = RepositorySingleton(appID);
