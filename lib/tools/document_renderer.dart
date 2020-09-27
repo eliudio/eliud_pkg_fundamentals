@@ -1,4 +1,4 @@
-import 'package:dynamic_widget/dynamic_widget.dart';
+//import 'package:dynamic_widget/dynamic_widget.dart';
 import 'package:eliud_core/core/tools/document_processor.dart';
 import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
 import 'package:eliud_core/tools/action_model.dart';
@@ -16,6 +16,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'package:eliud_pkg_fundamentals/tools/document_processor_extended.dart';
 
+/*
 class ActionListener implements ClickListener {
   final BuildContext context;
 
@@ -34,6 +35,7 @@ class ActionListener implements ClickListener {
     }
   }
 }
+*/
 
 class DocumentRendererTool {
   Widget _webViewRendererNotWeb(
@@ -95,9 +97,14 @@ class DocumentRendererTool {
     );
   }
 
+/*
   Future<Widget> _buildWidget(BuildContext context, String jsonString) async {
     return DynamicWidgetBuilder()
         .build(jsonString, context, new ActionListener(context));
+  }
+*/
+  Future<Widget> _buildWidget(BuildContext context, String jsonString) async {
+    return Text("dynamic_widget not supported. " + jsonString);
   }
 
   Widget _dynamicWidget(BuildContext context, String processedDocument) {
