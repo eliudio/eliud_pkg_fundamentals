@@ -62,7 +62,9 @@ class ImageRotaterState extends State<ImageRotater> {
     actions = items.map((element) => element.action).toList();
     if (cachedImages != null) {
       cachedImages.forEach((element) {
-        precacheImage(element, context);
+        try {
+          precacheImage(element, context);
+        } catch (_) {}
       });
     }
     super.didChangeDependencies();

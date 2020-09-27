@@ -36,18 +36,22 @@ class TheImageGFState extends State<TheImageGF> {
     double maxHeight = 0;
     double maxWidth = 0;
     for (int i = 0; i < widget.cachedImages.length; i++) {
-      Widget w = FaderHelper.getIt(
-          context,
-          widget.positionsAndSizes[i],
-          widget.cachedImages[i],
-          widget.orientation,
-          widget.actions != null ? widget.actions[i] : null,
-          i);
-      double height = FaderHelper.getHeight(context, widget.positionsAndSizes[i], widget.orientation);
-      double width = FaderHelper.getWidth(context, widget.positionsAndSizes[i], widget.orientation);
-      maxHeight = max(height, maxHeight);
-      maxWidth = max(width, maxWidth);
-      list.add(w);
+      if (widget.cachedImages[i] != null) {
+        Widget w = FaderHelper.getIt(
+            context,
+            widget.positionsAndSizes[i],
+            widget.cachedImages[i],
+            widget.orientation,
+            widget.actions != null ? widget.actions[i] : null,
+            i);
+        double height = FaderHelper.getHeight(
+            context, widget.positionsAndSizes[i], widget.orientation);
+        double width = FaderHelper.getWidth(
+            context, widget.positionsAndSizes[i], widget.orientation);
+        maxHeight = max(height, maxHeight);
+        maxWidth = max(width, maxWidth);
+        list.add(w);
+      }
     }
 
     double viewPortFraction = maxWidth  / fullScreenWidth(context);
@@ -150,28 +154,34 @@ class TheImageState extends State<TheImage> {
   @override
   Widget build(BuildContext context) {
     List<ImageProvider> cachedImages = widget.cachedImages;
-    Widget w = FaderHelper.getIt(
-        context,
-        widget.positionsAndSizes[_counter],
-        cachedImages[_counter],
-        widget.orientation,
-        widget.actions != null ? widget.actions[_counter] : null,
-        _counter);
+    if (widget.positionsAndSizes[_counter] != null) {
+      Widget w = FaderHelper.getIt(
+          context,
+          widget.positionsAndSizes[_counter],
+          cachedImages[_counter],
+          widget.orientation,
+          widget.actions != null ? widget.actions[_counter] : null,
+          _counter);
+      if (w == null)
+        return Text("No images available");
 
-    int milliseconds = widget.animationMilliseconds;
-    switch (widget.animation) {
-      case FaderAnimation.None:
-        return w;
-      case FaderAnimation.Fade:
-        return _fade(w, milliseconds);
-      case FaderAnimation.Scale:
-        return _scale(w, milliseconds);
-      case FaderAnimation.Slide:
-        return _slide(w, milliseconds);
-      case FaderAnimation.Unknown:
-        return w;
+      int milliseconds = widget.animationMilliseconds;
+      switch (widget.animation) {
+        case FaderAnimation.None:
+          return w;
+        case FaderAnimation.Fade:
+          return _fade(w, milliseconds);
+        case FaderAnimation.Scale:
+          return _scale(w, milliseconds);
+        case FaderAnimation.Slide:
+          return _slide(w, milliseconds);
+        case FaderAnimation.Unknown:
+          return w;
+      }
+      return w;
+    } else {
+      return null;
     }
-    return w;
   }
 
   @override
@@ -197,6 +207,8 @@ class FaderHelper {
 
   static Widget getIt(BuildContext context, PosSizeModel posSizeModel,
       ImageProvider imageProvider, Orientation orientation, ActionModel action, int index) {
+    if (imageProvider == null)
+      return null;
     BoxFit fit = BoxFitHelper.  toBoxFit(posSizeModel, orientation);
     double width = BoxFitHelper.toWidth(posSizeModel, context, orientation);
     double height = BoxFitHelper.toHeight(posSizeModel, context, orientation);
