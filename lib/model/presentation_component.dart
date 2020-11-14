@@ -15,6 +15,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:eliud_core/core/app/app_bloc.dart';
 
 import 'package:eliud_pkg_fundamentals/model/presentation_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_component_event.dart';
@@ -30,23 +31,23 @@ abstract class AbstractPresentationComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<PresentationBloc> (
-          create: (context) => PresentationBloc(
-            presentationRepository: getPresentationRepository())
-        ..add(FetchPresentation(id: presentationID)),
+    return BlocProvider<PresentationComponentBloc> (
+          create: (context) => PresentationComponentBloc(
+            presentationRepository: getPresentationRepository(context))
+        ..add(FetchPresentationComponent(id: presentationID)),
       child: _presentationBlockBuilder(context),
     );
   }
 
   Widget _presentationBlockBuilder(BuildContext context) {
-    return BlocBuilder<PresentationBloc, PresentationState>(builder: (context, state) {
-      if (state is PresentationLoaded) {
+    return BlocBuilder<PresentationComponentBloc, PresentationComponentState>(builder: (context, state) {
+      if (state is PresentationComponentLoaded) {
         if (state.value == null) {
           return alertWidget(title: 'Error', content: 'No presentation defined');
         } else {
           return yourWidget(context, state.value);
         }
-      } else if (state is PresentationError) {
+      } else if (state is PresentationComponentError) {
         return alertWidget(title: 'Error', content: state.message);
       } else {
         return Center(
@@ -58,7 +59,7 @@ abstract class AbstractPresentationComponent extends StatelessWidget {
 
   Widget yourWidget(BuildContext context, PresentationModel value);
   Widget alertWidget({ title: String, content: String});
-  PresentationRepository getPresentationRepository();
+  PresentationRepository getPresentationRepository(BuildContext context);
 }
 
 

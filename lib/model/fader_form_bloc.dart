@@ -38,10 +38,10 @@ import 'package:eliud_pkg_fundamentals/model/fader_form_state.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_repository.dart';
 
 class FaderFormBloc extends Bloc<FaderFormEvent, FaderFormState> {
-  final FaderRepository _faderRepository = faderRepository();
   final FormAction formAction;
+  final String appId;
 
-  FaderFormBloc({ this.formAction }): super(FaderFormUninitialized());
+  FaderFormBloc(this.appId, { this.formAction }): super(FaderFormUninitialized());
   @override
   Stream<FaderFormState> mapEventToState(FaderFormEvent event) async* {
     final currentState = state;
@@ -64,7 +64,7 @@ class FaderFormBloc extends Bloc<FaderFormEvent, FaderFormState> {
 
       if (event is InitialiseFaderFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        FaderFormLoaded loaded = FaderFormLoaded(value: await _faderRepository.get(event.value.documentID));
+        FaderFormLoaded loaded = FaderFormLoaded(value: await faderRepository(appID: appId).get(event.value.documentID));
         yield loaded;
         return;
       } else if (event is InitialiseFaderFormNoLoadEvent) {
@@ -133,7 +133,7 @@ class FaderFormBloc extends Bloc<FaderFormEvent, FaderFormState> {
   Future<FaderFormState> _isDocumentIDValid(String value, FaderModel newValue) async {
     if (value == null) return Future.value(error("Provide value for documentID", newValue));
     if (value.length == 0) return Future.value(error("Provide value for documentID", newValue));
-    Future<FaderModel> findDocument = _faderRepository.get(value);
+    Future<FaderModel> findDocument = faderRepository(appID: appId).get(value);
     return await findDocument.then((documentFound) {
       if (documentFound == null) {
         return SubmittableFaderForm(value: newValue);

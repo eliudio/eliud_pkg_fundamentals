@@ -42,9 +42,9 @@ import 'package:eliud_pkg_fundamentals/model/document_item_form_state.dart';
 import 'package:eliud_pkg_fundamentals/model/document_item_repository.dart';
 
 class DocumentItemFormBloc extends Bloc<DocumentItemFormEvent, DocumentItemFormState> {
-  final ImageRepository _imageRepository = imageRepository();
+  final String appId;
 
-  DocumentItemFormBloc(): super(DocumentItemFormUninitialized());
+  DocumentItemFormBloc(this.appId, ): super(DocumentItemFormUninitialized());
   @override
   Stream<DocumentItemFormState> mapEventToState(DocumentItemFormEvent event) async* {
     final currentState = state;
@@ -80,7 +80,7 @@ class DocumentItemFormBloc extends Bloc<DocumentItemFormEvent, DocumentItemFormS
       }
       if (event is ChangedDocumentItemImage) {
         if (event.value != null)
-          newValue = currentState.value.copyWith(image: await _imageRepository.get(event.value));
+          newValue = currentState.value.copyWith(image: await imageRepository(appID: appId).get(event.value));
         else
           newValue = new DocumentItemModel(
                                  documentID: currentState.value.documentID,

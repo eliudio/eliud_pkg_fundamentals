@@ -14,7 +14,10 @@
 */
 
 import 'package:eliud_core/core/global_data.dart';
-
+import 'package:eliud_core/core/app/app_bloc.dart';
+import 'package:eliud_core/core/access/bloc/access_state.dart';
+import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/app/app_state.dart';
 import 'package:eliud_core/tools/action_model.dart';
 import 'package:eliud_core/core/navigate/router.dart' as eliudrouter;
 import 'package:eliud_core/tools/screen_size.dart';
@@ -67,9 +70,12 @@ class SectionForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var app = AppBloc.app(context);
+    var accessState = AccessBloc.getState(context);
+    var appState = AppBloc.getState(context);
     if (formAction == FormAction.ShowData) {
       return BlocProvider<SectionFormBloc >(
-            create: (context) => SectionFormBloc(
+            create: (context) => SectionFormBloc(AppBloc.appId(context),
                                        
                                                 )..add(InitialiseSectionFormEvent(value: value)),
   
@@ -77,7 +83,7 @@ class SectionForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<SectionFormBloc >(
-            create: (context) => SectionFormBloc(
+            create: (context) => SectionFormBloc(AppBloc.appId(context),
                                        
                                                 )..add(InitialiseSectionFormNoLoadEvent(value: value)),
   
@@ -87,17 +93,17 @@ class SectionForm extends StatelessWidget {
       return Scaffold(
         appBar: formAction == FormAction.UpdateAction ?
                 AppBar(
-                    title: Text("Update Section", style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formAppBarTextColor))),
+                    title: Text("Update Section", style: TextStyle(color: RgbHelper.color(rgbo: app.formAppBarTextColor))),
                     flexibleSpace: Container(
-                        decoration: BoxDecorationHelper.boxDecoration(GlobalData.app().formAppBarBackground)),
+                        decoration: BoxDecorationHelper.boxDecoration(accessState, app.formAppBarBackground)),
                   ) :
                 AppBar(
-                    title: Text("Add Section", style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formAppBarTextColor))),
+                    title: Text("Add Section", style: TextStyle(color: RgbHelper.color(rgbo: app.formAppBarTextColor))),
                     flexibleSpace: Container(
-                        decoration: BoxDecorationHelper.boxDecoration(GlobalData.app().formAppBarBackground)),
+                        decoration: BoxDecorationHelper.boxDecoration(accessState, app.formAppBarBackground)),
                 ),
         body: BlocProvider<SectionFormBloc >(
-            create: (context) => SectionFormBloc(
+            create: (context) => SectionFormBloc(AppBloc.appId(context),
                                        
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseSectionFormEvent(value: value) : InitialiseNewSectionFormEvent())),
   
@@ -147,6 +153,9 @@ class _MySectionFormState extends State<MySectionForm> {
 
   @override
   Widget build(BuildContext context) {
+    var app = AppBloc.app(context);
+    var appState = AppBloc.getState(context);
+    var accessState = AccessBloc.getState(context);
     return BlocBuilder<SectionFormBloc, SectionFormState>(builder: (context, state) {
       if (state is SectionFormUninitialized) return Center(
         child: CircularProgressIndicator(),
@@ -189,17 +198,17 @@ class _MySectionFormState extends State<MySectionForm> {
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: Text('General',
                       style: TextStyle(
-                          color: RgbHelper.color(rgbo: GlobalData.app().formGroupTitleColor), fontWeight: FontWeight.bold)),
+                          color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
                 ));
 
         children.add(
 
                 TextFormField(
-                style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor)),
-                  readOnly: _readOnly(state),
+                style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
+                  readOnly: _readOnly(accessState, appState, state),
                   controller: _titleController,
                   decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: GlobalData.app().formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: GlobalData.app().formFieldHeaderColor)),
+                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
                     labelText: 'Title',
                   ),
                   keyboardType: TextInputType.text,
@@ -213,11 +222,11 @@ class _MySectionFormState extends State<MySectionForm> {
         children.add(
 
                 TextFormField(
-                style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor)),
-                  readOnly: _readOnly(state),
+                style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
+                  readOnly: _readOnly(accessState, appState, state),
                   controller: _descriptionController,
                   decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: GlobalData.app().formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: GlobalData.app().formFieldHeaderColor)),
+                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
                     labelText: 'Description',
                   ),
                   keyboardType: TextInputType.text,
@@ -231,11 +240,11 @@ class _MySectionFormState extends State<MySectionForm> {
         children.add(
 
                 TextFormField(
-                style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor)),
-                  readOnly: _readOnly(state),
+                style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
+                  readOnly: _readOnly(accessState, appState, state),
                   controller: _imageWidthController,
                   decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: GlobalData.app().formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: GlobalData.app().formFieldHeaderColor)),
+                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
                     labelText: 'Image Width (% of screen width)',
                     hintText: "Width of the image",
                   ),
@@ -249,7 +258,7 @@ class _MySectionFormState extends State<MySectionForm> {
 
 
         children.add(Container(height: 20.0));
-        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: GlobalData.app().dividerColor)));
+        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
 
 
          children.add(Container(
@@ -257,7 +266,7 @@ class _MySectionFormState extends State<MySectionForm> {
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: Text('Optional Image',
                       style: TextStyle(
-                          color: RgbHelper.color(rgbo: GlobalData.app().formGroupTitleColor), fontWeight: FontWeight.bold)),
+                          color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
                 ));
 
         children.add(
@@ -267,7 +276,7 @@ class _MySectionFormState extends State<MySectionForm> {
 
 
         children.add(Container(height: 20.0));
-        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: GlobalData.app().dividerColor)));
+        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
 
 
          children.add(Container(
@@ -275,18 +284,18 @@ class _MySectionFormState extends State<MySectionForm> {
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: Text('Relative position of the image',
                       style: TextStyle(
-                          color: RgbHelper.color(rgbo: GlobalData.app().formGroupTitleColor), fontWeight: FontWeight.bold)),
+                          color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
                 ));
 
         children.add(
 
                 RadioListTile(
                     value: 0,
-                    activeColor: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor),
+                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
                     groupValue: _imagePositionRelativeSelectedRadioTile,
-                    title: Text("Behind", style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),
-                    subtitle: Text("Behind", style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),
-                    onChanged: !GlobalData.memberIsOwner() ? null : (val) {
+                    title: Text("Behind", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    subtitle: Text("Behind", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
                       setSelectionImagePositionRelative(val);
                     },
                 ),
@@ -295,11 +304,11 @@ class _MySectionFormState extends State<MySectionForm> {
 
                 RadioListTile(
                     value: 1,
-                    activeColor: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor),
+                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
                     groupValue: _imagePositionRelativeSelectedRadioTile,
-                    title: Text("InFront", style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),
-                    subtitle: Text("InFront", style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),
-                    onChanged: !GlobalData.memberIsOwner() ? null : (val) {
+                    title: Text("InFront", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    subtitle: Text("InFront", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
                       setSelectionImagePositionRelative(val);
                     },
                 ),
@@ -308,11 +317,11 @@ class _MySectionFormState extends State<MySectionForm> {
 
                 RadioListTile(
                     value: 2,
-                    activeColor: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor),
+                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
                     groupValue: _imagePositionRelativeSelectedRadioTile,
-                    title: Text("Below", style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),
-                    subtitle: Text("Below", style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),
-                    onChanged: !GlobalData.memberIsOwner() ? null : (val) {
+                    title: Text("Below", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    subtitle: Text("Below", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
                       setSelectionImagePositionRelative(val);
                     },
                 ),
@@ -321,11 +330,11 @@ class _MySectionFormState extends State<MySectionForm> {
 
                 RadioListTile(
                     value: 3,
-                    activeColor: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor),
+                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
                     groupValue: _imagePositionRelativeSelectedRadioTile,
-                    title: Text("Above", style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),
-                    subtitle: Text("Above", style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),
-                    onChanged: !GlobalData.memberIsOwner() ? null : (val) {
+                    title: Text("Above", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    subtitle: Text("Above", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
                       setSelectionImagePositionRelative(val);
                     },
                 ),
@@ -334,11 +343,11 @@ class _MySectionFormState extends State<MySectionForm> {
 
                 RadioListTile(
                     value: 4,
-                    activeColor: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor),
+                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
                     groupValue: _imagePositionRelativeSelectedRadioTile,
-                    title: Text("Aside", style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),
-                    subtitle: Text("Aside", style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),
-                    onChanged: !GlobalData.memberIsOwner() ? null : (val) {
+                    title: Text("Aside", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    subtitle: Text("Aside", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
                       setSelectionImagePositionRelative(val);
                     },
                 ),
@@ -346,7 +355,7 @@ class _MySectionFormState extends State<MySectionForm> {
 
 
         children.add(Container(height: 20.0));
-        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: GlobalData.app().dividerColor)));
+        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
 
 
          children.add(Container(
@@ -354,18 +363,18 @@ class _MySectionFormState extends State<MySectionForm> {
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: Text('Alignment of the image',
                       style: TextStyle(
-                          color: RgbHelper.color(rgbo: GlobalData.app().formGroupTitleColor), fontWeight: FontWeight.bold)),
+                          color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
                 ));
 
         children.add(
 
                 RadioListTile(
                     value: 0,
-                    activeColor: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor),
+                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
                     groupValue: _imageAlignmentSelectedRadioTile,
-                    title: Text("Left", style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),
-                    subtitle: Text("Left", style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),
-                    onChanged: !GlobalData.memberIsOwner() ? null : (val) {
+                    title: Text("Left", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    subtitle: Text("Left", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
                       setSelectionImageAlignment(val);
                     },
                 ),
@@ -374,11 +383,11 @@ class _MySectionFormState extends State<MySectionForm> {
 
                 RadioListTile(
                     value: 1,
-                    activeColor: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor),
+                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
                     groupValue: _imageAlignmentSelectedRadioTile,
-                    title: Text("Center", style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),
-                    subtitle: Text("Center", style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),
-                    onChanged: !GlobalData.memberIsOwner() ? null : (val) {
+                    title: Text("Center", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    subtitle: Text("Center", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
                       setSelectionImageAlignment(val);
                     },
                 ),
@@ -387,11 +396,11 @@ class _MySectionFormState extends State<MySectionForm> {
 
                 RadioListTile(
                     value: 2,
-                    activeColor: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor),
+                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
                     groupValue: _imageAlignmentSelectedRadioTile,
-                    title: Text("Right", style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),
-                    subtitle: Text("Right", style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),
-                    onChanged: !GlobalData.memberIsOwner() ? null : (val) {
+                    title: Text("Right", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    subtitle: Text("Right", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
                       setSelectionImageAlignment(val);
                     },
                 ),
@@ -399,7 +408,7 @@ class _MySectionFormState extends State<MySectionForm> {
 
 
         children.add(Container(height: 20.0));
-        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: GlobalData.app().dividerColor)));
+        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
 
 
          children.add(Container(
@@ -407,7 +416,7 @@ class _MySectionFormState extends State<MySectionForm> {
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: Text('Chapter Links',
                       style: TextStyle(
-                          color: RgbHelper.color(rgbo: GlobalData.app().formGroupTitleColor), fontWeight: FontWeight.bold)),
+                          color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
                 ));
 
         children.add(
@@ -420,13 +429,13 @@ class _MySectionFormState extends State<MySectionForm> {
 
 
         children.add(Container(height: 20.0));
-        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: GlobalData.app().dividerColor)));
+        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
 
 
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
           children.add(RaisedButton(
-                  color: RgbHelper.color(rgbo: GlobalData.app().formSubmitButtonColor),
-                  onPressed: _readOnly(state) ? null : () {
+                  color: RgbHelper.color(rgbo: app.formSubmitButtonColor),
+                  onPressed: _readOnly(accessState, appState, state) ? null : () {
                     if (state is SectionFormError) {
                       return null;
                     } else {
@@ -463,12 +472,12 @@ class _MySectionFormState extends State<MySectionForm> {
                       return true;
                     }
                   },
-                  child: Text('Submit', style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formSubmitButtonTextColor))),
+                  child: Text('Submit', style: TextStyle(color: RgbHelper.color(rgbo: app.formSubmitButtonTextColor))),
                 ));
 
         return Container(
           color: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? Colors.transparent : null,
-          decoration: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? null : BoxDecorationHelper.boxDecoration(GlobalData.app().formBackground),
+          decoration: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? null : BoxDecorationHelper.boxDecoration(accessState, app.formBackground),
           padding:
           const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
             child: Form(
@@ -546,8 +555,8 @@ class _MySectionFormState extends State<MySectionForm> {
     super.dispose();
   }
 
-  bool _readOnly(SectionFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!GlobalData.memberIsOwner());
+  bool _readOnly(AccessState accessState, AppState appState, SectionFormInitialized state) {
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(appState));
   }
   
 

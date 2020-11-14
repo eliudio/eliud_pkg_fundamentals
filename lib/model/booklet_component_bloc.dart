@@ -20,28 +20,28 @@ import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_repository.dart';
-class BookletBloc extends Bloc<BookletEvent, BookletState> {
+class BookletComponentBloc extends Bloc<BookletComponentEvent, BookletComponentState> {
   final BookletRepository bookletRepository;
 
-  BookletBloc({ this.bookletRepository }): super(BookletUninitialized());
+  BookletComponentBloc({ this.bookletRepository }): super(BookletComponentUninitialized());
   @override
-  Stream<BookletState> mapEventToState(BookletEvent event) async* {
+  Stream<BookletComponentState> mapEventToState(BookletComponentEvent event) async* {
     final currentState = state;
-    if (event is FetchBooklet) {
+    if (event is FetchBookletComponent) {
       try {
-        if (currentState is BookletUninitialized) {
+        if (currentState is BookletComponentUninitialized) {
           final BookletModel model = await _fetchBooklet(event.id);
 
           if (model != null) {
-            yield BookletLoaded(value: model);
+            yield BookletComponentLoaded(value: model);
           } else {
             String id = event.id;
-            yield BookletError(message: "Booklet with id = '$id' not found");
+            yield BookletComponentError(message: "Booklet with id = '$id' not found");
           }
           return;
         }
       } catch (_) {
-        yield BookletError(message: "Unknown error whilst retrieving Booklet");
+        yield BookletComponentError(message: "Unknown error whilst retrieving Booklet");
       }
     }
   }

@@ -38,10 +38,10 @@ import 'package:eliud_pkg_fundamentals/model/booklet_form_state.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_repository.dart';
 
 class BookletFormBloc extends Bloc<BookletFormEvent, BookletFormState> {
-  final BookletRepository _bookletRepository = bookletRepository();
   final FormAction formAction;
+  final String appId;
 
-  BookletFormBloc({ this.formAction }): super(BookletFormUninitialized());
+  BookletFormBloc(this.appId, { this.formAction }): super(BookletFormUninitialized());
   @override
   Stream<BookletFormState> mapEventToState(BookletFormEvent event) async* {
     final currentState = state;
@@ -62,7 +62,7 @@ class BookletFormBloc extends Bloc<BookletFormEvent, BookletFormState> {
 
       if (event is InitialiseBookletFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        BookletFormLoaded loaded = BookletFormLoaded(value: await _bookletRepository.get(event.value.documentID));
+        BookletFormLoaded loaded = BookletFormLoaded(value: await bookletRepository(appID: appId).get(event.value.documentID));
         yield loaded;
         return;
       } else if (event is InitialiseBookletFormNoLoadEvent) {
@@ -103,7 +103,7 @@ class BookletFormBloc extends Bloc<BookletFormEvent, BookletFormState> {
   Future<BookletFormState> _isDocumentIDValid(String value, BookletModel newValue) async {
     if (value == null) return Future.value(error("Provide value for documentID", newValue));
     if (value.length == 0) return Future.value(error("Provide value for documentID", newValue));
-    Future<BookletModel> findDocument = _bookletRepository.get(value);
+    Future<BookletModel> findDocument = bookletRepository(appID: appId).get(value);
     return await findDocument.then((documentFound) {
       if (documentFound == null) {
         return SubmittableBookletForm(value: newValue);

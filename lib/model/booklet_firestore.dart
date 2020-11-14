@@ -28,7 +28,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class BookletFirestore implements BookletRepository {
   Future<BookletModel> add(BookletModel value) {
-    return BookletCollection.document(value.documentID).setData(value.toEntity().toDocument()).then((_) => value);
+    return BookletCollection.document(value.documentID).setData(value.toEntity(appID).toDocument()).then((_) => value);
   }
 
   Future<void> delete(BookletModel value) {
@@ -36,7 +36,7 @@ class BookletFirestore implements BookletRepository {
   }
 
   Future<BookletModel> update(BookletModel value) {
-    return BookletCollection.document(value.documentID).updateData(value.toEntity().toDocument()).then((_) => value);
+    return BookletCollection.document(value.documentID).updateData(value.toEntity(appID).toDocument()).then((_) => value);
   }
 
   BookletModel _populateDoc(DocumentSnapshot doc) {

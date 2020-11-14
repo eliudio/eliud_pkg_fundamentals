@@ -15,14 +15,14 @@
 
 import 'package:equatable/equatable.dart';
 
-abstract class SimpleImageEvent extends Equatable {
+abstract class SimpleImageComponentEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
 
-class FetchSimpleImage extends SimpleImageEvent {
+class FetchSimpleImageComponent extends SimpleImageComponentEvent {
   final String id;
 
-  FetchSimpleImage({ this.id });
+  FetchSimpleImageComponent({ this.id });
 }
 

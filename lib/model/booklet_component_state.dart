@@ -16,34 +16,34 @@
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
 
-abstract class BookletState extends Equatable {
-  const BookletState();
+abstract class BookletComponentState extends Equatable {
+  const BookletComponentState();
 
   @override
   List<Object> get props => [];
 }
 
-class BookletUninitialized extends BookletState {}
+class BookletComponentUninitialized extends BookletComponentState {}
 
-class BookletError extends BookletState {
+class BookletComponentError extends BookletComponentState {
   final String message;
-  BookletError({ this.message });
+  BookletComponentError({ this.message });
 }
 
-class BookletLoaded extends BookletState {
+class BookletComponentLoaded extends BookletComponentState {
   final BookletModel value;
 
-  const BookletLoaded({ this.value });
+  const BookletComponentLoaded({ this.value });
 
-  BookletLoaded copyWith({ BookletModel copyThis }) {
-    return BookletLoaded(value: copyThis ?? this.value);
+  BookletComponentLoaded copyWith({ BookletModel copyThis }) {
+    return BookletComponentLoaded(value: copyThis ?? this.value);
   }
 
   @override
   List<Object> get props => [value];
 
   @override
-  String toString() => 'BookletModelLoaded { value: $value }';
+  String toString() => 'BookletComponentLoaded { value: $value }';
 }
 
 

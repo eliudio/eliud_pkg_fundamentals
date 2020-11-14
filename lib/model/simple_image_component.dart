@@ -15,6 +15,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:eliud_core/core/app/app_bloc.dart';
 
 import 'package:eliud_pkg_fundamentals/model/simple_image_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_component_event.dart';
@@ -30,23 +31,23 @@ abstract class AbstractSimpleImageComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<SimpleImageBloc> (
-          create: (context) => SimpleImageBloc(
-            simpleImageRepository: getSimpleImageRepository())
-        ..add(FetchSimpleImage(id: simpleImageID)),
+    return BlocProvider<SimpleImageComponentBloc> (
+          create: (context) => SimpleImageComponentBloc(
+            simpleImageRepository: getSimpleImageRepository(context))
+        ..add(FetchSimpleImageComponent(id: simpleImageID)),
       child: _simpleImageBlockBuilder(context),
     );
   }
 
   Widget _simpleImageBlockBuilder(BuildContext context) {
-    return BlocBuilder<SimpleImageBloc, SimpleImageState>(builder: (context, state) {
-      if (state is SimpleImageLoaded) {
+    return BlocBuilder<SimpleImageComponentBloc, SimpleImageComponentState>(builder: (context, state) {
+      if (state is SimpleImageComponentLoaded) {
         if (state.value == null) {
           return alertWidget(title: 'Error', content: 'No simpleImage defined');
         } else {
           return yourWidget(context, state.value);
         }
-      } else if (state is SimpleImageError) {
+      } else if (state is SimpleImageComponentError) {
         return alertWidget(title: 'Error', content: state.message);
       } else {
         return Center(
@@ -58,7 +59,7 @@ abstract class AbstractSimpleImageComponent extends StatelessWidget {
 
   Widget yourWidget(BuildContext context, SimpleImageModel value);
   Widget alertWidget({ title: String, content: String});
-  SimpleImageRepository getSimpleImageRepository();
+  SimpleImageRepository getSimpleImageRepository(BuildContext context);
 }
 
 

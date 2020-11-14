@@ -42,10 +42,10 @@ import 'package:eliud_pkg_fundamentals/model/divider_form_state.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_repository.dart';
 
 class DividerFormBloc extends Bloc<DividerFormEvent, DividerFormState> {
-  final DividerRepository _dividerRepository = dividerRepository();
   final FormAction formAction;
+  final String appId;
 
-  DividerFormBloc({ this.formAction }): super(DividerFormUninitialized());
+  DividerFormBloc(this.appId, { this.formAction }): super(DividerFormUninitialized());
   @override
   Stream<DividerFormState> mapEventToState(DividerFormEvent event) async* {
     final currentState = state;
@@ -70,7 +70,7 @@ class DividerFormBloc extends Bloc<DividerFormEvent, DividerFormState> {
 
       if (event is InitialiseDividerFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        DividerFormLoaded loaded = DividerFormLoaded(value: await _dividerRepository.get(event.value.documentID));
+        DividerFormLoaded loaded = DividerFormLoaded(value: await dividerRepository(appID: appId).get(event.value.documentID));
         yield loaded;
         return;
       } else if (event is InitialiseDividerFormNoLoadEvent) {
@@ -155,7 +155,7 @@ class DividerFormBloc extends Bloc<DividerFormEvent, DividerFormState> {
   Future<DividerFormState> _isDocumentIDValid(String value, DividerModel newValue) async {
     if (value == null) return Future.value(error("Provide value for documentID", newValue));
     if (value.length == 0) return Future.value(error("Provide value for documentID", newValue));
-    Future<DividerModel> findDocument = _dividerRepository.get(value);
+    Future<DividerModel> findDocument = dividerRepository(appID: appId).get(value);
     return await findDocument.then((documentFound) {
       if (documentFound == null) {
         return SubmittableDividerForm(value: newValue);

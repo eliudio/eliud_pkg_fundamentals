@@ -16,34 +16,34 @@
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_model.dart';
 
-abstract class TutorialState extends Equatable {
-  const TutorialState();
+abstract class TutorialComponentState extends Equatable {
+  const TutorialComponentState();
 
   @override
   List<Object> get props => [];
 }
 
-class TutorialUninitialized extends TutorialState {}
+class TutorialComponentUninitialized extends TutorialComponentState {}
 
-class TutorialError extends TutorialState {
+class TutorialComponentError extends TutorialComponentState {
   final String message;
-  TutorialError({ this.message });
+  TutorialComponentError({ this.message });
 }
 
-class TutorialLoaded extends TutorialState {
+class TutorialComponentLoaded extends TutorialComponentState {
   final TutorialModel value;
 
-  const TutorialLoaded({ this.value });
+  const TutorialComponentLoaded({ this.value });
 
-  TutorialLoaded copyWith({ TutorialModel copyThis }) {
-    return TutorialLoaded(value: copyThis ?? this.value);
+  TutorialComponentLoaded copyWith({ TutorialModel copyThis }) {
+    return TutorialComponentLoaded(value: copyThis ?? this.value);
   }
 
   @override
   List<Object> get props => [value];
 
   @override
-  String toString() => 'TutorialModelLoaded { value: $value }';
+  String toString() => 'TutorialComponentLoaded { value: $value }';
 }
 
 

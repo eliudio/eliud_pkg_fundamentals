@@ -15,6 +15,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:eliud_core/core/app/app_bloc.dart';
 
 import 'package:eliud_pkg_fundamentals/model/play_store_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/play_store_component_event.dart';
@@ -30,23 +31,23 @@ abstract class AbstractPlayStoreComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<PlayStoreBloc> (
-          create: (context) => PlayStoreBloc(
-            playStoreRepository: getPlayStoreRepository())
-        ..add(FetchPlayStore(id: playStoreID)),
+    return BlocProvider<PlayStoreComponentBloc> (
+          create: (context) => PlayStoreComponentBloc(
+            playStoreRepository: getPlayStoreRepository(context))
+        ..add(FetchPlayStoreComponent(id: playStoreID)),
       child: _playStoreBlockBuilder(context),
     );
   }
 
   Widget _playStoreBlockBuilder(BuildContext context) {
-    return BlocBuilder<PlayStoreBloc, PlayStoreState>(builder: (context, state) {
-      if (state is PlayStoreLoaded) {
+    return BlocBuilder<PlayStoreComponentBloc, PlayStoreComponentState>(builder: (context, state) {
+      if (state is PlayStoreComponentLoaded) {
         if (state.value == null) {
           return alertWidget(title: 'Error', content: 'No playStore defined');
         } else {
           return yourWidget(context, state.value);
         }
-      } else if (state is PlayStoreError) {
+      } else if (state is PlayStoreComponentError) {
         return alertWidget(title: 'Error', content: state.message);
       } else {
         return Center(
@@ -58,7 +59,7 @@ abstract class AbstractPlayStoreComponent extends StatelessWidget {
 
   Widget yourWidget(BuildContext context, PlayStoreModel value);
   Widget alertWidget({ title: String, content: String});
-  PlayStoreRepository getPlayStoreRepository();
+  PlayStoreRepository getPlayStoreRepository(BuildContext context);
 }
 
 

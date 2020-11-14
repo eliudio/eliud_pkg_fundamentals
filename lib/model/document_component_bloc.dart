@@ -21,28 +21,28 @@ import 'package:eliud_pkg_fundamentals/model/document_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/document_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/document_repository.dart';
 
-class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
+class DocumentComponentBloc extends Bloc<DocumentComponentEvent, DocumentComponentState> {
   final DocumentRepository documentRepository;
 
-  DocumentBloc({ this.documentRepository }): super(DocumentUninitialized());
+  DocumentComponentBloc({ this.documentRepository }): super(DocumentComponentUninitialized());
   @override
-  Stream<DocumentState> mapEventToState(DocumentEvent event) async* {
+  Stream<DocumentComponentState> mapEventToState(DocumentComponentEvent event) async* {
     final currentState = state;
-    if (event is FetchDocument) {
+    if (event is FetchDocumentComponent) {
       try {
-        if (currentState is DocumentUninitialized) {
+        if (currentState is DocumentComponentUninitialized) {
           final DocumentModel model = await _fetchDocument(event.id);
 
           if (model != null) {
-            yield DocumentLoaded(value: model);
+            yield DocumentComponentLoaded(value: model);
           } else {
             String id = event.id;
-            yield DocumentError(message: "Document with id = '$id' not found");
+            yield DocumentComponentError(message: "Document with id = '$id' not found");
           }
           return;
         }
       } catch (_) {
-        yield DocumentError(message: "Unknown error whilst retrieving Document");
+        yield DocumentComponentError(message: "Unknown error whilst retrieving Document");
       }
     }
   }

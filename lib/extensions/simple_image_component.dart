@@ -1,3 +1,5 @@
+import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/app/app_bloc.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/platform/platform.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
@@ -8,6 +10,7 @@ import 'package:eliud_core/tools/component_constructor.dart';
 import 'package:flutter/material.dart';
 
 class SimpleImageComponentConstructorDefault implements ComponentConstructor {
+  @override
   Widget createNew({String id, Map<String, String> parameters}) {
     return SimpleImageComponent(simpleImageID: id);
   }
@@ -18,7 +21,8 @@ class SimpleImageComponent extends AbstractSimpleImageComponent {
 
   @override
   Widget yourWidget(BuildContext context, SimpleImageModel value) {
-    return AbstractPlatform.platform.getImage(image: value.image);
+    var state = AccessBloc.getState(context);
+    return AbstractPlatform.platform.getImage(state, image: value.image);
   }
 
   @override
@@ -27,7 +31,7 @@ class SimpleImageComponent extends AbstractSimpleImageComponent {
   }
 
   @override
-  SimpleImageRepository getSimpleImageRepository() {
-    return AbstractRepositorySingleton.singleton.simpleImageRepository();
+  SimpleImageRepository getSimpleImageRepository(BuildContext context) {
+    return AbstractRepositorySingleton.singleton.simpleImageRepository(AppBloc.appId(context));
   }
 }

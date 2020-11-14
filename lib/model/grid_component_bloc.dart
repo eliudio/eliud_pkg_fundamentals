@@ -21,28 +21,28 @@ import 'package:eliud_pkg_fundamentals/model/grid_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/grid_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/grid_repository.dart';
 
-class GridBloc extends Bloc<GridEvent, GridState> {
+class GridComponentBloc extends Bloc<GridComponentEvent, GridComponentState> {
   final GridRepository gridRepository;
 
-  GridBloc({ this.gridRepository }): super(GridUninitialized());
+  GridComponentBloc({ this.gridRepository }): super(GridComponentUninitialized());
   @override
-  Stream<GridState> mapEventToState(GridEvent event) async* {
+  Stream<GridComponentState> mapEventToState(GridComponentEvent event) async* {
     final currentState = state;
-    if (event is FetchGrid) {
+    if (event is FetchGridComponent) {
       try {
-        if (currentState is GridUninitialized) {
+        if (currentState is GridComponentUninitialized) {
           final GridModel model = await _fetchGrid(event.id);
 
           if (model != null) {
-            yield GridLoaded(value: model);
+            yield GridComponentLoaded(value: model);
           } else {
             String id = event.id;
-            yield GridError(message: "Grid with id = '$id' not found");
+            yield GridComponentError(message: "Grid with id = '$id' not found");
           }
           return;
         }
       } catch (_) {
-        yield GridError(message: "Unknown error whilst retrieving Grid");
+        yield GridComponentError(message: "Unknown error whilst retrieving Grid");
       }
     }
   }

@@ -65,13 +65,12 @@ class BookletModel {
     return 'BookletModel{documentID: $documentID, appId: $appId, name: $name, sections: Section[] { $sectionsCsv }}';
   }
 
-  BookletEntity toEntity() {
-    appId = GlobalData.app().documentID;
+  BookletEntity toEntity(String appId) {
     return BookletEntity(
           appId: (appId != null) ? appId : null, 
           name: (name != null) ? name : null, 
           sections: (sections != null) ? sections
-            .map((item) => item.toEntity())
+            .map((item) => item.toEntity(appId))
             .toList() : null, 
     );
   }

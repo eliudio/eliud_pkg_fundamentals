@@ -16,34 +16,34 @@
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/grid_model.dart';
 
-abstract class GridState extends Equatable {
-  const GridState();
+abstract class GridComponentState extends Equatable {
+  const GridComponentState();
 
   @override
   List<Object> get props => [];
 }
 
-class GridUninitialized extends GridState {}
+class GridComponentUninitialized extends GridComponentState {}
 
-class GridError extends GridState {
+class GridComponentError extends GridComponentState {
   final String message;
-  GridError({ this.message });
+  GridComponentError({ this.message });
 }
 
-class GridLoaded extends GridState {
+class GridComponentLoaded extends GridComponentState {
   final GridModel value;
 
-  const GridLoaded({ this.value });
+  const GridComponentLoaded({ this.value });
 
-  GridLoaded copyWith({ GridModel copyThis }) {
-    return GridLoaded(value: copyThis ?? this.value);
+  GridComponentLoaded copyWith({ GridModel copyThis }) {
+    return GridComponentLoaded(value: copyThis ?? this.value);
   }
 
   @override
   List<Object> get props => [value];
 
   @override
-  String toString() => 'GridModelLoaded { value: $value }';
+  String toString() => 'GridComponentLoaded { value: $value }';
 }
 
 

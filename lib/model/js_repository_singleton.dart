@@ -14,6 +14,7 @@
 */
 
 import 'abstract_repository_singleton.dart';
+import 'dart:collection';
 import '../model/booklet_js_firestore.dart';
 import '../model/booklet_repository.dart';
 import '../model/booklet_cache.dart';
@@ -63,34 +64,51 @@ import '../model/simple_image_model.dart';
 import '../model/tutorial_entry_model.dart';
 
 class JsRepositorySingleton extends AbstractRepositorySingleton {
-  JsRepositorySingleton(String appID) {
-    _bookletRepository = BookletCache(BookletJsFirestore(appID));
-    _dividerRepository = DividerCache(DividerJsFirestore(appID));
-    _documentRepository = DocumentCache(DocumentJsFirestore(appID));
-    _faderRepository = FaderCache(FaderJsFirestore(appID));
-    _gridRepository = GridCache(GridJsFirestore(appID));
-    _playStoreRepository = PlayStoreCache(PlayStoreJsFirestore(appID));
-    _presentationRepository = PresentationCache(PresentationJsFirestore(appID));
-    _simpleImageRepository = SimpleImageCache(SimpleImageJsFirestore(appID));
-    _tutorialRepository = TutorialCache(TutorialJsFirestore(appID));
-  }
-  BookletRepository bookletRepository() => _bookletRepository;
-  BookletRepository _bookletRepository;
-  DividerRepository dividerRepository() => _dividerRepository;
-  DividerRepository _dividerRepository;
-  DocumentRepository documentRepository() => _documentRepository;
-  DocumentRepository _documentRepository;
-  FaderRepository faderRepository() => _faderRepository;
-  FaderRepository _faderRepository;
-  GridRepository gridRepository() => _gridRepository;
-  GridRepository _gridRepository;
-  PlayStoreRepository playStoreRepository() => _playStoreRepository;
-  PlayStoreRepository _playStoreRepository;
-  PresentationRepository presentationRepository() => _presentationRepository;
-  PresentationRepository _presentationRepository;
-  SimpleImageRepository simpleImageRepository() => _simpleImageRepository;
-  SimpleImageRepository _simpleImageRepository;
-  TutorialRepository tutorialRepository() => _tutorialRepository;
-  TutorialRepository _tutorialRepository;
+    var _bookletRepository = HashMap<String, BookletRepository>();
+    var _dividerRepository = HashMap<String, DividerRepository>();
+    var _documentRepository = HashMap<String, DocumentRepository>();
+    var _faderRepository = HashMap<String, FaderRepository>();
+    var _gridRepository = HashMap<String, GridRepository>();
+    var _playStoreRepository = HashMap<String, PlayStoreRepository>();
+    var _presentationRepository = HashMap<String, PresentationRepository>();
+    var _simpleImageRepository = HashMap<String, SimpleImageRepository>();
+    var _tutorialRepository = HashMap<String, TutorialRepository>();
+
+    BookletRepository bookletRepository(String appID) {
+      if (_bookletRepository[appID] == null) _bookletRepository[appID] = BookletCache(BookletJsFirestore(appID));
+      return _bookletRepository[appID];
+    }
+    DividerRepository dividerRepository(String appID) {
+      if (_dividerRepository[appID] == null) _dividerRepository[appID] = DividerCache(DividerJsFirestore(appID));
+      return _dividerRepository[appID];
+    }
+    DocumentRepository documentRepository(String appID) {
+      if (_documentRepository[appID] == null) _documentRepository[appID] = DocumentCache(DocumentJsFirestore(appID));
+      return _documentRepository[appID];
+    }
+    FaderRepository faderRepository(String appID) {
+      if (_faderRepository[appID] == null) _faderRepository[appID] = FaderCache(FaderJsFirestore(appID));
+      return _faderRepository[appID];
+    }
+    GridRepository gridRepository(String appID) {
+      if (_gridRepository[appID] == null) _gridRepository[appID] = GridCache(GridJsFirestore(appID));
+      return _gridRepository[appID];
+    }
+    PlayStoreRepository playStoreRepository(String appID) {
+      if (_playStoreRepository[appID] == null) _playStoreRepository[appID] = PlayStoreCache(PlayStoreJsFirestore(appID));
+      return _playStoreRepository[appID];
+    }
+    PresentationRepository presentationRepository(String appID) {
+      if (_presentationRepository[appID] == null) _presentationRepository[appID] = PresentationCache(PresentationJsFirestore(appID));
+      return _presentationRepository[appID];
+    }
+    SimpleImageRepository simpleImageRepository(String appID) {
+      if (_simpleImageRepository[appID] == null) _simpleImageRepository[appID] = SimpleImageCache(SimpleImageJsFirestore(appID));
+      return _simpleImageRepository[appID];
+    }
+    TutorialRepository tutorialRepository(String appID) {
+      if (_tutorialRepository[appID] == null) _tutorialRepository[appID] = TutorialCache(TutorialJsFirestore(appID));
+      return _tutorialRepository[appID];
+    }
 
 }

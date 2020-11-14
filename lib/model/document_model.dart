@@ -98,8 +98,7 @@ class DocumentModel {
     return 'DocumentModel{documentID: $documentID, appId: $appId, name: $name, documentRenderer: $documentRenderer, content: $content, padding: $padding, images: DocumentItem[] { $imagesCsv }, background: $background}';
   }
 
-  DocumentEntity toEntity() {
-    appId = GlobalData.app().documentID;
+  DocumentEntity toEntity(String appId) {
     return DocumentEntity(
           appId: (appId != null) ? appId : null, 
           name: (name != null) ? name : null, 
@@ -107,7 +106,7 @@ class DocumentModel {
           content: (content != null) ? content : null, 
           padding: (padding != null) ? padding : null, 
           images: (images != null) ? images
-            .map((item) => item.toEntity())
+            .map((item) => item.toEntity(appId))
             .toList() : null, 
           backgroundId: (background != null) ? background.documentID : null, 
     );
@@ -135,7 +134,7 @@ class DocumentModel {
     BackgroundModel backgroundHolder;
     if (entity.backgroundId != null) {
       try {
-        await backgroundRepository().get(entity.backgroundId).then((val) {
+        await backgroundRepository(appID: entity.appId).get(entity.backgroundId).then((val) {
           backgroundHolder = val;
         }).catchError((error) {});
       } catch (_) {}

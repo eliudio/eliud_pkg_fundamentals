@@ -38,8 +38,9 @@ import 'package:eliud_pkg_fundamentals/model/link_form_state.dart';
 import 'package:eliud_pkg_fundamentals/model/link_repository.dart';
 
 class LinkFormBloc extends Bloc<LinkFormEvent, LinkFormState> {
+  final String appId;
 
-  LinkFormBloc(): super(LinkFormUninitialized());
+  LinkFormBloc(this.appId, ): super(LinkFormUninitialized());
   @override
   Stream<LinkFormState> mapEventToState(LinkFormEvent event) async* {
     final currentState = state;

@@ -15,6 +15,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:eliud_core/core/app/app_bloc.dart';
 
 import 'package:eliud_pkg_fundamentals/model/document_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/document_component_event.dart';
@@ -30,23 +31,23 @@ abstract class AbstractDocumentComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<DocumentBloc> (
-          create: (context) => DocumentBloc(
-            documentRepository: getDocumentRepository())
-        ..add(FetchDocument(id: documentID)),
+    return BlocProvider<DocumentComponentBloc> (
+          create: (context) => DocumentComponentBloc(
+            documentRepository: getDocumentRepository(context))
+        ..add(FetchDocumentComponent(id: documentID)),
       child: _documentBlockBuilder(context),
     );
   }
 
   Widget _documentBlockBuilder(BuildContext context) {
-    return BlocBuilder<DocumentBloc, DocumentState>(builder: (context, state) {
-      if (state is DocumentLoaded) {
+    return BlocBuilder<DocumentComponentBloc, DocumentComponentState>(builder: (context, state) {
+      if (state is DocumentComponentLoaded) {
         if (state.value == null) {
           return alertWidget(title: 'Error', content: 'No document defined');
         } else {
           return yourWidget(context, state.value);
         }
-      } else if (state is DocumentError) {
+      } else if (state is DocumentComponentError) {
         return alertWidget(title: 'Error', content: state.message);
       } else {
         return Center(
@@ -58,7 +59,7 @@ abstract class AbstractDocumentComponent extends StatelessWidget {
 
   Widget yourWidget(BuildContext context, DocumentModel value);
   Widget alertWidget({ title: String, content: String});
-  DocumentRepository getDocumentRepository();
+  DocumentRepository getDocumentRepository(BuildContext context);
 }
 
 

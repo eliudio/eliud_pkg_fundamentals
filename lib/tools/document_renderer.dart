@@ -1,7 +1,6 @@
-import 'package:dynamic_widget/dynamic_widget.dart';
+import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/app/app_bloc.dart';
 import 'package:eliud_core/core/tools/document_processor.dart';
-import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
-import 'package:eliud_core/tools/action_model.dart';
 import 'package:eliud_core/model/background_model.dart';
 import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_pkg_fundamentals/model/document_item_model.dart';
@@ -16,6 +15,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'package:eliud_pkg_fundamentals/tools/document_processor_extended.dart';
 
+/*
 class ActionListener implements ClickListener {
   final BuildContext context;
 
@@ -34,7 +34,7 @@ class ActionListener implements ClickListener {
     }
   }
 }
-
+*/
 class DocumentRendererTool {
   Widget _webViewRendererNotWeb(
       BuildContext context, String processedDocument) {
@@ -102,7 +102,7 @@ class DocumentRendererTool {
   }
 */
   Future<Widget> _buildWidget(BuildContext context, String jsonString) async {
-    return Text("dynamic_widget not supported. " + jsonString);
+    return Text('dynamic_widget not supported. ' + jsonString);
   }
 
   Widget _dynamicWidget(BuildContext context, String processedDocument) {
@@ -156,9 +156,11 @@ class DocumentRendererTool {
       String document,
       List<DocumentItemModel> images,
       BackgroundModel bdm) {
-    DocumentParameterProcessor documentParameterProcessor = ExtendedDocumentParameterProcessor(context, images: images);
+    var accessState = AccessBloc.getState(context);
+    var appState = AppBloc.getState(context);
+    DocumentParameterProcessor documentParameterProcessor = ExtendedDocumentParameterProcessor(context, accessState, appState, images: images);
     return Container(
         child: _rendered(context, documentRenderer, documentParameterProcessor.process(document)),
-        decoration: BoxDecorationHelper.boxDecoration(bdm));
+        decoration: BoxDecorationHelper.boxDecoration(accessState, bdm));
   }
 }

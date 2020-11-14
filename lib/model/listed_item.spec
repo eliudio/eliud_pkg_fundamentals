@@ -33,7 +33,7 @@
     {
       "fieldName": "action",
       "fieldType": "Action",
-      "bespokeFormField": "ActionField",
+      "bespokeFormField": "ActionField(AppBloc.appId(context), state.value.action, _onActionChanged)",
       "group": "action"
     },
     {

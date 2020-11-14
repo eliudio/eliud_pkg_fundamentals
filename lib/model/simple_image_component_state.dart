@@ -16,34 +16,34 @@
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_model.dart';
 
-abstract class SimpleImageState extends Equatable {
-  const SimpleImageState();
+abstract class SimpleImageComponentState extends Equatable {
+  const SimpleImageComponentState();
 
   @override
   List<Object> get props => [];
 }
 
-class SimpleImageUninitialized extends SimpleImageState {}
+class SimpleImageComponentUninitialized extends SimpleImageComponentState {}
 
-class SimpleImageError extends SimpleImageState {
+class SimpleImageComponentError extends SimpleImageComponentState {
   final String message;
-  SimpleImageError({ this.message });
+  SimpleImageComponentError({ this.message });
 }
 
-class SimpleImageLoaded extends SimpleImageState {
+class SimpleImageComponentLoaded extends SimpleImageComponentState {
   final SimpleImageModel value;
 
-  const SimpleImageLoaded({ this.value });
+  const SimpleImageComponentLoaded({ this.value });
 
-  SimpleImageLoaded copyWith({ SimpleImageModel copyThis }) {
-    return SimpleImageLoaded(value: copyThis ?? this.value);
+  SimpleImageComponentLoaded copyWith({ SimpleImageModel copyThis }) {
+    return SimpleImageComponentLoaded(value: copyThis ?? this.value);
   }
 
   @override
   List<Object> get props => [value];
 
   @override
-  String toString() => 'SimpleImageModelLoaded { value: $value }';
+  String toString() => 'SimpleImageComponentLoaded { value: $value }';
 }
 
 

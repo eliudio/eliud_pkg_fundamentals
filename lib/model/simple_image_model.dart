@@ -66,8 +66,7 @@ class SimpleImageModel {
     return 'SimpleImageModel{documentID: $documentID, appId: $appId, title: $title, image: $image}';
   }
 
-  SimpleImageEntity toEntity() {
-    appId = GlobalData.app().documentID;
+  SimpleImageEntity toEntity(String appId) {
     return SimpleImageEntity(
           appId: (appId != null) ? appId : null, 
           title: (title != null) ? title : null, 
@@ -90,7 +89,7 @@ class SimpleImageModel {
     ImageModel imageHolder;
     if (entity.imageId != null) {
       try {
-        await imageRepository().get(entity.imageId).then((val) {
+        await imageRepository(appID: entity.appId).get(entity.imageId).then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}

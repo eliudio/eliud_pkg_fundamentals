@@ -20,28 +20,28 @@ import 'package:eliud_pkg_fundamentals/model/fader_model.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_repository.dart';
-class FaderBloc extends Bloc<FaderEvent, FaderState> {
+class FaderComponentBloc extends Bloc<FaderComponentEvent, FaderComponentState> {
   final FaderRepository faderRepository;
 
-  FaderBloc({ this.faderRepository }): super(FaderUninitialized());
+  FaderComponentBloc({ this.faderRepository }): super(FaderComponentUninitialized());
   @override
-  Stream<FaderState> mapEventToState(FaderEvent event) async* {
+  Stream<FaderComponentState> mapEventToState(FaderComponentEvent event) async* {
     final currentState = state;
-    if (event is FetchFader) {
+    if (event is FetchFaderComponent) {
       try {
-        if (currentState is FaderUninitialized) {
+        if (currentState is FaderComponentUninitialized) {
           final FaderModel model = await _fetchFader(event.id);
 
           if (model != null) {
-            yield FaderLoaded(value: model);
+            yield FaderComponentLoaded(value: model);
           } else {
             String id = event.id;
-            yield FaderError(message: "Fader with id = '$id' not found");
+            yield FaderComponentError(message: "Fader with id = '$id' not found");
           }
           return;
         }
       } catch (_) {
-        yield FaderError(message: "Unknown error whilst retrieving Fader");
+        yield FaderComponentError(message: "Unknown error whilst retrieving Fader");
       }
     }
   }

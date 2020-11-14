@@ -73,13 +73,12 @@ class GridModel {
     return 'GridModel{documentID: $documentID, appId: $appId, title: $title, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, gridView: $gridView}';
   }
 
-  GridEntity toEntity() {
-    appId = GlobalData.app().documentID;
+  GridEntity toEntity(String appId) {
     return GridEntity(
           appId: (appId != null) ? appId : null, 
           title: (title != null) ? title : null, 
           bodyComponents: (bodyComponents != null) ? bodyComponents
-            .map((item) => item.toEntity())
+            .map((item) => item.toEntity(appId))
             .toList() : null, 
           gridViewId: (gridView != null) ? gridView.documentID : null, 
     );
@@ -104,7 +103,7 @@ class GridModel {
     GridViewModel gridViewHolder;
     if (entity.gridViewId != null) {
       try {
-        await gridViewRepository().get(entity.gridViewId).then((val) {
+        await gridViewRepository(appID: entity.appId).get(entity.gridViewId).then((val) {
           gridViewHolder = val;
         }).catchError((error) {});
       } catch (_) {}

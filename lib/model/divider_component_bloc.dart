@@ -20,28 +20,28 @@ import 'package:eliud_pkg_fundamentals/model/divider_model.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_repository.dart';
-class DividerBloc extends Bloc<DividerEvent, DividerState> {
+class DividerComponentBloc extends Bloc<DividerComponentEvent, DividerComponentState> {
   final DividerRepository dividerRepository;
 
-  DividerBloc({ this.dividerRepository }): super(DividerUninitialized());
+  DividerComponentBloc({ this.dividerRepository }): super(DividerComponentUninitialized());
   @override
-  Stream<DividerState> mapEventToState(DividerEvent event) async* {
+  Stream<DividerComponentState> mapEventToState(DividerComponentEvent event) async* {
     final currentState = state;
-    if (event is FetchDivider) {
+    if (event is FetchDividerComponent) {
       try {
-        if (currentState is DividerUninitialized) {
+        if (currentState is DividerComponentUninitialized) {
           final DividerModel model = await _fetchDivider(event.id);
 
           if (model != null) {
-            yield DividerLoaded(value: model);
+            yield DividerComponentLoaded(value: model);
           } else {
             String id = event.id;
-            yield DividerError(message: "Divider with id = '$id' not found");
+            yield DividerComponentError(message: "Divider with id = '$id' not found");
           }
           return;
         }
       } catch (_) {
-        yield DividerError(message: "Unknown error whilst retrieving Divider");
+        yield DividerComponentError(message: "Unknown error whilst retrieving Divider");
       }
     }
   }

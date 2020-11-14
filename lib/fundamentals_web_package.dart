@@ -4,7 +4,8 @@ import 'package:eliud_pkg_fundamentals/model/js_repository_singleton.dart';
 
 class FundamentalsWebPackage extends FundamentalsPackage {
   @override
-  void initRepository(String appID) {
-    AbstractRepositorySingleton.singleton = JsRepositorySingleton(appID);
+  void init() {
+    AbstractRepositorySingleton.singleton = JsRepositorySingleton();
+    super.init();
   }
 }

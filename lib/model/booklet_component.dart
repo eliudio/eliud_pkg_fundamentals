@@ -15,6 +15,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:eliud_core/core/app/app_bloc.dart';
 
 import 'package:eliud_pkg_fundamentals/model/booklet_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_component_event.dart';
@@ -30,23 +31,23 @@ abstract class AbstractBookletComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<BookletBloc> (
-          create: (context) => BookletBloc(
-            bookletRepository: getBookletRepository())
-        ..add(FetchBooklet(id: bookletID)),
+    return BlocProvider<BookletComponentBloc> (
+          create: (context) => BookletComponentBloc(
+            bookletRepository: getBookletRepository(context))
+        ..add(FetchBookletComponent(id: bookletID)),
       child: _bookletBlockBuilder(context),
     );
   }
 
   Widget _bookletBlockBuilder(BuildContext context) {
-    return BlocBuilder<BookletBloc, BookletState>(builder: (context, state) {
-      if (state is BookletLoaded) {
+    return BlocBuilder<BookletComponentBloc, BookletComponentState>(builder: (context, state) {
+      if (state is BookletComponentLoaded) {
         if (state.value == null) {
           return alertWidget(title: 'Error', content: 'No booklet defined');
         } else {
           return yourWidget(context, state.value);
         }
-      } else if (state is BookletError) {
+      } else if (state is BookletComponentError) {
         return alertWidget(title: 'Error', content: state.message);
       } else {
         return Center(
@@ -58,7 +59,7 @@ abstract class AbstractBookletComponent extends StatelessWidget {
 
   Widget yourWidget(BuildContext context, BookletModel value);
   Widget alertWidget({ title: String, content: String});
-  BookletRepository getBookletRepository();
+  BookletRepository getBookletRepository(BuildContext context);
 }
 
 

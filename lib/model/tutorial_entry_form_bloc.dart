@@ -42,9 +42,9 @@ import 'package:eliud_pkg_fundamentals/model/tutorial_entry_form_state.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_entry_repository.dart';
 
 class TutorialEntryFormBloc extends Bloc<TutorialEntryFormEvent, TutorialEntryFormState> {
-  final ImageRepository _imageRepository = imageRepository();
+  final String appId;
 
-  TutorialEntryFormBloc(): super(TutorialEntryFormUninitialized());
+  TutorialEntryFormBloc(this.appId, ): super(TutorialEntryFormUninitialized());
   @override
   Stream<TutorialEntryFormState> mapEventToState(TutorialEntryFormEvent event) async* {
     final currentState = state;
@@ -81,7 +81,7 @@ class TutorialEntryFormBloc extends Bloc<TutorialEntryFormEvent, TutorialEntryFo
       }
       if (event is ChangedTutorialEntryImage) {
         if (event.value != null)
-          newValue = currentState.value.copyWith(image: await _imageRepository.get(event.value));
+          newValue = currentState.value.copyWith(image: await imageRepository(appID: appId).get(event.value));
         else
           newValue = new TutorialEntryModel(
                                  documentID: currentState.value.documentID,

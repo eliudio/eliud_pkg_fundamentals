@@ -15,6 +15,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:eliud_core/core/app/app_bloc.dart';
 
 import 'package:eliud_pkg_fundamentals/model/grid_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/grid_component_event.dart';
@@ -30,23 +31,23 @@ abstract class AbstractGridComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<GridBloc> (
-          create: (context) => GridBloc(
-            gridRepository: getGridRepository())
-        ..add(FetchGrid(id: gridID)),
+    return BlocProvider<GridComponentBloc> (
+          create: (context) => GridComponentBloc(
+            gridRepository: getGridRepository(context))
+        ..add(FetchGridComponent(id: gridID)),
       child: _gridBlockBuilder(context),
     );
   }
 
   Widget _gridBlockBuilder(BuildContext context) {
-    return BlocBuilder<GridBloc, GridState>(builder: (context, state) {
-      if (state is GridLoaded) {
+    return BlocBuilder<GridComponentBloc, GridComponentState>(builder: (context, state) {
+      if (state is GridComponentLoaded) {
         if (state.value == null) {
           return alertWidget(title: 'Error', content: 'No grid defined');
         } else {
           return yourWidget(context, state.value);
         }
-      } else if (state is GridError) {
+      } else if (state is GridComponentError) {
         return alertWidget(title: 'Error', content: state.message);
       } else {
         return Center(
@@ -58,7 +59,7 @@ abstract class AbstractGridComponent extends StatelessWidget {
 
   Widget yourWidget(BuildContext context, GridModel value);
   Widget alertWidget({ title: String, content: String});
-  GridRepository getGridRepository();
+  GridRepository getGridRepository(BuildContext context);
 }
 
 

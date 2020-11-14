@@ -31,7 +31,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 class TutorialJsFirestore implements TutorialRepository {
   Future<TutorialModel> add(TutorialModel value) {
     return tutorialCollection.doc(value.documentID)
-        .set(value.toEntity().toDocument())
+        .set(value.toEntity(appID).toDocument())
         .then((_) => value);
   }
 
@@ -41,7 +41,7 @@ class TutorialJsFirestore implements TutorialRepository {
 
   Future<TutorialModel> update(TutorialModel value) {
     return tutorialCollection.doc(value.documentID)
-        .update(data: value.toEntity().toDocument())
+        .update(data: value.toEntity(appID).toDocument())
         .then((_) => value);
   }
 

@@ -1,9 +1,8 @@
-import 'package:eliud_core/core/global_data.dart';
+import 'package:eliud_core/core/app/app_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/play_store_component.dart';
 import 'package:eliud_pkg_fundamentals/model/play_store_model.dart';
 import 'package:eliud_pkg_fundamentals/model/play_store_repository.dart';
-import 'package:eliud_core/eliud.dart';
 import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/model/app_model.dart';
@@ -15,6 +14,7 @@ import 'package:eliud_core/tools/screen_size.dart';
 import 'package:flutter/material.dart';
 
 class PlayStoreComponentConstructorDefault implements ComponentConstructor {
+  @override
   Widget createNew({String id, Map<String, String> parameters}) {
     return PlayStoreBase(id);
   }
@@ -31,8 +31,8 @@ class PlayStoreBase extends AbstractPlayStoreComponent {
   }
 
   @override
-  PlayStoreRepository getPlayStoreRepository() {
-    return AbstractRepositorySingleton.singleton.playStoreRepository();
+  PlayStoreRepository getPlayStoreRepository(BuildContext context) {
+    return AbstractRepositorySingleton.singleton.playStoreRepository(AppBloc.appId(context));
   }
 
   @override
@@ -78,14 +78,16 @@ class PlayStoreState extends State<PlayStore> {
   }
 
   Widget _build(BuildContext context, List<AppModel> apps) {
-    double size = 150;
-    List<Widget> components = List();
+    var appID = AppBloc.appId(context);
+
+    var size = 150.0;
+    var components = <Widget>[];
     apps.forEach((model) {
-      if (model.documentID != GlobalData.playStoreApp) {
-        List<Widget> children = List();
-        children.add(new GestureDetector(
+      if (AppBloc.isPlayStoreApp(context, model.documentID)) {
+        var children = <Widget>[];
+        children.add(GestureDetector(
             onTap: () async {
-              EliudRouter.Router.navigateTo(context, SwitchApp(appID: model.documentID));
+              EliudRouter.Router.navigateTo(context, SwitchApp(appID, toAppID: model.documentID));
             },
             child: _buildStack(
                 size - 40,
@@ -95,12 +97,12 @@ class PlayStoreState extends State<PlayStore> {
       }
     });
 
-    int count = (fullScreenWidth(context) / size).floor() + 1;
-    int rows = ((components.length -1) / count).floor() + 1;
-    double fullHeight = rows * size;
+    var count = (fullScreenWidth(context) / size).floor() + 1;
+    var rows = ((components.length -1) / count).floor() + 1;
+    var fullHeight = rows * size;
     // end tests
 
-    if (components.length > 0) {
+    if (components.isNotEmpty) {
       return Container(
           height: fullHeight,
           child: GridView.extent(maxCrossAxisExtent: size,
@@ -111,7 +113,7 @@ class PlayStoreState extends State<PlayStore> {
               shrinkWrap: true,
               children: components));
     } else {
-      return Text("No apps available");
+      return Text('No apps available');
     }
   }
 }

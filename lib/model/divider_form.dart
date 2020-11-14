@@ -14,7 +14,10 @@
 */
 
 import 'package:eliud_core/core/global_data.dart';
-
+import 'package:eliud_core/core/app/app_bloc.dart';
+import 'package:eliud_core/core/access/bloc/access_state.dart';
+import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/app/app_state.dart';
 import 'package:eliud_core/tools/action_model.dart';
 import 'package:eliud_core/core/navigate/router.dart' as eliudrouter;
 import 'package:eliud_core/tools/screen_size.dart';
@@ -67,9 +70,12 @@ class DividerForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var app = AppBloc.app(context);
+    var accessState = AccessBloc.getState(context);
+    var appState = AppBloc.getState(context);
     if (formAction == FormAction.ShowData) {
       return BlocProvider<DividerFormBloc >(
-            create: (context) => DividerFormBloc(
+            create: (context) => DividerFormBloc(AppBloc.appId(context),
                                        formAction: formAction,
 
                                                 )..add(InitialiseDividerFormEvent(value: value)),
@@ -78,7 +84,7 @@ class DividerForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<DividerFormBloc >(
-            create: (context) => DividerFormBloc(
+            create: (context) => DividerFormBloc(AppBloc.appId(context),
                                        formAction: formAction,
 
                                                 )..add(InitialiseDividerFormNoLoadEvent(value: value)),
@@ -89,17 +95,17 @@ class DividerForm extends StatelessWidget {
       return Scaffold(
         appBar: formAction == FormAction.UpdateAction ?
                 AppBar(
-                    title: Text("Update Divider", style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formAppBarTextColor))),
+                    title: Text("Update Divider", style: TextStyle(color: RgbHelper.color(rgbo: app.formAppBarTextColor))),
                     flexibleSpace: Container(
-                        decoration: BoxDecorationHelper.boxDecoration(GlobalData.app().formAppBarBackground)),
+                        decoration: BoxDecorationHelper.boxDecoration(accessState, app.formAppBarBackground)),
                   ) :
                 AppBar(
-                    title: Text("Add Divider", style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formAppBarTextColor))),
+                    title: Text("Add Divider", style: TextStyle(color: RgbHelper.color(rgbo: app.formAppBarTextColor))),
                     flexibleSpace: Container(
-                        decoration: BoxDecorationHelper.boxDecoration(GlobalData.app().formAppBarBackground)),
+                        decoration: BoxDecorationHelper.boxDecoration(accessState, app.formAppBarBackground)),
                 ),
         body: BlocProvider<DividerFormBloc >(
-            create: (context) => DividerFormBloc(
+            create: (context) => DividerFormBloc(AppBloc.appId(context),
                                        formAction: formAction,
 
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseDividerFormEvent(value: value) : InitialiseNewDividerFormEvent())),
@@ -151,6 +157,9 @@ class _MyDividerFormState extends State<MyDividerForm> {
 
   @override
   Widget build(BuildContext context) {
+    var app = AppBloc.app(context);
+    var appState = AppBloc.getState(context);
+    var accessState = AccessBloc.getState(context);
     return BlocBuilder<DividerFormBloc, DividerFormState>(builder: (context, state) {
       if (state is DividerFormUninitialized) return Center(
         child: CircularProgressIndicator(),
@@ -193,17 +202,17 @@ class _MyDividerFormState extends State<MyDividerForm> {
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: Text('General',
                       style: TextStyle(
-                          color: RgbHelper.color(rgbo: GlobalData.app().formGroupTitleColor), fontWeight: FontWeight.bold)),
+                          color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
                 ));
 
         children.add(
 
                 TextFormField(
-                style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor)),
+                style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
                   readOnly: (formAction == FormAction.UpdateAction),
                   controller: _documentIDController,
                   decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: GlobalData.app().formFieldFocusColor))),                    icon: Icon(Icons.vpn_key, color: RgbHelper.color(rgbo: GlobalData.app().formFieldHeaderColor)),
+                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.vpn_key, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
                     labelText: 'Document ID',
                   ),
                   keyboardType: TextInputType.text,
@@ -217,11 +226,11 @@ class _MyDividerFormState extends State<MyDividerForm> {
         children.add(
 
                 TextFormField(
-                style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor)),
-                  readOnly: _readOnly(state),
+                style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
+                  readOnly: _readOnly(accessState, appState, state),
                   controller: _nameController,
                   decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: GlobalData.app().formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: GlobalData.app().formFieldHeaderColor)),
+                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
                     labelText: 'Name',
                   ),
                   keyboardType: TextInputType.text,
@@ -234,7 +243,7 @@ class _MyDividerFormState extends State<MyDividerForm> {
 
 
         children.add(Container(height: 20.0));
-        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: GlobalData.app().dividerColor)));
+        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
 
 
          children.add(Container(
@@ -242,7 +251,7 @@ class _MyDividerFormState extends State<MyDividerForm> {
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: Text('Shape',
                       style: TextStyle(
-                          color: RgbHelper.color(rgbo: GlobalData.app().formGroupTitleColor), fontWeight: FontWeight.bold)),
+                          color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
                 ));
 
         children.add(
@@ -253,11 +262,11 @@ class _MyDividerFormState extends State<MyDividerForm> {
         children.add(
 
                 TextFormField(
-                style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor)),
-                  readOnly: _readOnly(state),
+                style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
+                  readOnly: _readOnly(accessState, appState, state),
                   controller: _heightController,
                   decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: GlobalData.app().formFieldFocusColor))),                    icon: Icon(Icons.vertical_align_top, color: RgbHelper.color(rgbo: GlobalData.app().formFieldHeaderColor)),
+                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.vertical_align_top, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
                     labelText: 'Height',
                     hintText: "The divider's height extent. The divider itself is always drawn as a horizontal line that is centered within the height specified by this value.",
                   ),
@@ -272,11 +281,11 @@ class _MyDividerFormState extends State<MyDividerForm> {
         children.add(
 
                 TextFormField(
-                style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor)),
-                  readOnly: _readOnly(state),
+                style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
+                  readOnly: _readOnly(accessState, appState, state),
                   controller: _thicknessController,
                   decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: GlobalData.app().formFieldFocusColor))),                    icon: Icon(Icons.vertical_align_center, color: RgbHelper.color(rgbo: GlobalData.app().formFieldHeaderColor)),
+                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.vertical_align_center, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
                     labelText: 'Thickness',
                     hintText: "The thickness of the line drawn within the divider. A divider with a thickness of 0.0 is always drawn as a line with a height of exactly one device pixel.",
                   ),
@@ -291,11 +300,11 @@ class _MyDividerFormState extends State<MyDividerForm> {
         children.add(
 
                 TextFormField(
-                style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor)),
-                  readOnly: _readOnly(state),
+                style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
+                  readOnly: _readOnly(accessState, appState, state),
                   controller: _indentController,
                   decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: GlobalData.app().formFieldFocusColor))),                    icon: Icon(Icons.format_indent_increase, color: RgbHelper.color(rgbo: GlobalData.app().formFieldHeaderColor)),
+                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.format_indent_increase, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
                     labelText: 'Indent',
                     hintText: "The amount of empty space to the leading edge of the divider.",
                   ),
@@ -310,11 +319,11 @@ class _MyDividerFormState extends State<MyDividerForm> {
         children.add(
 
                 TextFormField(
-                style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor)),
-                  readOnly: _readOnly(state),
+                style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
+                  readOnly: _readOnly(accessState, appState, state),
                   controller: _endIndentController,
                   decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: GlobalData.app().formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: GlobalData.app().formFieldFocusColor))),                    icon: Icon(Icons.format_indent_decrease, color: RgbHelper.color(rgbo: GlobalData.app().formFieldHeaderColor)),
+                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.format_indent_decrease, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
                     labelText: 'End Indent',
                     hintText: "The amount of empty space to the trailing edge of the divider.",
                   ),
@@ -328,13 +337,13 @@ class _MyDividerFormState extends State<MyDividerForm> {
 
 
         children.add(Container(height: 20.0));
-        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: GlobalData.app().dividerColor)));
+        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
 
 
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
           children.add(RaisedButton(
-                  color: RgbHelper.color(rgbo: GlobalData.app().formSubmitButtonColor),
-                  onPressed: _readOnly(state) ? null : () {
+                  color: RgbHelper.color(rgbo: app.formSubmitButtonColor),
+                  onPressed: _readOnly(accessState, appState, state) ? null : () {
                     if (state is DividerFormError) {
                       return null;
                     } else {
@@ -371,12 +380,12 @@ class _MyDividerFormState extends State<MyDividerForm> {
                       return true;
                     }
                   },
-                  child: Text('Submit', style: TextStyle(color: RgbHelper.color(rgbo: GlobalData.app().formSubmitButtonTextColor))),
+                  child: Text('Submit', style: TextStyle(color: RgbHelper.color(rgbo: app.formSubmitButtonTextColor))),
                 ));
 
         return Container(
           color: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? Colors.transparent : null,
-          decoration: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? null : BoxDecorationHelper.boxDecoration(GlobalData.app().formBackground),
+          decoration: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? null : BoxDecorationHelper.boxDecoration(accessState, app.formBackground),
           padding:
           const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
             child: Form(
@@ -448,8 +457,8 @@ class _MyDividerFormState extends State<MyDividerForm> {
     super.dispose();
   }
 
-  bool _readOnly(DividerFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!GlobalData.memberIsOwner());
+  bool _readOnly(AccessState accessState, AppState appState, DividerFormInitialized state) {
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(appState));
   }
   
 

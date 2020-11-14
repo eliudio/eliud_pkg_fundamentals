@@ -42,9 +42,9 @@ import 'package:eliud_pkg_fundamentals/model/section_form_state.dart';
 import 'package:eliud_pkg_fundamentals/model/section_repository.dart';
 
 class SectionFormBloc extends Bloc<SectionFormEvent, SectionFormState> {
-  final ImageRepository _imageRepository = imageRepository();
+  final String appId;
 
-  SectionFormBloc(): super(SectionFormUninitialized());
+  SectionFormBloc(this.appId, ): super(SectionFormUninitialized());
   @override
   Stream<SectionFormState> mapEventToState(SectionFormEvent event) async* {
     final currentState = state;
@@ -89,7 +89,7 @@ class SectionFormBloc extends Bloc<SectionFormEvent, SectionFormState> {
       }
       if (event is ChangedSectionImage) {
         if (event.value != null)
-          newValue = currentState.value.copyWith(image: await _imageRepository.get(event.value));
+          newValue = currentState.value.copyWith(image: await imageRepository(appID: appId).get(event.value));
         else
           newValue = new SectionModel(
                                  documentID: currentState.value.documentID,

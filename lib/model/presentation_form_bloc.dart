@@ -42,11 +42,10 @@ import 'package:eliud_pkg_fundamentals/model/presentation_form_state.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_repository.dart';
 
 class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormState> {
-  final PresentationRepository _presentationRepository = presentationRepository();
   final FormAction formAction;
-  final ImageRepository _imageRepository = imageRepository();
+  final String appId;
 
-  PresentationFormBloc({ this.formAction }): super(PresentationFormUninitialized());
+  PresentationFormBloc(this.appId, { this.formAction }): super(PresentationFormUninitialized());
   @override
   Stream<PresentationFormState> mapEventToState(PresentationFormEvent event) async* {
     final currentState = state;
@@ -68,7 +67,7 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
 
       if (event is InitialisePresentationFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        PresentationFormLoaded loaded = PresentationFormLoaded(value: await _presentationRepository.get(event.value.documentID));
+        PresentationFormLoaded loaded = PresentationFormLoaded(value: await presentationRepository(appID: appId).get(event.value.documentID));
         yield loaded;
         return;
       } else if (event is InitialisePresentationFormNoLoadEvent) {
@@ -102,7 +101,7 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
       }
       if (event is ChangedPresentationImage) {
         if (event.value != null)
-          newValue = currentState.value.copyWith(image: await _imageRepository.get(event.value));
+          newValue = currentState.value.copyWith(image: await imageRepository(appID: appId).get(event.value));
         else
           newValue = new PresentationModel(
                                  documentID: currentState.value.documentID,
@@ -150,7 +149,7 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
   Future<PresentationFormState> _isDocumentIDValid(String value, PresentationModel newValue) async {
     if (value == null) return Future.value(error("Provide value for documentID", newValue));
     if (value.length == 0) return Future.value(error("Provide value for documentID", newValue));
-    Future<PresentationModel> findDocument = _presentationRepository.get(value);
+    Future<PresentationModel> findDocument = presentationRepository(appID: appId).get(value);
     return await findDocument.then((documentFound) {
       if (documentFound == null) {
         return SubmittablePresentationForm(value: newValue);

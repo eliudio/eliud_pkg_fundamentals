@@ -16,34 +16,34 @@
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_model.dart';
 
-abstract class FaderState extends Equatable {
-  const FaderState();
+abstract class FaderComponentState extends Equatable {
+  const FaderComponentState();
 
   @override
   List<Object> get props => [];
 }
 
-class FaderUninitialized extends FaderState {}
+class FaderComponentUninitialized extends FaderComponentState {}
 
-class FaderError extends FaderState {
+class FaderComponentError extends FaderComponentState {
   final String message;
-  FaderError({ this.message });
+  FaderComponentError({ this.message });
 }
 
-class FaderLoaded extends FaderState {
+class FaderComponentLoaded extends FaderComponentState {
   final FaderModel value;
 
-  const FaderLoaded({ this.value });
+  const FaderComponentLoaded({ this.value });
 
-  FaderLoaded copyWith({ FaderModel copyThis }) {
-    return FaderLoaded(value: copyThis ?? this.value);
+  FaderComponentLoaded copyWith({ FaderModel copyThis }) {
+    return FaderComponentLoaded(value: copyThis ?? this.value);
   }
 
   @override
   List<Object> get props => [value];
 
   @override
-  String toString() => 'FaderModelLoaded { value: $value }';
+  String toString() => 'FaderComponentLoaded { value: $value }';
 }
 
 

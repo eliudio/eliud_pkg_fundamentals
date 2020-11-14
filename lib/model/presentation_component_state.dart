@@ -16,34 +16,34 @@
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_model.dart';
 
-abstract class PresentationState extends Equatable {
-  const PresentationState();
+abstract class PresentationComponentState extends Equatable {
+  const PresentationComponentState();
 
   @override
   List<Object> get props => [];
 }
 
-class PresentationUninitialized extends PresentationState {}
+class PresentationComponentUninitialized extends PresentationComponentState {}
 
-class PresentationError extends PresentationState {
+class PresentationComponentError extends PresentationComponentState {
   final String message;
-  PresentationError({ this.message });
+  PresentationComponentError({ this.message });
 }
 
-class PresentationLoaded extends PresentationState {
+class PresentationComponentLoaded extends PresentationComponentState {
   final PresentationModel value;
 
-  const PresentationLoaded({ this.value });
+  const PresentationComponentLoaded({ this.value });
 
-  PresentationLoaded copyWith({ PresentationModel copyThis }) {
-    return PresentationLoaded(value: copyThis ?? this.value);
+  PresentationComponentLoaded copyWith({ PresentationModel copyThis }) {
+    return PresentationComponentLoaded(value: copyThis ?? this.value);
   }
 
   @override
   List<Object> get props => [value];
 
   @override
-  String toString() => 'PresentationModelLoaded { value: $value }';
+  String toString() => 'PresentationComponentLoaded { value: $value }';
 }
 
 

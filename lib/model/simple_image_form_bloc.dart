@@ -42,11 +42,10 @@ import 'package:eliud_pkg_fundamentals/model/simple_image_form_state.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_repository.dart';
 
 class SimpleImageFormBloc extends Bloc<SimpleImageFormEvent, SimpleImageFormState> {
-  final SimpleImageRepository _simpleImageRepository = simpleImageRepository();
   final FormAction formAction;
-  final ImageRepository _imageRepository = imageRepository();
+  final String appId;
 
-  SimpleImageFormBloc({ this.formAction }): super(SimpleImageFormUninitialized());
+  SimpleImageFormBloc(this.appId, { this.formAction }): super(SimpleImageFormUninitialized());
   @override
   Stream<SimpleImageFormState> mapEventToState(SimpleImageFormEvent event) async* {
     final currentState = state;
@@ -66,7 +65,7 @@ class SimpleImageFormBloc extends Bloc<SimpleImageFormEvent, SimpleImageFormStat
 
       if (event is InitialiseSimpleImageFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        SimpleImageFormLoaded loaded = SimpleImageFormLoaded(value: await _simpleImageRepository.get(event.value.documentID));
+        SimpleImageFormLoaded loaded = SimpleImageFormLoaded(value: await simpleImageRepository(appID: appId).get(event.value.documentID));
         yield loaded;
         return;
       } else if (event is InitialiseSimpleImageFormNoLoadEvent) {
@@ -94,7 +93,7 @@ class SimpleImageFormBloc extends Bloc<SimpleImageFormEvent, SimpleImageFormStat
       }
       if (event is ChangedSimpleImageImage) {
         if (event.value != null)
-          newValue = currentState.value.copyWith(image: await _imageRepository.get(event.value));
+          newValue = currentState.value.copyWith(image: await imageRepository(appID: appId).get(event.value));
         else
           newValue = new SimpleImageModel(
                                  documentID: currentState.value.documentID,
@@ -115,7 +114,7 @@ class SimpleImageFormBloc extends Bloc<SimpleImageFormEvent, SimpleImageFormStat
   Future<SimpleImageFormState> _isDocumentIDValid(String value, SimpleImageModel newValue) async {
     if (value == null) return Future.value(error("Provide value for documentID", newValue));
     if (value.length == 0) return Future.value(error("Provide value for documentID", newValue));
-    Future<SimpleImageModel> findDocument = _simpleImageRepository.get(value);
+    Future<SimpleImageModel> findDocument = simpleImageRepository(appID: appId).get(value);
     return await findDocument.then((documentFound) {
       if (documentFound == null) {
         return SubmittableSimpleImageForm(value: newValue);

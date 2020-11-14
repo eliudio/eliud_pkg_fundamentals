@@ -107,13 +107,12 @@ class PresentationModel {
     return 'PresentationModel{documentID: $documentID, appId: $appId, title: $title, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, image: $image, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth}';
   }
 
-  PresentationEntity toEntity() {
-    appId = GlobalData.app().documentID;
+  PresentationEntity toEntity(String appId) {
     return PresentationEntity(
           appId: (appId != null) ? appId : null, 
           title: (title != null) ? title : null, 
           bodyComponents: (bodyComponents != null) ? bodyComponents
-            .map((item) => item.toEntity())
+            .map((item) => item.toEntity(appId))
             .toList() : null, 
           imageId: (image != null) ? image.documentID : null, 
           imagePositionRelative: (imagePositionRelative != null) ? imagePositionRelative.index : null, 
@@ -144,7 +143,7 @@ class PresentationModel {
     ImageModel imageHolder;
     if (entity.imageId != null) {
       try {
-        await imageRepository().get(entity.imageId).then((val) {
+        await imageRepository(appID: entity.appId).get(entity.imageId).then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}

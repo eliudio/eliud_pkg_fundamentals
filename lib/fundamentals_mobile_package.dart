@@ -6,7 +6,8 @@ import 'model/component_registry.dart';
 
 class FundamentalsMobilePackage extends FundamentalsPackage {
   @override
-  void initRepository(String appID) {
-    AbstractRepositorySingleton.singleton = RepositorySingleton(appID);
+  void init() {
+    AbstractRepositorySingleton.singleton = RepositorySingleton();
+    super.init();
   }
 }

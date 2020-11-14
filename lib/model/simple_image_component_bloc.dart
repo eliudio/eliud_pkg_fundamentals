@@ -21,28 +21,28 @@ import 'package:eliud_pkg_fundamentals/model/simple_image_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_repository.dart';
 
-class SimpleImageBloc extends Bloc<SimpleImageEvent, SimpleImageState> {
+class SimpleImageComponentBloc extends Bloc<SimpleImageComponentEvent, SimpleImageComponentState> {
   final SimpleImageRepository simpleImageRepository;
 
-  SimpleImageBloc({ this.simpleImageRepository }): super(SimpleImageUninitialized());
+  SimpleImageComponentBloc({ this.simpleImageRepository }): super(SimpleImageComponentUninitialized());
   @override
-  Stream<SimpleImageState> mapEventToState(SimpleImageEvent event) async* {
+  Stream<SimpleImageComponentState> mapEventToState(SimpleImageComponentEvent event) async* {
     final currentState = state;
-    if (event is FetchSimpleImage) {
+    if (event is FetchSimpleImageComponent) {
       try {
-        if (currentState is SimpleImageUninitialized) {
+        if (currentState is SimpleImageComponentUninitialized) {
           final SimpleImageModel model = await _fetchSimpleImage(event.id);
 
           if (model != null) {
-            yield SimpleImageLoaded(value: model);
+            yield SimpleImageComponentLoaded(value: model);
           } else {
             String id = event.id;
-            yield SimpleImageError(message: "SimpleImage with id = '$id' not found");
+            yield SimpleImageComponentError(message: "SimpleImage with id = '$id' not found");
           }
           return;
         }
       } catch (_) {
-        yield SimpleImageError(message: "Unknown error whilst retrieving SimpleImage");
+        yield SimpleImageComponentError(message: "Unknown error whilst retrieving SimpleImage");
       }
     }
   }

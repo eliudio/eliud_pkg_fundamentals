@@ -1,3 +1,4 @@
+import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_model.dart';
 import 'package:eliud_core/platform/platform.dart';
 import 'package:eliud_core/model/image_model.dart';
@@ -29,10 +30,12 @@ class PresentationHelper {
 
   static Align _toAlignment(
       PresentationImageAlignment sectionImageAlignment, Widget widget) {
-    if (sectionImageAlignment == PresentationImageAlignment.Left)
+    if (sectionImageAlignment == PresentationImageAlignment.Left) {
       return Align(child: widget, alignment: Alignment.topLeft);
-    if (sectionImageAlignment == PresentationImageAlignment.Right)
+    }
+    if (sectionImageAlignment == PresentationImageAlignment.Right) {
       return Align(child: widget, alignment: Alignment.topRight);
+    }
 
     // default center
     return Align(child: widget, alignment: Alignment.topCenter);
@@ -45,23 +48,26 @@ class PresentationHelper {
       PresentationRelativeImagePosition relativeImagePosition,
       PresentationImageAlignment imageAlignment,
       double imageSize) {
+    var accessState = AccessBloc.getState(context);
     if (image == null) {
       return _makeBox(widgets);
     }
 
     if ((relativeImagePosition == null) ||
-        (relativeImagePosition == PresentationRelativeImagePosition.Unknown))
+        (relativeImagePosition == PresentationRelativeImagePosition.Unknown)) {
       relativeImagePosition = PresentationRelativeImagePosition.Above;
+    }
     if ((imageAlignment == null) ||
-        (imageAlignment == PresentationImageAlignment.Unknown))
+        (imageAlignment == PresentationImageAlignment.Unknown)) {
       imageAlignment = PresentationImageAlignment.Left;
+    }
 
     double size;
     if (imageSize != null) {
       size = fullScreenWidth(context) * imageSize;
     }
-    Widget widgetImage =
-        AbstractPlatform.platform.getImage(image: image, width: size);
+    var widgetImage =
+        AbstractPlatform.platform.getImage(accessState, image: image, width: size);
 
     if (relativeImagePosition == PresentationRelativeImagePosition.Aside) {
       Widget column1;
@@ -100,13 +106,13 @@ class PresentationHelper {
 
     Widget alignedWidget = _toAlignment(imageAlignment, widgetImage);
     if (relativeImagePosition == PresentationRelativeImagePosition.Below) {
-      List<Widget> widgets = List();
+      var widgets = <Widget>[];
       widgets.addAll(widgets);
       widgets.add(alignedWidget);
       return _makeBox(widgets);
     }
     if (relativeImagePosition == PresentationRelativeImagePosition.Above) {
-      List<Widget> newList = new List();
+      var newList = <Widget>[];
       newList.add(alignedWidget);
       newList.addAll(widgets);
       return _makeBox(newList);

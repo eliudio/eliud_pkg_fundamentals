@@ -15,6 +15,7 @@
 
 
 import 'package:eliud_core/tools/component_constructor.dart';
+import 'package:eliud_core/core/app/app_bloc.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -242,15 +243,15 @@ class ListComponent extends StatelessWidget with HasFab {
   @override
   Widget build(BuildContext context) {
 
-    if (componentId == 'booklets') return _bookletBuild();
-    if (componentId == 'dividers') return _dividerBuild();
-    if (componentId == 'documents') return _documentBuild();
-    if (componentId == 'faders') return _faderBuild();
-    if (componentId == 'grids') return _gridBuild();
-    if (componentId == 'playStores') return _playStoreBuild();
-    if (componentId == 'presentations') return _presentationBuild();
-    if (componentId == 'simpleImages') return _simpleImageBuild();
-    if (componentId == 'tutorials') return _tutorialBuild();
+    if (componentId == 'booklets') return _bookletBuild(context);
+    if (componentId == 'dividers') return _dividerBuild(context);
+    if (componentId == 'documents') return _documentBuild(context);
+    if (componentId == 'faders') return _faderBuild(context);
+    if (componentId == 'grids') return _gridBuild(context);
+    if (componentId == 'playStores') return _playStoreBuild(context);
+    if (componentId == 'presentations') return _presentationBuild(context);
+    if (componentId == 'simpleImages') return _simpleImageBuild(context);
+    if (componentId == 'tutorials') return _tutorialBuild(context);
     return Text('Component with componentId == $componentId not found');
   }
 
@@ -266,12 +267,12 @@ class ListComponent extends StatelessWidget with HasFab {
     if (componentId == 'tutorials') widget = TutorialListWidget();
   }
 
-  Widget _bookletBuild() {
+  Widget _bookletBuild(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<BookletListBloc>(
           create: (context) => BookletListBloc(
-            bookletRepository: bookletRepository(),
+            bookletRepository: bookletRepository(appID: AppBloc.appId(context)),
           )..add(LoadBookletList()),
         )
       ],
@@ -279,12 +280,12 @@ class ListComponent extends StatelessWidget with HasFab {
     );
   }
 
-  Widget _dividerBuild() {
+  Widget _dividerBuild(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<DividerListBloc>(
           create: (context) => DividerListBloc(
-            dividerRepository: dividerRepository(),
+            dividerRepository: dividerRepository(appID: AppBloc.appId(context)),
           )..add(LoadDividerList()),
         )
       ],
@@ -292,12 +293,12 @@ class ListComponent extends StatelessWidget with HasFab {
     );
   }
 
-  Widget _documentBuild() {
+  Widget _documentBuild(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<DocumentListBloc>(
           create: (context) => DocumentListBloc(
-            documentRepository: documentRepository(),
+            documentRepository: documentRepository(appID: AppBloc.appId(context)),
           )..add(LoadDocumentList()),
         )
       ],
@@ -305,12 +306,12 @@ class ListComponent extends StatelessWidget with HasFab {
     );
   }
 
-  Widget _faderBuild() {
+  Widget _faderBuild(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<FaderListBloc>(
           create: (context) => FaderListBloc(
-            faderRepository: faderRepository(),
+            faderRepository: faderRepository(appID: AppBloc.appId(context)),
           )..add(LoadFaderList()),
         )
       ],
@@ -318,12 +319,12 @@ class ListComponent extends StatelessWidget with HasFab {
     );
   }
 
-  Widget _gridBuild() {
+  Widget _gridBuild(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<GridListBloc>(
           create: (context) => GridListBloc(
-            gridRepository: gridRepository(),
+            gridRepository: gridRepository(appID: AppBloc.appId(context)),
           )..add(LoadGridList()),
         )
       ],
@@ -331,12 +332,12 @@ class ListComponent extends StatelessWidget with HasFab {
     );
   }
 
-  Widget _playStoreBuild() {
+  Widget _playStoreBuild(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<PlayStoreListBloc>(
           create: (context) => PlayStoreListBloc(
-            playStoreRepository: playStoreRepository(),
+            playStoreRepository: playStoreRepository(appID: AppBloc.appId(context)),
           )..add(LoadPlayStoreList()),
         )
       ],
@@ -344,12 +345,12 @@ class ListComponent extends StatelessWidget with HasFab {
     );
   }
 
-  Widget _presentationBuild() {
+  Widget _presentationBuild(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<PresentationListBloc>(
           create: (context) => PresentationListBloc(
-            presentationRepository: presentationRepository(),
+            presentationRepository: presentationRepository(appID: AppBloc.appId(context)),
           )..add(LoadPresentationList()),
         )
       ],
@@ -357,12 +358,12 @@ class ListComponent extends StatelessWidget with HasFab {
     );
   }
 
-  Widget _simpleImageBuild() {
+  Widget _simpleImageBuild(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<SimpleImageListBloc>(
           create: (context) => SimpleImageListBloc(
-            simpleImageRepository: simpleImageRepository(),
+            simpleImageRepository: simpleImageRepository(appID: AppBloc.appId(context)),
           )..add(LoadSimpleImageList()),
         )
       ],
@@ -370,12 +371,12 @@ class ListComponent extends StatelessWidget with HasFab {
     );
   }
 
-  Widget _tutorialBuild() {
+  Widget _tutorialBuild(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<TutorialListBloc>(
           create: (context) => TutorialListBloc(
-            tutorialRepository: tutorialRepository(),
+            tutorialRepository: tutorialRepository(appID: AppBloc.appId(context)),
           )..add(LoadTutorialList()),
         )
       ],
@@ -399,25 +400,25 @@ class DropdownButtonComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    if (componentId == 'booklets') return _bookletBuild();
-    if (componentId == 'dividers') return _dividerBuild();
-    if (componentId == 'documents') return _documentBuild();
-    if (componentId == 'faders') return _faderBuild();
-    if (componentId == 'grids') return _gridBuild();
-    if (componentId == 'playStores') return _playStoreBuild();
-    if (componentId == 'presentations') return _presentationBuild();
-    if (componentId == 'simpleImages') return _simpleImageBuild();
-    if (componentId == 'tutorials') return _tutorialBuild();
+    if (componentId == 'booklets') return _bookletBuild(context);
+    if (componentId == 'dividers') return _dividerBuild(context);
+    if (componentId == 'documents') return _documentBuild(context);
+    if (componentId == 'faders') return _faderBuild(context);
+    if (componentId == 'grids') return _gridBuild(context);
+    if (componentId == 'playStores') return _playStoreBuild(context);
+    if (componentId == 'presentations') return _presentationBuild(context);
+    if (componentId == 'simpleImages') return _simpleImageBuild(context);
+    if (componentId == 'tutorials') return _tutorialBuild(context);
     return Text('Component with componentId == $componentId not found');
   }
 
 
-  Widget _bookletBuild() {
+  Widget _bookletBuild(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<BookletListBloc>(
           create: (context) => BookletListBloc(
-            bookletRepository: bookletRepository(),
+            bookletRepository: bookletRepository(appID: AppBloc.appId(context)),
           )..add(LoadBookletList()),
         )
       ],
@@ -425,12 +426,12 @@ class DropdownButtonComponent extends StatelessWidget {
     );
   }
 
-  Widget _dividerBuild() {
+  Widget _dividerBuild(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<DividerListBloc>(
           create: (context) => DividerListBloc(
-            dividerRepository: dividerRepository(),
+            dividerRepository: dividerRepository(appID: AppBloc.appId(context)),
           )..add(LoadDividerList()),
         )
       ],
@@ -438,12 +439,12 @@ class DropdownButtonComponent extends StatelessWidget {
     );
   }
 
-  Widget _documentBuild() {
+  Widget _documentBuild(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<DocumentListBloc>(
           create: (context) => DocumentListBloc(
-            documentRepository: documentRepository(),
+            documentRepository: documentRepository(appID: AppBloc.appId(context)),
           )..add(LoadDocumentList()),
         )
       ],
@@ -451,12 +452,12 @@ class DropdownButtonComponent extends StatelessWidget {
     );
   }
 
-  Widget _faderBuild() {
+  Widget _faderBuild(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<FaderListBloc>(
           create: (context) => FaderListBloc(
-            faderRepository: faderRepository(),
+            faderRepository: faderRepository(appID: AppBloc.appId(context)),
           )..add(LoadFaderList()),
         )
       ],
@@ -464,12 +465,12 @@ class DropdownButtonComponent extends StatelessWidget {
     );
   }
 
-  Widget _gridBuild() {
+  Widget _gridBuild(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<GridListBloc>(
           create: (context) => GridListBloc(
-            gridRepository: gridRepository(),
+            gridRepository: gridRepository(appID: AppBloc.appId(context)),
           )..add(LoadGridList()),
         )
       ],
@@ -477,12 +478,12 @@ class DropdownButtonComponent extends StatelessWidget {
     );
   }
 
-  Widget _playStoreBuild() {
+  Widget _playStoreBuild(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<PlayStoreListBloc>(
           create: (context) => PlayStoreListBloc(
-            playStoreRepository: playStoreRepository(),
+            playStoreRepository: playStoreRepository(appID: AppBloc.appId(context)),
           )..add(LoadPlayStoreList()),
         )
       ],
@@ -490,12 +491,12 @@ class DropdownButtonComponent extends StatelessWidget {
     );
   }
 
-  Widget _presentationBuild() {
+  Widget _presentationBuild(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<PresentationListBloc>(
           create: (context) => PresentationListBloc(
-            presentationRepository: presentationRepository(),
+            presentationRepository: presentationRepository(appID: AppBloc.appId(context)),
           )..add(LoadPresentationList()),
         )
       ],
@@ -503,12 +504,12 @@ class DropdownButtonComponent extends StatelessWidget {
     );
   }
 
-  Widget _simpleImageBuild() {
+  Widget _simpleImageBuild(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<SimpleImageListBloc>(
           create: (context) => SimpleImageListBloc(
-            simpleImageRepository: simpleImageRepository(),
+            simpleImageRepository: simpleImageRepository(appID: AppBloc.appId(context)),
           )..add(LoadSimpleImageList()),
         )
       ],
@@ -516,12 +517,12 @@ class DropdownButtonComponent extends StatelessWidget {
     );
   }
 
-  Widget _tutorialBuild() {
+  Widget _tutorialBuild(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<TutorialListBloc>(
           create: (context) => TutorialListBloc(
-            tutorialRepository: tutorialRepository(),
+            tutorialRepository: tutorialRepository(appID: AppBloc.appId(context)),
           )..add(LoadTutorialList()),
         )
       ],

@@ -1,10 +1,12 @@
+import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/app/app_bloc.dart';
+import 'package:eliud_core/core/app/app_state.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_component.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/section_model.dart';
-import 'package:eliud_core/core/global_data.dart';
 import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
 import 'package:eliud_core/platform/platform.dart';
 import 'package:eliud_core/model/image_model.dart';
@@ -15,6 +17,7 @@ import 'package:eliud_pkg_fundamentals/tools/document_processor_extended.dart';
 import 'package:flutter/material.dart';
 
 class BookletComponentConstructorDefault implements ComponentConstructor {
+  @override
   Widget createNew({String id, Map<String, String> parameters}) {
     return BookletComponent(bookletID: id);
   }
@@ -56,6 +59,7 @@ class BookletComponent extends AbstractBookletComponent {
 
   Widget _addImage(BuildContext context, List<Widget> widgets, ImageModel image,
       RelativeImagePosition relativeImagePosition, SectionImageAlignment sectionImageAlignment, double imageSize) {
+    var state = AccessBloc.getState(context);
     if (image == null) {
       return _makeBox(widgets);
     }
@@ -67,8 +71,8 @@ class BookletComponent extends AbstractBookletComponent {
     if (imageSize != null) {
       size = fullScreenWidth(context) * imageSize;
     }
-    Widget widgetImage =
-        AbstractPlatform.platform.getImage(image: image, width: size);
+    var widgetImage =
+        AbstractPlatform.platform.getImage(state, image: image, width: size);
 
     if (relativeImagePosition == RelativeImagePosition.Aside) {
       if (sectionImageAlignment == SectionImageAlignment.Left) {
@@ -104,7 +108,7 @@ class BookletComponent extends AbstractBookletComponent {
       return _makeBox(widgets);
     }
     if (relativeImagePosition == RelativeImagePosition.Above) {
-      List<Widget> newList = new List();
+      var newList = <Widget>[];
       newList.add(alignedWidget);
       newList.addAll(widgets);
       return _makeBox(newList);
@@ -126,37 +130,40 @@ class BookletComponent extends AbstractBookletComponent {
     return _makeBox(widgets);
   }
 
+  @override
   Widget yourWidget(BuildContext context, BookletModel value) {
+    var accessState = AccessBloc.getState(context);
+    var appState = AppBloc.getState(context);
     var documentParameterProcessor =
-        ExtendedDocumentParameterProcessor(context);
+        ExtendedDocumentParameterProcessor(context, accessState, appState);
 
-    List<Widget> groupedWidgets = List();
+    var groupedWidgets = <Widget>[];
 
     value.sections.forEach((element) {
-      List<Widget> widgets = List();
+      var widgets = <Widget>[];
 
       widgets.add(Text(
         documentParameterProcessor.process(element.title),
-        style: FontTools.textStyle(GlobalData.app().h3),
+        style: appState is AppLoaded ? FontTools.textStyle(appState.app.h3) : null,
       ));
       widgets.add(_aBitSpace());
       widgets.add(Text(
           documentParameterProcessor.process(element.description),
-          style: FontTools.textStyle(GlobalData.app().fontText)));
+          style: appState is AppLoaded ? FontTools.textStyle(appState.app.fontText) : null));
       widgets.add(_aBitSpace());
-      if (element.links != null && element.links.length > 0) {
-        List<Widget> children = List();
+      if (element.links != null && element.links.isNotEmpty) {
+        var children = <Widget>[];
         element.links.forEach((link) {
           children.add(OutlineButton(
-              child: new Text(
+              child: Text(
                 link.linkText,
-                style: FontTools.textStyle(GlobalData.app().fontLink),
+                style: appState is AppLoaded ? FontTools.textStyle(appState.app.fontLink) : null,
               ),
               onPressed: () {
                 EliudRouter.Router.navigateTo(context, link.action);
               },
-              shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(30.0))));
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0))));
         });
         widgets.add(Wrap(
           spacing: 8.0,
@@ -186,7 +193,7 @@ class BookletComponent extends AbstractBookletComponent {
   }
 
   @override
-  BookletRepository getBookletRepository() {
-    return AbstractRepositorySingleton.singleton.bookletRepository();
+  BookletRepository getBookletRepository(BuildContext context) {
+    return AbstractRepositorySingleton.singleton.bookletRepository(AppBloc.appId(context));
   }
 }

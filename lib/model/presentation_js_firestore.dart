@@ -35,7 +35,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 class PresentationJsFirestore implements PresentationRepository {
   Future<PresentationModel> add(PresentationModel value) {
     return presentationCollection.doc(value.documentID)
-        .set(value.toEntity().toDocument())
+        .set(value.toEntity(appID).toDocument())
         .then((_) => value);
   }
 
@@ -45,7 +45,7 @@ class PresentationJsFirestore implements PresentationRepository {
 
   Future<PresentationModel> update(PresentationModel value) {
     return presentationCollection.doc(value.documentID)
-        .update(data: value.toEntity().toDocument())
+        .update(data: value.toEntity(appID).toDocument())
         .then((_) => value);
   }
 

@@ -15,14 +15,14 @@
 
 import 'package:equatable/equatable.dart';
 
-abstract class PlayStoreEvent extends Equatable {
+abstract class PlayStoreComponentEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
 
-class FetchPlayStore extends PlayStoreEvent {
+class FetchPlayStoreComponent extends PlayStoreComponentEvent {
   final String id;
 
-  FetchPlayStore({ this.id });
+  FetchPlayStoreComponent({ this.id });
 }
 

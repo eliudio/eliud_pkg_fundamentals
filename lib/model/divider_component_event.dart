@@ -15,14 +15,14 @@
 
 import 'package:equatable/equatable.dart';
 
-abstract class DividerEvent extends Equatable {
+abstract class DividerComponentEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
 
-class FetchDivider extends DividerEvent {
+class FetchDividerComponent extends DividerComponentEvent {
   final String id;
 
-  FetchDivider({ this.id });
+  FetchDividerComponent({ this.id });
 }
 

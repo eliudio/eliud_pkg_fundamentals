@@ -1,12 +1,12 @@
-import 'dart:async';
-import 'dart:math';
 
+import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/access/bloc/access_state.dart';
+import 'package:eliud_core/core/app/app_bloc.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_component.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_model.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_repository.dart';
-import 'package:eliud_pkg_fundamentals/model/listed_item_model.dart';
 import 'package:eliud_core/platform/platform.dart';
 import 'package:eliud_core/tools/action_model.dart';
 import 'package:eliud_core/model/pos_size_model.dart';
@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:eliud_pkg_fundamentals/extensions/fader_widgets/fader_widgets.dart';
 
 class FaderComponentConstructorDefault implements ComponentConstructor {
+  @override
   Widget createNew({String id, Map<String, String> parameters}) {
     return FaderComponent(faderID: id);
   }
@@ -24,8 +25,10 @@ class FaderComponentConstructorDefault implements ComponentConstructor {
 class FaderComponent extends AbstractFaderComponent {
   FaderComponent({String faderID}) : super(faderID: faderID);
 
+  @override
   Widget yourWidget(BuildContext context, FaderModel value) {
-    return ImageRotater(value);
+    var accessState = AccessBloc.getState(context);
+    return ImageRotater(accessState, value);
   }
 
   @override
@@ -34,18 +37,19 @@ class FaderComponent extends AbstractFaderComponent {
   }
 
   @override
-  FaderRepository getFaderRepository() {
-    return AbstractRepositorySingleton.singleton.faderRepository();
+  FaderRepository getFaderRepository(BuildContext context) {
+    return AbstractRepositorySingleton.singleton.faderRepository(AppBloc.appId(context));
   }
 }
 
 class ImageRotater extends StatefulWidget {
   final FaderModel faderModel;
+  final AccessState state;
 
-  ImageRotater(this.faderModel);
+  ImageRotater(this.state, this.faderModel);
 
   @override
-  State<StatefulWidget> createState() => new ImageRotaterState();
+  State<StatefulWidget> createState() => ImageRotaterState();
 }
 
 class ImageRotaterState extends State<ImageRotater> {
@@ -55,9 +59,9 @@ class ImageRotaterState extends State<ImageRotater> {
 
   @override
   void didChangeDependencies() {
-    List<ListedItemModel> items = widget.faderModel.items;
+    var items = widget.faderModel.items;
     cachedImages = items.map((element) =>
-        AbstractPlatform.platform.getImageProvider(element.image)).toList();
+        AbstractPlatform.platform.getImageProvider(widget.state, element.image)).toList();
     positionsAndSizes = items.map((element) => element.posSize).toList();
     actions = items.map((element) => element.action).toList();
     if (cachedImages != null) {
@@ -72,10 +76,10 @@ class ImageRotaterState extends State<ImageRotater> {
 
   @override
   Widget build(BuildContext context) {
-    if ((cachedImages == null) || (cachedImages.length == 0) || (widget.faderModel.items == 0)) {
-      return Text("Could not load or cache images.");
+    if ((cachedImages == null) || (cachedImages.isEmpty) || (widget.faderModel.items.isEmpty)) {
+      return Text('Could not load or cache images.');
     } else {
-      Orientation orientation = MediaQuery.of(context).orientation;
+      var orientation = MediaQuery.of(context).orientation;
       if (widget.faderModel.animation == FaderAnimation.Slide) {
         return TheImageGF(cachedImages, positionsAndSizes, actions, orientation, widget.faderModel.imageSeconds, widget.faderModel.animation, widget.faderModel.animationMilliseconds);
       } else {

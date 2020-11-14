@@ -82,12 +82,11 @@ class DividerModel {
     return 'DividerModel{documentID: $documentID, appId: $appId, name: $name, color: $color, height: $height, thickness: $thickness, indent: $indent, endIndent: $endIndent}';
   }
 
-  DividerEntity toEntity() {
-    appId = GlobalData.app().documentID;
+  DividerEntity toEntity(String appId) {
     return DividerEntity(
           appId: (appId != null) ? appId : null, 
           name: (name != null) ? name : null, 
-          color: (color != null) ? color.toEntity() : null, 
+          color: (color != null) ? color.toEntity(appId) : null, 
           height: (height != null) ? height : null, 
           thickness: (thickness != null) ? thickness : null, 
           indent: (indent != null) ? indent : null, 

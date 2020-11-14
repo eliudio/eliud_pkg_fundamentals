@@ -21,28 +21,28 @@ import 'package:eliud_pkg_fundamentals/model/presentation_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_repository.dart';
 
-class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
+class PresentationComponentBloc extends Bloc<PresentationComponentEvent, PresentationComponentState> {
   final PresentationRepository presentationRepository;
 
-  PresentationBloc({ this.presentationRepository }): super(PresentationUninitialized());
+  PresentationComponentBloc({ this.presentationRepository }): super(PresentationComponentUninitialized());
   @override
-  Stream<PresentationState> mapEventToState(PresentationEvent event) async* {
+  Stream<PresentationComponentState> mapEventToState(PresentationComponentEvent event) async* {
     final currentState = state;
-    if (event is FetchPresentation) {
+    if (event is FetchPresentationComponent) {
       try {
-        if (currentState is PresentationUninitialized) {
+        if (currentState is PresentationComponentUninitialized) {
           final PresentationModel model = await _fetchPresentation(event.id);
 
           if (model != null) {
-            yield PresentationLoaded(value: model);
+            yield PresentationComponentLoaded(value: model);
           } else {
             String id = event.id;
-            yield PresentationError(message: "Presentation with id = '$id' not found");
+            yield PresentationComponentError(message: "Presentation with id = '$id' not found");
           }
           return;
         }
       } catch (_) {
-        yield PresentationError(message: "Unknown error whilst retrieving Presentation");
+        yield PresentationComponentError(message: "Unknown error whilst retrieving Presentation");
       }
     }
   }

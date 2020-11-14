@@ -15,14 +15,14 @@
 
 import 'package:equatable/equatable.dart';
 
-abstract class FaderEvent extends Equatable {
+abstract class FaderComponentEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
 
-class FetchFader extends FaderEvent {
+class FetchFaderComponent extends FaderComponentEvent {
   final String id;
 
-  FetchFader({ this.id });
+  FetchFaderComponent({ this.id });
 }
 

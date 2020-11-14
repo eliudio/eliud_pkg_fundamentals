@@ -15,6 +15,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:eliud_core/core/app/app_bloc.dart';
 
 import 'package:eliud_pkg_fundamentals/model/divider_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_component_event.dart';
@@ -30,23 +31,23 @@ abstract class AbstractDividerComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<DividerBloc> (
-          create: (context) => DividerBloc(
-            dividerRepository: getDividerRepository())
-        ..add(FetchDivider(id: dividerID)),
+    return BlocProvider<DividerComponentBloc> (
+          create: (context) => DividerComponentBloc(
+            dividerRepository: getDividerRepository(context))
+        ..add(FetchDividerComponent(id: dividerID)),
       child: _dividerBlockBuilder(context),
     );
   }
 
   Widget _dividerBlockBuilder(BuildContext context) {
-    return BlocBuilder<DividerBloc, DividerState>(builder: (context, state) {
-      if (state is DividerLoaded) {
+    return BlocBuilder<DividerComponentBloc, DividerComponentState>(builder: (context, state) {
+      if (state is DividerComponentLoaded) {
         if (state.value == null) {
           return alertWidget(title: 'Error', content: 'No divider defined');
         } else {
           return yourWidget(context, state.value);
         }
-      } else if (state is DividerError) {
+      } else if (state is DividerComponentError) {
         return alertWidget(title: 'Error', content: state.message);
       } else {
         return Center(
@@ -58,7 +59,7 @@ abstract class AbstractDividerComponent extends StatelessWidget {
 
   Widget yourWidget(BuildContext context, DividerModel value);
   Widget alertWidget({ title: String, content: String});
-  DividerRepository getDividerRepository();
+  DividerRepository getDividerRepository(BuildContext context);
 }
 
 

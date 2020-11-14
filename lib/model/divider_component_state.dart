@@ -16,34 +16,34 @@
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_model.dart';
 
-abstract class DividerState extends Equatable {
-  const DividerState();
+abstract class DividerComponentState extends Equatable {
+  const DividerComponentState();
 
   @override
   List<Object> get props => [];
 }
 
-class DividerUninitialized extends DividerState {}
+class DividerComponentUninitialized extends DividerComponentState {}
 
-class DividerError extends DividerState {
+class DividerComponentError extends DividerComponentState {
   final String message;
-  DividerError({ this.message });
+  DividerComponentError({ this.message });
 }
 
-class DividerLoaded extends DividerState {
+class DividerComponentLoaded extends DividerComponentState {
   final DividerModel value;
 
-  const DividerLoaded({ this.value });
+  const DividerComponentLoaded({ this.value });
 
-  DividerLoaded copyWith({ DividerModel copyThis }) {
-    return DividerLoaded(value: copyThis ?? this.value);
+  DividerComponentLoaded copyWith({ DividerModel copyThis }) {
+    return DividerComponentLoaded(value: copyThis ?? this.value);
   }
 
   @override
   List<Object> get props => [value];
 
   @override
-  String toString() => 'DividerModelLoaded { value: $value }';
+  String toString() => 'DividerComponentLoaded { value: $value }';
 }
 
 

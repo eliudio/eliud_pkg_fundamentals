@@ -1,7 +1,7 @@
 {
   "id": "Section",
   "packageName": "eliud_pkg_fundamentals",
-  "isAppModel": true,
+  "isAppModel": false,
   "generate": {
     "generateComponent": false,
     "generateRepository": true,

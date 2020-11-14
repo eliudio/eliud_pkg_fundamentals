@@ -15,6 +15,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:eliud_core/core/app/app_bloc.dart';
 
 import 'package:eliud_pkg_fundamentals/model/fader_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_component_event.dart';
@@ -30,23 +31,23 @@ abstract class AbstractFaderComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<FaderBloc> (
-          create: (context) => FaderBloc(
-            faderRepository: getFaderRepository())
-        ..add(FetchFader(id: faderID)),
+    return BlocProvider<FaderComponentBloc> (
+          create: (context) => FaderComponentBloc(
+            faderRepository: getFaderRepository(context))
+        ..add(FetchFaderComponent(id: faderID)),
       child: _faderBlockBuilder(context),
     );
   }
 
   Widget _faderBlockBuilder(BuildContext context) {
-    return BlocBuilder<FaderBloc, FaderState>(builder: (context, state) {
-      if (state is FaderLoaded) {
+    return BlocBuilder<FaderComponentBloc, FaderComponentState>(builder: (context, state) {
+      if (state is FaderComponentLoaded) {
         if (state.value == null) {
           return alertWidget(title: 'Error', content: 'No fader defined');
         } else {
           return yourWidget(context, state.value);
         }
-      } else if (state is FaderError) {
+      } else if (state is FaderComponentError) {
         return alertWidget(title: 'Error', content: state.message);
       } else {
         return Center(
@@ -58,7 +59,7 @@ abstract class AbstractFaderComponent extends StatelessWidget {
 
   Widget yourWidget(BuildContext context, FaderModel value);
   Widget alertWidget({ title: String, content: String});
-  FaderRepository getFaderRepository();
+  FaderRepository getFaderRepository(BuildContext context);
 }
 
 

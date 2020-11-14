@@ -111,7 +111,7 @@ class DocumentCache implements DocumentRepository {
     BackgroundModel backgroundHolder;
     if (model.background != null) {
       try {
-        await backgroundRepository().get(model.background.documentID).then((val) {
+        await backgroundRepository(appID: model.appId).get(model.background.documentID).then((val) {
           backgroundHolder = val;
         }).catchError((error) {});
       } catch (_) {}

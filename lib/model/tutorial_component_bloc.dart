@@ -20,28 +20,28 @@ import 'package:eliud_pkg_fundamentals/model/tutorial_model.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_repository.dart';
-class TutorialBloc extends Bloc<TutorialEvent, TutorialState> {
+class TutorialComponentBloc extends Bloc<TutorialComponentEvent, TutorialComponentState> {
   final TutorialRepository tutorialRepository;
 
-  TutorialBloc({ this.tutorialRepository }): super(TutorialUninitialized());
+  TutorialComponentBloc({ this.tutorialRepository }): super(TutorialComponentUninitialized());
   @override
-  Stream<TutorialState> mapEventToState(TutorialEvent event) async* {
+  Stream<TutorialComponentState> mapEventToState(TutorialComponentEvent event) async* {
     final currentState = state;
-    if (event is FetchTutorial) {
+    if (event is FetchTutorialComponent) {
       try {
-        if (currentState is TutorialUninitialized) {
+        if (currentState is TutorialComponentUninitialized) {
           final TutorialModel model = await _fetchTutorial(event.id);
 
           if (model != null) {
-            yield TutorialLoaded(value: model);
+            yield TutorialComponentLoaded(value: model);
           } else {
             String id = event.id;
-            yield TutorialError(message: "Tutorial with id = '$id' not found");
+            yield TutorialComponentError(message: "Tutorial with id = '$id' not found");
           }
           return;
         }
       } catch (_) {
-        yield TutorialError(message: "Unknown error whilst retrieving Tutorial");
+        yield TutorialComponentError(message: "Unknown error whilst retrieving Tutorial");
       }
     }
   }

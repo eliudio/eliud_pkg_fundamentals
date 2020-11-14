@@ -15,6 +15,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:eliud_core/core/app/app_bloc.dart';
 
 import 'package:eliud_pkg_fundamentals/model/tutorial_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_component_event.dart';
@@ -30,23 +31,23 @@ abstract class AbstractTutorialComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<TutorialBloc> (
-          create: (context) => TutorialBloc(
-            tutorialRepository: getTutorialRepository())
-        ..add(FetchTutorial(id: tutorialID)),
+    return BlocProvider<TutorialComponentBloc> (
+          create: (context) => TutorialComponentBloc(
+            tutorialRepository: getTutorialRepository(context))
+        ..add(FetchTutorialComponent(id: tutorialID)),
       child: _tutorialBlockBuilder(context),
     );
   }
 
   Widget _tutorialBlockBuilder(BuildContext context) {
-    return BlocBuilder<TutorialBloc, TutorialState>(builder: (context, state) {
-      if (state is TutorialLoaded) {
+    return BlocBuilder<TutorialComponentBloc, TutorialComponentState>(builder: (context, state) {
+      if (state is TutorialComponentLoaded) {
         if (state.value == null) {
           return alertWidget(title: 'Error', content: 'No tutorial defined');
         } else {
           return yourWidget(context, state.value);
         }
-      } else if (state is TutorialError) {
+      } else if (state is TutorialComponentError) {
         return alertWidget(title: 'Error', content: state.message);
       } else {
         return Center(
@@ -58,7 +59,7 @@ abstract class AbstractTutorialComponent extends StatelessWidget {
 
   Widget yourWidget(BuildContext context, TutorialModel value);
   Widget alertWidget({ title: String, content: String});
-  TutorialRepository getTutorialRepository();
+  TutorialRepository getTutorialRepository(BuildContext context);
 }
 
 

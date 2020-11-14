@@ -1,3 +1,5 @@
+import 'package:eliud_core/core/access/bloc/access_state.dart';
+import 'package:eliud_core/core/app/app_state.dart';
 import 'package:eliud_core/core/tools/document_processor.dart';
 import 'package:eliud_core/model/image_model.dart';
 import 'package:eliud_pkg_fundamentals/model/document_item_model.dart';
@@ -8,8 +10,8 @@ const String IMAGE = 'image';
 class ExtendedDocumentParameterProcessor extends DocumentParameterProcessor {
   List<DocumentItemModel> images;
 
-  ExtendedDocumentParameterProcessor(BuildContext context, {this.images})
-      : super(context);
+  ExtendedDocumentParameterProcessor(BuildContext context, AccessState state, AppState appState, {this.images})
+      : super(context, state, appState);
 
   String image(KeyValue k) {
     try {

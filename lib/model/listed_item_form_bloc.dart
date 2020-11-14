@@ -42,10 +42,9 @@ import 'package:eliud_pkg_fundamentals/model/listed_item_form_state.dart';
 import 'package:eliud_pkg_fundamentals/model/listed_item_repository.dart';
 
 class ListedItemFormBloc extends Bloc<ListedItemFormEvent, ListedItemFormState> {
-  final ImageRepository _imageRepository = imageRepository();
-  final PosSizeRepository _posSizeRepository = posSizeRepository();
+  final String appId;
 
-  ListedItemFormBloc(): super(ListedItemFormUninitialized());
+  ListedItemFormBloc(this.appId, ): super(ListedItemFormUninitialized());
   @override
   Stream<ListedItemFormState> mapEventToState(ListedItemFormEvent event) async* {
     final currentState = state;
@@ -87,7 +86,7 @@ class ListedItemFormBloc extends Bloc<ListedItemFormEvent, ListedItemFormState> 
       }
       if (event is ChangedListedItemImage) {
         if (event.value != null)
-          newValue = currentState.value.copyWith(image: await _imageRepository.get(event.value));
+          newValue = currentState.value.copyWith(image: await imageRepository(appID: appId).get(event.value));
         else
           newValue = new ListedItemModel(
                                  documentID: currentState.value.documentID,
@@ -102,7 +101,7 @@ class ListedItemFormBloc extends Bloc<ListedItemFormEvent, ListedItemFormState> 
       }
       if (event is ChangedListedItemPosSize) {
         if (event.value != null)
-          newValue = currentState.value.copyWith(posSize: await _posSizeRepository.get(event.value));
+          newValue = currentState.value.copyWith(posSize: await posSizeRepository(appID: appId).get(event.value));
         else
           newValue = new ListedItemModel(
                                  documentID: currentState.value.documentID,

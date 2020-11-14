@@ -16,34 +16,34 @@
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/play_store_model.dart';
 
-abstract class PlayStoreState extends Equatable {
-  const PlayStoreState();
+abstract class PlayStoreComponentState extends Equatable {
+  const PlayStoreComponentState();
 
   @override
   List<Object> get props => [];
 }
 
-class PlayStoreUninitialized extends PlayStoreState {}
+class PlayStoreComponentUninitialized extends PlayStoreComponentState {}
 
-class PlayStoreError extends PlayStoreState {
+class PlayStoreComponentError extends PlayStoreComponentState {
   final String message;
-  PlayStoreError({ this.message });
+  PlayStoreComponentError({ this.message });
 }
 
-class PlayStoreLoaded extends PlayStoreState {
+class PlayStoreComponentLoaded extends PlayStoreComponentState {
   final PlayStoreModel value;
 
-  const PlayStoreLoaded({ this.value });
+  const PlayStoreComponentLoaded({ this.value });
 
-  PlayStoreLoaded copyWith({ PlayStoreModel copyThis }) {
-    return PlayStoreLoaded(value: copyThis ?? this.value);
+  PlayStoreComponentLoaded copyWith({ PlayStoreModel copyThis }) {
+    return PlayStoreComponentLoaded(value: copyThis ?? this.value);
   }
 
   @override
   List<Object> get props => [value];
 
   @override
-  String toString() => 'PlayStoreModelLoaded { value: $value }';
+  String toString() => 'PlayStoreComponentLoaded { value: $value }';
 }
 
 

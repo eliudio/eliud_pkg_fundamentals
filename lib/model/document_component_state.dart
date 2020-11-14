@@ -16,34 +16,34 @@
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/document_model.dart';
 
-abstract class DocumentState extends Equatable {
-  const DocumentState();
+abstract class DocumentComponentState extends Equatable {
+  const DocumentComponentState();
 
   @override
   List<Object> get props => [];
 }
 
-class DocumentUninitialized extends DocumentState {}
+class DocumentComponentUninitialized extends DocumentComponentState {}
 
-class DocumentError extends DocumentState {
+class DocumentComponentError extends DocumentComponentState {
   final String message;
-  DocumentError({ this.message });
+  DocumentComponentError({ this.message });
 }
 
-class DocumentLoaded extends DocumentState {
+class DocumentComponentLoaded extends DocumentComponentState {
   final DocumentModel value;
 
-  const DocumentLoaded({ this.value });
+  const DocumentComponentLoaded({ this.value });
 
-  DocumentLoaded copyWith({ DocumentModel copyThis }) {
-    return DocumentLoaded(value: copyThis ?? this.value);
+  DocumentComponentLoaded copyWith({ DocumentModel copyThis }) {
+    return DocumentComponentLoaded(value: copyThis ?? this.value);
   }
 
   @override
   List<Object> get props => [value];
 
   @override
-  String toString() => 'DocumentModelLoaded { value: $value }';
+  String toString() => 'DocumentComponentLoaded { value: $value }';
 }
 
 

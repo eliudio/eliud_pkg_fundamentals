@@ -66,8 +66,7 @@ class PlayStoreModel {
     return 'PlayStoreModel{documentID: $documentID, appId: $appId, description: $description, itemBackground: $itemBackground}';
   }
 
-  PlayStoreEntity toEntity() {
-    appId = GlobalData.app().documentID;
+  PlayStoreEntity toEntity(String appId) {
     return PlayStoreEntity(
           appId: (appId != null) ? appId : null, 
           description: (description != null) ? description : null, 
@@ -90,7 +89,7 @@ class PlayStoreModel {
     BackgroundModel itemBackgroundHolder;
     if (entity.itemBackgroundId != null) {
       try {
-        await backgroundRepository().get(entity.itemBackgroundId).then((val) {
+        await backgroundRepository(appID: entity.appId).get(entity.itemBackgroundId).then((val) {
           itemBackgroundHolder = val;
         }).catchError((error) {});
       } catch (_) {}

@@ -42,11 +42,10 @@ import 'package:eliud_pkg_fundamentals/model/document_form_state.dart';
 import 'package:eliud_pkg_fundamentals/model/document_repository.dart';
 
 class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
-  final DocumentRepository _documentRepository = documentRepository();
   final FormAction formAction;
-  final BackgroundRepository _backgroundRepository = backgroundRepository();
+  final String appId;
 
-  DocumentFormBloc({ this.formAction }): super(DocumentFormUninitialized());
+  DocumentFormBloc(this.appId, { this.formAction }): super(DocumentFormUninitialized());
   @override
   Stream<DocumentFormState> mapEventToState(DocumentFormEvent event) async* {
     final currentState = state;
@@ -69,7 +68,7 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
 
       if (event is InitialiseDocumentFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        DocumentFormLoaded loaded = DocumentFormLoaded(value: await _documentRepository.get(event.value.documentID));
+        DocumentFormLoaded loaded = DocumentFormLoaded(value: await documentRepository(appID: appId).get(event.value.documentID));
         yield loaded;
         return;
       } else if (event is InitialiseDocumentFormNoLoadEvent) {
@@ -126,7 +125,7 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
       }
       if (event is ChangedDocumentBackground) {
         if (event.value != null)
-          newValue = currentState.value.copyWith(background: await _backgroundRepository.get(event.value));
+          newValue = currentState.value.copyWith(background: await backgroundRepository(appID: appId).get(event.value));
         else
           newValue = new DocumentModel(
                                  documentID: currentState.value.documentID,
@@ -151,7 +150,7 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
   Future<DocumentFormState> _isDocumentIDValid(String value, DocumentModel newValue) async {
     if (value == null) return Future.value(error("Provide value for documentID", newValue));
     if (value.length == 0) return Future.value(error("Provide value for documentID", newValue));
-    Future<DocumentModel> findDocument = _documentRepository.get(value);
+    Future<DocumentModel> findDocument = documentRepository(appID: appId).get(value);
     return await findDocument.then((documentFound) {
       if (documentFound == null) {
         return SubmittableDocumentForm(value: newValue);
