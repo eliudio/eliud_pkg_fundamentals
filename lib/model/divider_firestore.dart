@@ -32,7 +32,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class DividerFirestore implements DividerRepository {
   Future<DividerModel> add(DividerModel value) {
-    return DividerCollection.document(value.documentID).setData(value.toEntity(appID).toDocument()).then((_) => value);
+    return DividerCollection.document(value.documentID).setData(value.toEntity(appId: appID).toDocument()).then((_) => value);
   }
 
   Future<void> delete(DividerModel value) {
@@ -40,7 +40,7 @@ class DividerFirestore implements DividerRepository {
   }
 
   Future<DividerModel> update(DividerModel value) {
-    return DividerCollection.document(value.documentID).updateData(value.toEntity(appID).toDocument()).then((_) => value);
+    return DividerCollection.document(value.documentID).updateData(value.toEntity(appId: appID).toDocument()).then((_) => value);
   }
 
   DividerModel _populateDoc(DocumentSnapshot doc) {

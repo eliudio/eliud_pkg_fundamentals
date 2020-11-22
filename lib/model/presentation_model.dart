@@ -107,12 +107,12 @@ class PresentationModel {
     return 'PresentationModel{documentID: $documentID, appId: $appId, title: $title, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, image: $image, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth}';
   }
 
-  PresentationEntity toEntity(String appId) {
+  PresentationEntity toEntity({String appId}) {
     return PresentationEntity(
           appId: (appId != null) ? appId : null, 
           title: (title != null) ? title : null, 
           bodyComponents: (bodyComponents != null) ? bodyComponents
-            .map((item) => item.toEntity(appId))
+            .map((item) => item.toEntity(appId: appId))
             .toList() : null, 
           imageId: (image != null) ? image.documentID : null, 
           imagePositionRelative: (imagePositionRelative != null) ? imagePositionRelative.index : null, 

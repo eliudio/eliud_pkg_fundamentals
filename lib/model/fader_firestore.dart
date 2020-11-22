@@ -28,7 +28,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class FaderFirestore implements FaderRepository {
   Future<FaderModel> add(FaderModel value) {
-    return FaderCollection.document(value.documentID).setData(value.toEntity(appID).toDocument()).then((_) => value);
+    return FaderCollection.document(value.documentID).setData(value.toEntity(appId: appID).toDocument()).then((_) => value);
   }
 
   Future<void> delete(FaderModel value) {
@@ -36,7 +36,7 @@ class FaderFirestore implements FaderRepository {
   }
 
   Future<FaderModel> update(FaderModel value) {
-    return FaderCollection.document(value.documentID).updateData(value.toEntity(appID).toDocument()).then((_) => value);
+    return FaderCollection.document(value.documentID).updateData(value.toEntity(appId: appID).toDocument()).then((_) => value);
   }
 
   FaderModel _populateDoc(DocumentSnapshot doc) {

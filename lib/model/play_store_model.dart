@@ -66,7 +66,7 @@ class PlayStoreModel {
     return 'PlayStoreModel{documentID: $documentID, appId: $appId, description: $description, itemBackground: $itemBackground}';
   }
 
-  PlayStoreEntity toEntity(String appId) {
+  PlayStoreEntity toEntity({String appId}) {
     return PlayStoreEntity(
           appId: (appId != null) ? appId : null, 
           description: (description != null) ? description : null, 

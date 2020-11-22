@@ -66,7 +66,7 @@ class TutorialEntryModel {
     return 'TutorialEntryModel{documentID: $documentID, description: $description, image: $image, code: $code}';
   }
 
-  TutorialEntryEntity toEntity() {
+  TutorialEntryEntity toEntity({String appId}) {
     return TutorialEntryEntity(
           description: (description != null) ? description : null, 
           imageId: (image != null) ? image.documentID : null, 

@@ -32,7 +32,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class GridFirestore implements GridRepository {
   Future<GridModel> add(GridModel value) {
-    return GridCollection.document(value.documentID).setData(value.toEntity(appID).toDocument()).then((_) => value);
+    return GridCollection.document(value.documentID).setData(value.toEntity(appId: appID).toDocument()).then((_) => value);
   }
 
   Future<void> delete(GridModel value) {
@@ -40,7 +40,7 @@ class GridFirestore implements GridRepository {
   }
 
   Future<GridModel> update(GridModel value) {
-    return GridCollection.document(value.documentID).updateData(value.toEntity(appID).toDocument()).then((_) => value);
+    return GridCollection.document(value.documentID).updateData(value.toEntity(appId: appID).toDocument()).then((_) => value);
   }
 
   GridModel _populateDoc(DocumentSnapshot doc) {

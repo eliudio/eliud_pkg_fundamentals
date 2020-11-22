@@ -35,7 +35,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 class SimpleImageJsFirestore implements SimpleImageRepository {
   Future<SimpleImageModel> add(SimpleImageModel value) {
     return simpleImageCollection.doc(value.documentID)
-        .set(value.toEntity(appID).toDocument())
+        .set(value.toEntity(appId: appID).toDocument())
         .then((_) => value);
   }
 
@@ -45,7 +45,7 @@ class SimpleImageJsFirestore implements SimpleImageRepository {
 
   Future<SimpleImageModel> update(SimpleImageModel value) {
     return simpleImageCollection.doc(value.documentID)
-        .update(data: value.toEntity(appID).toDocument())
+        .update(data: value.toEntity(appId: appID).toDocument())
         .then((_) => value);
   }
 

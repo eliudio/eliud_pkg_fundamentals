@@ -60,10 +60,10 @@ class LinkModel {
     return 'LinkModel{documentID: $documentID, linkText: $linkText, action: $action}';
   }
 
-  LinkEntity toEntity() {
+  LinkEntity toEntity({String appId}) {
     return LinkEntity(
           linkText: (linkText != null) ? linkText : null, 
-          action: (action != null) ? action.toEntity() : null, 
+          action: (action != null) ? action.toEntity(appId: appId) : null, 
     );
   }
 

@@ -66,7 +66,7 @@ class DocumentItemModel {
     return 'DocumentItemModel{documentID: $documentID, reference: $reference, image: $image}';
   }
 
-  DocumentItemEntity toEntity() {
+  DocumentItemEntity toEntity({String appId}) {
     return DocumentItemEntity(
           reference: (reference != null) ? reference : null, 
           imageId: (image != null) ? image.documentID : null, 

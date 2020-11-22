@@ -31,7 +31,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 class FaderJsFirestore implements FaderRepository {
   Future<FaderModel> add(FaderModel value) {
     return faderCollection.doc(value.documentID)
-        .set(value.toEntity(appID).toDocument())
+        .set(value.toEntity(appId: appID).toDocument())
         .then((_) => value);
   }
 
@@ -41,7 +41,7 @@ class FaderJsFirestore implements FaderRepository {
 
   Future<FaderModel> update(FaderModel value) {
     return faderCollection.doc(value.documentID)
-        .update(data: value.toEntity(appID).toDocument())
+        .update(data: value.toEntity(appId: appID).toDocument())
         .then((_) => value);
   }
 

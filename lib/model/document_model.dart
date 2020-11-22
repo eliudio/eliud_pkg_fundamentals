@@ -98,7 +98,7 @@ class DocumentModel {
     return 'DocumentModel{documentID: $documentID, appId: $appId, name: $name, documentRenderer: $documentRenderer, content: $content, padding: $padding, images: DocumentItem[] { $imagesCsv }, background: $background}';
   }
 
-  DocumentEntity toEntity(String appId) {
+  DocumentEntity toEntity({String appId}) {
     return DocumentEntity(
           appId: (appId != null) ? appId : null, 
           name: (name != null) ? name : null, 
@@ -106,7 +106,7 @@ class DocumentModel {
           content: (content != null) ? content : null, 
           padding: (padding != null) ? padding : null, 
           images: (images != null) ? images
-            .map((item) => item.toEntity(appId))
+            .map((item) => item.toEntity(appId: appId))
             .toList() : null, 
           backgroundId: (background != null) ? background.documentID : null, 
     );

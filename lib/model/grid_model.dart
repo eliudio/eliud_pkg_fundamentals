@@ -73,12 +73,12 @@ class GridModel {
     return 'GridModel{documentID: $documentID, appId: $appId, title: $title, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, gridView: $gridView}';
   }
 
-  GridEntity toEntity(String appId) {
+  GridEntity toEntity({String appId}) {
     return GridEntity(
           appId: (appId != null) ? appId : null, 
           title: (title != null) ? title : null, 
           bodyComponents: (bodyComponents != null) ? bodyComponents
-            .map((item) => item.toEntity(appId))
+            .map((item) => item.toEntity(appId: appId))
             .toList() : null, 
           gridViewId: (gridView != null) ? gridView.documentID : null, 
     );

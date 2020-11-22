@@ -32,7 +32,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class PresentationFirestore implements PresentationRepository {
   Future<PresentationModel> add(PresentationModel value) {
-    return PresentationCollection.document(value.documentID).setData(value.toEntity(appID).toDocument()).then((_) => value);
+    return PresentationCollection.document(value.documentID).setData(value.toEntity(appId: appID).toDocument()).then((_) => value);
   }
 
   Future<void> delete(PresentationModel value) {
@@ -40,7 +40,7 @@ class PresentationFirestore implements PresentationRepository {
   }
 
   Future<PresentationModel> update(PresentationModel value) {
-    return PresentationCollection.document(value.documentID).updateData(value.toEntity(appID).toDocument()).then((_) => value);
+    return PresentationCollection.document(value.documentID).updateData(value.toEntity(appId: appID).toDocument()).then((_) => value);
   }
 
   PresentationModel _populateDoc(DocumentSnapshot doc) {

@@ -91,7 +91,7 @@ class FaderModel {
     return 'FaderModel{documentID: $documentID, appId: $appId, name: $name, animation: $animation, animationMilliseconds: $animationMilliseconds, imageSeconds: $imageSeconds, items: ListedItem[] { $itemsCsv }}';
   }
 
-  FaderEntity toEntity(String appId) {
+  FaderEntity toEntity({String appId}) {
     return FaderEntity(
           appId: (appId != null) ? appId : null, 
           name: (name != null) ? name : null, 
@@ -99,7 +99,7 @@ class FaderModel {
           animationMilliseconds: (animationMilliseconds != null) ? animationMilliseconds : null, 
           imageSeconds: (imageSeconds != null) ? imageSeconds : null, 
           items: (items != null) ? items
-            .map((item) => item.toEntity(appId))
+            .map((item) => item.toEntity(appId: appId))
             .toList() : null, 
     );
   }

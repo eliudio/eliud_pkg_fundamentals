@@ -107,7 +107,7 @@ class SectionModel {
     return 'SectionModel{documentID: $documentID, title: $title, description: $description, image: $image, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth, links: Link[] { $linksCsv }}';
   }
 
-  SectionEntity toEntity() {
+  SectionEntity toEntity({String appId}) {
     return SectionEntity(
           title: (title != null) ? title : null, 
           description: (description != null) ? description : null, 
@@ -116,7 +116,7 @@ class SectionModel {
           imageAlignment: (imageAlignment != null) ? imageAlignment.index : null, 
           imageWidth: (imageWidth != null) ? imageWidth : null, 
           links: (links != null) ? links
-            .map((item) => item.toEntity())
+            .map((item) => item.toEntity(appId: appId))
             .toList() : null, 
     );
   }

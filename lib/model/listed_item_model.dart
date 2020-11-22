@@ -68,10 +68,10 @@ class ListedItemModel {
     return 'ListedItemModel{documentID: $documentID, description: $description, action: $action, image: $image, posSize: $posSize}';
   }
 
-  ListedItemEntity toEntity() {
+  ListedItemEntity toEntity({String appId}) {
     return ListedItemEntity(
           description: (description != null) ? description : null, 
-          action: (action != null) ? action.toEntity() : null, 
+          action: (action != null) ? action.toEntity(appId: appId) : null, 
           imageId: (image != null) ? image.documentID : null, 
           posSizeId: (posSize != null) ? posSize.documentID : null, 
     );

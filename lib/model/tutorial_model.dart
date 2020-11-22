@@ -69,14 +69,14 @@ class TutorialModel {
     return 'TutorialModel{documentID: $documentID, appId: $appId, name: $name, title: $title, description: $description, tutorialEntries: TutorialEntry[] { $tutorialEntriesCsv }}';
   }
 
-  TutorialEntity toEntity(String appId) {
+  TutorialEntity toEntity({String appId}) {
     return TutorialEntity(
           appId: (appId != null) ? appId : null, 
           name: (name != null) ? name : null, 
           title: (title != null) ? title : null, 
           description: (description != null) ? description : null, 
           tutorialEntries: (tutorialEntries != null) ? tutorialEntries
-            .map((item) => item.toEntity(appId))
+            .map((item) => item.toEntity(appId: appId))
             .toList() : null, 
     );
   }

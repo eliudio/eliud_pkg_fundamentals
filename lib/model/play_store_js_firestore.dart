@@ -35,7 +35,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 class PlayStoreJsFirestore implements PlayStoreRepository {
   Future<PlayStoreModel> add(PlayStoreModel value) {
     return playStoreCollection.doc(value.documentID)
-        .set(value.toEntity(appID).toDocument())
+        .set(value.toEntity(appId: appID).toDocument())
         .then((_) => value);
   }
 
@@ -45,7 +45,7 @@ class PlayStoreJsFirestore implements PlayStoreRepository {
 
   Future<PlayStoreModel> update(PlayStoreModel value) {
     return playStoreCollection.doc(value.documentID)
-        .update(data: value.toEntity(appID).toDocument())
+        .update(data: value.toEntity(appId: appID).toDocument())
         .then((_) => value);
   }
 

@@ -66,7 +66,7 @@ class SimpleImageModel {
     return 'SimpleImageModel{documentID: $documentID, appId: $appId, title: $title, image: $image}';
   }
 
-  SimpleImageEntity toEntity(String appId) {
+  SimpleImageEntity toEntity({String appId}) {
     return SimpleImageEntity(
           appId: (appId != null) ? appId : null, 
           title: (title != null) ? title : null, 
