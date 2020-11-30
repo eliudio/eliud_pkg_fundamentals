@@ -83,7 +83,7 @@ class PlayStoreState extends State<PlayStore> {
     var size = 150.0;
     var components = <Widget>[];
     apps.forEach((model) {
-      if (AppBloc.isPlayStoreApp(context, model.documentID)) {
+      if (!AppBloc.isPlayStoreApp(context, model.documentID)) {
         var children = <Widget>[];
         children.add(GestureDetector(
             onTap: () async {

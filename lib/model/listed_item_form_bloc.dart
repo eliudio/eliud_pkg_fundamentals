@@ -86,7 +86,7 @@ class ListedItemFormBloc extends Bloc<ListedItemFormEvent, ListedItemFormState> 
       }
       if (event is ChangedListedItemImage) {
         if (event.value != null)
-          newValue = currentState.value.copyWith(image: await imageRepository(appID: appId).get(event.value));
+          newValue = currentState.value.copyWith(image: await imageRepository(appId: appId).get(event.value));
         else
           newValue = new ListedItemModel(
                                  documentID: currentState.value.documentID,
@@ -101,7 +101,7 @@ class ListedItemFormBloc extends Bloc<ListedItemFormEvent, ListedItemFormState> 
       }
       if (event is ChangedListedItemPosSize) {
         if (event.value != null)
-          newValue = currentState.value.copyWith(posSize: await posSizeRepository(appID: appId).get(event.value));
+          newValue = currentState.value.copyWith(posSize: await posSizeRepository(appId: appId).get(event.value));
         else
           newValue = new ListedItemModel(
                                  documentID: currentState.value.documentID,

@@ -32,7 +32,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class PresentationFirestore implements PresentationRepository {
   Future<PresentationModel> add(PresentationModel value) {
-    return PresentationCollection.document(value.documentID).setData(value.toEntity(appId: appID).toDocument()).then((_) => value);
+    return PresentationCollection.document(value.documentID).setData(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
   Future<void> delete(PresentationModel value) {
@@ -40,15 +40,15 @@ class PresentationFirestore implements PresentationRepository {
   }
 
   Future<PresentationModel> update(PresentationModel value) {
-    return PresentationCollection.document(value.documentID).updateData(value.toEntity(appId: appID).toDocument()).then((_) => value);
+    return PresentationCollection.document(value.documentID).updateData(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
-  PresentationModel _populateDoc(DocumentSnapshot doc) {
-    return PresentationModel.fromEntity(doc.documentID, PresentationEntity.fromMap(doc.data));
+  PresentationModel _populateDoc(DocumentSnapshot value) {
+    return PresentationModel.fromEntity(value.documentID, PresentationEntity.fromMap(value.data));
   }
 
-  Future<PresentationModel> _populateDocPlus(DocumentSnapshot doc) async {
-    return PresentationModel.fromEntityPlus(doc.documentID, PresentationEntity.fromMap(doc.data));  }
+  Future<PresentationModel> _populateDocPlus(DocumentSnapshot value) async {
+    return PresentationModel.fromEntityPlus(value.documentID, PresentationEntity.fromMap(value.data), appId: appId);  }
 
   Future<PresentationModel> get(String id) {
     return PresentationCollection.document(id).get().then((doc) {
@@ -124,9 +124,9 @@ class PresentationFirestore implements PresentationRepository {
   }
 
 
-  final String appID;
+  final String appId;
   final CollectionReference PresentationCollection;
 
-  PresentationFirestore(this.appID) : PresentationCollection = Firestore.instance.collection('Presentation-${appID}');
+  PresentationFirestore(this.appId) : PresentationCollection = Firestore.instance.collection('Presentation-${appId}');
 }
 

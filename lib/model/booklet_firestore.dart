@@ -28,7 +28,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class BookletFirestore implements BookletRepository {
   Future<BookletModel> add(BookletModel value) {
-    return BookletCollection.document(value.documentID).setData(value.toEntity(appId: appID).toDocument()).then((_) => value);
+    return BookletCollection.document(value.documentID).setData(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
   Future<void> delete(BookletModel value) {
@@ -36,15 +36,15 @@ class BookletFirestore implements BookletRepository {
   }
 
   Future<BookletModel> update(BookletModel value) {
-    return BookletCollection.document(value.documentID).updateData(value.toEntity(appId: appID).toDocument()).then((_) => value);
+    return BookletCollection.document(value.documentID).updateData(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
-  BookletModel _populateDoc(DocumentSnapshot doc) {
-    return BookletModel.fromEntity(doc.documentID, BookletEntity.fromMap(doc.data));
+  BookletModel _populateDoc(DocumentSnapshot value) {
+    return BookletModel.fromEntity(value.documentID, BookletEntity.fromMap(value.data));
   }
 
-  Future<BookletModel> _populateDocPlus(DocumentSnapshot doc) async {
-    return BookletModel.fromEntityPlus(doc.documentID, BookletEntity.fromMap(doc.data));  }
+  Future<BookletModel> _populateDocPlus(DocumentSnapshot value) async {
+    return BookletModel.fromEntityPlus(value.documentID, BookletEntity.fromMap(value.data), appId: appId);  }
 
   Future<BookletModel> get(String id) {
     return BookletCollection.document(id).get().then((doc) {
@@ -120,9 +120,9 @@ class BookletFirestore implements BookletRepository {
   }
 
 
-  final String appID;
+  final String appId;
   final CollectionReference BookletCollection;
 
-  BookletFirestore(this.appID) : BookletCollection = Firestore.instance.collection('Booklet-${appID}');
+  BookletFirestore(this.appId) : BookletCollection = Firestore.instance.collection('Booklet-${appId}');
 }
 

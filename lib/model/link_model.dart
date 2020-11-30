@@ -77,14 +77,14 @@ class LinkModel {
     );
   }
 
-  static Future<LinkModel> fromEntityPlus(String documentID, LinkEntity entity) async {
+  static Future<LinkModel> fromEntityPlus(String documentID, LinkEntity entity, { String appId}) async {
     if (entity == null) return null;
 
     return LinkModel(
           documentID: documentID, 
           linkText: entity.linkText, 
           action: 
-            await ActionModel.fromEntityPlus(entity.action), 
+            await ActionModel.fromEntityPlus(entity.action, appId: appId), 
     );
   }
 

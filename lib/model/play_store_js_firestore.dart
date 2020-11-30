@@ -35,7 +35,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 class PlayStoreJsFirestore implements PlayStoreRepository {
   Future<PlayStoreModel> add(PlayStoreModel value) {
     return playStoreCollection.doc(value.documentID)
-        .set(value.toEntity(appId: appID).toDocument())
+        .set(value.toEntity(appId: appId).toDocument())
         .then((_) => value);
   }
 
@@ -45,16 +45,16 @@ class PlayStoreJsFirestore implements PlayStoreRepository {
 
   Future<PlayStoreModel> update(PlayStoreModel value) {
     return playStoreCollection.doc(value.documentID)
-        .update(data: value.toEntity(appId: appID).toDocument())
+        .update(data: value.toEntity(appId: appId).toDocument())
         .then((_) => value);
   }
 
-  PlayStoreModel _populateDoc(DocumentSnapshot doc) {
-    return PlayStoreModel.fromEntity(doc.id, PlayStoreEntity.fromMap(doc.data()));
+  PlayStoreModel _populateDoc(DocumentSnapshot value) {
+    return PlayStoreModel.fromEntity(value.id, PlayStoreEntity.fromMap(value.data()));
   }
 
-  Future<PlayStoreModel> _populateDocPlus(DocumentSnapshot doc) async {
-    return PlayStoreModel.fromEntityPlus(doc.id, PlayStoreEntity.fromMap(doc.data()));
+  Future<PlayStoreModel> _populateDocPlus(DocumentSnapshot value) async {
+    return PlayStoreModel.fromEntityPlus(value.id, PlayStoreEntity.fromMap(value.data()), appId: appId);
   }
 
   Future<PlayStoreModel> get(String id) {
@@ -128,11 +128,11 @@ class PlayStoreJsFirestore implements PlayStoreRepository {
     return playStoreCollection.get().then((snapshot) => snapshot.docs
         .forEach((element) => playStoreCollection.doc(element.id).delete()));
   }
-  CollectionReference getCollection() => firestore().collection('PlayStore-$appID');
+  CollectionReference getCollection() => firestore().collection('PlayStore-$appId');
 
-  final String appID;
+  final String appId;
   
-  PlayStoreJsFirestore(this.appID) : playStoreCollection = firestore().collection('PlayStore-$appID');
+  PlayStoreJsFirestore(this.appId) : playStoreCollection = firestore().collection('PlayStore-$appId');
 
   final CollectionReference playStoreCollection;
 }

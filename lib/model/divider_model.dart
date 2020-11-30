@@ -109,7 +109,7 @@ class DividerModel {
     );
   }
 
-  static Future<DividerModel> fromEntityPlus(String documentID, DividerEntity entity) async {
+  static Future<DividerModel> fromEntityPlus(String documentID, DividerEntity entity, { String appId}) async {
     if (entity == null) return null;
 
     return DividerModel(
@@ -117,7 +117,7 @@ class DividerModel {
           appId: entity.appId, 
           name: entity.name, 
           color: 
-            await RgbModel.fromEntityPlus(entity.color), 
+            await RgbModel.fromEntityPlus(entity.color, appId: appId), 
           height: entity.height, 
           thickness: entity.thickness, 
           indent: entity.indent, 

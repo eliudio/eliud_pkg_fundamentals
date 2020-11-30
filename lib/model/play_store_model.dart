@@ -83,13 +83,13 @@ class PlayStoreModel {
     );
   }
 
-  static Future<PlayStoreModel> fromEntityPlus(String documentID, PlayStoreEntity entity) async {
+  static Future<PlayStoreModel> fromEntityPlus(String documentID, PlayStoreEntity entity, { String appId}) async {
     if (entity == null) return null;
 
     BackgroundModel itemBackgroundHolder;
     if (entity.itemBackgroundId != null) {
       try {
-        await backgroundRepository(appID: entity.appId).get(entity.itemBackgroundId).then((val) {
+        await backgroundRepository(appId: appId).get(entity.itemBackgroundId).then((val) {
           itemBackgroundHolder = val;
         }).catchError((error) {});
       } catch (_) {}

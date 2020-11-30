@@ -83,13 +83,13 @@ class SimpleImageModel {
     );
   }
 
-  static Future<SimpleImageModel> fromEntityPlus(String documentID, SimpleImageEntity entity) async {
+  static Future<SimpleImageModel> fromEntityPlus(String documentID, SimpleImageEntity entity, { String appId}) async {
     if (entity == null) return null;
 
     ImageModel imageHolder;
     if (entity.imageId != null) {
       try {
-        await imageRepository(appID: entity.appId).get(entity.imageId).then((val) {
+        await imageRepository(appId: appId).get(entity.imageId).then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}

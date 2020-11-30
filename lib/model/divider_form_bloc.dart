@@ -70,7 +70,7 @@ class DividerFormBloc extends Bloc<DividerFormEvent, DividerFormState> {
 
       if (event is InitialiseDividerFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        DividerFormLoaded loaded = DividerFormLoaded(value: await dividerRepository(appID: appId).get(event.value.documentID));
+        DividerFormLoaded loaded = DividerFormLoaded(value: await dividerRepository(appId: appId).get(event.value.documentID));
         yield loaded;
         return;
       } else if (event is InitialiseDividerFormNoLoadEvent) {
@@ -155,7 +155,7 @@ class DividerFormBloc extends Bloc<DividerFormEvent, DividerFormState> {
   Future<DividerFormState> _isDocumentIDValid(String value, DividerModel newValue) async {
     if (value == null) return Future.value(error("Provide value for documentID", newValue));
     if (value.length == 0) return Future.value(error("Provide value for documentID", newValue));
-    Future<DividerModel> findDocument = dividerRepository(appID: appId).get(value);
+    Future<DividerModel> findDocument = dividerRepository(appId: appId).get(value);
     return await findDocument.then((documentFound) {
       if (documentFound == null) {
         return SubmittableDividerForm(value: newValue);

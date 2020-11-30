@@ -137,13 +137,13 @@ class PresentationModel {
     );
   }
 
-  static Future<PresentationModel> fromEntityPlus(String documentID, PresentationEntity entity) async {
+  static Future<PresentationModel> fromEntityPlus(String documentID, PresentationEntity entity, { String appId}) async {
     if (entity == null) return null;
 
     ImageModel imageHolder;
     if (entity.imageId != null) {
       try {
-        await imageRepository(appID: entity.appId).get(entity.imageId).then((val) {
+        await imageRepository(appId: appId).get(entity.imageId).then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}
@@ -155,7 +155,7 @@ class PresentationModel {
           title: entity.title, 
           bodyComponents: 
             new List<BodyComponentModel>.from(await Future.wait(entity. bodyComponents
-            .map((item) => BodyComponentModel.fromEntityPlus(newRandomKey(), item))
+            .map((item) => BodyComponentModel.fromEntityPlus(newRandomKey(), item, appId: appId))
             .toList())), 
           image: imageHolder, 
           imagePositionRelative: toPresentationRelativeImagePosition(entity.imagePositionRelative), 

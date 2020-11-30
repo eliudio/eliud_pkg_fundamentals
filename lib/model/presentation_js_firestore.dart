@@ -35,7 +35,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 class PresentationJsFirestore implements PresentationRepository {
   Future<PresentationModel> add(PresentationModel value) {
     return presentationCollection.doc(value.documentID)
-        .set(value.toEntity(appId: appID).toDocument())
+        .set(value.toEntity(appId: appId).toDocument())
         .then((_) => value);
   }
 
@@ -45,16 +45,16 @@ class PresentationJsFirestore implements PresentationRepository {
 
   Future<PresentationModel> update(PresentationModel value) {
     return presentationCollection.doc(value.documentID)
-        .update(data: value.toEntity(appId: appID).toDocument())
+        .update(data: value.toEntity(appId: appId).toDocument())
         .then((_) => value);
   }
 
-  PresentationModel _populateDoc(DocumentSnapshot doc) {
-    return PresentationModel.fromEntity(doc.id, PresentationEntity.fromMap(doc.data()));
+  PresentationModel _populateDoc(DocumentSnapshot value) {
+    return PresentationModel.fromEntity(value.id, PresentationEntity.fromMap(value.data()));
   }
 
-  Future<PresentationModel> _populateDocPlus(DocumentSnapshot doc) async {
-    return PresentationModel.fromEntityPlus(doc.id, PresentationEntity.fromMap(doc.data()));
+  Future<PresentationModel> _populateDocPlus(DocumentSnapshot value) async {
+    return PresentationModel.fromEntityPlus(value.id, PresentationEntity.fromMap(value.data()), appId: appId);
   }
 
   Future<PresentationModel> get(String id) {
@@ -128,11 +128,11 @@ class PresentationJsFirestore implements PresentationRepository {
     return presentationCollection.get().then((snapshot) => snapshot.docs
         .forEach((element) => presentationCollection.doc(element.id).delete()));
   }
-  CollectionReference getCollection() => firestore().collection('Presentation-$appID');
+  CollectionReference getCollection() => firestore().collection('Presentation-$appId');
 
-  final String appID;
+  final String appId;
   
-  PresentationJsFirestore(this.appID) : presentationCollection = firestore().collection('Presentation-$appID');
+  PresentationJsFirestore(this.appId) : presentationCollection = firestore().collection('Presentation-$appId');
 
   final CollectionReference presentationCollection;
 }

@@ -97,13 +97,13 @@ class GridModel {
     );
   }
 
-  static Future<GridModel> fromEntityPlus(String documentID, GridEntity entity) async {
+  static Future<GridModel> fromEntityPlus(String documentID, GridEntity entity, { String appId}) async {
     if (entity == null) return null;
 
     GridViewModel gridViewHolder;
     if (entity.gridViewId != null) {
       try {
-        await gridViewRepository(appID: entity.appId).get(entity.gridViewId).then((val) {
+        await gridViewRepository(appId: appId).get(entity.gridViewId).then((val) {
           gridViewHolder = val;
         }).catchError((error) {});
       } catch (_) {}
@@ -115,7 +115,7 @@ class GridModel {
           title: entity.title, 
           bodyComponents: 
             new List<BodyComponentModel>.from(await Future.wait(entity. bodyComponents
-            .map((item) => BodyComponentModel.fromEntityPlus(newRandomKey(), item))
+            .map((item) => BodyComponentModel.fromEntityPlus(newRandomKey(), item, appId: appId))
             .toList())), 
           gridView: gridViewHolder, 
     );

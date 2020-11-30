@@ -137,13 +137,13 @@ class SectionModel {
     );
   }
 
-  static Future<SectionModel> fromEntityPlus(String documentID, SectionEntity entity) async {
+  static Future<SectionModel> fromEntityPlus(String documentID, SectionEntity entity, { String appId}) async {
     if (entity == null) return null;
 
     ImageModel imageHolder;
     if (entity.imageId != null) {
       try {
-        await imageRepository().get(entity.imageId).then((val) {
+        await imageRepository(appId: appId).get(entity.imageId).then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}
@@ -159,7 +159,7 @@ class SectionModel {
           imageWidth: entity.imageWidth, 
           links: 
             new List<LinkModel>.from(await Future.wait(entity. links
-            .map((item) => LinkModel.fromEntityPlus(newRandomKey(), item))
+            .map((item) => LinkModel.fromEntityPlus(newRandomKey(), item, appId: appId))
             .toList())), 
     );
   }

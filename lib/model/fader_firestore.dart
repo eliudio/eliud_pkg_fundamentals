@@ -28,7 +28,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class FaderFirestore implements FaderRepository {
   Future<FaderModel> add(FaderModel value) {
-    return FaderCollection.document(value.documentID).setData(value.toEntity(appId: appID).toDocument()).then((_) => value);
+    return FaderCollection.document(value.documentID).setData(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
   Future<void> delete(FaderModel value) {
@@ -36,15 +36,15 @@ class FaderFirestore implements FaderRepository {
   }
 
   Future<FaderModel> update(FaderModel value) {
-    return FaderCollection.document(value.documentID).updateData(value.toEntity(appId: appID).toDocument()).then((_) => value);
+    return FaderCollection.document(value.documentID).updateData(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
-  FaderModel _populateDoc(DocumentSnapshot doc) {
-    return FaderModel.fromEntity(doc.documentID, FaderEntity.fromMap(doc.data));
+  FaderModel _populateDoc(DocumentSnapshot value) {
+    return FaderModel.fromEntity(value.documentID, FaderEntity.fromMap(value.data));
   }
 
-  Future<FaderModel> _populateDocPlus(DocumentSnapshot doc) async {
-    return FaderModel.fromEntityPlus(doc.documentID, FaderEntity.fromMap(doc.data));  }
+  Future<FaderModel> _populateDocPlus(DocumentSnapshot value) async {
+    return FaderModel.fromEntityPlus(value.documentID, FaderEntity.fromMap(value.data), appId: appId);  }
 
   Future<FaderModel> get(String id) {
     return FaderCollection.document(id).get().then((doc) {
@@ -120,9 +120,9 @@ class FaderFirestore implements FaderRepository {
   }
 
 
-  final String appID;
+  final String appId;
   final CollectionReference FaderCollection;
 
-  FaderFirestore(this.appID) : FaderCollection = Firestore.instance.collection('Fader-${appID}');
+  FaderFirestore(this.appId) : FaderCollection = Firestore.instance.collection('Fader-${appId}');
 }
 

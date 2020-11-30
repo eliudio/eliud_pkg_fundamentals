@@ -32,7 +32,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class DocumentFirestore implements DocumentRepository {
   Future<DocumentModel> add(DocumentModel value) {
-    return DocumentCollection.document(value.documentID).setData(value.toEntity(appId: appID).toDocument()).then((_) => value);
+    return DocumentCollection.document(value.documentID).setData(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
   Future<void> delete(DocumentModel value) {
@@ -40,15 +40,15 @@ class DocumentFirestore implements DocumentRepository {
   }
 
   Future<DocumentModel> update(DocumentModel value) {
-    return DocumentCollection.document(value.documentID).updateData(value.toEntity(appId: appID).toDocument()).then((_) => value);
+    return DocumentCollection.document(value.documentID).updateData(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
-  DocumentModel _populateDoc(DocumentSnapshot doc) {
-    return DocumentModel.fromEntity(doc.documentID, DocumentEntity.fromMap(doc.data));
+  DocumentModel _populateDoc(DocumentSnapshot value) {
+    return DocumentModel.fromEntity(value.documentID, DocumentEntity.fromMap(value.data));
   }
 
-  Future<DocumentModel> _populateDocPlus(DocumentSnapshot doc) async {
-    return DocumentModel.fromEntityPlus(doc.documentID, DocumentEntity.fromMap(doc.data));  }
+  Future<DocumentModel> _populateDocPlus(DocumentSnapshot value) async {
+    return DocumentModel.fromEntityPlus(value.documentID, DocumentEntity.fromMap(value.data), appId: appId);  }
 
   Future<DocumentModel> get(String id) {
     return DocumentCollection.document(id).get().then((doc) {
@@ -124,9 +124,9 @@ class DocumentFirestore implements DocumentRepository {
   }
 
 
-  final String appID;
+  final String appId;
   final CollectionReference DocumentCollection;
 
-  DocumentFirestore(this.appID) : DocumentCollection = Firestore.instance.collection('Document-${appID}');
+  DocumentFirestore(this.appId) : DocumentCollection = Firestore.instance.collection('Document-${appId}');
 }
 

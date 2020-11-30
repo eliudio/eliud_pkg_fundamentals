@@ -64,7 +64,7 @@ class TutorialFormBloc extends Bloc<TutorialFormEvent, TutorialFormState> {
 
       if (event is InitialiseTutorialFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        TutorialFormLoaded loaded = TutorialFormLoaded(value: await tutorialRepository(appID: appId).get(event.value.documentID));
+        TutorialFormLoaded loaded = TutorialFormLoaded(value: await tutorialRepository(appId: appId).get(event.value.documentID));
         yield loaded;
         return;
       } else if (event is InitialiseTutorialFormNoLoadEvent) {
@@ -117,7 +117,7 @@ class TutorialFormBloc extends Bloc<TutorialFormEvent, TutorialFormState> {
   Future<TutorialFormState> _isDocumentIDValid(String value, TutorialModel newValue) async {
     if (value == null) return Future.value(error("Provide value for documentID", newValue));
     if (value.length == 0) return Future.value(error("Provide value for documentID", newValue));
-    Future<TutorialModel> findDocument = tutorialRepository(appID: appId).get(value);
+    Future<TutorialModel> findDocument = tutorialRepository(appId: appId).get(value);
     return await findDocument.then((documentFound) {
       if (documentFound == null) {
         return SubmittableTutorialForm(value: newValue);

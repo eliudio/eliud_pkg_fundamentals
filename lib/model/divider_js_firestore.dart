@@ -35,7 +35,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 class DividerJsFirestore implements DividerRepository {
   Future<DividerModel> add(DividerModel value) {
     return dividerCollection.doc(value.documentID)
-        .set(value.toEntity(appId: appID).toDocument())
+        .set(value.toEntity(appId: appId).toDocument())
         .then((_) => value);
   }
 
@@ -45,16 +45,16 @@ class DividerJsFirestore implements DividerRepository {
 
   Future<DividerModel> update(DividerModel value) {
     return dividerCollection.doc(value.documentID)
-        .update(data: value.toEntity(appId: appID).toDocument())
+        .update(data: value.toEntity(appId: appId).toDocument())
         .then((_) => value);
   }
 
-  DividerModel _populateDoc(DocumentSnapshot doc) {
-    return DividerModel.fromEntity(doc.id, DividerEntity.fromMap(doc.data()));
+  DividerModel _populateDoc(DocumentSnapshot value) {
+    return DividerModel.fromEntity(value.id, DividerEntity.fromMap(value.data()));
   }
 
-  Future<DividerModel> _populateDocPlus(DocumentSnapshot doc) async {
-    return DividerModel.fromEntityPlus(doc.id, DividerEntity.fromMap(doc.data()));
+  Future<DividerModel> _populateDocPlus(DocumentSnapshot value) async {
+    return DividerModel.fromEntityPlus(value.id, DividerEntity.fromMap(value.data()), appId: appId);
   }
 
   Future<DividerModel> get(String id) {
@@ -128,11 +128,11 @@ class DividerJsFirestore implements DividerRepository {
     return dividerCollection.get().then((snapshot) => snapshot.docs
         .forEach((element) => dividerCollection.doc(element.id).delete()));
   }
-  CollectionReference getCollection() => firestore().collection('Divider-$appID');
+  CollectionReference getCollection() => firestore().collection('Divider-$appId');
 
-  final String appID;
+  final String appId;
   
-  DividerJsFirestore(this.appID) : dividerCollection = firestore().collection('Divider-$appID');
+  DividerJsFirestore(this.appId) : dividerCollection = firestore().collection('Divider-$appId');
 
   final CollectionReference dividerCollection;
 }

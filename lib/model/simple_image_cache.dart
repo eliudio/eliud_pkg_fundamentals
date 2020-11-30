@@ -111,7 +111,7 @@ class SimpleImageCache implements SimpleImageRepository {
     ImageModel imageHolder;
     if (model.image != null) {
       try {
-        await imageRepository(appID: model.appId).get(model.image.documentID).then((val) {
+        await imageRepository(appId: model.appId).get(model.image.documentID).then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}

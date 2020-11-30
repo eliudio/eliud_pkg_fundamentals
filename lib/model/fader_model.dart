@@ -120,7 +120,7 @@ class FaderModel {
     );
   }
 
-  static Future<FaderModel> fromEntityPlus(String documentID, FaderEntity entity) async {
+  static Future<FaderModel> fromEntityPlus(String documentID, FaderEntity entity, { String appId}) async {
     if (entity == null) return null;
 
     return FaderModel(
@@ -132,7 +132,7 @@ class FaderModel {
           imageSeconds: entity.imageSeconds, 
           items: 
             new List<ListedItemModel>.from(await Future.wait(entity. items
-            .map((item) => ListedItemModel.fromEntityPlus(newRandomKey(), item))
+            .map((item) => ListedItemModel.fromEntityPlus(newRandomKey(), item, appId: appId))
             .toList())), 
     );
   }

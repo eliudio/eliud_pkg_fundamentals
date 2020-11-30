@@ -32,7 +32,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class PlayStoreFirestore implements PlayStoreRepository {
   Future<PlayStoreModel> add(PlayStoreModel value) {
-    return PlayStoreCollection.document(value.documentID).setData(value.toEntity(appId: appID).toDocument()).then((_) => value);
+    return PlayStoreCollection.document(value.documentID).setData(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
   Future<void> delete(PlayStoreModel value) {
@@ -40,15 +40,15 @@ class PlayStoreFirestore implements PlayStoreRepository {
   }
 
   Future<PlayStoreModel> update(PlayStoreModel value) {
-    return PlayStoreCollection.document(value.documentID).updateData(value.toEntity(appId: appID).toDocument()).then((_) => value);
+    return PlayStoreCollection.document(value.documentID).updateData(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
-  PlayStoreModel _populateDoc(DocumentSnapshot doc) {
-    return PlayStoreModel.fromEntity(doc.documentID, PlayStoreEntity.fromMap(doc.data));
+  PlayStoreModel _populateDoc(DocumentSnapshot value) {
+    return PlayStoreModel.fromEntity(value.documentID, PlayStoreEntity.fromMap(value.data));
   }
 
-  Future<PlayStoreModel> _populateDocPlus(DocumentSnapshot doc) async {
-    return PlayStoreModel.fromEntityPlus(doc.documentID, PlayStoreEntity.fromMap(doc.data));  }
+  Future<PlayStoreModel> _populateDocPlus(DocumentSnapshot value) async {
+    return PlayStoreModel.fromEntityPlus(value.documentID, PlayStoreEntity.fromMap(value.data), appId: appId);  }
 
   Future<PlayStoreModel> get(String id) {
     return PlayStoreCollection.document(id).get().then((doc) {
@@ -124,9 +124,9 @@ class PlayStoreFirestore implements PlayStoreRepository {
   }
 
 
-  final String appID;
+  final String appId;
   final CollectionReference PlayStoreCollection;
 
-  PlayStoreFirestore(this.appID) : PlayStoreCollection = Firestore.instance.collection('PlayStore-${appID}');
+  PlayStoreFirestore(this.appId) : PlayStoreCollection = Firestore.instance.collection('PlayStore-${appId}');
 }
 

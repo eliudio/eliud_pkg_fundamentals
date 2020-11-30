@@ -32,7 +32,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class DividerFirestore implements DividerRepository {
   Future<DividerModel> add(DividerModel value) {
-    return DividerCollection.document(value.documentID).setData(value.toEntity(appId: appID).toDocument()).then((_) => value);
+    return DividerCollection.document(value.documentID).setData(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
   Future<void> delete(DividerModel value) {
@@ -40,15 +40,15 @@ class DividerFirestore implements DividerRepository {
   }
 
   Future<DividerModel> update(DividerModel value) {
-    return DividerCollection.document(value.documentID).updateData(value.toEntity(appId: appID).toDocument()).then((_) => value);
+    return DividerCollection.document(value.documentID).updateData(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
-  DividerModel _populateDoc(DocumentSnapshot doc) {
-    return DividerModel.fromEntity(doc.documentID, DividerEntity.fromMap(doc.data));
+  DividerModel _populateDoc(DocumentSnapshot value) {
+    return DividerModel.fromEntity(value.documentID, DividerEntity.fromMap(value.data));
   }
 
-  Future<DividerModel> _populateDocPlus(DocumentSnapshot doc) async {
-    return DividerModel.fromEntityPlus(doc.documentID, DividerEntity.fromMap(doc.data));  }
+  Future<DividerModel> _populateDocPlus(DocumentSnapshot value) async {
+    return DividerModel.fromEntityPlus(value.documentID, DividerEntity.fromMap(value.data), appId: appId);  }
 
   Future<DividerModel> get(String id) {
     return DividerCollection.document(id).get().then((doc) {
@@ -124,9 +124,9 @@ class DividerFirestore implements DividerRepository {
   }
 
 
-  final String appID;
+  final String appId;
   final CollectionReference DividerCollection;
 
-  DividerFirestore(this.appID) : DividerCollection = Firestore.instance.collection('Divider-${appID}');
+  DividerFirestore(this.appId) : DividerCollection = Firestore.instance.collection('Divider-${appId}');
 }
 

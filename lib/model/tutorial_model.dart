@@ -96,7 +96,7 @@ class TutorialModel {
     );
   }
 
-  static Future<TutorialModel> fromEntityPlus(String documentID, TutorialEntity entity) async {
+  static Future<TutorialModel> fromEntityPlus(String documentID, TutorialEntity entity, { String appId}) async {
     if (entity == null) return null;
 
     return TutorialModel(
@@ -107,7 +107,7 @@ class TutorialModel {
           description: entity.description, 
           tutorialEntries: 
             new List<TutorialEntryModel>.from(await Future.wait(entity. tutorialEntries
-            .map((item) => TutorialEntryModel.fromEntityPlus(newRandomKey(), item))
+            .map((item) => TutorialEntryModel.fromEntityPlus(newRandomKey(), item, appId: appId))
             .toList())), 
     );
   }

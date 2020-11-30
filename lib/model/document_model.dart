@@ -128,13 +128,13 @@ class DocumentModel {
     );
   }
 
-  static Future<DocumentModel> fromEntityPlus(String documentID, DocumentEntity entity) async {
+  static Future<DocumentModel> fromEntityPlus(String documentID, DocumentEntity entity, { String appId}) async {
     if (entity == null) return null;
 
     BackgroundModel backgroundHolder;
     if (entity.backgroundId != null) {
       try {
-        await backgroundRepository(appID: entity.appId).get(entity.backgroundId).then((val) {
+        await backgroundRepository(appId: appId).get(entity.backgroundId).then((val) {
           backgroundHolder = val;
         }).catchError((error) {});
       } catch (_) {}
@@ -149,7 +149,7 @@ class DocumentModel {
           padding: entity.padding, 
           images: 
             new List<DocumentItemModel>.from(await Future.wait(entity. images
-            .map((item) => DocumentItemModel.fromEntityPlus(newRandomKey(), item))
+            .map((item) => DocumentItemModel.fromEntityPlus(newRandomKey(), item, appId: appId))
             .toList())), 
           background: backgroundHolder, 
     );

@@ -35,7 +35,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 class GridJsFirestore implements GridRepository {
   Future<GridModel> add(GridModel value) {
     return gridCollection.doc(value.documentID)
-        .set(value.toEntity(appId: appID).toDocument())
+        .set(value.toEntity(appId: appId).toDocument())
         .then((_) => value);
   }
 
@@ -45,16 +45,16 @@ class GridJsFirestore implements GridRepository {
 
   Future<GridModel> update(GridModel value) {
     return gridCollection.doc(value.documentID)
-        .update(data: value.toEntity(appId: appID).toDocument())
+        .update(data: value.toEntity(appId: appId).toDocument())
         .then((_) => value);
   }
 
-  GridModel _populateDoc(DocumentSnapshot doc) {
-    return GridModel.fromEntity(doc.id, GridEntity.fromMap(doc.data()));
+  GridModel _populateDoc(DocumentSnapshot value) {
+    return GridModel.fromEntity(value.id, GridEntity.fromMap(value.data()));
   }
 
-  Future<GridModel> _populateDocPlus(DocumentSnapshot doc) async {
-    return GridModel.fromEntityPlus(doc.id, GridEntity.fromMap(doc.data()));
+  Future<GridModel> _populateDocPlus(DocumentSnapshot value) async {
+    return GridModel.fromEntityPlus(value.id, GridEntity.fromMap(value.data()), appId: appId);
   }
 
   Future<GridModel> get(String id) {
@@ -128,11 +128,11 @@ class GridJsFirestore implements GridRepository {
     return gridCollection.get().then((snapshot) => snapshot.docs
         .forEach((element) => gridCollection.doc(element.id).delete()));
   }
-  CollectionReference getCollection() => firestore().collection('Grid-$appID');
+  CollectionReference getCollection() => firestore().collection('Grid-$appId');
 
-  final String appID;
+  final String appId;
   
-  GridJsFirestore(this.appID) : gridCollection = firestore().collection('Grid-$appID');
+  GridJsFirestore(this.appId) : gridCollection = firestore().collection('Grid-$appId');
 
   final CollectionReference gridCollection;
 }

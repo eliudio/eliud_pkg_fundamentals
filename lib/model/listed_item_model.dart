@@ -87,13 +87,13 @@ class ListedItemModel {
     );
   }
 
-  static Future<ListedItemModel> fromEntityPlus(String documentID, ListedItemEntity entity) async {
+  static Future<ListedItemModel> fromEntityPlus(String documentID, ListedItemEntity entity, { String appId}) async {
     if (entity == null) return null;
 
     ImageModel imageHolder;
     if (entity.imageId != null) {
       try {
-        await imageRepository().get(entity.imageId).then((val) {
+        await imageRepository(appId: appId).get(entity.imageId).then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}
@@ -102,7 +102,7 @@ class ListedItemModel {
     PosSizeModel posSizeHolder;
     if (entity.posSizeId != null) {
       try {
-        await posSizeRepository().get(entity.posSizeId).then((val) {
+        await posSizeRepository(appId: appId).get(entity.posSizeId).then((val) {
           posSizeHolder = val;
         }).catchError((error) {});
       } catch (_) {}
@@ -112,7 +112,7 @@ class ListedItemModel {
           documentID: documentID, 
           description: entity.description, 
           action: 
-            await ActionModel.fromEntityPlus(entity.action), 
+            await ActionModel.fromEntityPlus(entity.action, appId: appId), 
           image: imageHolder, 
           posSize: posSizeHolder, 
     );

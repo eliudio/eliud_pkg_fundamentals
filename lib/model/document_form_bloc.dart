@@ -68,7 +68,7 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
 
       if (event is InitialiseDocumentFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        DocumentFormLoaded loaded = DocumentFormLoaded(value: await documentRepository(appID: appId).get(event.value.documentID));
+        DocumentFormLoaded loaded = DocumentFormLoaded(value: await documentRepository(appId: appId).get(event.value.documentID));
         yield loaded;
         return;
       } else if (event is InitialiseDocumentFormNoLoadEvent) {
@@ -125,7 +125,7 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
       }
       if (event is ChangedDocumentBackground) {
         if (event.value != null)
-          newValue = currentState.value.copyWith(background: await backgroundRepository(appID: appId).get(event.value));
+          newValue = currentState.value.copyWith(background: await backgroundRepository(appId: appId).get(event.value));
         else
           newValue = new DocumentModel(
                                  documentID: currentState.value.documentID,
@@ -150,7 +150,7 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
   Future<DocumentFormState> _isDocumentIDValid(String value, DocumentModel newValue) async {
     if (value == null) return Future.value(error("Provide value for documentID", newValue));
     if (value.length == 0) return Future.value(error("Provide value for documentID", newValue));
-    Future<DocumentModel> findDocument = documentRepository(appID: appId).get(value);
+    Future<DocumentModel> findDocument = documentRepository(appId: appId).get(value);
     return await findDocument.then((documentFound) {
       if (documentFound == null) {
         return SubmittableDocumentForm(value: newValue);

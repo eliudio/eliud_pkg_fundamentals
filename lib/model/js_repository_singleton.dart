@@ -74,41 +74,41 @@ class JsRepositorySingleton extends AbstractRepositorySingleton {
     var _simpleImageRepository = HashMap<String, SimpleImageRepository>();
     var _tutorialRepository = HashMap<String, TutorialRepository>();
 
-    BookletRepository bookletRepository(String appID) {
-      if (_bookletRepository[appID] == null) _bookletRepository[appID] = BookletCache(BookletJsFirestore(appID));
-      return _bookletRepository[appID];
+    BookletRepository bookletRepository(String appId) {
+      if (_bookletRepository[appId] == null) _bookletRepository[appId] = BookletCache(BookletJsFirestore(appId));
+      return _bookletRepository[appId];
     }
-    DividerRepository dividerRepository(String appID) {
-      if (_dividerRepository[appID] == null) _dividerRepository[appID] = DividerCache(DividerJsFirestore(appID));
-      return _dividerRepository[appID];
+    DividerRepository dividerRepository(String appId) {
+      if (_dividerRepository[appId] == null) _dividerRepository[appId] = DividerCache(DividerJsFirestore(appId));
+      return _dividerRepository[appId];
     }
-    DocumentRepository documentRepository(String appID) {
-      if (_documentRepository[appID] == null) _documentRepository[appID] = DocumentCache(DocumentJsFirestore(appID));
-      return _documentRepository[appID];
+    DocumentRepository documentRepository(String appId) {
+      if (_documentRepository[appId] == null) _documentRepository[appId] = DocumentCache(DocumentJsFirestore(appId));
+      return _documentRepository[appId];
     }
-    FaderRepository faderRepository(String appID) {
-      if (_faderRepository[appID] == null) _faderRepository[appID] = FaderCache(FaderJsFirestore(appID));
-      return _faderRepository[appID];
+    FaderRepository faderRepository(String appId) {
+      if (_faderRepository[appId] == null) _faderRepository[appId] = FaderCache(FaderJsFirestore(appId));
+      return _faderRepository[appId];
     }
-    GridRepository gridRepository(String appID) {
-      if (_gridRepository[appID] == null) _gridRepository[appID] = GridCache(GridJsFirestore(appID));
-      return _gridRepository[appID];
+    GridRepository gridRepository(String appId) {
+      if (_gridRepository[appId] == null) _gridRepository[appId] = GridCache(GridJsFirestore(appId));
+      return _gridRepository[appId];
     }
-    PlayStoreRepository playStoreRepository(String appID) {
-      if (_playStoreRepository[appID] == null) _playStoreRepository[appID] = PlayStoreCache(PlayStoreJsFirestore(appID));
-      return _playStoreRepository[appID];
+    PlayStoreRepository playStoreRepository(String appId) {
+      if (_playStoreRepository[appId] == null) _playStoreRepository[appId] = PlayStoreCache(PlayStoreJsFirestore(appId));
+      return _playStoreRepository[appId];
     }
-    PresentationRepository presentationRepository(String appID) {
-      if (_presentationRepository[appID] == null) _presentationRepository[appID] = PresentationCache(PresentationJsFirestore(appID));
-      return _presentationRepository[appID];
+    PresentationRepository presentationRepository(String appId) {
+      if (_presentationRepository[appId] == null) _presentationRepository[appId] = PresentationCache(PresentationJsFirestore(appId));
+      return _presentationRepository[appId];
     }
-    SimpleImageRepository simpleImageRepository(String appID) {
-      if (_simpleImageRepository[appID] == null) _simpleImageRepository[appID] = SimpleImageCache(SimpleImageJsFirestore(appID));
-      return _simpleImageRepository[appID];
+    SimpleImageRepository simpleImageRepository(String appId) {
+      if (_simpleImageRepository[appId] == null) _simpleImageRepository[appId] = SimpleImageCache(SimpleImageJsFirestore(appId));
+      return _simpleImageRepository[appId];
     }
-    TutorialRepository tutorialRepository(String appID) {
-      if (_tutorialRepository[appID] == null) _tutorialRepository[appID] = TutorialCache(TutorialJsFirestore(appID));
-      return _tutorialRepository[appID];
+    TutorialRepository tutorialRepository(String appId) {
+      if (_tutorialRepository[appId] == null) _tutorialRepository[appId] = TutorialCache(TutorialJsFirestore(appId));
+      return _tutorialRepository[appId];
     }
 
 }

@@ -31,7 +31,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 class BookletJsFirestore implements BookletRepository {
   Future<BookletModel> add(BookletModel value) {
     return bookletCollection.doc(value.documentID)
-        .set(value.toEntity(appId: appID).toDocument())
+        .set(value.toEntity(appId: appId).toDocument())
         .then((_) => value);
   }
 
@@ -41,16 +41,16 @@ class BookletJsFirestore implements BookletRepository {
 
   Future<BookletModel> update(BookletModel value) {
     return bookletCollection.doc(value.documentID)
-        .update(data: value.toEntity(appId: appID).toDocument())
+        .update(data: value.toEntity(appId: appId).toDocument())
         .then((_) => value);
   }
 
-  BookletModel _populateDoc(DocumentSnapshot doc) {
-    return BookletModel.fromEntity(doc.id, BookletEntity.fromMap(doc.data()));
+  BookletModel _populateDoc(DocumentSnapshot value) {
+    return BookletModel.fromEntity(value.id, BookletEntity.fromMap(value.data()));
   }
 
-  Future<BookletModel> _populateDocPlus(DocumentSnapshot doc) async {
-    return BookletModel.fromEntityPlus(doc.id, BookletEntity.fromMap(doc.data()));
+  Future<BookletModel> _populateDocPlus(DocumentSnapshot value) async {
+    return BookletModel.fromEntityPlus(value.id, BookletEntity.fromMap(value.data()), appId: appId);
   }
 
   Future<BookletModel> get(String id) {
@@ -124,11 +124,11 @@ class BookletJsFirestore implements BookletRepository {
     return bookletCollection.get().then((snapshot) => snapshot.docs
         .forEach((element) => bookletCollection.doc(element.id).delete()));
   }
-  CollectionReference getCollection() => firestore().collection('Booklet-$appID');
+  CollectionReference getCollection() => firestore().collection('Booklet-$appId');
 
-  final String appID;
+  final String appId;
   
-  BookletJsFirestore(this.appID) : bookletCollection = firestore().collection('Booklet-$appID');
+  BookletJsFirestore(this.appId) : bookletCollection = firestore().collection('Booklet-$appId');
 
   final CollectionReference bookletCollection;
 }

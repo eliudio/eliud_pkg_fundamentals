@@ -28,7 +28,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class TutorialFirestore implements TutorialRepository {
   Future<TutorialModel> add(TutorialModel value) {
-    return TutorialCollection.document(value.documentID).setData(value.toEntity(appId: appID).toDocument()).then((_) => value);
+    return TutorialCollection.document(value.documentID).setData(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
   Future<void> delete(TutorialModel value) {
@@ -36,15 +36,15 @@ class TutorialFirestore implements TutorialRepository {
   }
 
   Future<TutorialModel> update(TutorialModel value) {
-    return TutorialCollection.document(value.documentID).updateData(value.toEntity(appId: appID).toDocument()).then((_) => value);
+    return TutorialCollection.document(value.documentID).updateData(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
-  TutorialModel _populateDoc(DocumentSnapshot doc) {
-    return TutorialModel.fromEntity(doc.documentID, TutorialEntity.fromMap(doc.data));
+  TutorialModel _populateDoc(DocumentSnapshot value) {
+    return TutorialModel.fromEntity(value.documentID, TutorialEntity.fromMap(value.data));
   }
 
-  Future<TutorialModel> _populateDocPlus(DocumentSnapshot doc) async {
-    return TutorialModel.fromEntityPlus(doc.documentID, TutorialEntity.fromMap(doc.data));  }
+  Future<TutorialModel> _populateDocPlus(DocumentSnapshot value) async {
+    return TutorialModel.fromEntityPlus(value.documentID, TutorialEntity.fromMap(value.data), appId: appId);  }
 
   Future<TutorialModel> get(String id) {
     return TutorialCollection.document(id).get().then((doc) {
@@ -120,9 +120,9 @@ class TutorialFirestore implements TutorialRepository {
   }
 
 
-  final String appID;
+  final String appId;
   final CollectionReference TutorialCollection;
 
-  TutorialFirestore(this.appID) : TutorialCollection = Firestore.instance.collection('Tutorial-${appID}');
+  TutorialFirestore(this.appId) : TutorialCollection = Firestore.instance.collection('Tutorial-${appId}');
 }
 

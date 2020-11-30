@@ -88,7 +88,7 @@ class BookletModel {
     );
   }
 
-  static Future<BookletModel> fromEntityPlus(String documentID, BookletEntity entity) async {
+  static Future<BookletModel> fromEntityPlus(String documentID, BookletEntity entity, { String appId}) async {
     if (entity == null) return null;
 
     return BookletModel(
@@ -97,7 +97,7 @@ class BookletModel {
           name: entity.name, 
           sections: 
             new List<SectionModel>.from(await Future.wait(entity. sections
-            .map((item) => SectionModel.fromEntityPlus(newRandomKey(), item))
+            .map((item) => SectionModel.fromEntityPlus(newRandomKey(), item, appId: appId))
             .toList())), 
     );
   }

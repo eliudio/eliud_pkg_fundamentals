@@ -35,7 +35,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 class DocumentJsFirestore implements DocumentRepository {
   Future<DocumentModel> add(DocumentModel value) {
     return documentCollection.doc(value.documentID)
-        .set(value.toEntity(appId: appID).toDocument())
+        .set(value.toEntity(appId: appId).toDocument())
         .then((_) => value);
   }
 
@@ -45,16 +45,16 @@ class DocumentJsFirestore implements DocumentRepository {
 
   Future<DocumentModel> update(DocumentModel value) {
     return documentCollection.doc(value.documentID)
-        .update(data: value.toEntity(appId: appID).toDocument())
+        .update(data: value.toEntity(appId: appId).toDocument())
         .then((_) => value);
   }
 
-  DocumentModel _populateDoc(DocumentSnapshot doc) {
-    return DocumentModel.fromEntity(doc.id, DocumentEntity.fromMap(doc.data()));
+  DocumentModel _populateDoc(DocumentSnapshot value) {
+    return DocumentModel.fromEntity(value.id, DocumentEntity.fromMap(value.data()));
   }
 
-  Future<DocumentModel> _populateDocPlus(DocumentSnapshot doc) async {
-    return DocumentModel.fromEntityPlus(doc.id, DocumentEntity.fromMap(doc.data()));
+  Future<DocumentModel> _populateDocPlus(DocumentSnapshot value) async {
+    return DocumentModel.fromEntityPlus(value.id, DocumentEntity.fromMap(value.data()), appId: appId);
   }
 
   Future<DocumentModel> get(String id) {
@@ -128,11 +128,11 @@ class DocumentJsFirestore implements DocumentRepository {
     return documentCollection.get().then((snapshot) => snapshot.docs
         .forEach((element) => documentCollection.doc(element.id).delete()));
   }
-  CollectionReference getCollection() => firestore().collection('Document-$appID');
+  CollectionReference getCollection() => firestore().collection('Document-$appId');
 
-  final String appID;
+  final String appId;
   
-  DocumentJsFirestore(this.appID) : documentCollection = firestore().collection('Document-$appID');
+  DocumentJsFirestore(this.appId) : documentCollection = firestore().collection('Document-$appId');
 
   final CollectionReference documentCollection;
 }

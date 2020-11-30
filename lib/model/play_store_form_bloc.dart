@@ -65,7 +65,7 @@ class PlayStoreFormBloc extends Bloc<PlayStoreFormEvent, PlayStoreFormState> {
 
       if (event is InitialisePlayStoreFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        PlayStoreFormLoaded loaded = PlayStoreFormLoaded(value: await playStoreRepository(appID: appId).get(event.value.documentID));
+        PlayStoreFormLoaded loaded = PlayStoreFormLoaded(value: await playStoreRepository(appId: appId).get(event.value.documentID));
         yield loaded;
         return;
       } else if (event is InitialisePlayStoreFormNoLoadEvent) {
@@ -93,7 +93,7 @@ class PlayStoreFormBloc extends Bloc<PlayStoreFormEvent, PlayStoreFormState> {
       }
       if (event is ChangedPlayStoreItemBackground) {
         if (event.value != null)
-          newValue = currentState.value.copyWith(itemBackground: await backgroundRepository(appID: appId).get(event.value));
+          newValue = currentState.value.copyWith(itemBackground: await backgroundRepository(appId: appId).get(event.value));
         else
           newValue = new PlayStoreModel(
                                  documentID: currentState.value.documentID,
@@ -114,7 +114,7 @@ class PlayStoreFormBloc extends Bloc<PlayStoreFormEvent, PlayStoreFormState> {
   Future<PlayStoreFormState> _isDocumentIDValid(String value, PlayStoreModel newValue) async {
     if (value == null) return Future.value(error("Provide value for documentID", newValue));
     if (value.length == 0) return Future.value(error("Provide value for documentID", newValue));
-    Future<PlayStoreModel> findDocument = playStoreRepository(appID: appId).get(value);
+    Future<PlayStoreModel> findDocument = playStoreRepository(appId: appId).get(value);
     return await findDocument.then((documentFound) {
       if (documentFound == null) {
         return SubmittablePlayStoreForm(value: newValue);

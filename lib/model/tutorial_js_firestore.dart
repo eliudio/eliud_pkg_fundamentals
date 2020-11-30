@@ -31,7 +31,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 class TutorialJsFirestore implements TutorialRepository {
   Future<TutorialModel> add(TutorialModel value) {
     return tutorialCollection.doc(value.documentID)
-        .set(value.toEntity(appId: appID).toDocument())
+        .set(value.toEntity(appId: appId).toDocument())
         .then((_) => value);
   }
 
@@ -41,16 +41,16 @@ class TutorialJsFirestore implements TutorialRepository {
 
   Future<TutorialModel> update(TutorialModel value) {
     return tutorialCollection.doc(value.documentID)
-        .update(data: value.toEntity(appId: appID).toDocument())
+        .update(data: value.toEntity(appId: appId).toDocument())
         .then((_) => value);
   }
 
-  TutorialModel _populateDoc(DocumentSnapshot doc) {
-    return TutorialModel.fromEntity(doc.id, TutorialEntity.fromMap(doc.data()));
+  TutorialModel _populateDoc(DocumentSnapshot value) {
+    return TutorialModel.fromEntity(value.id, TutorialEntity.fromMap(value.data()));
   }
 
-  Future<TutorialModel> _populateDocPlus(DocumentSnapshot doc) async {
-    return TutorialModel.fromEntityPlus(doc.id, TutorialEntity.fromMap(doc.data()));
+  Future<TutorialModel> _populateDocPlus(DocumentSnapshot value) async {
+    return TutorialModel.fromEntityPlus(value.id, TutorialEntity.fromMap(value.data()), appId: appId);
   }
 
   Future<TutorialModel> get(String id) {
@@ -124,11 +124,11 @@ class TutorialJsFirestore implements TutorialRepository {
     return tutorialCollection.get().then((snapshot) => snapshot.docs
         .forEach((element) => tutorialCollection.doc(element.id).delete()));
   }
-  CollectionReference getCollection() => firestore().collection('Tutorial-$appID');
+  CollectionReference getCollection() => firestore().collection('Tutorial-$appId');
 
-  final String appID;
+  final String appId;
   
-  TutorialJsFirestore(this.appID) : tutorialCollection = firestore().collection('Tutorial-$appID');
+  TutorialJsFirestore(this.appId) : tutorialCollection = firestore().collection('Tutorial-$appId');
 
   final CollectionReference tutorialCollection;
 }

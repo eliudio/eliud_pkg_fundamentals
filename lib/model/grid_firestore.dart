@@ -32,7 +32,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class GridFirestore implements GridRepository {
   Future<GridModel> add(GridModel value) {
-    return GridCollection.document(value.documentID).setData(value.toEntity(appId: appID).toDocument()).then((_) => value);
+    return GridCollection.document(value.documentID).setData(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
   Future<void> delete(GridModel value) {
@@ -40,15 +40,15 @@ class GridFirestore implements GridRepository {
   }
 
   Future<GridModel> update(GridModel value) {
-    return GridCollection.document(value.documentID).updateData(value.toEntity(appId: appID).toDocument()).then((_) => value);
+    return GridCollection.document(value.documentID).updateData(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
-  GridModel _populateDoc(DocumentSnapshot doc) {
-    return GridModel.fromEntity(doc.documentID, GridEntity.fromMap(doc.data));
+  GridModel _populateDoc(DocumentSnapshot value) {
+    return GridModel.fromEntity(value.documentID, GridEntity.fromMap(value.data));
   }
 
-  Future<GridModel> _populateDocPlus(DocumentSnapshot doc) async {
-    return GridModel.fromEntityPlus(doc.documentID, GridEntity.fromMap(doc.data));  }
+  Future<GridModel> _populateDocPlus(DocumentSnapshot value) async {
+    return GridModel.fromEntityPlus(value.documentID, GridEntity.fromMap(value.data), appId: appId);  }
 
   Future<GridModel> get(String id) {
     return GridCollection.document(id).get().then((doc) {
@@ -124,9 +124,9 @@ class GridFirestore implements GridRepository {
   }
 
 
-  final String appID;
+  final String appId;
   final CollectionReference GridCollection;
 
-  GridFirestore(this.appID) : GridCollection = Firestore.instance.collection('Grid-${appID}');
+  GridFirestore(this.appId) : GridCollection = Firestore.instance.collection('Grid-${appId}');
 }
 

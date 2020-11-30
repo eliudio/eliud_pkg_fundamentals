@@ -32,7 +32,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class SimpleImageFirestore implements SimpleImageRepository {
   Future<SimpleImageModel> add(SimpleImageModel value) {
-    return SimpleImageCollection.document(value.documentID).setData(value.toEntity(appId: appID).toDocument()).then((_) => value);
+    return SimpleImageCollection.document(value.documentID).setData(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
   Future<void> delete(SimpleImageModel value) {
@@ -40,15 +40,15 @@ class SimpleImageFirestore implements SimpleImageRepository {
   }
 
   Future<SimpleImageModel> update(SimpleImageModel value) {
-    return SimpleImageCollection.document(value.documentID).updateData(value.toEntity(appId: appID).toDocument()).then((_) => value);
+    return SimpleImageCollection.document(value.documentID).updateData(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
-  SimpleImageModel _populateDoc(DocumentSnapshot doc) {
-    return SimpleImageModel.fromEntity(doc.documentID, SimpleImageEntity.fromMap(doc.data));
+  SimpleImageModel _populateDoc(DocumentSnapshot value) {
+    return SimpleImageModel.fromEntity(value.documentID, SimpleImageEntity.fromMap(value.data));
   }
 
-  Future<SimpleImageModel> _populateDocPlus(DocumentSnapshot doc) async {
-    return SimpleImageModel.fromEntityPlus(doc.documentID, SimpleImageEntity.fromMap(doc.data));  }
+  Future<SimpleImageModel> _populateDocPlus(DocumentSnapshot value) async {
+    return SimpleImageModel.fromEntityPlus(value.documentID, SimpleImageEntity.fromMap(value.data), appId: appId);  }
 
   Future<SimpleImageModel> get(String id) {
     return SimpleImageCollection.document(id).get().then((doc) {
@@ -124,9 +124,9 @@ class SimpleImageFirestore implements SimpleImageRepository {
   }
 
 
-  final String appID;
+  final String appId;
   final CollectionReference SimpleImageCollection;
 
-  SimpleImageFirestore(this.appID) : SimpleImageCollection = Firestore.instance.collection('SimpleImage-${appID}');
+  SimpleImageFirestore(this.appId) : SimpleImageCollection = Firestore.instance.collection('SimpleImage-${appId}');
 }
 

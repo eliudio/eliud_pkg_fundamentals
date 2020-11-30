@@ -81,13 +81,13 @@ class DocumentItemModel {
     );
   }
 
-  static Future<DocumentItemModel> fromEntityPlus(String documentID, DocumentItemEntity entity) async {
+  static Future<DocumentItemModel> fromEntityPlus(String documentID, DocumentItemEntity entity, { String appId}) async {
     if (entity == null) return null;
 
     ImageModel imageHolder;
     if (entity.imageId != null) {
       try {
-        await imageRepository().get(entity.imageId).then((val) {
+        await imageRepository(appId: appId).get(entity.imageId).then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}

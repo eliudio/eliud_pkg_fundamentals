@@ -30,38 +30,38 @@ import '../model/tutorial_entry_repository.dart';
 import 'package:eliud_core/core/access/bloc/user_repository.dart';
 import 'package:eliud_core/tools/types.dart';
 
-BookletRepository bookletRepository({ String appID }) => AbstractRepositorySingleton.singleton.bookletRepository(appID);
-DividerRepository dividerRepository({ String appID }) => AbstractRepositorySingleton.singleton.dividerRepository(appID);
-DocumentRepository documentRepository({ String appID }) => AbstractRepositorySingleton.singleton.documentRepository(appID);
-FaderRepository faderRepository({ String appID }) => AbstractRepositorySingleton.singleton.faderRepository(appID);
-GridRepository gridRepository({ String appID }) => AbstractRepositorySingleton.singleton.gridRepository(appID);
-PlayStoreRepository playStoreRepository({ String appID }) => AbstractRepositorySingleton.singleton.playStoreRepository(appID);
-PresentationRepository presentationRepository({ String appID }) => AbstractRepositorySingleton.singleton.presentationRepository(appID);
-SimpleImageRepository simpleImageRepository({ String appID }) => AbstractRepositorySingleton.singleton.simpleImageRepository(appID);
-TutorialRepository tutorialRepository({ String appID }) => AbstractRepositorySingleton.singleton.tutorialRepository(appID);
+BookletRepository bookletRepository({ String appId }) => AbstractRepositorySingleton.singleton.bookletRepository(appId);
+DividerRepository dividerRepository({ String appId }) => AbstractRepositorySingleton.singleton.dividerRepository(appId);
+DocumentRepository documentRepository({ String appId }) => AbstractRepositorySingleton.singleton.documentRepository(appId);
+FaderRepository faderRepository({ String appId }) => AbstractRepositorySingleton.singleton.faderRepository(appId);
+GridRepository gridRepository({ String appId }) => AbstractRepositorySingleton.singleton.gridRepository(appId);
+PlayStoreRepository playStoreRepository({ String appId }) => AbstractRepositorySingleton.singleton.playStoreRepository(appId);
+PresentationRepository presentationRepository({ String appId }) => AbstractRepositorySingleton.singleton.presentationRepository(appId);
+SimpleImageRepository simpleImageRepository({ String appId }) => AbstractRepositorySingleton.singleton.simpleImageRepository(appId);
+TutorialRepository tutorialRepository({ String appId }) => AbstractRepositorySingleton.singleton.tutorialRepository(appId);
 
 abstract class AbstractRepositorySingleton {
   static AbstractRepositorySingleton singleton;
 
-  BookletRepository bookletRepository(String appID);
-  DividerRepository dividerRepository(String appID);
-  DocumentRepository documentRepository(String appID);
-  FaderRepository faderRepository(String appID);
-  GridRepository gridRepository(String appID);
-  PlayStoreRepository playStoreRepository(String appID);
-  PresentationRepository presentationRepository(String appID);
-  SimpleImageRepository simpleImageRepository(String appID);
-  TutorialRepository tutorialRepository(String appID);
+  BookletRepository bookletRepository(String appId);
+  DividerRepository dividerRepository(String appId);
+  DocumentRepository documentRepository(String appId);
+  FaderRepository faderRepository(String appId);
+  GridRepository gridRepository(String appId);
+  PlayStoreRepository playStoreRepository(String appId);
+  PresentationRepository presentationRepository(String appId);
+  SimpleImageRepository simpleImageRepository(String appId);
+  TutorialRepository tutorialRepository(String appId);
 
-  void flush(String appID) {
-    bookletRepository(appID).flush();
-    dividerRepository(appID).flush();
-    documentRepository(appID).flush();
-    faderRepository(appID).flush();
-    gridRepository(appID).flush();
-    playStoreRepository(appID).flush();
-    presentationRepository(appID).flush();
-    simpleImageRepository(appID).flush();
-    tutorialRepository(appID).flush();
+  void flush(String appId) {
+    bookletRepository(appId).flush();
+    dividerRepository(appId).flush();
+    documentRepository(appId).flush();
+    faderRepository(appId).flush();
+    gridRepository(appId).flush();
+    playStoreRepository(appId).flush();
+    presentationRepository(appId).flush();
+    simpleImageRepository(appId).flush();
+    tutorialRepository(appId).flush();
   }
 }

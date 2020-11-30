@@ -67,7 +67,7 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
 
       if (event is InitialisePresentationFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        PresentationFormLoaded loaded = PresentationFormLoaded(value: await presentationRepository(appID: appId).get(event.value.documentID));
+        PresentationFormLoaded loaded = PresentationFormLoaded(value: await presentationRepository(appId: appId).get(event.value.documentID));
         yield loaded;
         return;
       } else if (event is InitialisePresentationFormNoLoadEvent) {
@@ -101,7 +101,7 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
       }
       if (event is ChangedPresentationImage) {
         if (event.value != null)
-          newValue = currentState.value.copyWith(image: await imageRepository(appID: appId).get(event.value));
+          newValue = currentState.value.copyWith(image: await imageRepository(appId: appId).get(event.value));
         else
           newValue = new PresentationModel(
                                  documentID: currentState.value.documentID,
@@ -149,7 +149,7 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
   Future<PresentationFormState> _isDocumentIDValid(String value, PresentationModel newValue) async {
     if (value == null) return Future.value(error("Provide value for documentID", newValue));
     if (value.length == 0) return Future.value(error("Provide value for documentID", newValue));
-    Future<PresentationModel> findDocument = presentationRepository(appID: appId).get(value);
+    Future<PresentationModel> findDocument = presentationRepository(appId: appId).get(value);
     return await findDocument.then((documentFound) {
       if (documentFound == null) {
         return SubmittablePresentationForm(value: newValue);
