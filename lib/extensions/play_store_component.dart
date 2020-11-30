@@ -1,4 +1,4 @@
-import 'package:eliud_core/core/app/app_bloc.dart';
+import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/play_store_component.dart';
 import 'package:eliud_pkg_fundamentals/model/play_store_model.dart';
@@ -32,7 +32,7 @@ class PlayStoreBase extends AbstractPlayStoreComponent {
 
   @override
   PlayStoreRepository getPlayStoreRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.playStoreRepository(AppBloc.appId(context));
+    return AbstractRepositorySingleton.singleton.playStoreRepository(AccessBloc.appId(context));
   }
 
   @override
@@ -78,12 +78,12 @@ class PlayStoreState extends State<PlayStore> {
   }
 
   Widget _build(BuildContext context, List<AppModel> apps) {
-    var appID = AppBloc.appId(context);
+    var appID = AccessBloc.appId(context);
 
     var size = 150.0;
     var components = <Widget>[];
     apps.forEach((model) {
-      if (!AppBloc.isPlayStoreApp(context, model.documentID)) {
+      if (!AccessBloc.isPlayStoreApp(context, model.documentID)) {
         var children = <Widget>[];
         children.add(GestureDetector(
             onTap: () async {

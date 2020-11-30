@@ -1,4 +1,4 @@
-import 'package:eliud_core/core/app/app_bloc.dart';
+import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/document_component.dart';
@@ -29,6 +29,6 @@ class DocumentComponent extends AbstractDocumentComponent {
 
   @override
   DocumentRepository getDocumentRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.documentRepository(AppBloc.appId(context));
+    return AbstractRepositorySingleton.singleton.documentRepository(AccessBloc.appId(context));
   }
 }

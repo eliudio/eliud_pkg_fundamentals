@@ -14,10 +14,8 @@
 */
 
 import 'package:eliud_core/core/global_data.dart';
-import 'package:eliud_core/core/app/app_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
-import 'package:eliud_core/core/app/app_state.dart';
 import 'package:eliud_core/tools/action_model.dart';
 import 'package:eliud_core/core/navigate/router.dart' as eliudrouter;
 import 'package:eliud_core/tools/screen_size.dart';
@@ -65,12 +63,11 @@ class BookletForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var app = AppBloc.app(context);
     var accessState = AccessBloc.getState(context);
-    var appState = AppBloc.getState(context);
+    var app = AccessBloc.app(context);
     if (formAction == FormAction.ShowData) {
       return BlocProvider<BookletFormBloc >(
-            create: (context) => BookletFormBloc(AppBloc.appId(context),
+            create: (context) => BookletFormBloc(AccessBloc.appId(context),
                                        formAction: formAction,
 
                                                 )..add(InitialiseBookletFormEvent(value: value)),
@@ -79,7 +76,7 @@ class BookletForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<BookletFormBloc >(
-            create: (context) => BookletFormBloc(AppBloc.appId(context),
+            create: (context) => BookletFormBloc(AccessBloc.appId(context),
                                        formAction: formAction,
 
                                                 )..add(InitialiseBookletFormNoLoadEvent(value: value)),
@@ -100,7 +97,7 @@ class BookletForm extends StatelessWidget {
                         decoration: BoxDecorationHelper.boxDecoration(accessState, app.formAppBarBackground)),
                 ),
         body: BlocProvider<BookletFormBloc >(
-            create: (context) => BookletFormBloc(AppBloc.appId(context),
+            create: (context) => BookletFormBloc(AccessBloc.appId(context),
                                        formAction: formAction,
 
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseBookletFormEvent(value: value) : InitialiseNewBookletFormEvent())),
@@ -144,8 +141,7 @@ class _MyBookletFormState extends State<MyBookletForm> {
 
   @override
   Widget build(BuildContext context) {
-    var app = AppBloc.app(context);
-    var appState = AppBloc.getState(context);
+    var app = AccessBloc.app(context);
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<BookletFormBloc, BookletFormState>(builder: (context, state) {
       if (state is BookletFormUninitialized) return Center(
@@ -198,7 +194,7 @@ class _MyBookletFormState extends State<MyBookletForm> {
 
                 TextFormField(
                 style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
-                  readOnly: _readOnly(accessState, appState, state),
+                  readOnly: _readOnly(accessState, state),
                   controller: _nameController,
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
@@ -267,7 +263,7 @@ class _MyBookletFormState extends State<MyBookletForm> {
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
           children.add(RaisedButton(
                   color: RgbHelper.color(rgbo: app.formSubmitButtonColor),
-                  onPressed: _readOnly(accessState, appState, state) ? null : () {
+                  onPressed: _readOnly(accessState, state) ? null : () {
                     if (state is BookletFormError) {
                       return null;
                     } else {
@@ -349,8 +345,8 @@ class _MyBookletFormState extends State<MyBookletForm> {
     super.dispose();
   }
 
-  bool _readOnly(AccessState accessState, AppState appState, BookletFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(appState));
+  bool _readOnly(AccessState accessState, BookletFormInitialized state) {
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner());
   }
   
 

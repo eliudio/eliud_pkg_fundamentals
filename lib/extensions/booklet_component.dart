@@ -1,6 +1,5 @@
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
-import 'package:eliud_core/core/app/app_bloc.dart';
-import 'package:eliud_core/core/app/app_state.dart';
+import 'package:eliud_core/core/access/bloc/access_state.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_component.dart';
@@ -133,9 +132,8 @@ class BookletComponent extends AbstractBookletComponent {
   @override
   Widget yourWidget(BuildContext context, BookletModel value) {
     var accessState = AccessBloc.getState(context);
-    var appState = AppBloc.getState(context);
     var documentParameterProcessor =
-        ExtendedDocumentParameterProcessor(context, accessState, appState);
+        ExtendedDocumentParameterProcessor(context, accessState);
 
     var groupedWidgets = <Widget>[];
 
@@ -144,12 +142,12 @@ class BookletComponent extends AbstractBookletComponent {
 
       widgets.add(Text(
         documentParameterProcessor.process(element.title),
-        style: appState is AppLoaded ? FontTools.textStyle(appState.app.h3) : null,
+        style: accessState is AppLoaded ? FontTools.textStyle(accessState.app.h3) : null,
       ));
       widgets.add(_aBitSpace());
       widgets.add(Text(
           documentParameterProcessor.process(element.description),
-          style: appState is AppLoaded ? FontTools.textStyle(appState.app.fontText) : null));
+          style: accessState is AppLoaded ? FontTools.textStyle(accessState.app.fontText) : null));
       widgets.add(_aBitSpace());
       if (element.links != null && element.links.isNotEmpty) {
         var children = <Widget>[];
@@ -157,7 +155,7 @@ class BookletComponent extends AbstractBookletComponent {
           children.add(OutlineButton(
               child: Text(
                 link.linkText,
-                style: appState is AppLoaded ? FontTools.textStyle(appState.app.fontLink) : null,
+                style: accessState is AppLoaded ? FontTools.textStyle(accessState.app.fontLink) : null,
               ),
               onPressed: () {
                 EliudRouter.Router.navigateTo(context, link.action);
@@ -194,6 +192,6 @@ class BookletComponent extends AbstractBookletComponent {
 
   @override
   BookletRepository getBookletRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.bookletRepository(AppBloc.appId(context));
+    return AbstractRepositorySingleton.singleton.bookletRepository(AccessBloc.appId(context));
   }
 }

@@ -1,7 +1,5 @@
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
-import 'package:eliud_core/core/app/app_bloc.dart';
-import 'package:eliud_core/core/app/app_state.dart';
 import 'package:eliud_core/model/background_model.dart';
 import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/router_builders.dart';
@@ -36,15 +34,14 @@ class DocumentTextFieldState extends State<DocumentTextField> {
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var appState = AppBloc.getState(context);
-    return _buildExcludeDocument(appState, accessState, context);
+    return _buildExcludeDocument(accessState, context);
   }
 
   Widget _buildExcludeDocument(
-      AppState appState, AccessState accessState, BuildContext context) {
-    var app = AppBloc.app(context);
+      AccessState accessState, BuildContext context) {
+    var app = AccessBloc.app(context);
     return RaisedButton.icon(
-        onPressed: () => _fullScreen(appState),
+        onPressed: () => _fullScreen(accessState),
         icon: Icon(Icons.fullscreen),
         label: Text(widget.label,
             style: TextStyle(
@@ -53,8 +50,7 @@ class DocumentTextFieldState extends State<DocumentTextField> {
   }
 
   // Not used at the moment, but is a candidate
-  Widget _buildIncludeDocument(
-      AppState appState, AccessState accessState, BuildContext context) {
+  Widget _buildIncludeDocument(AccessState accessState, BuildContext context) {
     var width = fullScreenWidth(context);
     var height = fullScreenHeight(context);
     var fullWidth = (width < height ? width : height) - 56;
@@ -73,12 +69,12 @@ class DocumentTextFieldState extends State<DocumentTextField> {
                                 child: SizedBox(
                                     width: fullWidth,
                                     child: RaisedButton.icon(
-                                        onPressed: () => _fullScreen(appState),
+                                        onPressed: () => _fullScreen(accessState),
                                         icon: Icon(Icons.fullscreen),
                                         label: Text(widget.label),
-                                        color: appState is AppLoaded
+                                        color: accessState is AppLoaded
                                             ? RgbHelper.color(
-                                                rgbo: appState
+                                                rgbo: accessState
                                                     .app.formSubmitButtonColor)
                                             : null))))
                       ]),
@@ -101,7 +97,7 @@ class DocumentTextFieldState extends State<DocumentTextField> {
                 ])));
   }
 
-  void _fullScreen(AppState appState) async {
+  void _fullScreen(AccessState appState) async {
     if (appState is AppLoaded) {
       Navigator.of(context).push(pageRouteBuilder(appState.app,
           page: DocumentTextFieldFullScreen(
@@ -152,8 +148,7 @@ class DocumentTextFieldFullScreenState
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var appState = AppBloc.getState(context);
-    return tabs(appState, accessState);
+    return tabs(accessState);
   }
 
   Widget _document() {
@@ -165,7 +160,7 @@ class DocumentTextFieldFullScreenState
     return ListView(children: <Widget>[w]);
   }
 
-  Widget tabs(AppState appState, AccessState accessState) {
+  Widget tabs(AccessState accessState) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: DefaultTabController(
@@ -173,10 +168,10 @@ class DocumentTextFieldFullScreenState
           child: Scaffold(
             appBar: AppBar(
                 automaticallyImplyLeading: true,
-                flexibleSpace: appState is AppLoaded
+                flexibleSpace: accessState is AppLoaded
                     ? Container(
                         decoration: BoxDecorationHelper.boxDecoration(
-                            accessState, appState.app.formAppBarBackground))
+                            accessState, accessState.app.formAppBarBackground))
                     : null,
                 title: Text(widget.label),
                 leading: IconButton(
@@ -188,26 +183,26 @@ class DocumentTextFieldFullScreenState
                   tabs: [
                     Tab(
                         icon: Icon(Icons.create,
-                            color: appState is AppLoaded
+                            color: accessState is AppLoaded
                                 ? RgbHelper.color(
-                                    rgbo: appState.app.formFieldHeaderColor)
+                                    rgbo: accessState.app.formFieldHeaderColor)
                                 : null)),
                     Tab(
                         icon: Icon(Icons.remove_red_eye,
-                            color: appState is AppLoaded
+                            color: accessState is AppLoaded
                                 ? RgbHelper.color(
-                                    rgbo: appState.app.formFieldHeaderColor)
+                                    rgbo: accessState.app.formFieldHeaderColor)
                                 : null)),
                   ],
                 )),
             body: TabBarView(
               children: <Widget>[
                 TextFormField(
-                  readOnly: !accessState.memberIsOwner(appState),
-                  style: appState is AppLoaded
+                  readOnly: !accessState.memberIsOwner(),
+                  style: accessState is AppLoaded
                       ? TextStyle(
                           color: RgbHelper.color(
-                              rgbo: appState.app.formFieldTextColor))
+                              rgbo: accessState.app.formFieldTextColor))
                       : null,
                   initialValue: value,
                   decoration: InputDecoration(

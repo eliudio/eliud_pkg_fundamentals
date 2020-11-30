@@ -14,10 +14,8 @@
 */
 
 import 'package:eliud_core/core/global_data.dart';
-import 'package:eliud_core/core/app/app_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
-import 'package:eliud_core/core/app/app_state.dart';
 import 'package:eliud_core/tools/action_model.dart';
 import 'package:eliud_core/core/navigate/router.dart' as eliudrouter;
 import 'package:eliud_core/tools/screen_size.dart';
@@ -65,12 +63,11 @@ class FaderForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var app = AppBloc.app(context);
     var accessState = AccessBloc.getState(context);
-    var appState = AppBloc.getState(context);
+    var app = AccessBloc.app(context);
     if (formAction == FormAction.ShowData) {
       return BlocProvider<FaderFormBloc >(
-            create: (context) => FaderFormBloc(AppBloc.appId(context),
+            create: (context) => FaderFormBloc(AccessBloc.appId(context),
                                        formAction: formAction,
 
                                                 )..add(InitialiseFaderFormEvent(value: value)),
@@ -79,7 +76,7 @@ class FaderForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<FaderFormBloc >(
-            create: (context) => FaderFormBloc(AppBloc.appId(context),
+            create: (context) => FaderFormBloc(AccessBloc.appId(context),
                                        formAction: formAction,
 
                                                 )..add(InitialiseFaderFormNoLoadEvent(value: value)),
@@ -100,7 +97,7 @@ class FaderForm extends StatelessWidget {
                         decoration: BoxDecorationHelper.boxDecoration(accessState, app.formAppBarBackground)),
                 ),
         body: BlocProvider<FaderFormBloc >(
-            create: (context) => FaderFormBloc(AppBloc.appId(context),
+            create: (context) => FaderFormBloc(AccessBloc.appId(context),
                                        formAction: formAction,
 
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseFaderFormEvent(value: value) : InitialiseNewFaderFormEvent())),
@@ -150,8 +147,7 @@ class _MyFaderFormState extends State<MyFaderForm> {
 
   @override
   Widget build(BuildContext context) {
-    var app = AppBloc.app(context);
-    var appState = AppBloc.getState(context);
+    var app = AccessBloc.app(context);
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<FaderFormBloc, FaderFormState>(builder: (context, state) {
       if (state is FaderFormUninitialized) return Center(
@@ -216,7 +212,7 @@ class _MyFaderFormState extends State<MyFaderForm> {
 
                 TextFormField(
                 style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
-                  readOnly: _readOnly(accessState, appState, state),
+                  readOnly: _readOnly(accessState, state),
                   controller: _nameController,
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
@@ -285,7 +281,7 @@ class _MyFaderFormState extends State<MyFaderForm> {
                     groupValue: _animationSelectedRadioTile,
                     title: Text("None", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     subtitle: Text("None", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
+                    onChanged: !accessState.memberIsOwner() ? null : (val) {
                       setSelectionAnimation(val);
                     },
                 ),
@@ -298,7 +294,7 @@ class _MyFaderFormState extends State<MyFaderForm> {
                     groupValue: _animationSelectedRadioTile,
                     title: Text("Fade", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     subtitle: Text("Fade", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
+                    onChanged: !accessState.memberIsOwner() ? null : (val) {
                       setSelectionAnimation(val);
                     },
                 ),
@@ -311,7 +307,7 @@ class _MyFaderFormState extends State<MyFaderForm> {
                     groupValue: _animationSelectedRadioTile,
                     title: Text("Scale", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     subtitle: Text("Scale", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
+                    onChanged: !accessState.memberIsOwner() ? null : (val) {
                       setSelectionAnimation(val);
                     },
                 ),
@@ -324,7 +320,7 @@ class _MyFaderFormState extends State<MyFaderForm> {
                     groupValue: _animationSelectedRadioTile,
                     title: Text("Slide", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     subtitle: Text("Slide", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
+                    onChanged: !accessState.memberIsOwner() ? null : (val) {
                       setSelectionAnimation(val);
                     },
                 ),
@@ -347,7 +343,7 @@ class _MyFaderFormState extends State<MyFaderForm> {
 
                 TextFormField(
                 style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
-                  readOnly: _readOnly(accessState, appState, state),
+                  readOnly: _readOnly(accessState, state),
                   controller: _animationMillisecondsController,
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
@@ -366,7 +362,7 @@ class _MyFaderFormState extends State<MyFaderForm> {
 
                 TextFormField(
                 style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
-                  readOnly: _readOnly(accessState, appState, state),
+                  readOnly: _readOnly(accessState, state),
                   controller: _imageSecondsController,
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
@@ -389,7 +385,7 @@ class _MyFaderFormState extends State<MyFaderForm> {
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
           children.add(RaisedButton(
                   color: RgbHelper.color(rgbo: app.formSubmitButtonColor),
-                  onPressed: _readOnly(accessState, appState, state) ? null : () {
+                  onPressed: _readOnly(accessState, state) ? null : () {
                     if (state is FaderFormError) {
                       return null;
                     } else {
@@ -497,8 +493,8 @@ class _MyFaderFormState extends State<MyFaderForm> {
     super.dispose();
   }
 
-  bool _readOnly(AccessState accessState, AppState appState, FaderFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(appState));
+  bool _readOnly(AccessState accessState, FaderFormInitialized state) {
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner());
   }
   
 

@@ -1,5 +1,4 @@
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
-import 'package:eliud_core/core/app/app_bloc.dart';
 import 'package:eliud_core/core/navigate/navigate_bloc.dart';
 import 'package:eliud_core/eliud.dart';
 import 'package:eliud_core/model/app_model.dart';
@@ -11,7 +10,7 @@ import 'package:eliud_pkg_fundamentals/model/component_registry.dart';
 
 abstract class FundamentalsPackage extends Package {
   @override
-  BlocProvider createMainBloc(NavigatorBloc navigatorBloc, AppBloc appBloc, AccessBloc accessBloc) => null;
+  BlocProvider createMainBloc(NavigatorBloc navigatorBloc, AccessBloc accessBloc) => null;
 
   @override
   Future<bool> isConditionOk(String packageCondition, AppModel app, MemberModel member, bool isOwner) async => null;

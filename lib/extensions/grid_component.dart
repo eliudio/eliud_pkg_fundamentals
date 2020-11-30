@@ -1,4 +1,4 @@
-import 'package:eliud_core/core/app/app_bloc.dart';
+import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/tools/grid_view_helper.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
@@ -39,6 +39,6 @@ class GridComponent extends AbstractGridComponent {
 
   @override
   GridRepository getGridRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.gridRepository(AppBloc.appId(context));
+    return AbstractRepositorySingleton.singleton.gridRepository(AccessBloc.appId(context));
   }
 }

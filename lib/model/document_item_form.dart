@@ -14,10 +14,8 @@
 */
 
 import 'package:eliud_core/core/global_data.dart';
-import 'package:eliud_core/core/app/app_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
-import 'package:eliud_core/core/app/app_state.dart';
 import 'package:eliud_core/tools/action_model.dart';
 import 'package:eliud_core/core/navigate/router.dart' as eliudrouter;
 import 'package:eliud_core/tools/screen_size.dart';
@@ -70,12 +68,11 @@ class DocumentItemForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var app = AppBloc.app(context);
     var accessState = AccessBloc.getState(context);
-    var appState = AppBloc.getState(context);
+    var app = AccessBloc.app(context);
     if (formAction == FormAction.ShowData) {
       return BlocProvider<DocumentItemFormBloc >(
-            create: (context) => DocumentItemFormBloc(AppBloc.appId(context),
+            create: (context) => DocumentItemFormBloc(AccessBloc.appId(context),
                                        
                                                 )..add(InitialiseDocumentItemFormEvent(value: value)),
   
@@ -83,7 +80,7 @@ class DocumentItemForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<DocumentItemFormBloc >(
-            create: (context) => DocumentItemFormBloc(AppBloc.appId(context),
+            create: (context) => DocumentItemFormBloc(AccessBloc.appId(context),
                                        
                                                 )..add(InitialiseDocumentItemFormNoLoadEvent(value: value)),
   
@@ -103,7 +100,7 @@ class DocumentItemForm extends StatelessWidget {
                         decoration: BoxDecorationHelper.boxDecoration(accessState, app.formAppBarBackground)),
                 ),
         body: BlocProvider<DocumentItemFormBloc >(
-            create: (context) => DocumentItemFormBloc(AppBloc.appId(context),
+            create: (context) => DocumentItemFormBloc(AccessBloc.appId(context),
                                        
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseDocumentItemFormEvent(value: value) : InitialiseNewDocumentItemFormEvent())),
   
@@ -145,8 +142,7 @@ class _MyDocumentItemFormState extends State<MyDocumentItemForm> {
 
   @override
   Widget build(BuildContext context) {
-    var app = AppBloc.app(context);
-    var appState = AppBloc.getState(context);
+    var app = AccessBloc.app(context);
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<DocumentItemFormBloc, DocumentItemFormState>(builder: (context, state) {
       if (state is DocumentItemFormUninitialized) return Center(
@@ -173,7 +169,7 @@ class _MyDocumentItemFormState extends State<MyDocumentItemForm> {
 
                 TextFormField(
                 style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
-                  readOnly: _readOnly(accessState, appState, state),
+                  readOnly: _readOnly(accessState, state),
                   controller: _referenceController,
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.vpn_key, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
@@ -197,7 +193,7 @@ class _MyDocumentItemFormState extends State<MyDocumentItemForm> {
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
           children.add(RaisedButton(
                   color: RgbHelper.color(rgbo: app.formSubmitButtonColor),
-                  onPressed: _readOnly(accessState, appState, state) ? null : () {
+                  onPressed: _readOnly(accessState, state) ? null : () {
                     if (state is DocumentItemFormError) {
                       return null;
                     } else {
@@ -273,8 +269,8 @@ class _MyDocumentItemFormState extends State<MyDocumentItemForm> {
     super.dispose();
   }
 
-  bool _readOnly(AccessState accessState, AppState appState, DocumentItemFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(appState));
+  bool _readOnly(AccessState accessState, DocumentItemFormInitialized state) {
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner());
   }
   
 

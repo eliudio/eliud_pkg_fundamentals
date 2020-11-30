@@ -14,10 +14,8 @@
 */
 
 import 'package:eliud_core/core/global_data.dart';
-import 'package:eliud_core/core/app/app_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
-import 'package:eliud_core/core/app/app_state.dart';
 import 'package:eliud_core/tools/action_model.dart';
 import 'package:eliud_core/core/navigate/router.dart' as eliudrouter;
 import 'package:eliud_core/tools/screen_size.dart';
@@ -70,12 +68,11 @@ class SimpleImageForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var app = AppBloc.app(context);
     var accessState = AccessBloc.getState(context);
-    var appState = AppBloc.getState(context);
+    var app = AccessBloc.app(context);
     if (formAction == FormAction.ShowData) {
       return BlocProvider<SimpleImageFormBloc >(
-            create: (context) => SimpleImageFormBloc(AppBloc.appId(context),
+            create: (context) => SimpleImageFormBloc(AccessBloc.appId(context),
                                        formAction: formAction,
 
                                                 )..add(InitialiseSimpleImageFormEvent(value: value)),
@@ -84,7 +81,7 @@ class SimpleImageForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<SimpleImageFormBloc >(
-            create: (context) => SimpleImageFormBloc(AppBloc.appId(context),
+            create: (context) => SimpleImageFormBloc(AccessBloc.appId(context),
                                        formAction: formAction,
 
                                                 )..add(InitialiseSimpleImageFormNoLoadEvent(value: value)),
@@ -105,7 +102,7 @@ class SimpleImageForm extends StatelessWidget {
                         decoration: BoxDecorationHelper.boxDecoration(accessState, app.formAppBarBackground)),
                 ),
         body: BlocProvider<SimpleImageFormBloc >(
-            create: (context) => SimpleImageFormBloc(AppBloc.appId(context),
+            create: (context) => SimpleImageFormBloc(AccessBloc.appId(context),
                                        formAction: formAction,
 
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseSimpleImageFormEvent(value: value) : InitialiseNewSimpleImageFormEvent())),
@@ -150,8 +147,7 @@ class _MySimpleImageFormState extends State<MySimpleImageForm> {
 
   @override
   Widget build(BuildContext context) {
-    var app = AppBloc.app(context);
-    var appState = AppBloc.getState(context);
+    var app = AccessBloc.app(context);
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<SimpleImageFormBloc, SimpleImageFormState>(builder: (context, state) {
       if (state is SimpleImageFormUninitialized) return Center(
@@ -221,7 +217,7 @@ class _MySimpleImageFormState extends State<MySimpleImageForm> {
 
                 TextFormField(
                 style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
-                  readOnly: _readOnly(accessState, appState, state),
+                  readOnly: _readOnly(accessState, state),
                   controller: _titleController,
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
@@ -261,7 +257,7 @@ class _MySimpleImageFormState extends State<MySimpleImageForm> {
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
           children.add(RaisedButton(
                   color: RgbHelper.color(rgbo: app.formSubmitButtonColor),
-                  onPressed: _readOnly(accessState, appState, state) ? null : () {
+                  onPressed: _readOnly(accessState, state) ? null : () {
                     if (state is SimpleImageFormError) {
                       return null;
                     } else {
@@ -345,8 +341,8 @@ class _MySimpleImageFormState extends State<MySimpleImageForm> {
     super.dispose();
   }
 
-  bool _readOnly(AccessState accessState, AppState appState, SimpleImageFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(appState));
+  bool _readOnly(AccessState accessState, SimpleImageFormInitialized state) {
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner());
   }
   
 

@@ -14,10 +14,8 @@
 */
 
 import 'package:eliud_core/core/global_data.dart';
-import 'package:eliud_core/core/app/app_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
-import 'package:eliud_core/core/app/app_state.dart';
 import 'package:eliud_core/tools/action_model.dart';
 import 'package:eliud_core/core/navigate/router.dart' as eliudrouter;
 import 'package:eliud_core/tools/screen_size.dart';
@@ -70,12 +68,11 @@ class PresentationForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var app = AppBloc.app(context);
     var accessState = AccessBloc.getState(context);
-    var appState = AppBloc.getState(context);
+    var app = AccessBloc.app(context);
     if (formAction == FormAction.ShowData) {
       return BlocProvider<PresentationFormBloc >(
-            create: (context) => PresentationFormBloc(AppBloc.appId(context),
+            create: (context) => PresentationFormBloc(AccessBloc.appId(context),
                                        formAction: formAction,
 
                                                 )..add(InitialisePresentationFormEvent(value: value)),
@@ -84,7 +81,7 @@ class PresentationForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<PresentationFormBloc >(
-            create: (context) => PresentationFormBloc(AppBloc.appId(context),
+            create: (context) => PresentationFormBloc(AccessBloc.appId(context),
                                        formAction: formAction,
 
                                                 )..add(InitialisePresentationFormNoLoadEvent(value: value)),
@@ -105,7 +102,7 @@ class PresentationForm extends StatelessWidget {
                         decoration: BoxDecorationHelper.boxDecoration(accessState, app.formAppBarBackground)),
                 ),
         body: BlocProvider<PresentationFormBloc >(
-            create: (context) => PresentationFormBloc(AppBloc.appId(context),
+            create: (context) => PresentationFormBloc(AccessBloc.appId(context),
                                        formAction: formAction,
 
                                                 )..add((formAction == FormAction.UpdateAction ? InitialisePresentationFormEvent(value: value) : InitialiseNewPresentationFormEvent())),
@@ -156,8 +153,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
 
   @override
   Widget build(BuildContext context) {
-    var app = AppBloc.app(context);
-    var appState = AppBloc.getState(context);
+    var app = AccessBloc.app(context);
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<PresentationFormBloc, PresentationFormState>(builder: (context, state) {
       if (state is PresentationFormUninitialized) return Center(
@@ -239,7 +235,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
 
                 TextFormField(
                 style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
-                  readOnly: _readOnly(accessState, appState, state),
+                  readOnly: _readOnly(accessState, state),
                   controller: _titleController,
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
@@ -257,7 +253,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
 
                 TextFormField(
                 style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
-                  readOnly: _readOnly(accessState, appState, state),
+                  readOnly: _readOnly(accessState, state),
                   controller: _imageWidthController,
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
@@ -332,7 +328,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
                     groupValue: _imagePositionRelativeSelectedRadioTile,
                     title: Text("Behind", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     subtitle: Text("Behind", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
+                    onChanged: !accessState.memberIsOwner() ? null : (val) {
                       setSelectionImagePositionRelative(val);
                     },
                 ),
@@ -345,7 +341,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
                     groupValue: _imagePositionRelativeSelectedRadioTile,
                     title: Text("InFront", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     subtitle: Text("InFront", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
+                    onChanged: !accessState.memberIsOwner() ? null : (val) {
                       setSelectionImagePositionRelative(val);
                     },
                 ),
@@ -358,7 +354,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
                     groupValue: _imagePositionRelativeSelectedRadioTile,
                     title: Text("Below", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     subtitle: Text("Below", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
+                    onChanged: !accessState.memberIsOwner() ? null : (val) {
                       setSelectionImagePositionRelative(val);
                     },
                 ),
@@ -371,7 +367,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
                     groupValue: _imagePositionRelativeSelectedRadioTile,
                     title: Text("Above", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     subtitle: Text("Above", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
+                    onChanged: !accessState.memberIsOwner() ? null : (val) {
                       setSelectionImagePositionRelative(val);
                     },
                 ),
@@ -384,7 +380,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
                     groupValue: _imagePositionRelativeSelectedRadioTile,
                     title: Text("Aside", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     subtitle: Text("Aside", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
+                    onChanged: !accessState.memberIsOwner() ? null : (val) {
                       setSelectionImagePositionRelative(val);
                     },
                 ),
@@ -411,7 +407,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
                     groupValue: _imageAlignmentSelectedRadioTile,
                     title: Text("Left", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     subtitle: Text("Left", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
+                    onChanged: !accessState.memberIsOwner() ? null : (val) {
                       setSelectionImageAlignment(val);
                     },
                 ),
@@ -424,7 +420,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
                     groupValue: _imageAlignmentSelectedRadioTile,
                     title: Text("Center", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     subtitle: Text("Center", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
+                    onChanged: !accessState.memberIsOwner() ? null : (val) {
                       setSelectionImageAlignment(val);
                     },
                 ),
@@ -437,7 +433,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
                     groupValue: _imageAlignmentSelectedRadioTile,
                     title: Text("Right", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     subtitle: Text("Right", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
+                    onChanged: !accessState.memberIsOwner() ? null : (val) {
                       setSelectionImageAlignment(val);
                     },
                 ),
@@ -478,7 +474,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
 
                 TextFormField(
                 style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
-                  readOnly: _readOnly(accessState, appState, state),
+                  readOnly: _readOnly(accessState, state),
                   controller: _titleController,
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
@@ -496,7 +492,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
 
                 TextFormField(
                 style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
-                  readOnly: _readOnly(accessState, appState, state),
+                  readOnly: _readOnly(accessState, state),
                   controller: _imageWidthController,
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
@@ -519,7 +515,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
           children.add(RaisedButton(
                   color: RgbHelper.color(rgbo: app.formSubmitButtonColor),
-                  onPressed: _readOnly(accessState, appState, state) ? null : () {
+                  onPressed: _readOnly(accessState, state) ? null : () {
                     if (state is PresentationFormError) {
                       return null;
                     } else {
@@ -639,8 +635,8 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
     super.dispose();
   }
 
-  bool _readOnly(AccessState accessState, AppState appState, PresentationFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(appState));
+  bool _readOnly(AccessState accessState, PresentationFormInitialized state) {
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner());
   }
   
 

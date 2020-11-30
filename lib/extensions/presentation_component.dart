@@ -1,4 +1,4 @@
-import 'package:eliud_core/core/app/app_bloc.dart';
+import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_pkg_fundamentals/extensions/presentation/presentation_helper.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
@@ -37,6 +37,6 @@ class PresentationComponent extends AbstractPresentationComponent {
 
   @override
   PresentationRepository getPresentationRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.presentationRepository(AppBloc.appId(context));
+    return AbstractRepositorySingleton.singleton.presentationRepository(AccessBloc.appId(context));
   }
 }

@@ -14,10 +14,8 @@
 */
 
 import 'package:eliud_core/core/global_data.dart';
-import 'package:eliud_core/core/app/app_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
-import 'package:eliud_core/core/app/app_state.dart';
 import 'package:eliud_core/tools/action_model.dart';
 import 'package:eliud_core/core/navigate/router.dart' as eliudrouter;
 import 'package:eliud_core/tools/screen_size.dart';
@@ -70,12 +68,11 @@ class ListedItemForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var app = AppBloc.app(context);
     var accessState = AccessBloc.getState(context);
-    var appState = AppBloc.getState(context);
+    var app = AccessBloc.app(context);
     if (formAction == FormAction.ShowData) {
       return BlocProvider<ListedItemFormBloc >(
-            create: (context) => ListedItemFormBloc(AppBloc.appId(context),
+            create: (context) => ListedItemFormBloc(AccessBloc.appId(context),
                                        
                                                 )..add(InitialiseListedItemFormEvent(value: value)),
   
@@ -83,7 +80,7 @@ class ListedItemForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<ListedItemFormBloc >(
-            create: (context) => ListedItemFormBloc(AppBloc.appId(context),
+            create: (context) => ListedItemFormBloc(AccessBloc.appId(context),
                                        
                                                 )..add(InitialiseListedItemFormNoLoadEvent(value: value)),
   
@@ -103,7 +100,7 @@ class ListedItemForm extends StatelessWidget {
                         decoration: BoxDecorationHelper.boxDecoration(accessState, app.formAppBarBackground)),
                 ),
         body: BlocProvider<ListedItemFormBloc >(
-            create: (context) => ListedItemFormBloc(AppBloc.appId(context),
+            create: (context) => ListedItemFormBloc(AccessBloc.appId(context),
                                        
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseListedItemFormEvent(value: value) : InitialiseNewListedItemFormEvent())),
   
@@ -146,8 +143,7 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
 
   @override
   Widget build(BuildContext context) {
-    var app = AppBloc.app(context);
-    var appState = AppBloc.getState(context);
+    var app = AccessBloc.app(context);
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<ListedItemFormBloc, ListedItemFormState>(builder: (context, state) {
       if (state is ListedItemFormUninitialized) return Center(
@@ -186,7 +182,7 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
 
                 TextFormField(
                 style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
-                  readOnly: _readOnly(accessState, appState, state),
+                  readOnly: _readOnly(accessState, state),
                   controller: _descriptionController,
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
@@ -215,7 +211,7 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
 
         children.add(
 
-                ActionField(AppBloc.appId(context), state.value.action, _onActionChanged)
+                ActionField(AccessBloc.appId(context), state.value.action, _onActionChanged)
           );
 
 
@@ -262,7 +258,7 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
           children.add(RaisedButton(
                   color: RgbHelper.color(rgbo: app.formSubmitButtonColor),
-                  onPressed: _readOnly(accessState, appState, state) ? null : () {
+                  onPressed: _readOnly(accessState, state) ? null : () {
                     if (state is ListedItemFormError) {
                       return null;
                     } else {
@@ -356,8 +352,8 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
     super.dispose();
   }
 
-  bool _readOnly(AccessState accessState, AppState appState, ListedItemFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(appState));
+  bool _readOnly(AccessState accessState, ListedItemFormInitialized state) {
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner());
   }
   
 

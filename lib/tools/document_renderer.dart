@@ -1,5 +1,4 @@
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
-import 'package:eliud_core/core/app/app_bloc.dart';
 import 'package:eliud_core/core/tools/document_processor.dart';
 import 'package:eliud_core/model/background_model.dart';
 import 'package:eliud_core/tools/etc.dart';
@@ -157,8 +156,7 @@ class DocumentRendererTool {
       List<DocumentItemModel> images,
       BackgroundModel bdm) {
     var accessState = AccessBloc.getState(context);
-    var appState = AppBloc.getState(context);
-    DocumentParameterProcessor documentParameterProcessor = ExtendedDocumentParameterProcessor(context, accessState, appState, images: images);
+    DocumentParameterProcessor documentParameterProcessor = ExtendedDocumentParameterProcessor(context, accessState, images: images);
     return Container(
         child: _rendered(context, documentRenderer, documentParameterProcessor.process(document)),
         decoration: BoxDecorationHelper.boxDecoration(accessState, bdm));

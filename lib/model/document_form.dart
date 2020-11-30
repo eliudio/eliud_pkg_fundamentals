@@ -14,10 +14,8 @@
 */
 
 import 'package:eliud_core/core/global_data.dart';
-import 'package:eliud_core/core/app/app_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
-import 'package:eliud_core/core/app/app_state.dart';
 import 'package:eliud_core/tools/action_model.dart';
 import 'package:eliud_core/core/navigate/router.dart' as eliudrouter;
 import 'package:eliud_core/tools/screen_size.dart';
@@ -70,12 +68,11 @@ class DocumentForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var app = AppBloc.app(context);
     var accessState = AccessBloc.getState(context);
-    var appState = AppBloc.getState(context);
+    var app = AccessBloc.app(context);
     if (formAction == FormAction.ShowData) {
       return BlocProvider<DocumentFormBloc >(
-            create: (context) => DocumentFormBloc(AppBloc.appId(context),
+            create: (context) => DocumentFormBloc(AccessBloc.appId(context),
                                        formAction: formAction,
 
                                                 )..add(InitialiseDocumentFormEvent(value: value)),
@@ -84,7 +81,7 @@ class DocumentForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<DocumentFormBloc >(
-            create: (context) => DocumentFormBloc(AppBloc.appId(context),
+            create: (context) => DocumentFormBloc(AccessBloc.appId(context),
                                        formAction: formAction,
 
                                                 )..add(InitialiseDocumentFormNoLoadEvent(value: value)),
@@ -105,7 +102,7 @@ class DocumentForm extends StatelessWidget {
                         decoration: BoxDecorationHelper.boxDecoration(accessState, app.formAppBarBackground)),
                 ),
         body: BlocProvider<DocumentFormBloc >(
-            create: (context) => DocumentFormBloc(AppBloc.appId(context),
+            create: (context) => DocumentFormBloc(AccessBloc.appId(context),
                                        formAction: formAction,
 
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseDocumentFormEvent(value: value) : InitialiseNewDocumentFormEvent())),
@@ -154,8 +151,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
 
   @override
   Widget build(BuildContext context) {
-    var app = AppBloc.app(context);
-    var appState = AppBloc.getState(context);
+    var app = AccessBloc.app(context);
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<DocumentFormBloc, DocumentFormState>(builder: (context, state) {
       if (state is DocumentFormUninitialized) return Center(
@@ -220,7 +216,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
 
                 TextFormField(
                 style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
-                  readOnly: _readOnly(accessState, appState, state),
+                  readOnly: _readOnly(accessState, state),
                   controller: _nameController,
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
@@ -273,7 +269,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
                     groupValue: _documentRendererSelectedRadioTile,
                     title: Text("flutter_html", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     subtitle: Text("flutter_html", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
+                    onChanged: !accessState.memberIsOwner() ? null : (val) {
                       setSelectionDocumentRenderer(val);
                     },
                 ),
@@ -286,7 +282,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
                     groupValue: _documentRendererSelectedRadioTile,
                     title: Text("flutter_widget_from_html_not_web", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     subtitle: Text("flutter_widget_from_html_not_web", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
+                    onChanged: !accessState.memberIsOwner() ? null : (val) {
                       setSelectionDocumentRenderer(val);
                     },
                 ),
@@ -299,7 +295,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
                     groupValue: _documentRendererSelectedRadioTile,
                     title: Text("webview_flutter_no_list_not_web", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     subtitle: Text("webview_flutter_no_list_not_web", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
+                    onChanged: !accessState.memberIsOwner() ? null : (val) {
                       setSelectionDocumentRenderer(val);
                     },
                 ),
@@ -312,7 +308,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
                     groupValue: _documentRendererSelectedRadioTile,
                     title: Text("flutter_markdown", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     subtitle: Text("flutter_markdown", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
+                    onChanged: !accessState.memberIsOwner() ? null : (val) {
                       setSelectionDocumentRenderer(val);
                     },
                 ),
@@ -325,7 +321,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
                     groupValue: _documentRendererSelectedRadioTile,
                     title: Text("dynamic_widget", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     subtitle: Text("dynamic_widget", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner(appState) ? null : (val) {
+                    onChanged: !accessState.memberIsOwner() ? null : (val) {
                       setSelectionDocumentRenderer(val);
                     },
                 ),
@@ -348,7 +344,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
 
                 TextFormField(
                 style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
-                  readOnly: _readOnly(accessState, appState, state),
+                  readOnly: _readOnly(accessState, state),
                   controller: _paddingController,
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.border_style, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
@@ -410,7 +406,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
           children.add(RaisedButton(
                   color: RgbHelper.color(rgbo: app.formSubmitButtonColor),
-                  onPressed: _readOnly(accessState, appState, state) ? null : () {
+                  onPressed: _readOnly(accessState, state) ? null : () {
                     if (state is DocumentFormError) {
                       return null;
                     } else {
@@ -528,8 +524,8 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
     super.dispose();
   }
 
-  bool _readOnly(AccessState accessState, AppState appState, DocumentFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(appState));
+  bool _readOnly(AccessState accessState, DocumentFormInitialized state) {
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner());
   }
   
 

@@ -15,8 +15,6 @@
 
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
-import 'package:eliud_core/core/app/app_bloc.dart';
-import 'package:eliud_core/core/app/app_state.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 import 'package:eliud_core/core/global_data.dart';
@@ -62,8 +60,7 @@ class LinkListWidget extends StatefulWidget with HasFab {
     if ((readOnly != null) && readOnly) return null;
     state ??= LinkListWidgetState();
     var accessState = AccessBloc.getState(context);
-    var appState = AppBloc.getState(context);
-    return state.fab(context, accessState, appState);
+    return state.fab(context, accessState);
   }
 }
 
@@ -83,18 +80,18 @@ class LinkListWidgetState extends State<LinkListWidget> {
   }
 
   @override
-  Widget fab(BuildContext aContext, AccessState accessState, AppLoaded appState) {
-    if (appState is AppLoaded) {
-      return !accessState.memberIsOwner(appState) 
+  Widget fab(BuildContext aContext, AccessState accessState) {
+    if (accessState is AppLoaded) {
+      return !accessState.memberIsOwner() 
         ? null
         :FloatingActionButton(
         heroTag: "LinkFloatBtnTag",
-        foregroundColor: RgbHelper.color(rgbo: appState.app.floatingButtonForegroundColor),
-        backgroundColor: RgbHelper.color(rgbo: appState.app.floatingButtonBackgroundColor),
+        foregroundColor: RgbHelper.color(rgbo: accessState.app.floatingButtonForegroundColor),
+        backgroundColor: RgbHelper.color(rgbo: accessState.app.floatingButtonBackgroundColor),
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.of(context).push(
-            pageRouteBuilder(appState.app, page: BlocProvider.value(
+            pageRouteBuilder(accessState.app, page: BlocProvider.value(
                 value: bloc,
                 child: LinkForm(
                     value: null,
@@ -110,9 +107,8 @@ class LinkListWidgetState extends State<LinkListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var appState = AppBloc.getState(context);
     var accessState = AccessBloc.getState(context);
-    if (appState is AppLoaded) {
+    if (accessState is AppLoaded) {
       return BlocBuilder<LinkListBloc, LinkListState>(builder: (context, state) {
         if (state is LinkListLoading) {
           return Center(
@@ -122,12 +118,12 @@ class LinkListWidgetState extends State<LinkListWidget> {
           final values = state.values;
           if ((widget.isEmbedded != null) && (widget.isEmbedded)) {
             List<Widget> children = List();
-            children.add(theList(context, values, appState, accessState));
+            children.add(theList(context, values, accessState));
             children.add(RaisedButton(
-                    color: RgbHelper.color(rgbo: appState.app.formSubmitButtonColor),
+                    color: RgbHelper.color(rgbo: accessState.app.formSubmitButtonColor),
                     onPressed: () {
                       Navigator.of(context).push(
-                                pageRouteBuilder(appState.app, page: BlocProvider.value(
+                                pageRouteBuilder(accessState.app, page: BlocProvider.value(
                                     value: bloc,
                                     child: LinkForm(
                                         value: null,
@@ -135,7 +131,7 @@ class LinkListWidgetState extends State<LinkListWidget> {
                                 )),
                               );
                     },
-                    child: Text('Add', style: TextStyle(color: RgbHelper.color(rgbo: appState.app.formSubmitButtonTextColor))),
+                    child: Text('Add', style: TextStyle(color: RgbHelper.color(rgbo: accessState.app.formSubmitButtonTextColor))),
                   ));
             return ListView(
               padding: const EdgeInsets.all(8),
@@ -144,7 +140,7 @@ class LinkListWidgetState extends State<LinkListWidget> {
               children: children
             );
           } else {
-            return theList(context, values, appState, accessState);
+            return theList(context, values, accessState);
           }
         } else {
           return Center(
@@ -157,12 +153,12 @@ class LinkListWidgetState extends State<LinkListWidget> {
     } 
   }
   
-  Widget theList(BuildContext context, values, AppLoaded appState, AccessState accessState) {
+  Widget theList(BuildContext context, values, AppLoaded accessState) {
     return Container(
-      decoration: BoxDecorationHelper.boxDecoration(accessState, appState.app.listBackground),
+      decoration: BoxDecorationHelper.boxDecoration(accessState, accessState.app.listBackground),
       child: ListView.separated(
         separatorBuilder: (context, index) => Divider(
-          color: RgbHelper.color(rgbo: appState.app.dividerColor)
+          color: RgbHelper.color(rgbo: accessState.app.dividerColor)
         ),
         shrinkWrap: true,
         physics: ScrollPhysics(),
@@ -171,7 +167,7 @@ class LinkListWidgetState extends State<LinkListWidget> {
           final value = values[index];
           return LinkListItem(
             value: value,
-            app: appState.app,
+            app: accessState.app,
             onDismissed: (direction) {
               BlocProvider.of<LinkListBloc>(context)
                   .add(DeleteLinkList(value: value));
@@ -183,7 +179,7 @@ class LinkListWidgetState extends State<LinkListWidget> {
             },
             onTap: () async {
                                    final removedItem = await Navigator.of(context).push(
-                        pageRouteBuilder(appState.app, page: BlocProvider.value(
+                        pageRouteBuilder(accessState.app, page: BlocProvider.value(
                               value: BlocProvider.of<LinkListBloc>(context),
                               child: getForm(value, FormAction.UpdateAction))));
                       if (removedItem != null) {
