@@ -33,12 +33,12 @@ class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
 
   Stream<SectionListState> _mapLoadSectionListToState() async* {
     _sectionsListSubscription?.cancel();
-    _sectionsListSubscription = _sectionRepository.listen((list) => add(SectionListUpdated(value: list)));
+    _sectionsListSubscription = _sectionRepository.listen( (list) => add(SectionListUpdated(value: list)));
   }
 
   Stream<SectionListState> _mapLoadSectionListWithDetailsToState() async* {
     _sectionsListSubscription?.cancel();
-    _sectionsListSubscription = _sectionRepository.listenWithDetails((list) => add(SectionListUpdated(value: list)));
+    _sectionsListSubscription = _sectionRepository.listenWithDetails( (list) => add(SectionListUpdated(value: list)));
   }
 
   Stream<SectionListState> _mapAddSectionListToState(AddSectionList event) async* {

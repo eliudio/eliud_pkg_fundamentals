@@ -33,12 +33,12 @@ class SimpleImageListBloc extends Bloc<SimpleImageListEvent, SimpleImageListStat
 
   Stream<SimpleImageListState> _mapLoadSimpleImageListToState() async* {
     _simpleImagesListSubscription?.cancel();
-    _simpleImagesListSubscription = _simpleImageRepository.listen((list) => add(SimpleImageListUpdated(value: list)));
+    _simpleImagesListSubscription = _simpleImageRepository.listen( (list) => add(SimpleImageListUpdated(value: list)));
   }
 
   Stream<SimpleImageListState> _mapLoadSimpleImageListWithDetailsToState() async* {
     _simpleImagesListSubscription?.cancel();
-    _simpleImagesListSubscription = _simpleImageRepository.listenWithDetails((list) => add(SimpleImageListUpdated(value: list)));
+    _simpleImagesListSubscription = _simpleImageRepository.listenWithDetails( (list) => add(SimpleImageListUpdated(value: list)));
   }
 
   Stream<SimpleImageListState> _mapAddSimpleImageListToState(AddSimpleImageList event) async* {

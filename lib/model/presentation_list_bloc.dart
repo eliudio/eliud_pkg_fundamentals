@@ -33,12 +33,12 @@ class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListS
 
   Stream<PresentationListState> _mapLoadPresentationListToState() async* {
     _presentationsListSubscription?.cancel();
-    _presentationsListSubscription = _presentationRepository.listen((list) => add(PresentationListUpdated(value: list)));
+    _presentationsListSubscription = _presentationRepository.listen( (list) => add(PresentationListUpdated(value: list)));
   }
 
   Stream<PresentationListState> _mapLoadPresentationListWithDetailsToState() async* {
     _presentationsListSubscription?.cancel();
-    _presentationsListSubscription = _presentationRepository.listenWithDetails((list) => add(PresentationListUpdated(value: list)));
+    _presentationsListSubscription = _presentationRepository.listenWithDetails( (list) => add(PresentationListUpdated(value: list)));
   }
 
   Stream<PresentationListState> _mapAddPresentationListToState(AddPresentationList event) async* {

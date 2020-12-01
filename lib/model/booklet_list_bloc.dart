@@ -33,12 +33,12 @@ class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
 
   Stream<BookletListState> _mapLoadBookletListToState() async* {
     _bookletsListSubscription?.cancel();
-    _bookletsListSubscription = _bookletRepository.listen((list) => add(BookletListUpdated(value: list)));
+    _bookletsListSubscription = _bookletRepository.listen( (list) => add(BookletListUpdated(value: list)));
   }
 
   Stream<BookletListState> _mapLoadBookletListWithDetailsToState() async* {
     _bookletsListSubscription?.cancel();
-    _bookletsListSubscription = _bookletRepository.listenWithDetails((list) => add(BookletListUpdated(value: list)));
+    _bookletsListSubscription = _bookletRepository.listenWithDetails( (list) => add(BookletListUpdated(value: list)));
   }
 
   Stream<BookletListState> _mapAddBookletListToState(AddBookletList event) async* {

@@ -33,12 +33,12 @@ class TutorialEntryListBloc extends Bloc<TutorialEntryListEvent, TutorialEntryLi
 
   Stream<TutorialEntryListState> _mapLoadTutorialEntryListToState() async* {
     _tutorialEntrysListSubscription?.cancel();
-    _tutorialEntrysListSubscription = _tutorialEntryRepository.listen((list) => add(TutorialEntryListUpdated(value: list)));
+    _tutorialEntrysListSubscription = _tutorialEntryRepository.listen( (list) => add(TutorialEntryListUpdated(value: list)));
   }
 
   Stream<TutorialEntryListState> _mapLoadTutorialEntryListWithDetailsToState() async* {
     _tutorialEntrysListSubscription?.cancel();
-    _tutorialEntrysListSubscription = _tutorialEntryRepository.listenWithDetails((list) => add(TutorialEntryListUpdated(value: list)));
+    _tutorialEntrysListSubscription = _tutorialEntryRepository.listenWithDetails( (list) => add(TutorialEntryListUpdated(value: list)));
   }
 
   Stream<TutorialEntryListState> _mapAddTutorialEntryListToState(AddTutorialEntryList event) async* {

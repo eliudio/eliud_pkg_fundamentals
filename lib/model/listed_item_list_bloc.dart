@@ -33,12 +33,12 @@ class ListedItemListBloc extends Bloc<ListedItemListEvent, ListedItemListState> 
 
   Stream<ListedItemListState> _mapLoadListedItemListToState() async* {
     _listedItemsListSubscription?.cancel();
-    _listedItemsListSubscription = _listedItemRepository.listen((list) => add(ListedItemListUpdated(value: list)));
+    _listedItemsListSubscription = _listedItemRepository.listen( (list) => add(ListedItemListUpdated(value: list)));
   }
 
   Stream<ListedItemListState> _mapLoadListedItemListWithDetailsToState() async* {
     _listedItemsListSubscription?.cancel();
-    _listedItemsListSubscription = _listedItemRepository.listenWithDetails((list) => add(ListedItemListUpdated(value: list)));
+    _listedItemsListSubscription = _listedItemRepository.listenWithDetails( (list) => add(ListedItemListUpdated(value: list)));
   }
 
   Stream<ListedItemListState> _mapAddListedItemListToState(AddListedItemList event) async* {

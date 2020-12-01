@@ -33,12 +33,12 @@ class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
 
   Stream<DividerListState> _mapLoadDividerListToState() async* {
     _dividersListSubscription?.cancel();
-    _dividersListSubscription = _dividerRepository.listen((list) => add(DividerListUpdated(value: list)));
+    _dividersListSubscription = _dividerRepository.listen( (list) => add(DividerListUpdated(value: list)));
   }
 
   Stream<DividerListState> _mapLoadDividerListWithDetailsToState() async* {
     _dividersListSubscription?.cancel();
-    _dividersListSubscription = _dividerRepository.listenWithDetails((list) => add(DividerListUpdated(value: list)));
+    _dividersListSubscription = _dividerRepository.listenWithDetails( (list) => add(DividerListUpdated(value: list)));
   }
 
   Stream<DividerListState> _mapAddDividerListToState(AddDividerList event) async* {

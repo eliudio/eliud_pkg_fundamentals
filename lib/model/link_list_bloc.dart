@@ -33,12 +33,12 @@ class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
 
   Stream<LinkListState> _mapLoadLinkListToState() async* {
     _linksListSubscription?.cancel();
-    _linksListSubscription = _linkRepository.listen((list) => add(LinkListUpdated(value: list)));
+    _linksListSubscription = _linkRepository.listen( (list) => add(LinkListUpdated(value: list)));
   }
 
   Stream<LinkListState> _mapLoadLinkListWithDetailsToState() async* {
     _linksListSubscription?.cancel();
-    _linksListSubscription = _linkRepository.listenWithDetails((list) => add(LinkListUpdated(value: list)));
+    _linksListSubscription = _linkRepository.listenWithDetails( (list) => add(LinkListUpdated(value: list)));
   }
 
   Stream<LinkListState> _mapAddLinkListToState(AddLinkList event) async* {

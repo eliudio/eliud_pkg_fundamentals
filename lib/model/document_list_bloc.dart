@@ -33,12 +33,12 @@ class DocumentListBloc extends Bloc<DocumentListEvent, DocumentListState> {
 
   Stream<DocumentListState> _mapLoadDocumentListToState() async* {
     _documentsListSubscription?.cancel();
-    _documentsListSubscription = _documentRepository.listen((list) => add(DocumentListUpdated(value: list)));
+    _documentsListSubscription = _documentRepository.listen( (list) => add(DocumentListUpdated(value: list)));
   }
 
   Stream<DocumentListState> _mapLoadDocumentListWithDetailsToState() async* {
     _documentsListSubscription?.cancel();
-    _documentsListSubscription = _documentRepository.listenWithDetails((list) => add(DocumentListUpdated(value: list)));
+    _documentsListSubscription = _documentRepository.listenWithDetails( (list) => add(DocumentListUpdated(value: list)));
   }
 
   Stream<DocumentListState> _mapAddDocumentListToState(AddDocumentList event) async* {
