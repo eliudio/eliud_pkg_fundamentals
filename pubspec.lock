@@ -459,13 +459,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "8.8.1"
-  getflutter:
+  getwidget:
     dependency: "direct main"
     description:
-      name: getflutter
+      name: getwidget
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.11"
+    version: "1.2.4"
   glob:
     dependency: transitive
     description:

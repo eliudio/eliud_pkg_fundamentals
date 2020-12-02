@@ -7,7 +7,7 @@ import 'package:eliud_core/model/pos_size_model.dart';
 import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/screen_size.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_model.dart';
-import 'package:getflutter/components/carousel/gf_carousel.dart';
+import 'package:getwidget/components/carousel/gf_carousel.dart';
 import 'package:flutter/material.dart';
 
 class TheImageGF extends StatefulWidget {

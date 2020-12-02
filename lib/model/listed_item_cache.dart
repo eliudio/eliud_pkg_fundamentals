@@ -120,7 +120,7 @@ class ListedItemCache implements ListedItemRepository {
     PosSizeModel posSizeHolder;
     if (model.posSize != null) {
       try {
-        await posSizeRepository().get(model.posSize.documentID).then((val) {
+        await posSizeRepository(appId: model.posSize.appId).get(model.posSize.documentID).then((val) {
           posSizeHolder = val;
         }).catchError((error) {});
       } catch (_) {}
