@@ -24,12 +24,11 @@ abstract class SimpleImageRepository {
   Future<SimpleImageModel> get(String id);
   Future<SimpleImageModel> update(SimpleImageModel value);
   Stream<List<SimpleImageModel>> values();
-  Stream<List<SimpleImageModel>> valuesWithDetails();
+  Stream<List<SimpleImageModel>> valuesWithDetails();  Future<List<SimpleImageModel>> valuesList();
+  Future<List<SimpleImageModel>> valuesListWithDetails();
   StreamSubscription<List<SimpleImageModel>> listen(SimpleImageModelTrigger trigger, { String orderBy, bool descending });
   StreamSubscription<List<SimpleImageModel>> listenWithDetails(SimpleImageModelTrigger trigger);
   void flush();
-  Future<List<SimpleImageModel>> valuesList();
-  Future<List<SimpleImageModel>> valuesListWithDetails();
 
   Future<void> deleteAll();
 }

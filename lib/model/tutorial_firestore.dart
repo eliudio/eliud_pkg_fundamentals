@@ -56,15 +56,25 @@ class TutorialFirestore implements TutorialRepository {
   }
 
   StreamSubscription<List<TutorialModel>> listen(TutorialModelTrigger trigger, { String orderBy, bool descending }) {
-    var stream = (orderBy == null ?  TutorialCollection : TutorialCollection.orderBy(orderBy, descending: descending)).snapshots()
-        .map((data) {
-      Iterable<TutorialModel> tutorials  = data.documents.map((doc) {
-        TutorialModel value = _populateDoc(doc);
-        return value;
-      }).toList();
-      return tutorials;
-    });
-
+    Stream<List<TutorialModel>> stream;
+    if (orderBy == null) {
+       stream = TutorialCollection.snapshots().map((data) {
+        Iterable<TutorialModel> tutorials  = data.documents.map((doc) {
+          TutorialModel value = _populateDoc(doc);
+          return value;
+        }).toList();
+        return tutorials;
+      });
+    } else {
+      stream = TutorialCollection.orderBy(orderBy, descending: descending).snapshots().map((data) {
+        Iterable<TutorialModel> tutorials  = data.documents.map((doc) {
+          TutorialModel value = _populateDoc(doc);
+          return value;
+        }).toList();
+        return tutorials;
+      });
+  
+    }
     return stream.listen((listOfTutorialModels) {
       trigger(listOfTutorialModels);
     });

@@ -24,12 +24,11 @@ abstract class BookletRepository {
   Future<BookletModel> get(String id);
   Future<BookletModel> update(BookletModel value);
   Stream<List<BookletModel>> values();
-  Stream<List<BookletModel>> valuesWithDetails();
+  Stream<List<BookletModel>> valuesWithDetails();  Future<List<BookletModel>> valuesList();
+  Future<List<BookletModel>> valuesListWithDetails();
   StreamSubscription<List<BookletModel>> listen(BookletModelTrigger trigger, { String orderBy, bool descending });
   StreamSubscription<List<BookletModel>> listenWithDetails(BookletModelTrigger trigger);
   void flush();
-  Future<List<BookletModel>> valuesList();
-  Future<List<BookletModel>> valuesListWithDetails();
 
   Future<void> deleteAll();
 }

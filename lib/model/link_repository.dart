@@ -24,12 +24,11 @@ abstract class LinkRepository {
   Future<LinkModel> get(String id);
   Future<LinkModel> update(LinkModel value);
   Stream<List<LinkModel>> values();
-  Stream<List<LinkModel>> valuesWithDetails();
+  Stream<List<LinkModel>> valuesWithDetails();  Future<List<LinkModel>> valuesList();
+  Future<List<LinkModel>> valuesListWithDetails();
   StreamSubscription<List<LinkModel>> listen(LinkModelTrigger trigger, { String orderBy, bool descending });
   StreamSubscription<List<LinkModel>> listenWithDetails(LinkModelTrigger trigger);
   void flush();
-  Future<List<LinkModel>> valuesList();
-  Future<List<LinkModel>> valuesListWithDetails();
 
   Future<void> deleteAll();
 }

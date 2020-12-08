@@ -24,12 +24,11 @@ abstract class PresentationRepository {
   Future<PresentationModel> get(String id);
   Future<PresentationModel> update(PresentationModel value);
   Stream<List<PresentationModel>> values();
-  Stream<List<PresentationModel>> valuesWithDetails();
+  Stream<List<PresentationModel>> valuesWithDetails();  Future<List<PresentationModel>> valuesList();
+  Future<List<PresentationModel>> valuesListWithDetails();
   StreamSubscription<List<PresentationModel>> listen(PresentationModelTrigger trigger, { String orderBy, bool descending });
   StreamSubscription<List<PresentationModel>> listenWithDetails(PresentationModelTrigger trigger);
   void flush();
-  Future<List<PresentationModel>> valuesList();
-  Future<List<PresentationModel>> valuesListWithDetails();
 
   Future<void> deleteAll();
 }

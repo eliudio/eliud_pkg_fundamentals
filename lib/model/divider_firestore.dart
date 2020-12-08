@@ -60,15 +60,25 @@ class DividerFirestore implements DividerRepository {
   }
 
   StreamSubscription<List<DividerModel>> listen(DividerModelTrigger trigger, { String orderBy, bool descending }) {
-    var stream = (orderBy == null ?  DividerCollection : DividerCollection.orderBy(orderBy, descending: descending)).snapshots()
-        .map((data) {
-      Iterable<DividerModel> dividers  = data.documents.map((doc) {
-        DividerModel value = _populateDoc(doc);
-        return value;
-      }).toList();
-      return dividers;
-    });
-
+    Stream<List<DividerModel>> stream;
+    if (orderBy == null) {
+       stream = DividerCollection.snapshots().map((data) {
+        Iterable<DividerModel> dividers  = data.documents.map((doc) {
+          DividerModel value = _populateDoc(doc);
+          return value;
+        }).toList();
+        return dividers;
+      });
+    } else {
+      stream = DividerCollection.orderBy(orderBy, descending: descending).snapshots().map((data) {
+        Iterable<DividerModel> dividers  = data.documents.map((doc) {
+          DividerModel value = _populateDoc(doc);
+          return value;
+        }).toList();
+        return dividers;
+      });
+  
+    }
     return stream.listen((listOfDividerModels) {
       trigger(listOfDividerModels);
     });

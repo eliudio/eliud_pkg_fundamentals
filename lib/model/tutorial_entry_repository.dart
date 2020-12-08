@@ -24,12 +24,11 @@ abstract class TutorialEntryRepository {
   Future<TutorialEntryModel> get(String id);
   Future<TutorialEntryModel> update(TutorialEntryModel value);
   Stream<List<TutorialEntryModel>> values();
-  Stream<List<TutorialEntryModel>> valuesWithDetails();
+  Stream<List<TutorialEntryModel>> valuesWithDetails();  Future<List<TutorialEntryModel>> valuesList();
+  Future<List<TutorialEntryModel>> valuesListWithDetails();
   StreamSubscription<List<TutorialEntryModel>> listen(TutorialEntryModelTrigger trigger, { String orderBy, bool descending });
   StreamSubscription<List<TutorialEntryModel>> listenWithDetails(TutorialEntryModelTrigger trigger);
   void flush();
-  Future<List<TutorialEntryModel>> valuesList();
-  Future<List<TutorialEntryModel>> valuesListWithDetails();
 
   Future<void> deleteAll();
 }

@@ -60,15 +60,25 @@ class PlayStoreFirestore implements PlayStoreRepository {
   }
 
   StreamSubscription<List<PlayStoreModel>> listen(PlayStoreModelTrigger trigger, { String orderBy, bool descending }) {
-    var stream = (orderBy == null ?  PlayStoreCollection : PlayStoreCollection.orderBy(orderBy, descending: descending)).snapshots()
-        .map((data) {
-      Iterable<PlayStoreModel> playStores  = data.documents.map((doc) {
-        PlayStoreModel value = _populateDoc(doc);
-        return value;
-      }).toList();
-      return playStores;
-    });
-
+    Stream<List<PlayStoreModel>> stream;
+    if (orderBy == null) {
+       stream = PlayStoreCollection.snapshots().map((data) {
+        Iterable<PlayStoreModel> playStores  = data.documents.map((doc) {
+          PlayStoreModel value = _populateDoc(doc);
+          return value;
+        }).toList();
+        return playStores;
+      });
+    } else {
+      stream = PlayStoreCollection.orderBy(orderBy, descending: descending).snapshots().map((data) {
+        Iterable<PlayStoreModel> playStores  = data.documents.map((doc) {
+          PlayStoreModel value = _populateDoc(doc);
+          return value;
+        }).toList();
+        return playStores;
+      });
+  
+    }
     return stream.listen((listOfPlayStoreModels) {
       trigger(listOfPlayStoreModels);
     });

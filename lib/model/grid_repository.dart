@@ -24,12 +24,11 @@ abstract class GridRepository {
   Future<GridModel> get(String id);
   Future<GridModel> update(GridModel value);
   Stream<List<GridModel>> values();
-  Stream<List<GridModel>> valuesWithDetails();
+  Stream<List<GridModel>> valuesWithDetails();  Future<List<GridModel>> valuesList();
+  Future<List<GridModel>> valuesListWithDetails();
   StreamSubscription<List<GridModel>> listen(GridModelTrigger trigger, { String orderBy, bool descending });
   StreamSubscription<List<GridModel>> listenWithDetails(GridModelTrigger trigger);
   void flush();
-  Future<List<GridModel>> valuesList();
-  Future<List<GridModel>> valuesListWithDetails();
 
   Future<void> deleteAll();
 }

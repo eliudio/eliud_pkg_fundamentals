@@ -24,12 +24,11 @@ abstract class SectionRepository {
   Future<SectionModel> get(String id);
   Future<SectionModel> update(SectionModel value);
   Stream<List<SectionModel>> values();
-  Stream<List<SectionModel>> valuesWithDetails();
+  Stream<List<SectionModel>> valuesWithDetails();  Future<List<SectionModel>> valuesList();
+  Future<List<SectionModel>> valuesListWithDetails();
   StreamSubscription<List<SectionModel>> listen(SectionModelTrigger trigger, { String orderBy, bool descending });
   StreamSubscription<List<SectionModel>> listenWithDetails(SectionModelTrigger trigger);
   void flush();
-  Future<List<SectionModel>> valuesList();
-  Future<List<SectionModel>> valuesListWithDetails();
 
   Future<void> deleteAll();
 }

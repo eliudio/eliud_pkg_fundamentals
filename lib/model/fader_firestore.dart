@@ -56,15 +56,25 @@ class FaderFirestore implements FaderRepository {
   }
 
   StreamSubscription<List<FaderModel>> listen(FaderModelTrigger trigger, { String orderBy, bool descending }) {
-    var stream = (orderBy == null ?  FaderCollection : FaderCollection.orderBy(orderBy, descending: descending)).snapshots()
-        .map((data) {
-      Iterable<FaderModel> faders  = data.documents.map((doc) {
-        FaderModel value = _populateDoc(doc);
-        return value;
-      }).toList();
-      return faders;
-    });
-
+    Stream<List<FaderModel>> stream;
+    if (orderBy == null) {
+       stream = FaderCollection.snapshots().map((data) {
+        Iterable<FaderModel> faders  = data.documents.map((doc) {
+          FaderModel value = _populateDoc(doc);
+          return value;
+        }).toList();
+        return faders;
+      });
+    } else {
+      stream = FaderCollection.orderBy(orderBy, descending: descending).snapshots().map((data) {
+        Iterable<FaderModel> faders  = data.documents.map((doc) {
+          FaderModel value = _populateDoc(doc);
+          return value;
+        }).toList();
+        return faders;
+      });
+  
+    }
     return stream.listen((listOfFaderModels) {
       trigger(listOfFaderModels);
     });

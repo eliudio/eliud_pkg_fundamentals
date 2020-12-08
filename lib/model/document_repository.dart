@@ -24,12 +24,11 @@ abstract class DocumentRepository {
   Future<DocumentModel> get(String id);
   Future<DocumentModel> update(DocumentModel value);
   Stream<List<DocumentModel>> values();
-  Stream<List<DocumentModel>> valuesWithDetails();
+  Stream<List<DocumentModel>> valuesWithDetails();  Future<List<DocumentModel>> valuesList();
+  Future<List<DocumentModel>> valuesListWithDetails();
   StreamSubscription<List<DocumentModel>> listen(DocumentModelTrigger trigger, { String orderBy, bool descending });
   StreamSubscription<List<DocumentModel>> listenWithDetails(DocumentModelTrigger trigger);
   void flush();
-  Future<List<DocumentModel>> valuesList();
-  Future<List<DocumentModel>> valuesListWithDetails();
 
   Future<void> deleteAll();
 }
