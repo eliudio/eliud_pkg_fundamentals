@@ -25,8 +25,8 @@ abstract class PresentationRepository {
   Future<PresentationModel> update(PresentationModel value);
   Stream<List<PresentationModel>> values();
   Stream<List<PresentationModel>> valuesWithDetails();
-  StreamSubscription<List<PresentationModel>> listen(PresentationModelTrigger trigger);
-StreamSubscription<List<PresentationModel>> listenWithDetails(PresentationModelTrigger trigger);
+  StreamSubscription<List<PresentationModel>> listen(PresentationModelTrigger trigger, { String orderBy, bool descending });
+  StreamSubscription<List<PresentationModel>> listenWithDetails(PresentationModelTrigger trigger);
   void flush();
   Future<List<PresentationModel>> valuesList();
   Future<List<PresentationModel>> valuesListWithDetails();

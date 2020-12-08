@@ -31,9 +31,9 @@ class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
       _dividerRepository = dividerRepository,
       super(DividerListLoading());
 
-  Stream<DividerListState> _mapLoadDividerListToState() async* {
+  Stream<DividerListState> _mapLoadDividerListToState({ String orderBy, bool descending }) async* {
     _dividersListSubscription?.cancel();
-    _dividersListSubscription = _dividerRepository.listen( (list) => add(DividerListUpdated(value: list)));
+    _dividersListSubscription = _dividerRepository.listen( (list) => add(DividerListUpdated(value: list)), orderBy: orderBy, descending: descending);
   }
 
   Stream<DividerListState> _mapLoadDividerListWithDetailsToState() async* {
@@ -62,7 +62,7 @@ class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
   Stream<DividerListState> mapEventToState(DividerListEvent event) async* {
     final currentState = state;
     if (event is LoadDividerList) {
-      yield* _mapLoadDividerListToState();
+      yield* _mapLoadDividerListToState(orderBy: event.orderBy, descending: event.descending);
     } if (event is LoadDividerListWithDetails) {
       yield* _mapLoadDividerListWithDetailsToState();
     } else if (event is AddDividerList) {

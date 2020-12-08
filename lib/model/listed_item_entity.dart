@@ -27,6 +27,7 @@ class ListedItemEntity {
 
   ListedItemEntity({this.description, this.action, this.imageId, this.posSizeId, });
 
+
   List<Object> get props => [description, action, imageId, posSizeId, ];
 
   @override

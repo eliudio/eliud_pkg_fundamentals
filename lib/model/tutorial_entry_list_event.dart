@@ -22,7 +22,17 @@ abstract class TutorialEntryListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadTutorialEntryList extends TutorialEntryListEvent {}
+class LoadTutorialEntryList extends TutorialEntryListEvent {
+  final String orderBy;
+  final bool descending;
+
+  LoadTutorialEntryList({this.orderBy, this.descending});
+
+  @override
+  List<Object> get props => [orderBy, descending];
+
+}
+
 class LoadTutorialEntryListWithDetails extends TutorialEntryListEvent {}
 
 class AddTutorialEntryList extends TutorialEntryListEvent {

@@ -31,9 +31,9 @@ class FaderListBloc extends Bloc<FaderListEvent, FaderListState> {
       _faderRepository = faderRepository,
       super(FaderListLoading());
 
-  Stream<FaderListState> _mapLoadFaderListToState() async* {
+  Stream<FaderListState> _mapLoadFaderListToState({ String orderBy, bool descending }) async* {
     _fadersListSubscription?.cancel();
-    _fadersListSubscription = _faderRepository.listen( (list) => add(FaderListUpdated(value: list)));
+    _fadersListSubscription = _faderRepository.listen( (list) => add(FaderListUpdated(value: list)), orderBy: orderBy, descending: descending);
   }
 
   Stream<FaderListState> _mapLoadFaderListWithDetailsToState() async* {
@@ -62,7 +62,7 @@ class FaderListBloc extends Bloc<FaderListEvent, FaderListState> {
   Stream<FaderListState> mapEventToState(FaderListEvent event) async* {
     final currentState = state;
     if (event is LoadFaderList) {
-      yield* _mapLoadFaderListToState();
+      yield* _mapLoadFaderListToState(orderBy: event.orderBy, descending: event.descending);
     } if (event is LoadFaderListWithDetails) {
       yield* _mapLoadFaderListWithDetailsToState();
     } else if (event is AddFaderList) {

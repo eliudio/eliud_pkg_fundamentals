@@ -22,7 +22,17 @@ abstract class PresentationListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadPresentationList extends PresentationListEvent {}
+class LoadPresentationList extends PresentationListEvent {
+  final String orderBy;
+  final bool descending;
+
+  LoadPresentationList({this.orderBy, this.descending});
+
+  @override
+  List<Object> get props => [orderBy, descending];
+
+}
+
 class LoadPresentationListWithDetails extends PresentationListEvent {}
 
 class AddPresentationList extends PresentationListEvent {

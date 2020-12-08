@@ -59,8 +59,8 @@ class PresentationFirestore implements PresentationRepository {
     });
   }
 
-  StreamSubscription<List<PresentationModel>> listen(PresentationModelTrigger trigger) {
-    Stream<List<PresentationModel>> stream = PresentationCollection.snapshots()
+  StreamSubscription<List<PresentationModel>> listen(PresentationModelTrigger trigger, { String orderBy, bool descending }) {
+    var stream = (orderBy == null ?  PresentationCollection : PresentationCollection.orderBy(orderBy, descending: descending)).snapshots()
         .map((data) {
       Iterable<PresentationModel> presentations  = data.documents.map((doc) {
         PresentationModel value = _populateDoc(doc);

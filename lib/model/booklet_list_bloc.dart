@@ -31,9 +31,9 @@ class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
       _bookletRepository = bookletRepository,
       super(BookletListLoading());
 
-  Stream<BookletListState> _mapLoadBookletListToState() async* {
+  Stream<BookletListState> _mapLoadBookletListToState({ String orderBy, bool descending }) async* {
     _bookletsListSubscription?.cancel();
-    _bookletsListSubscription = _bookletRepository.listen( (list) => add(BookletListUpdated(value: list)));
+    _bookletsListSubscription = _bookletRepository.listen( (list) => add(BookletListUpdated(value: list)), orderBy: orderBy, descending: descending);
   }
 
   Stream<BookletListState> _mapLoadBookletListWithDetailsToState() async* {
@@ -62,7 +62,7 @@ class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
   Stream<BookletListState> mapEventToState(BookletListEvent event) async* {
     final currentState = state;
     if (event is LoadBookletList) {
-      yield* _mapLoadBookletListToState();
+      yield* _mapLoadBookletListToState(orderBy: event.orderBy, descending: event.descending);
     } if (event is LoadBookletListWithDetails) {
       yield* _mapLoadBookletListWithDetailsToState();
     } else if (event is AddBookletList) {

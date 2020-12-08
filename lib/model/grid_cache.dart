@@ -96,8 +96,8 @@ class GridCache implements GridRepository {
   }
 
   @override
-  StreamSubscription<List<GridModel>> listen(trigger) {
-    return reference.listen(trigger);
+  StreamSubscription<List<GridModel>> listen(trigger, { String orderBy, bool descending }) {
+    return reference.listen(trigger, orderBy: orderBy, descending: descending);
   }
 
   @override

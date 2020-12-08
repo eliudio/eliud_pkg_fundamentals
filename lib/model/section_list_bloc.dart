@@ -31,9 +31,9 @@ class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
       _sectionRepository = sectionRepository,
       super(SectionListLoading());
 
-  Stream<SectionListState> _mapLoadSectionListToState() async* {
+  Stream<SectionListState> _mapLoadSectionListToState({ String orderBy, bool descending }) async* {
     _sectionsListSubscription?.cancel();
-    _sectionsListSubscription = _sectionRepository.listen( (list) => add(SectionListUpdated(value: list)));
+    _sectionsListSubscription = _sectionRepository.listen( (list) => add(SectionListUpdated(value: list)), orderBy: orderBy, descending: descending);
   }
 
   Stream<SectionListState> _mapLoadSectionListWithDetailsToState() async* {
@@ -62,7 +62,7 @@ class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
   Stream<SectionListState> mapEventToState(SectionListEvent event) async* {
     final currentState = state;
     if (event is LoadSectionList) {
-      yield* _mapLoadSectionListToState();
+      yield* _mapLoadSectionListToState(orderBy: event.orderBy, descending: event.descending);
     } if (event is LoadSectionListWithDetails) {
       yield* _mapLoadSectionListWithDetailsToState();
     } else if (event is AddSectionList) {

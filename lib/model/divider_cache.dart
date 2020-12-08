@@ -96,8 +96,8 @@ class DividerCache implements DividerRepository {
   }
 
   @override
-  StreamSubscription<List<DividerModel>> listen(trigger) {
-    return reference.listen(trigger);
+  StreamSubscription<List<DividerModel>> listen(trigger, { String orderBy, bool descending }) {
+    return reference.listen(trigger, orderBy: orderBy, descending: descending);
   }
 
   @override

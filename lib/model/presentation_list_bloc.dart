@@ -31,9 +31,9 @@ class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListS
       _presentationRepository = presentationRepository,
       super(PresentationListLoading());
 
-  Stream<PresentationListState> _mapLoadPresentationListToState() async* {
+  Stream<PresentationListState> _mapLoadPresentationListToState({ String orderBy, bool descending }) async* {
     _presentationsListSubscription?.cancel();
-    _presentationsListSubscription = _presentationRepository.listen( (list) => add(PresentationListUpdated(value: list)));
+    _presentationsListSubscription = _presentationRepository.listen( (list) => add(PresentationListUpdated(value: list)), orderBy: orderBy, descending: descending);
   }
 
   Stream<PresentationListState> _mapLoadPresentationListWithDetailsToState() async* {
@@ -62,7 +62,7 @@ class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListS
   Stream<PresentationListState> mapEventToState(PresentationListEvent event) async* {
     final currentState = state;
     if (event is LoadPresentationList) {
-      yield* _mapLoadPresentationListToState();
+      yield* _mapLoadPresentationListToState(orderBy: event.orderBy, descending: event.descending);
     } if (event is LoadPresentationListWithDetails) {
       yield* _mapLoadPresentationListWithDetailsToState();
     } else if (event is AddPresentationList) {

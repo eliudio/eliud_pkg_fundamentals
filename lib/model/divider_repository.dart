@@ -25,8 +25,8 @@ abstract class DividerRepository {
   Future<DividerModel> update(DividerModel value);
   Stream<List<DividerModel>> values();
   Stream<List<DividerModel>> valuesWithDetails();
-  StreamSubscription<List<DividerModel>> listen(DividerModelTrigger trigger);
-StreamSubscription<List<DividerModel>> listenWithDetails(DividerModelTrigger trigger);
+  StreamSubscription<List<DividerModel>> listen(DividerModelTrigger trigger, { String orderBy, bool descending });
+  StreamSubscription<List<DividerModel>> listenWithDetails(DividerModelTrigger trigger);
   void flush();
   Future<List<DividerModel>> valuesList();
   Future<List<DividerModel>> valuesListWithDetails();

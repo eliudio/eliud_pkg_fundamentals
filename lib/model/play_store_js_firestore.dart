@@ -67,9 +67,9 @@ class PlayStoreJsFirestore implements PlayStoreRepository {
     });
   }
 
-  StreamSubscription<List<PlayStoreModel>> listen(PlayStoreModelTrigger trigger) {
-    // If we use playStoreCollection here, then the second subscription fails
-    Stream<List<PlayStoreModel>> stream = getCollection().onSnapshot
+  @override
+  StreamSubscription<List<PlayStoreModel>> listen(PlayStoreModelTrigger trigger, {String orderBy, bool descending }) {
+    var stream = (orderBy == null ?  getCollection() : getCollection().orderBy(orderBy, descending ? 'desc': 'asc')).onSnapshot
         .map((data) {
       Iterable<PlayStoreModel> playStores  = data.docs.map((doc) {
         PlayStoreModel value = _populateDoc(doc);

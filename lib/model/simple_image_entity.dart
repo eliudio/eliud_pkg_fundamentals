@@ -26,6 +26,7 @@ class SimpleImageEntity {
 
   SimpleImageEntity({this.appId, this.title, this.imageId, });
 
+
   List<Object> get props => [appId, title, imageId, ];
 
   @override

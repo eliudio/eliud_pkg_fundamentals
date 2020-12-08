@@ -25,8 +25,8 @@ abstract class LinkRepository {
   Future<LinkModel> update(LinkModel value);
   Stream<List<LinkModel>> values();
   Stream<List<LinkModel>> valuesWithDetails();
-  StreamSubscription<List<LinkModel>> listen(LinkModelTrigger trigger);
-StreamSubscription<List<LinkModel>> listenWithDetails(LinkModelTrigger trigger);
+  StreamSubscription<List<LinkModel>> listen(LinkModelTrigger trigger, { String orderBy, bool descending });
+  StreamSubscription<List<LinkModel>> listenWithDetails(LinkModelTrigger trigger);
   void flush();
   Future<List<LinkModel>> valuesList();
   Future<List<LinkModel>> valuesListWithDetails();

@@ -25,8 +25,8 @@ abstract class ListedItemRepository {
   Future<ListedItemModel> update(ListedItemModel value);
   Stream<List<ListedItemModel>> values();
   Stream<List<ListedItemModel>> valuesWithDetails();
-  StreamSubscription<List<ListedItemModel>> listen(ListedItemModelTrigger trigger);
-StreamSubscription<List<ListedItemModel>> listenWithDetails(ListedItemModelTrigger trigger);
+  StreamSubscription<List<ListedItemModel>> listen(ListedItemModelTrigger trigger, { String orderBy, bool descending });
+  StreamSubscription<List<ListedItemModel>> listenWithDetails(ListedItemModelTrigger trigger);
   void flush();
   Future<List<ListedItemModel>> valuesList();
   Future<List<ListedItemModel>> valuesListWithDetails();

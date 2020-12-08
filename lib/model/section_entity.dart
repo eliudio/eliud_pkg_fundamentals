@@ -30,6 +30,7 @@ class SectionEntity {
 
   SectionEntity({this.title, this.description, this.imageId, this.imagePositionRelative, this.imageAlignment, this.imageWidth, this.links, });
 
+
   List<Object> get props => [title, description, imageId, imagePositionRelative, imageAlignment, imageWidth, links, ];
 
   @override

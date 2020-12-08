@@ -27,6 +27,7 @@ class GridEntity {
 
   GridEntity({this.appId, this.title, this.bodyComponents, this.gridViewId, });
 
+
   List<Object> get props => [appId, title, bodyComponents, gridViewId, ];
 
   @override

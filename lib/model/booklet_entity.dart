@@ -25,6 +25,7 @@ class BookletEntity {
 
   BookletEntity({this.appId, this.name, this.sections, });
 
+
   List<Object> get props => [appId, name, sections, ];
 
   @override

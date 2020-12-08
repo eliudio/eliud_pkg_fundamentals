@@ -91,8 +91,8 @@ class BookletCache implements BookletRepository {
   }
 
   @override
-  StreamSubscription<List<BookletModel>> listen(trigger) {
-    return reference.listen(trigger);
+  StreamSubscription<List<BookletModel>> listen(trigger, { String orderBy, bool descending }) {
+    return reference.listen(trigger, orderBy: orderBy, descending: descending);
   }
 
   @override

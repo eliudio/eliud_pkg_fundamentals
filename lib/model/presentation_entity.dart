@@ -30,6 +30,7 @@ class PresentationEntity {
 
   PresentationEntity({this.appId, this.title, this.bodyComponents, this.imageId, this.imagePositionRelative, this.imageAlignment, this.imageWidth, });
 
+
   List<Object> get props => [appId, title, bodyComponents, imageId, imagePositionRelative, imageAlignment, imageWidth, ];
 
   @override

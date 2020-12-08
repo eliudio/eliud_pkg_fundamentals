@@ -24,6 +24,7 @@ class LinkEntity {
 
   LinkEntity({this.linkText, this.action, });
 
+
   List<Object> get props => [linkText, action, ];
 
   @override

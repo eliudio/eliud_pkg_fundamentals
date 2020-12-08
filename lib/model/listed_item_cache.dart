@@ -96,8 +96,8 @@ class ListedItemCache implements ListedItemRepository {
   }
 
   @override
-  StreamSubscription<List<ListedItemModel>> listen(trigger) {
-    return reference.listen(trigger);
+  StreamSubscription<List<ListedItemModel>> listen(trigger, { String orderBy, bool descending }) {
+    return reference.listen(trigger, orderBy: orderBy, descending: descending);
   }
 
   @override

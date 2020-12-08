@@ -31,9 +31,9 @@ class DocumentItemListBloc extends Bloc<DocumentItemListEvent, DocumentItemListS
       _documentItemRepository = documentItemRepository,
       super(DocumentItemListLoading());
 
-  Stream<DocumentItemListState> _mapLoadDocumentItemListToState() async* {
+  Stream<DocumentItemListState> _mapLoadDocumentItemListToState({ String orderBy, bool descending }) async* {
     _documentItemsListSubscription?.cancel();
-    _documentItemsListSubscription = _documentItemRepository.listen( (list) => add(DocumentItemListUpdated(value: list)));
+    _documentItemsListSubscription = _documentItemRepository.listen( (list) => add(DocumentItemListUpdated(value: list)), orderBy: orderBy, descending: descending);
   }
 
   Stream<DocumentItemListState> _mapLoadDocumentItemListWithDetailsToState() async* {
@@ -62,7 +62,7 @@ class DocumentItemListBloc extends Bloc<DocumentItemListEvent, DocumentItemListS
   Stream<DocumentItemListState> mapEventToState(DocumentItemListEvent event) async* {
     final currentState = state;
     if (event is LoadDocumentItemList) {
-      yield* _mapLoadDocumentItemListToState();
+      yield* _mapLoadDocumentItemListToState(orderBy: event.orderBy, descending: event.descending);
     } if (event is LoadDocumentItemListWithDetails) {
       yield* _mapLoadDocumentItemListWithDetailsToState();
     } else if (event is AddDocumentItemList) {

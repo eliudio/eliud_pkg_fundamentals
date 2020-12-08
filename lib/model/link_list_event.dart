@@ -22,7 +22,17 @@ abstract class LinkListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadLinkList extends LinkListEvent {}
+class LoadLinkList extends LinkListEvent {
+  final String orderBy;
+  final bool descending;
+
+  LoadLinkList({this.orderBy, this.descending});
+
+  @override
+  List<Object> get props => [orderBy, descending];
+
+}
+
 class LoadLinkListWithDetails extends LinkListEvent {}
 
 class AddLinkList extends LinkListEvent {

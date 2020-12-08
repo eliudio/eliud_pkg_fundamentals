@@ -31,9 +31,9 @@ class PlayStoreListBloc extends Bloc<PlayStoreListEvent, PlayStoreListState> {
       _playStoreRepository = playStoreRepository,
       super(PlayStoreListLoading());
 
-  Stream<PlayStoreListState> _mapLoadPlayStoreListToState() async* {
+  Stream<PlayStoreListState> _mapLoadPlayStoreListToState({ String orderBy, bool descending }) async* {
     _playStoresListSubscription?.cancel();
-    _playStoresListSubscription = _playStoreRepository.listen( (list) => add(PlayStoreListUpdated(value: list)));
+    _playStoresListSubscription = _playStoreRepository.listen( (list) => add(PlayStoreListUpdated(value: list)), orderBy: orderBy, descending: descending);
   }
 
   Stream<PlayStoreListState> _mapLoadPlayStoreListWithDetailsToState() async* {
@@ -62,7 +62,7 @@ class PlayStoreListBloc extends Bloc<PlayStoreListEvent, PlayStoreListState> {
   Stream<PlayStoreListState> mapEventToState(PlayStoreListEvent event) async* {
     final currentState = state;
     if (event is LoadPlayStoreList) {
-      yield* _mapLoadPlayStoreListToState();
+      yield* _mapLoadPlayStoreListToState(orderBy: event.orderBy, descending: event.descending);
     } if (event is LoadPlayStoreListWithDetails) {
       yield* _mapLoadPlayStoreListWithDetailsToState();
     } else if (event is AddPlayStoreList) {

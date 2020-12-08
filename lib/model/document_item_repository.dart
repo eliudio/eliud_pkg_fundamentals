@@ -25,8 +25,8 @@ abstract class DocumentItemRepository {
   Future<DocumentItemModel> update(DocumentItemModel value);
   Stream<List<DocumentItemModel>> values();
   Stream<List<DocumentItemModel>> valuesWithDetails();
-  StreamSubscription<List<DocumentItemModel>> listen(DocumentItemModelTrigger trigger);
-StreamSubscription<List<DocumentItemModel>> listenWithDetails(DocumentItemModelTrigger trigger);
+  StreamSubscription<List<DocumentItemModel>> listen(DocumentItemModelTrigger trigger, { String orderBy, bool descending });
+  StreamSubscription<List<DocumentItemModel>> listenWithDetails(DocumentItemModelTrigger trigger);
   void flush();
   Future<List<DocumentItemModel>> valuesList();
   Future<List<DocumentItemModel>> valuesListWithDetails();

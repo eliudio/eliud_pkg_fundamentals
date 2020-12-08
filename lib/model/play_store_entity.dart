@@ -26,6 +26,7 @@ class PlayStoreEntity {
 
   PlayStoreEntity({this.appId, this.description, this.itemBackgroundId, });
 
+
   List<Object> get props => [appId, description, itemBackgroundId, ];
 
   @override

@@ -25,8 +25,8 @@ abstract class SimpleImageRepository {
   Future<SimpleImageModel> update(SimpleImageModel value);
   Stream<List<SimpleImageModel>> values();
   Stream<List<SimpleImageModel>> valuesWithDetails();
-  StreamSubscription<List<SimpleImageModel>> listen(SimpleImageModelTrigger trigger);
-StreamSubscription<List<SimpleImageModel>> listenWithDetails(SimpleImageModelTrigger trigger);
+  StreamSubscription<List<SimpleImageModel>> listen(SimpleImageModelTrigger trigger, { String orderBy, bool descending });
+  StreamSubscription<List<SimpleImageModel>> listenWithDetails(SimpleImageModelTrigger trigger);
   void flush();
   Future<List<SimpleImageModel>> valuesList();
   Future<List<SimpleImageModel>> valuesListWithDetails();

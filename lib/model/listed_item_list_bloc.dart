@@ -31,9 +31,9 @@ class ListedItemListBloc extends Bloc<ListedItemListEvent, ListedItemListState> 
       _listedItemRepository = listedItemRepository,
       super(ListedItemListLoading());
 
-  Stream<ListedItemListState> _mapLoadListedItemListToState() async* {
+  Stream<ListedItemListState> _mapLoadListedItemListToState({ String orderBy, bool descending }) async* {
     _listedItemsListSubscription?.cancel();
-    _listedItemsListSubscription = _listedItemRepository.listen( (list) => add(ListedItemListUpdated(value: list)));
+    _listedItemsListSubscription = _listedItemRepository.listen( (list) => add(ListedItemListUpdated(value: list)), orderBy: orderBy, descending: descending);
   }
 
   Stream<ListedItemListState> _mapLoadListedItemListWithDetailsToState() async* {
@@ -62,7 +62,7 @@ class ListedItemListBloc extends Bloc<ListedItemListEvent, ListedItemListState> 
   Stream<ListedItemListState> mapEventToState(ListedItemListEvent event) async* {
     final currentState = state;
     if (event is LoadListedItemList) {
-      yield* _mapLoadListedItemListToState();
+      yield* _mapLoadListedItemListToState(orderBy: event.orderBy, descending: event.descending);
     } if (event is LoadListedItemListWithDetails) {
       yield* _mapLoadListedItemListWithDetailsToState();
     } else if (event is AddListedItemList) {

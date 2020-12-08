@@ -210,7 +210,7 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
     }
     
     @override
-    StreamSubscription<List<DocumentItemModel>> listen(trigger) {
+    StreamSubscription<List<DocumentItemModel>> listen(trigger, { String orderBy, bool descending }) {
       return theValues.listen((theList) => trigger(theList));
     }
   
@@ -289,7 +289,7 @@ class LinkInMemoryRepository implements LinkRepository {
     }
     
     @override
-    StreamSubscription<List<LinkModel>> listen(trigger) {
+    StreamSubscription<List<LinkModel>> listen(trigger, { String orderBy, bool descending }) {
       return theValues.listen((theList) => trigger(theList));
     }
   
@@ -368,7 +368,7 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
     }
     
     @override
-    StreamSubscription<List<ListedItemModel>> listen(trigger) {
+    StreamSubscription<List<ListedItemModel>> listen(trigger, { String orderBy, bool descending }) {
       return theValues.listen((theList) => trigger(theList));
     }
   
@@ -447,7 +447,7 @@ class SectionInMemoryRepository implements SectionRepository {
     }
     
     @override
-    StreamSubscription<List<SectionModel>> listen(trigger) {
+    StreamSubscription<List<SectionModel>> listen(trigger, { String orderBy, bool descending }) {
       return theValues.listen((theList) => trigger(theList));
     }
   
@@ -526,7 +526,7 @@ class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
     }
     
     @override
-    StreamSubscription<List<TutorialEntryModel>> listen(trigger) {
+    StreamSubscription<List<TutorialEntryModel>> listen(trigger, { String orderBy, bool descending }) {
       return theValues.listen((theList) => trigger(theList));
     }
   

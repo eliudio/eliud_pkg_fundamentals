@@ -22,7 +22,17 @@ abstract class SectionListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadSectionList extends SectionListEvent {}
+class LoadSectionList extends SectionListEvent {
+  final String orderBy;
+  final bool descending;
+
+  LoadSectionList({this.orderBy, this.descending});
+
+  @override
+  List<Object> get props => [orderBy, descending];
+
+}
+
 class LoadSectionListWithDetails extends SectionListEvent {}
 
 class AddSectionList extends SectionListEvent {

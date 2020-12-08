@@ -30,6 +30,7 @@ class DividerEntity {
 
   DividerEntity({this.appId, this.name, this.color, this.height, this.thickness, this.indent, this.endIndent, });
 
+
   List<Object> get props => [appId, name, color, height, thickness, indent, endIndent, ];
 
   @override

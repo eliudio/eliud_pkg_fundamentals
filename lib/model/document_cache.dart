@@ -96,8 +96,8 @@ class DocumentCache implements DocumentRepository {
   }
 
   @override
-  StreamSubscription<List<DocumentModel>> listen(trigger) {
-    return reference.listen(trigger);
+  StreamSubscription<List<DocumentModel>> listen(trigger, { String orderBy, bool descending }) {
+    return reference.listen(trigger, orderBy: orderBy, descending: descending);
   }
 
   @override

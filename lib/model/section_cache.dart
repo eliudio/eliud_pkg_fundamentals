@@ -96,8 +96,8 @@ class SectionCache implements SectionRepository {
   }
 
   @override
-  StreamSubscription<List<SectionModel>> listen(trigger) {
-    return reference.listen(trigger);
+  StreamSubscription<List<SectionModel>> listen(trigger, { String orderBy, bool descending }) {
+    return reference.listen(trigger, orderBy: orderBy, descending: descending);
   }
 
   @override

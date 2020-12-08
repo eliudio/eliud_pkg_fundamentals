@@ -27,6 +27,7 @@ class TutorialEntity {
 
   TutorialEntity({this.appId, this.name, this.title, this.description, this.tutorialEntries, });
 
+
   List<Object> get props => [appId, name, title, description, tutorialEntries, ];
 
   @override

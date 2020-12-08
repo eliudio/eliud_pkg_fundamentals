@@ -25,6 +25,7 @@ class DocumentItemEntity {
 
   DocumentItemEntity({this.reference, this.imageId, });
 
+
   List<Object> get props => [reference, imageId, ];
 
   @override

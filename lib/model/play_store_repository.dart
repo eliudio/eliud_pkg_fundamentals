@@ -25,8 +25,8 @@ abstract class PlayStoreRepository {
   Future<PlayStoreModel> update(PlayStoreModel value);
   Stream<List<PlayStoreModel>> values();
   Stream<List<PlayStoreModel>> valuesWithDetails();
-  StreamSubscription<List<PlayStoreModel>> listen(PlayStoreModelTrigger trigger);
-StreamSubscription<List<PlayStoreModel>> listenWithDetails(PlayStoreModelTrigger trigger);
+  StreamSubscription<List<PlayStoreModel>> listen(PlayStoreModelTrigger trigger, { String orderBy, bool descending });
+  StreamSubscription<List<PlayStoreModel>> listenWithDetails(PlayStoreModelTrigger trigger);
   void flush();
   Future<List<PlayStoreModel>> valuesList();
   Future<List<PlayStoreModel>> valuesListWithDetails();

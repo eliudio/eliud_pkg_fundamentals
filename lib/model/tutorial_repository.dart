@@ -25,8 +25,8 @@ abstract class TutorialRepository {
   Future<TutorialModel> update(TutorialModel value);
   Stream<List<TutorialModel>> values();
   Stream<List<TutorialModel>> valuesWithDetails();
-  StreamSubscription<List<TutorialModel>> listen(TutorialModelTrigger trigger);
-StreamSubscription<List<TutorialModel>> listenWithDetails(TutorialModelTrigger trigger);
+  StreamSubscription<List<TutorialModel>> listen(TutorialModelTrigger trigger, { String orderBy, bool descending });
+  StreamSubscription<List<TutorialModel>> listenWithDetails(TutorialModelTrigger trigger);
   void flush();
   Future<List<TutorialModel>> valuesList();
   Future<List<TutorialModel>> valuesListWithDetails();

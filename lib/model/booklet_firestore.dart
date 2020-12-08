@@ -55,8 +55,8 @@ class BookletFirestore implements BookletRepository {
     });
   }
 
-  StreamSubscription<List<BookletModel>> listen(BookletModelTrigger trigger) {
-    Stream<List<BookletModel>> stream = BookletCollection.snapshots()
+  StreamSubscription<List<BookletModel>> listen(BookletModelTrigger trigger, { String orderBy, bool descending }) {
+    var stream = (orderBy == null ?  BookletCollection : BookletCollection.orderBy(orderBy, descending: descending)).snapshots()
         .map((data) {
       Iterable<BookletModel> booklets  = data.documents.map((doc) {
         BookletModel value = _populateDoc(doc);

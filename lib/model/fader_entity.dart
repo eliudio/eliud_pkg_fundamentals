@@ -28,6 +28,7 @@ class FaderEntity {
 
   FaderEntity({this.appId, this.name, this.animation, this.animationMilliseconds, this.imageSeconds, this.items, });
 
+
   List<Object> get props => [appId, name, animation, animationMilliseconds, imageSeconds, items, ];
 
   @override

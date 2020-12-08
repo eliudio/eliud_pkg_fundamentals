@@ -63,9 +63,9 @@ class TutorialJsFirestore implements TutorialRepository {
     });
   }
 
-  StreamSubscription<List<TutorialModel>> listen(TutorialModelTrigger trigger) {
-    // If we use tutorialCollection here, then the second subscription fails
-    Stream<List<TutorialModel>> stream = getCollection().onSnapshot
+  @override
+  StreamSubscription<List<TutorialModel>> listen(TutorialModelTrigger trigger, {String orderBy, bool descending }) {
+    var stream = (orderBy == null ?  getCollection() : getCollection().orderBy(orderBy, descending ? 'desc': 'asc')).onSnapshot
         .map((data) {
       Iterable<TutorialModel> tutorials  = data.docs.map((doc) {
         TutorialModel value = _populateDoc(doc);

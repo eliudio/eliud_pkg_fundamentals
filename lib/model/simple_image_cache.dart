@@ -96,8 +96,8 @@ class SimpleImageCache implements SimpleImageRepository {
   }
 
   @override
-  StreamSubscription<List<SimpleImageModel>> listen(trigger) {
-    return reference.listen(trigger);
+  StreamSubscription<List<SimpleImageModel>> listen(trigger, { String orderBy, bool descending }) {
+    return reference.listen(trigger, orderBy: orderBy, descending: descending);
   }
 
   @override

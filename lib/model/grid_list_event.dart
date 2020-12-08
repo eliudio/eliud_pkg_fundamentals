@@ -22,7 +22,17 @@ abstract class GridListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadGridList extends GridListEvent {}
+class LoadGridList extends GridListEvent {
+  final String orderBy;
+  final bool descending;
+
+  LoadGridList({this.orderBy, this.descending});
+
+  @override
+  List<Object> get props => [orderBy, descending];
+
+}
+
 class LoadGridListWithDetails extends GridListEvent {}
 
 class AddGridList extends GridListEvent {

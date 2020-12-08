@@ -25,8 +25,8 @@ abstract class BookletRepository {
   Future<BookletModel> update(BookletModel value);
   Stream<List<BookletModel>> values();
   Stream<List<BookletModel>> valuesWithDetails();
-  StreamSubscription<List<BookletModel>> listen(BookletModelTrigger trigger);
-StreamSubscription<List<BookletModel>> listenWithDetails(BookletModelTrigger trigger);
+  StreamSubscription<List<BookletModel>> listen(BookletModelTrigger trigger, { String orderBy, bool descending });
+  StreamSubscription<List<BookletModel>> listenWithDetails(BookletModelTrigger trigger);
   void flush();
   Future<List<BookletModel>> valuesList();
   Future<List<BookletModel>> valuesListWithDetails();

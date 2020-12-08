@@ -67,9 +67,9 @@ class GridJsFirestore implements GridRepository {
     });
   }
 
-  StreamSubscription<List<GridModel>> listen(GridModelTrigger trigger) {
-    // If we use gridCollection here, then the second subscription fails
-    Stream<List<GridModel>> stream = getCollection().onSnapshot
+  @override
+  StreamSubscription<List<GridModel>> listen(GridModelTrigger trigger, {String orderBy, bool descending }) {
+    var stream = (orderBy == null ?  getCollection() : getCollection().orderBy(orderBy, descending ? 'desc': 'asc')).onSnapshot
         .map((data) {
       Iterable<GridModel> grids  = data.docs.map((doc) {
         GridModel value = _populateDoc(doc);

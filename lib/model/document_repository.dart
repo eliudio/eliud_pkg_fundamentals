@@ -25,8 +25,8 @@ abstract class DocumentRepository {
   Future<DocumentModel> update(DocumentModel value);
   Stream<List<DocumentModel>> values();
   Stream<List<DocumentModel>> valuesWithDetails();
-  StreamSubscription<List<DocumentModel>> listen(DocumentModelTrigger trigger);
-StreamSubscription<List<DocumentModel>> listenWithDetails(DocumentModelTrigger trigger);
+  StreamSubscription<List<DocumentModel>> listen(DocumentModelTrigger trigger, { String orderBy, bool descending });
+  StreamSubscription<List<DocumentModel>> listenWithDetails(DocumentModelTrigger trigger);
   void flush();
   Future<List<DocumentModel>> valuesList();
   Future<List<DocumentModel>> valuesListWithDetails();

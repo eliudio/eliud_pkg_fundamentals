@@ -25,8 +25,8 @@ abstract class GridRepository {
   Future<GridModel> update(GridModel value);
   Stream<List<GridModel>> values();
   Stream<List<GridModel>> valuesWithDetails();
-  StreamSubscription<List<GridModel>> listen(GridModelTrigger trigger);
-StreamSubscription<List<GridModel>> listenWithDetails(GridModelTrigger trigger);
+  StreamSubscription<List<GridModel>> listen(GridModelTrigger trigger, { String orderBy, bool descending });
+  StreamSubscription<List<GridModel>> listenWithDetails(GridModelTrigger trigger);
   void flush();
   Future<List<GridModel>> valuesList();
   Future<List<GridModel>> valuesListWithDetails();

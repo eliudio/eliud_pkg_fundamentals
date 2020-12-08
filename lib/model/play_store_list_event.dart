@@ -22,7 +22,17 @@ abstract class PlayStoreListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadPlayStoreList extends PlayStoreListEvent {}
+class LoadPlayStoreList extends PlayStoreListEvent {
+  final String orderBy;
+  final bool descending;
+
+  LoadPlayStoreList({this.orderBy, this.descending});
+
+  @override
+  List<Object> get props => [orderBy, descending];
+
+}
+
 class LoadPlayStoreListWithDetails extends PlayStoreListEvent {}
 
 class AddPlayStoreList extends PlayStoreListEvent {

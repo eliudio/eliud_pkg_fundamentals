@@ -22,7 +22,17 @@ abstract class DocumentListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadDocumentList extends DocumentListEvent {}
+class LoadDocumentList extends DocumentListEvent {
+  final String orderBy;
+  final bool descending;
+
+  LoadDocumentList({this.orderBy, this.descending});
+
+  @override
+  List<Object> get props => [orderBy, descending];
+
+}
+
 class LoadDocumentListWithDetails extends DocumentListEvent {}
 
 class AddDocumentList extends DocumentListEvent {

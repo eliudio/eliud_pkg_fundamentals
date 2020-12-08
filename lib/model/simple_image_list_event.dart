@@ -22,7 +22,17 @@ abstract class SimpleImageListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadSimpleImageList extends SimpleImageListEvent {}
+class LoadSimpleImageList extends SimpleImageListEvent {
+  final String orderBy;
+  final bool descending;
+
+  LoadSimpleImageList({this.orderBy, this.descending});
+
+  @override
+  List<Object> get props => [orderBy, descending];
+
+}
+
 class LoadSimpleImageListWithDetails extends SimpleImageListEvent {}
 
 class AddSimpleImageList extends SimpleImageListEvent {

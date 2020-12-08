@@ -25,8 +25,8 @@ abstract class FaderRepository {
   Future<FaderModel> update(FaderModel value);
   Stream<List<FaderModel>> values();
   Stream<List<FaderModel>> valuesWithDetails();
-  StreamSubscription<List<FaderModel>> listen(FaderModelTrigger trigger);
-StreamSubscription<List<FaderModel>> listenWithDetails(FaderModelTrigger trigger);
+  StreamSubscription<List<FaderModel>> listen(FaderModelTrigger trigger, { String orderBy, bool descending });
+  StreamSubscription<List<FaderModel>> listenWithDetails(FaderModelTrigger trigger);
   void flush();
   Future<List<FaderModel>> valuesList();
   Future<List<FaderModel>> valuesListWithDetails();

@@ -30,6 +30,7 @@ class DocumentEntity {
 
   DocumentEntity({this.appId, this.name, this.documentRenderer, this.content, this.padding, this.images, this.backgroundId, });
 
+
   List<Object> get props => [appId, name, documentRenderer, content, padding, images, backgroundId, ];
 
   @override

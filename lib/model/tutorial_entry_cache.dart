@@ -96,8 +96,8 @@ class TutorialEntryCache implements TutorialEntryRepository {
   }
 
   @override
-  StreamSubscription<List<TutorialEntryModel>> listen(trigger) {
-    return reference.listen(trigger);
+  StreamSubscription<List<TutorialEntryModel>> listen(trigger, { String orderBy, bool descending }) {
+    return reference.listen(trigger, orderBy: orderBy, descending: descending);
   }
 
   @override

@@ -26,6 +26,7 @@ class TutorialEntryEntity {
 
   TutorialEntryEntity({this.description, this.imageId, this.code, });
 
+
   List<Object> get props => [description, imageId, code, ];
 
   @override

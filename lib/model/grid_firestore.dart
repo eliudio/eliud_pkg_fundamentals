@@ -59,8 +59,8 @@ class GridFirestore implements GridRepository {
     });
   }
 
-  StreamSubscription<List<GridModel>> listen(GridModelTrigger trigger) {
-    Stream<List<GridModel>> stream = GridCollection.snapshots()
+  StreamSubscription<List<GridModel>> listen(GridModelTrigger trigger, { String orderBy, bool descending }) {
+    var stream = (orderBy == null ?  GridCollection : GridCollection.orderBy(orderBy, descending: descending)).snapshots()
         .map((data) {
       Iterable<GridModel> grids  = data.documents.map((doc) {
         GridModel value = _populateDoc(doc);

@@ -22,7 +22,17 @@ abstract class DividerListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadDividerList extends DividerListEvent {}
+class LoadDividerList extends DividerListEvent {
+  final String orderBy;
+  final bool descending;
+
+  LoadDividerList({this.orderBy, this.descending});
+
+  @override
+  List<Object> get props => [orderBy, descending];
+
+}
+
 class LoadDividerListWithDetails extends DividerListEvent {}
 
 class AddDividerList extends DividerListEvent {

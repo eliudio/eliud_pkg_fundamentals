@@ -22,7 +22,17 @@ abstract class FaderListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadFaderList extends FaderListEvent {}
+class LoadFaderList extends FaderListEvent {
+  final String orderBy;
+  final bool descending;
+
+  LoadFaderList({this.orderBy, this.descending});
+
+  @override
+  List<Object> get props => [orderBy, descending];
+
+}
+
 class LoadFaderListWithDetails extends FaderListEvent {}
 
 class AddFaderList extends FaderListEvent {
