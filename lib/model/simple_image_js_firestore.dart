@@ -69,15 +69,26 @@ class SimpleImageJsFirestore implements SimpleImageRepository {
 
   @override
   StreamSubscription<List<SimpleImageModel>> listen(SimpleImageModelTrigger trigger, {String orderBy, bool descending }) {
-    var stream = (orderBy == null ?  getCollection() : getCollection().orderBy(orderBy, descending ? 'desc': 'asc')).onSnapshot
-        .map((data) {
-      Iterable<SimpleImageModel> simpleImages  = data.docs.map((doc) {
-        SimpleImageModel value = _populateDoc(doc);
-        return value;
-      }).toList();
-      return simpleImages;
-    });
-
+    var stream;
+    if (orderBy == null) {
+      stream = getCollection().onSnapshot
+          .map((data) {
+        Iterable<SimpleImageModel> simpleImages  = data.docs.map((doc) {
+          SimpleImageModel value = _populateDoc(doc);
+          return value;
+        }).toList();
+        return simpleImages;
+      });
+    } else {
+      stream = (orderBy == null ?  getCollection() : getCollection().orderBy(orderBy, descending ? 'desc': 'asc')).onSnapshot
+          .map((data) {
+        Iterable<SimpleImageModel> simpleImages  = data.docs.map((doc) {
+          SimpleImageModel value = _populateDoc(doc);
+          return value;
+        }).toList();
+        return simpleImages;
+      });
+    }
     return stream.listen((listOfSimpleImageModels) {
       trigger(listOfSimpleImageModels);
     });

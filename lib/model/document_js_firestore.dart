@@ -69,15 +69,26 @@ class DocumentJsFirestore implements DocumentRepository {
 
   @override
   StreamSubscription<List<DocumentModel>> listen(DocumentModelTrigger trigger, {String orderBy, bool descending }) {
-    var stream = (orderBy == null ?  getCollection() : getCollection().orderBy(orderBy, descending ? 'desc': 'asc')).onSnapshot
-        .map((data) {
-      Iterable<DocumentModel> documents  = data.docs.map((doc) {
-        DocumentModel value = _populateDoc(doc);
-        return value;
-      }).toList();
-      return documents;
-    });
-
+    var stream;
+    if (orderBy == null) {
+      stream = getCollection().onSnapshot
+          .map((data) {
+        Iterable<DocumentModel> documents  = data.docs.map((doc) {
+          DocumentModel value = _populateDoc(doc);
+          return value;
+        }).toList();
+        return documents;
+      });
+    } else {
+      stream = (orderBy == null ?  getCollection() : getCollection().orderBy(orderBy, descending ? 'desc': 'asc')).onSnapshot
+          .map((data) {
+        Iterable<DocumentModel> documents  = data.docs.map((doc) {
+          DocumentModel value = _populateDoc(doc);
+          return value;
+        }).toList();
+        return documents;
+      });
+    }
     return stream.listen((listOfDocumentModels) {
       trigger(listOfDocumentModels);
     });

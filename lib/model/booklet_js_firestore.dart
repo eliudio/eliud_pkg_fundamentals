@@ -65,15 +65,26 @@ class BookletJsFirestore implements BookletRepository {
 
   @override
   StreamSubscription<List<BookletModel>> listen(BookletModelTrigger trigger, {String orderBy, bool descending }) {
-    var stream = (orderBy == null ?  getCollection() : getCollection().orderBy(orderBy, descending ? 'desc': 'asc')).onSnapshot
-        .map((data) {
-      Iterable<BookletModel> booklets  = data.docs.map((doc) {
-        BookletModel value = _populateDoc(doc);
-        return value;
-      }).toList();
-      return booklets;
-    });
-
+    var stream;
+    if (orderBy == null) {
+      stream = getCollection().onSnapshot
+          .map((data) {
+        Iterable<BookletModel> booklets  = data.docs.map((doc) {
+          BookletModel value = _populateDoc(doc);
+          return value;
+        }).toList();
+        return booklets;
+      });
+    } else {
+      stream = (orderBy == null ?  getCollection() : getCollection().orderBy(orderBy, descending ? 'desc': 'asc')).onSnapshot
+          .map((data) {
+        Iterable<BookletModel> booklets  = data.docs.map((doc) {
+          BookletModel value = _populateDoc(doc);
+          return value;
+        }).toList();
+        return booklets;
+      });
+    }
     return stream.listen((listOfBookletModels) {
       trigger(listOfBookletModels);
     });

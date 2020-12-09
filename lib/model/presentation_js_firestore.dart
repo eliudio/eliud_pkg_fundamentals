@@ -69,15 +69,26 @@ class PresentationJsFirestore implements PresentationRepository {
 
   @override
   StreamSubscription<List<PresentationModel>> listen(PresentationModelTrigger trigger, {String orderBy, bool descending }) {
-    var stream = (orderBy == null ?  getCollection() : getCollection().orderBy(orderBy, descending ? 'desc': 'asc')).onSnapshot
-        .map((data) {
-      Iterable<PresentationModel> presentations  = data.docs.map((doc) {
-        PresentationModel value = _populateDoc(doc);
-        return value;
-      }).toList();
-      return presentations;
-    });
-
+    var stream;
+    if (orderBy == null) {
+      stream = getCollection().onSnapshot
+          .map((data) {
+        Iterable<PresentationModel> presentations  = data.docs.map((doc) {
+          PresentationModel value = _populateDoc(doc);
+          return value;
+        }).toList();
+        return presentations;
+      });
+    } else {
+      stream = (orderBy == null ?  getCollection() : getCollection().orderBy(orderBy, descending ? 'desc': 'asc')).onSnapshot
+          .map((data) {
+        Iterable<PresentationModel> presentations  = data.docs.map((doc) {
+          PresentationModel value = _populateDoc(doc);
+          return value;
+        }).toList();
+        return presentations;
+      });
+    }
     return stream.listen((listOfPresentationModels) {
       trigger(listOfPresentationModels);
     });
