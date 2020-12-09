@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 
 class TutorialComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({String id, Map<String, String> parameters}) {
+  Widget createNew({String id, Map<String, Object> parameters}) {
     return TutorialComponent(tutorialID: id);
   }
 }

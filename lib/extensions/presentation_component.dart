@@ -11,13 +11,13 @@ import 'package:flutter/material.dart';
 
 class PresentationComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({String id, Map<String, String> parameters}) {
+  Widget createNew({String id, Map<String, Object> parameters}) {
     return PresentationComponent(presentationID: id, parameters: parameters,);
   }
 }
 
 class PresentationComponent extends AbstractPresentationComponent {
-  Map<String, String> parameters;
+  Map<String, Object> parameters;
 
   PresentationComponent({String presentationID, this.parameters}) : super(presentationID: presentationID);
 

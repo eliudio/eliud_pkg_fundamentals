@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 
 class PlayStoreComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({String id, Map<String, String> parameters}) {
+  Widget createNew({String id, Map<String, Object> parameters}) {
     return PlayStoreBase(id);
   }
 }

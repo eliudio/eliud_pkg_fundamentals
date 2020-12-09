@@ -16,7 +16,7 @@ import 'package:eliud_pkg_fundamentals/extensions/fader_widgets/fader_widgets.da
 
 class FaderComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({String id, Map<String, String> parameters}) {
+  Widget createNew({String id, Map<String, Object> parameters}) {
     return FaderComponent(faderID: id);
   }
 }
