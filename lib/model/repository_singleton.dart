@@ -75,39 +75,39 @@ class RepositorySingleton extends AbstractRepositorySingleton {
     var _tutorialRepository = HashMap<String, TutorialRepository>();
 
     BookletRepository bookletRepository(String appId) {
-      if (_bookletRepository[appId] == null) _bookletRepository[appId] = BookletFirestore(appId);
+      if (_bookletRepository[appId] == null) _bookletRepository[appId] = BookletCache(BookletFirestore(appId));
       return _bookletRepository[appId];
     }
     DividerRepository dividerRepository(String appId) {
-      if (_dividerRepository[appId] == null) _dividerRepository[appId] = DividerFirestore(appId);
+      if (_dividerRepository[appId] == null) _dividerRepository[appId] = DividerCache(DividerFirestore(appId));
       return _dividerRepository[appId];
     }
     DocumentRepository documentRepository(String appId) {
-      if (_documentRepository[appId] == null) _documentRepository[appId] = DocumentFirestore(appId);
+      if (_documentRepository[appId] == null) _documentRepository[appId] = DocumentCache(DocumentFirestore(appId));
       return _documentRepository[appId];
     }
     FaderRepository faderRepository(String appId) {
-      if (_faderRepository[appId] == null) _faderRepository[appId] = FaderFirestore(appId);
+      if (_faderRepository[appId] == null) _faderRepository[appId] = FaderCache(FaderFirestore(appId));
       return _faderRepository[appId];
     }
     GridRepository gridRepository(String appId) {
-      if (_gridRepository[appId] == null) _gridRepository[appId] = GridFirestore(appId);
+      if (_gridRepository[appId] == null) _gridRepository[appId] = GridCache(GridFirestore(appId));
       return _gridRepository[appId];
     }
     PlayStoreRepository playStoreRepository(String appId) {
-      if (_playStoreRepository[appId] == null) _playStoreRepository[appId] = PlayStoreFirestore(appId);
+      if (_playStoreRepository[appId] == null) _playStoreRepository[appId] = PlayStoreCache(PlayStoreFirestore(appId));
       return _playStoreRepository[appId];
     }
     PresentationRepository presentationRepository(String appId) {
-      if (_presentationRepository[appId] == null) _presentationRepository[appId] = PresentationFirestore(appId);
+      if (_presentationRepository[appId] == null) _presentationRepository[appId] = PresentationCache(PresentationFirestore(appId));
       return _presentationRepository[appId];
     }
     SimpleImageRepository simpleImageRepository(String appId) {
-      if (_simpleImageRepository[appId] == null) _simpleImageRepository[appId] = SimpleImageFirestore(appId);
+      if (_simpleImageRepository[appId] == null) _simpleImageRepository[appId] = SimpleImageCache(SimpleImageFirestore(appId));
       return _simpleImageRepository[appId];
     }
     TutorialRepository tutorialRepository(String appId) {
-      if (_tutorialRepository[appId] == null) _tutorialRepository[appId] = TutorialFirestore(appId);
+      if (_tutorialRepository[appId] == null) _tutorialRepository[appId] = TutorialCache(TutorialFirestore(appId));
       return _tutorialRepository[appId];
     }
 
