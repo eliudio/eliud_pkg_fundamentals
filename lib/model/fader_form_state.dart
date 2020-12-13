@@ -111,22 +111,6 @@ class NameFaderFormError extends FaderFormError {
 }
 
 
-class AnimationFaderFormError extends FaderFormError { 
-  const AnimationFaderFormError({ String message, FaderModel value }): super(message: message, value: value);
-
-  @override
-  List<Object> get props => [ message, value ];
-
-  @override
-  String toString() {
-    return '''AnimationFaderFormError {
-      value: $value,
-      message: $message,
-    }''';
-  }
-}
-
-
 class AnimationMillisecondsFaderFormError extends FaderFormError { 
   const AnimationMillisecondsFaderFormError({ String message, FaderModel value }): super(message: message, value: value);
 

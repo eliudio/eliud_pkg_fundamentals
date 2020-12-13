@@ -16,6 +16,7 @@
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
+import 'package:eliud_core/core/widgets/progress_indicator.dart';
 
 import 'package:eliud_core/core/global_data.dart';
 import 'package:eliud_core/tools/has_fab.dart';
@@ -112,7 +113,7 @@ class FaderListWidgetState extends State<FaderListWidget> {
       return BlocBuilder<FaderListBloc, FaderListState>(builder: (context, state) {
         if (state is FaderListLoading) {
           return Center(
-            child: CircularProgressIndicator(),
+            child: DelayedCircularProgressIndicator(),
           );
         } else if (state is FaderListLoaded) {
           final values = state.values;
@@ -144,7 +145,7 @@ class FaderListWidgetState extends State<FaderListWidget> {
           }
         } else {
           return Center(
-            child: CircularProgressIndicator(),
+            child: DelayedCircularProgressIndicator(),
           );
         }
       });

@@ -16,6 +16,7 @@
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
+import 'package:eliud_core/core/widgets/progress_indicator.dart';
 
 import 'package:eliud_core/core/global_data.dart';
 import 'package:eliud_core/tools/has_fab.dart';
@@ -112,7 +113,7 @@ class GridListWidgetState extends State<GridListWidget> {
       return BlocBuilder<GridListBloc, GridListState>(builder: (context, state) {
         if (state is GridListLoading) {
           return Center(
-            child: CircularProgressIndicator(),
+            child: DelayedCircularProgressIndicator(),
           );
         } else if (state is GridListLoaded) {
           final values = state.values;
@@ -144,7 +145,7 @@ class GridListWidgetState extends State<GridListWidget> {
           }
         } else {
           return Center(
-            child: CircularProgressIndicator(),
+            child: DelayedCircularProgressIndicator(),
           );
         }
       });

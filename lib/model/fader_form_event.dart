@@ -90,18 +90,6 @@ class ChangedFaderName extends FaderFormEvent {
   String toString() => 'ChangedFaderName{ value: $value }';
 }
 
-class ChangedFaderAnimation extends FaderFormEvent {
-  final FaderAnimation value;
-
-  ChangedFaderAnimation({this.value});
-
-  @override
-  List<Object> get props => [ value ];
-
-  @override
-  String toString() => 'ChangedFaderAnimation{ value: $value }';
-}
-
 class ChangedFaderAnimationMilliseconds extends FaderFormEvent {
   final String value;
 

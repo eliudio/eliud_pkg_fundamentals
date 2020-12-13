@@ -15,6 +15,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:eliud_core/core/widgets/progress_indicator.dart';
 
 import 'package:eliud_pkg_fundamentals/model/booklet_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_component_event.dart';
@@ -50,7 +51,7 @@ abstract class AbstractBookletComponent extends StatelessWidget {
         return alertWidget(title: 'Error', content: state.message);
       } else {
         return Center(
-          child: CircularProgressIndicator(),
+          child: DelayedCircularProgressIndicator(),
         );
       }
     });

@@ -13,6 +13,7 @@
 
 */
 
+import 'package:eliud_core/core/widgets/progress_indicator.dart';
 import 'package:eliud_core/core/global_data.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
@@ -155,7 +156,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<DocumentFormBloc, DocumentFormState>(builder: (context, state) {
       if (state is DocumentFormUninitialized) return Center(
-        child: CircularProgressIndicator(),
+        child: DelayedCircularProgressIndicator(),
       );
 
       if (state is DocumentFormLoaded) {
@@ -461,7 +462,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
           )
         );
       } else {
-        return CircularProgressIndicator();
+        return DelayedCircularProgressIndicator();
       }
     });
   }

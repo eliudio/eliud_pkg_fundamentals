@@ -42,15 +42,6 @@
       "iconName": "text_format"
     },
     {
-      "fieldName": "animation",
-      "displayName": "Animation",
-      "remark": "The animation to switch images.",
-      "fieldType": "enum",
-      "enumName": "FaderAnimation",
-      "group": "animation",
-      "enumValues" : [ "None", "Fade", "Scale", "Slide" ]
-    },
-    {
       "fieldName": "animationMilliseconds",
       "displayName": "Animation Time (millisec)",
       "remark": "The duration of the transition between the images",
@@ -84,10 +75,6 @@
     {
         "group": "rights",
         "description": "Access Rights"
-    },
-    {
-        "group": "animation",
-        "description": "Animation"
     },
     {
         "group": "animationTime",

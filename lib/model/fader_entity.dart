@@ -21,21 +21,20 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 class FaderEntity {
   final String appId;
   final String name;
-  final int animation;
   final int animationMilliseconds;
   final int imageSeconds;
   final List<ListedItemEntity> items;
 
-  FaderEntity({this.appId, this.name, this.animation, this.animationMilliseconds, this.imageSeconds, this.items, });
+  FaderEntity({this.appId, this.name, this.animationMilliseconds, this.imageSeconds, this.items, });
 
 
-  List<Object> get props => [appId, name, animation, animationMilliseconds, imageSeconds, items, ];
+  List<Object> get props => [appId, name, animationMilliseconds, imageSeconds, items, ];
 
   @override
   String toString() {
     String itemsCsv = (items == null) ? '' : items.join(', ');
 
-    return 'FaderEntity{appId: $appId, name: $name, animation: $animation, animationMilliseconds: $animationMilliseconds, imageSeconds: $imageSeconds, items: ListedItem[] { $itemsCsv }}';
+    return 'FaderEntity{appId: $appId, name: $name, animationMilliseconds: $animationMilliseconds, imageSeconds: $imageSeconds, items: ListedItem[] { $itemsCsv }}';
   }
 
   static FaderEntity fromMap(Map map) {
@@ -49,7 +48,6 @@ class FaderEntity {
     return FaderEntity(
       appId: map['appId'], 
       name: map['name'], 
-      animation: map['animation'], 
       animationMilliseconds: int.tryParse(map['animationMilliseconds'].toString()), 
       imageSeconds: int.tryParse(map['imageSeconds'].toString()), 
       items: itemsList, 
@@ -66,8 +64,6 @@ class FaderEntity {
       else theDocument["appId"] = null;
     if (name != null) theDocument["name"] = name;
       else theDocument["name"] = null;
-    if (animation != null) theDocument["animation"] = animation;
-      else theDocument["animation"] = null;
     if (animationMilliseconds != null) theDocument["animationMilliseconds"] = animationMilliseconds;
       else theDocument["animationMilliseconds"] = null;
     if (imageSeconds != null) theDocument["imageSeconds"] = imageSeconds;

@@ -90,12 +90,6 @@ class FaderFormBloc extends Bloc<FaderFormEvent, FaderFormState> {
 
         return;
       }
-      if (event is ChangedFaderAnimation) {
-        newValue = currentState.value.copyWith(animation: event.value);
-        yield SubmittableFaderForm(value: newValue);
-
-        return;
-      }
       if (event is ChangedFaderAnimationMilliseconds) {
         if (isInt(event.value)) {
           newValue = currentState.value.copyWith(animationMilliseconds: int.parse(event.value));

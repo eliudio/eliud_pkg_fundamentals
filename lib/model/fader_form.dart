@@ -13,6 +13,7 @@
 
 */
 
+import 'package:eliud_core/core/widgets/progress_indicator.dart';
 import 'package:eliud_core/core/global_data.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
@@ -126,7 +127,6 @@ class _MyFaderFormState extends State<MyFaderForm> {
   final TextEditingController _documentIDController = TextEditingController();
   final TextEditingController _appIdController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-  int _animationSelectedRadioTile;
   final TextEditingController _animationMillisecondsController = TextEditingController();
   final TextEditingController _imageSecondsController = TextEditingController();
 
@@ -140,7 +140,6 @@ class _MyFaderFormState extends State<MyFaderForm> {
     _documentIDController.addListener(_onDocumentIDChanged);
     _appIdController.addListener(_onAppIdChanged);
     _nameController.addListener(_onNameChanged);
-    _animationSelectedRadioTile = 0;
     _animationMillisecondsController.addListener(_onAnimationMillisecondsChanged);
     _imageSecondsController.addListener(_onImageSecondsChanged);
   }
@@ -151,7 +150,7 @@ class _MyFaderFormState extends State<MyFaderForm> {
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<FaderFormBloc, FaderFormState>(builder: (context, state) {
       if (state is FaderFormUninitialized) return Center(
-        child: CircularProgressIndicator(),
+        child: DelayedCircularProgressIndicator(),
       );
 
       if (state is FaderFormLoaded) {
@@ -167,10 +166,6 @@ class _MyFaderFormState extends State<MyFaderForm> {
           _nameController.text = state.value.name.toString();
         else
           _nameController.text = "";
-        if (state.value.animation != null)
-          _animationSelectedRadioTile = state.value.animation.index;
-        else
-          _animationSelectedRadioTile = 0;
         if (state.value.animationMilliseconds != null)
           _animationMillisecondsController.text = state.value.animationMilliseconds.toString();
         else
@@ -268,72 +263,6 @@ class _MyFaderFormState extends State<MyFaderForm> {
          children.add(Container(
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  child: Text('Animation',
-                      style: TextStyle(
-                          color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
-                ));
-
-        children.add(
-
-                RadioListTile(
-                    value: 0,
-                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
-                    groupValue: _animationSelectedRadioTile,
-                    title: Text("None", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    subtitle: Text("None", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner() ? null : (val) {
-                      setSelectionAnimation(val);
-                    },
-                ),
-          );
-        children.add(
-
-                RadioListTile(
-                    value: 1,
-                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
-                    groupValue: _animationSelectedRadioTile,
-                    title: Text("Fade", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    subtitle: Text("Fade", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner() ? null : (val) {
-                      setSelectionAnimation(val);
-                    },
-                ),
-          );
-        children.add(
-
-                RadioListTile(
-                    value: 2,
-                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
-                    groupValue: _animationSelectedRadioTile,
-                    title: Text("Scale", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    subtitle: Text("Scale", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner() ? null : (val) {
-                      setSelectionAnimation(val);
-                    },
-                ),
-          );
-        children.add(
-
-                RadioListTile(
-                    value: 3,
-                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
-                    groupValue: _animationSelectedRadioTile,
-                    title: Text("Slide", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    subtitle: Text("Slide", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner() ? null : (val) {
-                      setSelectionAnimation(val);
-                    },
-                ),
-          );
-
-
-        children.add(Container(height: 20.0));
-        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
-
-
-         children.add(Container(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: Text('Animation Times',
                       style: TextStyle(
                           color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
@@ -395,7 +324,6 @@ class _MyFaderFormState extends State<MyFaderForm> {
                               documentID: state.value.documentID, 
                               appId: state.value.appId, 
                               name: state.value.name, 
-                              animation: state.value.animation, 
                               animationMilliseconds: state.value.animationMilliseconds, 
                               imageSeconds: state.value.imageSeconds, 
                               items: state.value.items, 
@@ -406,7 +334,6 @@ class _MyFaderFormState extends State<MyFaderForm> {
                               documentID: state.value.documentID, 
                               appId: state.value.appId, 
                               name: state.value.name, 
-                              animation: state.value.animation, 
                               animationMilliseconds: state.value.animationMilliseconds, 
                               imageSeconds: state.value.imageSeconds, 
                               items: state.value.items, 
@@ -438,7 +365,7 @@ class _MyFaderFormState extends State<MyFaderForm> {
           )
         );
       } else {
-        return CircularProgressIndicator();
+        return DelayedCircularProgressIndicator();
       }
     });
   }
@@ -455,14 +382,6 @@ class _MyFaderFormState extends State<MyFaderForm> {
 
   void _onNameChanged() {
     _myFormBloc.add(ChangedFaderName(value: _nameController.text));
-  }
-
-
-  void setSelectionAnimation(int val) {
-    setState(() {
-      _animationSelectedRadioTile = val;
-    });
-    _myFormBloc.add(ChangedFaderAnimation(value: toFaderAnimation(val)));
   }
 
 

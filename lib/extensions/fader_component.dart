@@ -79,11 +79,7 @@ class ImageRotaterState extends State<ImageRotater> {
       return Text('Could not load or cache images.');
     } else {
       var orientation = MediaQuery.of(context).orientation;
-      if (widget.faderModel.animation == FaderAnimation.Slide) {
-        return TheImageGF(cachedImages, positionsAndSizes, actions, orientation, widget.faderModel.imageSeconds, widget.faderModel.animation, widget.faderModel.animationMilliseconds);
-      } else {
-        return TheImage(cachedImages, positionsAndSizes, actions, orientation, widget.faderModel.imageSeconds, widget.faderModel.animation, widget.faderModel.animationMilliseconds);
-      }
-      }
+      return TheImageGF(cachedImages, positionsAndSizes, actions, orientation, widget.faderModel.imageSeconds, widget.faderModel.animationMilliseconds);
+    }
   }
 }

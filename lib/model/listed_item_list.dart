@@ -16,6 +16,7 @@
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
+import 'package:eliud_core/core/widgets/progress_indicator.dart';
 
 import 'package:eliud_core/core/global_data.dart';
 import 'package:eliud_core/tools/has_fab.dart';
@@ -112,7 +113,7 @@ class ListedItemListWidgetState extends State<ListedItemListWidget> {
       return BlocBuilder<ListedItemListBloc, ListedItemListState>(builder: (context, state) {
         if (state is ListedItemListLoading) {
           return Center(
-            child: CircularProgressIndicator(),
+            child: DelayedCircularProgressIndicator(),
           );
         } else if (state is ListedItemListLoaded) {
           final values = state.values;
@@ -144,7 +145,7 @@ class ListedItemListWidgetState extends State<ListedItemListWidget> {
           }
         } else {
           return Center(
-            child: CircularProgressIndicator(),
+            child: DelayedCircularProgressIndicator(),
           );
         }
       });

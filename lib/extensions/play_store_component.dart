@@ -1,4 +1,5 @@
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/widgets/progress_indicator.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/play_store_component.dart';
 import 'package:eliud_pkg_fundamentals/model/play_store_model.dart';
@@ -70,7 +71,7 @@ class PlayStoreState extends State<PlayStore> {
           return _build(context, snapshot.data);
         } else {
           return Center(
-            child: CircularProgressIndicator(),
+            child: DelayedCircularProgressIndicator(),
           );
         }
       },

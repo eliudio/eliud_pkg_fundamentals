@@ -17,7 +17,7 @@ dependencies:
   getwidget: ^1.1.0
   flutter_markdown: ^0.3.3
   photo_view: 0.9.2
-  dynamic_widget: 2.0.3
+  dynamic_widget: 3.0.1
   flutter_html: ^0.11.1					#DO NOT UPGRADE
 
 dev_dependencies:

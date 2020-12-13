@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
@@ -6,7 +5,6 @@ import 'package:eliud_core/tools/action_model.dart';
 import 'package:eliud_core/model/pos_size_model.dart';
 import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/screen_size.dart';
-import 'package:eliud_pkg_fundamentals/model/fader_model.dart';
 import 'package:getwidget/components/carousel/gf_carousel.dart';
 import 'package:flutter/material.dart';
 
@@ -18,35 +16,34 @@ class TheImageGF extends StatefulWidget {
   // The time to display 1 image
   final int imageSeconds;
   // The animation to switch images.
-  final FaderAnimation animation;
 
   // The duration of the transition between the images
   final int animationMilliseconds;
 
-  TheImageGF(this.cachedImages, this.positionsAndSizes, this.actions, this.orientation, this.imageSeconds, this.animation, this.animationMilliseconds);
+  TheImageGF(this.cachedImages, this.positionsAndSizes, this.actions, this.orientation, this.imageSeconds, this.animationMilliseconds);
 
   @override
-  State<StatefulWidget> createState() => new TheImageGFState();
+  State<StatefulWidget> createState() => TheImageGFState();
 }
 
 class TheImageGFState extends State<TheImageGF> {
   @override
   Widget build(BuildContext context) {
-    List<Widget> list = List();
-    double maxHeight = 0;
-    double maxWidth = 0;
-    for (int i = 0; i < widget.cachedImages.length; i++) {
+    var list = <Widget>[];
+    var maxHeight = 0.0;
+    var maxWidth = 0.0;
+    for (var i = 0; i < widget.cachedImages.length; i++) {
       if (widget.cachedImages[i] != null) {
-        Widget w = FaderHelper.getIt(
+        var w = FaderHelper.getIt(
             context,
             widget.positionsAndSizes[i],
             widget.cachedImages[i],
             widget.orientation,
             widget.actions != null ? widget.actions[i] : null,
             i);
-        double height = FaderHelper.getHeight(
+        var height = FaderHelper.getHeight(
             context, widget.positionsAndSizes[i], widget.orientation);
-        double width = FaderHelper.getWidth(
+        var width = FaderHelper.getWidth(
             context, widget.positionsAndSizes[i], widget.orientation);
         maxHeight = max(height, maxHeight);
         maxWidth = max(width, maxWidth);
@@ -54,22 +51,17 @@ class TheImageGFState extends State<TheImageGF> {
       }
     }
 
-    double viewPortFraction = maxWidth  / fullScreenWidth(context);
+    var viewPortFraction = maxWidth  / fullScreenWidth(context);
     return GFCarousel(
         height: maxHeight,
         items: list,
         autoPlay: true,
-//        autoPlayInterval: const Duration(seconds: widget.faderModel.imageSeconds),
-//        autoPlayAnimationDuration = const Duration(milliseconds: widget.faderModel.animationMilliseconds),
         viewportFraction: viewPortFraction,
-        onPageChanged: (index) {
-          setState(() {
-            index;
-          });
-        });
+      );
   }
 }
 
+/*
 class TheImage extends StatefulWidget {
   final Orientation orientation;
   final List<ImageProvider> cachedImages;
@@ -191,37 +183,37 @@ class TheImageState extends State<TheImage> {
     super.dispose();
   }
 }
+*/
 
 class FaderHelper {
   static double getHeight(BuildContext context, PosSizeModel posSizeModel,
       Orientation orientation) {
-    double height = BoxFitHelper.toHeight(posSizeModel, context, orientation);
-    return height;
+    return  BoxFitHelper.toHeight(posSizeModel, context, orientation);
   }
 
   static double getWidth(BuildContext context, PosSizeModel posSizeModel,
       Orientation orientation) {
-    double width = BoxFitHelper.toWidth(posSizeModel, context, orientation);
-    return width;
+    return BoxFitHelper.toWidth(posSizeModel, context, orientation);
   }
 
   static Widget getIt(BuildContext context, PosSizeModel posSizeModel,
       ImageProvider imageProvider, Orientation orientation, ActionModel action, int index) {
-    if (imageProvider == null)
+    if (imageProvider == null) {
       return null;
-    BoxFit fit = BoxFitHelper.  toBoxFit(posSizeModel, orientation);
-    double width = BoxFitHelper.toWidth(posSizeModel, context, orientation);
-    double height = BoxFitHelper.toHeight(posSizeModel, context, orientation);
-    Alignment alignment = BoxFitHelper.toAlignment(posSizeModel, orientation);
+    }
+    var fit = BoxFitHelper.  toBoxFit(posSizeModel, orientation);
+    var width = BoxFitHelper.toWidth(posSizeModel, context, orientation);
+    var height = BoxFitHelper.toHeight(posSizeModel, context, orientation);
+    var alignment = BoxFitHelper.toAlignment(posSizeModel, orientation);
 
-    Image realImage = Image(
+    var realImage = Image(
       image: imageProvider,
       width: width,
       height: height,
       fit: fit,
     );
 
-    Widget clip = null;
+    var clip;
     if (posSizeModel.clip != null) {
       switch (posSizeModel.clip) {
         case ClipType.NoClip:
@@ -262,10 +254,13 @@ class FaderHelper {
       clip = realImage;
     }
 
-    Widget aligned = null;
-    if (alignment == null) aligned = clip;
-    else aligned = Align(
+    var aligned;
+    if (alignment == null) {
+      aligned = clip;
+    } else {
+      aligned = Align(
         alignment: alignment, child: clip, key: ValueKey<int>(index));
+    }
 
     if (action != null) {
       return GestureDetector(
