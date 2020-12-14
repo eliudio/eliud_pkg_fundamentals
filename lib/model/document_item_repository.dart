@@ -23,11 +23,11 @@ abstract class DocumentItemRepository {
   Future<void> delete(DocumentItemModel value);
   Future<DocumentItemModel> get(String id);
   Future<DocumentItemModel> update(DocumentItemModel value);
-  Stream<List<DocumentItemModel>> values();
-  Stream<List<DocumentItemModel>> valuesWithDetails();  Future<List<DocumentItemModel>> valuesList();
-  Future<List<DocumentItemModel>> valuesListWithDetails();
+  Stream<List<DocumentItemModel>> values({String orderBy, bool descending });
+  Stream<List<DocumentItemModel>> valuesWithDetails({String orderBy, bool descending });  Future<List<DocumentItemModel>> valuesList({String orderBy, bool descending });
+  Future<List<DocumentItemModel>> valuesListWithDetails({String orderBy, bool descending });
   StreamSubscription<List<DocumentItemModel>> listen(DocumentItemModelTrigger trigger, { String orderBy, bool descending });
-  StreamSubscription<List<DocumentItemModel>> listenWithDetails(DocumentItemModelTrigger trigger);
+  StreamSubscription<List<DocumentItemModel>> listenWithDetails(DocumentItemModelTrigger trigger, { String orderBy, bool descending });
   void flush();
 
   Future<void> deleteAll();

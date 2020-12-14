@@ -62,22 +62,22 @@ class LinkCache implements LinkRepository {
   }
 
   @override
-  Stream<List<LinkModel>> values() {
+  Stream<List<LinkModel>> values({String orderBy, bool descending }) {
     return reference.values();
   }
 
   @override
-  Stream<List<LinkModel>> valuesWithDetails() {
+  Stream<List<LinkModel>> valuesWithDetails({String orderBy, bool descending }) {
     return reference.valuesWithDetails();
   }
 
   @override
-  Future<List<LinkModel>> valuesList() async {
+  Future<List<LinkModel>> valuesList({String orderBy, bool descending }) async {
     return await reference.valuesList();
   }
   
   @override
-  Future<List<LinkModel>> valuesListWithDetails() async {
+  Future<List<LinkModel>> valuesListWithDetails({String orderBy, bool descending }) async {
     return await reference.valuesListWithDetails();
   }
 
@@ -96,7 +96,7 @@ class LinkCache implements LinkRepository {
   }
 
   @override
-  StreamSubscription<List<LinkModel>> listenWithDetails(trigger) {
+  StreamSubscription<List<LinkModel>> listenWithDetails(trigger, {String orderBy, bool descending }) {
     return reference.listenWithDetails(trigger);
   }
 

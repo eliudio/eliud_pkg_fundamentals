@@ -67,22 +67,22 @@ class PlayStoreCache implements PlayStoreRepository {
   }
 
   @override
-  Stream<List<PlayStoreModel>> values() {
+  Stream<List<PlayStoreModel>> values({String orderBy, bool descending }) {
     return reference.values();
   }
 
   @override
-  Stream<List<PlayStoreModel>> valuesWithDetails() {
+  Stream<List<PlayStoreModel>> valuesWithDetails({String orderBy, bool descending }) {
     return reference.valuesWithDetails();
   }
 
   @override
-  Future<List<PlayStoreModel>> valuesList() async {
+  Future<List<PlayStoreModel>> valuesList({String orderBy, bool descending }) async {
     return await reference.valuesList();
   }
   
   @override
-  Future<List<PlayStoreModel>> valuesListWithDetails() async {
+  Future<List<PlayStoreModel>> valuesListWithDetails({String orderBy, bool descending }) async {
     return await reference.valuesListWithDetails();
   }
 
@@ -101,7 +101,7 @@ class PlayStoreCache implements PlayStoreRepository {
   }
 
   @override
-  StreamSubscription<List<PlayStoreModel>> listenWithDetails(trigger) {
+  StreamSubscription<List<PlayStoreModel>> listenWithDetails(trigger, {String orderBy, bool descending }) {
     return reference.listenWithDetails(trigger);
   }
 

@@ -62,22 +62,22 @@ class TutorialCache implements TutorialRepository {
   }
 
   @override
-  Stream<List<TutorialModel>> values() {
+  Stream<List<TutorialModel>> values({String orderBy, bool descending }) {
     return reference.values();
   }
 
   @override
-  Stream<List<TutorialModel>> valuesWithDetails() {
+  Stream<List<TutorialModel>> valuesWithDetails({String orderBy, bool descending }) {
     return reference.valuesWithDetails();
   }
 
   @override
-  Future<List<TutorialModel>> valuesList() async {
+  Future<List<TutorialModel>> valuesList({String orderBy, bool descending }) async {
     return await reference.valuesList();
   }
   
   @override
-  Future<List<TutorialModel>> valuesListWithDetails() async {
+  Future<List<TutorialModel>> valuesListWithDetails({String orderBy, bool descending }) async {
     return await reference.valuesListWithDetails();
   }
 
@@ -96,7 +96,7 @@ class TutorialCache implements TutorialRepository {
   }
 
   @override
-  StreamSubscription<List<TutorialModel>> listenWithDetails(trigger) {
+  StreamSubscription<List<TutorialModel>> listenWithDetails(trigger, {String orderBy, bool descending }) {
     return reference.listenWithDetails(trigger);
   }
 

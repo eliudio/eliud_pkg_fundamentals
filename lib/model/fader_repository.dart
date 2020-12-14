@@ -23,11 +23,11 @@ abstract class FaderRepository {
   Future<void> delete(FaderModel value);
   Future<FaderModel> get(String id);
   Future<FaderModel> update(FaderModel value);
-  Stream<List<FaderModel>> values();
-  Stream<List<FaderModel>> valuesWithDetails();  Future<List<FaderModel>> valuesList();
-  Future<List<FaderModel>> valuesListWithDetails();
+  Stream<List<FaderModel>> values({String orderBy, bool descending });
+  Stream<List<FaderModel>> valuesWithDetails({String orderBy, bool descending });  Future<List<FaderModel>> valuesList({String orderBy, bool descending });
+  Future<List<FaderModel>> valuesListWithDetails({String orderBy, bool descending });
   StreamSubscription<List<FaderModel>> listen(FaderModelTrigger trigger, { String orderBy, bool descending });
-  StreamSubscription<List<FaderModel>> listenWithDetails(FaderModelTrigger trigger);
+  StreamSubscription<List<FaderModel>> listenWithDetails(FaderModelTrigger trigger, { String orderBy, bool descending });
   void flush();
 
   Future<void> deleteAll();

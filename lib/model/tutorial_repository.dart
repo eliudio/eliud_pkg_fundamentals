@@ -23,11 +23,11 @@ abstract class TutorialRepository {
   Future<void> delete(TutorialModel value);
   Future<TutorialModel> get(String id);
   Future<TutorialModel> update(TutorialModel value);
-  Stream<List<TutorialModel>> values();
-  Stream<List<TutorialModel>> valuesWithDetails();  Future<List<TutorialModel>> valuesList();
-  Future<List<TutorialModel>> valuesListWithDetails();
+  Stream<List<TutorialModel>> values({String orderBy, bool descending });
+  Stream<List<TutorialModel>> valuesWithDetails({String orderBy, bool descending });  Future<List<TutorialModel>> valuesList({String orderBy, bool descending });
+  Future<List<TutorialModel>> valuesListWithDetails({String orderBy, bool descending });
   StreamSubscription<List<TutorialModel>> listen(TutorialModelTrigger trigger, { String orderBy, bool descending });
-  StreamSubscription<List<TutorialModel>> listenWithDetails(TutorialModelTrigger trigger);
+  StreamSubscription<List<TutorialModel>> listenWithDetails(TutorialModelTrigger trigger, { String orderBy, bool descending });
   void flush();
 
   Future<void> deleteAll();

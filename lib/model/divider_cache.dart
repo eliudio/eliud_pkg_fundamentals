@@ -67,22 +67,22 @@ class DividerCache implements DividerRepository {
   }
 
   @override
-  Stream<List<DividerModel>> values() {
+  Stream<List<DividerModel>> values({String orderBy, bool descending }) {
     return reference.values();
   }
 
   @override
-  Stream<List<DividerModel>> valuesWithDetails() {
+  Stream<List<DividerModel>> valuesWithDetails({String orderBy, bool descending }) {
     return reference.valuesWithDetails();
   }
 
   @override
-  Future<List<DividerModel>> valuesList() async {
+  Future<List<DividerModel>> valuesList({String orderBy, bool descending }) async {
     return await reference.valuesList();
   }
   
   @override
-  Future<List<DividerModel>> valuesListWithDetails() async {
+  Future<List<DividerModel>> valuesListWithDetails({String orderBy, bool descending }) async {
     return await reference.valuesListWithDetails();
   }
 
@@ -101,7 +101,7 @@ class DividerCache implements DividerRepository {
   }
 
   @override
-  StreamSubscription<List<DividerModel>> listenWithDetails(trigger) {
+  StreamSubscription<List<DividerModel>> listenWithDetails(trigger, {String orderBy, bool descending }) {
     return reference.listenWithDetails(trigger);
   }
 

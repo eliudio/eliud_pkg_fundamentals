@@ -67,22 +67,22 @@ class ListedItemCache implements ListedItemRepository {
   }
 
   @override
-  Stream<List<ListedItemModel>> values() {
+  Stream<List<ListedItemModel>> values({String orderBy, bool descending }) {
     return reference.values();
   }
 
   @override
-  Stream<List<ListedItemModel>> valuesWithDetails() {
+  Stream<List<ListedItemModel>> valuesWithDetails({String orderBy, bool descending }) {
     return reference.valuesWithDetails();
   }
 
   @override
-  Future<List<ListedItemModel>> valuesList() async {
+  Future<List<ListedItemModel>> valuesList({String orderBy, bool descending }) async {
     return await reference.valuesList();
   }
   
   @override
-  Future<List<ListedItemModel>> valuesListWithDetails() async {
+  Future<List<ListedItemModel>> valuesListWithDetails({String orderBy, bool descending }) async {
     return await reference.valuesListWithDetails();
   }
 
@@ -101,7 +101,7 @@ class ListedItemCache implements ListedItemRepository {
   }
 
   @override
-  StreamSubscription<List<ListedItemModel>> listenWithDetails(trigger) {
+  StreamSubscription<List<ListedItemModel>> listenWithDetails(trigger, {String orderBy, bool descending }) {
     return reference.listenWithDetails(trigger);
   }
 

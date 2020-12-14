@@ -67,22 +67,22 @@ class SimpleImageCache implements SimpleImageRepository {
   }
 
   @override
-  Stream<List<SimpleImageModel>> values() {
+  Stream<List<SimpleImageModel>> values({String orderBy, bool descending }) {
     return reference.values();
   }
 
   @override
-  Stream<List<SimpleImageModel>> valuesWithDetails() {
+  Stream<List<SimpleImageModel>> valuesWithDetails({String orderBy, bool descending }) {
     return reference.valuesWithDetails();
   }
 
   @override
-  Future<List<SimpleImageModel>> valuesList() async {
+  Future<List<SimpleImageModel>> valuesList({String orderBy, bool descending }) async {
     return await reference.valuesList();
   }
   
   @override
-  Future<List<SimpleImageModel>> valuesListWithDetails() async {
+  Future<List<SimpleImageModel>> valuesListWithDetails({String orderBy, bool descending }) async {
     return await reference.valuesListWithDetails();
   }
 
@@ -101,7 +101,7 @@ class SimpleImageCache implements SimpleImageRepository {
   }
 
   @override
-  StreamSubscription<List<SimpleImageModel>> listenWithDetails(trigger) {
+  StreamSubscription<List<SimpleImageModel>> listenWithDetails(trigger, {String orderBy, bool descending }) {
     return reference.listenWithDetails(trigger);
   }
 

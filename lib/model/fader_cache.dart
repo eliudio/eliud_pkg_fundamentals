@@ -62,22 +62,22 @@ class FaderCache implements FaderRepository {
   }
 
   @override
-  Stream<List<FaderModel>> values() {
+  Stream<List<FaderModel>> values({String orderBy, bool descending }) {
     return reference.values();
   }
 
   @override
-  Stream<List<FaderModel>> valuesWithDetails() {
+  Stream<List<FaderModel>> valuesWithDetails({String orderBy, bool descending }) {
     return reference.valuesWithDetails();
   }
 
   @override
-  Future<List<FaderModel>> valuesList() async {
+  Future<List<FaderModel>> valuesList({String orderBy, bool descending }) async {
     return await reference.valuesList();
   }
   
   @override
-  Future<List<FaderModel>> valuesListWithDetails() async {
+  Future<List<FaderModel>> valuesListWithDetails({String orderBy, bool descending }) async {
     return await reference.valuesListWithDetails();
   }
 
@@ -96,7 +96,7 @@ class FaderCache implements FaderRepository {
   }
 
   @override
-  StreamSubscription<List<FaderModel>> listenWithDetails(trigger) {
+  StreamSubscription<List<FaderModel>> listenWithDetails(trigger, {String orderBy, bool descending }) {
     return reference.listenWithDetails(trigger);
   }
 

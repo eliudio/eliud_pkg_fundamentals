@@ -23,11 +23,11 @@ abstract class PlayStoreRepository {
   Future<void> delete(PlayStoreModel value);
   Future<PlayStoreModel> get(String id);
   Future<PlayStoreModel> update(PlayStoreModel value);
-  Stream<List<PlayStoreModel>> values();
-  Stream<List<PlayStoreModel>> valuesWithDetails();  Future<List<PlayStoreModel>> valuesList();
-  Future<List<PlayStoreModel>> valuesListWithDetails();
+  Stream<List<PlayStoreModel>> values({String orderBy, bool descending });
+  Stream<List<PlayStoreModel>> valuesWithDetails({String orderBy, bool descending });  Future<List<PlayStoreModel>> valuesList({String orderBy, bool descending });
+  Future<List<PlayStoreModel>> valuesListWithDetails({String orderBy, bool descending });
   StreamSubscription<List<PlayStoreModel>> listen(PlayStoreModelTrigger trigger, { String orderBy, bool descending });
-  StreamSubscription<List<PlayStoreModel>> listenWithDetails(PlayStoreModelTrigger trigger);
+  StreamSubscription<List<PlayStoreModel>> listenWithDetails(PlayStoreModelTrigger trigger, { String orderBy, bool descending });
   void flush();
 
   Future<void> deleteAll();

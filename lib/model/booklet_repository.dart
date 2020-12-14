@@ -23,11 +23,11 @@ abstract class BookletRepository {
   Future<void> delete(BookletModel value);
   Future<BookletModel> get(String id);
   Future<BookletModel> update(BookletModel value);
-  Stream<List<BookletModel>> values();
-  Stream<List<BookletModel>> valuesWithDetails();  Future<List<BookletModel>> valuesList();
-  Future<List<BookletModel>> valuesListWithDetails();
+  Stream<List<BookletModel>> values({String orderBy, bool descending });
+  Stream<List<BookletModel>> valuesWithDetails({String orderBy, bool descending });  Future<List<BookletModel>> valuesList({String orderBy, bool descending });
+  Future<List<BookletModel>> valuesListWithDetails({String orderBy, bool descending });
   StreamSubscription<List<BookletModel>> listen(BookletModelTrigger trigger, { String orderBy, bool descending });
-  StreamSubscription<List<BookletModel>> listenWithDetails(BookletModelTrigger trigger);
+  StreamSubscription<List<BookletModel>> listenWithDetails(BookletModelTrigger trigger, { String orderBy, bool descending });
   void flush();
 
   Future<void> deleteAll();

@@ -67,22 +67,22 @@ class SectionCache implements SectionRepository {
   }
 
   @override
-  Stream<List<SectionModel>> values() {
+  Stream<List<SectionModel>> values({String orderBy, bool descending }) {
     return reference.values();
   }
 
   @override
-  Stream<List<SectionModel>> valuesWithDetails() {
+  Stream<List<SectionModel>> valuesWithDetails({String orderBy, bool descending }) {
     return reference.valuesWithDetails();
   }
 
   @override
-  Future<List<SectionModel>> valuesList() async {
+  Future<List<SectionModel>> valuesList({String orderBy, bool descending }) async {
     return await reference.valuesList();
   }
   
   @override
-  Future<List<SectionModel>> valuesListWithDetails() async {
+  Future<List<SectionModel>> valuesListWithDetails({String orderBy, bool descending }) async {
     return await reference.valuesListWithDetails();
   }
 
@@ -101,7 +101,7 @@ class SectionCache implements SectionRepository {
   }
 
   @override
-  StreamSubscription<List<SectionModel>> listenWithDetails(trigger) {
+  StreamSubscription<List<SectionModel>> listenWithDetails(trigger, {String orderBy, bool descending }) {
     return reference.listenWithDetails(trigger);
   }
 

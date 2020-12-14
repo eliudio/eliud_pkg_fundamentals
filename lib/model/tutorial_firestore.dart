@@ -80,11 +80,19 @@ class TutorialFirestore implements TutorialRepository {
     });
   }
 
-  StreamSubscription<List<TutorialModel>> listenWithDetails(TutorialModelTrigger trigger) {
-    Stream<List<TutorialModel>> stream = TutorialCollection.snapshots()
-        .asyncMap((data) async {
-      return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
-    });
+  StreamSubscription<List<TutorialModel>> listenWithDetails(TutorialModelTrigger trigger, { String orderBy, bool descending }) {
+    Stream<List<TutorialModel>> stream;
+    if (orderBy == null) {
+      stream = TutorialCollection.snapshots()
+          .asyncMap((data) async {
+        return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
+      });
+    } else {
+      stream = TutorialCollection.orderBy(orderBy, descending: descending).snapshots()
+          .asyncMap((data) async {
+        return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
+      });
+    }
 
     return stream.listen((listOfTutorialModels) {
       trigger(listOfTutorialModels);
@@ -92,32 +100,60 @@ class TutorialFirestore implements TutorialRepository {
   }
 
 
-  Stream<List<TutorialModel>> values() {
-    return TutorialCollection.snapshots().map((snapshot) {
-      return snapshot.documents
-            .map((doc) => _populateDoc(doc)).toList();
-    });
+  Stream<List<TutorialModel>> values({ String orderBy, bool descending }) {
+    if (orderBy == null) {
+      return TutorialCollection.snapshots().map((snapshot) {
+        return snapshot.documents
+              .map((doc) => _populateDoc(doc)).toList();
+      });
+    } else {
+      return TutorialCollection.orderBy(orderBy, descending: descending).snapshots().map((snapshot) {
+        return snapshot.documents
+              .map((doc) => _populateDoc(doc)).toList();
+      });
+    }
   }
 
-  Stream<List<TutorialModel>> valuesWithDetails() {
-    return TutorialCollection.snapshots().asyncMap((snapshot) {
-      return Future.wait(snapshot.documents
-          .map((doc) => _populateDocPlus(doc)).toList());
-    });
+  Stream<List<TutorialModel>> valuesWithDetails({ String orderBy, bool descending }) {
+    if (orderBy == null) {
+      return TutorialCollection.snapshots().asyncMap((snapshot) {
+        return Future.wait(snapshot.documents
+            .map((doc) => _populateDocPlus(doc)).toList());
+      });
+    } else {
+      return TutorialCollection.orderBy(orderBy, descending: descending).snapshots().asyncMap((snapshot) {
+        return Future.wait(snapshot.documents
+            .map((doc) => _populateDocPlus(doc)).toList());
+      });
+    }
   }
 
-  Future<List<TutorialModel>> valuesList() async {
-    return await TutorialCollection.getDocuments().then((value) {
-      var list = value.documents;
-      return list.map((doc) => _populateDoc(doc)).toList();
-    });
+  Future<List<TutorialModel>> valuesList({ String orderBy, bool descending }) async {
+    if (orderBy == null) {
+      return await TutorialCollection.getDocuments().then((value) {
+        var list = value.documents;
+        return list.map((doc) => _populateDoc(doc)).toList();
+      });
+    } else {
+      return await TutorialCollection.orderBy(orderBy, descending: descending).getDocuments().then((value) {
+        var list = value.documents;
+        return list.map((doc) => _populateDoc(doc)).toList();
+      });
+    }
   }
 
-  Future<List<TutorialModel>> valuesListWithDetails() async {
-    return await TutorialCollection.getDocuments().then((value) {
-      var list = value.documents;
-      return Future.wait(list.map((doc) =>  _populateDocPlus(doc)).toList());
-    });
+  Future<List<TutorialModel>> valuesListWithDetails({ String orderBy, bool descending }) async {
+    if (orderBy == null) {
+      return await TutorialCollection.getDocuments().then((value) {
+        var list = value.documents;
+        return Future.wait(list.map((doc) =>  _populateDocPlus(doc)).toList());
+      });
+    } else {
+      return await TutorialCollection.orderBy(orderBy, descending: descending).getDocuments().then((value) {
+        var list = value.documents;
+        return Future.wait(list.map((doc) =>  _populateDocPlus(doc)).toList());
+      });
+    }
   }
 
   void flush() {}

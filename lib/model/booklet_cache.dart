@@ -62,22 +62,22 @@ class BookletCache implements BookletRepository {
   }
 
   @override
-  Stream<List<BookletModel>> values() {
+  Stream<List<BookletModel>> values({String orderBy, bool descending }) {
     return reference.values();
   }
 
   @override
-  Stream<List<BookletModel>> valuesWithDetails() {
+  Stream<List<BookletModel>> valuesWithDetails({String orderBy, bool descending }) {
     return reference.valuesWithDetails();
   }
 
   @override
-  Future<List<BookletModel>> valuesList() async {
+  Future<List<BookletModel>> valuesList({String orderBy, bool descending }) async {
     return await reference.valuesList();
   }
   
   @override
-  Future<List<BookletModel>> valuesListWithDetails() async {
+  Future<List<BookletModel>> valuesListWithDetails({String orderBy, bool descending }) async {
     return await reference.valuesListWithDetails();
   }
 
@@ -96,7 +96,7 @@ class BookletCache implements BookletRepository {
   }
 
   @override
-  StreamSubscription<List<BookletModel>> listenWithDetails(trigger) {
+  StreamSubscription<List<BookletModel>> listenWithDetails(trigger, {String orderBy, bool descending }) {
     return reference.listenWithDetails(trigger);
   }
 

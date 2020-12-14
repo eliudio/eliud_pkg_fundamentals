@@ -67,22 +67,22 @@ class DocumentItemCache implements DocumentItemRepository {
   }
 
   @override
-  Stream<List<DocumentItemModel>> values() {
+  Stream<List<DocumentItemModel>> values({String orderBy, bool descending }) {
     return reference.values();
   }
 
   @override
-  Stream<List<DocumentItemModel>> valuesWithDetails() {
+  Stream<List<DocumentItemModel>> valuesWithDetails({String orderBy, bool descending }) {
     return reference.valuesWithDetails();
   }
 
   @override
-  Future<List<DocumentItemModel>> valuesList() async {
+  Future<List<DocumentItemModel>> valuesList({String orderBy, bool descending }) async {
     return await reference.valuesList();
   }
   
   @override
-  Future<List<DocumentItemModel>> valuesListWithDetails() async {
+  Future<List<DocumentItemModel>> valuesListWithDetails({String orderBy, bool descending }) async {
     return await reference.valuesListWithDetails();
   }
 
@@ -101,7 +101,7 @@ class DocumentItemCache implements DocumentItemRepository {
   }
 
   @override
-  StreamSubscription<List<DocumentItemModel>> listenWithDetails(trigger) {
+  StreamSubscription<List<DocumentItemModel>> listenWithDetails(trigger, {String orderBy, bool descending }) {
     return reference.listenWithDetails(trigger);
   }
 

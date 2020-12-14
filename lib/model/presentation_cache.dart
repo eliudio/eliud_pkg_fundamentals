@@ -67,22 +67,22 @@ class PresentationCache implements PresentationRepository {
   }
 
   @override
-  Stream<List<PresentationModel>> values() {
+  Stream<List<PresentationModel>> values({String orderBy, bool descending }) {
     return reference.values();
   }
 
   @override
-  Stream<List<PresentationModel>> valuesWithDetails() {
+  Stream<List<PresentationModel>> valuesWithDetails({String orderBy, bool descending }) {
     return reference.valuesWithDetails();
   }
 
   @override
-  Future<List<PresentationModel>> valuesList() async {
+  Future<List<PresentationModel>> valuesList({String orderBy, bool descending }) async {
     return await reference.valuesList();
   }
   
   @override
-  Future<List<PresentationModel>> valuesListWithDetails() async {
+  Future<List<PresentationModel>> valuesListWithDetails({String orderBy, bool descending }) async {
     return await reference.valuesListWithDetails();
   }
 
@@ -101,7 +101,7 @@ class PresentationCache implements PresentationRepository {
   }
 
   @override
-  StreamSubscription<List<PresentationModel>> listenWithDetails(trigger) {
+  StreamSubscription<List<PresentationModel>> listenWithDetails(trigger, {String orderBy, bool descending }) {
     return reference.listenWithDetails(trigger);
   }
 

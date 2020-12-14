@@ -67,22 +67,22 @@ class GridCache implements GridRepository {
   }
 
   @override
-  Stream<List<GridModel>> values() {
+  Stream<List<GridModel>> values({String orderBy, bool descending }) {
     return reference.values();
   }
 
   @override
-  Stream<List<GridModel>> valuesWithDetails() {
+  Stream<List<GridModel>> valuesWithDetails({String orderBy, bool descending }) {
     return reference.valuesWithDetails();
   }
 
   @override
-  Future<List<GridModel>> valuesList() async {
+  Future<List<GridModel>> valuesList({String orderBy, bool descending }) async {
     return await reference.valuesList();
   }
   
   @override
-  Future<List<GridModel>> valuesListWithDetails() async {
+  Future<List<GridModel>> valuesListWithDetails({String orderBy, bool descending }) async {
     return await reference.valuesListWithDetails();
   }
 
@@ -101,7 +101,7 @@ class GridCache implements GridRepository {
   }
 
   @override
-  StreamSubscription<List<GridModel>> listenWithDetails(trigger) {
+  StreamSubscription<List<GridModel>> listenWithDetails(trigger, {String orderBy, bool descending }) {
     return reference.listenWithDetails(trigger);
   }
 

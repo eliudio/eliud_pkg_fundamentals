@@ -201,11 +201,11 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
       return completer.future;
     }
 
-    Stream<List<DocumentItemModel>> values() {
+    Stream<List<DocumentItemModel>> values({String orderBy, bool descending }) {
       return theValues;
     }
     
-    Stream<List<DocumentItemModel>> valuesWithDetails() {
+    Stream<List<DocumentItemModel>> valuesWithDetails({String orderBy, bool descending }) {
       return theValues;
     }
     
@@ -215,17 +215,17 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
     }
   
     @override
-    StreamSubscription<List<DocumentItemModel>> listenWithDetails(trigger) {
+    StreamSubscription<List<DocumentItemModel>> listenWithDetails(trigger, {String orderBy, bool descending }) {
       return theValues.listen((theList) => trigger(theList));
     }
     
     void flush() {}
 
-    Future<List<DocumentItemModel>> valuesList() {
+    Future<List<DocumentItemModel>> valuesList({String orderBy, bool descending }) {
       return Future.value(items);
     }
     
-    Future<List<DocumentItemModel>> valuesListWithDetails() {
+    Future<List<DocumentItemModel>> valuesListWithDetails({String orderBy, bool descending }) {
       return Future.value(items);
     }
 
@@ -280,11 +280,11 @@ class LinkInMemoryRepository implements LinkRepository {
       return completer.future;
     }
 
-    Stream<List<LinkModel>> values() {
+    Stream<List<LinkModel>> values({String orderBy, bool descending }) {
       return theValues;
     }
     
-    Stream<List<LinkModel>> valuesWithDetails() {
+    Stream<List<LinkModel>> valuesWithDetails({String orderBy, bool descending }) {
       return theValues;
     }
     
@@ -294,17 +294,17 @@ class LinkInMemoryRepository implements LinkRepository {
     }
   
     @override
-    StreamSubscription<List<LinkModel>> listenWithDetails(trigger) {
+    StreamSubscription<List<LinkModel>> listenWithDetails(trigger, {String orderBy, bool descending }) {
       return theValues.listen((theList) => trigger(theList));
     }
     
     void flush() {}
 
-    Future<List<LinkModel>> valuesList() {
+    Future<List<LinkModel>> valuesList({String orderBy, bool descending }) {
       return Future.value(items);
     }
     
-    Future<List<LinkModel>> valuesListWithDetails() {
+    Future<List<LinkModel>> valuesListWithDetails({String orderBy, bool descending }) {
       return Future.value(items);
     }
 
@@ -359,11 +359,11 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
       return completer.future;
     }
 
-    Stream<List<ListedItemModel>> values() {
+    Stream<List<ListedItemModel>> values({String orderBy, bool descending }) {
       return theValues;
     }
     
-    Stream<List<ListedItemModel>> valuesWithDetails() {
+    Stream<List<ListedItemModel>> valuesWithDetails({String orderBy, bool descending }) {
       return theValues;
     }
     
@@ -373,17 +373,17 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
     }
   
     @override
-    StreamSubscription<List<ListedItemModel>> listenWithDetails(trigger) {
+    StreamSubscription<List<ListedItemModel>> listenWithDetails(trigger, {String orderBy, bool descending }) {
       return theValues.listen((theList) => trigger(theList));
     }
     
     void flush() {}
 
-    Future<List<ListedItemModel>> valuesList() {
+    Future<List<ListedItemModel>> valuesList({String orderBy, bool descending }) {
       return Future.value(items);
     }
     
-    Future<List<ListedItemModel>> valuesListWithDetails() {
+    Future<List<ListedItemModel>> valuesListWithDetails({String orderBy, bool descending }) {
       return Future.value(items);
     }
 
@@ -438,11 +438,11 @@ class SectionInMemoryRepository implements SectionRepository {
       return completer.future;
     }
 
-    Stream<List<SectionModel>> values() {
+    Stream<List<SectionModel>> values({String orderBy, bool descending }) {
       return theValues;
     }
     
-    Stream<List<SectionModel>> valuesWithDetails() {
+    Stream<List<SectionModel>> valuesWithDetails({String orderBy, bool descending }) {
       return theValues;
     }
     
@@ -452,17 +452,17 @@ class SectionInMemoryRepository implements SectionRepository {
     }
   
     @override
-    StreamSubscription<List<SectionModel>> listenWithDetails(trigger) {
+    StreamSubscription<List<SectionModel>> listenWithDetails(trigger, {String orderBy, bool descending }) {
       return theValues.listen((theList) => trigger(theList));
     }
     
     void flush() {}
 
-    Future<List<SectionModel>> valuesList() {
+    Future<List<SectionModel>> valuesList({String orderBy, bool descending }) {
       return Future.value(items);
     }
     
-    Future<List<SectionModel>> valuesListWithDetails() {
+    Future<List<SectionModel>> valuesListWithDetails({String orderBy, bool descending }) {
       return Future.value(items);
     }
 
@@ -517,11 +517,11 @@ class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
       return completer.future;
     }
 
-    Stream<List<TutorialEntryModel>> values() {
+    Stream<List<TutorialEntryModel>> values({String orderBy, bool descending }) {
       return theValues;
     }
     
-    Stream<List<TutorialEntryModel>> valuesWithDetails() {
+    Stream<List<TutorialEntryModel>> valuesWithDetails({String orderBy, bool descending }) {
       return theValues;
     }
     
@@ -531,17 +531,17 @@ class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
     }
   
     @override
-    StreamSubscription<List<TutorialEntryModel>> listenWithDetails(trigger) {
+    StreamSubscription<List<TutorialEntryModel>> listenWithDetails(trigger, {String orderBy, bool descending }) {
       return theValues.listen((theList) => trigger(theList));
     }
     
     void flush() {}
 
-    Future<List<TutorialEntryModel>> valuesList() {
+    Future<List<TutorialEntryModel>> valuesList({String orderBy, bool descending }) {
       return Future.value(items);
     }
     
-    Future<List<TutorialEntryModel>> valuesListWithDetails() {
+    Future<List<TutorialEntryModel>> valuesListWithDetails({String orderBy, bool descending }) {
       return Future.value(items);
     }
 

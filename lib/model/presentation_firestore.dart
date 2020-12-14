@@ -84,11 +84,19 @@ class PresentationFirestore implements PresentationRepository {
     });
   }
 
-  StreamSubscription<List<PresentationModel>> listenWithDetails(PresentationModelTrigger trigger) {
-    Stream<List<PresentationModel>> stream = PresentationCollection.snapshots()
-        .asyncMap((data) async {
-      return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
-    });
+  StreamSubscription<List<PresentationModel>> listenWithDetails(PresentationModelTrigger trigger, { String orderBy, bool descending }) {
+    Stream<List<PresentationModel>> stream;
+    if (orderBy == null) {
+      stream = PresentationCollection.snapshots()
+          .asyncMap((data) async {
+        return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
+      });
+    } else {
+      stream = PresentationCollection.orderBy(orderBy, descending: descending).snapshots()
+          .asyncMap((data) async {
+        return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
+      });
+    }
 
     return stream.listen((listOfPresentationModels) {
       trigger(listOfPresentationModels);
@@ -96,32 +104,60 @@ class PresentationFirestore implements PresentationRepository {
   }
 
 
-  Stream<List<PresentationModel>> values() {
-    return PresentationCollection.snapshots().map((snapshot) {
-      return snapshot.documents
-            .map((doc) => _populateDoc(doc)).toList();
-    });
+  Stream<List<PresentationModel>> values({ String orderBy, bool descending }) {
+    if (orderBy == null) {
+      return PresentationCollection.snapshots().map((snapshot) {
+        return snapshot.documents
+              .map((doc) => _populateDoc(doc)).toList();
+      });
+    } else {
+      return PresentationCollection.orderBy(orderBy, descending: descending).snapshots().map((snapshot) {
+        return snapshot.documents
+              .map((doc) => _populateDoc(doc)).toList();
+      });
+    }
   }
 
-  Stream<List<PresentationModel>> valuesWithDetails() {
-    return PresentationCollection.snapshots().asyncMap((snapshot) {
-      return Future.wait(snapshot.documents
-          .map((doc) => _populateDocPlus(doc)).toList());
-    });
+  Stream<List<PresentationModel>> valuesWithDetails({ String orderBy, bool descending }) {
+    if (orderBy == null) {
+      return PresentationCollection.snapshots().asyncMap((snapshot) {
+        return Future.wait(snapshot.documents
+            .map((doc) => _populateDocPlus(doc)).toList());
+      });
+    } else {
+      return PresentationCollection.orderBy(orderBy, descending: descending).snapshots().asyncMap((snapshot) {
+        return Future.wait(snapshot.documents
+            .map((doc) => _populateDocPlus(doc)).toList());
+      });
+    }
   }
 
-  Future<List<PresentationModel>> valuesList() async {
-    return await PresentationCollection.getDocuments().then((value) {
-      var list = value.documents;
-      return list.map((doc) => _populateDoc(doc)).toList();
-    });
+  Future<List<PresentationModel>> valuesList({ String orderBy, bool descending }) async {
+    if (orderBy == null) {
+      return await PresentationCollection.getDocuments().then((value) {
+        var list = value.documents;
+        return list.map((doc) => _populateDoc(doc)).toList();
+      });
+    } else {
+      return await PresentationCollection.orderBy(orderBy, descending: descending).getDocuments().then((value) {
+        var list = value.documents;
+        return list.map((doc) => _populateDoc(doc)).toList();
+      });
+    }
   }
 
-  Future<List<PresentationModel>> valuesListWithDetails() async {
-    return await PresentationCollection.getDocuments().then((value) {
-      var list = value.documents;
-      return Future.wait(list.map((doc) =>  _populateDocPlus(doc)).toList());
-    });
+  Future<List<PresentationModel>> valuesListWithDetails({ String orderBy, bool descending }) async {
+    if (orderBy == null) {
+      return await PresentationCollection.getDocuments().then((value) {
+        var list = value.documents;
+        return Future.wait(list.map((doc) =>  _populateDocPlus(doc)).toList());
+      });
+    } else {
+      return await PresentationCollection.orderBy(orderBy, descending: descending).getDocuments().then((value) {
+        var list = value.documents;
+        return Future.wait(list.map((doc) =>  _populateDocPlus(doc)).toList());
+      });
+    }
   }
 
   void flush() {}

@@ -23,11 +23,11 @@ abstract class SectionRepository {
   Future<void> delete(SectionModel value);
   Future<SectionModel> get(String id);
   Future<SectionModel> update(SectionModel value);
-  Stream<List<SectionModel>> values();
-  Stream<List<SectionModel>> valuesWithDetails();  Future<List<SectionModel>> valuesList();
-  Future<List<SectionModel>> valuesListWithDetails();
+  Stream<List<SectionModel>> values({String orderBy, bool descending });
+  Stream<List<SectionModel>> valuesWithDetails({String orderBy, bool descending });  Future<List<SectionModel>> valuesList({String orderBy, bool descending });
+  Future<List<SectionModel>> valuesListWithDetails({String orderBy, bool descending });
   StreamSubscription<List<SectionModel>> listen(SectionModelTrigger trigger, { String orderBy, bool descending });
-  StreamSubscription<List<SectionModel>> listenWithDetails(SectionModelTrigger trigger);
+  StreamSubscription<List<SectionModel>> listenWithDetails(SectionModelTrigger trigger, { String orderBy, bool descending });
   void flush();
 
   Future<void> deleteAll();

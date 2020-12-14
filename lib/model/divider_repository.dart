@@ -23,11 +23,11 @@ abstract class DividerRepository {
   Future<void> delete(DividerModel value);
   Future<DividerModel> get(String id);
   Future<DividerModel> update(DividerModel value);
-  Stream<List<DividerModel>> values();
-  Stream<List<DividerModel>> valuesWithDetails();  Future<List<DividerModel>> valuesList();
-  Future<List<DividerModel>> valuesListWithDetails();
+  Stream<List<DividerModel>> values({String orderBy, bool descending });
+  Stream<List<DividerModel>> valuesWithDetails({String orderBy, bool descending });  Future<List<DividerModel>> valuesList({String orderBy, bool descending });
+  Future<List<DividerModel>> valuesListWithDetails({String orderBy, bool descending });
   StreamSubscription<List<DividerModel>> listen(DividerModelTrigger trigger, { String orderBy, bool descending });
-  StreamSubscription<List<DividerModel>> listenWithDetails(DividerModelTrigger trigger);
+  StreamSubscription<List<DividerModel>> listenWithDetails(DividerModelTrigger trigger, { String orderBy, bool descending });
   void flush();
 
   Future<void> deleteAll();
