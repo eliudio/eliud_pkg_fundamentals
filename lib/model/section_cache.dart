@@ -14,6 +14,7 @@
 */
 
 import 'dart:async';
+import 'package:eliud_core/tools/common_tools.dart';
 import 'package:eliud_pkg_fundamentals/model/section_model.dart';
 import 'package:eliud_pkg_fundamentals/model/section_repository.dart';
 import 'package:eliud_core/model/repository_export.dart';
@@ -67,23 +68,23 @@ class SectionCache implements SectionRepository {
   }
 
   @override
-  Stream<List<SectionModel>> values({String orderBy, bool descending }) {
-    return reference.values();
+  Stream<List<SectionModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) {
+    return reference.values(currentMember: currentMember, orderBy: orderBy, descending: descending, startAfter: startAfter, limit: limit, setLastDoc: setLastDoc);
   }
 
   @override
-  Stream<List<SectionModel>> valuesWithDetails({String orderBy, bool descending }) {
-    return reference.valuesWithDetails();
+  Stream<List<SectionModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) {
+    return reference.valuesWithDetails(currentMember: currentMember, orderBy: orderBy, descending: descending, startAfter: startAfter, limit: limit, setLastDoc: setLastDoc);
   }
 
   @override
-  Future<List<SectionModel>> valuesList({String orderBy, bool descending }) async {
-    return await reference.valuesList();
+  Future<List<SectionModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) async {
+    return await reference.valuesList(currentMember: currentMember, orderBy: orderBy, descending: descending, startAfter: startAfter, limit: limit, setLastDoc: setLastDoc);
   }
   
   @override
-  Future<List<SectionModel>> valuesListWithDetails({String orderBy, bool descending }) async {
-    return await reference.valuesListWithDetails();
+  Future<List<SectionModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc}) async {
+    return await reference.valuesListWithDetails(currentMember: currentMember, orderBy: orderBy, descending: descending, startAfter: startAfter, limit: limit, setLastDoc: setLastDoc);
   }
 
   void flush() {
@@ -96,13 +97,13 @@ class SectionCache implements SectionRepository {
   }
 
   @override
-  StreamSubscription<List<SectionModel>> listen(trigger, { String orderBy, bool descending }) {
-    return reference.listen(trigger, orderBy: orderBy, descending: descending);
+  StreamSubscription<List<SectionModel>> listen(trigger, {String currentMember, String orderBy, bool descending}) {
+    return reference.listen(trigger, currentMember: currentMember, orderBy: orderBy, descending: descending);
   }
 
   @override
-  StreamSubscription<List<SectionModel>> listenWithDetails(trigger, {String orderBy, bool descending }) {
-    return reference.listenWithDetails(trigger);
+  StreamSubscription<List<SectionModel>> listenWithDetails(trigger, {String currentMember, String orderBy, bool descending}) {
+    return reference.listenWithDetails(trigger, currentMember: currentMember, orderBy: orderBy, descending: descending);
   }
 
 

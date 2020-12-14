@@ -13,8 +13,11 @@
 
 */
 
-import 'dart:async';
 import 'package:eliud_pkg_fundamentals/model/divider_model.dart';
+
+import 'dart:async';
+import 'package:eliud_core/tools/firestore_tools.dart';
+import 'package:eliud_core/tools/common_tools.dart';
 
 typedef DividerModelTrigger(List<DividerModel> list);
 
@@ -23,11 +26,14 @@ abstract class DividerRepository {
   Future<void> delete(DividerModel value);
   Future<DividerModel> get(String id);
   Future<DividerModel> update(DividerModel value);
-  Stream<List<DividerModel>> values({String orderBy, bool descending });
-  Stream<List<DividerModel>> valuesWithDetails({String orderBy, bool descending });  Future<List<DividerModel>> valuesList({String orderBy, bool descending });
-  Future<List<DividerModel>> valuesListWithDetails({String orderBy, bool descending });
-  StreamSubscription<List<DividerModel>> listen(DividerModelTrigger trigger, { String orderBy, bool descending });
-  StreamSubscription<List<DividerModel>> listenWithDetails(DividerModelTrigger trigger, { String orderBy, bool descending });
+
+  Stream<List<DividerModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+  Stream<List<DividerModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+  Future<List<DividerModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+  Future<List<DividerModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+
+  StreamSubscription<List<DividerModel>> listen(DividerModelTrigger trigger, {String currentMember, String orderBy, bool descending});
+  StreamSubscription<List<DividerModel>> listenWithDetails(DividerModelTrigger trigger, {String currentMember, String orderBy, bool descending});
   void flush();
 
   Future<void> deleteAll();

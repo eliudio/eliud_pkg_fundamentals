@@ -33,12 +33,12 @@ class GridListBloc extends Bloc<GridListEvent, GridListState> {
 
   Stream<GridListState> _mapLoadGridListToState({ String orderBy, bool descending }) async* {
     _gridsListSubscription?.cancel();
-    _gridsListSubscription = _gridRepository.listen( (list) => add(GridListUpdated(value: list)), orderBy: orderBy, descending: descending);
+    _gridsListSubscription = _gridRepository.listen((list) => add(GridListUpdated(value: list)), orderBy: orderBy, descending: descending, );
   }
 
   Stream<GridListState> _mapLoadGridListWithDetailsToState() async* {
     _gridsListSubscription?.cancel();
-    _gridsListSubscription = _gridRepository.listenWithDetails( (list) => add(GridListUpdated(value: list)));
+    _gridsListSubscription = _gridRepository.listenWithDetails((list) => add(GridListUpdated(value: list)), );
   }
 
   Stream<GridListState> _mapAddGridListToState(AddGridList event) async* {

@@ -13,8 +13,11 @@
 
 */
 
-import 'dart:async';
 import 'package:eliud_pkg_fundamentals/model/presentation_model.dart';
+
+import 'dart:async';
+import 'package:eliud_core/tools/firestore_tools.dart';
+import 'package:eliud_core/tools/common_tools.dart';
 
 typedef PresentationModelTrigger(List<PresentationModel> list);
 
@@ -23,11 +26,14 @@ abstract class PresentationRepository {
   Future<void> delete(PresentationModel value);
   Future<PresentationModel> get(String id);
   Future<PresentationModel> update(PresentationModel value);
-  Stream<List<PresentationModel>> values({String orderBy, bool descending });
-  Stream<List<PresentationModel>> valuesWithDetails({String orderBy, bool descending });  Future<List<PresentationModel>> valuesList({String orderBy, bool descending });
-  Future<List<PresentationModel>> valuesListWithDetails({String orderBy, bool descending });
-  StreamSubscription<List<PresentationModel>> listen(PresentationModelTrigger trigger, { String orderBy, bool descending });
-  StreamSubscription<List<PresentationModel>> listenWithDetails(PresentationModelTrigger trigger, { String orderBy, bool descending });
+
+  Stream<List<PresentationModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+  Stream<List<PresentationModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+  Future<List<PresentationModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+  Future<List<PresentationModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+
+  StreamSubscription<List<PresentationModel>> listen(PresentationModelTrigger trigger, {String currentMember, String orderBy, bool descending});
+  StreamSubscription<List<PresentationModel>> listenWithDetails(PresentationModelTrigger trigger, {String currentMember, String orderBy, bool descending});
   void flush();
 
   Future<void> deleteAll();

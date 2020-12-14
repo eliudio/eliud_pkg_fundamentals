@@ -13,8 +13,6 @@
 
 */
 
-import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_pkg_fundamentals/model/play_store_repository.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
@@ -29,6 +27,11 @@ import 'package:eliud_core/model/entity_export.dart';
 import 'package:eliud_core/tools/action_entity.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
+
+import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eliud_core/tools/firestore_tools.dart';
+import 'package:eliud_core/tools/common_tools.dart';
 
 class PlayStoreFirestore implements PlayStoreRepository {
   Future<PlayStoreModel> add(PlayStoreModel value) {
@@ -59,7 +62,7 @@ class PlayStoreFirestore implements PlayStoreRepository {
     });
   }
 
-  StreamSubscription<List<PlayStoreModel>> listen(PlayStoreModelTrigger trigger, { String orderBy, bool descending }) {
+  StreamSubscription<List<PlayStoreModel>> listen(PlayStoreModelTrigger trigger, {String currentMember, String orderBy, bool descending}) {
     Stream<List<PlayStoreModel>> stream;
     if (orderBy == null) {
        stream = PlayStoreCollection.snapshots().map((data) {
@@ -84,7 +87,7 @@ class PlayStoreFirestore implements PlayStoreRepository {
     });
   }
 
-  StreamSubscription<List<PlayStoreModel>> listenWithDetails(PlayStoreModelTrigger trigger, { String orderBy, bool descending }) {
+  StreamSubscription<List<PlayStoreModel>> listenWithDetails(PlayStoreModelTrigger trigger, {String currentMember, String orderBy, bool descending}) {
     Stream<List<PlayStoreModel>> stream;
     if (orderBy == null) {
       stream = PlayStoreCollection.snapshots()
@@ -104,60 +107,53 @@ class PlayStoreFirestore implements PlayStoreRepository {
   }
 
 
-  Stream<List<PlayStoreModel>> values({ String orderBy, bool descending }) {
-    if (orderBy == null) {
-      return PlayStoreCollection.snapshots().map((snapshot) {
-        return snapshot.documents
-              .map((doc) => _populateDoc(doc)).toList();
-      });
-    } else {
-      return PlayStoreCollection.orderBy(orderBy, descending: descending).snapshots().map((snapshot) {
-        return snapshot.documents
-              .map((doc) => _populateDoc(doc)).toList();
-      });
-    }
+  Stream<List<PlayStoreModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) {
+    DocumentSnapshot lastDoc;
+    Stream<List<PlayStoreModel>> _values = getQuery(PlayStoreCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit).snapshots().map((snapshot) {
+      return snapshot.documents.map((doc) {
+        lastDoc = doc;
+        return _populateDoc(doc);
+      }).toList();});
+    if ((setLastDoc != null) && (lastDoc != null)) setLastDoc(lastDoc);
+    return _values;
   }
 
-  Stream<List<PlayStoreModel>> valuesWithDetails({ String orderBy, bool descending }) {
-    if (orderBy == null) {
-      return PlayStoreCollection.snapshots().asyncMap((snapshot) {
-        return Future.wait(snapshot.documents
-            .map((doc) => _populateDocPlus(doc)).toList());
-      });
-    } else {
-      return PlayStoreCollection.orderBy(orderBy, descending: descending).snapshots().asyncMap((snapshot) {
-        return Future.wait(snapshot.documents
-            .map((doc) => _populateDocPlus(doc)).toList());
-      });
-    }
+  Stream<List<PlayStoreModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) {
+    DocumentSnapshot lastDoc;
+    Stream<List<PlayStoreModel>> _values = getQuery(PlayStoreCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit).snapshots().asyncMap((snapshot) {
+      return Future.wait(snapshot.documents.map((doc) {
+        lastDoc = doc;
+        return _populateDocPlus(doc);
+      }).toList());
+    });
+    if ((setLastDoc != null) && (lastDoc != null)) setLastDoc(lastDoc);
+    return _values;
   }
 
-  Future<List<PlayStoreModel>> valuesList({ String orderBy, bool descending }) async {
-    if (orderBy == null) {
-      return await PlayStoreCollection.getDocuments().then((value) {
-        var list = value.documents;
-        return list.map((doc) => _populateDoc(doc)).toList();
-      });
-    } else {
-      return await PlayStoreCollection.orderBy(orderBy, descending: descending).getDocuments().then((value) {
-        var list = value.documents;
-        return list.map((doc) => _populateDoc(doc)).toList();
-      });
-    }
+  Future<List<PlayStoreModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) async {
+    DocumentSnapshot lastDoc;
+    List<PlayStoreModel> _values = await getQuery(PlayStoreCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit).getDocuments().then((value) {
+      var list = value.documents;
+      return list.map((doc) { 
+        lastDoc = doc;
+        return _populateDoc(doc);
+      }).toList();
+    });
+    if ((setLastDoc != null) && (lastDoc != null)) setLastDoc(lastDoc);
+    return _values;
   }
 
-  Future<List<PlayStoreModel>> valuesListWithDetails({ String orderBy, bool descending }) async {
-    if (orderBy == null) {
-      return await PlayStoreCollection.getDocuments().then((value) {
-        var list = value.documents;
-        return Future.wait(list.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    } else {
-      return await PlayStoreCollection.orderBy(orderBy, descending: descending).getDocuments().then((value) {
-        var list = value.documents;
-        return Future.wait(list.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    }
+  Future<List<PlayStoreModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) async {
+    DocumentSnapshot lastDoc;
+    List<PlayStoreModel> _values = await getQuery(PlayStoreCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit).getDocuments().then((value) {
+      var list = value.documents;
+      return Future.wait(list.map((doc) {
+        lastDoc = doc;
+        return _populateDocPlus(doc);
+      }).toList());
+    });
+    if ((setLastDoc != null) && (lastDoc != null)) setLastDoc(lastDoc);
+    return _values;
   }
 
   void flush() {}
@@ -166,7 +162,8 @@ class PlayStoreFirestore implements PlayStoreRepository {
     return PlayStoreCollection.getDocuments().then((snapshot) {
       for (DocumentSnapshot ds in snapshot.documents){
         ds.reference.delete();
-      }});
+      }
+    });
   }
 
 

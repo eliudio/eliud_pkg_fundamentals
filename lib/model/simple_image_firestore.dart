@@ -13,8 +13,6 @@
 
 */
 
-import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_repository.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
@@ -29,6 +27,11 @@ import 'package:eliud_core/model/entity_export.dart';
 import 'package:eliud_core/tools/action_entity.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
+
+import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eliud_core/tools/firestore_tools.dart';
+import 'package:eliud_core/tools/common_tools.dart';
 
 class SimpleImageFirestore implements SimpleImageRepository {
   Future<SimpleImageModel> add(SimpleImageModel value) {
@@ -59,7 +62,7 @@ class SimpleImageFirestore implements SimpleImageRepository {
     });
   }
 
-  StreamSubscription<List<SimpleImageModel>> listen(SimpleImageModelTrigger trigger, { String orderBy, bool descending }) {
+  StreamSubscription<List<SimpleImageModel>> listen(SimpleImageModelTrigger trigger, {String currentMember, String orderBy, bool descending}) {
     Stream<List<SimpleImageModel>> stream;
     if (orderBy == null) {
        stream = SimpleImageCollection.snapshots().map((data) {
@@ -84,7 +87,7 @@ class SimpleImageFirestore implements SimpleImageRepository {
     });
   }
 
-  StreamSubscription<List<SimpleImageModel>> listenWithDetails(SimpleImageModelTrigger trigger, { String orderBy, bool descending }) {
+  StreamSubscription<List<SimpleImageModel>> listenWithDetails(SimpleImageModelTrigger trigger, {String currentMember, String orderBy, bool descending}) {
     Stream<List<SimpleImageModel>> stream;
     if (orderBy == null) {
       stream = SimpleImageCollection.snapshots()
@@ -104,60 +107,53 @@ class SimpleImageFirestore implements SimpleImageRepository {
   }
 
 
-  Stream<List<SimpleImageModel>> values({ String orderBy, bool descending }) {
-    if (orderBy == null) {
-      return SimpleImageCollection.snapshots().map((snapshot) {
-        return snapshot.documents
-              .map((doc) => _populateDoc(doc)).toList();
-      });
-    } else {
-      return SimpleImageCollection.orderBy(orderBy, descending: descending).snapshots().map((snapshot) {
-        return snapshot.documents
-              .map((doc) => _populateDoc(doc)).toList();
-      });
-    }
+  Stream<List<SimpleImageModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) {
+    DocumentSnapshot lastDoc;
+    Stream<List<SimpleImageModel>> _values = getQuery(SimpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit).snapshots().map((snapshot) {
+      return snapshot.documents.map((doc) {
+        lastDoc = doc;
+        return _populateDoc(doc);
+      }).toList();});
+    if ((setLastDoc != null) && (lastDoc != null)) setLastDoc(lastDoc);
+    return _values;
   }
 
-  Stream<List<SimpleImageModel>> valuesWithDetails({ String orderBy, bool descending }) {
-    if (orderBy == null) {
-      return SimpleImageCollection.snapshots().asyncMap((snapshot) {
-        return Future.wait(snapshot.documents
-            .map((doc) => _populateDocPlus(doc)).toList());
-      });
-    } else {
-      return SimpleImageCollection.orderBy(orderBy, descending: descending).snapshots().asyncMap((snapshot) {
-        return Future.wait(snapshot.documents
-            .map((doc) => _populateDocPlus(doc)).toList());
-      });
-    }
+  Stream<List<SimpleImageModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) {
+    DocumentSnapshot lastDoc;
+    Stream<List<SimpleImageModel>> _values = getQuery(SimpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit).snapshots().asyncMap((snapshot) {
+      return Future.wait(snapshot.documents.map((doc) {
+        lastDoc = doc;
+        return _populateDocPlus(doc);
+      }).toList());
+    });
+    if ((setLastDoc != null) && (lastDoc != null)) setLastDoc(lastDoc);
+    return _values;
   }
 
-  Future<List<SimpleImageModel>> valuesList({ String orderBy, bool descending }) async {
-    if (orderBy == null) {
-      return await SimpleImageCollection.getDocuments().then((value) {
-        var list = value.documents;
-        return list.map((doc) => _populateDoc(doc)).toList();
-      });
-    } else {
-      return await SimpleImageCollection.orderBy(orderBy, descending: descending).getDocuments().then((value) {
-        var list = value.documents;
-        return list.map((doc) => _populateDoc(doc)).toList();
-      });
-    }
+  Future<List<SimpleImageModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) async {
+    DocumentSnapshot lastDoc;
+    List<SimpleImageModel> _values = await getQuery(SimpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit).getDocuments().then((value) {
+      var list = value.documents;
+      return list.map((doc) { 
+        lastDoc = doc;
+        return _populateDoc(doc);
+      }).toList();
+    });
+    if ((setLastDoc != null) && (lastDoc != null)) setLastDoc(lastDoc);
+    return _values;
   }
 
-  Future<List<SimpleImageModel>> valuesListWithDetails({ String orderBy, bool descending }) async {
-    if (orderBy == null) {
-      return await SimpleImageCollection.getDocuments().then((value) {
-        var list = value.documents;
-        return Future.wait(list.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    } else {
-      return await SimpleImageCollection.orderBy(orderBy, descending: descending).getDocuments().then((value) {
-        var list = value.documents;
-        return Future.wait(list.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    }
+  Future<List<SimpleImageModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) async {
+    DocumentSnapshot lastDoc;
+    List<SimpleImageModel> _values = await getQuery(SimpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit).getDocuments().then((value) {
+      var list = value.documents;
+      return Future.wait(list.map((doc) {
+        lastDoc = doc;
+        return _populateDocPlus(doc);
+      }).toList());
+    });
+    if ((setLastDoc != null) && (lastDoc != null)) setLastDoc(lastDoc);
+    return _values;
   }
 
   void flush() {}
@@ -166,7 +162,8 @@ class SimpleImageFirestore implements SimpleImageRepository {
     return SimpleImageCollection.getDocuments().then((snapshot) {
       for (DocumentSnapshot ds in snapshot.documents){
         ds.reference.delete();
-      }});
+      }
+    });
   }
 
 

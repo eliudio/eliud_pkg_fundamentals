@@ -13,8 +13,11 @@
 
 */
 
-import 'dart:async';
 import 'package:eliud_pkg_fundamentals/model/tutorial_model.dart';
+
+import 'dart:async';
+import 'package:eliud_core/tools/firestore_tools.dart';
+import 'package:eliud_core/tools/common_tools.dart';
 
 typedef TutorialModelTrigger(List<TutorialModel> list);
 
@@ -23,11 +26,14 @@ abstract class TutorialRepository {
   Future<void> delete(TutorialModel value);
   Future<TutorialModel> get(String id);
   Future<TutorialModel> update(TutorialModel value);
-  Stream<List<TutorialModel>> values({String orderBy, bool descending });
-  Stream<List<TutorialModel>> valuesWithDetails({String orderBy, bool descending });  Future<List<TutorialModel>> valuesList({String orderBy, bool descending });
-  Future<List<TutorialModel>> valuesListWithDetails({String orderBy, bool descending });
-  StreamSubscription<List<TutorialModel>> listen(TutorialModelTrigger trigger, { String orderBy, bool descending });
-  StreamSubscription<List<TutorialModel>> listenWithDetails(TutorialModelTrigger trigger, { String orderBy, bool descending });
+
+  Stream<List<TutorialModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+  Stream<List<TutorialModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+  Future<List<TutorialModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+  Future<List<TutorialModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+
+  StreamSubscription<List<TutorialModel>> listen(TutorialModelTrigger trigger, {String currentMember, String orderBy, bool descending});
+  StreamSubscription<List<TutorialModel>> listenWithDetails(TutorialModelTrigger trigger, {String currentMember, String orderBy, bool descending});
   void flush();
 
   Future<void> deleteAll();

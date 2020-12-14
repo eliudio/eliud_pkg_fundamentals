@@ -13,9 +13,6 @@
 
 */
 
-import 'dart:async';
-import 'package:firebase/firebase.dart';
-import 'package:firebase/firestore.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_repository.dart';
 
 
@@ -31,6 +28,13 @@ import 'package:eliud_core/model/entity_export.dart';
 import 'package:eliud_core/tools/action_entity.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
+
+
+import 'dart:async';
+import 'package:firebase/firebase.dart';
+import 'package:firebase/firestore.dart';
+import 'package:eliud_core/tools/js_firestore_tools.dart';
+import 'package:eliud_core/tools/common_tools.dart';
 
 class SimpleImageJsFirestore implements SimpleImageRepository {
   Future<SimpleImageModel> add(SimpleImageModel value) {
@@ -68,7 +72,7 @@ class SimpleImageJsFirestore implements SimpleImageRepository {
   }
 
   @override
-  StreamSubscription<List<SimpleImageModel>> listen(SimpleImageModelTrigger trigger, {String orderBy, bool descending }) {
+  StreamSubscription<List<SimpleImageModel>> listen(SimpleImageModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) {
     var stream;
     if (orderBy == null) {
       stream = getCollection().onSnapshot
@@ -94,7 +98,7 @@ class SimpleImageJsFirestore implements SimpleImageRepository {
     });
   }
 
-  StreamSubscription<List<SimpleImageModel>> listenWithDetails(SimpleImageModelTrigger trigger, {String orderBy, bool descending }) {
+  StreamSubscription<List<SimpleImageModel>> listenWithDetails(SimpleImageModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) {
     var stream;
     if (orderBy == null) {
       // If we use simpleImageCollection here, then the second subscription fails
@@ -114,54 +118,59 @@ class SimpleImageJsFirestore implements SimpleImageRepository {
     });
   }
 
-  Stream<List<SimpleImageModel>> values({String orderBy, bool descending }) {
-    if (orderBy == null) {
-      return simpleImageCollection.onSnapshot
-          .map((data) => data.docs.map((doc) => _populateDoc(doc)).toList());
-    } else {
-      return simpleImageCollection.orderBy(orderBy, descending ? 'desc': 'asc').onSnapshot
-          .map((data) => data.docs.map((doc) => _populateDoc(doc)).toList());
-    }
+  Stream<List<SimpleImageModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) {
+    DocumentSnapshot lastDoc;
+    Stream<List<SimpleImageModel>> _values = getQuery(simpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit)
+      .onSnapshot
+      .map((data) { 
+        return data.docs.map((doc) {
+          lastDoc = doc;
+        return _populateDoc(doc);
+      }).toList();});
+    if ((setLastDoc != null) && (lastDoc != null)) setLastDoc(lastDoc);
+    return _values;
   }
 
-  Stream<List<SimpleImageModel>> valuesWithDetails({String orderBy, bool descending }) {
-    if (orderBy == null) {
-      return simpleImageCollection.onSnapshot
-          .asyncMap((data) => Future.wait(data.docs.map((doc) => _populateDocPlus(doc)).toList()));
-    } else {
-      return simpleImageCollection.orderBy(orderBy, descending ? 'desc': 'asc').onSnapshot
-          .asyncMap((data) => Future.wait(data.docs.map((doc) => _populateDocPlus(doc)).toList()));
-    }
-  }
-
-  @override
-  Future<List<SimpleImageModel>> valuesList({String orderBy, bool descending }) {
-    if (orderBy == null) {
-      return simpleImageCollection.get().then((value) {
-        var list = value.docs;
-        return list.map((doc) => _populateDoc(doc)).toList();
-      });
-    } else {
-      return simpleImageCollection.orderBy(orderBy, descending ? 'desc': 'asc').get().then((value) {
-        var list = value.docs;
-        return list.map((doc) => _populateDoc(doc)).toList();
-      });
-    }
+  Stream<List<SimpleImageModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) {
+    DocumentSnapshot lastDoc;
+    Stream<List<SimpleImageModel>> _values = getQuery(simpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit)
+      .onSnapshot
+      .asyncMap((data) {
+        return Future.wait(data.docs.map((doc) { 
+          lastDoc = doc;
+          return _populateDocPlus(doc);
+        }).toList());
+    });
+    if ((setLastDoc != null) && (lastDoc != null)) setLastDoc(lastDoc);
+    return _values;
   }
 
   @override
-  Future<List<SimpleImageModel>> valuesListWithDetails({String orderBy, bool descending }) {
-    if (orderBy == null) {
-      return simpleImageCollection.get().then((value) {
-        var list = value.docs;
-        return Future.wait(list.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    } else {
-      return simpleImageCollection.orderBy(orderBy, descending ? 'desc': 'asc').get().then((value) {
-        var list = value.docs;
-        return Future.wait(list.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    }
+  Future<List<SimpleImageModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) async {
+    DocumentSnapshot lastDoc;
+    List<SimpleImageModel> _values = await getQuery(simpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit).get().then((value) {
+      var list = value.docs;
+      return list.map((doc) { 
+        lastDoc = doc;
+        return _populateDoc(doc);
+      }).toList();
+    });
+    if ((setLastDoc != null) && (lastDoc != null)) setLastDoc(lastDoc);
+    return _values;
+  }
+
+  @override
+  Future<List<SimpleImageModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) async {
+    DocumentSnapshot lastDoc;
+    List<SimpleImageModel> _values = await getQuery(simpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit).get().then((value) {
+      var list = value.docs;
+      return Future.wait(list.map((doc) {  
+        lastDoc = doc;
+        return _populateDocPlus(doc);
+      }).toList());
+    });
+    if ((setLastDoc != null) && (lastDoc != null)) setLastDoc(lastDoc);
+    return _values;
   }
 
   void flush() {

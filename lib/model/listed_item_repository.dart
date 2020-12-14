@@ -13,8 +13,11 @@
 
 */
 
-import 'dart:async';
 import 'package:eliud_pkg_fundamentals/model/listed_item_model.dart';
+
+import 'dart:async';
+import 'package:eliud_core/tools/firestore_tools.dart';
+import 'package:eliud_core/tools/common_tools.dart';
 
 typedef ListedItemModelTrigger(List<ListedItemModel> list);
 
@@ -23,11 +26,14 @@ abstract class ListedItemRepository {
   Future<void> delete(ListedItemModel value);
   Future<ListedItemModel> get(String id);
   Future<ListedItemModel> update(ListedItemModel value);
-  Stream<List<ListedItemModel>> values({String orderBy, bool descending });
-  Stream<List<ListedItemModel>> valuesWithDetails({String orderBy, bool descending });  Future<List<ListedItemModel>> valuesList({String orderBy, bool descending });
-  Future<List<ListedItemModel>> valuesListWithDetails({String orderBy, bool descending });
-  StreamSubscription<List<ListedItemModel>> listen(ListedItemModelTrigger trigger, { String orderBy, bool descending });
-  StreamSubscription<List<ListedItemModel>> listenWithDetails(ListedItemModelTrigger trigger, { String orderBy, bool descending });
+
+  Stream<List<ListedItemModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+  Stream<List<ListedItemModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+  Future<List<ListedItemModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+  Future<List<ListedItemModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+
+  StreamSubscription<List<ListedItemModel>> listen(ListedItemModelTrigger trigger, {String currentMember, String orderBy, bool descending});
+  StreamSubscription<List<ListedItemModel>> listenWithDetails(ListedItemModelTrigger trigger, {String currentMember, String orderBy, bool descending});
   void flush();
 
   Future<void> deleteAll();

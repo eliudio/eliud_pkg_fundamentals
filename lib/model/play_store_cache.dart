@@ -14,6 +14,7 @@
 */
 
 import 'dart:async';
+import 'package:eliud_core/tools/common_tools.dart';
 import 'package:eliud_pkg_fundamentals/model/play_store_model.dart';
 import 'package:eliud_pkg_fundamentals/model/play_store_repository.dart';
 import 'package:eliud_core/model/repository_export.dart';
@@ -67,23 +68,23 @@ class PlayStoreCache implements PlayStoreRepository {
   }
 
   @override
-  Stream<List<PlayStoreModel>> values({String orderBy, bool descending }) {
-    return reference.values();
+  Stream<List<PlayStoreModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) {
+    return reference.values(currentMember: currentMember, orderBy: orderBy, descending: descending, startAfter: startAfter, limit: limit, setLastDoc: setLastDoc);
   }
 
   @override
-  Stream<List<PlayStoreModel>> valuesWithDetails({String orderBy, bool descending }) {
-    return reference.valuesWithDetails();
+  Stream<List<PlayStoreModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) {
+    return reference.valuesWithDetails(currentMember: currentMember, orderBy: orderBy, descending: descending, startAfter: startAfter, limit: limit, setLastDoc: setLastDoc);
   }
 
   @override
-  Future<List<PlayStoreModel>> valuesList({String orderBy, bool descending }) async {
-    return await reference.valuesList();
+  Future<List<PlayStoreModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) async {
+    return await reference.valuesList(currentMember: currentMember, orderBy: orderBy, descending: descending, startAfter: startAfter, limit: limit, setLastDoc: setLastDoc);
   }
   
   @override
-  Future<List<PlayStoreModel>> valuesListWithDetails({String orderBy, bool descending }) async {
-    return await reference.valuesListWithDetails();
+  Future<List<PlayStoreModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc}) async {
+    return await reference.valuesListWithDetails(currentMember: currentMember, orderBy: orderBy, descending: descending, startAfter: startAfter, limit: limit, setLastDoc: setLastDoc);
   }
 
   void flush() {
@@ -96,13 +97,13 @@ class PlayStoreCache implements PlayStoreRepository {
   }
 
   @override
-  StreamSubscription<List<PlayStoreModel>> listen(trigger, { String orderBy, bool descending }) {
-    return reference.listen(trigger, orderBy: orderBy, descending: descending);
+  StreamSubscription<List<PlayStoreModel>> listen(trigger, {String currentMember, String orderBy, bool descending}) {
+    return reference.listen(trigger, currentMember: currentMember, orderBy: orderBy, descending: descending);
   }
 
   @override
-  StreamSubscription<List<PlayStoreModel>> listenWithDetails(trigger, {String orderBy, bool descending }) {
-    return reference.listenWithDetails(trigger);
+  StreamSubscription<List<PlayStoreModel>> listenWithDetails(trigger, {String currentMember, String orderBy, bool descending}) {
+    return reference.listenWithDetails(trigger, currentMember: currentMember, orderBy: orderBy, descending: descending);
   }
 
 

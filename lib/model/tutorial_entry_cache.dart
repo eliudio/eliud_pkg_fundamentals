@@ -14,6 +14,7 @@
 */
 
 import 'dart:async';
+import 'package:eliud_core/tools/common_tools.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_entry_model.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_entry_repository.dart';
 import 'package:eliud_core/model/repository_export.dart';
@@ -67,23 +68,23 @@ class TutorialEntryCache implements TutorialEntryRepository {
   }
 
   @override
-  Stream<List<TutorialEntryModel>> values({String orderBy, bool descending }) {
-    return reference.values();
+  Stream<List<TutorialEntryModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) {
+    return reference.values(currentMember: currentMember, orderBy: orderBy, descending: descending, startAfter: startAfter, limit: limit, setLastDoc: setLastDoc);
   }
 
   @override
-  Stream<List<TutorialEntryModel>> valuesWithDetails({String orderBy, bool descending }) {
-    return reference.valuesWithDetails();
+  Stream<List<TutorialEntryModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) {
+    return reference.valuesWithDetails(currentMember: currentMember, orderBy: orderBy, descending: descending, startAfter: startAfter, limit: limit, setLastDoc: setLastDoc);
   }
 
   @override
-  Future<List<TutorialEntryModel>> valuesList({String orderBy, bool descending }) async {
-    return await reference.valuesList();
+  Future<List<TutorialEntryModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) async {
+    return await reference.valuesList(currentMember: currentMember, orderBy: orderBy, descending: descending, startAfter: startAfter, limit: limit, setLastDoc: setLastDoc);
   }
   
   @override
-  Future<List<TutorialEntryModel>> valuesListWithDetails({String orderBy, bool descending }) async {
-    return await reference.valuesListWithDetails();
+  Future<List<TutorialEntryModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc}) async {
+    return await reference.valuesListWithDetails(currentMember: currentMember, orderBy: orderBy, descending: descending, startAfter: startAfter, limit: limit, setLastDoc: setLastDoc);
   }
 
   void flush() {
@@ -96,13 +97,13 @@ class TutorialEntryCache implements TutorialEntryRepository {
   }
 
   @override
-  StreamSubscription<List<TutorialEntryModel>> listen(trigger, { String orderBy, bool descending }) {
-    return reference.listen(trigger, orderBy: orderBy, descending: descending);
+  StreamSubscription<List<TutorialEntryModel>> listen(trigger, {String currentMember, String orderBy, bool descending}) {
+    return reference.listen(trigger, currentMember: currentMember, orderBy: orderBy, descending: descending);
   }
 
   @override
-  StreamSubscription<List<TutorialEntryModel>> listenWithDetails(trigger, {String orderBy, bool descending }) {
-    return reference.listenWithDetails(trigger);
+  StreamSubscription<List<TutorialEntryModel>> listenWithDetails(trigger, {String currentMember, String orderBy, bool descending}) {
+    return reference.listenWithDetails(trigger, currentMember: currentMember, orderBy: orderBy, descending: descending);
   }
 
 

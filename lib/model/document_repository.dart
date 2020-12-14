@@ -13,8 +13,11 @@
 
 */
 
-import 'dart:async';
 import 'package:eliud_pkg_fundamentals/model/document_model.dart';
+
+import 'dart:async';
+import 'package:eliud_core/tools/firestore_tools.dart';
+import 'package:eliud_core/tools/common_tools.dart';
 
 typedef DocumentModelTrigger(List<DocumentModel> list);
 
@@ -23,11 +26,14 @@ abstract class DocumentRepository {
   Future<void> delete(DocumentModel value);
   Future<DocumentModel> get(String id);
   Future<DocumentModel> update(DocumentModel value);
-  Stream<List<DocumentModel>> values({String orderBy, bool descending });
-  Stream<List<DocumentModel>> valuesWithDetails({String orderBy, bool descending });  Future<List<DocumentModel>> valuesList({String orderBy, bool descending });
-  Future<List<DocumentModel>> valuesListWithDetails({String orderBy, bool descending });
-  StreamSubscription<List<DocumentModel>> listen(DocumentModelTrigger trigger, { String orderBy, bool descending });
-  StreamSubscription<List<DocumentModel>> listenWithDetails(DocumentModelTrigger trigger, { String orderBy, bool descending });
+
+  Stream<List<DocumentModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+  Stream<List<DocumentModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+  Future<List<DocumentModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+  Future<List<DocumentModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+
+  StreamSubscription<List<DocumentModel>> listen(DocumentModelTrigger trigger, {String currentMember, String orderBy, bool descending});
+  StreamSubscription<List<DocumentModel>> listenWithDetails(DocumentModelTrigger trigger, {String currentMember, String orderBy, bool descending});
   void flush();
 
   Future<void> deleteAll();

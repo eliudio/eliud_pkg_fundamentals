@@ -13,9 +13,6 @@
 
 */
 
-import 'dart:async';
-import 'package:firebase/firebase.dart';
-import 'package:firebase/firestore.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_repository.dart';
 
 
@@ -31,6 +28,13 @@ import 'package:eliud_core/model/entity_export.dart';
 import 'package:eliud_core/tools/action_entity.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
+
+
+import 'dart:async';
+import 'package:firebase/firebase.dart';
+import 'package:firebase/firestore.dart';
+import 'package:eliud_core/tools/js_firestore_tools.dart';
+import 'package:eliud_core/tools/common_tools.dart';
 
 class DividerJsFirestore implements DividerRepository {
   Future<DividerModel> add(DividerModel value) {
@@ -68,7 +72,7 @@ class DividerJsFirestore implements DividerRepository {
   }
 
   @override
-  StreamSubscription<List<DividerModel>> listen(DividerModelTrigger trigger, {String orderBy, bool descending }) {
+  StreamSubscription<List<DividerModel>> listen(DividerModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) {
     var stream;
     if (orderBy == null) {
       stream = getCollection().onSnapshot
@@ -94,7 +98,7 @@ class DividerJsFirestore implements DividerRepository {
     });
   }
 
-  StreamSubscription<List<DividerModel>> listenWithDetails(DividerModelTrigger trigger, {String orderBy, bool descending }) {
+  StreamSubscription<List<DividerModel>> listenWithDetails(DividerModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) {
     var stream;
     if (orderBy == null) {
       // If we use dividerCollection here, then the second subscription fails
@@ -114,54 +118,59 @@ class DividerJsFirestore implements DividerRepository {
     });
   }
 
-  Stream<List<DividerModel>> values({String orderBy, bool descending }) {
-    if (orderBy == null) {
-      return dividerCollection.onSnapshot
-          .map((data) => data.docs.map((doc) => _populateDoc(doc)).toList());
-    } else {
-      return dividerCollection.orderBy(orderBy, descending ? 'desc': 'asc').onSnapshot
-          .map((data) => data.docs.map((doc) => _populateDoc(doc)).toList());
-    }
+  Stream<List<DividerModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) {
+    DocumentSnapshot lastDoc;
+    Stream<List<DividerModel>> _values = getQuery(dividerCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit)
+      .onSnapshot
+      .map((data) { 
+        return data.docs.map((doc) {
+          lastDoc = doc;
+        return _populateDoc(doc);
+      }).toList();});
+    if ((setLastDoc != null) && (lastDoc != null)) setLastDoc(lastDoc);
+    return _values;
   }
 
-  Stream<List<DividerModel>> valuesWithDetails({String orderBy, bool descending }) {
-    if (orderBy == null) {
-      return dividerCollection.onSnapshot
-          .asyncMap((data) => Future.wait(data.docs.map((doc) => _populateDocPlus(doc)).toList()));
-    } else {
-      return dividerCollection.orderBy(orderBy, descending ? 'desc': 'asc').onSnapshot
-          .asyncMap((data) => Future.wait(data.docs.map((doc) => _populateDocPlus(doc)).toList()));
-    }
-  }
-
-  @override
-  Future<List<DividerModel>> valuesList({String orderBy, bool descending }) {
-    if (orderBy == null) {
-      return dividerCollection.get().then((value) {
-        var list = value.docs;
-        return list.map((doc) => _populateDoc(doc)).toList();
-      });
-    } else {
-      return dividerCollection.orderBy(orderBy, descending ? 'desc': 'asc').get().then((value) {
-        var list = value.docs;
-        return list.map((doc) => _populateDoc(doc)).toList();
-      });
-    }
+  Stream<List<DividerModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) {
+    DocumentSnapshot lastDoc;
+    Stream<List<DividerModel>> _values = getQuery(dividerCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit)
+      .onSnapshot
+      .asyncMap((data) {
+        return Future.wait(data.docs.map((doc) { 
+          lastDoc = doc;
+          return _populateDocPlus(doc);
+        }).toList());
+    });
+    if ((setLastDoc != null) && (lastDoc != null)) setLastDoc(lastDoc);
+    return _values;
   }
 
   @override
-  Future<List<DividerModel>> valuesListWithDetails({String orderBy, bool descending }) {
-    if (orderBy == null) {
-      return dividerCollection.get().then((value) {
-        var list = value.docs;
-        return Future.wait(list.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    } else {
-      return dividerCollection.orderBy(orderBy, descending ? 'desc': 'asc').get().then((value) {
-        var list = value.docs;
-        return Future.wait(list.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    }
+  Future<List<DividerModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) async {
+    DocumentSnapshot lastDoc;
+    List<DividerModel> _values = await getQuery(dividerCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit).get().then((value) {
+      var list = value.docs;
+      return list.map((doc) { 
+        lastDoc = doc;
+        return _populateDoc(doc);
+      }).toList();
+    });
+    if ((setLastDoc != null) && (lastDoc != null)) setLastDoc(lastDoc);
+    return _values;
+  }
+
+  @override
+  Future<List<DividerModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) async {
+    DocumentSnapshot lastDoc;
+    List<DividerModel> _values = await getQuery(dividerCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit).get().then((value) {
+      var list = value.docs;
+      return Future.wait(list.map((doc) {  
+        lastDoc = doc;
+        return _populateDocPlus(doc);
+      }).toList());
+    });
+    if ((setLastDoc != null) && (lastDoc != null)) setLastDoc(lastDoc);
+    return _values;
   }
 
   void flush() {

@@ -13,8 +13,11 @@
 
 */
 
-import 'dart:async';
 import 'package:eliud_pkg_fundamentals/model/link_model.dart';
+
+import 'dart:async';
+import 'package:eliud_core/tools/firestore_tools.dart';
+import 'package:eliud_core/tools/common_tools.dart';
 
 typedef LinkModelTrigger(List<LinkModel> list);
 
@@ -23,11 +26,14 @@ abstract class LinkRepository {
   Future<void> delete(LinkModel value);
   Future<LinkModel> get(String id);
   Future<LinkModel> update(LinkModel value);
-  Stream<List<LinkModel>> values({String orderBy, bool descending });
-  Stream<List<LinkModel>> valuesWithDetails({String orderBy, bool descending });  Future<List<LinkModel>> valuesList({String orderBy, bool descending });
-  Future<List<LinkModel>> valuesListWithDetails({String orderBy, bool descending });
-  StreamSubscription<List<LinkModel>> listen(LinkModelTrigger trigger, { String orderBy, bool descending });
-  StreamSubscription<List<LinkModel>> listenWithDetails(LinkModelTrigger trigger, { String orderBy, bool descending });
+
+  Stream<List<LinkModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+  Stream<List<LinkModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+  Future<List<LinkModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+  Future<List<LinkModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+
+  StreamSubscription<List<LinkModel>> listen(LinkModelTrigger trigger, {String currentMember, String orderBy, bool descending});
+  StreamSubscription<List<LinkModel>> listenWithDetails(LinkModelTrigger trigger, {String currentMember, String orderBy, bool descending});
   void flush();
 
   Future<void> deleteAll();

@@ -13,8 +13,11 @@
 
 */
 
-import 'dart:async';
 import 'package:eliud_pkg_fundamentals/model/tutorial_entry_model.dart';
+
+import 'dart:async';
+import 'package:eliud_core/tools/firestore_tools.dart';
+import 'package:eliud_core/tools/common_tools.dart';
 
 typedef TutorialEntryModelTrigger(List<TutorialEntryModel> list);
 
@@ -23,11 +26,14 @@ abstract class TutorialEntryRepository {
   Future<void> delete(TutorialEntryModel value);
   Future<TutorialEntryModel> get(String id);
   Future<TutorialEntryModel> update(TutorialEntryModel value);
-  Stream<List<TutorialEntryModel>> values({String orderBy, bool descending });
-  Stream<List<TutorialEntryModel>> valuesWithDetails({String orderBy, bool descending });  Future<List<TutorialEntryModel>> valuesList({String orderBy, bool descending });
-  Future<List<TutorialEntryModel>> valuesListWithDetails({String orderBy, bool descending });
-  StreamSubscription<List<TutorialEntryModel>> listen(TutorialEntryModelTrigger trigger, { String orderBy, bool descending });
-  StreamSubscription<List<TutorialEntryModel>> listenWithDetails(TutorialEntryModelTrigger trigger, { String orderBy, bool descending });
+
+  Stream<List<TutorialEntryModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+  Stream<List<TutorialEntryModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+  Future<List<TutorialEntryModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+  Future<List<TutorialEntryModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc});
+
+  StreamSubscription<List<TutorialEntryModel>> listen(TutorialEntryModelTrigger trigger, {String currentMember, String orderBy, bool descending});
+  StreamSubscription<List<TutorialEntryModel>> listenWithDetails(TutorialEntryModelTrigger trigger, {String currentMember, String orderBy, bool descending});
   void flush();
 
   Future<void> deleteAll();

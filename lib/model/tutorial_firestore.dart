@@ -13,8 +13,6 @@
 
 */
 
-import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_repository.dart';
 
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
@@ -25,6 +23,11 @@ import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 import 'package:eliud_core/tools/action_entity.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
+
+import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eliud_core/tools/firestore_tools.dart';
+import 'package:eliud_core/tools/common_tools.dart';
 
 class TutorialFirestore implements TutorialRepository {
   Future<TutorialModel> add(TutorialModel value) {
@@ -55,7 +58,7 @@ class TutorialFirestore implements TutorialRepository {
     });
   }
 
-  StreamSubscription<List<TutorialModel>> listen(TutorialModelTrigger trigger, { String orderBy, bool descending }) {
+  StreamSubscription<List<TutorialModel>> listen(TutorialModelTrigger trigger, {String currentMember, String orderBy, bool descending}) {
     Stream<List<TutorialModel>> stream;
     if (orderBy == null) {
        stream = TutorialCollection.snapshots().map((data) {
@@ -80,7 +83,7 @@ class TutorialFirestore implements TutorialRepository {
     });
   }
 
-  StreamSubscription<List<TutorialModel>> listenWithDetails(TutorialModelTrigger trigger, { String orderBy, bool descending }) {
+  StreamSubscription<List<TutorialModel>> listenWithDetails(TutorialModelTrigger trigger, {String currentMember, String orderBy, bool descending}) {
     Stream<List<TutorialModel>> stream;
     if (orderBy == null) {
       stream = TutorialCollection.snapshots()
@@ -100,60 +103,53 @@ class TutorialFirestore implements TutorialRepository {
   }
 
 
-  Stream<List<TutorialModel>> values({ String orderBy, bool descending }) {
-    if (orderBy == null) {
-      return TutorialCollection.snapshots().map((snapshot) {
-        return snapshot.documents
-              .map((doc) => _populateDoc(doc)).toList();
-      });
-    } else {
-      return TutorialCollection.orderBy(orderBy, descending: descending).snapshots().map((snapshot) {
-        return snapshot.documents
-              .map((doc) => _populateDoc(doc)).toList();
-      });
-    }
+  Stream<List<TutorialModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) {
+    DocumentSnapshot lastDoc;
+    Stream<List<TutorialModel>> _values = getQuery(TutorialCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit).snapshots().map((snapshot) {
+      return snapshot.documents.map((doc) {
+        lastDoc = doc;
+        return _populateDoc(doc);
+      }).toList();});
+    if ((setLastDoc != null) && (lastDoc != null)) setLastDoc(lastDoc);
+    return _values;
   }
 
-  Stream<List<TutorialModel>> valuesWithDetails({ String orderBy, bool descending }) {
-    if (orderBy == null) {
-      return TutorialCollection.snapshots().asyncMap((snapshot) {
-        return Future.wait(snapshot.documents
-            .map((doc) => _populateDocPlus(doc)).toList());
-      });
-    } else {
-      return TutorialCollection.orderBy(orderBy, descending: descending).snapshots().asyncMap((snapshot) {
-        return Future.wait(snapshot.documents
-            .map((doc) => _populateDocPlus(doc)).toList());
-      });
-    }
+  Stream<List<TutorialModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) {
+    DocumentSnapshot lastDoc;
+    Stream<List<TutorialModel>> _values = getQuery(TutorialCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit).snapshots().asyncMap((snapshot) {
+      return Future.wait(snapshot.documents.map((doc) {
+        lastDoc = doc;
+        return _populateDocPlus(doc);
+      }).toList());
+    });
+    if ((setLastDoc != null) && (lastDoc != null)) setLastDoc(lastDoc);
+    return _values;
   }
 
-  Future<List<TutorialModel>> valuesList({ String orderBy, bool descending }) async {
-    if (orderBy == null) {
-      return await TutorialCollection.getDocuments().then((value) {
-        var list = value.documents;
-        return list.map((doc) => _populateDoc(doc)).toList();
-      });
-    } else {
-      return await TutorialCollection.orderBy(orderBy, descending: descending).getDocuments().then((value) {
-        var list = value.documents;
-        return list.map((doc) => _populateDoc(doc)).toList();
-      });
-    }
+  Future<List<TutorialModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) async {
+    DocumentSnapshot lastDoc;
+    List<TutorialModel> _values = await getQuery(TutorialCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit).getDocuments().then((value) {
+      var list = value.documents;
+      return list.map((doc) { 
+        lastDoc = doc;
+        return _populateDoc(doc);
+      }).toList();
+    });
+    if ((setLastDoc != null) && (lastDoc != null)) setLastDoc(lastDoc);
+    return _values;
   }
 
-  Future<List<TutorialModel>> valuesListWithDetails({ String orderBy, bool descending }) async {
-    if (orderBy == null) {
-      return await TutorialCollection.getDocuments().then((value) {
-        var list = value.documents;
-        return Future.wait(list.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    } else {
-      return await TutorialCollection.orderBy(orderBy, descending: descending).getDocuments().then((value) {
-        var list = value.documents;
-        return Future.wait(list.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    }
+  Future<List<TutorialModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc }) async {
+    DocumentSnapshot lastDoc;
+    List<TutorialModel> _values = await getQuery(TutorialCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit).getDocuments().then((value) {
+      var list = value.documents;
+      return Future.wait(list.map((doc) {
+        lastDoc = doc;
+        return _populateDocPlus(doc);
+      }).toList());
+    });
+    if ((setLastDoc != null) && (lastDoc != null)) setLastDoc(lastDoc);
+    return _values;
   }
 
   void flush() {}
@@ -162,7 +158,8 @@ class TutorialFirestore implements TutorialRepository {
     return TutorialCollection.getDocuments().then((snapshot) {
       for (DocumentSnapshot ds in snapshot.documents){
         ds.reference.delete();
-      }});
+      }
+    });
   }
 
 
