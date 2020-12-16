@@ -41,14 +41,17 @@ import 'package:eliud_pkg_fundamentals/model/section_model.dart';
 
 import 'package:eliud_core/model/app_model.dart';
 
+
 import 'section_form.dart';
+
 class SectionListWidget extends StatefulWidget with HasFab {
   bool readOnly;
   String form;
+  String listItemWidget;
   SectionListWidgetState state;
   bool isEmbedded;
 
-  SectionListWidget({ Key key, this.readOnly, this.form, this.isEmbedded }): super(key: key);
+  SectionListWidget({ Key key, this.readOnly, this.form, this.listItemWidget, this.isEmbedded }): super(key: key);
 
   @override
   SectionListWidgetState createState() {
@@ -166,6 +169,7 @@ class SectionListWidgetState extends State<SectionListWidget> {
         itemCount: values.length,
         itemBuilder: (context, index) {
           final value = values[index];
+
           return SectionListItem(
             value: value,
             app: accessState.app,
@@ -207,6 +211,7 @@ class SectionListWidgetState extends State<SectionListWidget> {
       return null;
     }
   }
+  
   
 }
 

@@ -41,14 +41,17 @@ import 'package:eliud_pkg_fundamentals/model/link_model.dart';
 
 import 'package:eliud_core/model/app_model.dart';
 
+
 import 'link_form.dart';
+
 class LinkListWidget extends StatefulWidget with HasFab {
   bool readOnly;
   String form;
+  String listItemWidget;
   LinkListWidgetState state;
   bool isEmbedded;
 
-  LinkListWidget({ Key key, this.readOnly, this.form, this.isEmbedded }): super(key: key);
+  LinkListWidget({ Key key, this.readOnly, this.form, this.listItemWidget, this.isEmbedded }): super(key: key);
 
   @override
   LinkListWidgetState createState() {
@@ -166,6 +169,7 @@ class LinkListWidgetState extends State<LinkListWidget> {
         itemCount: values.length,
         itemBuilder: (context, index) {
           final value = values[index];
+
           return LinkListItem(
             value: value,
             app: accessState.app,
@@ -207,6 +211,7 @@ class LinkListWidgetState extends State<LinkListWidget> {
       return null;
     }
   }
+  
   
 }
 

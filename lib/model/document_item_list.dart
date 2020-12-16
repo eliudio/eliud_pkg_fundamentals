@@ -41,14 +41,17 @@ import 'package:eliud_pkg_fundamentals/model/document_item_model.dart';
 
 import 'package:eliud_core/model/app_model.dart';
 
+
 import 'document_item_form.dart';
+
 class DocumentItemListWidget extends StatefulWidget with HasFab {
   bool readOnly;
   String form;
+  String listItemWidget;
   DocumentItemListWidgetState state;
   bool isEmbedded;
 
-  DocumentItemListWidget({ Key key, this.readOnly, this.form, this.isEmbedded }): super(key: key);
+  DocumentItemListWidget({ Key key, this.readOnly, this.form, this.listItemWidget, this.isEmbedded }): super(key: key);
 
   @override
   DocumentItemListWidgetState createState() {
@@ -166,6 +169,7 @@ class DocumentItemListWidgetState extends State<DocumentItemListWidget> {
         itemCount: values.length,
         itemBuilder: (context, index) {
           final value = values[index];
+
           return DocumentItemListItem(
             value: value,
             app: accessState.app,
@@ -207,6 +211,7 @@ class DocumentItemListWidgetState extends State<DocumentItemListWidget> {
       return null;
     }
   }
+  
   
 }
 

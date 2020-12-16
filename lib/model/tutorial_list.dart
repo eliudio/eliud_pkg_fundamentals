@@ -41,14 +41,17 @@ import 'package:eliud_pkg_fundamentals/model/tutorial_model.dart';
 
 import 'package:eliud_core/model/app_model.dart';
 
+
 import 'tutorial_form.dart';
+
 class TutorialListWidget extends StatefulWidget with HasFab {
   bool readOnly;
   String form;
+  String listItemWidget;
   TutorialListWidgetState state;
   bool isEmbedded;
 
-  TutorialListWidget({ Key key, this.readOnly, this.form, this.isEmbedded }): super(key: key);
+  TutorialListWidget({ Key key, this.readOnly, this.form, this.listItemWidget, this.isEmbedded }): super(key: key);
 
   @override
   TutorialListWidgetState createState() {
@@ -166,6 +169,7 @@ class TutorialListWidgetState extends State<TutorialListWidget> {
         itemCount: values.length,
         itemBuilder: (context, index) {
           final value = values[index];
+
           return TutorialListItem(
             value: value,
             app: accessState.app,
@@ -207,6 +211,7 @@ class TutorialListWidgetState extends State<TutorialListWidget> {
       return null;
     }
   }
+  
   
 }
 

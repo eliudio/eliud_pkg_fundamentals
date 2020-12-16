@@ -41,14 +41,17 @@ import 'package:eliud_pkg_fundamentals/model/play_store_model.dart';
 
 import 'package:eliud_core/model/app_model.dart';
 
+
 import 'play_store_form.dart';
+
 class PlayStoreListWidget extends StatefulWidget with HasFab {
   bool readOnly;
   String form;
+  String listItemWidget;
   PlayStoreListWidgetState state;
   bool isEmbedded;
 
-  PlayStoreListWidget({ Key key, this.readOnly, this.form, this.isEmbedded }): super(key: key);
+  PlayStoreListWidget({ Key key, this.readOnly, this.form, this.listItemWidget, this.isEmbedded }): super(key: key);
 
   @override
   PlayStoreListWidgetState createState() {
@@ -166,6 +169,7 @@ class PlayStoreListWidgetState extends State<PlayStoreListWidget> {
         itemCount: values.length,
         itemBuilder: (context, index) {
           final value = values[index];
+
           return PlayStoreListItem(
             value: value,
             app: accessState.app,
@@ -207,6 +211,7 @@ class PlayStoreListWidgetState extends State<PlayStoreListWidget> {
       return null;
     }
   }
+  
   
 }
 

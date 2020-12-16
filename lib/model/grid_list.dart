@@ -41,14 +41,17 @@ import 'package:eliud_pkg_fundamentals/model/grid_model.dart';
 
 import 'package:eliud_core/model/app_model.dart';
 
+
 import 'grid_form.dart';
+
 class GridListWidget extends StatefulWidget with HasFab {
   bool readOnly;
   String form;
+  String listItemWidget;
   GridListWidgetState state;
   bool isEmbedded;
 
-  GridListWidget({ Key key, this.readOnly, this.form, this.isEmbedded }): super(key: key);
+  GridListWidget({ Key key, this.readOnly, this.form, this.listItemWidget, this.isEmbedded }): super(key: key);
 
   @override
   GridListWidgetState createState() {
@@ -166,6 +169,7 @@ class GridListWidgetState extends State<GridListWidget> {
         itemCount: values.length,
         itemBuilder: (context, index) {
           final value = values[index];
+
           return GridListItem(
             value: value,
             app: accessState.app,
@@ -207,6 +211,7 @@ class GridListWidgetState extends State<GridListWidget> {
       return null;
     }
   }
+  
   
 }
 
