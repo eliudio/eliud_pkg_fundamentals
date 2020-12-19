@@ -20,13 +20,17 @@ import 'package:meta/meta.dart';
 import 'package:eliud_pkg_fundamentals/model/link_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/link_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/link_list_state.dart';
+import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
 class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
   final LinkRepository _linkRepository;
   StreamSubscription _linksListSubscription;
+  final AccessBloc accessBloc;
 
-  LinkListBloc({ @required LinkRepository linkRepository })
+  LinkListBloc(this.accessBloc,{ @required LinkRepository linkRepository })
       : assert(linkRepository != null),
       _linkRepository = linkRepository,
       super(LinkListLoading());

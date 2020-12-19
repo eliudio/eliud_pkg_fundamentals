@@ -275,7 +275,7 @@ class _MyTutorialFormState extends State<MyTutorialForm> {
 
                 new Container(
                     height: (fullScreenHeight(context) / 2.5), 
-                    child: tutorialEntrysList(state.value.tutorialEntries, _onTutorialEntriesChanged)
+                    child: tutorialEntrysList(context, state.value.tutorialEntries, _onTutorialEntriesChanged)
                 )
           );
 

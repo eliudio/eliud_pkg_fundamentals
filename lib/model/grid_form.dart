@@ -250,7 +250,7 @@ class _MyGridFormState extends State<MyGridForm> {
 
                 new Container(
                     height: (fullScreenHeight(context) / 2.5), 
-                    child: bodyComponentsList(state.value.bodyComponents, _onBodyComponentsChanged)
+                    child: bodyComponentsList(context, state.value.bodyComponents, _onBodyComponentsChanged)
                 )
           );
 

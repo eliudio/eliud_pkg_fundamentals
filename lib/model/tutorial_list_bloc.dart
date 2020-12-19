@@ -20,13 +20,17 @@ import 'package:meta/meta.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_list_state.dart';
+import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
 class TutorialListBloc extends Bloc<TutorialListEvent, TutorialListState> {
   final TutorialRepository _tutorialRepository;
   StreamSubscription _tutorialsListSubscription;
+  final AccessBloc accessBloc;
 
-  TutorialListBloc({ @required TutorialRepository tutorialRepository })
+  TutorialListBloc(this.accessBloc,{ @required TutorialRepository tutorialRepository })
       : assert(tutorialRepository != null),
       _tutorialRepository = tutorialRepository,
       super(TutorialListLoading());

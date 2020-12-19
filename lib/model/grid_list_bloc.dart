@@ -20,13 +20,17 @@ import 'package:meta/meta.dart';
 import 'package:eliud_pkg_fundamentals/model/grid_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/grid_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/grid_list_state.dart';
+import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
 class GridListBloc extends Bloc<GridListEvent, GridListState> {
   final GridRepository _gridRepository;
   StreamSubscription _gridsListSubscription;
+  final AccessBloc accessBloc;
 
-  GridListBloc({ @required GridRepository gridRepository })
+  GridListBloc(this.accessBloc,{ @required GridRepository gridRepository })
       : assert(gridRepository != null),
       _gridRepository = gridRepository,
       super(GridListLoading());

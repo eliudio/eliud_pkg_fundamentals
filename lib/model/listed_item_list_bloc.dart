@@ -20,13 +20,17 @@ import 'package:meta/meta.dart';
 import 'package:eliud_pkg_fundamentals/model/listed_item_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/listed_item_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/listed_item_list_state.dart';
+import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
 class ListedItemListBloc extends Bloc<ListedItemListEvent, ListedItemListState> {
   final ListedItemRepository _listedItemRepository;
   StreamSubscription _listedItemsListSubscription;
+  final AccessBloc accessBloc;
 
-  ListedItemListBloc({ @required ListedItemRepository listedItemRepository })
+  ListedItemListBloc(this.accessBloc,{ @required ListedItemRepository listedItemRepository })
       : assert(listedItemRepository != null),
       _listedItemRepository = listedItemRepository,
       super(ListedItemListLoading());

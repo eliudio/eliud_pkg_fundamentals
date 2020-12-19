@@ -20,13 +20,17 @@ import 'package:meta/meta.dart';
 import 'package:eliud_pkg_fundamentals/model/section_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/section_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/section_list_state.dart';
+import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
 class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
   final SectionRepository _sectionRepository;
   StreamSubscription _sectionsListSubscription;
+  final AccessBloc accessBloc;
 
-  SectionListBloc({ @required SectionRepository sectionRepository })
+  SectionListBloc(this.accessBloc,{ @required SectionRepository sectionRepository })
       : assert(sectionRepository != null),
       _sectionRepository = sectionRepository,
       super(SectionListLoading());

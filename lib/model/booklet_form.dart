@@ -253,7 +253,7 @@ class _MyBookletFormState extends State<MyBookletForm> {
 
                 new Container(
                     height: (fullScreenHeight(context) / 2.5), 
-                    child: sectionsList(state.value.sections, _onSectionsChanged)
+                    child: sectionsList(context, state.value.sections, _onSectionsChanged)
                 )
           );
 

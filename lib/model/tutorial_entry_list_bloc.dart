@@ -20,13 +20,17 @@ import 'package:meta/meta.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_entry_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_entry_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_entry_list_state.dart';
+import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
 class TutorialEntryListBloc extends Bloc<TutorialEntryListEvent, TutorialEntryListState> {
   final TutorialEntryRepository _tutorialEntryRepository;
   StreamSubscription _tutorialEntrysListSubscription;
+  final AccessBloc accessBloc;
 
-  TutorialEntryListBloc({ @required TutorialEntryRepository tutorialEntryRepository })
+  TutorialEntryListBloc(this.accessBloc,{ @required TutorialEntryRepository tutorialEntryRepository })
       : assert(tutorialEntryRepository != null),
       _tutorialEntryRepository = tutorialEntryRepository,
       super(TutorialEntryListLoading());

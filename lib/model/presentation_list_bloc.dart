@@ -20,13 +20,17 @@ import 'package:meta/meta.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_list_state.dart';
+import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
 class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListState> {
   final PresentationRepository _presentationRepository;
   StreamSubscription _presentationsListSubscription;
+  final AccessBloc accessBloc;
 
-  PresentationListBloc({ @required PresentationRepository presentationRepository })
+  PresentationListBloc(this.accessBloc,{ @required PresentationRepository presentationRepository })
       : assert(presentationRepository != null),
       _presentationRepository = presentationRepository,
       super(PresentationListLoading());

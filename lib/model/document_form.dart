@@ -378,7 +378,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
 
                 new Container(
                     height: (fullScreenHeight(context) / 2.5), 
-                    child: documentItemsList(state.value.images, _onImagesChanged)
+                    child: documentItemsList(context, state.value.images, _onImagesChanged)
                 )
           );
 

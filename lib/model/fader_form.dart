@@ -239,7 +239,7 @@ class _MyFaderFormState extends State<MyFaderForm> {
 
                 new Container(
                     height: (fullScreenHeight(context) / 2.5), 
-                    child: listedItemsList(state.value.items, _onItemsChanged)
+                    child: listedItemsList(context, state.value.items, _onItemsChanged)
                 )
           );
 

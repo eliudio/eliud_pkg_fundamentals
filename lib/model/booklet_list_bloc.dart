@@ -20,13 +20,17 @@ import 'package:meta/meta.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_list_state.dart';
+import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
 class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
   final BookletRepository _bookletRepository;
   StreamSubscription _bookletsListSubscription;
+  final AccessBloc accessBloc;
 
-  BookletListBloc({ @required BookletRepository bookletRepository })
+  BookletListBloc(this.accessBloc,{ @required BookletRepository bookletRepository })
       : assert(bookletRepository != null),
       _bookletRepository = bookletRepository,
       super(BookletListLoading());

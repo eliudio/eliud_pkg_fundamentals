@@ -20,13 +20,17 @@ import 'package:meta/meta.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_list_state.dart';
+import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
 class FaderListBloc extends Bloc<FaderListEvent, FaderListState> {
   final FaderRepository _faderRepository;
   StreamSubscription _fadersListSubscription;
+  final AccessBloc accessBloc;
 
-  FaderListBloc({ @required FaderRepository faderRepository })
+  FaderListBloc(this.accessBloc,{ @required FaderRepository faderRepository })
       : assert(faderRepository != null),
       _faderRepository = faderRepository,
       super(FaderListLoading());

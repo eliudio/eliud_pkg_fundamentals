@@ -287,7 +287,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
 
                 new Container(
                     height: (fullScreenHeight(context) / 2.5), 
-                    child: bodyComponentsList(state.value.bodyComponents, _onBodyComponentsChanged)
+                    child: bodyComponentsList(context, state.value.bodyComponents, _onBodyComponentsChanged)
                 )
           );
 

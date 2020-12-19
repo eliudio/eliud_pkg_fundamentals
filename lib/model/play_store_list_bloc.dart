@@ -20,13 +20,17 @@ import 'package:meta/meta.dart';
 import 'package:eliud_pkg_fundamentals/model/play_store_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/play_store_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/play_store_list_state.dart';
+import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
 class PlayStoreListBloc extends Bloc<PlayStoreListEvent, PlayStoreListState> {
   final PlayStoreRepository _playStoreRepository;
   StreamSubscription _playStoresListSubscription;
+  final AccessBloc accessBloc;
 
-  PlayStoreListBloc({ @required PlayStoreRepository playStoreRepository })
+  PlayStoreListBloc(this.accessBloc,{ @required PlayStoreRepository playStoreRepository })
       : assert(playStoreRepository != null),
       _playStoreRepository = playStoreRepository,
       super(PlayStoreListLoading());

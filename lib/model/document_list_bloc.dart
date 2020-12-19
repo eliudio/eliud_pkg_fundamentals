@@ -20,13 +20,17 @@ import 'package:meta/meta.dart';
 import 'package:eliud_pkg_fundamentals/model/document_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/document_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/document_list_state.dart';
+import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
 class DocumentListBloc extends Bloc<DocumentListEvent, DocumentListState> {
   final DocumentRepository _documentRepository;
   StreamSubscription _documentsListSubscription;
+  final AccessBloc accessBloc;
 
-  DocumentListBloc({ @required DocumentRepository documentRepository })
+  DocumentListBloc(this.accessBloc,{ @required DocumentRepository documentRepository })
       : assert(documentRepository != null),
       _documentRepository = documentRepository,
       super(DocumentListLoading());

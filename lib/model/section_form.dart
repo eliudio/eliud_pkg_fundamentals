@@ -421,7 +421,7 @@ class _MySectionFormState extends State<MySectionForm> {
 
                 new Container(
                     height: (fullScreenHeight(context) / 2.5), 
-                    child: linksList(state.value.links, _onLinksChanged)
+                    child: linksList(context, state.value.links, _onLinksChanged)
                 )
           );
 

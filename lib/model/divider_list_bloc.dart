@@ -20,13 +20,17 @@ import 'package:meta/meta.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_list_state.dart';
+import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
 class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
   final DividerRepository _dividerRepository;
   StreamSubscription _dividersListSubscription;
+  final AccessBloc accessBloc;
 
-  DividerListBloc({ @required DividerRepository dividerRepository })
+  DividerListBloc(this.accessBloc,{ @required DividerRepository dividerRepository })
       : assert(dividerRepository != null),
       _dividerRepository = dividerRepository,
       super(DividerListLoading());
