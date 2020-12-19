@@ -16,6 +16,8 @@
 
 import 'package:eliud_core/tools/admin_app_base.dart';
 import 'package:eliud_core/tools/action_model.dart';
+import 'package:eliud_core/tools/common_tools.dart';
+import 'package:eliud_core/tools/common_tools.dart';
 
 import 'package:eliud_core/model/menu_def_model.dart';
 import 'package:eliud_core/model/page_model.dart';
@@ -55,7 +57,8 @@ class AdminApp extends AdminAppInstallerBase {
     components.add(BodyComponentModel(
       documentID: "internalWidget-booklets", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "booklets"));
     PageModel page = PageModel(
-        conditional: PageCondition.AdminOnly,
+        readCondition: ReadCondition.AsSpecifiedInPrivilegeLevelRequired,
+        privilegeLevelRequired: 99999,
         appId: appId,
         documentID: "eliud_pkg_fundamentals_booklets_page",
         title: "Booklets",
@@ -75,7 +78,8 @@ class AdminApp extends AdminAppInstallerBase {
     components.add(BodyComponentModel(
       documentID: "internalWidget-dividers", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "dividers"));
     PageModel page = PageModel(
-        conditional: PageCondition.AdminOnly,
+        readCondition: ReadCondition.AsSpecifiedInPrivilegeLevelRequired,
+        privilegeLevelRequired: 99999,
         appId: appId,
         documentID: "eliud_pkg_fundamentals_dividers_page",
         title: "Dividers",
@@ -95,7 +99,8 @@ class AdminApp extends AdminAppInstallerBase {
     components.add(BodyComponentModel(
       documentID: "internalWidget-documents", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "documents"));
     PageModel page = PageModel(
-        conditional: PageCondition.AdminOnly,
+        readCondition: ReadCondition.AsSpecifiedInPrivilegeLevelRequired,
+        privilegeLevelRequired: 99999,
         appId: appId,
         documentID: "eliud_pkg_fundamentals_documents_page",
         title: "Documents",
@@ -115,7 +120,8 @@ class AdminApp extends AdminAppInstallerBase {
     components.add(BodyComponentModel(
       documentID: "internalWidget-faders", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "faders"));
     PageModel page = PageModel(
-        conditional: PageCondition.AdminOnly,
+        readCondition: ReadCondition.AsSpecifiedInPrivilegeLevelRequired,
+        privilegeLevelRequired: 99999,
         appId: appId,
         documentID: "eliud_pkg_fundamentals_faders_page",
         title: "Faders",
@@ -135,7 +141,8 @@ class AdminApp extends AdminAppInstallerBase {
     components.add(BodyComponentModel(
       documentID: "internalWidget-grids", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "grids"));
     PageModel page = PageModel(
-        conditional: PageCondition.AdminOnly,
+        readCondition: ReadCondition.AsSpecifiedInPrivilegeLevelRequired,
+        privilegeLevelRequired: 99999,
         appId: appId,
         documentID: "eliud_pkg_fundamentals_grids_page",
         title: "Grids",
@@ -155,7 +162,8 @@ class AdminApp extends AdminAppInstallerBase {
     components.add(BodyComponentModel(
       documentID: "internalWidget-playStores", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "playStores"));
     PageModel page = PageModel(
-        conditional: PageCondition.AdminOnly,
+        readCondition: ReadCondition.AsSpecifiedInPrivilegeLevelRequired,
+        privilegeLevelRequired: 99999,
         appId: appId,
         documentID: "eliud_pkg_fundamentals_playstores_page",
         title: "PlayStores",
@@ -175,7 +183,8 @@ class AdminApp extends AdminAppInstallerBase {
     components.add(BodyComponentModel(
       documentID: "internalWidget-presentations", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "presentations"));
     PageModel page = PageModel(
-        conditional: PageCondition.AdminOnly,
+        readCondition: ReadCondition.AsSpecifiedInPrivilegeLevelRequired,
+        privilegeLevelRequired: 99999,
         appId: appId,
         documentID: "eliud_pkg_fundamentals_presentations_page",
         title: "Presentations",
@@ -195,7 +204,8 @@ class AdminApp extends AdminAppInstallerBase {
     components.add(BodyComponentModel(
       documentID: "internalWidget-simpleImages", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "simpleImages"));
     PageModel page = PageModel(
-        conditional: PageCondition.AdminOnly,
+        readCondition: ReadCondition.AsSpecifiedInPrivilegeLevelRequired,
+        privilegeLevelRequired: 99999,
         appId: appId,
         documentID: "eliud_pkg_fundamentals_simpleimages_page",
         title: "SimpleImages",
@@ -215,7 +225,8 @@ class AdminApp extends AdminAppInstallerBase {
     components.add(BodyComponentModel(
       documentID: "internalWidget-tutorials", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "tutorials"));
     PageModel page = PageModel(
-        conditional: PageCondition.AdminOnly,
+        readCondition: ReadCondition.AsSpecifiedInPrivilegeLevelRequired,
+        privilegeLevelRequired: 99999,
         appId: appId,
         documentID: "eliud_pkg_fundamentals_tutorials_page",
         title: "Tutorials",
