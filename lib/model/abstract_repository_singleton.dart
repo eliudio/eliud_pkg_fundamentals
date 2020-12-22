@@ -29,6 +29,7 @@ import '../model/tutorial_repository.dart';
 import '../model/tutorial_entry_repository.dart';
 import 'package:eliud_core/core/access/bloc/user_repository.dart';
 import 'package:eliud_core/tools/common_tools.dart';
+import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
 
 BookletRepository bookletRepository({ String appId }) => AbstractRepositorySingleton.singleton.bookletRepository(appId);
 DividerRepository dividerRepository({ String appId }) => AbstractRepositorySingleton.singleton.dividerRepository(appId);
@@ -54,14 +55,5 @@ abstract class AbstractRepositorySingleton {
   TutorialRepository tutorialRepository(String appId);
 
   void flush(String appId) {
-    bookletRepository(appId).flush();
-    dividerRepository(appId).flush();
-    documentRepository(appId).flush();
-    faderRepository(appId).flush();
-    gridRepository(appId).flush();
-    playStoreRepository(appId).flush();
-    presentationRepository(appId).flush();
-    simpleImageRepository(appId).flush();
-    tutorialRepository(appId).flush();
   }
 }

@@ -39,7 +39,7 @@ import 'package:eliud_core/tools/common_tools.dart';
 class PresentationJsFirestore implements PresentationRepository {
   Future<PresentationModel> add(PresentationModel value) {
     return presentationCollection.doc(value.documentID)
-        .set(value.toEntity(appId: appId).toDocument())
+        .set(value.toEntity().toDocument())
         .then((_) => value);
   }
 
@@ -49,7 +49,7 @@ class PresentationJsFirestore implements PresentationRepository {
 
   Future<PresentationModel> update(PresentationModel value) {
     return presentationCollection.doc(value.documentID)
-        .update(data: value.toEntity(appId: appId).toDocument())
+        .update(data: value.toEntity().toDocument())
         .then((_) => value);
   }
 
@@ -58,7 +58,7 @@ class PresentationJsFirestore implements PresentationRepository {
   }
 
   Future<PresentationModel> _populateDocPlus(DocumentSnapshot value) async {
-    return PresentationModel.fromEntityPlus(value.id, PresentationEntity.fromMap(value.data()), appId: appId);
+    return PresentationModel.fromEntityPlus(value.id, PresentationEntity.fromMap(value.data()), );
   }
 
   Future<PresentationModel> get(String id) {
@@ -120,7 +120,7 @@ class PresentationJsFirestore implements PresentationRepository {
 
   Stream<List<PresentationModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) {
     DocumentSnapshot lastDoc;
-    Stream<List<PresentationModel>> _values = getQuery(presentationCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId)
+    Stream<List<PresentationModel>> _values = getQuery(presentationCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, )
       .onSnapshot
       .map((data) { 
         return data.docs.map((doc) {
@@ -133,7 +133,7 @@ class PresentationJsFirestore implements PresentationRepository {
 
   Stream<List<PresentationModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) {
     DocumentSnapshot lastDoc;
-    Stream<List<PresentationModel>> _values = getQuery(presentationCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId)
+    Stream<List<PresentationModel>> _values = getQuery(presentationCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, )
       .onSnapshot
       .asyncMap((data) {
         return Future.wait(data.docs.map((doc) { 
@@ -148,7 +148,7 @@ class PresentationJsFirestore implements PresentationRepository {
   @override
   Future<List<PresentationModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) async {
     DocumentSnapshot lastDoc;
-    List<PresentationModel> _values = await getQuery(presentationCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId).get().then((value) {
+    List<PresentationModel> _values = await getQuery(presentationCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, ).get().then((value) {
       var list = value.docs;
       return list.map((doc) { 
         lastDoc = doc;
@@ -162,7 +162,7 @@ class PresentationJsFirestore implements PresentationRepository {
   @override
   Future<List<PresentationModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) async {
     DocumentSnapshot lastDoc;
-    List<PresentationModel> _values = await getQuery(presentationCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId).get().then((value) {
+    List<PresentationModel> _values = await getQuery(presentationCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, ).get().then((value) {
       var list = value.docs;
       return Future.wait(list.map((doc) {  
         lastDoc = doc;
@@ -180,11 +180,15 @@ class PresentationJsFirestore implements PresentationRepository {
     return presentationCollection.get().then((snapshot) => snapshot.docs
         .forEach((element) => presentationCollection.doc(element.id).delete()));
   }
-  CollectionReference getCollection() => firestore().collection('Presentation-$appId');
-
-  final String appId;
   
-  PresentationJsFirestore(this.appId) : presentationCollection = firestore().collection('Presentation-$appId');
+  dynamic getSubCollection(String documentId, String name) {
+    return presentationCollection.doc(documentId).collection(name);
+  }
+
+  CollectionReference getCollection() => presentationCollection;
+
+  PresentationJsFirestore(this.presentationCollection);
 
   final CollectionReference presentationCollection;
 }
+

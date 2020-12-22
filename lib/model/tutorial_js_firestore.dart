@@ -35,7 +35,7 @@ import 'package:eliud_core/tools/common_tools.dart';
 class TutorialJsFirestore implements TutorialRepository {
   Future<TutorialModel> add(TutorialModel value) {
     return tutorialCollection.doc(value.documentID)
-        .set(value.toEntity(appId: appId).toDocument())
+        .set(value.toEntity().toDocument())
         .then((_) => value);
   }
 
@@ -45,7 +45,7 @@ class TutorialJsFirestore implements TutorialRepository {
 
   Future<TutorialModel> update(TutorialModel value) {
     return tutorialCollection.doc(value.documentID)
-        .update(data: value.toEntity(appId: appId).toDocument())
+        .update(data: value.toEntity().toDocument())
         .then((_) => value);
   }
 
@@ -54,7 +54,7 @@ class TutorialJsFirestore implements TutorialRepository {
   }
 
   Future<TutorialModel> _populateDocPlus(DocumentSnapshot value) async {
-    return TutorialModel.fromEntityPlus(value.id, TutorialEntity.fromMap(value.data()), appId: appId);
+    return TutorialModel.fromEntityPlus(value.id, TutorialEntity.fromMap(value.data()), );
   }
 
   Future<TutorialModel> get(String id) {
@@ -116,7 +116,7 @@ class TutorialJsFirestore implements TutorialRepository {
 
   Stream<List<TutorialModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) {
     DocumentSnapshot lastDoc;
-    Stream<List<TutorialModel>> _values = getQuery(tutorialCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId)
+    Stream<List<TutorialModel>> _values = getQuery(tutorialCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, )
       .onSnapshot
       .map((data) { 
         return data.docs.map((doc) {
@@ -129,7 +129,7 @@ class TutorialJsFirestore implements TutorialRepository {
 
   Stream<List<TutorialModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) {
     DocumentSnapshot lastDoc;
-    Stream<List<TutorialModel>> _values = getQuery(tutorialCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId)
+    Stream<List<TutorialModel>> _values = getQuery(tutorialCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, )
       .onSnapshot
       .asyncMap((data) {
         return Future.wait(data.docs.map((doc) { 
@@ -144,7 +144,7 @@ class TutorialJsFirestore implements TutorialRepository {
   @override
   Future<List<TutorialModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) async {
     DocumentSnapshot lastDoc;
-    List<TutorialModel> _values = await getQuery(tutorialCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId).get().then((value) {
+    List<TutorialModel> _values = await getQuery(tutorialCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, ).get().then((value) {
       var list = value.docs;
       return list.map((doc) { 
         lastDoc = doc;
@@ -158,7 +158,7 @@ class TutorialJsFirestore implements TutorialRepository {
   @override
   Future<List<TutorialModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) async {
     DocumentSnapshot lastDoc;
-    List<TutorialModel> _values = await getQuery(tutorialCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId).get().then((value) {
+    List<TutorialModel> _values = await getQuery(tutorialCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, ).get().then((value) {
       var list = value.docs;
       return Future.wait(list.map((doc) {  
         lastDoc = doc;
@@ -176,11 +176,15 @@ class TutorialJsFirestore implements TutorialRepository {
     return tutorialCollection.get().then((snapshot) => snapshot.docs
         .forEach((element) => tutorialCollection.doc(element.id).delete()));
   }
-  CollectionReference getCollection() => firestore().collection('Tutorial-$appId');
-
-  final String appId;
   
-  TutorialJsFirestore(this.appId) : tutorialCollection = firestore().collection('Tutorial-$appId');
+  dynamic getSubCollection(String documentId, String name) {
+    return tutorialCollection.doc(documentId).collection(name);
+  }
+
+  CollectionReference getCollection() => tutorialCollection;
+
+  TutorialJsFirestore(this.tutorialCollection);
 
   final CollectionReference tutorialCollection;
 }
+

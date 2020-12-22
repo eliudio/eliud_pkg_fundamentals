@@ -15,6 +15,7 @@
 
 import 'package:eliud_pkg_fundamentals/model/fader_repository.dart';
 
+
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
@@ -31,7 +32,7 @@ import 'package:eliud_core/tools/common_tools.dart';
 
 class FaderFirestore implements FaderRepository {
   Future<FaderModel> add(FaderModel value) {
-    return FaderCollection.document(value.documentID).setData(value.toEntity(appId: appId).toDocument()).then((_) => value);
+    return FaderCollection.document(value.documentID).setData(value.toEntity().toDocument()).then((_) => value);
   }
 
   Future<void> delete(FaderModel value) {
@@ -39,7 +40,7 @@ class FaderFirestore implements FaderRepository {
   }
 
   Future<FaderModel> update(FaderModel value) {
-    return FaderCollection.document(value.documentID).updateData(value.toEntity(appId: appId).toDocument()).then((_) => value);
+    return FaderCollection.document(value.documentID).updateData(value.toEntity().toDocument()).then((_) => value);
   }
 
   FaderModel _populateDoc(DocumentSnapshot value) {
@@ -47,7 +48,7 @@ class FaderFirestore implements FaderRepository {
   }
 
   Future<FaderModel> _populateDocPlus(DocumentSnapshot value) async {
-    return FaderModel.fromEntityPlus(value.documentID, FaderEntity.fromMap(value.data), appId: appId);  }
+    return FaderModel.fromEntityPlus(value.documentID, FaderEntity.fromMap(value.data), );  }
 
   Future<FaderModel> get(String id) {
     return FaderCollection.document(id).get().then((doc) {
@@ -105,7 +106,7 @@ class FaderFirestore implements FaderRepository {
 
   Stream<List<FaderModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) {
     DocumentSnapshot lastDoc;
-    Stream<List<FaderModel>> _values = getQuery(FaderCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, appId: appId).snapshots().map((snapshot) {
+    Stream<List<FaderModel>> _values = getQuery(FaderCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, ).snapshots().map((snapshot) {
       return snapshot.documents.map((doc) {
         lastDoc = doc;
         return _populateDoc(doc);
@@ -116,7 +117,7 @@ class FaderFirestore implements FaderRepository {
 
   Stream<List<FaderModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) {
     DocumentSnapshot lastDoc;
-    Stream<List<FaderModel>> _values = getQuery(FaderCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, appId: appId).snapshots().asyncMap((snapshot) {
+    Stream<List<FaderModel>> _values = getQuery(FaderCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, ).snapshots().asyncMap((snapshot) {
       return Future.wait(snapshot.documents.map((doc) {
         lastDoc = doc;
         return _populateDocPlus(doc);
@@ -128,7 +129,7 @@ class FaderFirestore implements FaderRepository {
 
   Future<List<FaderModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) async {
     DocumentSnapshot lastDoc;
-    List<FaderModel> _values = await getQuery(FaderCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId).getDocuments().then((value) {
+    List<FaderModel> _values = await getQuery(FaderCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, ).getDocuments().then((value) {
       var list = value.documents;
       return list.map((doc) { 
         lastDoc = doc;
@@ -141,7 +142,7 @@ class FaderFirestore implements FaderRepository {
 
   Future<List<FaderModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) async {
     DocumentSnapshot lastDoc;
-    List<FaderModel> _values = await getQuery(FaderCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId).getDocuments().then((value) {
+    List<FaderModel> _values = await getQuery(FaderCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, ).getDocuments().then((value) {
       var list = value.documents;
       return Future.wait(list.map((doc) {
         lastDoc = doc;
@@ -162,10 +163,13 @@ class FaderFirestore implements FaderRepository {
     });
   }
 
+  dynamic getSubCollection(String documentId, String name) {
+    return FaderCollection.document(documentId).collection(name);
+  }
 
-  final String appId;
+
+  FaderFirestore(this.FaderCollection);
+
   final CollectionReference FaderCollection;
-
-  FaderFirestore(this.appId) : FaderCollection = Firestore.instance.collection('Fader-${appId}');
 }
 

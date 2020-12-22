@@ -39,7 +39,7 @@ import 'package:eliud_core/tools/common_tools.dart';
 class SimpleImageJsFirestore implements SimpleImageRepository {
   Future<SimpleImageModel> add(SimpleImageModel value) {
     return simpleImageCollection.doc(value.documentID)
-        .set(value.toEntity(appId: appId).toDocument())
+        .set(value.toEntity().toDocument())
         .then((_) => value);
   }
 
@@ -49,7 +49,7 @@ class SimpleImageJsFirestore implements SimpleImageRepository {
 
   Future<SimpleImageModel> update(SimpleImageModel value) {
     return simpleImageCollection.doc(value.documentID)
-        .update(data: value.toEntity(appId: appId).toDocument())
+        .update(data: value.toEntity().toDocument())
         .then((_) => value);
   }
 
@@ -58,7 +58,7 @@ class SimpleImageJsFirestore implements SimpleImageRepository {
   }
 
   Future<SimpleImageModel> _populateDocPlus(DocumentSnapshot value) async {
-    return SimpleImageModel.fromEntityPlus(value.id, SimpleImageEntity.fromMap(value.data()), appId: appId);
+    return SimpleImageModel.fromEntityPlus(value.id, SimpleImageEntity.fromMap(value.data()), );
   }
 
   Future<SimpleImageModel> get(String id) {
@@ -120,7 +120,7 @@ class SimpleImageJsFirestore implements SimpleImageRepository {
 
   Stream<List<SimpleImageModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) {
     DocumentSnapshot lastDoc;
-    Stream<List<SimpleImageModel>> _values = getQuery(simpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId)
+    Stream<List<SimpleImageModel>> _values = getQuery(simpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, )
       .onSnapshot
       .map((data) { 
         return data.docs.map((doc) {
@@ -133,7 +133,7 @@ class SimpleImageJsFirestore implements SimpleImageRepository {
 
   Stream<List<SimpleImageModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) {
     DocumentSnapshot lastDoc;
-    Stream<List<SimpleImageModel>> _values = getQuery(simpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId)
+    Stream<List<SimpleImageModel>> _values = getQuery(simpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, )
       .onSnapshot
       .asyncMap((data) {
         return Future.wait(data.docs.map((doc) { 
@@ -148,7 +148,7 @@ class SimpleImageJsFirestore implements SimpleImageRepository {
   @override
   Future<List<SimpleImageModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) async {
     DocumentSnapshot lastDoc;
-    List<SimpleImageModel> _values = await getQuery(simpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId).get().then((value) {
+    List<SimpleImageModel> _values = await getQuery(simpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, ).get().then((value) {
       var list = value.docs;
       return list.map((doc) { 
         lastDoc = doc;
@@ -162,7 +162,7 @@ class SimpleImageJsFirestore implements SimpleImageRepository {
   @override
   Future<List<SimpleImageModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) async {
     DocumentSnapshot lastDoc;
-    List<SimpleImageModel> _values = await getQuery(simpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId).get().then((value) {
+    List<SimpleImageModel> _values = await getQuery(simpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, ).get().then((value) {
       var list = value.docs;
       return Future.wait(list.map((doc) {  
         lastDoc = doc;
@@ -180,11 +180,15 @@ class SimpleImageJsFirestore implements SimpleImageRepository {
     return simpleImageCollection.get().then((snapshot) => snapshot.docs
         .forEach((element) => simpleImageCollection.doc(element.id).delete()));
   }
-  CollectionReference getCollection() => firestore().collection('SimpleImage-$appId');
-
-  final String appId;
   
-  SimpleImageJsFirestore(this.appId) : simpleImageCollection = firestore().collection('SimpleImage-$appId');
+  dynamic getSubCollection(String documentId, String name) {
+    return simpleImageCollection.doc(documentId).collection(name);
+  }
+
+  CollectionReference getCollection() => simpleImageCollection;
+
+  SimpleImageJsFirestore(this.simpleImageCollection);
 
   final CollectionReference simpleImageCollection;
 }
+
