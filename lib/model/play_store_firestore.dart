@@ -36,7 +36,7 @@ import 'package:eliud_core/tools/common_tools.dart';
 
 class PlayStoreFirestore implements PlayStoreRepository {
   Future<PlayStoreModel> add(PlayStoreModel value) {
-    return PlayStoreCollection.document(value.documentID).setData(value.toEntity().toDocument()).then((_) => value);
+    return PlayStoreCollection.document(value.documentID).setData(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
   Future<void> delete(PlayStoreModel value) {
@@ -44,7 +44,7 @@ class PlayStoreFirestore implements PlayStoreRepository {
   }
 
   Future<PlayStoreModel> update(PlayStoreModel value) {
-    return PlayStoreCollection.document(value.documentID).updateData(value.toEntity().toDocument()).then((_) => value);
+    return PlayStoreCollection.document(value.documentID).updateData(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
   PlayStoreModel _populateDoc(DocumentSnapshot value) {
@@ -52,7 +52,7 @@ class PlayStoreFirestore implements PlayStoreRepository {
   }
 
   Future<PlayStoreModel> _populateDocPlus(DocumentSnapshot value) async {
-    return PlayStoreModel.fromEntityPlus(value.documentID, PlayStoreEntity.fromMap(value.data), );  }
+    return PlayStoreModel.fromEntityPlus(value.documentID, PlayStoreEntity.fromMap(value.data), appId: appId);  }
 
   Future<PlayStoreModel> get(String id) {
     return PlayStoreCollection.document(id).get().then((doc) {
@@ -110,7 +110,7 @@ class PlayStoreFirestore implements PlayStoreRepository {
 
   Stream<List<PlayStoreModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) {
     DocumentSnapshot lastDoc;
-    Stream<List<PlayStoreModel>> _values = getQuery(PlayStoreCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, ).snapshots().map((snapshot) {
+    Stream<List<PlayStoreModel>> _values = getQuery(PlayStoreCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, appId: appId).snapshots().map((snapshot) {
       return snapshot.documents.map((doc) {
         lastDoc = doc;
         return _populateDoc(doc);
@@ -121,7 +121,7 @@ class PlayStoreFirestore implements PlayStoreRepository {
 
   Stream<List<PlayStoreModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) {
     DocumentSnapshot lastDoc;
-    Stream<List<PlayStoreModel>> _values = getQuery(PlayStoreCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, ).snapshots().asyncMap((snapshot) {
+    Stream<List<PlayStoreModel>> _values = getQuery(PlayStoreCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, appId: appId).snapshots().asyncMap((snapshot) {
       return Future.wait(snapshot.documents.map((doc) {
         lastDoc = doc;
         return _populateDocPlus(doc);
@@ -133,7 +133,7 @@ class PlayStoreFirestore implements PlayStoreRepository {
 
   Future<List<PlayStoreModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) async {
     DocumentSnapshot lastDoc;
-    List<PlayStoreModel> _values = await getQuery(PlayStoreCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, ).getDocuments().then((value) {
+    List<PlayStoreModel> _values = await getQuery(PlayStoreCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId).getDocuments().then((value) {
       var list = value.documents;
       return list.map((doc) { 
         lastDoc = doc;
@@ -146,7 +146,7 @@ class PlayStoreFirestore implements PlayStoreRepository {
 
   Future<List<PlayStoreModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) async {
     DocumentSnapshot lastDoc;
-    List<PlayStoreModel> _values = await getQuery(PlayStoreCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, ).getDocuments().then((value) {
+    List<PlayStoreModel> _values = await getQuery(PlayStoreCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId).getDocuments().then((value) {
       var list = value.documents;
       return Future.wait(list.map((doc) {
         lastDoc = doc;
@@ -172,7 +172,8 @@ class PlayStoreFirestore implements PlayStoreRepository {
   }
 
 
-  PlayStoreFirestore(this.PlayStoreCollection);
+  final String appId;
+  PlayStoreFirestore(this.PlayStoreCollection, this.appId);
 
   final CollectionReference PlayStoreCollection;
 }

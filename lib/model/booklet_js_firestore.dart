@@ -35,7 +35,7 @@ import 'package:eliud_core/tools/common_tools.dart';
 class BookletJsFirestore implements BookletRepository {
   Future<BookletModel> add(BookletModel value) {
     return bookletCollection.doc(value.documentID)
-        .set(value.toEntity().toDocument())
+        .set(value.toEntity(appId: appId).toDocument())
         .then((_) => value);
   }
 
@@ -45,7 +45,7 @@ class BookletJsFirestore implements BookletRepository {
 
   Future<BookletModel> update(BookletModel value) {
     return bookletCollection.doc(value.documentID)
-        .update(data: value.toEntity().toDocument())
+        .update(data: value.toEntity(appId: appId).toDocument())
         .then((_) => value);
   }
 
@@ -54,7 +54,7 @@ class BookletJsFirestore implements BookletRepository {
   }
 
   Future<BookletModel> _populateDocPlus(DocumentSnapshot value) async {
-    return BookletModel.fromEntityPlus(value.id, BookletEntity.fromMap(value.data()), );
+    return BookletModel.fromEntityPlus(value.id, BookletEntity.fromMap(value.data()), appId: appId);
   }
 
   Future<BookletModel> get(String id) {
@@ -116,7 +116,7 @@ class BookletJsFirestore implements BookletRepository {
 
   Stream<List<BookletModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) {
     DocumentSnapshot lastDoc;
-    Stream<List<BookletModel>> _values = getQuery(bookletCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, )
+    Stream<List<BookletModel>> _values = getQuery(bookletCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId)
       .onSnapshot
       .map((data) { 
         return data.docs.map((doc) {
@@ -129,7 +129,7 @@ class BookletJsFirestore implements BookletRepository {
 
   Stream<List<BookletModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) {
     DocumentSnapshot lastDoc;
-    Stream<List<BookletModel>> _values = getQuery(bookletCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, )
+    Stream<List<BookletModel>> _values = getQuery(bookletCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId)
       .onSnapshot
       .asyncMap((data) {
         return Future.wait(data.docs.map((doc) { 
@@ -144,7 +144,7 @@ class BookletJsFirestore implements BookletRepository {
   @override
   Future<List<BookletModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) async {
     DocumentSnapshot lastDoc;
-    List<BookletModel> _values = await getQuery(bookletCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, ).get().then((value) {
+    List<BookletModel> _values = await getQuery(bookletCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId).get().then((value) {
       var list = value.docs;
       return list.map((doc) { 
         lastDoc = doc;
@@ -158,7 +158,7 @@ class BookletJsFirestore implements BookletRepository {
   @override
   Future<List<BookletModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) async {
     DocumentSnapshot lastDoc;
-    List<BookletModel> _values = await getQuery(bookletCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, ).get().then((value) {
+    List<BookletModel> _values = await getQuery(bookletCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId).get().then((value) {
       var list = value.docs;
       return Future.wait(list.map((doc) {  
         lastDoc = doc;
@@ -181,10 +181,10 @@ class BookletJsFirestore implements BookletRepository {
     return bookletCollection.doc(documentId).collection(name);
   }
 
+  final String appId;
+  BookletJsFirestore(this.bookletCollection, this.appId);
+
   CollectionReference getCollection() => bookletCollection;
-
-  BookletJsFirestore(this.bookletCollection);
-
   final CollectionReference bookletCollection;
 }
 

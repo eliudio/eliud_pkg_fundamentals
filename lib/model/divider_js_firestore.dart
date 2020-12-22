@@ -39,7 +39,7 @@ import 'package:eliud_core/tools/common_tools.dart';
 class DividerJsFirestore implements DividerRepository {
   Future<DividerModel> add(DividerModel value) {
     return dividerCollection.doc(value.documentID)
-        .set(value.toEntity().toDocument())
+        .set(value.toEntity(appId: appId).toDocument())
         .then((_) => value);
   }
 
@@ -49,7 +49,7 @@ class DividerJsFirestore implements DividerRepository {
 
   Future<DividerModel> update(DividerModel value) {
     return dividerCollection.doc(value.documentID)
-        .update(data: value.toEntity().toDocument())
+        .update(data: value.toEntity(appId: appId).toDocument())
         .then((_) => value);
   }
 
@@ -58,7 +58,7 @@ class DividerJsFirestore implements DividerRepository {
   }
 
   Future<DividerModel> _populateDocPlus(DocumentSnapshot value) async {
-    return DividerModel.fromEntityPlus(value.id, DividerEntity.fromMap(value.data()), );
+    return DividerModel.fromEntityPlus(value.id, DividerEntity.fromMap(value.data()), appId: appId);
   }
 
   Future<DividerModel> get(String id) {
@@ -120,7 +120,7 @@ class DividerJsFirestore implements DividerRepository {
 
   Stream<List<DividerModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) {
     DocumentSnapshot lastDoc;
-    Stream<List<DividerModel>> _values = getQuery(dividerCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, )
+    Stream<List<DividerModel>> _values = getQuery(dividerCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId)
       .onSnapshot
       .map((data) { 
         return data.docs.map((doc) {
@@ -133,7 +133,7 @@ class DividerJsFirestore implements DividerRepository {
 
   Stream<List<DividerModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) {
     DocumentSnapshot lastDoc;
-    Stream<List<DividerModel>> _values = getQuery(dividerCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, )
+    Stream<List<DividerModel>> _values = getQuery(dividerCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId)
       .onSnapshot
       .asyncMap((data) {
         return Future.wait(data.docs.map((doc) { 
@@ -148,7 +148,7 @@ class DividerJsFirestore implements DividerRepository {
   @override
   Future<List<DividerModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) async {
     DocumentSnapshot lastDoc;
-    List<DividerModel> _values = await getQuery(dividerCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, ).get().then((value) {
+    List<DividerModel> _values = await getQuery(dividerCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId).get().then((value) {
       var list = value.docs;
       return list.map((doc) { 
         lastDoc = doc;
@@ -162,7 +162,7 @@ class DividerJsFirestore implements DividerRepository {
   @override
   Future<List<DividerModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) async {
     DocumentSnapshot lastDoc;
-    List<DividerModel> _values = await getQuery(dividerCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, ).get().then((value) {
+    List<DividerModel> _values = await getQuery(dividerCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId).get().then((value) {
       var list = value.docs;
       return Future.wait(list.map((doc) {  
         lastDoc = doc;
@@ -185,10 +185,10 @@ class DividerJsFirestore implements DividerRepository {
     return dividerCollection.doc(documentId).collection(name);
   }
 
+  final String appId;
+  DividerJsFirestore(this.dividerCollection, this.appId);
+
   CollectionReference getCollection() => dividerCollection;
-
-  DividerJsFirestore(this.dividerCollection);
-
   final CollectionReference dividerCollection;
 }
 

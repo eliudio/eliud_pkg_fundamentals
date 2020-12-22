@@ -36,7 +36,7 @@ import 'package:eliud_core/tools/common_tools.dart';
 
 class DocumentFirestore implements DocumentRepository {
   Future<DocumentModel> add(DocumentModel value) {
-    return DocumentCollection.document(value.documentID).setData(value.toEntity().toDocument()).then((_) => value);
+    return DocumentCollection.document(value.documentID).setData(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
   Future<void> delete(DocumentModel value) {
@@ -44,7 +44,7 @@ class DocumentFirestore implements DocumentRepository {
   }
 
   Future<DocumentModel> update(DocumentModel value) {
-    return DocumentCollection.document(value.documentID).updateData(value.toEntity().toDocument()).then((_) => value);
+    return DocumentCollection.document(value.documentID).updateData(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
   DocumentModel _populateDoc(DocumentSnapshot value) {
@@ -52,7 +52,7 @@ class DocumentFirestore implements DocumentRepository {
   }
 
   Future<DocumentModel> _populateDocPlus(DocumentSnapshot value) async {
-    return DocumentModel.fromEntityPlus(value.documentID, DocumentEntity.fromMap(value.data), );  }
+    return DocumentModel.fromEntityPlus(value.documentID, DocumentEntity.fromMap(value.data), appId: appId);  }
 
   Future<DocumentModel> get(String id) {
     return DocumentCollection.document(id).get().then((doc) {
@@ -110,7 +110,7 @@ class DocumentFirestore implements DocumentRepository {
 
   Stream<List<DocumentModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) {
     DocumentSnapshot lastDoc;
-    Stream<List<DocumentModel>> _values = getQuery(DocumentCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, ).snapshots().map((snapshot) {
+    Stream<List<DocumentModel>> _values = getQuery(DocumentCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, appId: appId).snapshots().map((snapshot) {
       return snapshot.documents.map((doc) {
         lastDoc = doc;
         return _populateDoc(doc);
@@ -121,7 +121,7 @@ class DocumentFirestore implements DocumentRepository {
 
   Stream<List<DocumentModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) {
     DocumentSnapshot lastDoc;
-    Stream<List<DocumentModel>> _values = getQuery(DocumentCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, ).snapshots().asyncMap((snapshot) {
+    Stream<List<DocumentModel>> _values = getQuery(DocumentCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, appId: appId).snapshots().asyncMap((snapshot) {
       return Future.wait(snapshot.documents.map((doc) {
         lastDoc = doc;
         return _populateDocPlus(doc);
@@ -133,7 +133,7 @@ class DocumentFirestore implements DocumentRepository {
 
   Future<List<DocumentModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) async {
     DocumentSnapshot lastDoc;
-    List<DocumentModel> _values = await getQuery(DocumentCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, ).getDocuments().then((value) {
+    List<DocumentModel> _values = await getQuery(DocumentCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId).getDocuments().then((value) {
       var list = value.documents;
       return list.map((doc) { 
         lastDoc = doc;
@@ -146,7 +146,7 @@ class DocumentFirestore implements DocumentRepository {
 
   Future<List<DocumentModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) async {
     DocumentSnapshot lastDoc;
-    List<DocumentModel> _values = await getQuery(DocumentCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, ).getDocuments().then((value) {
+    List<DocumentModel> _values = await getQuery(DocumentCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId).getDocuments().then((value) {
       var list = value.documents;
       return Future.wait(list.map((doc) {
         lastDoc = doc;
@@ -172,7 +172,8 @@ class DocumentFirestore implements DocumentRepository {
   }
 
 
-  DocumentFirestore(this.DocumentCollection);
+  final String appId;
+  DocumentFirestore(this.DocumentCollection, this.appId);
 
   final CollectionReference DocumentCollection;
 }
