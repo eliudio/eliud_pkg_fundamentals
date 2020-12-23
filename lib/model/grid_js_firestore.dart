@@ -188,7 +188,9 @@ class GridJsFirestore implements GridRepository {
   final String appId;
   GridJsFirestore(this.gridCollection, this.appId);
 
-  CollectionReference getCollection() => gridCollection;
+  // In flutterweb, it seems we require to re-retrieve the collection. If not then subscribing / listening to it a second time fails.
+  // CollectionReference getCollection() => gridCollection;
+  CollectionReference getCollection() => appRepository().getSubCollection(appId, 'grid');
   final CollectionReference gridCollection;
 }
 

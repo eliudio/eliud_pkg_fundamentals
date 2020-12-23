@@ -188,7 +188,9 @@ class DividerJsFirestore implements DividerRepository {
   final String appId;
   DividerJsFirestore(this.dividerCollection, this.appId);
 
-  CollectionReference getCollection() => dividerCollection;
+  // In flutterweb, it seems we require to re-retrieve the collection. If not then subscribing / listening to it a second time fails.
+  // CollectionReference getCollection() => dividerCollection;
+  CollectionReference getCollection() => appRepository().getSubCollection(appId, 'divider');
   final CollectionReference dividerCollection;
 }
 

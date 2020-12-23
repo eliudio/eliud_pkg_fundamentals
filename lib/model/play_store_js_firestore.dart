@@ -188,7 +188,9 @@ class PlayStoreJsFirestore implements PlayStoreRepository {
   final String appId;
   PlayStoreJsFirestore(this.playStoreCollection, this.appId);
 
-  CollectionReference getCollection() => playStoreCollection;
+  // In flutterweb, it seems we require to re-retrieve the collection. If not then subscribing / listening to it a second time fails.
+  // CollectionReference getCollection() => playStoreCollection;
+  CollectionReference getCollection() => appRepository().getSubCollection(appId, 'playstore');
   final CollectionReference playStoreCollection;
 }
 

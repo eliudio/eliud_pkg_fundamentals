@@ -184,7 +184,9 @@ class BookletJsFirestore implements BookletRepository {
   final String appId;
   BookletJsFirestore(this.bookletCollection, this.appId);
 
-  CollectionReference getCollection() => bookletCollection;
+  // In flutterweb, it seems we require to re-retrieve the collection. If not then subscribing / listening to it a second time fails.
+  // CollectionReference getCollection() => bookletCollection;
+  CollectionReference getCollection() => appRepository().getSubCollection(appId, 'booklet');
   final CollectionReference bookletCollection;
 }
 

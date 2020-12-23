@@ -184,7 +184,9 @@ class FaderJsFirestore implements FaderRepository {
   final String appId;
   FaderJsFirestore(this.faderCollection, this.appId);
 
-  CollectionReference getCollection() => faderCollection;
+  // In flutterweb, it seems we require to re-retrieve the collection. If not then subscribing / listening to it a second time fails.
+  // CollectionReference getCollection() => faderCollection;
+  CollectionReference getCollection() => appRepository().getSubCollection(appId, 'fader');
   final CollectionReference faderCollection;
 }
 

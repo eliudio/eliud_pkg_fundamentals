@@ -188,7 +188,9 @@ class PresentationJsFirestore implements PresentationRepository {
   final String appId;
   PresentationJsFirestore(this.presentationCollection, this.appId);
 
-  CollectionReference getCollection() => presentationCollection;
+  // In flutterweb, it seems we require to re-retrieve the collection. If not then subscribing / listening to it a second time fails.
+  // CollectionReference getCollection() => presentationCollection;
+  CollectionReference getCollection() => appRepository().getSubCollection(appId, 'presentation');
   final CollectionReference presentationCollection;
 }
 

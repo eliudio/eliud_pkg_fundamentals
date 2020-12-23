@@ -188,7 +188,9 @@ class SimpleImageJsFirestore implements SimpleImageRepository {
   final String appId;
   SimpleImageJsFirestore(this.simpleImageCollection, this.appId);
 
-  CollectionReference getCollection() => simpleImageCollection;
+  // In flutterweb, it seems we require to re-retrieve the collection. If not then subscribing / listening to it a second time fails.
+  // CollectionReference getCollection() => simpleImageCollection;
+  CollectionReference getCollection() => appRepository().getSubCollection(appId, 'simpleimage');
   final CollectionReference simpleImageCollection;
 }
 

@@ -188,7 +188,9 @@ class DocumentJsFirestore implements DocumentRepository {
   final String appId;
   DocumentJsFirestore(this.documentCollection, this.appId);
 
-  CollectionReference getCollection() => documentCollection;
+  // In flutterweb, it seems we require to re-retrieve the collection. If not then subscribing / listening to it a second time fails.
+  // CollectionReference getCollection() => documentCollection;
+  CollectionReference getCollection() => appRepository().getSubCollection(appId, 'document');
   final CollectionReference documentCollection;
 }
 

@@ -184,7 +184,9 @@ class TutorialJsFirestore implements TutorialRepository {
   final String appId;
   TutorialJsFirestore(this.tutorialCollection, this.appId);
 
-  CollectionReference getCollection() => tutorialCollection;
+  // In flutterweb, it seems we require to re-retrieve the collection. If not then subscribing / listening to it a second time fails.
+  // CollectionReference getCollection() => tutorialCollection;
+  CollectionReference getCollection() => appRepository().getSubCollection(appId, 'tutorial');
   final CollectionReference tutorialCollection;
 }
 
