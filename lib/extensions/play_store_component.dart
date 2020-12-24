@@ -7,7 +7,7 @@ import 'package:eliud_pkg_fundamentals/model/play_store_repository.dart';
 import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/model/app_model.dart';
-import 'package:eliud_core/tools/action_model.dart';
+import 'package:eliud_core/tools/action/action_model.dart';
 import 'package:eliud_core/tools/component_constructor.dart';
 import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';

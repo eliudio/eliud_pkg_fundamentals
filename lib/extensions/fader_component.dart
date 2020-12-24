@@ -7,7 +7,7 @@ import 'package:eliud_pkg_fundamentals/model/fader_component.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_model.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_repository.dart';
 import 'package:eliud_core/platform/platform.dart';
-import 'package:eliud_core/tools/action_model.dart';
+import 'package:eliud_core/tools/action/action_model.dart';
 import 'package:eliud_core/model/pos_size_model.dart';
 import 'package:eliud_core/tools/component_constructor.dart';
 import 'package:flutter/material.dart';
