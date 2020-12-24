@@ -28,9 +28,9 @@ import 'package:eliud_core/tools/string_validator.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
-import 'package:eliud_core/tools/action_model.dart';
+import '../tools/bespoke_models.dart';
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
-import 'package:eliud_core/tools/action_entity.dart';
+import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 import 'package:eliud_pkg_fundamentals/model/tutorial_form_event.dart';
