@@ -185,6 +185,9 @@ class SimpleImageJsFirestore implements SimpleImageRepository {
     return simpleImageCollection.doc(documentId).collection(name);
   }
 
+  String timeStampToString(dynamic timeStamp) {
+    return firestoreTimeStampToString(timeStamp);
+  } 
   final String appId;
   SimpleImageJsFirestore(this.simpleImageCollection, this.appId);
 

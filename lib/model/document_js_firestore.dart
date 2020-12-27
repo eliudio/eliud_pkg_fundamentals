@@ -185,6 +185,9 @@ class DocumentJsFirestore implements DocumentRepository {
     return documentCollection.doc(documentId).collection(name);
   }
 
+  String timeStampToString(dynamic timeStamp) {
+    return firestoreTimeStampToString(timeStamp);
+  } 
   final String appId;
   DocumentJsFirestore(this.documentCollection, this.appId);
 

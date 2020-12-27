@@ -171,6 +171,9 @@ class PlayStoreFirestore implements PlayStoreRepository {
     return PlayStoreCollection.document(documentId).collection(name);
   }
 
+  String timeStampToString(dynamic timeStamp) {
+    return firestoreTimeStampToString(timeStamp);
+  } 
 
   final String appId;
   PlayStoreFirestore(this.PlayStoreCollection, this.appId);

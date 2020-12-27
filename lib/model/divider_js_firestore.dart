@@ -185,6 +185,9 @@ class DividerJsFirestore implements DividerRepository {
     return dividerCollection.doc(documentId).collection(name);
   }
 
+  String timeStampToString(dynamic timeStamp) {
+    return firestoreTimeStampToString(timeStamp);
+  } 
   final String appId;
   DividerJsFirestore(this.dividerCollection, this.appId);
 

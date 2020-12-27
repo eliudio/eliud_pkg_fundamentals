@@ -167,6 +167,9 @@ class TutorialFirestore implements TutorialRepository {
     return TutorialCollection.document(documentId).collection(name);
   }
 
+  String timeStampToString(dynamic timeStamp) {
+    return firestoreTimeStampToString(timeStamp);
+  } 
 
   final String appId;
   TutorialFirestore(this.TutorialCollection, this.appId);

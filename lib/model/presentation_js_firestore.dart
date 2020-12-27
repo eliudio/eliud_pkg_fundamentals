@@ -185,6 +185,9 @@ class PresentationJsFirestore implements PresentationRepository {
     return presentationCollection.doc(documentId).collection(name);
   }
 
+  String timeStampToString(dynamic timeStamp) {
+    return firestoreTimeStampToString(timeStamp);
+  } 
   final String appId;
   PresentationJsFirestore(this.presentationCollection, this.appId);
 

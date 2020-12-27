@@ -185,6 +185,9 @@ class GridJsFirestore implements GridRepository {
     return gridCollection.doc(documentId).collection(name);
   }
 
+  String timeStampToString(dynamic timeStamp) {
+    return firestoreTimeStampToString(timeStamp);
+  } 
   final String appId;
   GridJsFirestore(this.gridCollection, this.appId);
 

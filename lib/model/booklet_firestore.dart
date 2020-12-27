@@ -167,6 +167,9 @@ class BookletFirestore implements BookletRepository {
     return BookletCollection.document(documentId).collection(name);
   }
 
+  String timeStampToString(dynamic timeStamp) {
+    return firestoreTimeStampToString(timeStamp);
+  } 
 
   final String appId;
   BookletFirestore(this.BookletCollection, this.appId);

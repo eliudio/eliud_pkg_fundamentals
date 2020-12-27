@@ -181,6 +181,9 @@ class FaderJsFirestore implements FaderRepository {
     return faderCollection.doc(documentId).collection(name);
   }
 
+  String timeStampToString(dynamic timeStamp) {
+    return firestoreTimeStampToString(timeStamp);
+  } 
   final String appId;
   FaderJsFirestore(this.faderCollection, this.appId);
 

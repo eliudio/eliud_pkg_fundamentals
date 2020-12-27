@@ -241,6 +241,11 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
       throw UnimplementedError();
     }
 
+  @override
+  String timeStampToString(timeStamp) {
+    throw UnimplementedError();
+  }
+
     Future<void> deleteAll() {}
 }
 
@@ -324,6 +329,11 @@ class LinkInMemoryRepository implements LinkRepository {
     getSubCollection(String documentId, String name) {
       throw UnimplementedError();
     }
+
+  @override
+  String timeStampToString(timeStamp) {
+    throw UnimplementedError();
+  }
 
     Future<void> deleteAll() {}
 }
@@ -409,6 +419,11 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
       throw UnimplementedError();
     }
 
+  @override
+  String timeStampToString(timeStamp) {
+    throw UnimplementedError();
+  }
+
     Future<void> deleteAll() {}
 }
 
@@ -493,6 +508,11 @@ class SectionInMemoryRepository implements SectionRepository {
       throw UnimplementedError();
     }
 
+  @override
+  String timeStampToString(timeStamp) {
+    throw UnimplementedError();
+  }
+
     Future<void> deleteAll() {}
 }
 
@@ -576,6 +596,11 @@ class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
     getSubCollection(String documentId, String name) {
       throw UnimplementedError();
     }
+
+  @override
+  String timeStampToString(timeStamp) {
+    throw UnimplementedError();
+  }
 
     Future<void> deleteAll() {}
 }
