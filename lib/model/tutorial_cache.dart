@@ -109,6 +109,10 @@ class TutorialCache implements TutorialRepository {
     return reference.listenWithDetails(trigger, currentMember: currentMember, orderBy: orderBy, descending: descending, privilegeLevel: privilegeLevel, );
   }
 
+  @override
+  StreamSubscription<TutorialModel> listenTo(String documentId, changed) {
+    reference.listenTo(documentId, changed);
+  }
 
   static Future<TutorialModel> refreshRelations(TutorialModel model) async {
 

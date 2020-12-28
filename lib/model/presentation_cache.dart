@@ -114,6 +114,10 @@ class PresentationCache implements PresentationRepository {
     return reference.listenWithDetails(trigger, currentMember: currentMember, orderBy: orderBy, descending: descending, privilegeLevel: privilegeLevel, );
   }
 
+  @override
+  StreamSubscription<PresentationModel> listenTo(String documentId, changed) {
+    reference.listenTo(documentId, changed);
+  }
 
   static Future<PresentationModel> refreshRelations(PresentationModel model) async {
 

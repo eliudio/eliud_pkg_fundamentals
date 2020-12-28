@@ -114,6 +114,10 @@ class DividerCache implements DividerRepository {
     return reference.listenWithDetails(trigger, currentMember: currentMember, orderBy: orderBy, descending: descending, privilegeLevel: privilegeLevel, );
   }
 
+  @override
+  StreamSubscription<DividerModel> listenTo(String documentId, changed) {
+    reference.listenTo(documentId, changed);
+  }
 
   static Future<DividerModel> refreshRelations(DividerModel model) async {
 

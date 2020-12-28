@@ -109,6 +109,10 @@ class LinkCache implements LinkRepository {
     return reference.listenWithDetails(trigger, currentMember: currentMember, orderBy: orderBy, descending: descending, privilegeLevel: privilegeLevel, );
   }
 
+  @override
+  StreamSubscription<LinkModel> listenTo(String documentId, changed) {
+    reference.listenTo(documentId, changed);
+  }
 
   static Future<LinkModel> refreshRelations(LinkModel model) async {
 

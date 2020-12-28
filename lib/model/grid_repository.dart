@@ -34,6 +34,7 @@ import 'package:eliud_core/tools/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
 typedef GridModelTrigger(List<GridModel> list);
+typedef GridChanged(GridModel value);
 
 abstract class GridRepository {
   Future<GridModel> add(GridModel value);
@@ -48,6 +49,7 @@ abstract class GridRepository {
 
   StreamSubscription<List<GridModel>> listen(GridModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel});
   StreamSubscription<List<GridModel>> listenWithDetails(GridModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel});
+  StreamSubscription<GridModel> listenTo(String documentId, GridChanged changed);
   void flush();
   
   String timeStampToString(dynamic timeStamp);

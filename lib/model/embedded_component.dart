@@ -245,6 +245,12 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
   String timeStampToString(timeStamp) {
     throw UnimplementedError();
   }
+  
+  @override
+  StreamSubscription<DocumentItemModel> listenTo(String documentId, DocumentItemChanged changed) {
+    throw UnimplementedError();
+  }
+  
 
     Future<void> deleteAll() {}
 }
@@ -334,6 +340,12 @@ class LinkInMemoryRepository implements LinkRepository {
   String timeStampToString(timeStamp) {
     throw UnimplementedError();
   }
+  
+  @override
+  StreamSubscription<LinkModel> listenTo(String documentId, LinkChanged changed) {
+    throw UnimplementedError();
+  }
+  
 
     Future<void> deleteAll() {}
 }
@@ -423,6 +435,12 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
   String timeStampToString(timeStamp) {
     throw UnimplementedError();
   }
+  
+  @override
+  StreamSubscription<ListedItemModel> listenTo(String documentId, ListedItemChanged changed) {
+    throw UnimplementedError();
+  }
+  
 
     Future<void> deleteAll() {}
 }
@@ -512,6 +530,12 @@ class SectionInMemoryRepository implements SectionRepository {
   String timeStampToString(timeStamp) {
     throw UnimplementedError();
   }
+  
+  @override
+  StreamSubscription<SectionModel> listenTo(String documentId, SectionChanged changed) {
+    throw UnimplementedError();
+  }
+  
 
     Future<void> deleteAll() {}
 }
@@ -601,6 +625,12 @@ class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
   String timeStampToString(timeStamp) {
     throw UnimplementedError();
   }
+  
+  @override
+  StreamSubscription<TutorialEntryModel> listenTo(String documentId, TutorialEntryChanged changed) {
+    throw UnimplementedError();
+  }
+  
 
     Future<void> deleteAll() {}
 }

@@ -114,6 +114,10 @@ class PlayStoreCache implements PlayStoreRepository {
     return reference.listenWithDetails(trigger, currentMember: currentMember, orderBy: orderBy, descending: descending, privilegeLevel: privilegeLevel, );
   }
 
+  @override
+  StreamSubscription<PlayStoreModel> listenTo(String documentId, changed) {
+    reference.listenTo(documentId, changed);
+  }
 
   static Future<PlayStoreModel> refreshRelations(PlayStoreModel model) async {
 

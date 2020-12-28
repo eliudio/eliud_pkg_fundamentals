@@ -34,6 +34,7 @@ import 'package:eliud_core/tools/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
 typedef DividerModelTrigger(List<DividerModel> list);
+typedef DividerChanged(DividerModel value);
 
 abstract class DividerRepository {
   Future<DividerModel> add(DividerModel value);
@@ -48,6 +49,7 @@ abstract class DividerRepository {
 
   StreamSubscription<List<DividerModel>> listen(DividerModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel});
   StreamSubscription<List<DividerModel>> listenWithDetails(DividerModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel});
+  StreamSubscription<DividerModel> listenTo(String documentId, DividerChanged changed);
   void flush();
   
   String timeStampToString(dynamic timeStamp);

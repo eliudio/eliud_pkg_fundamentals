@@ -107,6 +107,17 @@ class DividerFirestore implements DividerRepository {
     });
   }
 
+  @override
+  StreamSubscription<DividerModel> listenTo(String documentId, DividerChanged changed) {
+    var stream = DividerCollection.document(documentId)
+        .snapshots()
+        .asyncMap((data) {
+      return _populateDocPlus(data);
+    });
+    return stream.listen((value) {
+      changed(value);
+    });
+  }
 
   Stream<List<DividerModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) {
     DocumentSnapshot lastDoc;

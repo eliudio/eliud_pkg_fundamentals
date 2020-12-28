@@ -103,6 +103,17 @@ class TutorialFirestore implements TutorialRepository {
     });
   }
 
+  @override
+  StreamSubscription<TutorialModel> listenTo(String documentId, TutorialChanged changed) {
+    var stream = TutorialCollection.document(documentId)
+        .snapshots()
+        .asyncMap((data) {
+      return _populateDocPlus(data);
+    });
+    return stream.listen((value) {
+      changed(value);
+    });
+  }
 
   Stream<List<TutorialModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) {
     DocumentSnapshot lastDoc;

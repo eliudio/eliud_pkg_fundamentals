@@ -114,6 +114,10 @@ class DocumentCache implements DocumentRepository {
     return reference.listenWithDetails(trigger, currentMember: currentMember, orderBy: orderBy, descending: descending, privilegeLevel: privilegeLevel, );
   }
 
+  @override
+  StreamSubscription<DocumentModel> listenTo(String documentId, changed) {
+    reference.listenTo(documentId, changed);
+  }
 
   static Future<DocumentModel> refreshRelations(DocumentModel model) async {
 

@@ -118,6 +118,18 @@ class DividerJsFirestore implements DividerRepository {
     });
   }
 
+  @override
+  StreamSubscription<DividerModel> listenTo(String documentId, DividerChanged changed) {
+    var stream = getCollection().doc(documentId)
+        .onSnapshot
+        .asyncMap((data) {
+      return _populateDocPlus(data);
+    });
+    return stream.listen((value) {
+      changed(value);
+    });
+  }
+
   Stream<List<DividerModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) {
     DocumentSnapshot lastDoc;
     Stream<List<DividerModel>> _values = getQuery(dividerCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId)

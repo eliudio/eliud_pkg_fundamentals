@@ -30,6 +30,7 @@ import 'package:eliud_core/tools/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
 typedef LinkModelTrigger(List<LinkModel> list);
+typedef LinkChanged(LinkModel value);
 
 abstract class LinkRepository {
   Future<LinkModel> add(LinkModel value);
@@ -44,6 +45,7 @@ abstract class LinkRepository {
 
   StreamSubscription<List<LinkModel>> listen(LinkModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel});
   StreamSubscription<List<LinkModel>> listenWithDetails(LinkModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel});
+  StreamSubscription<LinkModel> listenTo(String documentId, LinkChanged changed);
   void flush();
   
   String timeStampToString(dynamic timeStamp);

@@ -118,6 +118,18 @@ class PresentationJsFirestore implements PresentationRepository {
     });
   }
 
+  @override
+  StreamSubscription<PresentationModel> listenTo(String documentId, PresentationChanged changed) {
+    var stream = getCollection().doc(documentId)
+        .onSnapshot
+        .asyncMap((data) {
+      return _populateDocPlus(data);
+    });
+    return stream.listen((value) {
+      changed(value);
+    });
+  }
+
   Stream<List<PresentationModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) {
     DocumentSnapshot lastDoc;
     Stream<List<PresentationModel>> _values = getQuery(presentationCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, appId: appId)

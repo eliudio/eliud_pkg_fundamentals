@@ -107,6 +107,17 @@ class DocumentFirestore implements DocumentRepository {
     });
   }
 
+  @override
+  StreamSubscription<DocumentModel> listenTo(String documentId, DocumentChanged changed) {
+    var stream = DocumentCollection.document(documentId)
+        .snapshots()
+        .asyncMap((data) {
+      return _populateDocPlus(data);
+    });
+    return stream.listen((value) {
+      changed(value);
+    });
+  }
 
   Stream<List<DocumentModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) {
     DocumentSnapshot lastDoc;

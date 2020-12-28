@@ -34,6 +34,7 @@ import 'package:eliud_core/tools/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
 typedef SectionModelTrigger(List<SectionModel> list);
+typedef SectionChanged(SectionModel value);
 
 abstract class SectionRepository {
   Future<SectionModel> add(SectionModel value);
@@ -48,6 +49,7 @@ abstract class SectionRepository {
 
   StreamSubscription<List<SectionModel>> listen(SectionModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel});
   StreamSubscription<List<SectionModel>> listenWithDetails(SectionModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel});
+  StreamSubscription<SectionModel> listenTo(String documentId, SectionChanged changed);
   void flush();
   
   String timeStampToString(dynamic timeStamp);

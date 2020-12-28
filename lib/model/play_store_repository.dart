@@ -34,6 +34,7 @@ import 'package:eliud_core/tools/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
 typedef PlayStoreModelTrigger(List<PlayStoreModel> list);
+typedef PlayStoreChanged(PlayStoreModel value);
 
 abstract class PlayStoreRepository {
   Future<PlayStoreModel> add(PlayStoreModel value);
@@ -48,6 +49,7 @@ abstract class PlayStoreRepository {
 
   StreamSubscription<List<PlayStoreModel>> listen(PlayStoreModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel});
   StreamSubscription<List<PlayStoreModel>> listenWithDetails(PlayStoreModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel});
+  StreamSubscription<PlayStoreModel> listenTo(String documentId, PlayStoreChanged changed);
   void flush();
   
   String timeStampToString(dynamic timeStamp);

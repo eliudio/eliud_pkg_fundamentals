@@ -107,6 +107,17 @@ class SimpleImageFirestore implements SimpleImageRepository {
     });
   }
 
+  @override
+  StreamSubscription<SimpleImageModel> listenTo(String documentId, SimpleImageChanged changed) {
+    var stream = SimpleImageCollection.document(documentId)
+        .snapshots()
+        .asyncMap((data) {
+      return _populateDocPlus(data);
+    });
+    return stream.listen((value) {
+      changed(value);
+    });
+  }
 
   Stream<List<SimpleImageModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel }) {
     DocumentSnapshot lastDoc;

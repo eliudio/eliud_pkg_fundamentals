@@ -114,6 +114,10 @@ class ListedItemCache implements ListedItemRepository {
     return reference.listenWithDetails(trigger, currentMember: currentMember, orderBy: orderBy, descending: descending, privilegeLevel: privilegeLevel, );
   }
 
+  @override
+  StreamSubscription<ListedItemModel> listenTo(String documentId, changed) {
+    reference.listenTo(documentId, changed);
+  }
 
   static Future<ListedItemModel> refreshRelations(ListedItemModel model) async {
 

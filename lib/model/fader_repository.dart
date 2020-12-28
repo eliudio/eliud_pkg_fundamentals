@@ -30,6 +30,7 @@ import 'package:eliud_core/tools/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
 typedef FaderModelTrigger(List<FaderModel> list);
+typedef FaderChanged(FaderModel value);
 
 abstract class FaderRepository {
   Future<FaderModel> add(FaderModel value);
@@ -44,6 +45,7 @@ abstract class FaderRepository {
 
   StreamSubscription<List<FaderModel>> listen(FaderModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel});
   StreamSubscription<List<FaderModel>> listenWithDetails(FaderModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel});
+  StreamSubscription<FaderModel> listenTo(String documentId, FaderChanged changed);
   void flush();
   
   String timeStampToString(dynamic timeStamp);
