@@ -64,44 +64,26 @@ class DividerFirestore implements DividerRepository {
     });
   }
 
-  StreamSubscription<List<DividerModel>> listen(DividerModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery}) {
+  StreamSubscription<List<DividerModel>> listen(DividerModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
     Stream<List<DividerModel>> stream;
-    if (orderBy == null) {
-       stream = DividerCollection.snapshots().map((data) {
-        Iterable<DividerModel> dividers  = data.documents.map((doc) {
-          DividerModel value = _populateDoc(doc);
-          return value;
-        }).toList();
-        return dividers;
-      });
-    } else {
-      stream = DividerCollection.orderBy(orderBy, descending: descending).snapshots().map((data) {
-        Iterable<DividerModel> dividers  = data.documents.map((doc) {
-          DividerModel value = _populateDoc(doc);
-          return value;
-        }).toList();
-        return dividers;
-      });
-  
-    }
+    stream = getQuery(DividerCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((data) {
+      Iterable<DividerModel> dividers  = data.documents.map((doc) {
+        DividerModel value = _populateDoc(doc);
+        return value;
+      }).toList();
+      return dividers;
+    });
     return stream.listen((listOfDividerModels) {
       trigger(listOfDividerModels);
     });
   }
 
-  StreamSubscription<List<DividerModel>> listenWithDetails(DividerModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery}) {
+  StreamSubscription<List<DividerModel>> listenWithDetails(DividerModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
     Stream<List<DividerModel>> stream;
-    if (orderBy == null) {
-      stream = DividerCollection.snapshots()
-          .asyncMap((data) async {
-        return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    } else {
-      stream = DividerCollection.orderBy(orderBy, descending: descending).snapshots()
-          .asyncMap((data) async {
-        return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    }
+    stream = getQuery(DividerCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots()
+        .asyncMap((data) async {
+      return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
+    });
 
     return stream.listen((listOfDividerModels) {
       trigger(listOfDividerModels);

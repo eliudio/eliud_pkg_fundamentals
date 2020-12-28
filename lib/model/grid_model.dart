@@ -92,7 +92,8 @@ class GridModel {
           appId: entity.appId, 
           title: entity.title, 
           bodyComponents: 
-            entity. bodyComponents
+            entity.bodyComponents == null ? null :
+            entity.bodyComponents
             .map((item) => BodyComponentModel.fromEntity(newRandomKey(), item))
             .toList(), 
     );
@@ -115,7 +116,7 @@ class GridModel {
           appId: entity.appId, 
           title: entity.title, 
           bodyComponents: 
-            new List<BodyComponentModel>.from(await Future.wait(entity. bodyComponents
+            entity. bodyComponents == null ? null : new List<BodyComponentModel>.from(await Future.wait(entity. bodyComponents
             .map((item) => BodyComponentModel.fromEntityPlus(newRandomKey(), item, appId: appId))
             .toList())), 
           gridView: gridViewHolder, 

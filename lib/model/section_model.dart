@@ -132,7 +132,8 @@ class SectionModel {
           imageAlignment: toSectionImageAlignment(entity.imageAlignment), 
           imageWidth: entity.imageWidth, 
           links: 
-            entity. links
+            entity.links == null ? null :
+            entity.links
             .map((item) => LinkModel.fromEntity(newRandomKey(), item))
             .toList(), 
     );
@@ -159,7 +160,7 @@ class SectionModel {
           imageAlignment: toSectionImageAlignment(entity.imageAlignment), 
           imageWidth: entity.imageWidth, 
           links: 
-            new List<LinkModel>.from(await Future.wait(entity. links
+            entity. links == null ? null : new List<LinkModel>.from(await Future.wait(entity. links
             .map((item) => LinkModel.fromEntityPlus(newRandomKey(), item, appId: appId))
             .toList())), 
     );

@@ -64,44 +64,26 @@ class SimpleImageFirestore implements SimpleImageRepository {
     });
   }
 
-  StreamSubscription<List<SimpleImageModel>> listen(SimpleImageModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery}) {
+  StreamSubscription<List<SimpleImageModel>> listen(SimpleImageModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
     Stream<List<SimpleImageModel>> stream;
-    if (orderBy == null) {
-       stream = SimpleImageCollection.snapshots().map((data) {
-        Iterable<SimpleImageModel> simpleImages  = data.documents.map((doc) {
-          SimpleImageModel value = _populateDoc(doc);
-          return value;
-        }).toList();
-        return simpleImages;
-      });
-    } else {
-      stream = SimpleImageCollection.orderBy(orderBy, descending: descending).snapshots().map((data) {
-        Iterable<SimpleImageModel> simpleImages  = data.documents.map((doc) {
-          SimpleImageModel value = _populateDoc(doc);
-          return value;
-        }).toList();
-        return simpleImages;
-      });
-  
-    }
+    stream = getQuery(SimpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((data) {
+      Iterable<SimpleImageModel> simpleImages  = data.documents.map((doc) {
+        SimpleImageModel value = _populateDoc(doc);
+        return value;
+      }).toList();
+      return simpleImages;
+    });
     return stream.listen((listOfSimpleImageModels) {
       trigger(listOfSimpleImageModels);
     });
   }
 
-  StreamSubscription<List<SimpleImageModel>> listenWithDetails(SimpleImageModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery}) {
+  StreamSubscription<List<SimpleImageModel>> listenWithDetails(SimpleImageModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
     Stream<List<SimpleImageModel>> stream;
-    if (orderBy == null) {
-      stream = SimpleImageCollection.snapshots()
-          .asyncMap((data) async {
-        return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    } else {
-      stream = SimpleImageCollection.orderBy(orderBy, descending: descending).snapshots()
-          .asyncMap((data) async {
-        return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    }
+    stream = getQuery(SimpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots()
+        .asyncMap((data) async {
+      return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
+    });
 
     return stream.listen((listOfSimpleImageModels) {
       trigger(listOfSimpleImageModels);

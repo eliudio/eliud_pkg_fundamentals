@@ -60,44 +60,26 @@ class FaderFirestore implements FaderRepository {
     });
   }
 
-  StreamSubscription<List<FaderModel>> listen(FaderModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery}) {
+  StreamSubscription<List<FaderModel>> listen(FaderModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
     Stream<List<FaderModel>> stream;
-    if (orderBy == null) {
-       stream = FaderCollection.snapshots().map((data) {
-        Iterable<FaderModel> faders  = data.documents.map((doc) {
-          FaderModel value = _populateDoc(doc);
-          return value;
-        }).toList();
-        return faders;
-      });
-    } else {
-      stream = FaderCollection.orderBy(orderBy, descending: descending).snapshots().map((data) {
-        Iterable<FaderModel> faders  = data.documents.map((doc) {
-          FaderModel value = _populateDoc(doc);
-          return value;
-        }).toList();
-        return faders;
-      });
-  
-    }
+    stream = getQuery(FaderCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((data) {
+      Iterable<FaderModel> faders  = data.documents.map((doc) {
+        FaderModel value = _populateDoc(doc);
+        return value;
+      }).toList();
+      return faders;
+    });
     return stream.listen((listOfFaderModels) {
       trigger(listOfFaderModels);
     });
   }
 
-  StreamSubscription<List<FaderModel>> listenWithDetails(FaderModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery}) {
+  StreamSubscription<List<FaderModel>> listenWithDetails(FaderModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
     Stream<List<FaderModel>> stream;
-    if (orderBy == null) {
-      stream = FaderCollection.snapshots()
-          .asyncMap((data) async {
-        return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    } else {
-      stream = FaderCollection.orderBy(orderBy, descending: descending).snapshots()
-          .asyncMap((data) async {
-        return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    }
+    stream = getQuery(FaderCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots()
+        .asyncMap((data) async {
+      return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
+    });
 
     return stream.listen((listOfFaderModels) {
       trigger(listOfFaderModels);

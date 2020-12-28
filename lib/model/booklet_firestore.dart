@@ -60,44 +60,26 @@ class BookletFirestore implements BookletRepository {
     });
   }
 
-  StreamSubscription<List<BookletModel>> listen(BookletModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery}) {
+  StreamSubscription<List<BookletModel>> listen(BookletModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
     Stream<List<BookletModel>> stream;
-    if (orderBy == null) {
-       stream = BookletCollection.snapshots().map((data) {
-        Iterable<BookletModel> booklets  = data.documents.map((doc) {
-          BookletModel value = _populateDoc(doc);
-          return value;
-        }).toList();
-        return booklets;
-      });
-    } else {
-      stream = BookletCollection.orderBy(orderBy, descending: descending).snapshots().map((data) {
-        Iterable<BookletModel> booklets  = data.documents.map((doc) {
-          BookletModel value = _populateDoc(doc);
-          return value;
-        }).toList();
-        return booklets;
-      });
-  
-    }
+    stream = getQuery(BookletCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((data) {
+      Iterable<BookletModel> booklets  = data.documents.map((doc) {
+        BookletModel value = _populateDoc(doc);
+        return value;
+      }).toList();
+      return booklets;
+    });
     return stream.listen((listOfBookletModels) {
       trigger(listOfBookletModels);
     });
   }
 
-  StreamSubscription<List<BookletModel>> listenWithDetails(BookletModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery}) {
+  StreamSubscription<List<BookletModel>> listenWithDetails(BookletModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
     Stream<List<BookletModel>> stream;
-    if (orderBy == null) {
-      stream = BookletCollection.snapshots()
-          .asyncMap((data) async {
-        return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    } else {
-      stream = BookletCollection.orderBy(orderBy, descending: descending).snapshots()
-          .asyncMap((data) async {
-        return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    }
+    stream = getQuery(BookletCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots()
+        .asyncMap((data) async {
+      return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
+    });
 
     return stream.listen((listOfBookletModels) {
       trigger(listOfBookletModels);

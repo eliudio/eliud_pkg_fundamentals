@@ -218,12 +218,12 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
     }
     
     @override
-    StreamSubscription<List<DocumentItemModel>> listen(trigger, { String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery }) {
+    StreamSubscription<List<DocumentItemModel>> listen(trigger, { String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery }) {
       return theValues.listen((theList) => trigger(theList));
     }
   
     @override
-    StreamSubscription<List<DocumentItemModel>> listenWithDetails(trigger, { String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery }) {
+    StreamSubscription<List<DocumentItemModel>> listenWithDetails(trigger, { String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery }) {
       return theValues.listen((theList) => trigger(theList));
     }
     
@@ -313,12 +313,12 @@ class LinkInMemoryRepository implements LinkRepository {
     }
     
     @override
-    StreamSubscription<List<LinkModel>> listen(trigger, { String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery }) {
+    StreamSubscription<List<LinkModel>> listen(trigger, { String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery }) {
       return theValues.listen((theList) => trigger(theList));
     }
   
     @override
-    StreamSubscription<List<LinkModel>> listenWithDetails(trigger, { String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery }) {
+    StreamSubscription<List<LinkModel>> listenWithDetails(trigger, { String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery }) {
       return theValues.listen((theList) => trigger(theList));
     }
     
@@ -408,12 +408,12 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
     }
     
     @override
-    StreamSubscription<List<ListedItemModel>> listen(trigger, { String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery }) {
+    StreamSubscription<List<ListedItemModel>> listen(trigger, { String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery }) {
       return theValues.listen((theList) => trigger(theList));
     }
   
     @override
-    StreamSubscription<List<ListedItemModel>> listenWithDetails(trigger, { String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery }) {
+    StreamSubscription<List<ListedItemModel>> listenWithDetails(trigger, { String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery }) {
       return theValues.listen((theList) => trigger(theList));
     }
     
@@ -503,12 +503,12 @@ class SectionInMemoryRepository implements SectionRepository {
     }
     
     @override
-    StreamSubscription<List<SectionModel>> listen(trigger, { String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery }) {
+    StreamSubscription<List<SectionModel>> listen(trigger, { String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery }) {
       return theValues.listen((theList) => trigger(theList));
     }
   
     @override
-    StreamSubscription<List<SectionModel>> listenWithDetails(trigger, { String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery }) {
+    StreamSubscription<List<SectionModel>> listenWithDetails(trigger, { String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery }) {
       return theValues.listen((theList) => trigger(theList));
     }
     
@@ -598,12 +598,12 @@ class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
     }
     
     @override
-    StreamSubscription<List<TutorialEntryModel>> listen(trigger, { String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery }) {
+    StreamSubscription<List<TutorialEntryModel>> listen(trigger, { String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery }) {
       return theValues.listen((theList) => trigger(theList));
     }
   
     @override
-    StreamSubscription<List<TutorialEntryModel>> listenWithDetails(trigger, { String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery }) {
+    StreamSubscription<List<TutorialEntryModel>> listenWithDetails(trigger, { String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery }) {
       return theValues.listen((theList) => trigger(theList));
     }
     

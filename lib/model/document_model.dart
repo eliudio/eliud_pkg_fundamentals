@@ -123,7 +123,8 @@ class DocumentModel {
           content: entity.content, 
           padding: entity.padding, 
           images: 
-            entity. images
+            entity.images == null ? null :
+            entity.images
             .map((item) => DocumentItemModel.fromEntity(newRandomKey(), item))
             .toList(), 
     );
@@ -149,7 +150,7 @@ class DocumentModel {
           content: entity.content, 
           padding: entity.padding, 
           images: 
-            new List<DocumentItemModel>.from(await Future.wait(entity. images
+            entity. images == null ? null : new List<DocumentItemModel>.from(await Future.wait(entity. images
             .map((item) => DocumentItemModel.fromEntityPlus(newRandomKey(), item, appId: appId))
             .toList())), 
           background: backgroundHolder, 

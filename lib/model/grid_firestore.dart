@@ -64,44 +64,26 @@ class GridFirestore implements GridRepository {
     });
   }
 
-  StreamSubscription<List<GridModel>> listen(GridModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery}) {
+  StreamSubscription<List<GridModel>> listen(GridModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
     Stream<List<GridModel>> stream;
-    if (orderBy == null) {
-       stream = GridCollection.snapshots().map((data) {
-        Iterable<GridModel> grids  = data.documents.map((doc) {
-          GridModel value = _populateDoc(doc);
-          return value;
-        }).toList();
-        return grids;
-      });
-    } else {
-      stream = GridCollection.orderBy(orderBy, descending: descending).snapshots().map((data) {
-        Iterable<GridModel> grids  = data.documents.map((doc) {
-          GridModel value = _populateDoc(doc);
-          return value;
-        }).toList();
-        return grids;
-      });
-  
-    }
+    stream = getQuery(GridCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((data) {
+      Iterable<GridModel> grids  = data.documents.map((doc) {
+        GridModel value = _populateDoc(doc);
+        return value;
+      }).toList();
+      return grids;
+    });
     return stream.listen((listOfGridModels) {
       trigger(listOfGridModels);
     });
   }
 
-  StreamSubscription<List<GridModel>> listenWithDetails(GridModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery}) {
+  StreamSubscription<List<GridModel>> listenWithDetails(GridModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
     Stream<List<GridModel>> stream;
-    if (orderBy == null) {
-      stream = GridCollection.snapshots()
-          .asyncMap((data) async {
-        return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    } else {
-      stream = GridCollection.orderBy(orderBy, descending: descending).snapshots()
-          .asyncMap((data) async {
-        return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    }
+    stream = getQuery(GridCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots()
+        .asyncMap((data) async {
+      return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
+    });
 
     return stream.listen((listOfGridModels) {
       trigger(listOfGridModels);

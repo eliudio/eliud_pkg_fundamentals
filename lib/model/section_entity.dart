@@ -45,7 +45,11 @@ class SectionEntity {
   static SectionEntity fromMap(Map map) {
     if (map == null) return null;
 
-    final linksList = (map['links'] as List<dynamic>)
+    var linksFromMap;
+    linksFromMap = map['links'];
+    var linksList;
+    if (linksFromMap != null)
+      linksList = (map['links'] as List<dynamic>)
         .map((dynamic item) =>
         LinkEntity.fromMap(item as Map))
         .toList();

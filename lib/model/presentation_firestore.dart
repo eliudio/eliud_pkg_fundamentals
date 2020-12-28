@@ -64,44 +64,26 @@ class PresentationFirestore implements PresentationRepository {
     });
   }
 
-  StreamSubscription<List<PresentationModel>> listen(PresentationModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery}) {
+  StreamSubscription<List<PresentationModel>> listen(PresentationModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
     Stream<List<PresentationModel>> stream;
-    if (orderBy == null) {
-       stream = PresentationCollection.snapshots().map((data) {
-        Iterable<PresentationModel> presentations  = data.documents.map((doc) {
-          PresentationModel value = _populateDoc(doc);
-          return value;
-        }).toList();
-        return presentations;
-      });
-    } else {
-      stream = PresentationCollection.orderBy(orderBy, descending: descending).snapshots().map((data) {
-        Iterable<PresentationModel> presentations  = data.documents.map((doc) {
-          PresentationModel value = _populateDoc(doc);
-          return value;
-        }).toList();
-        return presentations;
-      });
-  
-    }
+    stream = getQuery(PresentationCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((data) {
+      Iterable<PresentationModel> presentations  = data.documents.map((doc) {
+        PresentationModel value = _populateDoc(doc);
+        return value;
+      }).toList();
+      return presentations;
+    });
     return stream.listen((listOfPresentationModels) {
       trigger(listOfPresentationModels);
     });
   }
 
-  StreamSubscription<List<PresentationModel>> listenWithDetails(PresentationModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery}) {
+  StreamSubscription<List<PresentationModel>> listenWithDetails(PresentationModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
     Stream<List<PresentationModel>> stream;
-    if (orderBy == null) {
-      stream = PresentationCollection.snapshots()
-          .asyncMap((data) async {
-        return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    } else {
-      stream = PresentationCollection.orderBy(orderBy, descending: descending).snapshots()
-          .asyncMap((data) async {
-        return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    }
+    stream = getQuery(PresentationCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots()
+        .asyncMap((data) async {
+      return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
+    });
 
     return stream.listen((listOfPresentationModels) {
       trigger(listOfPresentationModels);

@@ -45,7 +45,11 @@ class DocumentEntity {
   static DocumentEntity fromMap(Map map) {
     if (map == null) return null;
 
-    final imagesList = (map['images'] as List<dynamic>)
+    var imagesFromMap;
+    imagesFromMap = map['images'];
+    var imagesList;
+    if (imagesFromMap != null)
+      imagesList = (map['images'] as List<dynamic>)
         .map((dynamic item) =>
         DocumentItemEntity.fromMap(item as Map))
         .toList();

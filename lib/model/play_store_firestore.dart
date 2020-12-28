@@ -64,44 +64,26 @@ class PlayStoreFirestore implements PlayStoreRepository {
     });
   }
 
-  StreamSubscription<List<PlayStoreModel>> listen(PlayStoreModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery}) {
+  StreamSubscription<List<PlayStoreModel>> listen(PlayStoreModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
     Stream<List<PlayStoreModel>> stream;
-    if (orderBy == null) {
-       stream = PlayStoreCollection.snapshots().map((data) {
-        Iterable<PlayStoreModel> playStores  = data.documents.map((doc) {
-          PlayStoreModel value = _populateDoc(doc);
-          return value;
-        }).toList();
-        return playStores;
-      });
-    } else {
-      stream = PlayStoreCollection.orderBy(orderBy, descending: descending).snapshots().map((data) {
-        Iterable<PlayStoreModel> playStores  = data.documents.map((doc) {
-          PlayStoreModel value = _populateDoc(doc);
-          return value;
-        }).toList();
-        return playStores;
-      });
-  
-    }
+    stream = getQuery(PlayStoreCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((data) {
+      Iterable<PlayStoreModel> playStores  = data.documents.map((doc) {
+        PlayStoreModel value = _populateDoc(doc);
+        return value;
+      }).toList();
+      return playStores;
+    });
     return stream.listen((listOfPlayStoreModels) {
       trigger(listOfPlayStoreModels);
     });
   }
 
-  StreamSubscription<List<PlayStoreModel>> listenWithDetails(PlayStoreModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery}) {
+  StreamSubscription<List<PlayStoreModel>> listenWithDetails(PlayStoreModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
     Stream<List<PlayStoreModel>> stream;
-    if (orderBy == null) {
-      stream = PlayStoreCollection.snapshots()
-          .asyncMap((data) async {
-        return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    } else {
-      stream = PlayStoreCollection.orderBy(orderBy, descending: descending).snapshots()
-          .asyncMap((data) async {
-        return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    }
+    stream = getQuery(PlayStoreCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots()
+        .asyncMap((data) async {
+      return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
+    });
 
     return stream.listen((listOfPlayStoreModels) {
       trigger(listOfPlayStoreModels);

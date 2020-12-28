@@ -91,7 +91,8 @@ class TutorialModel {
           title: entity.title, 
           description: entity.description, 
           tutorialEntries: 
-            entity. tutorialEntries
+            entity.tutorialEntries == null ? null :
+            entity.tutorialEntries
             .map((item) => TutorialEntryModel.fromEntity(newRandomKey(), item))
             .toList(), 
     );
@@ -107,7 +108,7 @@ class TutorialModel {
           title: entity.title, 
           description: entity.description, 
           tutorialEntries: 
-            new List<TutorialEntryModel>.from(await Future.wait(entity. tutorialEntries
+            entity. tutorialEntries == null ? null : new List<TutorialEntryModel>.from(await Future.wait(entity. tutorialEntries
             .map((item) => TutorialEntryModel.fromEntityPlus(newRandomKey(), item, appId: appId))
             .toList())), 
     );

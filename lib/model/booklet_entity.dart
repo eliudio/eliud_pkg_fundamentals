@@ -40,7 +40,11 @@ class BookletEntity {
   static BookletEntity fromMap(Map map) {
     if (map == null) return null;
 
-    final sectionsList = (map['sections'] as List<dynamic>)
+    var sectionsFromMap;
+    sectionsFromMap = map['sections'];
+    var sectionsList;
+    if (sectionsFromMap != null)
+      sectionsList = (map['sections'] as List<dynamic>)
         .map((dynamic item) =>
         SectionEntity.fromMap(item as Map))
         .toList();

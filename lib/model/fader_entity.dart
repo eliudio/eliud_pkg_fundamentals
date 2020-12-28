@@ -42,7 +42,11 @@ class FaderEntity {
   static FaderEntity fromMap(Map map) {
     if (map == null) return null;
 
-    final itemsList = (map['items'] as List<dynamic>)
+    var itemsFromMap;
+    itemsFromMap = map['items'];
+    var itemsList;
+    if (itemsFromMap != null)
+      itemsList = (map['items'] as List<dynamic>)
         .map((dynamic item) =>
         ListedItemEntity.fromMap(item as Map))
         .toList();

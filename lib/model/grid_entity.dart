@@ -42,7 +42,11 @@ class GridEntity {
   static GridEntity fromMap(Map map) {
     if (map == null) return null;
 
-    final bodyComponentsList = (map['bodyComponents'] as List<dynamic>)
+    var bodyComponentsFromMap;
+    bodyComponentsFromMap = map['bodyComponents'];
+    var bodyComponentsList;
+    if (bodyComponentsFromMap != null)
+      bodyComponentsList = (map['bodyComponents'] as List<dynamic>)
         .map((dynamic item) =>
         BodyComponentEntity.fromMap(item as Map))
         .toList();

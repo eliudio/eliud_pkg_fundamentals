@@ -60,44 +60,26 @@ class TutorialFirestore implements TutorialRepository {
     });
   }
 
-  StreamSubscription<List<TutorialModel>> listen(TutorialModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery}) {
+  StreamSubscription<List<TutorialModel>> listen(TutorialModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
     Stream<List<TutorialModel>> stream;
-    if (orderBy == null) {
-       stream = TutorialCollection.snapshots().map((data) {
-        Iterable<TutorialModel> tutorials  = data.documents.map((doc) {
-          TutorialModel value = _populateDoc(doc);
-          return value;
-        }).toList();
-        return tutorials;
-      });
-    } else {
-      stream = TutorialCollection.orderBy(orderBy, descending: descending).snapshots().map((data) {
-        Iterable<TutorialModel> tutorials  = data.documents.map((doc) {
-          TutorialModel value = _populateDoc(doc);
-          return value;
-        }).toList();
-        return tutorials;
-      });
-  
-    }
+    stream = getQuery(TutorialCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((data) {
+      Iterable<TutorialModel> tutorials  = data.documents.map((doc) {
+        TutorialModel value = _populateDoc(doc);
+        return value;
+      }).toList();
+      return tutorials;
+    });
     return stream.listen((listOfTutorialModels) {
       trigger(listOfTutorialModels);
     });
   }
 
-  StreamSubscription<List<TutorialModel>> listenWithDetails(TutorialModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery}) {
+  StreamSubscription<List<TutorialModel>> listenWithDetails(TutorialModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
     Stream<List<TutorialModel>> stream;
-    if (orderBy == null) {
-      stream = TutorialCollection.snapshots()
-          .asyncMap((data) async {
-        return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    } else {
-      stream = TutorialCollection.orderBy(orderBy, descending: descending).snapshots()
-          .asyncMap((data) async {
-        return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    }
+    stream = getQuery(TutorialCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots()
+        .asyncMap((data) async {
+      return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
+    });
 
     return stream.listen((listOfTutorialModels) {
       trigger(listOfTutorialModels);

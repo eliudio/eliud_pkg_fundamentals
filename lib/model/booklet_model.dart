@@ -83,7 +83,8 @@ class BookletModel {
           appId: entity.appId, 
           name: entity.name, 
           sections: 
-            entity. sections
+            entity.sections == null ? null :
+            entity.sections
             .map((item) => SectionModel.fromEntity(newRandomKey(), item))
             .toList(), 
     );
@@ -97,7 +98,7 @@ class BookletModel {
           appId: entity.appId, 
           name: entity.name, 
           sections: 
-            new List<SectionModel>.from(await Future.wait(entity. sections
+            entity. sections == null ? null : new List<SectionModel>.from(await Future.wait(entity. sections
             .map((item) => SectionModel.fromEntityPlus(newRandomKey(), item, appId: appId))
             .toList())), 
     );

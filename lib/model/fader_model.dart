@@ -95,7 +95,8 @@ class FaderModel {
           animationMilliseconds: entity.animationMilliseconds, 
           imageSeconds: entity.imageSeconds, 
           items: 
-            entity. items
+            entity.items == null ? null :
+            entity.items
             .map((item) => ListedItemModel.fromEntity(newRandomKey(), item))
             .toList(), 
     );
@@ -111,7 +112,7 @@ class FaderModel {
           animationMilliseconds: entity.animationMilliseconds, 
           imageSeconds: entity.imageSeconds, 
           items: 
-            new List<ListedItemModel>.from(await Future.wait(entity. items
+            entity. items == null ? null : new List<ListedItemModel>.from(await Future.wait(entity. items
             .map((item) => ListedItemModel.fromEntityPlus(newRandomKey(), item, appId: appId))
             .toList())), 
     );

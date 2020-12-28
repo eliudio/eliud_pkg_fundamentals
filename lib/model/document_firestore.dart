@@ -64,44 +64,26 @@ class DocumentFirestore implements DocumentRepository {
     });
   }
 
-  StreamSubscription<List<DocumentModel>> listen(DocumentModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery}) {
+  StreamSubscription<List<DocumentModel>> listen(DocumentModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
     Stream<List<DocumentModel>> stream;
-    if (orderBy == null) {
-       stream = DocumentCollection.snapshots().map((data) {
-        Iterable<DocumentModel> documents  = data.documents.map((doc) {
-          DocumentModel value = _populateDoc(doc);
-          return value;
-        }).toList();
-        return documents;
-      });
-    } else {
-      stream = DocumentCollection.orderBy(orderBy, descending: descending).snapshots().map((data) {
-        Iterable<DocumentModel> documents  = data.documents.map((doc) {
-          DocumentModel value = _populateDoc(doc);
-          return value;
-        }).toList();
-        return documents;
-      });
-  
-    }
+    stream = getQuery(DocumentCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((data) {
+      Iterable<DocumentModel> documents  = data.documents.map((doc) {
+        DocumentModel value = _populateDoc(doc);
+        return value;
+      }).toList();
+      return documents;
+    });
     return stream.listen((listOfDocumentModels) {
       trigger(listOfDocumentModels);
     });
   }
 
-  StreamSubscription<List<DocumentModel>> listenWithDetails(DocumentModelTrigger trigger, {String currentMember, String orderBy, bool descending, int privilegeLevel, EliudQuery eliudQuery}) {
+  StreamSubscription<List<DocumentModel>> listenWithDetails(DocumentModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
     Stream<List<DocumentModel>> stream;
-    if (orderBy == null) {
-      stream = DocumentCollection.snapshots()
-          .asyncMap((data) async {
-        return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    } else {
-      stream = DocumentCollection.orderBy(orderBy, descending: descending).snapshots()
-          .asyncMap((data) async {
-        return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
-      });
-    }
+    stream = getQuery(DocumentCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots()
+        .asyncMap((data) async {
+      return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
+    });
 
     return stream.listen((listOfDocumentModels) {
       trigger(listOfDocumentModels);
