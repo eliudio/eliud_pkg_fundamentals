@@ -22,6 +22,7 @@ import 'package:eliud_pkg_fundamentals/model/section_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/section_list_state.dart';
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
@@ -29,15 +30,17 @@ class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
   final SectionRepository _sectionRepository;
   StreamSubscription _sectionsListSubscription;
   final AccessBloc accessBloc;
+  final EliudQuery eliudQuery;
 
-  SectionListBloc(this.accessBloc,{ @required SectionRepository sectionRepository })
+
+  SectionListBloc(this.accessBloc,{ this.eliudQuery, @required SectionRepository sectionRepository })
       : assert(sectionRepository != null),
       _sectionRepository = sectionRepository,
       super(SectionListLoading());
 
   Stream<SectionListState> _mapLoadSectionListToState({ String orderBy, bool descending }) async* {
     _sectionsListSubscription?.cancel();
-    _sectionsListSubscription = _sectionRepository.listen((list) => add(SectionListUpdated(value: list)), orderBy: orderBy, descending: descending, );
+    _sectionsListSubscription = _sectionRepository.listen((list) => add(SectionListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
   }
 
   Stream<SectionListState> _mapLoadSectionListWithDetailsToState() async* {

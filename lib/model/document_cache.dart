@@ -131,9 +131,12 @@ class DocumentCache implements DocumentRepository {
       } catch (_) {}
     }
 
-    List<DocumentItemModel> imagesHolder = List<DocumentItemModel>.from(await Future.wait(await model.images.map((element) async {
-      return await DocumentItemCache.refreshRelations(element);
-    }))).toList();
+    List<DocumentItemModel> imagesHolder;
+    if (model.images != null) {
+      imagesHolder = List<DocumentItemModel>.from(await Future.wait(await model.images.map((element) async {
+        return await DocumentItemCache.refreshRelations(element);
+      }))).toList();
+    }
 
     return model.copyWith(
         background: backgroundHolder,

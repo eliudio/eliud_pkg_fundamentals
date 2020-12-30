@@ -22,6 +22,7 @@ import 'package:eliud_pkg_fundamentals/model/fader_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_list_state.dart';
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
@@ -29,15 +30,17 @@ class FaderListBloc extends Bloc<FaderListEvent, FaderListState> {
   final FaderRepository _faderRepository;
   StreamSubscription _fadersListSubscription;
   final AccessBloc accessBloc;
+  final EliudQuery eliudQuery;
 
-  FaderListBloc(this.accessBloc,{ @required FaderRepository faderRepository })
+
+  FaderListBloc(this.accessBloc,{ this.eliudQuery, @required FaderRepository faderRepository })
       : assert(faderRepository != null),
       _faderRepository = faderRepository,
       super(FaderListLoading());
 
   Stream<FaderListState> _mapLoadFaderListToState({ String orderBy, bool descending }) async* {
     _fadersListSubscription?.cancel();
-    _fadersListSubscription = _faderRepository.listen((list) => add(FaderListUpdated(value: list)), orderBy: orderBy, descending: descending, );
+    _fadersListSubscription = _faderRepository.listen((list) => add(FaderListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
   }
 
   Stream<FaderListState> _mapLoadFaderListWithDetailsToState() async* {

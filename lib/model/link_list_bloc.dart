@@ -22,6 +22,7 @@ import 'package:eliud_pkg_fundamentals/model/link_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/link_list_state.dart';
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
@@ -29,15 +30,17 @@ class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
   final LinkRepository _linkRepository;
   StreamSubscription _linksListSubscription;
   final AccessBloc accessBloc;
+  final EliudQuery eliudQuery;
 
-  LinkListBloc(this.accessBloc,{ @required LinkRepository linkRepository })
+
+  LinkListBloc(this.accessBloc,{ this.eliudQuery, @required LinkRepository linkRepository })
       : assert(linkRepository != null),
       _linkRepository = linkRepository,
       super(LinkListLoading());
 
   Stream<LinkListState> _mapLoadLinkListToState({ String orderBy, bool descending }) async* {
     _linksListSubscription?.cancel();
-    _linksListSubscription = _linkRepository.listen((list) => add(LinkListUpdated(value: list)), orderBy: orderBy, descending: descending, );
+    _linksListSubscription = _linkRepository.listen((list) => add(LinkListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
   }
 
   Stream<LinkListState> _mapLoadLinkListWithDetailsToState() async* {

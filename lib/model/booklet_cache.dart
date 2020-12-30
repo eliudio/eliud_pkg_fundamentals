@@ -117,9 +117,12 @@ class BookletCache implements BookletRepository {
 
   static Future<BookletModel> refreshRelations(BookletModel model) async {
 
-    List<SectionModel> sectionsHolder = List<SectionModel>.from(await Future.wait(await model.sections.map((element) async {
-      return await SectionCache.refreshRelations(element);
-    }))).toList();
+    List<SectionModel> sectionsHolder;
+    if (model.sections != null) {
+      sectionsHolder = List<SectionModel>.from(await Future.wait(await model.sections.map((element) async {
+        return await SectionCache.refreshRelations(element);
+      }))).toList();
+    }
 
     return model.copyWith(
         sections: sectionsHolder,

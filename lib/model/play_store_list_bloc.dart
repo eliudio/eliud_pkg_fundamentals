@@ -22,6 +22,7 @@ import 'package:eliud_pkg_fundamentals/model/play_store_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/play_store_list_state.dart';
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
@@ -29,15 +30,17 @@ class PlayStoreListBloc extends Bloc<PlayStoreListEvent, PlayStoreListState> {
   final PlayStoreRepository _playStoreRepository;
   StreamSubscription _playStoresListSubscription;
   final AccessBloc accessBloc;
+  final EliudQuery eliudQuery;
 
-  PlayStoreListBloc(this.accessBloc,{ @required PlayStoreRepository playStoreRepository })
+
+  PlayStoreListBloc(this.accessBloc,{ this.eliudQuery, @required PlayStoreRepository playStoreRepository })
       : assert(playStoreRepository != null),
       _playStoreRepository = playStoreRepository,
       super(PlayStoreListLoading());
 
   Stream<PlayStoreListState> _mapLoadPlayStoreListToState({ String orderBy, bool descending }) async* {
     _playStoresListSubscription?.cancel();
-    _playStoresListSubscription = _playStoreRepository.listen((list) => add(PlayStoreListUpdated(value: list)), orderBy: orderBy, descending: descending, );
+    _playStoresListSubscription = _playStoreRepository.listen((list) => add(PlayStoreListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
   }
 
   Stream<PlayStoreListState> _mapLoadPlayStoreListWithDetailsToState() async* {

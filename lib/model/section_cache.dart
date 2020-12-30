@@ -131,9 +131,12 @@ class SectionCache implements SectionRepository {
       } catch (_) {}
     }
 
-    List<LinkModel> linksHolder = List<LinkModel>.from(await Future.wait(await model.links.map((element) async {
-      return await LinkCache.refreshRelations(element);
-    }))).toList();
+    List<LinkModel> linksHolder;
+    if (model.links != null) {
+      linksHolder = List<LinkModel>.from(await Future.wait(await model.links.map((element) async {
+        return await LinkCache.refreshRelations(element);
+      }))).toList();
+    }
 
     return model.copyWith(
         image: imageHolder,

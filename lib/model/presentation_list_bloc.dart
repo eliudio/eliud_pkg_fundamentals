@@ -22,6 +22,7 @@ import 'package:eliud_pkg_fundamentals/model/presentation_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_list_state.dart';
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
@@ -29,15 +30,17 @@ class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListS
   final PresentationRepository _presentationRepository;
   StreamSubscription _presentationsListSubscription;
   final AccessBloc accessBloc;
+  final EliudQuery eliudQuery;
 
-  PresentationListBloc(this.accessBloc,{ @required PresentationRepository presentationRepository })
+
+  PresentationListBloc(this.accessBloc,{ this.eliudQuery, @required PresentationRepository presentationRepository })
       : assert(presentationRepository != null),
       _presentationRepository = presentationRepository,
       super(PresentationListLoading());
 
   Stream<PresentationListState> _mapLoadPresentationListToState({ String orderBy, bool descending }) async* {
     _presentationsListSubscription?.cancel();
-    _presentationsListSubscription = _presentationRepository.listen((list) => add(PresentationListUpdated(value: list)), orderBy: orderBy, descending: descending, );
+    _presentationsListSubscription = _presentationRepository.listen((list) => add(PresentationListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
   }
 
   Stream<PresentationListState> _mapLoadPresentationListWithDetailsToState() async* {

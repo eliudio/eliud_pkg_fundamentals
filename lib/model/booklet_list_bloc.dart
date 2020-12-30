@@ -22,6 +22,7 @@ import 'package:eliud_pkg_fundamentals/model/booklet_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_list_state.dart';
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
@@ -29,15 +30,17 @@ class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
   final BookletRepository _bookletRepository;
   StreamSubscription _bookletsListSubscription;
   final AccessBloc accessBloc;
+  final EliudQuery eliudQuery;
 
-  BookletListBloc(this.accessBloc,{ @required BookletRepository bookletRepository })
+
+  BookletListBloc(this.accessBloc,{ this.eliudQuery, @required BookletRepository bookletRepository })
       : assert(bookletRepository != null),
       _bookletRepository = bookletRepository,
       super(BookletListLoading());
 
   Stream<BookletListState> _mapLoadBookletListToState({ String orderBy, bool descending }) async* {
     _bookletsListSubscription?.cancel();
-    _bookletsListSubscription = _bookletRepository.listen((list) => add(BookletListUpdated(value: list)), orderBy: orderBy, descending: descending, );
+    _bookletsListSubscription = _bookletRepository.listen((list) => add(BookletListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
   }
 
   Stream<BookletListState> _mapLoadBookletListWithDetailsToState() async* {

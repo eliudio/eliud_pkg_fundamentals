@@ -22,6 +22,7 @@ import 'package:eliud_pkg_fundamentals/model/simple_image_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_list_state.dart';
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
@@ -29,15 +30,17 @@ class SimpleImageListBloc extends Bloc<SimpleImageListEvent, SimpleImageListStat
   final SimpleImageRepository _simpleImageRepository;
   StreamSubscription _simpleImagesListSubscription;
   final AccessBloc accessBloc;
+  final EliudQuery eliudQuery;
 
-  SimpleImageListBloc(this.accessBloc,{ @required SimpleImageRepository simpleImageRepository })
+
+  SimpleImageListBloc(this.accessBloc,{ this.eliudQuery, @required SimpleImageRepository simpleImageRepository })
       : assert(simpleImageRepository != null),
       _simpleImageRepository = simpleImageRepository,
       super(SimpleImageListLoading());
 
   Stream<SimpleImageListState> _mapLoadSimpleImageListToState({ String orderBy, bool descending }) async* {
     _simpleImagesListSubscription?.cancel();
-    _simpleImagesListSubscription = _simpleImageRepository.listen((list) => add(SimpleImageListUpdated(value: list)), orderBy: orderBy, descending: descending, );
+    _simpleImagesListSubscription = _simpleImageRepository.listen((list) => add(SimpleImageListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
   }
 
   Stream<SimpleImageListState> _mapLoadSimpleImageListWithDetailsToState() async* {

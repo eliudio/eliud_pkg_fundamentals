@@ -22,6 +22,7 @@ import 'package:eliud_pkg_fundamentals/model/tutorial_entry_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_entry_list_state.dart';
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
@@ -29,15 +30,17 @@ class TutorialEntryListBloc extends Bloc<TutorialEntryListEvent, TutorialEntryLi
   final TutorialEntryRepository _tutorialEntryRepository;
   StreamSubscription _tutorialEntrysListSubscription;
   final AccessBloc accessBloc;
+  final EliudQuery eliudQuery;
 
-  TutorialEntryListBloc(this.accessBloc,{ @required TutorialEntryRepository tutorialEntryRepository })
+
+  TutorialEntryListBloc(this.accessBloc,{ this.eliudQuery, @required TutorialEntryRepository tutorialEntryRepository })
       : assert(tutorialEntryRepository != null),
       _tutorialEntryRepository = tutorialEntryRepository,
       super(TutorialEntryListLoading());
 
   Stream<TutorialEntryListState> _mapLoadTutorialEntryListToState({ String orderBy, bool descending }) async* {
     _tutorialEntrysListSubscription?.cancel();
-    _tutorialEntrysListSubscription = _tutorialEntryRepository.listen((list) => add(TutorialEntryListUpdated(value: list)), orderBy: orderBy, descending: descending, );
+    _tutorialEntrysListSubscription = _tutorialEntryRepository.listen((list) => add(TutorialEntryListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
   }
 
   Stream<TutorialEntryListState> _mapLoadTutorialEntryListWithDetailsToState() async* {

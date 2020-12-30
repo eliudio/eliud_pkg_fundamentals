@@ -22,6 +22,7 @@ import 'package:eliud_pkg_fundamentals/model/tutorial_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_list_state.dart';
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
@@ -29,15 +30,17 @@ class TutorialListBloc extends Bloc<TutorialListEvent, TutorialListState> {
   final TutorialRepository _tutorialRepository;
   StreamSubscription _tutorialsListSubscription;
   final AccessBloc accessBloc;
+  final EliudQuery eliudQuery;
 
-  TutorialListBloc(this.accessBloc,{ @required TutorialRepository tutorialRepository })
+
+  TutorialListBloc(this.accessBloc,{ this.eliudQuery, @required TutorialRepository tutorialRepository })
       : assert(tutorialRepository != null),
       _tutorialRepository = tutorialRepository,
       super(TutorialListLoading());
 
   Stream<TutorialListState> _mapLoadTutorialListToState({ String orderBy, bool descending }) async* {
     _tutorialsListSubscription?.cancel();
-    _tutorialsListSubscription = _tutorialRepository.listen((list) => add(TutorialListUpdated(value: list)), orderBy: orderBy, descending: descending, );
+    _tutorialsListSubscription = _tutorialRepository.listen((list) => add(TutorialListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
   }
 
   Stream<TutorialListState> _mapLoadTutorialListWithDetailsToState() async* {

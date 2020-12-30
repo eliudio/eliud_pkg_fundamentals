@@ -117,9 +117,12 @@ class FaderCache implements FaderRepository {
 
   static Future<FaderModel> refreshRelations(FaderModel model) async {
 
-    List<ListedItemModel> itemsHolder = List<ListedItemModel>.from(await Future.wait(await model.items.map((element) async {
-      return await ListedItemCache.refreshRelations(element);
-    }))).toList();
+    List<ListedItemModel> itemsHolder;
+    if (model.items != null) {
+      itemsHolder = List<ListedItemModel>.from(await Future.wait(await model.items.map((element) async {
+        return await ListedItemCache.refreshRelations(element);
+      }))).toList();
+    }
 
     return model.copyWith(
         items: itemsHolder,

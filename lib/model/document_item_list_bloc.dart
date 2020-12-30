@@ -22,6 +22,7 @@ import 'package:eliud_pkg_fundamentals/model/document_item_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/document_item_list_state.dart';
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
@@ -29,15 +30,17 @@ class DocumentItemListBloc extends Bloc<DocumentItemListEvent, DocumentItemListS
   final DocumentItemRepository _documentItemRepository;
   StreamSubscription _documentItemsListSubscription;
   final AccessBloc accessBloc;
+  final EliudQuery eliudQuery;
 
-  DocumentItemListBloc(this.accessBloc,{ @required DocumentItemRepository documentItemRepository })
+
+  DocumentItemListBloc(this.accessBloc,{ this.eliudQuery, @required DocumentItemRepository documentItemRepository })
       : assert(documentItemRepository != null),
       _documentItemRepository = documentItemRepository,
       super(DocumentItemListLoading());
 
   Stream<DocumentItemListState> _mapLoadDocumentItemListToState({ String orderBy, bool descending }) async* {
     _documentItemsListSubscription?.cancel();
-    _documentItemsListSubscription = _documentItemRepository.listen((list) => add(DocumentItemListUpdated(value: list)), orderBy: orderBy, descending: descending, );
+    _documentItemsListSubscription = _documentItemRepository.listen((list) => add(DocumentItemListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
   }
 
   Stream<DocumentItemListState> _mapLoadDocumentItemListWithDetailsToState() async* {

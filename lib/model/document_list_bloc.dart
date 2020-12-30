@@ -22,6 +22,7 @@ import 'package:eliud_pkg_fundamentals/model/document_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/document_list_state.dart';
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
@@ -29,15 +30,17 @@ class DocumentListBloc extends Bloc<DocumentListEvent, DocumentListState> {
   final DocumentRepository _documentRepository;
   StreamSubscription _documentsListSubscription;
   final AccessBloc accessBloc;
+  final EliudQuery eliudQuery;
 
-  DocumentListBloc(this.accessBloc,{ @required DocumentRepository documentRepository })
+
+  DocumentListBloc(this.accessBloc,{ this.eliudQuery, @required DocumentRepository documentRepository })
       : assert(documentRepository != null),
       _documentRepository = documentRepository,
       super(DocumentListLoading());
 
   Stream<DocumentListState> _mapLoadDocumentListToState({ String orderBy, bool descending }) async* {
     _documentsListSubscription?.cancel();
-    _documentsListSubscription = _documentRepository.listen((list) => add(DocumentListUpdated(value: list)), orderBy: orderBy, descending: descending, );
+    _documentsListSubscription = _documentRepository.listen((list) => add(DocumentListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
   }
 
   Stream<DocumentListState> _mapLoadDocumentListWithDetailsToState() async* {

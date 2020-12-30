@@ -22,6 +22,7 @@ import 'package:eliud_pkg_fundamentals/model/listed_item_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/listed_item_list_state.dart';
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
@@ -29,15 +30,17 @@ class ListedItemListBloc extends Bloc<ListedItemListEvent, ListedItemListState> 
   final ListedItemRepository _listedItemRepository;
   StreamSubscription _listedItemsListSubscription;
   final AccessBloc accessBloc;
+  final EliudQuery eliudQuery;
 
-  ListedItemListBloc(this.accessBloc,{ @required ListedItemRepository listedItemRepository })
+
+  ListedItemListBloc(this.accessBloc,{ this.eliudQuery, @required ListedItemRepository listedItemRepository })
       : assert(listedItemRepository != null),
       _listedItemRepository = listedItemRepository,
       super(ListedItemListLoading());
 
   Stream<ListedItemListState> _mapLoadListedItemListToState({ String orderBy, bool descending }) async* {
     _listedItemsListSubscription?.cancel();
-    _listedItemsListSubscription = _listedItemRepository.listen((list) => add(ListedItemListUpdated(value: list)), orderBy: orderBy, descending: descending, );
+    _listedItemsListSubscription = _listedItemRepository.listen((list) => add(ListedItemListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
   }
 
   Stream<ListedItemListState> _mapLoadListedItemListWithDetailsToState() async* {

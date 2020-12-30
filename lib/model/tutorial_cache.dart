@@ -117,9 +117,12 @@ class TutorialCache implements TutorialRepository {
 
   static Future<TutorialModel> refreshRelations(TutorialModel model) async {
 
-    List<TutorialEntryModel> tutorialEntriesHolder = List<TutorialEntryModel>.from(await Future.wait(await model.tutorialEntries.map((element) async {
-      return await TutorialEntryCache.refreshRelations(element);
-    }))).toList();
+    List<TutorialEntryModel> tutorialEntriesHolder;
+    if (model.tutorialEntries != null) {
+      tutorialEntriesHolder = List<TutorialEntryModel>.from(await Future.wait(await model.tutorialEntries.map((element) async {
+        return await TutorialEntryCache.refreshRelations(element);
+      }))).toList();
+    }
 
     return model.copyWith(
         tutorialEntries: tutorialEntriesHolder,

@@ -22,6 +22,7 @@ import 'package:eliud_pkg_fundamentals/model/divider_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_list_state.dart';
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_event.dart';
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 
 
@@ -29,15 +30,17 @@ class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
   final DividerRepository _dividerRepository;
   StreamSubscription _dividersListSubscription;
   final AccessBloc accessBloc;
+  final EliudQuery eliudQuery;
 
-  DividerListBloc(this.accessBloc,{ @required DividerRepository dividerRepository })
+
+  DividerListBloc(this.accessBloc,{ this.eliudQuery, @required DividerRepository dividerRepository })
       : assert(dividerRepository != null),
       _dividerRepository = dividerRepository,
       super(DividerListLoading());
 
   Stream<DividerListState> _mapLoadDividerListToState({ String orderBy, bool descending }) async* {
     _dividersListSubscription?.cancel();
-    _dividersListSubscription = _dividerRepository.listen((list) => add(DividerListUpdated(value: list)), orderBy: orderBy, descending: descending, );
+    _dividersListSubscription = _dividerRepository.listen((list) => add(DividerListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
   }
 
   Stream<DividerListState> _mapLoadDividerListWithDetailsToState() async* {
