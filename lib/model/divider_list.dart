@@ -44,15 +44,18 @@ import 'package:eliud_core/model/app_model.dart';
 
 import 'divider_form.dart';
 
+
+typedef DividerWidgetProvider(DividerModel value);
+
 class DividerListWidget extends StatefulWidget with HasFab {
   BackgroundModel listBackground;
+  DividerWidgetProvider widgetProvider;
   bool readOnly;
   String form;
-  String listItemWidget;
   DividerListWidgetState state;
   bool isEmbedded;
 
-  DividerListWidget({ Key key, this.readOnly, this.form, this.listItemWidget, this.isEmbedded, this.listBackground }): super(key: key);
+  DividerListWidget({ Key key, this.readOnly, this.form, this.widgetProvider, this.isEmbedded, this.listBackground }): super(key: key);
 
   @override
   DividerListWidgetState createState() {
@@ -170,6 +173,8 @@ class DividerListWidgetState extends State<DividerListWidget> {
         itemCount: values.length,
         itemBuilder: (context, index) {
           final value = values[index];
+          
+          if (widget.widgetProvider != null) return widget.widgetProvider(value);
 
           return DividerListItem(
             value: value,

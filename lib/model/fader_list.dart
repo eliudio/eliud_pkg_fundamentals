@@ -44,15 +44,18 @@ import 'package:eliud_core/model/app_model.dart';
 
 import 'fader_form.dart';
 
+
+typedef FaderWidgetProvider(FaderModel value);
+
 class FaderListWidget extends StatefulWidget with HasFab {
   BackgroundModel listBackground;
+  FaderWidgetProvider widgetProvider;
   bool readOnly;
   String form;
-  String listItemWidget;
   FaderListWidgetState state;
   bool isEmbedded;
 
-  FaderListWidget({ Key key, this.readOnly, this.form, this.listItemWidget, this.isEmbedded, this.listBackground }): super(key: key);
+  FaderListWidget({ Key key, this.readOnly, this.form, this.widgetProvider, this.isEmbedded, this.listBackground }): super(key: key);
 
   @override
   FaderListWidgetState createState() {
@@ -170,6 +173,8 @@ class FaderListWidgetState extends State<FaderListWidget> {
         itemCount: values.length,
         itemBuilder: (context, index) {
           final value = values[index];
+          
+          if (widget.widgetProvider != null) return widget.widgetProvider(value);
 
           return FaderListItem(
             value: value,

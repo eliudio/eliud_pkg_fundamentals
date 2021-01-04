@@ -44,15 +44,18 @@ import 'package:eliud_core/model/app_model.dart';
 
 import 'tutorial_form.dart';
 
+
+typedef TutorialWidgetProvider(TutorialModel value);
+
 class TutorialListWidget extends StatefulWidget with HasFab {
   BackgroundModel listBackground;
+  TutorialWidgetProvider widgetProvider;
   bool readOnly;
   String form;
-  String listItemWidget;
   TutorialListWidgetState state;
   bool isEmbedded;
 
-  TutorialListWidget({ Key key, this.readOnly, this.form, this.listItemWidget, this.isEmbedded, this.listBackground }): super(key: key);
+  TutorialListWidget({ Key key, this.readOnly, this.form, this.widgetProvider, this.isEmbedded, this.listBackground }): super(key: key);
 
   @override
   TutorialListWidgetState createState() {
@@ -170,6 +173,8 @@ class TutorialListWidgetState extends State<TutorialListWidget> {
         itemCount: values.length,
         itemBuilder: (context, index) {
           final value = values[index];
+          
+          if (widget.widgetProvider != null) return widget.widgetProvider(value);
 
           return TutorialListItem(
             value: value,

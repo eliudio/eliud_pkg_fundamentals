@@ -44,15 +44,18 @@ import 'package:eliud_core/model/app_model.dart';
 
 import 'booklet_form.dart';
 
+
+typedef BookletWidgetProvider(BookletModel value);
+
 class BookletListWidget extends StatefulWidget with HasFab {
   BackgroundModel listBackground;
+  BookletWidgetProvider widgetProvider;
   bool readOnly;
   String form;
-  String listItemWidget;
   BookletListWidgetState state;
   bool isEmbedded;
 
-  BookletListWidget({ Key key, this.readOnly, this.form, this.listItemWidget, this.isEmbedded, this.listBackground }): super(key: key);
+  BookletListWidget({ Key key, this.readOnly, this.form, this.widgetProvider, this.isEmbedded, this.listBackground }): super(key: key);
 
   @override
   BookletListWidgetState createState() {
@@ -170,6 +173,8 @@ class BookletListWidgetState extends State<BookletListWidget> {
         itemCount: values.length,
         itemBuilder: (context, index) {
           final value = values[index];
+          
+          if (widget.widgetProvider != null) return widget.widgetProvider(value);
 
           return BookletListItem(
             value: value,

@@ -44,15 +44,18 @@ import 'package:eliud_core/model/app_model.dart';
 
 import 'presentation_form.dart';
 
+
+typedef PresentationWidgetProvider(PresentationModel value);
+
 class PresentationListWidget extends StatefulWidget with HasFab {
   BackgroundModel listBackground;
+  PresentationWidgetProvider widgetProvider;
   bool readOnly;
   String form;
-  String listItemWidget;
   PresentationListWidgetState state;
   bool isEmbedded;
 
-  PresentationListWidget({ Key key, this.readOnly, this.form, this.listItemWidget, this.isEmbedded, this.listBackground }): super(key: key);
+  PresentationListWidget({ Key key, this.readOnly, this.form, this.widgetProvider, this.isEmbedded, this.listBackground }): super(key: key);
 
   @override
   PresentationListWidgetState createState() {
@@ -170,6 +173,8 @@ class PresentationListWidgetState extends State<PresentationListWidget> {
         itemCount: values.length,
         itemBuilder: (context, index) {
           final value = values[index];
+          
+          if (widget.widgetProvider != null) return widget.widgetProvider(value);
 
           return PresentationListItem(
             value: value,
