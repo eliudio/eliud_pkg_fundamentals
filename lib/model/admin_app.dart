@@ -58,8 +58,9 @@ class AdminApp extends AdminAppInstallerBase {
       documentID: "internalWidget-booklets", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "booklets"));
     PageModel page = PageModel(
         conditions: ConditionsModel(
-          readCondition: ReadCondition.MemberOrPrivilegedMemberOnly,
-          privilegeLevelRequired: OWNER_PRIVILEGES
+          privilegeLevelRequired: PrivilegeLevelRequired.OwnerPrivilegeRequired,
+          packageCondition: null,
+          conditionOverride: null,
         ),
         appId: appId,
         documentID: "eliud_pkg_fundamentals_booklets_page",
@@ -81,8 +82,9 @@ class AdminApp extends AdminAppInstallerBase {
       documentID: "internalWidget-dividers", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "dividers"));
     PageModel page = PageModel(
         conditions: ConditionsModel(
-          readCondition: ReadCondition.MemberOrPrivilegedMemberOnly,
-          privilegeLevelRequired: OWNER_PRIVILEGES
+          privilegeLevelRequired: PrivilegeLevelRequired.OwnerPrivilegeRequired,
+          packageCondition: null,
+          conditionOverride: null,
         ),
         appId: appId,
         documentID: "eliud_pkg_fundamentals_dividers_page",
@@ -104,8 +106,9 @@ class AdminApp extends AdminAppInstallerBase {
       documentID: "internalWidget-documents", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "documents"));
     PageModel page = PageModel(
         conditions: ConditionsModel(
-          readCondition: ReadCondition.MemberOrPrivilegedMemberOnly,
-          privilegeLevelRequired: OWNER_PRIVILEGES
+          privilegeLevelRequired: PrivilegeLevelRequired.OwnerPrivilegeRequired,
+          packageCondition: null,
+          conditionOverride: null,
         ),
         appId: appId,
         documentID: "eliud_pkg_fundamentals_documents_page",
@@ -127,8 +130,9 @@ class AdminApp extends AdminAppInstallerBase {
       documentID: "internalWidget-faders", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "faders"));
     PageModel page = PageModel(
         conditions: ConditionsModel(
-          readCondition: ReadCondition.MemberOrPrivilegedMemberOnly,
-          privilegeLevelRequired: OWNER_PRIVILEGES
+          privilegeLevelRequired: PrivilegeLevelRequired.OwnerPrivilegeRequired,
+          packageCondition: null,
+          conditionOverride: null,
         ),
         appId: appId,
         documentID: "eliud_pkg_fundamentals_faders_page",
@@ -150,8 +154,9 @@ class AdminApp extends AdminAppInstallerBase {
       documentID: "internalWidget-grids", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "grids"));
     PageModel page = PageModel(
         conditions: ConditionsModel(
-          readCondition: ReadCondition.MemberOrPrivilegedMemberOnly,
-          privilegeLevelRequired: OWNER_PRIVILEGES
+          privilegeLevelRequired: PrivilegeLevelRequired.OwnerPrivilegeRequired,
+          packageCondition: null,
+          conditionOverride: null,
         ),
         appId: appId,
         documentID: "eliud_pkg_fundamentals_grids_page",
@@ -173,8 +178,9 @@ class AdminApp extends AdminAppInstallerBase {
       documentID: "internalWidget-playStores", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "playStores"));
     PageModel page = PageModel(
         conditions: ConditionsModel(
-          readCondition: ReadCondition.MemberOrPrivilegedMemberOnly,
-          privilegeLevelRequired: OWNER_PRIVILEGES
+          privilegeLevelRequired: PrivilegeLevelRequired.OwnerPrivilegeRequired,
+          packageCondition: null,
+          conditionOverride: null,
         ),
         appId: appId,
         documentID: "eliud_pkg_fundamentals_playstores_page",
@@ -196,8 +202,9 @@ class AdminApp extends AdminAppInstallerBase {
       documentID: "internalWidget-presentations", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "presentations"));
     PageModel page = PageModel(
         conditions: ConditionsModel(
-          readCondition: ReadCondition.MemberOrPrivilegedMemberOnly,
-          privilegeLevelRequired: OWNER_PRIVILEGES
+          privilegeLevelRequired: PrivilegeLevelRequired.OwnerPrivilegeRequired,
+          packageCondition: null,
+          conditionOverride: null,
         ),
         appId: appId,
         documentID: "eliud_pkg_fundamentals_presentations_page",
@@ -219,8 +226,9 @@ class AdminApp extends AdminAppInstallerBase {
       documentID: "internalWidget-simpleImages", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "simpleImages"));
     PageModel page = PageModel(
         conditions: ConditionsModel(
-          readCondition: ReadCondition.MemberOrPrivilegedMemberOnly,
-          privilegeLevelRequired: OWNER_PRIVILEGES
+          privilegeLevelRequired: PrivilegeLevelRequired.OwnerPrivilegeRequired,
+          packageCondition: null,
+          conditionOverride: null,
         ),
         appId: appId,
         documentID: "eliud_pkg_fundamentals_simpleimages_page",
@@ -242,8 +250,9 @@ class AdminApp extends AdminAppInstallerBase {
       documentID: "internalWidget-tutorials", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "tutorials"));
     PageModel page = PageModel(
         conditions: ConditionsModel(
-          readCondition: ReadCondition.MemberOrPrivilegedMemberOnly,
-          privilegeLevelRequired: OWNER_PRIVILEGES
+          privilegeLevelRequired: PrivilegeLevelRequired.OwnerPrivilegeRequired,
+          packageCondition: null,
+          conditionOverride: null,
         ),
         appId: appId,
         documentID: "eliud_pkg_fundamentals_tutorials_page",
