@@ -39,7 +39,7 @@ typedef PlayStoreChanged(PlayStoreModel value);
 abstract class PlayStoreRepository {
   Future<PlayStoreModel> add(PlayStoreModel value);
   Future<void> delete(PlayStoreModel value);
-  Future<PlayStoreModel> get(String id);
+  Future<PlayStoreModel> get(String id, { Function(Exception) onError });
   Future<PlayStoreModel> update(PlayStoreModel value);
 
   Stream<List<PlayStoreModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery });

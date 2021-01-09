@@ -62,12 +62,16 @@ class PlayStoreJsFirestore implements PlayStoreRepository {
     return PlayStoreModel.fromEntityPlus(value.id, PlayStoreEntity.fromMap(value.data()), appId: appId);
   }
 
-  Future<PlayStoreModel> get(String id) {
+  Future<PlayStoreModel> get(String id, { Function(Exception) onError }) {
     return playStoreCollection.doc(id).get().then((data) {
       if (data.data() != null) {
         return _populateDocPlus(data);
       } else {
         return null;
+      }
+    }).catchError((Object e) {
+      if (onError != null) {
+        onError(e);
       }
     });
   }

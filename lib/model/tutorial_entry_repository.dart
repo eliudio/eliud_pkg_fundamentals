@@ -39,7 +39,7 @@ typedef TutorialEntryChanged(TutorialEntryModel value);
 abstract class TutorialEntryRepository {
   Future<TutorialEntryModel> add(TutorialEntryModel value);
   Future<void> delete(TutorialEntryModel value);
-  Future<TutorialEntryModel> get(String id);
+  Future<TutorialEntryModel> get(String id, { Function(Exception) onError });
   Future<TutorialEntryModel> update(TutorialEntryModel value);
 
   Stream<List<TutorialEntryModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery });

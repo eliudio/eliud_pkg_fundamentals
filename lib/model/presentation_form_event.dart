@@ -155,3 +155,15 @@ class ChangedPresentationImageWidth extends PresentationFormEvent {
   String toString() => 'ChangedPresentationImageWidth{ value: $value }';
 }
 
+class ChangedPresentationConditions extends PresentationFormEvent {
+  final ConditionsSimpleModel value;
+
+  ChangedPresentationConditions({this.value});
+
+  @override
+  List<Object> get props => [ value ];
+
+  @override
+  String toString() => 'ChangedPresentationConditions{ value: $value }';
+}
+

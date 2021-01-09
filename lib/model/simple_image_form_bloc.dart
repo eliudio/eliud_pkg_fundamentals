@@ -100,7 +100,14 @@ class SimpleImageFormBloc extends Bloc<SimpleImageFormEvent, SimpleImageFormStat
                                  appId: currentState.value.appId,
                                  title: currentState.value.title,
                                  image: null,
+                                 conditions: currentState.value.conditions,
           );
+        yield SubmittableSimpleImageForm(value: newValue);
+
+        return;
+      }
+      if (event is ChangedSimpleImageConditions) {
+        newValue = currentState.value.copyWith(conditions: event.value);
         yield SubmittableSimpleImageForm(value: newValue);
 
         return;

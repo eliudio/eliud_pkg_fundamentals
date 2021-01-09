@@ -155,3 +155,15 @@ class ChangedDocumentBackground extends DocumentFormEvent {
   String toString() => 'ChangedDocumentBackground{ value: $value }';
 }
 
+class ChangedDocumentConditions extends DocumentFormEvent {
+  final ConditionsSimpleModel value;
+
+  ChangedDocumentConditions({this.value});
+
+  @override
+  List<Object> get props => [ value ];
+
+  @override
+  String toString() => 'ChangedDocumentConditions{ value: $value }';
+}
+

@@ -17,6 +17,7 @@ import 'dart:collection';
 import 'dart:convert';
 import 'package:eliud_core/tools/common_tools.dart';
 import 'abstract_repository_singleton.dart';
+import 'package:eliud_core/model/entity_export.dart';
 import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
@@ -26,17 +27,18 @@ class FaderEntity {
   final int animationMilliseconds;
   final int imageSeconds;
   final List<ListedItemEntity> items;
+  final ConditionsSimpleEntity conditions;
 
-  FaderEntity({this.appId, this.name, this.animationMilliseconds, this.imageSeconds, this.items, });
+  FaderEntity({this.appId, this.name, this.animationMilliseconds, this.imageSeconds, this.items, this.conditions, });
 
 
-  List<Object> get props => [appId, name, animationMilliseconds, imageSeconds, items, ];
+  List<Object> get props => [appId, name, animationMilliseconds, imageSeconds, items, conditions, ];
 
   @override
   String toString() {
     String itemsCsv = (items == null) ? '' : items.join(', ');
 
-    return 'FaderEntity{appId: $appId, name: $name, animationMilliseconds: $animationMilliseconds, imageSeconds: $imageSeconds, items: ListedItem[] { $itemsCsv }}';
+    return 'FaderEntity{appId: $appId, name: $name, animationMilliseconds: $animationMilliseconds, imageSeconds: $imageSeconds, items: ListedItem[] { $itemsCsv }, conditions: $conditions}';
   }
 
   static FaderEntity fromMap(Map map) {
@@ -50,6 +52,10 @@ class FaderEntity {
         .map((dynamic item) =>
         ListedItemEntity.fromMap(item as Map))
         .toList();
+    var conditionsFromMap;
+    conditionsFromMap = map['conditions'];
+    if (conditionsFromMap != null)
+      conditionsFromMap = ConditionsSimpleEntity.fromMap(conditionsFromMap);
 
     return FaderEntity(
       appId: map['appId'], 
@@ -57,12 +63,16 @@ class FaderEntity {
       animationMilliseconds: int.tryParse(map['animationMilliseconds'].toString()), 
       imageSeconds: int.tryParse(map['imageSeconds'].toString()), 
       items: itemsList, 
+      conditions: conditionsFromMap, 
     );
   }
 
   Map<String, Object> toDocument() {
     final List<Map<String, dynamic>> itemsListMap = items != null 
         ? items.map((item) => item.toDocument()).toList()
+        : null;
+    final Map<String, dynamic> conditionsMap = conditions != null 
+        ? conditions.toDocument()
         : null;
 
     Map<String, Object> theDocument = HashMap();
@@ -76,6 +86,8 @@ class FaderEntity {
       else theDocument["imageSeconds"] = null;
     if (items != null) theDocument["items"] = itemsListMap;
       else theDocument["items"] = null;
+    if (conditions != null) theDocument["conditions"] = conditionsMap;
+      else theDocument["conditions"] = null;
     return theDocument;
   }
 

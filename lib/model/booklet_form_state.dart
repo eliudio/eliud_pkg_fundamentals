@@ -127,6 +127,22 @@ class SectionsBookletFormError extends BookletFormError {
 }
 
 
+class ConditionsBookletFormError extends BookletFormError { 
+  const ConditionsBookletFormError({ String message, BookletModel value }): super(message: message, value: value);
+
+  @override
+  List<Object> get props => [ message, value ];
+
+  @override
+  String toString() {
+    return '''ConditionsBookletFormError {
+      value: $value,
+      message: $message,
+    }''';
+  }
+}
+
+
 class BookletFormLoaded extends BookletFormInitialized { 
   const BookletFormLoaded({ BookletModel value }): super(value: value);
 

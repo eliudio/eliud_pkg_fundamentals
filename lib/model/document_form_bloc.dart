@@ -136,7 +136,14 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
                                  padding: currentState.value.padding,
                                  images: currentState.value.images,
                                  background: null,
+                                 conditions: currentState.value.conditions,
           );
+        yield SubmittableDocumentForm(value: newValue);
+
+        return;
+      }
+      if (event is ChangedDocumentConditions) {
+        newValue = currentState.value.copyWith(conditions: event.value);
         yield SubmittableDocumentForm(value: newValue);
 
         return;

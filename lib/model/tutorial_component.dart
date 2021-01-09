@@ -43,10 +43,16 @@ abstract class AbstractTutorialComponent extends StatelessWidget {
     return BlocBuilder<TutorialComponentBloc, TutorialComponentState>(builder: (context, state) {
       if (state is TutorialComponentLoaded) {
         if (state.value == null) {
-          return alertWidget(title: 'Error', content: 'No tutorial defined');
+          return alertWidget(title: 'Error', content: 'No Tutorial defined');
         } else {
           return yourWidget(context, state.value);
         }
+      } else if (state is TutorialComponentPermissionDenied) {
+        return Icon(
+          Icons.highlight_off,
+          color: Colors.red,
+          size: 30.0,
+        );
       } else if (state is TutorialComponentError) {
         return alertWidget(title: 'Error', content: state.message);
       } else {
@@ -61,5 +67,4 @@ abstract class AbstractTutorialComponent extends StatelessWidget {
   Widget alertWidget({ title: String, content: String});
   TutorialRepository getTutorialRepository(BuildContext context);
 }
-
 

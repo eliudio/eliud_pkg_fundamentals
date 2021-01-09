@@ -66,17 +66,18 @@ class DocumentModel {
   double padding;
   List<DocumentItemModel> images;
   BackgroundModel background;
+  ConditionsSimpleModel conditions;
 
-  DocumentModel({this.documentID, this.appId, this.name, this.documentRenderer, this.content, this.padding, this.images, this.background, })  {
+  DocumentModel({this.documentID, this.appId, this.name, this.documentRenderer, this.content, this.padding, this.images, this.background, this.conditions, })  {
     assert(documentID != null);
   }
 
-  DocumentModel copyWith({String documentID, String appId, String name, DocumentRenderer documentRenderer, String content, double padding, List<DocumentItemModel> images, BackgroundModel background, }) {
-    return DocumentModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, name: name ?? this.name, documentRenderer: documentRenderer ?? this.documentRenderer, content: content ?? this.content, padding: padding ?? this.padding, images: images ?? this.images, background: background ?? this.background, );
+  DocumentModel copyWith({String documentID, String appId, String name, DocumentRenderer documentRenderer, String content, double padding, List<DocumentItemModel> images, BackgroundModel background, ConditionsSimpleModel conditions, }) {
+    return DocumentModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, name: name ?? this.name, documentRenderer: documentRenderer ?? this.documentRenderer, content: content ?? this.content, padding: padding ?? this.padding, images: images ?? this.images, background: background ?? this.background, conditions: conditions ?? this.conditions, );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ appId.hashCode ^ name.hashCode ^ documentRenderer.hashCode ^ content.hashCode ^ padding.hashCode ^ images.hashCode ^ background.hashCode;
+  int get hashCode => documentID.hashCode ^ appId.hashCode ^ name.hashCode ^ documentRenderer.hashCode ^ content.hashCode ^ padding.hashCode ^ images.hashCode ^ background.hashCode ^ conditions.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -90,13 +91,14 @@ class DocumentModel {
           content == other.content &&
           padding == other.padding &&
           ListEquality().equals(images, other.images) &&
-          background == other.background;
+          background == other.background &&
+          conditions == other.conditions;
 
   @override
   String toString() {
     String imagesCsv = (images == null) ? '' : images.join(', ');
 
-    return 'DocumentModel{documentID: $documentID, appId: $appId, name: $name, documentRenderer: $documentRenderer, content: $content, padding: $padding, images: DocumentItem[] { $imagesCsv }, background: $background}';
+    return 'DocumentModel{documentID: $documentID, appId: $appId, name: $name, documentRenderer: $documentRenderer, content: $content, padding: $padding, images: DocumentItem[] { $imagesCsv }, background: $background, conditions: $conditions}';
   }
 
   DocumentEntity toEntity({String appId}) {
@@ -110,6 +112,7 @@ class DocumentModel {
             .map((item) => item.toEntity(appId: appId))
             .toList() : null, 
           backgroundId: (background != null) ? background.documentID : null, 
+          conditions: (conditions != null) ? conditions.toEntity(appId: appId) : null, 
     );
   }
 
@@ -127,6 +130,8 @@ class DocumentModel {
             entity.images
             .map((item) => DocumentItemModel.fromEntity(newRandomKey(), item))
             .toList(), 
+          conditions: 
+            ConditionsSimpleModel.fromEntity(entity.conditions), 
     );
   }
 
@@ -154,6 +159,8 @@ class DocumentModel {
             .map((item) => DocumentItemModel.fromEntityPlus(newRandomKey(), item, appId: appId))
             .toList())), 
           background: backgroundHolder, 
+          conditions: 
+            await ConditionsSimpleModel.fromEntityPlus(entity.conditions, appId: appId), 
     );
   }
 

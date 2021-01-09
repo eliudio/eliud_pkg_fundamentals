@@ -35,7 +35,7 @@ typedef LinkChanged(LinkModel value);
 abstract class LinkRepository {
   Future<LinkModel> add(LinkModel value);
   Future<void> delete(LinkModel value);
-  Future<LinkModel> get(String id);
+  Future<LinkModel> get(String id, { Function(Exception) onError });
   Future<LinkModel> update(LinkModel value);
 
   Stream<List<LinkModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery });

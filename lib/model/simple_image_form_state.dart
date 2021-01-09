@@ -127,6 +127,22 @@ class ImageSimpleImageFormError extends SimpleImageFormError {
 }
 
 
+class ConditionsSimpleImageFormError extends SimpleImageFormError { 
+  const ConditionsSimpleImageFormError({ String message, SimpleImageModel value }): super(message: message, value: value);
+
+  @override
+  List<Object> get props => [ message, value ];
+
+  @override
+  String toString() {
+    return '''ConditionsSimpleImageFormError {
+      value: $value,
+      message: $message,
+    }''';
+  }
+}
+
+
 class SimpleImageFormLoaded extends SimpleImageFormInitialized { 
   const SimpleImageFormLoaded({ SimpleImageModel value }): super(value: value);
 

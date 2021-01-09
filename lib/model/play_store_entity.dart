@@ -25,28 +25,39 @@ class PlayStoreEntity {
   final String appId;
   final String description;
   final String itemBackgroundId;
+  final ConditionsSimpleEntity conditions;
 
-  PlayStoreEntity({this.appId, this.description, this.itemBackgroundId, });
+  PlayStoreEntity({this.appId, this.description, this.itemBackgroundId, this.conditions, });
 
 
-  List<Object> get props => [appId, description, itemBackgroundId, ];
+  List<Object> get props => [appId, description, itemBackgroundId, conditions, ];
 
   @override
   String toString() {
-    return 'PlayStoreEntity{appId: $appId, description: $description, itemBackgroundId: $itemBackgroundId}';
+    return 'PlayStoreEntity{appId: $appId, description: $description, itemBackgroundId: $itemBackgroundId, conditions: $conditions}';
   }
 
   static PlayStoreEntity fromMap(Map map) {
     if (map == null) return null;
 
+    var conditionsFromMap;
+    conditionsFromMap = map['conditions'];
+    if (conditionsFromMap != null)
+      conditionsFromMap = ConditionsSimpleEntity.fromMap(conditionsFromMap);
+
     return PlayStoreEntity(
       appId: map['appId'], 
       description: map['description'], 
       itemBackgroundId: map['itemBackgroundId'], 
+      conditions: conditionsFromMap, 
     );
   }
 
   Map<String, Object> toDocument() {
+    final Map<String, dynamic> conditionsMap = conditions != null 
+        ? conditions.toDocument()
+        : null;
+
     Map<String, Object> theDocument = HashMap();
     if (appId != null) theDocument["appId"] = appId;
       else theDocument["appId"] = null;
@@ -54,6 +65,8 @@ class PlayStoreEntity {
       else theDocument["description"] = null;
     if (itemBackgroundId != null) theDocument["itemBackgroundId"] = itemBackgroundId;
       else theDocument["itemBackgroundId"] = null;
+    if (conditions != null) theDocument["conditions"] = conditionsMap;
+      else theDocument["conditions"] = null;
     return theDocument;
   }
 

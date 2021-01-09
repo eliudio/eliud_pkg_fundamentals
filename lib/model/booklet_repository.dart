@@ -16,11 +16,15 @@
 import 'package:eliud_pkg_fundamentals/model/booklet_repository.dart';
 
 
+import 'package:eliud_core/model/repository_export.dart';
+import 'package:eliud_core/model/abstract_repository_singleton.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
+import 'package:eliud_core/model/model_export.dart';
 import '../tools/bespoke_models.dart';
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
+import 'package:eliud_core/model/entity_export.dart';
 import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
@@ -35,7 +39,7 @@ typedef BookletChanged(BookletModel value);
 abstract class BookletRepository {
   Future<BookletModel> add(BookletModel value);
   Future<void> delete(BookletModel value);
-  Future<BookletModel> get(String id);
+  Future<BookletModel> get(String id, { Function(Exception) onError });
   Future<BookletModel> update(BookletModel value);
 
   Stream<List<BookletModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery });

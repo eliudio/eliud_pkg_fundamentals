@@ -16,11 +16,15 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:eliud_core/tools/common_tools.dart';
+import 'package:eliud_core/model/repository_export.dart';
+import 'package:eliud_core/model/abstract_repository_singleton.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
+import 'package:eliud_core/model/model_export.dart';
 import '../tools/bespoke_models.dart';
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
+import 'package:eliud_core/model/entity_export.dart';
 import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
@@ -125,5 +129,17 @@ class ChangedFaderItems extends FaderFormEvent {
 
   @override
   String toString() => 'ChangedFaderItems{ value: $value }';
+}
+
+class ChangedFaderConditions extends FaderFormEvent {
+  final ConditionsSimpleModel value;
+
+  ChangedFaderConditions({this.value});
+
+  @override
+  List<Object> get props => [ value ];
+
+  @override
+  String toString() => 'ChangedFaderConditions{ value: $value }';
 }
 

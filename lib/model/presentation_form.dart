@@ -449,65 +449,11 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
          children.add(Container(
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  child: Text('general',
+                  child: Text('Conditions',
                       style: TextStyle(
                           color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
                 ));
 
-        children.add(
-
-                TextFormField(
-                style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
-                  readOnly: (formAction == FormAction.UpdateAction),
-                  controller: _documentIDController,
-                  decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.vpn_key, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
-                    labelText: 'Document ID',
-                  ),
-                  keyboardType: TextInputType.text,
-                  autovalidate: true,
-                  validator: (_) {
-                    return state is DocumentIDPresentationFormError ? state.message : null;
-                  },
-                ),
-          );
-
-        children.add(
-
-                TextFormField(
-                style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
-                  readOnly: _readOnly(accessState, state),
-                  controller: _titleController,
-                  decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
-                    labelText: 'Title',
-                  ),
-                  keyboardType: TextInputType.text,
-                  autovalidate: true,
-                  validator: (_) {
-                    return state is TitlePresentationFormError ? state.message : null;
-                  },
-                ),
-          );
-
-        children.add(
-
-                TextFormField(
-                style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
-                  readOnly: _readOnly(accessState, state),
-                  controller: _imageWidthController,
-                  decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
-                    labelText: 'Image Width (% of screen width)',
-                    hintText: "Width of the image",
-                  ),
-                  keyboardType: TextInputType.number,
-                  autovalidate: true,
-                  validator: (_) {
-                    return state is ImageWidthPresentationFormError ? state.message : null;
-                  },
-                ),
-          );
 
 
         children.add(Container(height: 20.0));
@@ -532,6 +478,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
                               imagePositionRelative: state.value.imagePositionRelative, 
                               imageAlignment: state.value.imageAlignment, 
                               imageWidth: state.value.imageWidth, 
+                              conditions: state.value.conditions, 
                         )));
                       } else {
                         BlocProvider.of<PresentationListBloc>(context).add(
@@ -544,6 +491,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
                               imagePositionRelative: state.value.imagePositionRelative, 
                               imageAlignment: state.value.imageAlignment, 
                               imageWidth: state.value.imageWidth, 
+                              conditions: state.value.conditions, 
                           )));
                       }
                       if (widget.submitAction != null) {

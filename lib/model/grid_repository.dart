@@ -39,7 +39,7 @@ typedef GridChanged(GridModel value);
 abstract class GridRepository {
   Future<GridModel> add(GridModel value);
   Future<void> delete(GridModel value);
-  Future<GridModel> get(String id);
+  Future<GridModel> get(String id, { Function(Exception) onError });
   Future<GridModel> update(GridModel value);
 
   Stream<List<GridModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery });

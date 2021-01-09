@@ -20,6 +20,8 @@ import 'package:eliud_pkg_fundamentals/model/grid_model.dart';
 import 'package:eliud_pkg_fundamentals/model/grid_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/grid_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/grid_repository.dart';
+import 'package:flutter/services.dart';
+
 
 class GridComponentBloc extends Bloc<GridComponentEvent, GridComponentState> {
   final GridRepository gridRepository;
@@ -31,13 +33,23 @@ class GridComponentBloc extends Bloc<GridComponentEvent, GridComponentState> {
     if (event is FetchGridComponent) {
       try {
         if (currentState is GridComponentUninitialized) {
-          final GridModel model = await _fetchGrid(event.id);
-
-          if (model != null) {
-            yield GridComponentLoaded(value: model);
+          bool permissionDenied = false;
+          final model = await gridRepository.get(event.id, onError: (error) {
+            // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
+            if ((error is PlatformException) &&  (error.message.startsWith("PERMISSION_DENIED"))) {
+              permissionDenied = true;
+            }
+          });
+          if (permissionDenied) {
+            yield GridComponentPermissionDenied();
           } else {
-            String id = event.id;
-            yield GridComponentError(message: "Grid with id = '$id' not found");
+            if (model != null) {
+              yield GridComponentLoaded(value: model);
+            } else {
+              String id = event.id;
+              yield GridComponentError(
+                  message: "Grid with id = '$id' not found");
+            }
           }
           return;
         }
@@ -47,15 +59,10 @@ class GridComponentBloc extends Bloc<GridComponentEvent, GridComponentState> {
     }
   }
 
-  Future<GridModel> _fetchGrid(String id) async {
-    return gridRepository.get(id);
-  }
-
   @override
   Future<void> close() {
     return super.close();
   }
 
 }
-
 

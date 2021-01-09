@@ -43,10 +43,16 @@ abstract class AbstractGridComponent extends StatelessWidget {
     return BlocBuilder<GridComponentBloc, GridComponentState>(builder: (context, state) {
       if (state is GridComponentLoaded) {
         if (state.value == null) {
-          return alertWidget(title: 'Error', content: 'No grid defined');
+          return alertWidget(title: 'Error', content: 'No Grid defined');
         } else {
           return yourWidget(context, state.value);
         }
+      } else if (state is GridComponentPermissionDenied) {
+        return Icon(
+          Icons.highlight_off,
+          color: Colors.red,
+          size: 30.0,
+        );
       } else if (state is GridComponentError) {
         return alertWidget(title: 'Error', content: state.message);
       } else {
@@ -61,5 +67,4 @@ abstract class AbstractGridComponent extends StatelessWidget {
   Widget alertWidget({ title: String, content: String});
   GridRepository getGridRepository(BuildContext context);
 }
-
 

@@ -40,17 +40,18 @@ class SimpleImageModel {
   String appId;
   String title;
   ImageModel image;
+  ConditionsSimpleModel conditions;
 
-  SimpleImageModel({this.documentID, this.appId, this.title, this.image, })  {
+  SimpleImageModel({this.documentID, this.appId, this.title, this.image, this.conditions, })  {
     assert(documentID != null);
   }
 
-  SimpleImageModel copyWith({String documentID, String appId, String title, ImageModel image, }) {
-    return SimpleImageModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, title: title ?? this.title, image: image ?? this.image, );
+  SimpleImageModel copyWith({String documentID, String appId, String title, ImageModel image, ConditionsSimpleModel conditions, }) {
+    return SimpleImageModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, title: title ?? this.title, image: image ?? this.image, conditions: conditions ?? this.conditions, );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ appId.hashCode ^ title.hashCode ^ image.hashCode;
+  int get hashCode => documentID.hashCode ^ appId.hashCode ^ title.hashCode ^ image.hashCode ^ conditions.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -60,11 +61,12 @@ class SimpleImageModel {
           documentID == other.documentID &&
           appId == other.appId &&
           title == other.title &&
-          image == other.image;
+          image == other.image &&
+          conditions == other.conditions;
 
   @override
   String toString() {
-    return 'SimpleImageModel{documentID: $documentID, appId: $appId, title: $title, image: $image}';
+    return 'SimpleImageModel{documentID: $documentID, appId: $appId, title: $title, image: $image, conditions: $conditions}';
   }
 
   SimpleImageEntity toEntity({String appId}) {
@@ -72,6 +74,7 @@ class SimpleImageModel {
           appId: (appId != null) ? appId : null, 
           title: (title != null) ? title : null, 
           imageId: (image != null) ? image.documentID : null, 
+          conditions: (conditions != null) ? conditions.toEntity(appId: appId) : null, 
     );
   }
 
@@ -81,6 +84,8 @@ class SimpleImageModel {
           documentID: documentID, 
           appId: entity.appId, 
           title: entity.title, 
+          conditions: 
+            ConditionsSimpleModel.fromEntity(entity.conditions), 
     );
   }
 
@@ -101,6 +106,8 @@ class SimpleImageModel {
           appId: entity.appId, 
           title: entity.title, 
           image: imageHolder, 
+          conditions: 
+            await ConditionsSimpleModel.fromEntityPlus(entity.conditions, appId: appId), 
     );
   }
 

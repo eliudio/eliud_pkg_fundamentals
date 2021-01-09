@@ -30,6 +30,10 @@ class TutorialComponentError extends TutorialComponentState {
   TutorialComponentError({ this.message });
 }
 
+class TutorialComponentPermissionDenied extends TutorialComponentState {
+  TutorialComponentPermissionDenied();
+}
+
 class TutorialComponentLoaded extends TutorialComponentState {
   final TutorialModel value;
 
@@ -45,5 +49,4 @@ class TutorialComponentLoaded extends TutorialComponentState {
   @override
   String toString() => 'TutorialComponentLoaded { value: $value }';
 }
-
 

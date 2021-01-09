@@ -119,3 +119,15 @@ class ChangedGridGridView extends GridFormEvent {
   String toString() => 'ChangedGridGridView{ value: $value }';
 }
 
+class ChangedGridConditions extends GridFormEvent {
+  final ConditionsSimpleModel value;
+
+  ChangedGridConditions({this.value});
+
+  @override
+  List<Object> get props => [ value ];
+
+  @override
+  String toString() => 'ChangedGridConditions{ value: $value }';
+}
+

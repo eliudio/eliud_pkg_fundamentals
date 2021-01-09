@@ -48,6 +48,12 @@
       "group": "sections",
       "fieldType": "Section",
       "arrayType": "Array"
+    },
+    {
+      "fieldName": "conditions",
+      "displayName": "Conditions",
+      "fieldType": "ConditionsSimple",
+      "group": "conditional"
     }
   ],
   "groups": [
@@ -66,10 +72,15 @@
     {
         "group": "sections",
         "description": "Sections"
+    },
+    {
+        "group": "conditional",
+        "description": "Conditions"
     }
   ],
   "listFields": {
     "title": "documentID",
     "subTitle": "name"
-  }
+  },
+  "depends": ["eliud_core"]
 }

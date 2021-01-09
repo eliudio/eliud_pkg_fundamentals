@@ -55,12 +55,16 @@ class DividerFirestore implements DividerRepository {
   Future<DividerModel> _populateDocPlus(DocumentSnapshot value) async {
     return DividerModel.fromEntityPlus(value.documentID, DividerEntity.fromMap(value.data), appId: appId);  }
 
-  Future<DividerModel> get(String id) {
+  Future<DividerModel> get(String id, {Function(Exception) onError}) {
     return DividerCollection.document(id).get().then((doc) {
       if (doc.data != null)
         return _populateDocPlus(doc);
       else
         return null;
+    }).catchError((Object e) {
+      if (onError != null) {
+        onError(e);
+      }
     });
   }
 

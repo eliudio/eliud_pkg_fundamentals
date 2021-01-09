@@ -55,6 +55,12 @@
       "fieldType": "GridView",
       "association": true,
       "group": "gridView"
+    },
+    {
+      "fieldName": "conditions",
+      "displayName": "Conditions",
+      "fieldType": "ConditionsSimple",
+      "group": "conditions"
     }
   ],
   "groups": [
@@ -69,6 +75,10 @@
     {
         "group": "gridView",
         "description": "GridView"
+    },
+    {
+        "group": "conditions",
+        "description": "Conditions"
     }
   ],
   "listFields": {

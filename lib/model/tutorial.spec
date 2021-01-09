@@ -62,6 +62,12 @@
       "group": "tutorialEntries",
       "fieldType": "TutorialEntry",
       "arrayType": "Array"
+    },
+    {
+      "fieldName": "conditions",
+      "displayName": "Conditions",
+      "fieldType": "ConditionsSimple",
+      "group": "conditions"
     }
   ],
   "groups": [
@@ -72,10 +78,15 @@
     {
         "group": "tutorialEntries",
         "description": "Tutorial Entries"
+    },
+    {
+        "group": "conditions",
+        "description": "Conditions"
     }
   ],
   "listFields": {
     "title": "documentID",
     "subTitle": "name"
-  }
+  },
+  "depends": ["eliud_core"]
 }

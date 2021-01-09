@@ -39,7 +39,7 @@ typedef SimpleImageChanged(SimpleImageModel value);
 abstract class SimpleImageRepository {
   Future<SimpleImageModel> add(SimpleImageModel value);
   Future<void> delete(SimpleImageModel value);
-  Future<SimpleImageModel> get(String id);
+  Future<SimpleImageModel> get(String id, { Function(Exception) onError });
   Future<SimpleImageModel> update(SimpleImageModel value);
 
   Stream<List<SimpleImageModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery });

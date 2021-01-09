@@ -55,12 +55,16 @@ class DocumentFirestore implements DocumentRepository {
   Future<DocumentModel> _populateDocPlus(DocumentSnapshot value) async {
     return DocumentModel.fromEntityPlus(value.documentID, DocumentEntity.fromMap(value.data), appId: appId);  }
 
-  Future<DocumentModel> get(String id) {
+  Future<DocumentModel> get(String id, {Function(Exception) onError}) {
     return DocumentCollection.document(id).get().then((doc) {
       if (doc.data != null)
         return _populateDocPlus(doc);
       else
         return null;
+    }).catchError((Object e) {
+      if (onError != null) {
+        onError(e);
+      }
     });
   }
 

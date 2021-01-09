@@ -191,6 +191,22 @@ class BackgroundDocumentFormError extends DocumentFormError {
 }
 
 
+class ConditionsDocumentFormError extends DocumentFormError { 
+  const ConditionsDocumentFormError({ String message, DocumentModel value }): super(message: message, value: value);
+
+  @override
+  List<Object> get props => [ message, value ];
+
+  @override
+  String toString() {
+    return '''ConditionsDocumentFormError {
+      value: $value,
+      message: $message,
+    }''';
+  }
+}
+
+
 class DocumentFormLoaded extends DocumentFormInitialized { 
   const DocumentFormLoaded({ DocumentModel value }): super(value: value);
 

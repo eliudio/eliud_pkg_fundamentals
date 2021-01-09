@@ -39,7 +39,7 @@ typedef DocumentItemChanged(DocumentItemModel value);
 abstract class DocumentItemRepository {
   Future<DocumentItemModel> add(DocumentItemModel value);
   Future<void> delete(DocumentItemModel value);
-  Future<DocumentItemModel> get(String id);
+  Future<DocumentItemModel> get(String id, { Function(Exception) onError });
   Future<DocumentItemModel> update(DocumentItemModel value);
 
   Stream<List<DocumentItemModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery });

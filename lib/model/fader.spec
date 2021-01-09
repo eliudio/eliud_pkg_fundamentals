@@ -62,6 +62,12 @@
       "group": "items",
       "fieldType": "ListedItem",
       "arrayType": "Array"
+    },
+    {
+      "fieldName": "conditions",
+      "displayName": "Conditions",
+      "fieldType": "ConditionsSimple",
+      "group": "conditions"
     }
   ],
   "groups": [
@@ -80,10 +86,15 @@
     {
         "group": "animationTime",
         "description": "Animation Times"
+    },
+    {
+        "group": "conditions",
+        "description": "Conditions"
     }
   ],
   "listFields": {
     "title": "documentID",
     "subTitle": "name"
-  }
+  },
+  "depends": ["eliud_core"]
 }

@@ -39,7 +39,7 @@ typedef DividerChanged(DividerModel value);
 abstract class DividerRepository {
   Future<DividerModel> add(DividerModel value);
   Future<void> delete(DividerModel value);
-  Future<DividerModel> get(String id);
+  Future<DividerModel> get(String id, { Function(Exception) onError });
   Future<DividerModel> update(DividerModel value);
 
   Stream<List<DividerModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery });

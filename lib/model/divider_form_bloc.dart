@@ -146,6 +146,12 @@ class DividerFormBloc extends Bloc<DividerFormEvent, DividerFormState> {
         }
         return;
       }
+      if (event is ChangedDividerConditions) {
+        newValue = currentState.value.copyWith(conditions: event.value);
+        yield SubmittableDividerForm(value: newValue);
+
+        return;
+      }
     }
   }
 

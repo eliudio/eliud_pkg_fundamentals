@@ -82,6 +82,12 @@
       "remark": "The amount of empty space to the trailing edge of the divider.",
       "iconName": "format_indent_decrease",
       "fieldType": "double"
+    },
+    {
+      "fieldName": "conditions",
+      "displayName": "Conditions",
+      "fieldType": "ConditionsSimple",
+      "group": "conditions"
     }
   ],
   "groups": [
@@ -92,6 +98,10 @@
     {
         "group": "shape",
         "description": "Shape"
+    },
+    {
+        "group": "conditions",
+        "description": "Conditions"
     }
   ],
   "listFields": {

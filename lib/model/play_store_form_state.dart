@@ -127,6 +127,22 @@ class ItemBackgroundPlayStoreFormError extends PlayStoreFormError {
 }
 
 
+class ConditionsPlayStoreFormError extends PlayStoreFormError { 
+  const ConditionsPlayStoreFormError({ String message, PlayStoreModel value }): super(message: message, value: value);
+
+  @override
+  List<Object> get props => [ message, value ];
+
+  @override
+  String toString() {
+    return '''ConditionsPlayStoreFormError {
+      value: $value,
+      message: $message,
+    }''';
+  }
+}
+
+
 class PlayStoreFormLoaded extends PlayStoreFormInitialized { 
   const PlayStoreFormLoaded({ PlayStoreModel value }): super(value: value);
 

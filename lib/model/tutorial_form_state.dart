@@ -159,6 +159,22 @@ class TutorialEntriesTutorialFormError extends TutorialFormError {
 }
 
 
+class ConditionsTutorialFormError extends TutorialFormError { 
+  const ConditionsTutorialFormError({ String message, TutorialModel value }): super(message: message, value: value);
+
+  @override
+  List<Object> get props => [ message, value ];
+
+  @override
+  String toString() {
+    return '''ConditionsTutorialFormError {
+      value: $value,
+      message: $message,
+    }''';
+  }
+}
+
+
 class TutorialFormLoaded extends TutorialFormInitialized { 
   const TutorialFormLoaded({ TutorialModel value }): super(value: value);
 

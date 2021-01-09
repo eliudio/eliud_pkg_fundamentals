@@ -30,6 +30,10 @@ class SimpleImageComponentError extends SimpleImageComponentState {
   SimpleImageComponentError({ this.message });
 }
 
+class SimpleImageComponentPermissionDenied extends SimpleImageComponentState {
+  SimpleImageComponentPermissionDenied();
+}
+
 class SimpleImageComponentLoaded extends SimpleImageComponentState {
   final SimpleImageModel value;
 
@@ -45,5 +49,4 @@ class SimpleImageComponentLoaded extends SimpleImageComponentState {
   @override
   String toString() => 'SimpleImageComponentLoaded { value: $value }';
 }
-
 

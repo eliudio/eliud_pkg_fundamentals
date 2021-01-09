@@ -108,7 +108,14 @@ class GridFormBloc extends Bloc<GridFormEvent, GridFormState> {
                                  title: currentState.value.title,
                                  bodyComponents: currentState.value.bodyComponents,
                                  gridView: null,
+                                 conditions: currentState.value.conditions,
           );
+        yield SubmittableGridForm(value: newValue);
+
+        return;
+      }
+      if (event is ChangedGridConditions) {
+        newValue = currentState.value.copyWith(conditions: event.value);
         yield SubmittableGridForm(value: newValue);
 
         return;

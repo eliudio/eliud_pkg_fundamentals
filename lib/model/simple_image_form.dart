@@ -256,6 +256,20 @@ class _MySimpleImageFormState extends State<MySimpleImageForm> {
         children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
 
 
+         children.add(Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                  child: Text('Conditions',
+                      style: TextStyle(
+                          color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
+                ));
+
+
+
+        children.add(Container(height: 20.0));
+        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
+
+
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
           children.add(RaisedButton(
                   color: RgbHelper.color(rgbo: app.formSubmitButtonColor),
@@ -270,6 +284,7 @@ class _MySimpleImageFormState extends State<MySimpleImageForm> {
                               appId: state.value.appId, 
                               title: state.value.title, 
                               image: state.value.image, 
+                              conditions: state.value.conditions, 
                         )));
                       } else {
                         BlocProvider.of<SimpleImageListBloc>(context).add(
@@ -278,6 +293,7 @@ class _MySimpleImageFormState extends State<MySimpleImageForm> {
                               appId: state.value.appId, 
                               title: state.value.title, 
                               image: state.value.image, 
+                              conditions: state.value.conditions, 
                           )));
                       }
                       if (widget.submitAction != null) {

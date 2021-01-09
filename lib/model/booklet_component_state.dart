@@ -30,6 +30,10 @@ class BookletComponentError extends BookletComponentState {
   BookletComponentError({ this.message });
 }
 
+class BookletComponentPermissionDenied extends BookletComponentState {
+  BookletComponentPermissionDenied();
+}
+
 class BookletComponentLoaded extends BookletComponentState {
   final BookletModel value;
 
@@ -45,5 +49,4 @@ class BookletComponentLoaded extends BookletComponentState {
   @override
   String toString() => 'BookletComponentLoaded { value: $value }';
 }
-
 

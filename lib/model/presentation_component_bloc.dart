@@ -20,6 +20,8 @@ import 'package:eliud_pkg_fundamentals/model/presentation_model.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_repository.dart';
+import 'package:flutter/services.dart';
+
 
 class PresentationComponentBloc extends Bloc<PresentationComponentEvent, PresentationComponentState> {
   final PresentationRepository presentationRepository;
@@ -31,13 +33,23 @@ class PresentationComponentBloc extends Bloc<PresentationComponentEvent, Present
     if (event is FetchPresentationComponent) {
       try {
         if (currentState is PresentationComponentUninitialized) {
-          final PresentationModel model = await _fetchPresentation(event.id);
-
-          if (model != null) {
-            yield PresentationComponentLoaded(value: model);
+          bool permissionDenied = false;
+          final model = await presentationRepository.get(event.id, onError: (error) {
+            // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
+            if ((error is PlatformException) &&  (error.message.startsWith("PERMISSION_DENIED"))) {
+              permissionDenied = true;
+            }
+          });
+          if (permissionDenied) {
+            yield PresentationComponentPermissionDenied();
           } else {
-            String id = event.id;
-            yield PresentationComponentError(message: "Presentation with id = '$id' not found");
+            if (model != null) {
+              yield PresentationComponentLoaded(value: model);
+            } else {
+              String id = event.id;
+              yield PresentationComponentError(
+                  message: "Presentation with id = '$id' not found");
+            }
           }
           return;
         }
@@ -47,15 +59,10 @@ class PresentationComponentBloc extends Bloc<PresentationComponentEvent, Present
     }
   }
 
-  Future<PresentationModel> _fetchPresentation(String id) async {
-    return presentationRepository.get(id);
-  }
-
   @override
   Future<void> close() {
     return super.close();
   }
 
 }
-
 

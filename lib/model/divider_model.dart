@@ -52,17 +52,18 @@ class DividerModel {
 
   // The amount of empty space to the trailing edge of the divider.
   double endIndent;
+  ConditionsSimpleModel conditions;
 
-  DividerModel({this.documentID, this.appId, this.name, this.color, this.height, this.thickness, this.indent, this.endIndent, })  {
+  DividerModel({this.documentID, this.appId, this.name, this.color, this.height, this.thickness, this.indent, this.endIndent, this.conditions, })  {
     assert(documentID != null);
   }
 
-  DividerModel copyWith({String documentID, String appId, String name, RgbModel color, double height, double thickness, double indent, double endIndent, }) {
-    return DividerModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, name: name ?? this.name, color: color ?? this.color, height: height ?? this.height, thickness: thickness ?? this.thickness, indent: indent ?? this.indent, endIndent: endIndent ?? this.endIndent, );
+  DividerModel copyWith({String documentID, String appId, String name, RgbModel color, double height, double thickness, double indent, double endIndent, ConditionsSimpleModel conditions, }) {
+    return DividerModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, name: name ?? this.name, color: color ?? this.color, height: height ?? this.height, thickness: thickness ?? this.thickness, indent: indent ?? this.indent, endIndent: endIndent ?? this.endIndent, conditions: conditions ?? this.conditions, );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ appId.hashCode ^ name.hashCode ^ color.hashCode ^ height.hashCode ^ thickness.hashCode ^ indent.hashCode ^ endIndent.hashCode;
+  int get hashCode => documentID.hashCode ^ appId.hashCode ^ name.hashCode ^ color.hashCode ^ height.hashCode ^ thickness.hashCode ^ indent.hashCode ^ endIndent.hashCode ^ conditions.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -76,11 +77,12 @@ class DividerModel {
           height == other.height &&
           thickness == other.thickness &&
           indent == other.indent &&
-          endIndent == other.endIndent;
+          endIndent == other.endIndent &&
+          conditions == other.conditions;
 
   @override
   String toString() {
-    return 'DividerModel{documentID: $documentID, appId: $appId, name: $name, color: $color, height: $height, thickness: $thickness, indent: $indent, endIndent: $endIndent}';
+    return 'DividerModel{documentID: $documentID, appId: $appId, name: $name, color: $color, height: $height, thickness: $thickness, indent: $indent, endIndent: $endIndent, conditions: $conditions}';
   }
 
   DividerEntity toEntity({String appId}) {
@@ -92,6 +94,7 @@ class DividerModel {
           thickness: (thickness != null) ? thickness : null, 
           indent: (indent != null) ? indent : null, 
           endIndent: (endIndent != null) ? endIndent : null, 
+          conditions: (conditions != null) ? conditions.toEntity(appId: appId) : null, 
     );
   }
 
@@ -107,6 +110,8 @@ class DividerModel {
           thickness: entity.thickness, 
           indent: entity.indent, 
           endIndent: entity.endIndent, 
+          conditions: 
+            ConditionsSimpleModel.fromEntity(entity.conditions), 
     );
   }
 
@@ -123,6 +128,8 @@ class DividerModel {
           thickness: entity.thickness, 
           indent: entity.indent, 
           endIndent: entity.endIndent, 
+          conditions: 
+            await ConditionsSimpleModel.fromEntityPlus(entity.conditions, appId: appId), 
     );
   }
 

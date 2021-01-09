@@ -30,6 +30,10 @@ class GridComponentError extends GridComponentState {
   GridComponentError({ this.message });
 }
 
+class GridComponentPermissionDenied extends GridComponentState {
+  GridComponentPermissionDenied();
+}
+
 class GridComponentLoaded extends GridComponentState {
   final GridModel value;
 
@@ -45,5 +49,4 @@ class GridComponentLoaded extends GridComponentState {
   @override
   String toString() => 'GridComponentLoaded { value: $value }';
 }
-
 

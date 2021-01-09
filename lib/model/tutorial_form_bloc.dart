@@ -25,11 +25,15 @@ import 'package:eliud_core/model/rgb_model.dart';
 
 import 'package:eliud_core/tools/string_validator.dart';
 
+import 'package:eliud_core/model/repository_export.dart';
+import 'package:eliud_core/model/abstract_repository_singleton.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
+import 'package:eliud_core/model/model_export.dart';
 import '../tools/bespoke_models.dart';
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
+import 'package:eliud_core/model/entity_export.dart';
 import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
@@ -104,6 +108,12 @@ class TutorialFormBloc extends Bloc<TutorialFormEvent, TutorialFormState> {
       }
       if (event is ChangedTutorialTutorialEntries) {
         newValue = currentState.value.copyWith(tutorialEntries: event.value);
+        yield SubmittableTutorialForm(value: newValue);
+
+        return;
+      }
+      if (event is ChangedTutorialConditions) {
+        newValue = currentState.value.copyWith(conditions: event.value);
         yield SubmittableTutorialForm(value: newValue);
 
         return;

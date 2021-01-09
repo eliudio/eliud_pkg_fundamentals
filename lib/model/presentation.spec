@@ -78,6 +78,12 @@
       "fieldType": "double",
       "remark": "Width of the image",
       "group": "general"
+    },
+    {
+      "fieldName": "conditions",
+      "displayName": "Conditions",
+      "fieldType": "ConditionsSimple",
+      "group": "conditions"
     }
   ],
   "groups": [
@@ -102,11 +108,8 @@
         "description": "Alignment of the image"
     },
     {
-      "fieldName": "imageWidth",
-      "displayName": "Image Width (% of screen width)",
-      "fieldType": "double",
-      "remark": "Width of the image",
-      "group": "general"
+        "group": "conditions",
+        "description": "Conditions"
     }
   ],
   "listFields": {

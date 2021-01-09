@@ -100,7 +100,14 @@ class PlayStoreFormBloc extends Bloc<PlayStoreFormEvent, PlayStoreFormState> {
                                  appId: currentState.value.appId,
                                  description: currentState.value.description,
                                  itemBackground: null,
+                                 conditions: currentState.value.conditions,
           );
+        yield SubmittablePlayStoreForm(value: newValue);
+
+        return;
+      }
+      if (event is ChangedPlayStoreConditions) {
+        newValue = currentState.value.copyWith(conditions: event.value);
         yield SubmittablePlayStoreForm(value: newValue);
 
         return;

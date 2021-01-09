@@ -20,6 +20,8 @@ import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_repository.dart';
+import 'package:flutter/services.dart';
+
 class BookletComponentBloc extends Bloc<BookletComponentEvent, BookletComponentState> {
   final BookletRepository bookletRepository;
 
@@ -30,13 +32,23 @@ class BookletComponentBloc extends Bloc<BookletComponentEvent, BookletComponentS
     if (event is FetchBookletComponent) {
       try {
         if (currentState is BookletComponentUninitialized) {
-          final BookletModel model = await _fetchBooklet(event.id);
-
-          if (model != null) {
-            yield BookletComponentLoaded(value: model);
+          bool permissionDenied = false;
+          final model = await bookletRepository.get(event.id, onError: (error) {
+            // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
+            if ((error is PlatformException) &&  (error.message.startsWith("PERMISSION_DENIED"))) {
+              permissionDenied = true;
+            }
+          });
+          if (permissionDenied) {
+            yield BookletComponentPermissionDenied();
           } else {
-            String id = event.id;
-            yield BookletComponentError(message: "Booklet with id = '$id' not found");
+            if (model != null) {
+              yield BookletComponentLoaded(value: model);
+            } else {
+              String id = event.id;
+              yield BookletComponentError(
+                  message: "Booklet with id = '$id' not found");
+            }
           }
           return;
         }
@@ -46,15 +58,10 @@ class BookletComponentBloc extends Bloc<BookletComponentEvent, BookletComponentS
     }
   }
 
-  Future<BookletModel> _fetchBooklet(String id) async {
-    return bookletRepository.get(id);
-  }
-
   @override
   Future<void> close() {
     return super.close();
   }
 
 }
-
 

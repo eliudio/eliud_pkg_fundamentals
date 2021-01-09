@@ -17,11 +17,15 @@ import 'package:collection/collection.dart';
 import 'package:eliud_core/core/global_data.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
+import 'package:eliud_core/model/repository_export.dart';
+import 'package:eliud_core/model/abstract_repository_singleton.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
+import 'package:eliud_core/model/model_export.dart';
 import '../tools/bespoke_models.dart';
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
+import 'package:eliud_core/model/entity_export.dart';
 import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
@@ -39,17 +43,18 @@ class TutorialModel {
   String title;
   String description;
   List<TutorialEntryModel> tutorialEntries;
+  ConditionsSimpleModel conditions;
 
-  TutorialModel({this.documentID, this.appId, this.name, this.title, this.description, this.tutorialEntries, })  {
+  TutorialModel({this.documentID, this.appId, this.name, this.title, this.description, this.tutorialEntries, this.conditions, })  {
     assert(documentID != null);
   }
 
-  TutorialModel copyWith({String documentID, String appId, String name, String title, String description, List<TutorialEntryModel> tutorialEntries, }) {
-    return TutorialModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, name: name ?? this.name, title: title ?? this.title, description: description ?? this.description, tutorialEntries: tutorialEntries ?? this.tutorialEntries, );
+  TutorialModel copyWith({String documentID, String appId, String name, String title, String description, List<TutorialEntryModel> tutorialEntries, ConditionsSimpleModel conditions, }) {
+    return TutorialModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, name: name ?? this.name, title: title ?? this.title, description: description ?? this.description, tutorialEntries: tutorialEntries ?? this.tutorialEntries, conditions: conditions ?? this.conditions, );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ appId.hashCode ^ name.hashCode ^ title.hashCode ^ description.hashCode ^ tutorialEntries.hashCode;
+  int get hashCode => documentID.hashCode ^ appId.hashCode ^ name.hashCode ^ title.hashCode ^ description.hashCode ^ tutorialEntries.hashCode ^ conditions.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -61,13 +66,14 @@ class TutorialModel {
           name == other.name &&
           title == other.title &&
           description == other.description &&
-          ListEquality().equals(tutorialEntries, other.tutorialEntries);
+          ListEquality().equals(tutorialEntries, other.tutorialEntries) &&
+          conditions == other.conditions;
 
   @override
   String toString() {
     String tutorialEntriesCsv = (tutorialEntries == null) ? '' : tutorialEntries.join(', ');
 
-    return 'TutorialModel{documentID: $documentID, appId: $appId, name: $name, title: $title, description: $description, tutorialEntries: TutorialEntry[] { $tutorialEntriesCsv }}';
+    return 'TutorialModel{documentID: $documentID, appId: $appId, name: $name, title: $title, description: $description, tutorialEntries: TutorialEntry[] { $tutorialEntriesCsv }, conditions: $conditions}';
   }
 
   TutorialEntity toEntity({String appId}) {
@@ -79,6 +85,7 @@ class TutorialModel {
           tutorialEntries: (tutorialEntries != null) ? tutorialEntries
             .map((item) => item.toEntity(appId: appId))
             .toList() : null, 
+          conditions: (conditions != null) ? conditions.toEntity(appId: appId) : null, 
     );
   }
 
@@ -95,6 +102,8 @@ class TutorialModel {
             entity.tutorialEntries
             .map((item) => TutorialEntryModel.fromEntity(newRandomKey(), item))
             .toList(), 
+          conditions: 
+            ConditionsSimpleModel.fromEntity(entity.conditions), 
     );
   }
 
@@ -111,6 +120,8 @@ class TutorialModel {
             entity. tutorialEntries == null ? null : new List<TutorialEntryModel>.from(await Future.wait(entity. tutorialEntries
             .map((item) => TutorialEntryModel.fromEntityPlus(newRandomKey(), item, appId: appId))
             .toList())), 
+          conditions: 
+            await ConditionsSimpleModel.fromEntityPlus(entity.conditions, appId: appId), 
     );
   }
 

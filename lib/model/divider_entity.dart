@@ -29,15 +29,16 @@ class DividerEntity {
   final double thickness;
   final double indent;
   final double endIndent;
+  final ConditionsSimpleEntity conditions;
 
-  DividerEntity({this.appId, this.name, this.color, this.height, this.thickness, this.indent, this.endIndent, });
+  DividerEntity({this.appId, this.name, this.color, this.height, this.thickness, this.indent, this.endIndent, this.conditions, });
 
 
-  List<Object> get props => [appId, name, color, height, thickness, indent, endIndent, ];
+  List<Object> get props => [appId, name, color, height, thickness, indent, endIndent, conditions, ];
 
   @override
   String toString() {
-    return 'DividerEntity{appId: $appId, name: $name, color: $color, height: $height, thickness: $thickness, indent: $indent, endIndent: $endIndent}';
+    return 'DividerEntity{appId: $appId, name: $name, color: $color, height: $height, thickness: $thickness, indent: $indent, endIndent: $endIndent, conditions: $conditions}';
   }
 
   static DividerEntity fromMap(Map map) {
@@ -47,6 +48,10 @@ class DividerEntity {
     colorFromMap = map['color'];
     if (colorFromMap != null)
       colorFromMap = RgbEntity.fromMap(colorFromMap);
+    var conditionsFromMap;
+    conditionsFromMap = map['conditions'];
+    if (conditionsFromMap != null)
+      conditionsFromMap = ConditionsSimpleEntity.fromMap(conditionsFromMap);
 
     return DividerEntity(
       appId: map['appId'], 
@@ -56,12 +61,16 @@ class DividerEntity {
       thickness: double.tryParse(map['thickness'].toString()), 
       indent: double.tryParse(map['indent'].toString()), 
       endIndent: double.tryParse(map['endIndent'].toString()), 
+      conditions: conditionsFromMap, 
     );
   }
 
   Map<String, Object> toDocument() {
     final Map<String, dynamic> colorMap = color != null 
         ? color.toDocument()
+        : null;
+    final Map<String, dynamic> conditionsMap = conditions != null 
+        ? conditions.toDocument()
         : null;
 
     Map<String, Object> theDocument = HashMap();
@@ -79,6 +88,8 @@ class DividerEntity {
       else theDocument["indent"] = null;
     if (endIndent != null) theDocument["endIndent"] = endIndent;
       else theDocument["endIndent"] = null;
+    if (conditions != null) theDocument["conditions"] = conditionsMap;
+      else theDocument["conditions"] = null;
     return theDocument;
   }
 

@@ -30,6 +30,10 @@ class DocumentComponentError extends DocumentComponentState {
   DocumentComponentError({ this.message });
 }
 
+class DocumentComponentPermissionDenied extends DocumentComponentState {
+  DocumentComponentPermissionDenied();
+}
+
 class DocumentComponentLoaded extends DocumentComponentState {
   final DocumentModel value;
 
@@ -45,5 +49,4 @@ class DocumentComponentLoaded extends DocumentComponentState {
   @override
   String toString() => 'DocumentComponentLoaded { value: $value }';
 }
-
 

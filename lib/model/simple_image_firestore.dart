@@ -55,12 +55,16 @@ class SimpleImageFirestore implements SimpleImageRepository {
   Future<SimpleImageModel> _populateDocPlus(DocumentSnapshot value) async {
     return SimpleImageModel.fromEntityPlus(value.documentID, SimpleImageEntity.fromMap(value.data), appId: appId);  }
 
-  Future<SimpleImageModel> get(String id) {
+  Future<SimpleImageModel> get(String id, {Function(Exception) onError}) {
     return SimpleImageCollection.document(id).get().then((doc) {
       if (doc.data != null)
         return _populateDocPlus(doc);
       else
         return null;
+    }).catchError((Object e) {
+      if (onError != null) {
+        onError(e);
+      }
     });
   }
 

@@ -191,6 +191,22 @@ class EndIndentDividerFormError extends DividerFormError {
 }
 
 
+class ConditionsDividerFormError extends DividerFormError { 
+  const ConditionsDividerFormError({ String message, DividerModel value }): super(message: message, value: value);
+
+  @override
+  List<Object> get props => [ message, value ];
+
+  @override
+  String toString() {
+    return '''ConditionsDividerFormError {
+      value: $value,
+      message: $message,
+    }''';
+  }
+}
+
+
 class DividerFormLoaded extends DividerFormInitialized { 
   const DividerFormLoaded({ DividerModel value }): super(value: value);
 

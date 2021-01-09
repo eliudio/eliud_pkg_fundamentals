@@ -29,17 +29,18 @@ class PresentationEntity {
   final int imagePositionRelative;
   final int imageAlignment;
   final double imageWidth;
+  final ConditionsSimpleEntity conditions;
 
-  PresentationEntity({this.appId, this.title, this.bodyComponents, this.imageId, this.imagePositionRelative, this.imageAlignment, this.imageWidth, });
+  PresentationEntity({this.appId, this.title, this.bodyComponents, this.imageId, this.imagePositionRelative, this.imageAlignment, this.imageWidth, this.conditions, });
 
 
-  List<Object> get props => [appId, title, bodyComponents, imageId, imagePositionRelative, imageAlignment, imageWidth, ];
+  List<Object> get props => [appId, title, bodyComponents, imageId, imagePositionRelative, imageAlignment, imageWidth, conditions, ];
 
   @override
   String toString() {
     String bodyComponentsCsv = (bodyComponents == null) ? '' : bodyComponents.join(', ');
 
-    return 'PresentationEntity{appId: $appId, title: $title, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, imageId: $imageId, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth}';
+    return 'PresentationEntity{appId: $appId, title: $title, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, imageId: $imageId, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth, conditions: $conditions}';
   }
 
   static PresentationEntity fromMap(Map map) {
@@ -53,6 +54,10 @@ class PresentationEntity {
         .map((dynamic item) =>
         BodyComponentEntity.fromMap(item as Map))
         .toList();
+    var conditionsFromMap;
+    conditionsFromMap = map['conditions'];
+    if (conditionsFromMap != null)
+      conditionsFromMap = ConditionsSimpleEntity.fromMap(conditionsFromMap);
 
     return PresentationEntity(
       appId: map['appId'], 
@@ -62,12 +67,16 @@ class PresentationEntity {
       imagePositionRelative: map['imagePositionRelative'], 
       imageAlignment: map['imageAlignment'], 
       imageWidth: double.tryParse(map['imageWidth'].toString()), 
+      conditions: conditionsFromMap, 
     );
   }
 
   Map<String, Object> toDocument() {
     final List<Map<String, dynamic>> bodyComponentsListMap = bodyComponents != null 
         ? bodyComponents.map((item) => item.toDocument()).toList()
+        : null;
+    final Map<String, dynamic> conditionsMap = conditions != null 
+        ? conditions.toDocument()
         : null;
 
     Map<String, Object> theDocument = HashMap();
@@ -85,6 +94,8 @@ class PresentationEntity {
       else theDocument["imageAlignment"] = null;
     if (imageWidth != null) theDocument["imageWidth"] = imageWidth;
       else theDocument["imageWidth"] = null;
+    if (conditions != null) theDocument["conditions"] = conditionsMap;
+      else theDocument["conditions"] = null;
     return theDocument;
   }
 

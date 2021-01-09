@@ -39,7 +39,7 @@ typedef PresentationChanged(PresentationModel value);
 abstract class PresentationRepository {
   Future<PresentationModel> add(PresentationModel value);
   Future<void> delete(PresentationModel value);
-  Future<PresentationModel> get(String id);
+  Future<PresentationModel> get(String id, { Function(Exception) onError });
   Future<PresentationModel> update(PresentationModel value);
 
   Stream<List<PresentationModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery });

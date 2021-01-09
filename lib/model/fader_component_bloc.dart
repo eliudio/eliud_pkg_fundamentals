@@ -20,6 +20,8 @@ import 'package:eliud_pkg_fundamentals/model/fader_model.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_repository.dart';
+import 'package:flutter/services.dart';
+
 class FaderComponentBloc extends Bloc<FaderComponentEvent, FaderComponentState> {
   final FaderRepository faderRepository;
 
@@ -30,13 +32,23 @@ class FaderComponentBloc extends Bloc<FaderComponentEvent, FaderComponentState> 
     if (event is FetchFaderComponent) {
       try {
         if (currentState is FaderComponentUninitialized) {
-          final FaderModel model = await _fetchFader(event.id);
-
-          if (model != null) {
-            yield FaderComponentLoaded(value: model);
+          bool permissionDenied = false;
+          final model = await faderRepository.get(event.id, onError: (error) {
+            // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
+            if ((error is PlatformException) &&  (error.message.startsWith("PERMISSION_DENIED"))) {
+              permissionDenied = true;
+            }
+          });
+          if (permissionDenied) {
+            yield FaderComponentPermissionDenied();
           } else {
-            String id = event.id;
-            yield FaderComponentError(message: "Fader with id = '$id' not found");
+            if (model != null) {
+              yield FaderComponentLoaded(value: model);
+            } else {
+              String id = event.id;
+              yield FaderComponentError(
+                  message: "Fader with id = '$id' not found");
+            }
           }
           return;
         }
@@ -46,15 +58,10 @@ class FaderComponentBloc extends Bloc<FaderComponentEvent, FaderComponentState> 
     }
   }
 
-  Future<FaderModel> _fetchFader(String id) async {
-    return faderRepository.get(id);
-  }
-
   @override
   Future<void> close() {
     return super.close();
   }
 
 }
-
 

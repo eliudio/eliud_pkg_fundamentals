@@ -30,6 +30,10 @@ class PresentationComponentError extends PresentationComponentState {
   PresentationComponentError({ this.message });
 }
 
+class PresentationComponentPermissionDenied extends PresentationComponentState {
+  PresentationComponentPermissionDenied();
+}
+
 class PresentationComponentLoaded extends PresentationComponentState {
   final PresentationModel value;
 
@@ -45,5 +49,4 @@ class PresentationComponentLoaded extends PresentationComponentState {
   @override
   String toString() => 'PresentationComponentLoaded { value: $value }';
 }
-
 

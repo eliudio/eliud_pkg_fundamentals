@@ -43,10 +43,16 @@ abstract class AbstractDividerComponent extends StatelessWidget {
     return BlocBuilder<DividerComponentBloc, DividerComponentState>(builder: (context, state) {
       if (state is DividerComponentLoaded) {
         if (state.value == null) {
-          return alertWidget(title: 'Error', content: 'No divider defined');
+          return alertWidget(title: 'Error', content: 'No Divider defined');
         } else {
           return yourWidget(context, state.value);
         }
+      } else if (state is DividerComponentPermissionDenied) {
+        return Icon(
+          Icons.highlight_off,
+          color: Colors.red,
+          size: 30.0,
+        );
       } else if (state is DividerComponentError) {
         return alertWidget(title: 'Error', content: state.message);
       } else {
@@ -61,5 +67,4 @@ abstract class AbstractDividerComponent extends StatelessWidget {
   Widget alertWidget({ title: String, content: String});
   DividerRepository getDividerRepository(BuildContext context);
 }
-
 

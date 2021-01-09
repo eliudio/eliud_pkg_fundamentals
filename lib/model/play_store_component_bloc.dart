@@ -20,6 +20,8 @@ import 'package:eliud_pkg_fundamentals/model/play_store_model.dart';
 import 'package:eliud_pkg_fundamentals/model/play_store_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/play_store_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/play_store_repository.dart';
+import 'package:flutter/services.dart';
+
 
 class PlayStoreComponentBloc extends Bloc<PlayStoreComponentEvent, PlayStoreComponentState> {
   final PlayStoreRepository playStoreRepository;
@@ -31,13 +33,23 @@ class PlayStoreComponentBloc extends Bloc<PlayStoreComponentEvent, PlayStoreComp
     if (event is FetchPlayStoreComponent) {
       try {
         if (currentState is PlayStoreComponentUninitialized) {
-          final PlayStoreModel model = await _fetchPlayStore(event.id);
-
-          if (model != null) {
-            yield PlayStoreComponentLoaded(value: model);
+          bool permissionDenied = false;
+          final model = await playStoreRepository.get(event.id, onError: (error) {
+            // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
+            if ((error is PlatformException) &&  (error.message.startsWith("PERMISSION_DENIED"))) {
+              permissionDenied = true;
+            }
+          });
+          if (permissionDenied) {
+            yield PlayStoreComponentPermissionDenied();
           } else {
-            String id = event.id;
-            yield PlayStoreComponentError(message: "PlayStore with id = '$id' not found");
+            if (model != null) {
+              yield PlayStoreComponentLoaded(value: model);
+            } else {
+              String id = event.id;
+              yield PlayStoreComponentError(
+                  message: "PlayStore with id = '$id' not found");
+            }
           }
           return;
         }
@@ -47,15 +59,10 @@ class PlayStoreComponentBloc extends Bloc<PlayStoreComponentEvent, PlayStoreComp
     }
   }
 
-  Future<PlayStoreModel> _fetchPlayStore(String id) async {
-    return playStoreRepository.get(id);
-  }
-
   @override
   Future<void> close() {
     return super.close();
   }
 
 }
-
 

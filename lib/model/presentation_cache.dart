@@ -18,6 +18,7 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_model.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_repository.dart';
+
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
@@ -52,10 +53,10 @@ class PresentationCache implements PresentationRepository {
     return Future.value();
   }
 
-  Future<PresentationModel> get(String id){
+  Future<PresentationModel> get(String id, {Function(Exception) onError}) {
     PresentationModel value = fullCache[id];
     if (value != null) return refreshRelations(value);
-    return reference.get(id).then((value) {
+    return reference.get(id, onError: onError).then((value) {
       fullCache[id] = value;
       return value;
     });

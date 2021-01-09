@@ -159,6 +159,22 @@ class ItemsFaderFormError extends FaderFormError {
 }
 
 
+class ConditionsFaderFormError extends FaderFormError { 
+  const ConditionsFaderFormError({ String message, FaderModel value }): super(message: message, value: value);
+
+  @override
+  List<Object> get props => [ message, value ];
+
+  @override
+  String toString() {
+    return '''ConditionsFaderFormError {
+      value: $value,
+      message: $message,
+    }''';
+  }
+}
+
+
 class FaderFormLoaded extends FaderFormInitialized { 
   const FaderFormLoaded({ FaderModel value }): super(value: value);
 

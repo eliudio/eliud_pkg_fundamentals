@@ -49,6 +49,12 @@
       "association": true,
       "optional": true,
       "group": "background"
+    },
+    {
+      "fieldName": "conditions",
+      "displayName": "Conditions",
+      "fieldType": "ConditionsSimple",
+      "group": "conditions"
     }
   ],
   "groups": [
@@ -59,6 +65,10 @@
     {
         "group": "background",
         "description": "Background"
+    },
+    {
+        "group": "conditions",
+        "description": "Conditions"
     }
   ],
   "listFields": {

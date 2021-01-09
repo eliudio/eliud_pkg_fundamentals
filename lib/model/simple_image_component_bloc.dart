@@ -20,6 +20,8 @@ import 'package:eliud_pkg_fundamentals/model/simple_image_model.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_repository.dart';
+import 'package:flutter/services.dart';
+
 
 class SimpleImageComponentBloc extends Bloc<SimpleImageComponentEvent, SimpleImageComponentState> {
   final SimpleImageRepository simpleImageRepository;
@@ -31,13 +33,23 @@ class SimpleImageComponentBloc extends Bloc<SimpleImageComponentEvent, SimpleIma
     if (event is FetchSimpleImageComponent) {
       try {
         if (currentState is SimpleImageComponentUninitialized) {
-          final SimpleImageModel model = await _fetchSimpleImage(event.id);
-
-          if (model != null) {
-            yield SimpleImageComponentLoaded(value: model);
+          bool permissionDenied = false;
+          final model = await simpleImageRepository.get(event.id, onError: (error) {
+            // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
+            if ((error is PlatformException) &&  (error.message.startsWith("PERMISSION_DENIED"))) {
+              permissionDenied = true;
+            }
+          });
+          if (permissionDenied) {
+            yield SimpleImageComponentPermissionDenied();
           } else {
-            String id = event.id;
-            yield SimpleImageComponentError(message: "SimpleImage with id = '$id' not found");
+            if (model != null) {
+              yield SimpleImageComponentLoaded(value: model);
+            } else {
+              String id = event.id;
+              yield SimpleImageComponentError(
+                  message: "SimpleImage with id = '$id' not found");
+            }
           }
           return;
         }
@@ -47,15 +59,10 @@ class SimpleImageComponentBloc extends Bloc<SimpleImageComponentEvent, SimpleIma
     }
   }
 
-  Future<SimpleImageModel> _fetchSimpleImage(String id) async {
-    return simpleImageRepository.get(id);
-  }
-
   @override
   Future<void> close() {
     return super.close();
   }
 
 }
-
 

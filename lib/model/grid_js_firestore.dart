@@ -62,12 +62,16 @@ class GridJsFirestore implements GridRepository {
     return GridModel.fromEntityPlus(value.id, GridEntity.fromMap(value.data()), appId: appId);
   }
 
-  Future<GridModel> get(String id) {
+  Future<GridModel> get(String id, { Function(Exception) onError }) {
     return gridCollection.doc(id).get().then((data) {
       if (data.data() != null) {
         return _populateDocPlus(data);
       } else {
         return null;
+      }
+    }).catchError((Object e) {
+      if (onError != null) {
+        onError(e);
       }
     });
   }

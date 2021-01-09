@@ -20,6 +20,8 @@ import 'package:eliud_pkg_fundamentals/model/document_model.dart';
 import 'package:eliud_pkg_fundamentals/model/document_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/document_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/document_repository.dart';
+import 'package:flutter/services.dart';
+
 
 class DocumentComponentBloc extends Bloc<DocumentComponentEvent, DocumentComponentState> {
   final DocumentRepository documentRepository;
@@ -31,13 +33,23 @@ class DocumentComponentBloc extends Bloc<DocumentComponentEvent, DocumentCompone
     if (event is FetchDocumentComponent) {
       try {
         if (currentState is DocumentComponentUninitialized) {
-          final DocumentModel model = await _fetchDocument(event.id);
-
-          if (model != null) {
-            yield DocumentComponentLoaded(value: model);
+          bool permissionDenied = false;
+          final model = await documentRepository.get(event.id, onError: (error) {
+            // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
+            if ((error is PlatformException) &&  (error.message.startsWith("PERMISSION_DENIED"))) {
+              permissionDenied = true;
+            }
+          });
+          if (permissionDenied) {
+            yield DocumentComponentPermissionDenied();
           } else {
-            String id = event.id;
-            yield DocumentComponentError(message: "Document with id = '$id' not found");
+            if (model != null) {
+              yield DocumentComponentLoaded(value: model);
+            } else {
+              String id = event.id;
+              yield DocumentComponentError(
+                  message: "Document with id = '$id' not found");
+            }
           }
           return;
         }
@@ -47,15 +59,10 @@ class DocumentComponentBloc extends Bloc<DocumentComponentEvent, DocumentCompone
     }
   }
 
-  Future<DocumentModel> _fetchDocument(String id) async {
-    return documentRepository.get(id);
-  }
-
   @override
   Future<void> close() {
     return super.close();
   }
 
 }
-
 

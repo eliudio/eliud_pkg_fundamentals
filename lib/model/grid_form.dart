@@ -277,6 +277,20 @@ class _MyGridFormState extends State<MyGridForm> {
         children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
 
 
+         children.add(Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                  child: Text('Conditions',
+                      style: TextStyle(
+                          color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
+                ));
+
+
+
+        children.add(Container(height: 20.0));
+        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
+
+
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
           children.add(RaisedButton(
                   color: RgbHelper.color(rgbo: app.formSubmitButtonColor),
@@ -292,6 +306,7 @@ class _MyGridFormState extends State<MyGridForm> {
                               title: state.value.title, 
                               bodyComponents: state.value.bodyComponents, 
                               gridView: state.value.gridView, 
+                              conditions: state.value.conditions, 
                         )));
                       } else {
                         BlocProvider.of<GridListBloc>(context).add(
@@ -301,6 +316,7 @@ class _MyGridFormState extends State<MyGridForm> {
                               title: state.value.title, 
                               bodyComponents: state.value.bodyComponents, 
                               gridView: state.value.gridView, 
+                              conditions: state.value.conditions, 
                           )));
                       }
                       if (widget.submitAction != null) {

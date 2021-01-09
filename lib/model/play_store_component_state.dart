@@ -30,6 +30,10 @@ class PlayStoreComponentError extends PlayStoreComponentState {
   PlayStoreComponentError({ this.message });
 }
 
+class PlayStoreComponentPermissionDenied extends PlayStoreComponentState {
+  PlayStoreComponentPermissionDenied();
+}
+
 class PlayStoreComponentLoaded extends PlayStoreComponentState {
   final PlayStoreModel value;
 
@@ -45,5 +49,4 @@ class PlayStoreComponentLoaded extends PlayStoreComponentState {
   @override
   String toString() => 'PlayStoreComponentLoaded { value: $value }';
 }
-
 

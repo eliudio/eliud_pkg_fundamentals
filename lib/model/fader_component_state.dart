@@ -30,6 +30,10 @@ class FaderComponentError extends FaderComponentState {
   FaderComponentError({ this.message });
 }
 
+class FaderComponentPermissionDenied extends FaderComponentState {
+  FaderComponentPermissionDenied();
+}
+
 class FaderComponentLoaded extends FaderComponentState {
   final FaderModel value;
 
@@ -45,5 +49,4 @@ class FaderComponentLoaded extends FaderComponentState {
   @override
   String toString() => 'FaderComponentLoaded { value: $value }';
 }
-
 

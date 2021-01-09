@@ -20,6 +20,8 @@ import 'package:eliud_pkg_fundamentals/model/tutorial_model.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_repository.dart';
+import 'package:flutter/services.dart';
+
 class TutorialComponentBloc extends Bloc<TutorialComponentEvent, TutorialComponentState> {
   final TutorialRepository tutorialRepository;
 
@@ -30,13 +32,23 @@ class TutorialComponentBloc extends Bloc<TutorialComponentEvent, TutorialCompone
     if (event is FetchTutorialComponent) {
       try {
         if (currentState is TutorialComponentUninitialized) {
-          final TutorialModel model = await _fetchTutorial(event.id);
-
-          if (model != null) {
-            yield TutorialComponentLoaded(value: model);
+          bool permissionDenied = false;
+          final model = await tutorialRepository.get(event.id, onError: (error) {
+            // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
+            if ((error is PlatformException) &&  (error.message.startsWith("PERMISSION_DENIED"))) {
+              permissionDenied = true;
+            }
+          });
+          if (permissionDenied) {
+            yield TutorialComponentPermissionDenied();
           } else {
-            String id = event.id;
-            yield TutorialComponentError(message: "Tutorial with id = '$id' not found");
+            if (model != null) {
+              yield TutorialComponentLoaded(value: model);
+            } else {
+              String id = event.id;
+              yield TutorialComponentError(
+                  message: "Tutorial with id = '$id' not found");
+            }
           }
           return;
         }
@@ -46,15 +58,10 @@ class TutorialComponentBloc extends Bloc<TutorialComponentEvent, TutorialCompone
     }
   }
 
-  Future<TutorialModel> _fetchTutorial(String id) async {
-    return tutorialRepository.get(id);
-  }
-
   @override
   Future<void> close() {
     return super.close();
   }
 
 }
-
 

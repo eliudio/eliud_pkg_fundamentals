@@ -17,6 +17,7 @@ import 'dart:collection';
 import 'dart:convert';
 import 'package:eliud_core/tools/common_tools.dart';
 import 'abstract_repository_singleton.dart';
+import 'package:eliud_core/model/entity_export.dart';
 import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
@@ -26,17 +27,18 @@ class TutorialEntity {
   final String title;
   final String description;
   final List<TutorialEntryEntity> tutorialEntries;
+  final ConditionsSimpleEntity conditions;
 
-  TutorialEntity({this.appId, this.name, this.title, this.description, this.tutorialEntries, });
+  TutorialEntity({this.appId, this.name, this.title, this.description, this.tutorialEntries, this.conditions, });
 
 
-  List<Object> get props => [appId, name, title, description, tutorialEntries, ];
+  List<Object> get props => [appId, name, title, description, tutorialEntries, conditions, ];
 
   @override
   String toString() {
     String tutorialEntriesCsv = (tutorialEntries == null) ? '' : tutorialEntries.join(', ');
 
-    return 'TutorialEntity{appId: $appId, name: $name, title: $title, description: $description, tutorialEntries: TutorialEntry[] { $tutorialEntriesCsv }}';
+    return 'TutorialEntity{appId: $appId, name: $name, title: $title, description: $description, tutorialEntries: TutorialEntry[] { $tutorialEntriesCsv }, conditions: $conditions}';
   }
 
   static TutorialEntity fromMap(Map map) {
@@ -50,6 +52,10 @@ class TutorialEntity {
         .map((dynamic item) =>
         TutorialEntryEntity.fromMap(item as Map))
         .toList();
+    var conditionsFromMap;
+    conditionsFromMap = map['conditions'];
+    if (conditionsFromMap != null)
+      conditionsFromMap = ConditionsSimpleEntity.fromMap(conditionsFromMap);
 
     return TutorialEntity(
       appId: map['appId'], 
@@ -57,12 +63,16 @@ class TutorialEntity {
       title: map['title'], 
       description: map['description'], 
       tutorialEntries: tutorialEntriesList, 
+      conditions: conditionsFromMap, 
     );
   }
 
   Map<String, Object> toDocument() {
     final List<Map<String, dynamic>> tutorialEntriesListMap = tutorialEntries != null 
         ? tutorialEntries.map((item) => item.toDocument()).toList()
+        : null;
+    final Map<String, dynamic> conditionsMap = conditions != null 
+        ? conditions.toDocument()
         : null;
 
     Map<String, Object> theDocument = HashMap();
@@ -76,6 +86,8 @@ class TutorialEntity {
       else theDocument["description"] = null;
     if (tutorialEntries != null) theDocument["tutorialEntries"] = tutorialEntriesListMap;
       else theDocument["tutorialEntries"] = null;
+    if (conditions != null) theDocument["conditions"] = conditionsMap;
+      else theDocument["conditions"] = null;
     return theDocument;
   }
 

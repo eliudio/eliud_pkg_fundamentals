@@ -43,10 +43,16 @@ abstract class AbstractBookletComponent extends StatelessWidget {
     return BlocBuilder<BookletComponentBloc, BookletComponentState>(builder: (context, state) {
       if (state is BookletComponentLoaded) {
         if (state.value == null) {
-          return alertWidget(title: 'Error', content: 'No booklet defined');
+          return alertWidget(title: 'Error', content: 'No Booklet defined');
         } else {
           return yourWidget(context, state.value);
         }
+      } else if (state is BookletComponentPermissionDenied) {
+        return Icon(
+          Icons.highlight_off,
+          color: Colors.red,
+          size: 30.0,
+        );
       } else if (state is BookletComponentError) {
         return alertWidget(title: 'Error', content: state.message);
       } else {
@@ -61,5 +67,4 @@ abstract class AbstractBookletComponent extends StatelessWidget {
   Widget alertWidget({ title: String, content: String});
   BookletRepository getBookletRepository(BuildContext context);
 }
-
 

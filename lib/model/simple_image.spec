@@ -48,6 +48,12 @@
       "optional": false,
       "iconName": "add_a_photo",
       "group": "image"
+    },
+    {
+      "fieldName": "conditions",
+      "displayName": "Conditions",
+      "fieldType": "ConditionsSimple",
+      "group": "conditions"
     }
   ],
   "groups": [
@@ -58,6 +64,10 @@
     {
         "group": "image",
         "description": "Image"
+    },
+    {
+        "group": "conditions",
+        "description": "Conditions"
     }
   ],
   "listFields": {

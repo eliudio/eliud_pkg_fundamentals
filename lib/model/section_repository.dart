@@ -39,7 +39,7 @@ typedef SectionChanged(SectionModel value);
 abstract class SectionRepository {
   Future<SectionModel> add(SectionModel value);
   Future<void> delete(SectionModel value);
-  Future<SectionModel> get(String id);
+  Future<SectionModel> get(String id, { Function(Exception) onError });
   Future<SectionModel> update(SectionModel value);
 
   Stream<List<SectionModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery });

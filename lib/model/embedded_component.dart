@@ -202,7 +202,7 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
       }
     }
 
-    Future<DocumentItemModel> get(String id) {
+    Future<DocumentItemModel> get(String id, { Function(Exception) onError }) {
       int index = _index(id);
       var completer = new Completer<DocumentItemModel>();
       completer.complete(items[index]);
@@ -297,7 +297,7 @@ class LinkInMemoryRepository implements LinkRepository {
       }
     }
 
-    Future<LinkModel> get(String id) {
+    Future<LinkModel> get(String id, { Function(Exception) onError }) {
       int index = _index(id);
       var completer = new Completer<LinkModel>();
       completer.complete(items[index]);
@@ -392,7 +392,7 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
       }
     }
 
-    Future<ListedItemModel> get(String id) {
+    Future<ListedItemModel> get(String id, { Function(Exception) onError }) {
       int index = _index(id);
       var completer = new Completer<ListedItemModel>();
       completer.complete(items[index]);
@@ -487,7 +487,7 @@ class SectionInMemoryRepository implements SectionRepository {
       }
     }
 
-    Future<SectionModel> get(String id) {
+    Future<SectionModel> get(String id, { Function(Exception) onError }) {
       int index = _index(id);
       var completer = new Completer<SectionModel>();
       completer.complete(items[index]);
@@ -582,7 +582,7 @@ class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
       }
     }
 
-    Future<TutorialEntryModel> get(String id) {
+    Future<TutorialEntryModel> get(String id, { Function(Exception) onError }) {
       int index = _index(id);
       var completer = new Completer<TutorialEntryModel>();
       completer.complete(items[index]);

@@ -191,6 +191,22 @@ class ImageWidthPresentationFormError extends PresentationFormError {
 }
 
 
+class ConditionsPresentationFormError extends PresentationFormError { 
+  const ConditionsPresentationFormError({ String message, PresentationModel value }): super(message: message, value: value);
+
+  @override
+  List<Object> get props => [ message, value ];
+
+  @override
+  String toString() {
+    return '''ConditionsPresentationFormError {
+      value: $value,
+      message: $message,
+    }''';
+  }
+}
+
+
 class PresentationFormLoaded extends PresentationFormInitialized { 
   const PresentationFormLoaded({ PresentationModel value }): super(value: value);
 

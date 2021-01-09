@@ -107,3 +107,15 @@ class ChangedSimpleImageImage extends SimpleImageFormEvent {
   String toString() => 'ChangedSimpleImageImage{ value: $value }';
 }
 
+class ChangedSimpleImageConditions extends SimpleImageFormEvent {
+  final ConditionsSimpleModel value;
+
+  ChangedSimpleImageConditions({this.value});
+
+  @override
+  List<Object> get props => [ value ];
+
+  @override
+  String toString() => 'ChangedSimpleImageConditions{ value: $value }';
+}
+

@@ -338,6 +338,20 @@ class _MyDividerFormState extends State<MyDividerForm> {
         children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
 
 
+         children.add(Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                  child: Text('Conditions',
+                      style: TextStyle(
+                          color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
+                ));
+
+
+
+        children.add(Container(height: 20.0));
+        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
+
+
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
           children.add(RaisedButton(
                   color: RgbHelper.color(rgbo: app.formSubmitButtonColor),
@@ -356,6 +370,7 @@ class _MyDividerFormState extends State<MyDividerForm> {
                               thickness: state.value.thickness, 
                               indent: state.value.indent, 
                               endIndent: state.value.endIndent, 
+                              conditions: state.value.conditions, 
                         )));
                       } else {
                         BlocProvider.of<DividerListBloc>(context).add(
@@ -368,6 +383,7 @@ class _MyDividerFormState extends State<MyDividerForm> {
                               thickness: state.value.thickness, 
                               indent: state.value.indent, 
                               endIndent: state.value.endIndent, 
+                              conditions: state.value.conditions, 
                           )));
                       }
                       if (widget.submitAction != null) {

@@ -16,11 +16,15 @@
 import 'package:eliud_pkg_fundamentals/model/fader_repository.dart';
 
 
+import 'package:eliud_core/model/repository_export.dart';
+import 'package:eliud_core/model/abstract_repository_singleton.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
+import 'package:eliud_core/model/model_export.dart';
 import '../tools/bespoke_models.dart';
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
+import 'package:eliud_core/model/entity_export.dart';
 import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
@@ -51,12 +55,16 @@ class FaderFirestore implements FaderRepository {
   Future<FaderModel> _populateDocPlus(DocumentSnapshot value) async {
     return FaderModel.fromEntityPlus(value.documentID, FaderEntity.fromMap(value.data), appId: appId);  }
 
-  Future<FaderModel> get(String id) {
+  Future<FaderModel> get(String id, {Function(Exception) onError}) {
     return FaderCollection.document(id).get().then((doc) {
       if (doc.data != null)
         return _populateDocPlus(doc);
       else
         return null;
+    }).catchError((Object e) {
+      if (onError != null) {
+        onError(e);
+      }
     });
   }
 

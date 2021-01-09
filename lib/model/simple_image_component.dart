@@ -43,10 +43,16 @@ abstract class AbstractSimpleImageComponent extends StatelessWidget {
     return BlocBuilder<SimpleImageComponentBloc, SimpleImageComponentState>(builder: (context, state) {
       if (state is SimpleImageComponentLoaded) {
         if (state.value == null) {
-          return alertWidget(title: 'Error', content: 'No simpleImage defined');
+          return alertWidget(title: 'Error', content: 'No SimpleImage defined');
         } else {
           return yourWidget(context, state.value);
         }
+      } else if (state is SimpleImageComponentPermissionDenied) {
+        return Icon(
+          Icons.highlight_off,
+          color: Colors.red,
+          size: 30.0,
+        );
       } else if (state is SimpleImageComponentError) {
         return alertWidget(title: 'Error', content: state.message);
       } else {
@@ -61,5 +67,4 @@ abstract class AbstractSimpleImageComponent extends StatelessWidget {
   Widget alertWidget({ title: String, content: String});
   SimpleImageRepository getSimpleImageRepository(BuildContext context);
 }
-
 

@@ -75,17 +75,18 @@ class PresentationModel {
 
   // Width of the image
   double imageWidth;
+  ConditionsSimpleModel conditions;
 
-  PresentationModel({this.documentID, this.appId, this.title, this.bodyComponents, this.image, this.imagePositionRelative, this.imageAlignment, this.imageWidth, })  {
+  PresentationModel({this.documentID, this.appId, this.title, this.bodyComponents, this.image, this.imagePositionRelative, this.imageAlignment, this.imageWidth, this.conditions, })  {
     assert(documentID != null);
   }
 
-  PresentationModel copyWith({String documentID, String appId, String title, List<BodyComponentModel> bodyComponents, ImageModel image, PresentationRelativeImagePosition imagePositionRelative, PresentationImageAlignment imageAlignment, double imageWidth, }) {
-    return PresentationModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, title: title ?? this.title, bodyComponents: bodyComponents ?? this.bodyComponents, image: image ?? this.image, imagePositionRelative: imagePositionRelative ?? this.imagePositionRelative, imageAlignment: imageAlignment ?? this.imageAlignment, imageWidth: imageWidth ?? this.imageWidth, );
+  PresentationModel copyWith({String documentID, String appId, String title, List<BodyComponentModel> bodyComponents, ImageModel image, PresentationRelativeImagePosition imagePositionRelative, PresentationImageAlignment imageAlignment, double imageWidth, ConditionsSimpleModel conditions, }) {
+    return PresentationModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, title: title ?? this.title, bodyComponents: bodyComponents ?? this.bodyComponents, image: image ?? this.image, imagePositionRelative: imagePositionRelative ?? this.imagePositionRelative, imageAlignment: imageAlignment ?? this.imageAlignment, imageWidth: imageWidth ?? this.imageWidth, conditions: conditions ?? this.conditions, );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ appId.hashCode ^ title.hashCode ^ bodyComponents.hashCode ^ image.hashCode ^ imagePositionRelative.hashCode ^ imageAlignment.hashCode ^ imageWidth.hashCode;
+  int get hashCode => documentID.hashCode ^ appId.hashCode ^ title.hashCode ^ bodyComponents.hashCode ^ image.hashCode ^ imagePositionRelative.hashCode ^ imageAlignment.hashCode ^ imageWidth.hashCode ^ conditions.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -99,13 +100,14 @@ class PresentationModel {
           image == other.image &&
           imagePositionRelative == other.imagePositionRelative &&
           imageAlignment == other.imageAlignment &&
-          imageWidth == other.imageWidth;
+          imageWidth == other.imageWidth &&
+          conditions == other.conditions;
 
   @override
   String toString() {
     String bodyComponentsCsv = (bodyComponents == null) ? '' : bodyComponents.join(', ');
 
-    return 'PresentationModel{documentID: $documentID, appId: $appId, title: $title, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, image: $image, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth}';
+    return 'PresentationModel{documentID: $documentID, appId: $appId, title: $title, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, image: $image, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth, conditions: $conditions}';
   }
 
   PresentationEntity toEntity({String appId}) {
@@ -119,6 +121,7 @@ class PresentationModel {
           imagePositionRelative: (imagePositionRelative != null) ? imagePositionRelative.index : null, 
           imageAlignment: (imageAlignment != null) ? imageAlignment.index : null, 
           imageWidth: (imageWidth != null) ? imageWidth : null, 
+          conditions: (conditions != null) ? conditions.toEntity(appId: appId) : null, 
     );
   }
 
@@ -136,6 +139,8 @@ class PresentationModel {
           imagePositionRelative: toPresentationRelativeImagePosition(entity.imagePositionRelative), 
           imageAlignment: toPresentationImageAlignment(entity.imageAlignment), 
           imageWidth: entity.imageWidth, 
+          conditions: 
+            ConditionsSimpleModel.fromEntity(entity.conditions), 
     );
   }
 
@@ -163,6 +168,8 @@ class PresentationModel {
           imagePositionRelative: toPresentationRelativeImagePosition(entity.imagePositionRelative), 
           imageAlignment: toPresentationImageAlignment(entity.imageAlignment), 
           imageWidth: entity.imageWidth, 
+          conditions: 
+            await ConditionsSimpleModel.fromEntityPlus(entity.conditions, appId: appId), 
     );
   }
 

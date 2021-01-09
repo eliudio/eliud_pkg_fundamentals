@@ -30,6 +30,10 @@ class DividerComponentError extends DividerComponentState {
   DividerComponentError({ this.message });
 }
 
+class DividerComponentPermissionDenied extends DividerComponentState {
+  DividerComponentPermissionDenied();
+}
+
 class DividerComponentLoaded extends DividerComponentState {
   final DividerModel value;
 
@@ -45,5 +49,4 @@ class DividerComponentLoaded extends DividerComponentState {
   @override
   String toString() => 'DividerComponentLoaded { value: $value }';
 }
-
 

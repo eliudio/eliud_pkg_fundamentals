@@ -43,10 +43,16 @@ abstract class AbstractPlayStoreComponent extends StatelessWidget {
     return BlocBuilder<PlayStoreComponentBloc, PlayStoreComponentState>(builder: (context, state) {
       if (state is PlayStoreComponentLoaded) {
         if (state.value == null) {
-          return alertWidget(title: 'Error', content: 'No playStore defined');
+          return alertWidget(title: 'Error', content: 'No PlayStore defined');
         } else {
           return yourWidget(context, state.value);
         }
+      } else if (state is PlayStoreComponentPermissionDenied) {
+        return Icon(
+          Icons.highlight_off,
+          color: Colors.red,
+          size: 30.0,
+        );
       } else if (state is PlayStoreComponentError) {
         return alertWidget(title: 'Error', content: state.message);
       } else {
@@ -61,5 +67,4 @@ abstract class AbstractPlayStoreComponent extends StatelessWidget {
   Widget alertWidget({ title: String, content: String});
   PlayStoreRepository getPlayStoreRepository(BuildContext context);
 }
-
 

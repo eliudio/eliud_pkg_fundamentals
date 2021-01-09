@@ -25,28 +25,39 @@ class SimpleImageEntity {
   final String appId;
   final String title;
   final String imageId;
+  final ConditionsSimpleEntity conditions;
 
-  SimpleImageEntity({this.appId, this.title, this.imageId, });
+  SimpleImageEntity({this.appId, this.title, this.imageId, this.conditions, });
 
 
-  List<Object> get props => [appId, title, imageId, ];
+  List<Object> get props => [appId, title, imageId, conditions, ];
 
   @override
   String toString() {
-    return 'SimpleImageEntity{appId: $appId, title: $title, imageId: $imageId}';
+    return 'SimpleImageEntity{appId: $appId, title: $title, imageId: $imageId, conditions: $conditions}';
   }
 
   static SimpleImageEntity fromMap(Map map) {
     if (map == null) return null;
 
+    var conditionsFromMap;
+    conditionsFromMap = map['conditions'];
+    if (conditionsFromMap != null)
+      conditionsFromMap = ConditionsSimpleEntity.fromMap(conditionsFromMap);
+
     return SimpleImageEntity(
       appId: map['appId'], 
       title: map['title'], 
       imageId: map['imageId'], 
+      conditions: conditionsFromMap, 
     );
   }
 
   Map<String, Object> toDocument() {
+    final Map<String, dynamic> conditionsMap = conditions != null 
+        ? conditions.toDocument()
+        : null;
+
     Map<String, Object> theDocument = HashMap();
     if (appId != null) theDocument["appId"] = appId;
       else theDocument["appId"] = null;
@@ -54,6 +65,8 @@ class SimpleImageEntity {
       else theDocument["title"] = null;
     if (imageId != null) theDocument["imageId"] = imageId;
       else theDocument["imageId"] = null;
+    if (conditions != null) theDocument["conditions"] = conditionsMap;
+      else theDocument["conditions"] = null;
     return theDocument;
   }
 

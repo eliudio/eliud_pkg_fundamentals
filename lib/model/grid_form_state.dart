@@ -143,6 +143,22 @@ class GridViewGridFormError extends GridFormError {
 }
 
 
+class ConditionsGridFormError extends GridFormError { 
+  const ConditionsGridFormError({ String message, GridModel value }): super(message: message, value: value);
+
+  @override
+  List<Object> get props => [ message, value ];
+
+  @override
+  String toString() {
+    return '''ConditionsGridFormError {
+      value: $value,
+      message: $message,
+    }''';
+  }
+}
+
+
 class GridFormLoaded extends GridFormInitialized { 
   const GridFormLoaded({ GridModel value }): super(value: value);
 

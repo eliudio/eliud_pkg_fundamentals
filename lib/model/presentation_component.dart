@@ -43,10 +43,16 @@ abstract class AbstractPresentationComponent extends StatelessWidget {
     return BlocBuilder<PresentationComponentBloc, PresentationComponentState>(builder: (context, state) {
       if (state is PresentationComponentLoaded) {
         if (state.value == null) {
-          return alertWidget(title: 'Error', content: 'No presentation defined');
+          return alertWidget(title: 'Error', content: 'No Presentation defined');
         } else {
           return yourWidget(context, state.value);
         }
+      } else if (state is PresentationComponentPermissionDenied) {
+        return Icon(
+          Icons.highlight_off,
+          color: Colors.red,
+          size: 30.0,
+        );
       } else if (state is PresentationComponentError) {
         return alertWidget(title: 'Error', content: state.message);
       } else {
@@ -61,5 +67,4 @@ abstract class AbstractPresentationComponent extends StatelessWidget {
   Widget alertWidget({ title: String, content: String});
   PresentationRepository getPresentationRepository(BuildContext context);
 }
-
 

@@ -44,17 +44,18 @@ class GridModel {
 
   // Specific gridview
   GridViewModel gridView;
+  ConditionsSimpleModel conditions;
 
-  GridModel({this.documentID, this.appId, this.title, this.bodyComponents, this.gridView, })  {
+  GridModel({this.documentID, this.appId, this.title, this.bodyComponents, this.gridView, this.conditions, })  {
     assert(documentID != null);
   }
 
-  GridModel copyWith({String documentID, String appId, String title, List<BodyComponentModel> bodyComponents, GridViewModel gridView, }) {
-    return GridModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, title: title ?? this.title, bodyComponents: bodyComponents ?? this.bodyComponents, gridView: gridView ?? this.gridView, );
+  GridModel copyWith({String documentID, String appId, String title, List<BodyComponentModel> bodyComponents, GridViewModel gridView, ConditionsSimpleModel conditions, }) {
+    return GridModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, title: title ?? this.title, bodyComponents: bodyComponents ?? this.bodyComponents, gridView: gridView ?? this.gridView, conditions: conditions ?? this.conditions, );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ appId.hashCode ^ title.hashCode ^ bodyComponents.hashCode ^ gridView.hashCode;
+  int get hashCode => documentID.hashCode ^ appId.hashCode ^ title.hashCode ^ bodyComponents.hashCode ^ gridView.hashCode ^ conditions.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -65,13 +66,14 @@ class GridModel {
           appId == other.appId &&
           title == other.title &&
           ListEquality().equals(bodyComponents, other.bodyComponents) &&
-          gridView == other.gridView;
+          gridView == other.gridView &&
+          conditions == other.conditions;
 
   @override
   String toString() {
     String bodyComponentsCsv = (bodyComponents == null) ? '' : bodyComponents.join(', ');
 
-    return 'GridModel{documentID: $documentID, appId: $appId, title: $title, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, gridView: $gridView}';
+    return 'GridModel{documentID: $documentID, appId: $appId, title: $title, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, gridView: $gridView, conditions: $conditions}';
   }
 
   GridEntity toEntity({String appId}) {
@@ -82,6 +84,7 @@ class GridModel {
             .map((item) => item.toEntity(appId: appId))
             .toList() : null, 
           gridViewId: (gridView != null) ? gridView.documentID : null, 
+          conditions: (conditions != null) ? conditions.toEntity(appId: appId) : null, 
     );
   }
 
@@ -96,6 +99,8 @@ class GridModel {
             entity.bodyComponents
             .map((item) => BodyComponentModel.fromEntity(newRandomKey(), item))
             .toList(), 
+          conditions: 
+            ConditionsSimpleModel.fromEntity(entity.conditions), 
     );
   }
 
@@ -120,6 +125,8 @@ class GridModel {
             .map((item) => BodyComponentModel.fromEntityPlus(newRandomKey(), item, appId: appId))
             .toList())), 
           gridView: gridViewHolder, 
+          conditions: 
+            await ConditionsSimpleModel.fromEntityPlus(entity.conditions, appId: appId), 
     );
   }
 

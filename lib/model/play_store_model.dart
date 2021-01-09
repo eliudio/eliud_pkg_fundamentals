@@ -40,17 +40,18 @@ class PlayStoreModel {
   String appId;
   String description;
   BackgroundModel itemBackground;
+  ConditionsSimpleModel conditions;
 
-  PlayStoreModel({this.documentID, this.appId, this.description, this.itemBackground, })  {
+  PlayStoreModel({this.documentID, this.appId, this.description, this.itemBackground, this.conditions, })  {
     assert(documentID != null);
   }
 
-  PlayStoreModel copyWith({String documentID, String appId, String description, BackgroundModel itemBackground, }) {
-    return PlayStoreModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, description: description ?? this.description, itemBackground: itemBackground ?? this.itemBackground, );
+  PlayStoreModel copyWith({String documentID, String appId, String description, BackgroundModel itemBackground, ConditionsSimpleModel conditions, }) {
+    return PlayStoreModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, description: description ?? this.description, itemBackground: itemBackground ?? this.itemBackground, conditions: conditions ?? this.conditions, );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ appId.hashCode ^ description.hashCode ^ itemBackground.hashCode;
+  int get hashCode => documentID.hashCode ^ appId.hashCode ^ description.hashCode ^ itemBackground.hashCode ^ conditions.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -60,11 +61,12 @@ class PlayStoreModel {
           documentID == other.documentID &&
           appId == other.appId &&
           description == other.description &&
-          itemBackground == other.itemBackground;
+          itemBackground == other.itemBackground &&
+          conditions == other.conditions;
 
   @override
   String toString() {
-    return 'PlayStoreModel{documentID: $documentID, appId: $appId, description: $description, itemBackground: $itemBackground}';
+    return 'PlayStoreModel{documentID: $documentID, appId: $appId, description: $description, itemBackground: $itemBackground, conditions: $conditions}';
   }
 
   PlayStoreEntity toEntity({String appId}) {
@@ -72,6 +74,7 @@ class PlayStoreModel {
           appId: (appId != null) ? appId : null, 
           description: (description != null) ? description : null, 
           itemBackgroundId: (itemBackground != null) ? itemBackground.documentID : null, 
+          conditions: (conditions != null) ? conditions.toEntity(appId: appId) : null, 
     );
   }
 
@@ -81,6 +84,8 @@ class PlayStoreModel {
           documentID: documentID, 
           appId: entity.appId, 
           description: entity.description, 
+          conditions: 
+            ConditionsSimpleModel.fromEntity(entity.conditions), 
     );
   }
 
@@ -101,6 +106,8 @@ class PlayStoreModel {
           appId: entity.appId, 
           description: entity.description, 
           itemBackground: itemBackgroundHolder, 
+          conditions: 
+            await ConditionsSimpleModel.fromEntityPlus(entity.conditions, appId: appId), 
     );
   }
 

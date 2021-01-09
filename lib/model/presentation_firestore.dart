@@ -55,12 +55,16 @@ class PresentationFirestore implements PresentationRepository {
   Future<PresentationModel> _populateDocPlus(DocumentSnapshot value) async {
     return PresentationModel.fromEntityPlus(value.documentID, PresentationEntity.fromMap(value.data), appId: appId);  }
 
-  Future<PresentationModel> get(String id) {
+  Future<PresentationModel> get(String id, {Function(Exception) onError}) {
     return PresentationCollection.document(id).get().then((doc) {
       if (doc.data != null)
         return _populateDocPlus(doc);
       else
         return null;
+    }).catchError((Object e) {
+      if (onError != null) {
+        onError(e);
+      }
     });
   }
 

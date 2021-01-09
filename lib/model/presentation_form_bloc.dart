@@ -112,6 +112,7 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
                                  imagePositionRelative: currentState.value.imagePositionRelative,
                                  imageAlignment: currentState.value.imageAlignment,
                                  imageWidth: currentState.value.imageWidth,
+                                 conditions: currentState.value.conditions,
           );
         yield SubmittablePresentationForm(value: newValue);
 
@@ -138,6 +139,12 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
           newValue = currentState.value.copyWith(imageWidth: 0.0);
           yield ImageWidthPresentationFormError(message: "Value should be a number or decimal number", value: newValue);
         }
+        return;
+      }
+      if (event is ChangedPresentationConditions) {
+        newValue = currentState.value.copyWith(conditions: event.value);
+        yield SubmittablePresentationForm(value: newValue);
+
         return;
       }
     }
