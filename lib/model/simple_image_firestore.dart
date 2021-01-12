@@ -37,27 +37,27 @@ import 'package:eliud_core/tools/common_tools.dart';
 
 class SimpleImageFirestore implements SimpleImageRepository {
   Future<SimpleImageModel> add(SimpleImageModel value) {
-    return SimpleImageCollection.document(value.documentID).setData(value.toEntity(appId: appId).toDocument()).then((_) => value);
+    return SimpleImageCollection.doc(value.documentID).set(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
   Future<void> delete(SimpleImageModel value) {
-    return SimpleImageCollection.document(value.documentID).delete();
+    return SimpleImageCollection.doc(value.documentID).delete();
   }
 
   Future<SimpleImageModel> update(SimpleImageModel value) {
-    return SimpleImageCollection.document(value.documentID).updateData(value.toEntity(appId: appId).toDocument()).then((_) => value);
+    return SimpleImageCollection.doc(value.documentID).update(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
   SimpleImageModel _populateDoc(DocumentSnapshot value) {
-    return SimpleImageModel.fromEntity(value.documentID, SimpleImageEntity.fromMap(value.data));
+    return SimpleImageModel.fromEntity(value.id, SimpleImageEntity.fromMap(value.data()));
   }
 
   Future<SimpleImageModel> _populateDocPlus(DocumentSnapshot value) async {
-    return SimpleImageModel.fromEntityPlus(value.documentID, SimpleImageEntity.fromMap(value.data), appId: appId);  }
+    return SimpleImageModel.fromEntityPlus(value.id, SimpleImageEntity.fromMap(value.data()), appId: appId);  }
 
   Future<SimpleImageModel> get(String id, {Function(Exception) onError}) {
-    return SimpleImageCollection.document(id).get().then((doc) {
-      if (doc.data != null)
+    return SimpleImageCollection.doc(id).get().then((doc) {
+      if (doc.data() != null)
         return _populateDocPlus(doc);
       else
         return null;
@@ -71,7 +71,7 @@ class SimpleImageFirestore implements SimpleImageRepository {
   StreamSubscription<List<SimpleImageModel>> listen(SimpleImageModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
     Stream<List<SimpleImageModel>> stream;
     stream = getQuery(SimpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((data) {
-      Iterable<SimpleImageModel> simpleImages  = data.documents.map((doc) {
+      Iterable<SimpleImageModel> simpleImages  = data.docs.map((doc) {
         SimpleImageModel value = _populateDoc(doc);
         return value;
       }).toList();
@@ -86,7 +86,7 @@ class SimpleImageFirestore implements SimpleImageRepository {
     Stream<List<SimpleImageModel>> stream;
     stream = getQuery(SimpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots()
         .asyncMap((data) async {
-      return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
+      return await Future.wait(data.docs.map((doc) =>  _populateDocPlus(doc)).toList());
     });
 
     return stream.listen((listOfSimpleImageModels) {
@@ -96,7 +96,7 @@ class SimpleImageFirestore implements SimpleImageRepository {
 
   @override
   StreamSubscription<SimpleImageModel> listenTo(String documentId, SimpleImageChanged changed) {
-    var stream = SimpleImageCollection.document(documentId)
+    var stream = SimpleImageCollection.doc(documentId)
         .snapshots()
         .asyncMap((data) {
       return _populateDocPlus(data);
@@ -109,7 +109,7 @@ class SimpleImageFirestore implements SimpleImageRepository {
   Stream<List<SimpleImageModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) {
     DocumentSnapshot lastDoc;
     Stream<List<SimpleImageModel>> _values = getQuery(SimpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((snapshot) {
-      return snapshot.documents.map((doc) {
+      return snapshot.docs.map((doc) {
         lastDoc = doc;
         return _populateDoc(doc);
       }).toList();});
@@ -120,7 +120,7 @@ class SimpleImageFirestore implements SimpleImageRepository {
   Stream<List<SimpleImageModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) {
     DocumentSnapshot lastDoc;
     Stream<List<SimpleImageModel>> _values = getQuery(SimpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().asyncMap((snapshot) {
-      return Future.wait(snapshot.documents.map((doc) {
+      return Future.wait(snapshot.docs.map((doc) {
         lastDoc = doc;
         return _populateDocPlus(doc);
       }).toList());
@@ -131,8 +131,8 @@ class SimpleImageFirestore implements SimpleImageRepository {
 
   Future<List<SimpleImageModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) async {
     DocumentSnapshot lastDoc;
-    List<SimpleImageModel> _values = await getQuery(SimpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).getDocuments().then((value) {
-      var list = value.documents;
+    List<SimpleImageModel> _values = await getQuery(SimpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).get().then((value) {
+      var list = value.docs;
       return list.map((doc) { 
         lastDoc = doc;
         return _populateDoc(doc);
@@ -144,8 +144,8 @@ class SimpleImageFirestore implements SimpleImageRepository {
 
   Future<List<SimpleImageModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) async {
     DocumentSnapshot lastDoc;
-    List<SimpleImageModel> _values = await getQuery(SimpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).getDocuments().then((value) {
-      var list = value.documents;
+    List<SimpleImageModel> _values = await getQuery(SimpleImageCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).get().then((value) {
+      var list = value.docs;
       return Future.wait(list.map((doc) {
         lastDoc = doc;
         return _populateDocPlus(doc);
@@ -158,15 +158,15 @@ class SimpleImageFirestore implements SimpleImageRepository {
   void flush() {}
 
   Future<void> deleteAll() {
-    return SimpleImageCollection.getDocuments().then((snapshot) {
-      for (DocumentSnapshot ds in snapshot.documents){
+    return SimpleImageCollection.get().then((snapshot) {
+      for (DocumentSnapshot ds in snapshot.docs){
         ds.reference.delete();
       }
     });
   }
 
   dynamic getSubCollection(String documentId, String name) {
-    return SimpleImageCollection.document(documentId).collection(name);
+    return SimpleImageCollection.doc(documentId).collection(name);
   }
 
   String timeStampToString(dynamic timeStamp) {

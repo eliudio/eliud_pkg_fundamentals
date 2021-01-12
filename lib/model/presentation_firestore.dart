@@ -37,27 +37,27 @@ import 'package:eliud_core/tools/common_tools.dart';
 
 class PresentationFirestore implements PresentationRepository {
   Future<PresentationModel> add(PresentationModel value) {
-    return PresentationCollection.document(value.documentID).setData(value.toEntity(appId: appId).toDocument()).then((_) => value);
+    return PresentationCollection.doc(value.documentID).set(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
   Future<void> delete(PresentationModel value) {
-    return PresentationCollection.document(value.documentID).delete();
+    return PresentationCollection.doc(value.documentID).delete();
   }
 
   Future<PresentationModel> update(PresentationModel value) {
-    return PresentationCollection.document(value.documentID).updateData(value.toEntity(appId: appId).toDocument()).then((_) => value);
+    return PresentationCollection.doc(value.documentID).update(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
   PresentationModel _populateDoc(DocumentSnapshot value) {
-    return PresentationModel.fromEntity(value.documentID, PresentationEntity.fromMap(value.data));
+    return PresentationModel.fromEntity(value.id, PresentationEntity.fromMap(value.data()));
   }
 
   Future<PresentationModel> _populateDocPlus(DocumentSnapshot value) async {
-    return PresentationModel.fromEntityPlus(value.documentID, PresentationEntity.fromMap(value.data), appId: appId);  }
+    return PresentationModel.fromEntityPlus(value.id, PresentationEntity.fromMap(value.data()), appId: appId);  }
 
   Future<PresentationModel> get(String id, {Function(Exception) onError}) {
-    return PresentationCollection.document(id).get().then((doc) {
-      if (doc.data != null)
+    return PresentationCollection.doc(id).get().then((doc) {
+      if (doc.data() != null)
         return _populateDocPlus(doc);
       else
         return null;
@@ -71,7 +71,7 @@ class PresentationFirestore implements PresentationRepository {
   StreamSubscription<List<PresentationModel>> listen(PresentationModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
     Stream<List<PresentationModel>> stream;
     stream = getQuery(PresentationCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((data) {
-      Iterable<PresentationModel> presentations  = data.documents.map((doc) {
+      Iterable<PresentationModel> presentations  = data.docs.map((doc) {
         PresentationModel value = _populateDoc(doc);
         return value;
       }).toList();
@@ -86,7 +86,7 @@ class PresentationFirestore implements PresentationRepository {
     Stream<List<PresentationModel>> stream;
     stream = getQuery(PresentationCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots()
         .asyncMap((data) async {
-      return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
+      return await Future.wait(data.docs.map((doc) =>  _populateDocPlus(doc)).toList());
     });
 
     return stream.listen((listOfPresentationModels) {
@@ -96,7 +96,7 @@ class PresentationFirestore implements PresentationRepository {
 
   @override
   StreamSubscription<PresentationModel> listenTo(String documentId, PresentationChanged changed) {
-    var stream = PresentationCollection.document(documentId)
+    var stream = PresentationCollection.doc(documentId)
         .snapshots()
         .asyncMap((data) {
       return _populateDocPlus(data);
@@ -109,7 +109,7 @@ class PresentationFirestore implements PresentationRepository {
   Stream<List<PresentationModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) {
     DocumentSnapshot lastDoc;
     Stream<List<PresentationModel>> _values = getQuery(PresentationCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((snapshot) {
-      return snapshot.documents.map((doc) {
+      return snapshot.docs.map((doc) {
         lastDoc = doc;
         return _populateDoc(doc);
       }).toList();});
@@ -120,7 +120,7 @@ class PresentationFirestore implements PresentationRepository {
   Stream<List<PresentationModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) {
     DocumentSnapshot lastDoc;
     Stream<List<PresentationModel>> _values = getQuery(PresentationCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().asyncMap((snapshot) {
-      return Future.wait(snapshot.documents.map((doc) {
+      return Future.wait(snapshot.docs.map((doc) {
         lastDoc = doc;
         return _populateDocPlus(doc);
       }).toList());
@@ -131,8 +131,8 @@ class PresentationFirestore implements PresentationRepository {
 
   Future<List<PresentationModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) async {
     DocumentSnapshot lastDoc;
-    List<PresentationModel> _values = await getQuery(PresentationCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).getDocuments().then((value) {
-      var list = value.documents;
+    List<PresentationModel> _values = await getQuery(PresentationCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).get().then((value) {
+      var list = value.docs;
       return list.map((doc) { 
         lastDoc = doc;
         return _populateDoc(doc);
@@ -144,8 +144,8 @@ class PresentationFirestore implements PresentationRepository {
 
   Future<List<PresentationModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) async {
     DocumentSnapshot lastDoc;
-    List<PresentationModel> _values = await getQuery(PresentationCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).getDocuments().then((value) {
-      var list = value.documents;
+    List<PresentationModel> _values = await getQuery(PresentationCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).get().then((value) {
+      var list = value.docs;
       return Future.wait(list.map((doc) {
         lastDoc = doc;
         return _populateDocPlus(doc);
@@ -158,15 +158,15 @@ class PresentationFirestore implements PresentationRepository {
   void flush() {}
 
   Future<void> deleteAll() {
-    return PresentationCollection.getDocuments().then((snapshot) {
-      for (DocumentSnapshot ds in snapshot.documents){
+    return PresentationCollection.get().then((snapshot) {
+      for (DocumentSnapshot ds in snapshot.docs){
         ds.reference.delete();
       }
     });
   }
 
   dynamic getSubCollection(String documentId, String name) {
-    return PresentationCollection.document(documentId).collection(name);
+    return PresentationCollection.doc(documentId).collection(name);
   }
 
   String timeStampToString(dynamic timeStamp) {

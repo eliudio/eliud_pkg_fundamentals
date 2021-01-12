@@ -37,27 +37,27 @@ import 'package:eliud_core/tools/common_tools.dart';
 
 class GridFirestore implements GridRepository {
   Future<GridModel> add(GridModel value) {
-    return GridCollection.document(value.documentID).setData(value.toEntity(appId: appId).toDocument()).then((_) => value);
+    return GridCollection.doc(value.documentID).set(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
   Future<void> delete(GridModel value) {
-    return GridCollection.document(value.documentID).delete();
+    return GridCollection.doc(value.documentID).delete();
   }
 
   Future<GridModel> update(GridModel value) {
-    return GridCollection.document(value.documentID).updateData(value.toEntity(appId: appId).toDocument()).then((_) => value);
+    return GridCollection.doc(value.documentID).update(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
   GridModel _populateDoc(DocumentSnapshot value) {
-    return GridModel.fromEntity(value.documentID, GridEntity.fromMap(value.data));
+    return GridModel.fromEntity(value.id, GridEntity.fromMap(value.data()));
   }
 
   Future<GridModel> _populateDocPlus(DocumentSnapshot value) async {
-    return GridModel.fromEntityPlus(value.documentID, GridEntity.fromMap(value.data), appId: appId);  }
+    return GridModel.fromEntityPlus(value.id, GridEntity.fromMap(value.data()), appId: appId);  }
 
   Future<GridModel> get(String id, {Function(Exception) onError}) {
-    return GridCollection.document(id).get().then((doc) {
-      if (doc.data != null)
+    return GridCollection.doc(id).get().then((doc) {
+      if (doc.data() != null)
         return _populateDocPlus(doc);
       else
         return null;
@@ -71,7 +71,7 @@ class GridFirestore implements GridRepository {
   StreamSubscription<List<GridModel>> listen(GridModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
     Stream<List<GridModel>> stream;
     stream = getQuery(GridCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((data) {
-      Iterable<GridModel> grids  = data.documents.map((doc) {
+      Iterable<GridModel> grids  = data.docs.map((doc) {
         GridModel value = _populateDoc(doc);
         return value;
       }).toList();
@@ -86,7 +86,7 @@ class GridFirestore implements GridRepository {
     Stream<List<GridModel>> stream;
     stream = getQuery(GridCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots()
         .asyncMap((data) async {
-      return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
+      return await Future.wait(data.docs.map((doc) =>  _populateDocPlus(doc)).toList());
     });
 
     return stream.listen((listOfGridModels) {
@@ -96,7 +96,7 @@ class GridFirestore implements GridRepository {
 
   @override
   StreamSubscription<GridModel> listenTo(String documentId, GridChanged changed) {
-    var stream = GridCollection.document(documentId)
+    var stream = GridCollection.doc(documentId)
         .snapshots()
         .asyncMap((data) {
       return _populateDocPlus(data);
@@ -109,7 +109,7 @@ class GridFirestore implements GridRepository {
   Stream<List<GridModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) {
     DocumentSnapshot lastDoc;
     Stream<List<GridModel>> _values = getQuery(GridCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((snapshot) {
-      return snapshot.documents.map((doc) {
+      return snapshot.docs.map((doc) {
         lastDoc = doc;
         return _populateDoc(doc);
       }).toList();});
@@ -120,7 +120,7 @@ class GridFirestore implements GridRepository {
   Stream<List<GridModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) {
     DocumentSnapshot lastDoc;
     Stream<List<GridModel>> _values = getQuery(GridCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().asyncMap((snapshot) {
-      return Future.wait(snapshot.documents.map((doc) {
+      return Future.wait(snapshot.docs.map((doc) {
         lastDoc = doc;
         return _populateDocPlus(doc);
       }).toList());
@@ -131,8 +131,8 @@ class GridFirestore implements GridRepository {
 
   Future<List<GridModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) async {
     DocumentSnapshot lastDoc;
-    List<GridModel> _values = await getQuery(GridCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).getDocuments().then((value) {
-      var list = value.documents;
+    List<GridModel> _values = await getQuery(GridCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).get().then((value) {
+      var list = value.docs;
       return list.map((doc) { 
         lastDoc = doc;
         return _populateDoc(doc);
@@ -144,8 +144,8 @@ class GridFirestore implements GridRepository {
 
   Future<List<GridModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) async {
     DocumentSnapshot lastDoc;
-    List<GridModel> _values = await getQuery(GridCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).getDocuments().then((value) {
-      var list = value.documents;
+    List<GridModel> _values = await getQuery(GridCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).get().then((value) {
+      var list = value.docs;
       return Future.wait(list.map((doc) {
         lastDoc = doc;
         return _populateDocPlus(doc);
@@ -158,15 +158,15 @@ class GridFirestore implements GridRepository {
   void flush() {}
 
   Future<void> deleteAll() {
-    return GridCollection.getDocuments().then((snapshot) {
-      for (DocumentSnapshot ds in snapshot.documents){
+    return GridCollection.get().then((snapshot) {
+      for (DocumentSnapshot ds in snapshot.docs){
         ds.reference.delete();
       }
     });
   }
 
   dynamic getSubCollection(String documentId, String name) {
-    return GridCollection.document(documentId).collection(name);
+    return GridCollection.doc(documentId).collection(name);
   }
 
   String timeStampToString(dynamic timeStamp) {

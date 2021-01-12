@@ -37,27 +37,27 @@ import 'package:eliud_core/tools/common_tools.dart';
 
 class DocumentFirestore implements DocumentRepository {
   Future<DocumentModel> add(DocumentModel value) {
-    return DocumentCollection.document(value.documentID).setData(value.toEntity(appId: appId).toDocument()).then((_) => value);
+    return DocumentCollection.doc(value.documentID).set(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
   Future<void> delete(DocumentModel value) {
-    return DocumentCollection.document(value.documentID).delete();
+    return DocumentCollection.doc(value.documentID).delete();
   }
 
   Future<DocumentModel> update(DocumentModel value) {
-    return DocumentCollection.document(value.documentID).updateData(value.toEntity(appId: appId).toDocument()).then((_) => value);
+    return DocumentCollection.doc(value.documentID).update(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
   DocumentModel _populateDoc(DocumentSnapshot value) {
-    return DocumentModel.fromEntity(value.documentID, DocumentEntity.fromMap(value.data));
+    return DocumentModel.fromEntity(value.id, DocumentEntity.fromMap(value.data()));
   }
 
   Future<DocumentModel> _populateDocPlus(DocumentSnapshot value) async {
-    return DocumentModel.fromEntityPlus(value.documentID, DocumentEntity.fromMap(value.data), appId: appId);  }
+    return DocumentModel.fromEntityPlus(value.id, DocumentEntity.fromMap(value.data()), appId: appId);  }
 
   Future<DocumentModel> get(String id, {Function(Exception) onError}) {
-    return DocumentCollection.document(id).get().then((doc) {
-      if (doc.data != null)
+    return DocumentCollection.doc(id).get().then((doc) {
+      if (doc.data() != null)
         return _populateDocPlus(doc);
       else
         return null;
@@ -71,7 +71,7 @@ class DocumentFirestore implements DocumentRepository {
   StreamSubscription<List<DocumentModel>> listen(DocumentModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
     Stream<List<DocumentModel>> stream;
     stream = getQuery(DocumentCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((data) {
-      Iterable<DocumentModel> documents  = data.documents.map((doc) {
+      Iterable<DocumentModel> documents  = data.docs.map((doc) {
         DocumentModel value = _populateDoc(doc);
         return value;
       }).toList();
@@ -86,7 +86,7 @@ class DocumentFirestore implements DocumentRepository {
     Stream<List<DocumentModel>> stream;
     stream = getQuery(DocumentCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots()
         .asyncMap((data) async {
-      return await Future.wait(data.documents.map((doc) =>  _populateDocPlus(doc)).toList());
+      return await Future.wait(data.docs.map((doc) =>  _populateDocPlus(doc)).toList());
     });
 
     return stream.listen((listOfDocumentModels) {
@@ -96,7 +96,7 @@ class DocumentFirestore implements DocumentRepository {
 
   @override
   StreamSubscription<DocumentModel> listenTo(String documentId, DocumentChanged changed) {
-    var stream = DocumentCollection.document(documentId)
+    var stream = DocumentCollection.doc(documentId)
         .snapshots()
         .asyncMap((data) {
       return _populateDocPlus(data);
@@ -109,7 +109,7 @@ class DocumentFirestore implements DocumentRepository {
   Stream<List<DocumentModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) {
     DocumentSnapshot lastDoc;
     Stream<List<DocumentModel>> _values = getQuery(DocumentCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((snapshot) {
-      return snapshot.documents.map((doc) {
+      return snapshot.docs.map((doc) {
         lastDoc = doc;
         return _populateDoc(doc);
       }).toList();});
@@ -120,7 +120,7 @@ class DocumentFirestore implements DocumentRepository {
   Stream<List<DocumentModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) {
     DocumentSnapshot lastDoc;
     Stream<List<DocumentModel>> _values = getQuery(DocumentCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().asyncMap((snapshot) {
-      return Future.wait(snapshot.documents.map((doc) {
+      return Future.wait(snapshot.docs.map((doc) {
         lastDoc = doc;
         return _populateDocPlus(doc);
       }).toList());
@@ -131,8 +131,8 @@ class DocumentFirestore implements DocumentRepository {
 
   Future<List<DocumentModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) async {
     DocumentSnapshot lastDoc;
-    List<DocumentModel> _values = await getQuery(DocumentCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).getDocuments().then((value) {
-      var list = value.documents;
+    List<DocumentModel> _values = await getQuery(DocumentCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).get().then((value) {
+      var list = value.docs;
       return list.map((doc) { 
         lastDoc = doc;
         return _populateDoc(doc);
@@ -144,8 +144,8 @@ class DocumentFirestore implements DocumentRepository {
 
   Future<List<DocumentModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) async {
     DocumentSnapshot lastDoc;
-    List<DocumentModel> _values = await getQuery(DocumentCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).getDocuments().then((value) {
-      var list = value.documents;
+    List<DocumentModel> _values = await getQuery(DocumentCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).get().then((value) {
+      var list = value.docs;
       return Future.wait(list.map((doc) {
         lastDoc = doc;
         return _populateDocPlus(doc);
@@ -158,15 +158,15 @@ class DocumentFirestore implements DocumentRepository {
   void flush() {}
 
   Future<void> deleteAll() {
-    return DocumentCollection.getDocuments().then((snapshot) {
-      for (DocumentSnapshot ds in snapshot.documents){
+    return DocumentCollection.get().then((snapshot) {
+      for (DocumentSnapshot ds in snapshot.docs){
         ds.reference.delete();
       }
     });
   }
 
   dynamic getSubCollection(String documentId, String name) {
-    return DocumentCollection.document(documentId).collection(name);
+    return DocumentCollection.doc(documentId).collection(name);
   }
 
   String timeStampToString(dynamic timeStamp) {
