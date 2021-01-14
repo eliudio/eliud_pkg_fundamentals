@@ -43,9 +43,9 @@ class TutorialEntryListBloc extends Bloc<TutorialEntryListEvent, TutorialEntryLi
     _tutorialEntrysListSubscription = _tutorialEntryRepository.listen((list) => add(TutorialEntryListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
   }
 
-  Stream<TutorialEntryListState> _mapLoadTutorialEntryListWithDetailsToState() async* {
+  Stream<TutorialEntryListState> _mapLoadTutorialEntryListWithDetailsToState({ String orderBy, bool descending }) async* {
     _tutorialEntrysListSubscription?.cancel();
-    _tutorialEntrysListSubscription = _tutorialEntryRepository.listenWithDetails((list) => add(TutorialEntryListUpdated(value: list)), );
+    _tutorialEntrysListSubscription = _tutorialEntryRepository.listenWithDetails((list) => add(TutorialEntryListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
   }
 
   Stream<TutorialEntryListState> _mapAddTutorialEntryListToState(AddTutorialEntryList event) async* {

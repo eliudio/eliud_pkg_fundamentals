@@ -43,9 +43,9 @@ class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListS
     _presentationsListSubscription = _presentationRepository.listen((list) => add(PresentationListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
   }
 
-  Stream<PresentationListState> _mapLoadPresentationListWithDetailsToState() async* {
+  Stream<PresentationListState> _mapLoadPresentationListWithDetailsToState({ String orderBy, bool descending }) async* {
     _presentationsListSubscription?.cancel();
-    _presentationsListSubscription = _presentationRepository.listenWithDetails((list) => add(PresentationListUpdated(value: list)), );
+    _presentationsListSubscription = _presentationRepository.listenWithDetails((list) => add(PresentationListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
   }
 
   Stream<PresentationListState> _mapAddPresentationListToState(AddPresentationList event) async* {

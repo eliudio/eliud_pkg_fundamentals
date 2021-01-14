@@ -43,9 +43,9 @@ class FaderListBloc extends Bloc<FaderListEvent, FaderListState> {
     _fadersListSubscription = _faderRepository.listen((list) => add(FaderListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
   }
 
-  Stream<FaderListState> _mapLoadFaderListWithDetailsToState() async* {
+  Stream<FaderListState> _mapLoadFaderListWithDetailsToState({ String orderBy, bool descending }) async* {
     _fadersListSubscription?.cancel();
-    _fadersListSubscription = _faderRepository.listenWithDetails((list) => add(FaderListUpdated(value: list)), );
+    _fadersListSubscription = _faderRepository.listenWithDetails((list) => add(FaderListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
   }
 
   Stream<FaderListState> _mapAddFaderListToState(AddFaderList event) async* {

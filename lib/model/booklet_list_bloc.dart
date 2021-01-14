@@ -43,9 +43,9 @@ class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
     _bookletsListSubscription = _bookletRepository.listen((list) => add(BookletListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
   }
 
-  Stream<BookletListState> _mapLoadBookletListWithDetailsToState() async* {
+  Stream<BookletListState> _mapLoadBookletListWithDetailsToState({ String orderBy, bool descending }) async* {
     _bookletsListSubscription?.cancel();
-    _bookletsListSubscription = _bookletRepository.listenWithDetails((list) => add(BookletListUpdated(value: list)), );
+    _bookletsListSubscription = _bookletRepository.listenWithDetails((list) => add(BookletListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
   }
 
   Stream<BookletListState> _mapAddBookletListToState(AddBookletList event) async* {

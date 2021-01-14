@@ -43,9 +43,9 @@ class DocumentItemListBloc extends Bloc<DocumentItemListEvent, DocumentItemListS
     _documentItemsListSubscription = _documentItemRepository.listen((list) => add(DocumentItemListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
   }
 
-  Stream<DocumentItemListState> _mapLoadDocumentItemListWithDetailsToState() async* {
+  Stream<DocumentItemListState> _mapLoadDocumentItemListWithDetailsToState({ String orderBy, bool descending }) async* {
     _documentItemsListSubscription?.cancel();
-    _documentItemsListSubscription = _documentItemRepository.listenWithDetails((list) => add(DocumentItemListUpdated(value: list)), );
+    _documentItemsListSubscription = _documentItemRepository.listenWithDetails((list) => add(DocumentItemListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
   }
 
   Stream<DocumentItemListState> _mapAddDocumentItemListToState(AddDocumentItemList event) async* {
