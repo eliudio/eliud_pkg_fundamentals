@@ -61,7 +61,7 @@ class PlayStoreState extends State<PlayStore> {
     width: size,
     child: image,
   );
-
+  
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<AppModel>>(
