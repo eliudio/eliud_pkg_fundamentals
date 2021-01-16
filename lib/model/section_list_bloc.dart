@@ -40,12 +40,12 @@ class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
 
   Stream<SectionListState> _mapLoadSectionListToState({ String orderBy, bool descending }) async* {
     _sectionsListSubscription?.cancel();
-    _sectionsListSubscription = _sectionRepository.listen((list) => add(SectionListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
+    _sectionsListSubscription = _sectionRepository.listen((list) => add(SectionListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
   }
 
   Stream<SectionListState> _mapLoadSectionListWithDetailsToState({ String orderBy, bool descending }) async* {
     _sectionsListSubscription?.cancel();
-    _sectionsListSubscription = _sectionRepository.listenWithDetails((list) => add(SectionListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
+    _sectionsListSubscription = _sectionRepository.listenWithDetails((list) => add(SectionListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
   }
 
   Stream<SectionListState> _mapAddSectionListToState(AddSectionList event) async* {

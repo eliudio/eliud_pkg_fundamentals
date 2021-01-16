@@ -68,14 +68,14 @@ class DividerFirestore implements DividerRepository {
     });
   }
 
-  StreamSubscription<List<DividerModel>> listen(DividerModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
+  StreamSubscription<List<DividerModel>> listen(DividerModelTrigger trigger, {String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
     Stream<List<DividerModel>> stream;
-//    stream = getQuery(DividerCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((data) {
+//    stream = getQuery(DividerCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((data) {
 //    The above line is replaced by the below line. The reason is because the same collection can not be subscribed to twice
 //    The reason we're subscribing twice to the same list, is because the close on bloc isn't called. This needs to be fixed.
 //    See https://github.com/felangel/bloc/issues/2073.
 //    In the meantime:
-      stream = getQuery(appRepository().getSubCollection(appId, 'divider'), currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((data) {
+      stream = getQuery(appRepository().getSubCollection(appId, 'divider'), orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((data) {
       Iterable<DividerModel> dividers  = data.docs.map((doc) {
         DividerModel value = _populateDoc(doc);
         return value;
@@ -87,11 +87,11 @@ class DividerFirestore implements DividerRepository {
     });
   }
 
-  StreamSubscription<List<DividerModel>> listenWithDetails(DividerModelTrigger trigger, {String currentMember, String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
+  StreamSubscription<List<DividerModel>> listenWithDetails(DividerModelTrigger trigger, {String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
     Stream<List<DividerModel>> stream;
-//  stream = getQuery(DividerCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots()
+//  stream = getQuery(DividerCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots()
 //  see comment listen(...) above
-    stream = getQuery(appRepository().getSubCollection(appId, 'divider'), currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots()
+    stream = getQuery(appRepository().getSubCollection(appId, 'divider'), orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots()
         .asyncMap((data) async {
       return await Future.wait(data.docs.map((doc) =>  _populateDocPlus(doc)).toList());
     });
@@ -113,9 +113,9 @@ class DividerFirestore implements DividerRepository {
     });
   }
 
-  Stream<List<DividerModel>> values({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) {
+  Stream<List<DividerModel>> values({String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) {
     DocumentSnapshot lastDoc;
-    Stream<List<DividerModel>> _values = getQuery(DividerCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((snapshot) {
+    Stream<List<DividerModel>> _values = getQuery(DividerCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((snapshot) {
       return snapshot.docs.map((doc) {
         lastDoc = doc;
         return _populateDoc(doc);
@@ -124,9 +124,9 @@ class DividerFirestore implements DividerRepository {
     return _values;
   }
 
-  Stream<List<DividerModel>> valuesWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) {
+  Stream<List<DividerModel>> valuesWithDetails({String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) {
     DocumentSnapshot lastDoc;
-    Stream<List<DividerModel>> _values = getQuery(DividerCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().asyncMap((snapshot) {
+    Stream<List<DividerModel>> _values = getQuery(DividerCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().asyncMap((snapshot) {
       return Future.wait(snapshot.docs.map((doc) {
         lastDoc = doc;
         return _populateDocPlus(doc);
@@ -136,9 +136,9 @@ class DividerFirestore implements DividerRepository {
     return _values;
   }
 
-  Future<List<DividerModel>> valuesList({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) async {
+  Future<List<DividerModel>> valuesList({String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) async {
     DocumentSnapshot lastDoc;
-    List<DividerModel> _values = await getQuery(DividerCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).get().then((value) {
+    List<DividerModel> _values = await getQuery(DividerCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).get().then((value) {
       var list = value.docs;
       return list.map((doc) { 
         lastDoc = doc;
@@ -149,9 +149,9 @@ class DividerFirestore implements DividerRepository {
     return _values;
   }
 
-  Future<List<DividerModel>> valuesListWithDetails({String currentMember, String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) async {
+  Future<List<DividerModel>> valuesListWithDetails({String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) async {
     DocumentSnapshot lastDoc;
-    List<DividerModel> _values = await getQuery(DividerCollection, currentMember: currentMember, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).get().then((value) {
+    List<DividerModel> _values = await getQuery(DividerCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).get().then((value) {
       var list = value.docs;
       return Future.wait(list.map((doc) {
         lastDoc = doc;

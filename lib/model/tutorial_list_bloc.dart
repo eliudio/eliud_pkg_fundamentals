@@ -40,12 +40,12 @@ class TutorialListBloc extends Bloc<TutorialListEvent, TutorialListState> {
 
   Stream<TutorialListState> _mapLoadTutorialListToState({ String orderBy, bool descending }) async* {
     _tutorialsListSubscription?.cancel();
-    _tutorialsListSubscription = _tutorialRepository.listen((list) => add(TutorialListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
+    _tutorialsListSubscription = _tutorialRepository.listen((list) => add(TutorialListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
   }
 
   Stream<TutorialListState> _mapLoadTutorialListWithDetailsToState({ String orderBy, bool descending }) async* {
     _tutorialsListSubscription?.cancel();
-    _tutorialsListSubscription = _tutorialRepository.listenWithDetails((list) => add(TutorialListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
+    _tutorialsListSubscription = _tutorialRepository.listenWithDetails((list) => add(TutorialListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
   }
 
   Stream<TutorialListState> _mapAddTutorialListToState(AddTutorialList event) async* {

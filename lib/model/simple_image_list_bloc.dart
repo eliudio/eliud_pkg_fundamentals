@@ -40,12 +40,12 @@ class SimpleImageListBloc extends Bloc<SimpleImageListEvent, SimpleImageListStat
 
   Stream<SimpleImageListState> _mapLoadSimpleImageListToState({ String orderBy, bool descending }) async* {
     _simpleImagesListSubscription?.cancel();
-    _simpleImagesListSubscription = _simpleImageRepository.listen((list) => add(SimpleImageListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
+    _simpleImagesListSubscription = _simpleImageRepository.listen((list) => add(SimpleImageListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
   }
 
   Stream<SimpleImageListState> _mapLoadSimpleImageListWithDetailsToState({ String orderBy, bool descending }) async* {
     _simpleImagesListSubscription?.cancel();
-    _simpleImagesListSubscription = _simpleImageRepository.listenWithDetails((list) => add(SimpleImageListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
+    _simpleImagesListSubscription = _simpleImageRepository.listenWithDetails((list) => add(SimpleImageListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
   }
 
   Stream<SimpleImageListState> _mapAddSimpleImageListToState(AddSimpleImageList event) async* {

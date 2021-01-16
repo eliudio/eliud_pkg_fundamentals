@@ -40,12 +40,12 @@ class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
 
   Stream<LinkListState> _mapLoadLinkListToState({ String orderBy, bool descending }) async* {
     _linksListSubscription?.cancel();
-    _linksListSubscription = _linkRepository.listen((list) => add(LinkListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
+    _linksListSubscription = _linkRepository.listen((list) => add(LinkListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
   }
 
   Stream<LinkListState> _mapLoadLinkListWithDetailsToState({ String orderBy, bool descending }) async* {
     _linksListSubscription?.cancel();
-    _linksListSubscription = _linkRepository.listenWithDetails((list) => add(LinkListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
+    _linksListSubscription = _linkRepository.listenWithDetails((list) => add(LinkListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
   }
 
   Stream<LinkListState> _mapAddLinkListToState(AddLinkList event) async* {

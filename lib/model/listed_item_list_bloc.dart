@@ -40,12 +40,12 @@ class ListedItemListBloc extends Bloc<ListedItemListEvent, ListedItemListState> 
 
   Stream<ListedItemListState> _mapLoadListedItemListToState({ String orderBy, bool descending }) async* {
     _listedItemsListSubscription?.cancel();
-    _listedItemsListSubscription = _listedItemRepository.listen((list) => add(ListedItemListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
+    _listedItemsListSubscription = _listedItemRepository.listen((list) => add(ListedItemListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
   }
 
   Stream<ListedItemListState> _mapLoadListedItemListWithDetailsToState({ String orderBy, bool descending }) async* {
     _listedItemsListSubscription?.cancel();
-    _listedItemsListSubscription = _listedItemRepository.listenWithDetails((list) => add(ListedItemListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery, );
+    _listedItemsListSubscription = _listedItemRepository.listenWithDetails((list) => add(ListedItemListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
   }
 
   Stream<ListedItemListState> _mapAddListedItemListToState(AddListedItemList event) async* {
