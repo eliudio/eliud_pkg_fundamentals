@@ -20,32 +20,48 @@ import 'package:meta/meta.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_list_state.dart';
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
-import 'package:eliud_core/core/access/bloc/access_event.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
-import 'package:eliud_core/core/access/bloc/access_state.dart';
 
+
+const _presentationLimit = 5;
 
 class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListState> {
   final PresentationRepository _presentationRepository;
   StreamSubscription _presentationsListSubscription;
-  final AccessBloc accessBloc;
   final EliudQuery eliudQuery;
+  int pages = 1;
+  final bool paged;
+  final String orderBy;
+  final bool descending;
+  final bool detailed;
 
-
-  PresentationListBloc(this.accessBloc,{ this.eliudQuery, @required PresentationRepository presentationRepository })
+  PresentationListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, @required PresentationRepository presentationRepository})
       : assert(presentationRepository != null),
-      _presentationRepository = presentationRepository,
-      super(PresentationListLoading());
+        _presentationRepository = presentationRepository,
+        super(PresentationListLoading());
 
-  Stream<PresentationListState> _mapLoadPresentationListToState({ String orderBy, bool descending }) async* {
+  Stream<PresentationListState> _mapLoadPresentationListToState() async* {
+    int amountNow =  (state is PresentationListLoaded) ? (state as PresentationListLoaded).values.length : 0;
     _presentationsListSubscription?.cancel();
-    _presentationsListSubscription = _presentationRepository.listen((list) => add(PresentationListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
+    _presentationsListSubscription = _presentationRepository.listen(
+          (list) => add(PresentationListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+      orderBy: orderBy,
+      descending: descending,
+      eliudQuery: eliudQuery,
+      limit: ((paged != null) && (paged)) ? pages * _presentationLimit : null
+    );
   }
 
-  Stream<PresentationListState> _mapLoadPresentationListWithDetailsToState({ String orderBy, bool descending }) async* {
+  Stream<PresentationListState> _mapLoadPresentationListWithDetailsToState() async* {
+    int amountNow =  (state is PresentationListLoaded) ? (state as PresentationListLoaded).values.length : 0;
     _presentationsListSubscription?.cancel();
-    _presentationsListSubscription = _presentationRepository.listenWithDetails((list) => add(PresentationListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
+    _presentationsListSubscription = _presentationRepository.listenWithDetails(
+            (list) => add(PresentationListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+        orderBy: orderBy,
+        descending: descending,
+        eliudQuery: eliudQuery,
+        limit: ((paged != null) && (paged)) ? pages * _presentationLimit : null
+    );
   }
 
   Stream<PresentationListState> _mapAddPresentationListToState(AddPresentationList event) async* {
@@ -60,17 +76,22 @@ class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListS
     _presentationRepository.delete(event.value);
   }
 
-  Stream<PresentationListState> _mapPresentationListUpdatedToState(PresentationListUpdated event) async* {
-    yield PresentationListLoaded(values: event.value);
+  Stream<PresentationListState> _mapPresentationListUpdatedToState(
+      PresentationListUpdated event) async* {
+    yield PresentationListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
   }
-
 
   @override
   Stream<PresentationListState> mapEventToState(PresentationListEvent event) async* {
-    final currentState = state;
     if (event is LoadPresentationList) {
-      yield* _mapLoadPresentationListToState(orderBy: event.orderBy, descending: event.descending);
-    } if (event is LoadPresentationListWithDetails) {
+      if ((detailed == null) || (!detailed)) {
+        yield* _mapLoadPresentationListToState();
+      } else {
+        yield* _mapLoadPresentationListWithDetailsToState();
+      }
+    }
+    if (event is NewPage) {
+      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
       yield* _mapLoadPresentationListWithDetailsToState();
     } else if (event is AddPresentationList) {
       yield* _mapAddPresentationListToState(event);
@@ -88,7 +109,6 @@ class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListS
     _presentationsListSubscription?.cancel();
     return super.close();
   }
-
 }
 
 

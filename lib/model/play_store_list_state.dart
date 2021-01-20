@@ -27,11 +27,12 @@ class PlayStoreListLoading extends PlayStoreListState {}
 
 class PlayStoreListLoaded extends PlayStoreListState {
   final List<PlayStoreModel> values;
+  final bool mightHaveMore;
 
-  const PlayStoreListLoaded({this.values = const []});
+  const PlayStoreListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object> get props => [ values ];
+  List<Object> get props => [ values, mightHaveMore ];
 
   @override
   String toString() => 'PlayStoreListLoaded { values: $values }';

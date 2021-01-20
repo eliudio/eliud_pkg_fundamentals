@@ -22,18 +22,9 @@ abstract class ListedItemListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadListedItemList extends ListedItemListEvent {
-  final String orderBy;
-  final bool descending;
+class LoadListedItemList extends ListedItemListEvent {}
 
-  LoadListedItemList({this.orderBy, this.descending});
-
-  @override
-  List<Object> get props => [orderBy, descending];
-
-}
-
-class LoadListedItemListWithDetails extends ListedItemListEvent {}
+class NewPage extends ListedItemListEvent {}
 
 class AddListedItemList extends ListedItemListEvent {
   final ListedItemModel value;
@@ -73,13 +64,14 @@ class DeleteListedItemList extends ListedItemListEvent {
 
 class ListedItemListUpdated extends ListedItemListEvent {
   final List<ListedItemModel> value;
+  final bool mightHaveMore;
 
-  const ListedItemListUpdated({ this.value });
-
-  @override
-  List<Object> get props => [ value ];
+  const ListedItemListUpdated({ this.value, this.mightHaveMore });
 
   @override
-  String toString() => 'ListedItemListUpdated{ value: $value }';
+  List<Object> get props => [ value, mightHaveMore ];
+
+  @override
+  String toString() => 'ListedItemListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 

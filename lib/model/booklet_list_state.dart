@@ -27,11 +27,12 @@ class BookletListLoading extends BookletListState {}
 
 class BookletListLoaded extends BookletListState {
   final List<BookletModel> values;
+  final bool mightHaveMore;
 
-  const BookletListLoaded({this.values = const []});
+  const BookletListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object> get props => [ values ];
+  List<Object> get props => [ values, mightHaveMore ];
 
   @override
   String toString() => 'BookletListLoaded { values: $values }';

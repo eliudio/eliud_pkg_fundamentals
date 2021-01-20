@@ -20,32 +20,48 @@ import 'package:meta/meta.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_entry_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_entry_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_entry_list_state.dart';
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
-import 'package:eliud_core/core/access/bloc/access_event.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
-import 'package:eliud_core/core/access/bloc/access_state.dart';
 
+
+const _tutorialEntryLimit = 5;
 
 class TutorialEntryListBloc extends Bloc<TutorialEntryListEvent, TutorialEntryListState> {
   final TutorialEntryRepository _tutorialEntryRepository;
   StreamSubscription _tutorialEntrysListSubscription;
-  final AccessBloc accessBloc;
   final EliudQuery eliudQuery;
+  int pages = 1;
+  final bool paged;
+  final String orderBy;
+  final bool descending;
+  final bool detailed;
 
-
-  TutorialEntryListBloc(this.accessBloc,{ this.eliudQuery, @required TutorialEntryRepository tutorialEntryRepository })
+  TutorialEntryListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, @required TutorialEntryRepository tutorialEntryRepository})
       : assert(tutorialEntryRepository != null),
-      _tutorialEntryRepository = tutorialEntryRepository,
-      super(TutorialEntryListLoading());
+        _tutorialEntryRepository = tutorialEntryRepository,
+        super(TutorialEntryListLoading());
 
-  Stream<TutorialEntryListState> _mapLoadTutorialEntryListToState({ String orderBy, bool descending }) async* {
+  Stream<TutorialEntryListState> _mapLoadTutorialEntryListToState() async* {
+    int amountNow =  (state is TutorialEntryListLoaded) ? (state as TutorialEntryListLoaded).values.length : 0;
     _tutorialEntrysListSubscription?.cancel();
-    _tutorialEntrysListSubscription = _tutorialEntryRepository.listen((list) => add(TutorialEntryListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
+    _tutorialEntrysListSubscription = _tutorialEntryRepository.listen(
+          (list) => add(TutorialEntryListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+      orderBy: orderBy,
+      descending: descending,
+      eliudQuery: eliudQuery,
+      limit: ((paged != null) && (paged)) ? pages * _tutorialEntryLimit : null
+    );
   }
 
-  Stream<TutorialEntryListState> _mapLoadTutorialEntryListWithDetailsToState({ String orderBy, bool descending }) async* {
+  Stream<TutorialEntryListState> _mapLoadTutorialEntryListWithDetailsToState() async* {
+    int amountNow =  (state is TutorialEntryListLoaded) ? (state as TutorialEntryListLoaded).values.length : 0;
     _tutorialEntrysListSubscription?.cancel();
-    _tutorialEntrysListSubscription = _tutorialEntryRepository.listenWithDetails((list) => add(TutorialEntryListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
+    _tutorialEntrysListSubscription = _tutorialEntryRepository.listenWithDetails(
+            (list) => add(TutorialEntryListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+        orderBy: orderBy,
+        descending: descending,
+        eliudQuery: eliudQuery,
+        limit: ((paged != null) && (paged)) ? pages * _tutorialEntryLimit : null
+    );
   }
 
   Stream<TutorialEntryListState> _mapAddTutorialEntryListToState(AddTutorialEntryList event) async* {
@@ -60,17 +76,22 @@ class TutorialEntryListBloc extends Bloc<TutorialEntryListEvent, TutorialEntryLi
     _tutorialEntryRepository.delete(event.value);
   }
 
-  Stream<TutorialEntryListState> _mapTutorialEntryListUpdatedToState(TutorialEntryListUpdated event) async* {
-    yield TutorialEntryListLoaded(values: event.value);
+  Stream<TutorialEntryListState> _mapTutorialEntryListUpdatedToState(
+      TutorialEntryListUpdated event) async* {
+    yield TutorialEntryListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
   }
-
 
   @override
   Stream<TutorialEntryListState> mapEventToState(TutorialEntryListEvent event) async* {
-    final currentState = state;
     if (event is LoadTutorialEntryList) {
-      yield* _mapLoadTutorialEntryListToState(orderBy: event.orderBy, descending: event.descending);
-    } if (event is LoadTutorialEntryListWithDetails) {
+      if ((detailed == null) || (!detailed)) {
+        yield* _mapLoadTutorialEntryListToState();
+      } else {
+        yield* _mapLoadTutorialEntryListWithDetailsToState();
+      }
+    }
+    if (event is NewPage) {
+      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
       yield* _mapLoadTutorialEntryListWithDetailsToState();
     } else if (event is AddTutorialEntryList) {
       yield* _mapAddTutorialEntryListToState(event);
@@ -88,7 +109,6 @@ class TutorialEntryListBloc extends Bloc<TutorialEntryListEvent, TutorialEntryLi
     _tutorialEntrysListSubscription?.cancel();
     return super.close();
   }
-
 }
 
 

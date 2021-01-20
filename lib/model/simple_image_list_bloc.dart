@@ -20,32 +20,48 @@ import 'package:meta/meta.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_list_state.dart';
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
-import 'package:eliud_core/core/access/bloc/access_event.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
-import 'package:eliud_core/core/access/bloc/access_state.dart';
 
+
+const _simpleImageLimit = 5;
 
 class SimpleImageListBloc extends Bloc<SimpleImageListEvent, SimpleImageListState> {
   final SimpleImageRepository _simpleImageRepository;
   StreamSubscription _simpleImagesListSubscription;
-  final AccessBloc accessBloc;
   final EliudQuery eliudQuery;
+  int pages = 1;
+  final bool paged;
+  final String orderBy;
+  final bool descending;
+  final bool detailed;
 
-
-  SimpleImageListBloc(this.accessBloc,{ this.eliudQuery, @required SimpleImageRepository simpleImageRepository })
+  SimpleImageListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, @required SimpleImageRepository simpleImageRepository})
       : assert(simpleImageRepository != null),
-      _simpleImageRepository = simpleImageRepository,
-      super(SimpleImageListLoading());
+        _simpleImageRepository = simpleImageRepository,
+        super(SimpleImageListLoading());
 
-  Stream<SimpleImageListState> _mapLoadSimpleImageListToState({ String orderBy, bool descending }) async* {
+  Stream<SimpleImageListState> _mapLoadSimpleImageListToState() async* {
+    int amountNow =  (state is SimpleImageListLoaded) ? (state as SimpleImageListLoaded).values.length : 0;
     _simpleImagesListSubscription?.cancel();
-    _simpleImagesListSubscription = _simpleImageRepository.listen((list) => add(SimpleImageListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
+    _simpleImagesListSubscription = _simpleImageRepository.listen(
+          (list) => add(SimpleImageListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+      orderBy: orderBy,
+      descending: descending,
+      eliudQuery: eliudQuery,
+      limit: ((paged != null) && (paged)) ? pages * _simpleImageLimit : null
+    );
   }
 
-  Stream<SimpleImageListState> _mapLoadSimpleImageListWithDetailsToState({ String orderBy, bool descending }) async* {
+  Stream<SimpleImageListState> _mapLoadSimpleImageListWithDetailsToState() async* {
+    int amountNow =  (state is SimpleImageListLoaded) ? (state as SimpleImageListLoaded).values.length : 0;
     _simpleImagesListSubscription?.cancel();
-    _simpleImagesListSubscription = _simpleImageRepository.listenWithDetails((list) => add(SimpleImageListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
+    _simpleImagesListSubscription = _simpleImageRepository.listenWithDetails(
+            (list) => add(SimpleImageListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+        orderBy: orderBy,
+        descending: descending,
+        eliudQuery: eliudQuery,
+        limit: ((paged != null) && (paged)) ? pages * _simpleImageLimit : null
+    );
   }
 
   Stream<SimpleImageListState> _mapAddSimpleImageListToState(AddSimpleImageList event) async* {
@@ -60,17 +76,22 @@ class SimpleImageListBloc extends Bloc<SimpleImageListEvent, SimpleImageListStat
     _simpleImageRepository.delete(event.value);
   }
 
-  Stream<SimpleImageListState> _mapSimpleImageListUpdatedToState(SimpleImageListUpdated event) async* {
-    yield SimpleImageListLoaded(values: event.value);
+  Stream<SimpleImageListState> _mapSimpleImageListUpdatedToState(
+      SimpleImageListUpdated event) async* {
+    yield SimpleImageListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
   }
-
 
   @override
   Stream<SimpleImageListState> mapEventToState(SimpleImageListEvent event) async* {
-    final currentState = state;
     if (event is LoadSimpleImageList) {
-      yield* _mapLoadSimpleImageListToState(orderBy: event.orderBy, descending: event.descending);
-    } if (event is LoadSimpleImageListWithDetails) {
+      if ((detailed == null) || (!detailed)) {
+        yield* _mapLoadSimpleImageListToState();
+      } else {
+        yield* _mapLoadSimpleImageListWithDetailsToState();
+      }
+    }
+    if (event is NewPage) {
+      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
       yield* _mapLoadSimpleImageListWithDetailsToState();
     } else if (event is AddSimpleImageList) {
       yield* _mapAddSimpleImageListToState(event);
@@ -88,7 +109,6 @@ class SimpleImageListBloc extends Bloc<SimpleImageListEvent, SimpleImageListStat
     _simpleImagesListSubscription?.cancel();
     return super.close();
   }
-
 }
 
 

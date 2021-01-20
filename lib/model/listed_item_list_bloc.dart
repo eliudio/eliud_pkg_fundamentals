@@ -20,32 +20,48 @@ import 'package:meta/meta.dart';
 import 'package:eliud_pkg_fundamentals/model/listed_item_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/listed_item_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/listed_item_list_state.dart';
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
-import 'package:eliud_core/core/access/bloc/access_event.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
-import 'package:eliud_core/core/access/bloc/access_state.dart';
 
+
+const _listedItemLimit = 5;
 
 class ListedItemListBloc extends Bloc<ListedItemListEvent, ListedItemListState> {
   final ListedItemRepository _listedItemRepository;
   StreamSubscription _listedItemsListSubscription;
-  final AccessBloc accessBloc;
   final EliudQuery eliudQuery;
+  int pages = 1;
+  final bool paged;
+  final String orderBy;
+  final bool descending;
+  final bool detailed;
 
-
-  ListedItemListBloc(this.accessBloc,{ this.eliudQuery, @required ListedItemRepository listedItemRepository })
+  ListedItemListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, @required ListedItemRepository listedItemRepository})
       : assert(listedItemRepository != null),
-      _listedItemRepository = listedItemRepository,
-      super(ListedItemListLoading());
+        _listedItemRepository = listedItemRepository,
+        super(ListedItemListLoading());
 
-  Stream<ListedItemListState> _mapLoadListedItemListToState({ String orderBy, bool descending }) async* {
+  Stream<ListedItemListState> _mapLoadListedItemListToState() async* {
+    int amountNow =  (state is ListedItemListLoaded) ? (state as ListedItemListLoaded).values.length : 0;
     _listedItemsListSubscription?.cancel();
-    _listedItemsListSubscription = _listedItemRepository.listen((list) => add(ListedItemListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
+    _listedItemsListSubscription = _listedItemRepository.listen(
+          (list) => add(ListedItemListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+      orderBy: orderBy,
+      descending: descending,
+      eliudQuery: eliudQuery,
+      limit: ((paged != null) && (paged)) ? pages * _listedItemLimit : null
+    );
   }
 
-  Stream<ListedItemListState> _mapLoadListedItemListWithDetailsToState({ String orderBy, bool descending }) async* {
+  Stream<ListedItemListState> _mapLoadListedItemListWithDetailsToState() async* {
+    int amountNow =  (state is ListedItemListLoaded) ? (state as ListedItemListLoaded).values.length : 0;
     _listedItemsListSubscription?.cancel();
-    _listedItemsListSubscription = _listedItemRepository.listenWithDetails((list) => add(ListedItemListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
+    _listedItemsListSubscription = _listedItemRepository.listenWithDetails(
+            (list) => add(ListedItemListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+        orderBy: orderBy,
+        descending: descending,
+        eliudQuery: eliudQuery,
+        limit: ((paged != null) && (paged)) ? pages * _listedItemLimit : null
+    );
   }
 
   Stream<ListedItemListState> _mapAddListedItemListToState(AddListedItemList event) async* {
@@ -60,17 +76,22 @@ class ListedItemListBloc extends Bloc<ListedItemListEvent, ListedItemListState> 
     _listedItemRepository.delete(event.value);
   }
 
-  Stream<ListedItemListState> _mapListedItemListUpdatedToState(ListedItemListUpdated event) async* {
-    yield ListedItemListLoaded(values: event.value);
+  Stream<ListedItemListState> _mapListedItemListUpdatedToState(
+      ListedItemListUpdated event) async* {
+    yield ListedItemListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
   }
-
 
   @override
   Stream<ListedItemListState> mapEventToState(ListedItemListEvent event) async* {
-    final currentState = state;
     if (event is LoadListedItemList) {
-      yield* _mapLoadListedItemListToState(orderBy: event.orderBy, descending: event.descending);
-    } if (event is LoadListedItemListWithDetails) {
+      if ((detailed == null) || (!detailed)) {
+        yield* _mapLoadListedItemListToState();
+      } else {
+        yield* _mapLoadListedItemListWithDetailsToState();
+      }
+    }
+    if (event is NewPage) {
+      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
       yield* _mapLoadListedItemListWithDetailsToState();
     } else if (event is AddListedItemList) {
       yield* _mapAddListedItemListToState(event);
@@ -88,7 +109,6 @@ class ListedItemListBloc extends Bloc<ListedItemListEvent, ListedItemListState> 
     _listedItemsListSubscription?.cancel();
     return super.close();
   }
-
 }
 
 

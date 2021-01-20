@@ -27,11 +27,12 @@ class SectionListLoading extends SectionListState {}
 
 class SectionListLoaded extends SectionListState {
   final List<SectionModel> values;
+  final bool mightHaveMore;
 
-  const SectionListLoaded({this.values = const []});
+  const SectionListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object> get props => [ values ];
+  List<Object> get props => [ values, mightHaveMore ];
 
   @override
   String toString() => 'SectionListLoaded { values: $values }';

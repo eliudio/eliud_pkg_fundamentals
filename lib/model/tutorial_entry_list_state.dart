@@ -27,11 +27,12 @@ class TutorialEntryListLoading extends TutorialEntryListState {}
 
 class TutorialEntryListLoaded extends TutorialEntryListState {
   final List<TutorialEntryModel> values;
+  final bool mightHaveMore;
 
-  const TutorialEntryListLoaded({this.values = const []});
+  const TutorialEntryListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object> get props => [ values ];
+  List<Object> get props => [ values, mightHaveMore ];
 
   @override
   String toString() => 'TutorialEntryListLoaded { values: $values }';

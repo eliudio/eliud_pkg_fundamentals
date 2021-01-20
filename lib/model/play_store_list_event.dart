@@ -22,18 +22,9 @@ abstract class PlayStoreListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadPlayStoreList extends PlayStoreListEvent {
-  final String orderBy;
-  final bool descending;
+class LoadPlayStoreList extends PlayStoreListEvent {}
 
-  LoadPlayStoreList({this.orderBy, this.descending});
-
-  @override
-  List<Object> get props => [orderBy, descending];
-
-}
-
-class LoadPlayStoreListWithDetails extends PlayStoreListEvent {}
+class NewPage extends PlayStoreListEvent {}
 
 class AddPlayStoreList extends PlayStoreListEvent {
   final PlayStoreModel value;
@@ -73,13 +64,14 @@ class DeletePlayStoreList extends PlayStoreListEvent {
 
 class PlayStoreListUpdated extends PlayStoreListEvent {
   final List<PlayStoreModel> value;
+  final bool mightHaveMore;
 
-  const PlayStoreListUpdated({ this.value });
-
-  @override
-  List<Object> get props => [ value ];
+  const PlayStoreListUpdated({ this.value, this.mightHaveMore });
 
   @override
-  String toString() => 'PlayStoreListUpdated{ value: $value }';
+  List<Object> get props => [ value, mightHaveMore ];
+
+  @override
+  String toString() => 'PlayStoreListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 

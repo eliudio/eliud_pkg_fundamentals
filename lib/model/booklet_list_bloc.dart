@@ -20,32 +20,48 @@ import 'package:meta/meta.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_list_state.dart';
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
-import 'package:eliud_core/core/access/bloc/access_event.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
-import 'package:eliud_core/core/access/bloc/access_state.dart';
 
+
+const _bookletLimit = 5;
 
 class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
   final BookletRepository _bookletRepository;
   StreamSubscription _bookletsListSubscription;
-  final AccessBloc accessBloc;
   final EliudQuery eliudQuery;
+  int pages = 1;
+  final bool paged;
+  final String orderBy;
+  final bool descending;
+  final bool detailed;
 
-
-  BookletListBloc(this.accessBloc,{ this.eliudQuery, @required BookletRepository bookletRepository })
+  BookletListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, @required BookletRepository bookletRepository})
       : assert(bookletRepository != null),
-      _bookletRepository = bookletRepository,
-      super(BookletListLoading());
+        _bookletRepository = bookletRepository,
+        super(BookletListLoading());
 
-  Stream<BookletListState> _mapLoadBookletListToState({ String orderBy, bool descending }) async* {
+  Stream<BookletListState> _mapLoadBookletListToState() async* {
+    int amountNow =  (state is BookletListLoaded) ? (state as BookletListLoaded).values.length : 0;
     _bookletsListSubscription?.cancel();
-    _bookletsListSubscription = _bookletRepository.listen((list) => add(BookletListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
+    _bookletsListSubscription = _bookletRepository.listen(
+          (list) => add(BookletListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+      orderBy: orderBy,
+      descending: descending,
+      eliudQuery: eliudQuery,
+      limit: ((paged != null) && (paged)) ? pages * _bookletLimit : null
+    );
   }
 
-  Stream<BookletListState> _mapLoadBookletListWithDetailsToState({ String orderBy, bool descending }) async* {
+  Stream<BookletListState> _mapLoadBookletListWithDetailsToState() async* {
+    int amountNow =  (state is BookletListLoaded) ? (state as BookletListLoaded).values.length : 0;
     _bookletsListSubscription?.cancel();
-    _bookletsListSubscription = _bookletRepository.listenWithDetails((list) => add(BookletListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
+    _bookletsListSubscription = _bookletRepository.listenWithDetails(
+            (list) => add(BookletListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+        orderBy: orderBy,
+        descending: descending,
+        eliudQuery: eliudQuery,
+        limit: ((paged != null) && (paged)) ? pages * _bookletLimit : null
+    );
   }
 
   Stream<BookletListState> _mapAddBookletListToState(AddBookletList event) async* {
@@ -60,17 +76,22 @@ class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
     _bookletRepository.delete(event.value);
   }
 
-  Stream<BookletListState> _mapBookletListUpdatedToState(BookletListUpdated event) async* {
-    yield BookletListLoaded(values: event.value);
+  Stream<BookletListState> _mapBookletListUpdatedToState(
+      BookletListUpdated event) async* {
+    yield BookletListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
   }
-
 
   @override
   Stream<BookletListState> mapEventToState(BookletListEvent event) async* {
-    final currentState = state;
     if (event is LoadBookletList) {
-      yield* _mapLoadBookletListToState(orderBy: event.orderBy, descending: event.descending);
-    } if (event is LoadBookletListWithDetails) {
+      if ((detailed == null) || (!detailed)) {
+        yield* _mapLoadBookletListToState();
+      } else {
+        yield* _mapLoadBookletListWithDetailsToState();
+      }
+    }
+    if (event is NewPage) {
+      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
       yield* _mapLoadBookletListWithDetailsToState();
     } else if (event is AddBookletList) {
       yield* _mapAddBookletListToState(event);
@@ -88,7 +109,6 @@ class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
     _bookletsListSubscription?.cancel();
     return super.close();
   }
-
 }
 
 

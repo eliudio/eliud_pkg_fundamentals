@@ -22,18 +22,9 @@ abstract class FaderListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadFaderList extends FaderListEvent {
-  final String orderBy;
-  final bool descending;
+class LoadFaderList extends FaderListEvent {}
 
-  LoadFaderList({this.orderBy, this.descending});
-
-  @override
-  List<Object> get props => [orderBy, descending];
-
-}
-
-class LoadFaderListWithDetails extends FaderListEvent {}
+class NewPage extends FaderListEvent {}
 
 class AddFaderList extends FaderListEvent {
   final FaderModel value;
@@ -73,13 +64,14 @@ class DeleteFaderList extends FaderListEvent {
 
 class FaderListUpdated extends FaderListEvent {
   final List<FaderModel> value;
+  final bool mightHaveMore;
 
-  const FaderListUpdated({ this.value });
-
-  @override
-  List<Object> get props => [ value ];
+  const FaderListUpdated({ this.value, this.mightHaveMore });
 
   @override
-  String toString() => 'FaderListUpdated{ value: $value }';
+  List<Object> get props => [ value, mightHaveMore ];
+
+  @override
+  String toString() => 'FaderListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 

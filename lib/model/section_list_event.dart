@@ -22,18 +22,9 @@ abstract class SectionListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadSectionList extends SectionListEvent {
-  final String orderBy;
-  final bool descending;
+class LoadSectionList extends SectionListEvent {}
 
-  LoadSectionList({this.orderBy, this.descending});
-
-  @override
-  List<Object> get props => [orderBy, descending];
-
-}
-
-class LoadSectionListWithDetails extends SectionListEvent {}
+class NewPage extends SectionListEvent {}
 
 class AddSectionList extends SectionListEvent {
   final SectionModel value;
@@ -73,13 +64,14 @@ class DeleteSectionList extends SectionListEvent {
 
 class SectionListUpdated extends SectionListEvent {
   final List<SectionModel> value;
+  final bool mightHaveMore;
 
-  const SectionListUpdated({ this.value });
-
-  @override
-  List<Object> get props => [ value ];
+  const SectionListUpdated({ this.value, this.mightHaveMore });
 
   @override
-  String toString() => 'SectionListUpdated{ value: $value }';
+  List<Object> get props => [ value, mightHaveMore ];
+
+  @override
+  String toString() => 'SectionListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 

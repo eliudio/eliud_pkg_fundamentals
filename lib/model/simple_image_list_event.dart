@@ -22,18 +22,9 @@ abstract class SimpleImageListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadSimpleImageList extends SimpleImageListEvent {
-  final String orderBy;
-  final bool descending;
+class LoadSimpleImageList extends SimpleImageListEvent {}
 
-  LoadSimpleImageList({this.orderBy, this.descending});
-
-  @override
-  List<Object> get props => [orderBy, descending];
-
-}
-
-class LoadSimpleImageListWithDetails extends SimpleImageListEvent {}
+class NewPage extends SimpleImageListEvent {}
 
 class AddSimpleImageList extends SimpleImageListEvent {
   final SimpleImageModel value;
@@ -73,13 +64,14 @@ class DeleteSimpleImageList extends SimpleImageListEvent {
 
 class SimpleImageListUpdated extends SimpleImageListEvent {
   final List<SimpleImageModel> value;
+  final bool mightHaveMore;
 
-  const SimpleImageListUpdated({ this.value });
-
-  @override
-  List<Object> get props => [ value ];
+  const SimpleImageListUpdated({ this.value, this.mightHaveMore });
 
   @override
-  String toString() => 'SimpleImageListUpdated{ value: $value }';
+  List<Object> get props => [ value, mightHaveMore ];
+
+  @override
+  String toString() => 'SimpleImageListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 

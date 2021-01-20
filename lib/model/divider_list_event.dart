@@ -22,18 +22,9 @@ abstract class DividerListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadDividerList extends DividerListEvent {
-  final String orderBy;
-  final bool descending;
+class LoadDividerList extends DividerListEvent {}
 
-  LoadDividerList({this.orderBy, this.descending});
-
-  @override
-  List<Object> get props => [orderBy, descending];
-
-}
-
-class LoadDividerListWithDetails extends DividerListEvent {}
+class NewPage extends DividerListEvent {}
 
 class AddDividerList extends DividerListEvent {
   final DividerModel value;
@@ -73,13 +64,14 @@ class DeleteDividerList extends DividerListEvent {
 
 class DividerListUpdated extends DividerListEvent {
   final List<DividerModel> value;
+  final bool mightHaveMore;
 
-  const DividerListUpdated({ this.value });
-
-  @override
-  List<Object> get props => [ value ];
+  const DividerListUpdated({ this.value, this.mightHaveMore });
 
   @override
-  String toString() => 'DividerListUpdated{ value: $value }';
+  List<Object> get props => [ value, mightHaveMore ];
+
+  @override
+  String toString() => 'DividerListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 

@@ -22,18 +22,9 @@ abstract class GridListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadGridList extends GridListEvent {
-  final String orderBy;
-  final bool descending;
+class LoadGridList extends GridListEvent {}
 
-  LoadGridList({this.orderBy, this.descending});
-
-  @override
-  List<Object> get props => [orderBy, descending];
-
-}
-
-class LoadGridListWithDetails extends GridListEvent {}
+class NewPage extends GridListEvent {}
 
 class AddGridList extends GridListEvent {
   final GridModel value;
@@ -73,13 +64,14 @@ class DeleteGridList extends GridListEvent {
 
 class GridListUpdated extends GridListEvent {
   final List<GridModel> value;
+  final bool mightHaveMore;
 
-  const GridListUpdated({ this.value });
-
-  @override
-  List<Object> get props => [ value ];
+  const GridListUpdated({ this.value, this.mightHaveMore });
 
   @override
-  String toString() => 'GridListUpdated{ value: $value }';
+  List<Object> get props => [ value, mightHaveMore ];
+
+  @override
+  String toString() => 'GridListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 

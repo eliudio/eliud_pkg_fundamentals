@@ -77,7 +77,6 @@ static Widget documentItemsList(BuildContext context, List<DocumentItemModel> va
     providers: [
       BlocProvider<DocumentItemListBloc>(
         create: (context) => DocumentItemListBloc(
-          AccessBloc.getBloc(context), 
           documentItemRepository: inMemoryRepository,
           )..add(LoadDocumentItemList()),
         )
@@ -95,7 +94,6 @@ static Widget linksList(BuildContext context, List<LinkModel> values, LinkListCh
     providers: [
       BlocProvider<LinkListBloc>(
         create: (context) => LinkListBloc(
-          AccessBloc.getBloc(context), 
           linkRepository: inMemoryRepository,
           )..add(LoadLinkList()),
         )
@@ -113,7 +111,6 @@ static Widget listedItemsList(BuildContext context, List<ListedItemModel> values
     providers: [
       BlocProvider<ListedItemListBloc>(
         create: (context) => ListedItemListBloc(
-          AccessBloc.getBloc(context), 
           listedItemRepository: inMemoryRepository,
           )..add(LoadListedItemList()),
         )
@@ -131,7 +128,6 @@ static Widget sectionsList(BuildContext context, List<SectionModel> values, Sect
     providers: [
       BlocProvider<SectionListBloc>(
         create: (context) => SectionListBloc(
-          AccessBloc.getBloc(context), 
           sectionRepository: inMemoryRepository,
           )..add(LoadSectionList()),
         )
@@ -149,7 +145,6 @@ static Widget tutorialEntrysList(BuildContext context, List<TutorialEntryModel> 
     providers: [
       BlocProvider<TutorialEntryListBloc>(
         create: (context) => TutorialEntryListBloc(
-          AccessBloc.getBloc(context), 
           tutorialEntryRepository: inMemoryRepository,
           )..add(LoadTutorialEntryList()),
         )

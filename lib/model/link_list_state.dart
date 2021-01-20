@@ -27,11 +27,12 @@ class LinkListLoading extends LinkListState {}
 
 class LinkListLoaded extends LinkListState {
   final List<LinkModel> values;
+  final bool mightHaveMore;
 
-  const LinkListLoaded({this.values = const []});
+  const LinkListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object> get props => [ values ];
+  List<Object> get props => [ values, mightHaveMore ];
 
   @override
   String toString() => 'LinkListLoaded { values: $values }';

@@ -27,11 +27,12 @@ class SimpleImageListLoading extends SimpleImageListState {}
 
 class SimpleImageListLoaded extends SimpleImageListState {
   final List<SimpleImageModel> values;
+  final bool mightHaveMore;
 
-  const SimpleImageListLoaded({this.values = const []});
+  const SimpleImageListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object> get props => [ values ];
+  List<Object> get props => [ values, mightHaveMore ];
 
   @override
   String toString() => 'SimpleImageListLoaded { values: $values }';

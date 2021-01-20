@@ -20,32 +20,48 @@ import 'package:meta/meta.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_list_state.dart';
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
-import 'package:eliud_core/core/access/bloc/access_event.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
-import 'package:eliud_core/core/access/bloc/access_state.dart';
 
+
+const _tutorialLimit = 5;
 
 class TutorialListBloc extends Bloc<TutorialListEvent, TutorialListState> {
   final TutorialRepository _tutorialRepository;
   StreamSubscription _tutorialsListSubscription;
-  final AccessBloc accessBloc;
   final EliudQuery eliudQuery;
+  int pages = 1;
+  final bool paged;
+  final String orderBy;
+  final bool descending;
+  final bool detailed;
 
-
-  TutorialListBloc(this.accessBloc,{ this.eliudQuery, @required TutorialRepository tutorialRepository })
+  TutorialListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, @required TutorialRepository tutorialRepository})
       : assert(tutorialRepository != null),
-      _tutorialRepository = tutorialRepository,
-      super(TutorialListLoading());
+        _tutorialRepository = tutorialRepository,
+        super(TutorialListLoading());
 
-  Stream<TutorialListState> _mapLoadTutorialListToState({ String orderBy, bool descending }) async* {
+  Stream<TutorialListState> _mapLoadTutorialListToState() async* {
+    int amountNow =  (state is TutorialListLoaded) ? (state as TutorialListLoaded).values.length : 0;
     _tutorialsListSubscription?.cancel();
-    _tutorialsListSubscription = _tutorialRepository.listen((list) => add(TutorialListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
+    _tutorialsListSubscription = _tutorialRepository.listen(
+          (list) => add(TutorialListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+      orderBy: orderBy,
+      descending: descending,
+      eliudQuery: eliudQuery,
+      limit: ((paged != null) && (paged)) ? pages * _tutorialLimit : null
+    );
   }
 
-  Stream<TutorialListState> _mapLoadTutorialListWithDetailsToState({ String orderBy, bool descending }) async* {
+  Stream<TutorialListState> _mapLoadTutorialListWithDetailsToState() async* {
+    int amountNow =  (state is TutorialListLoaded) ? (state as TutorialListLoaded).values.length : 0;
     _tutorialsListSubscription?.cancel();
-    _tutorialsListSubscription = _tutorialRepository.listenWithDetails((list) => add(TutorialListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
+    _tutorialsListSubscription = _tutorialRepository.listenWithDetails(
+            (list) => add(TutorialListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+        orderBy: orderBy,
+        descending: descending,
+        eliudQuery: eliudQuery,
+        limit: ((paged != null) && (paged)) ? pages * _tutorialLimit : null
+    );
   }
 
   Stream<TutorialListState> _mapAddTutorialListToState(AddTutorialList event) async* {
@@ -60,17 +76,22 @@ class TutorialListBloc extends Bloc<TutorialListEvent, TutorialListState> {
     _tutorialRepository.delete(event.value);
   }
 
-  Stream<TutorialListState> _mapTutorialListUpdatedToState(TutorialListUpdated event) async* {
-    yield TutorialListLoaded(values: event.value);
+  Stream<TutorialListState> _mapTutorialListUpdatedToState(
+      TutorialListUpdated event) async* {
+    yield TutorialListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
   }
-
 
   @override
   Stream<TutorialListState> mapEventToState(TutorialListEvent event) async* {
-    final currentState = state;
     if (event is LoadTutorialList) {
-      yield* _mapLoadTutorialListToState(orderBy: event.orderBy, descending: event.descending);
-    } if (event is LoadTutorialListWithDetails) {
+      if ((detailed == null) || (!detailed)) {
+        yield* _mapLoadTutorialListToState();
+      } else {
+        yield* _mapLoadTutorialListWithDetailsToState();
+      }
+    }
+    if (event is NewPage) {
+      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
       yield* _mapLoadTutorialListWithDetailsToState();
     } else if (event is AddTutorialList) {
       yield* _mapAddTutorialListToState(event);
@@ -88,7 +109,6 @@ class TutorialListBloc extends Bloc<TutorialListEvent, TutorialListState> {
     _tutorialsListSubscription?.cancel();
     return super.close();
   }
-
 }
 
 

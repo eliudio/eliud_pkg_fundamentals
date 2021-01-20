@@ -20,32 +20,48 @@ import 'package:meta/meta.dart';
 import 'package:eliud_pkg_fundamentals/model/section_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/section_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/section_list_state.dart';
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
-import 'package:eliud_core/core/access/bloc/access_event.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
-import 'package:eliud_core/core/access/bloc/access_state.dart';
 
+
+const _sectionLimit = 5;
 
 class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
   final SectionRepository _sectionRepository;
   StreamSubscription _sectionsListSubscription;
-  final AccessBloc accessBloc;
   final EliudQuery eliudQuery;
+  int pages = 1;
+  final bool paged;
+  final String orderBy;
+  final bool descending;
+  final bool detailed;
 
-
-  SectionListBloc(this.accessBloc,{ this.eliudQuery, @required SectionRepository sectionRepository })
+  SectionListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, @required SectionRepository sectionRepository})
       : assert(sectionRepository != null),
-      _sectionRepository = sectionRepository,
-      super(SectionListLoading());
+        _sectionRepository = sectionRepository,
+        super(SectionListLoading());
 
-  Stream<SectionListState> _mapLoadSectionListToState({ String orderBy, bool descending }) async* {
+  Stream<SectionListState> _mapLoadSectionListToState() async* {
+    int amountNow =  (state is SectionListLoaded) ? (state as SectionListLoaded).values.length : 0;
     _sectionsListSubscription?.cancel();
-    _sectionsListSubscription = _sectionRepository.listen((list) => add(SectionListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
+    _sectionsListSubscription = _sectionRepository.listen(
+          (list) => add(SectionListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+      orderBy: orderBy,
+      descending: descending,
+      eliudQuery: eliudQuery,
+      limit: ((paged != null) && (paged)) ? pages * _sectionLimit : null
+    );
   }
 
-  Stream<SectionListState> _mapLoadSectionListWithDetailsToState({ String orderBy, bool descending }) async* {
+  Stream<SectionListState> _mapLoadSectionListWithDetailsToState() async* {
+    int amountNow =  (state is SectionListLoaded) ? (state as SectionListLoaded).values.length : 0;
     _sectionsListSubscription?.cancel();
-    _sectionsListSubscription = _sectionRepository.listenWithDetails((list) => add(SectionListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
+    _sectionsListSubscription = _sectionRepository.listenWithDetails(
+            (list) => add(SectionListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+        orderBy: orderBy,
+        descending: descending,
+        eliudQuery: eliudQuery,
+        limit: ((paged != null) && (paged)) ? pages * _sectionLimit : null
+    );
   }
 
   Stream<SectionListState> _mapAddSectionListToState(AddSectionList event) async* {
@@ -60,17 +76,22 @@ class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
     _sectionRepository.delete(event.value);
   }
 
-  Stream<SectionListState> _mapSectionListUpdatedToState(SectionListUpdated event) async* {
-    yield SectionListLoaded(values: event.value);
+  Stream<SectionListState> _mapSectionListUpdatedToState(
+      SectionListUpdated event) async* {
+    yield SectionListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
   }
-
 
   @override
   Stream<SectionListState> mapEventToState(SectionListEvent event) async* {
-    final currentState = state;
     if (event is LoadSectionList) {
-      yield* _mapLoadSectionListToState(orderBy: event.orderBy, descending: event.descending);
-    } if (event is LoadSectionListWithDetails) {
+      if ((detailed == null) || (!detailed)) {
+        yield* _mapLoadSectionListToState();
+      } else {
+        yield* _mapLoadSectionListWithDetailsToState();
+      }
+    }
+    if (event is NewPage) {
+      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
       yield* _mapLoadSectionListWithDetailsToState();
     } else if (event is AddSectionList) {
       yield* _mapAddSectionListToState(event);
@@ -88,7 +109,6 @@ class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
     _sectionsListSubscription?.cancel();
     return super.close();
   }
-
 }
 
 

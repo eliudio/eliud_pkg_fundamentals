@@ -22,18 +22,9 @@ abstract class TutorialListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadTutorialList extends TutorialListEvent {
-  final String orderBy;
-  final bool descending;
+class LoadTutorialList extends TutorialListEvent {}
 
-  LoadTutorialList({this.orderBy, this.descending});
-
-  @override
-  List<Object> get props => [orderBy, descending];
-
-}
-
-class LoadTutorialListWithDetails extends TutorialListEvent {}
+class NewPage extends TutorialListEvent {}
 
 class AddTutorialList extends TutorialListEvent {
   final TutorialModel value;
@@ -73,13 +64,14 @@ class DeleteTutorialList extends TutorialListEvent {
 
 class TutorialListUpdated extends TutorialListEvent {
   final List<TutorialModel> value;
+  final bool mightHaveMore;
 
-  const TutorialListUpdated({ this.value });
-
-  @override
-  List<Object> get props => [ value ];
+  const TutorialListUpdated({ this.value, this.mightHaveMore });
 
   @override
-  String toString() => 'TutorialListUpdated{ value: $value }';
+  List<Object> get props => [ value, mightHaveMore ];
+
+  @override
+  String toString() => 'TutorialListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 

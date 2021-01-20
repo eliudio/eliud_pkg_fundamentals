@@ -22,18 +22,9 @@ abstract class PresentationListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadPresentationList extends PresentationListEvent {
-  final String orderBy;
-  final bool descending;
+class LoadPresentationList extends PresentationListEvent {}
 
-  LoadPresentationList({this.orderBy, this.descending});
-
-  @override
-  List<Object> get props => [orderBy, descending];
-
-}
-
-class LoadPresentationListWithDetails extends PresentationListEvent {}
+class NewPage extends PresentationListEvent {}
 
 class AddPresentationList extends PresentationListEvent {
   final PresentationModel value;
@@ -73,13 +64,14 @@ class DeletePresentationList extends PresentationListEvent {
 
 class PresentationListUpdated extends PresentationListEvent {
   final List<PresentationModel> value;
+  final bool mightHaveMore;
 
-  const PresentationListUpdated({ this.value });
-
-  @override
-  List<Object> get props => [ value ];
+  const PresentationListUpdated({ this.value, this.mightHaveMore });
 
   @override
-  String toString() => 'PresentationListUpdated{ value: $value }';
+  List<Object> get props => [ value, mightHaveMore ];
+
+  @override
+  String toString() => 'PresentationListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 

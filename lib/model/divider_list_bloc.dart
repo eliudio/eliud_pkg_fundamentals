@@ -20,32 +20,48 @@ import 'package:meta/meta.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_list_state.dart';
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
-import 'package:eliud_core/core/access/bloc/access_event.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
-import 'package:eliud_core/core/access/bloc/access_state.dart';
 
+
+const _dividerLimit = 5;
 
 class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
   final DividerRepository _dividerRepository;
   StreamSubscription _dividersListSubscription;
-  final AccessBloc accessBloc;
   final EliudQuery eliudQuery;
+  int pages = 1;
+  final bool paged;
+  final String orderBy;
+  final bool descending;
+  final bool detailed;
 
-
-  DividerListBloc(this.accessBloc,{ this.eliudQuery, @required DividerRepository dividerRepository })
+  DividerListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, @required DividerRepository dividerRepository})
       : assert(dividerRepository != null),
-      _dividerRepository = dividerRepository,
-      super(DividerListLoading());
+        _dividerRepository = dividerRepository,
+        super(DividerListLoading());
 
-  Stream<DividerListState> _mapLoadDividerListToState({ String orderBy, bool descending }) async* {
+  Stream<DividerListState> _mapLoadDividerListToState() async* {
+    int amountNow =  (state is DividerListLoaded) ? (state as DividerListLoaded).values.length : 0;
     _dividersListSubscription?.cancel();
-    _dividersListSubscription = _dividerRepository.listen((list) => add(DividerListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
+    _dividersListSubscription = _dividerRepository.listen(
+          (list) => add(DividerListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+      orderBy: orderBy,
+      descending: descending,
+      eliudQuery: eliudQuery,
+      limit: ((paged != null) && (paged)) ? pages * _dividerLimit : null
+    );
   }
 
-  Stream<DividerListState> _mapLoadDividerListWithDetailsToState({ String orderBy, bool descending }) async* {
+  Stream<DividerListState> _mapLoadDividerListWithDetailsToState() async* {
+    int amountNow =  (state is DividerListLoaded) ? (state as DividerListLoaded).values.length : 0;
     _dividersListSubscription?.cancel();
-    _dividersListSubscription = _dividerRepository.listenWithDetails((list) => add(DividerListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
+    _dividersListSubscription = _dividerRepository.listenWithDetails(
+            (list) => add(DividerListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+        orderBy: orderBy,
+        descending: descending,
+        eliudQuery: eliudQuery,
+        limit: ((paged != null) && (paged)) ? pages * _dividerLimit : null
+    );
   }
 
   Stream<DividerListState> _mapAddDividerListToState(AddDividerList event) async* {
@@ -60,17 +76,22 @@ class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
     _dividerRepository.delete(event.value);
   }
 
-  Stream<DividerListState> _mapDividerListUpdatedToState(DividerListUpdated event) async* {
-    yield DividerListLoaded(values: event.value);
+  Stream<DividerListState> _mapDividerListUpdatedToState(
+      DividerListUpdated event) async* {
+    yield DividerListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
   }
-
 
   @override
   Stream<DividerListState> mapEventToState(DividerListEvent event) async* {
-    final currentState = state;
     if (event is LoadDividerList) {
-      yield* _mapLoadDividerListToState(orderBy: event.orderBy, descending: event.descending);
-    } if (event is LoadDividerListWithDetails) {
+      if ((detailed == null) || (!detailed)) {
+        yield* _mapLoadDividerListToState();
+      } else {
+        yield* _mapLoadDividerListWithDetailsToState();
+      }
+    }
+    if (event is NewPage) {
+      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
       yield* _mapLoadDividerListWithDetailsToState();
     } else if (event is AddDividerList) {
       yield* _mapAddDividerListToState(event);
@@ -88,7 +109,6 @@ class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
     _dividersListSubscription?.cancel();
     return super.close();
   }
-
 }
 
 

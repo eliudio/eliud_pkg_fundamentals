@@ -27,11 +27,12 @@ class DividerListLoading extends DividerListState {}
 
 class DividerListLoaded extends DividerListState {
   final List<DividerModel> values;
+  final bool mightHaveMore;
 
-  const DividerListLoaded({this.values = const []});
+  const DividerListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object> get props => [ values ];
+  List<Object> get props => [ values, mightHaveMore ];
 
   @override
   String toString() => 'DividerListLoaded { values: $values }';

@@ -22,18 +22,9 @@ abstract class BookletListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadBookletList extends BookletListEvent {
-  final String orderBy;
-  final bool descending;
+class LoadBookletList extends BookletListEvent {}
 
-  LoadBookletList({this.orderBy, this.descending});
-
-  @override
-  List<Object> get props => [orderBy, descending];
-
-}
-
-class LoadBookletListWithDetails extends BookletListEvent {}
+class NewPage extends BookletListEvent {}
 
 class AddBookletList extends BookletListEvent {
   final BookletModel value;
@@ -73,13 +64,14 @@ class DeleteBookletList extends BookletListEvent {
 
 class BookletListUpdated extends BookletListEvent {
   final List<BookletModel> value;
+  final bool mightHaveMore;
 
-  const BookletListUpdated({ this.value });
-
-  @override
-  List<Object> get props => [ value ];
+  const BookletListUpdated({ this.value, this.mightHaveMore });
 
   @override
-  String toString() => 'BookletListUpdated{ value: $value }';
+  List<Object> get props => [ value, mightHaveMore ];
+
+  @override
+  String toString() => 'BookletListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 

@@ -22,18 +22,9 @@ abstract class DocumentListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadDocumentList extends DocumentListEvent {
-  final String orderBy;
-  final bool descending;
+class LoadDocumentList extends DocumentListEvent {}
 
-  LoadDocumentList({this.orderBy, this.descending});
-
-  @override
-  List<Object> get props => [orderBy, descending];
-
-}
-
-class LoadDocumentListWithDetails extends DocumentListEvent {}
+class NewPage extends DocumentListEvent {}
 
 class AddDocumentList extends DocumentListEvent {
   final DocumentModel value;
@@ -73,13 +64,14 @@ class DeleteDocumentList extends DocumentListEvent {
 
 class DocumentListUpdated extends DocumentListEvent {
   final List<DocumentModel> value;
+  final bool mightHaveMore;
 
-  const DocumentListUpdated({ this.value });
-
-  @override
-  List<Object> get props => [ value ];
+  const DocumentListUpdated({ this.value, this.mightHaveMore });
 
   @override
-  String toString() => 'DocumentListUpdated{ value: $value }';
+  List<Object> get props => [ value, mightHaveMore ];
+
+  @override
+  String toString() => 'DocumentListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 

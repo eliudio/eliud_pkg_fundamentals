@@ -27,11 +27,12 @@ class DocumentItemListLoading extends DocumentItemListState {}
 
 class DocumentItemListLoaded extends DocumentItemListState {
   final List<DocumentItemModel> values;
+  final bool mightHaveMore;
 
-  const DocumentItemListLoaded({this.values = const []});
+  const DocumentItemListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object> get props => [ values ];
+  List<Object> get props => [ values, mightHaveMore ];
 
   @override
   String toString() => 'DocumentItemListLoaded { values: $values }';

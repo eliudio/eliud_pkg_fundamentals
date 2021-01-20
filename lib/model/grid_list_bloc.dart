@@ -20,32 +20,48 @@ import 'package:meta/meta.dart';
 import 'package:eliud_pkg_fundamentals/model/grid_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/grid_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/grid_list_state.dart';
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
-import 'package:eliud_core/core/access/bloc/access_event.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
-import 'package:eliud_core/core/access/bloc/access_state.dart';
 
+
+const _gridLimit = 5;
 
 class GridListBloc extends Bloc<GridListEvent, GridListState> {
   final GridRepository _gridRepository;
   StreamSubscription _gridsListSubscription;
-  final AccessBloc accessBloc;
   final EliudQuery eliudQuery;
+  int pages = 1;
+  final bool paged;
+  final String orderBy;
+  final bool descending;
+  final bool detailed;
 
-
-  GridListBloc(this.accessBloc,{ this.eliudQuery, @required GridRepository gridRepository })
+  GridListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, @required GridRepository gridRepository})
       : assert(gridRepository != null),
-      _gridRepository = gridRepository,
-      super(GridListLoading());
+        _gridRepository = gridRepository,
+        super(GridListLoading());
 
-  Stream<GridListState> _mapLoadGridListToState({ String orderBy, bool descending }) async* {
+  Stream<GridListState> _mapLoadGridListToState() async* {
+    int amountNow =  (state is GridListLoaded) ? (state as GridListLoaded).values.length : 0;
     _gridsListSubscription?.cancel();
-    _gridsListSubscription = _gridRepository.listen((list) => add(GridListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
+    _gridsListSubscription = _gridRepository.listen(
+          (list) => add(GridListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+      orderBy: orderBy,
+      descending: descending,
+      eliudQuery: eliudQuery,
+      limit: ((paged != null) && (paged)) ? pages * _gridLimit : null
+    );
   }
 
-  Stream<GridListState> _mapLoadGridListWithDetailsToState({ String orderBy, bool descending }) async* {
+  Stream<GridListState> _mapLoadGridListWithDetailsToState() async* {
+    int amountNow =  (state is GridListLoaded) ? (state as GridListLoaded).values.length : 0;
     _gridsListSubscription?.cancel();
-    _gridsListSubscription = _gridRepository.listenWithDetails((list) => add(GridListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
+    _gridsListSubscription = _gridRepository.listenWithDetails(
+            (list) => add(GridListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+        orderBy: orderBy,
+        descending: descending,
+        eliudQuery: eliudQuery,
+        limit: ((paged != null) && (paged)) ? pages * _gridLimit : null
+    );
   }
 
   Stream<GridListState> _mapAddGridListToState(AddGridList event) async* {
@@ -60,17 +76,22 @@ class GridListBloc extends Bloc<GridListEvent, GridListState> {
     _gridRepository.delete(event.value);
   }
 
-  Stream<GridListState> _mapGridListUpdatedToState(GridListUpdated event) async* {
-    yield GridListLoaded(values: event.value);
+  Stream<GridListState> _mapGridListUpdatedToState(
+      GridListUpdated event) async* {
+    yield GridListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
   }
-
 
   @override
   Stream<GridListState> mapEventToState(GridListEvent event) async* {
-    final currentState = state;
     if (event is LoadGridList) {
-      yield* _mapLoadGridListToState(orderBy: event.orderBy, descending: event.descending);
-    } if (event is LoadGridListWithDetails) {
+      if ((detailed == null) || (!detailed)) {
+        yield* _mapLoadGridListToState();
+      } else {
+        yield* _mapLoadGridListWithDetailsToState();
+      }
+    }
+    if (event is NewPage) {
+      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
       yield* _mapLoadGridListWithDetailsToState();
     } else if (event is AddGridList) {
       yield* _mapAddGridListToState(event);
@@ -88,7 +109,6 @@ class GridListBloc extends Bloc<GridListEvent, GridListState> {
     _gridsListSubscription?.cancel();
     return super.close();
   }
-
 }
 
 

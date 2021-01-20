@@ -27,11 +27,12 @@ class PresentationListLoading extends PresentationListState {}
 
 class PresentationListLoaded extends PresentationListState {
   final List<PresentationModel> values;
+  final bool mightHaveMore;
 
-  const PresentationListLoaded({this.values = const []});
+  const PresentationListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object> get props => [ values ];
+  List<Object> get props => [ values, mightHaveMore ];
 
   @override
   String toString() => 'PresentationListLoaded { values: $values }';

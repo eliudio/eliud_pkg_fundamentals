@@ -20,32 +20,48 @@ import 'package:meta/meta.dart';
 import 'package:eliud_pkg_fundamentals/model/link_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/link_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/link_list_state.dart';
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
-import 'package:eliud_core/core/access/bloc/access_event.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
-import 'package:eliud_core/core/access/bloc/access_state.dart';
 
+
+const _linkLimit = 5;
 
 class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
   final LinkRepository _linkRepository;
   StreamSubscription _linksListSubscription;
-  final AccessBloc accessBloc;
   final EliudQuery eliudQuery;
+  int pages = 1;
+  final bool paged;
+  final String orderBy;
+  final bool descending;
+  final bool detailed;
 
-
-  LinkListBloc(this.accessBloc,{ this.eliudQuery, @required LinkRepository linkRepository })
+  LinkListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, @required LinkRepository linkRepository})
       : assert(linkRepository != null),
-      _linkRepository = linkRepository,
-      super(LinkListLoading());
+        _linkRepository = linkRepository,
+        super(LinkListLoading());
 
-  Stream<LinkListState> _mapLoadLinkListToState({ String orderBy, bool descending }) async* {
+  Stream<LinkListState> _mapLoadLinkListToState() async* {
+    int amountNow =  (state is LinkListLoaded) ? (state as LinkListLoaded).values.length : 0;
     _linksListSubscription?.cancel();
-    _linksListSubscription = _linkRepository.listen((list) => add(LinkListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
+    _linksListSubscription = _linkRepository.listen(
+          (list) => add(LinkListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+      orderBy: orderBy,
+      descending: descending,
+      eliudQuery: eliudQuery,
+      limit: ((paged != null) && (paged)) ? pages * _linkLimit : null
+    );
   }
 
-  Stream<LinkListState> _mapLoadLinkListWithDetailsToState({ String orderBy, bool descending }) async* {
+  Stream<LinkListState> _mapLoadLinkListWithDetailsToState() async* {
+    int amountNow =  (state is LinkListLoaded) ? (state as LinkListLoaded).values.length : 0;
     _linksListSubscription?.cancel();
-    _linksListSubscription = _linkRepository.listenWithDetails((list) => add(LinkListUpdated(value: list)), orderBy: orderBy, descending: descending, eliudQuery: eliudQuery,);
+    _linksListSubscription = _linkRepository.listenWithDetails(
+            (list) => add(LinkListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+        orderBy: orderBy,
+        descending: descending,
+        eliudQuery: eliudQuery,
+        limit: ((paged != null) && (paged)) ? pages * _linkLimit : null
+    );
   }
 
   Stream<LinkListState> _mapAddLinkListToState(AddLinkList event) async* {
@@ -60,17 +76,22 @@ class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
     _linkRepository.delete(event.value);
   }
 
-  Stream<LinkListState> _mapLinkListUpdatedToState(LinkListUpdated event) async* {
-    yield LinkListLoaded(values: event.value);
+  Stream<LinkListState> _mapLinkListUpdatedToState(
+      LinkListUpdated event) async* {
+    yield LinkListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
   }
-
 
   @override
   Stream<LinkListState> mapEventToState(LinkListEvent event) async* {
-    final currentState = state;
     if (event is LoadLinkList) {
-      yield* _mapLoadLinkListToState(orderBy: event.orderBy, descending: event.descending);
-    } if (event is LoadLinkListWithDetails) {
+      if ((detailed == null) || (!detailed)) {
+        yield* _mapLoadLinkListToState();
+      } else {
+        yield* _mapLoadLinkListWithDetailsToState();
+      }
+    }
+    if (event is NewPage) {
+      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
       yield* _mapLoadLinkListWithDetailsToState();
     } else if (event is AddLinkList) {
       yield* _mapAddLinkListToState(event);
@@ -88,7 +109,6 @@ class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
     _linksListSubscription?.cancel();
     return super.close();
   }
-
 }
 
 

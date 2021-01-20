@@ -27,11 +27,12 @@ class GridListLoading extends GridListState {}
 
 class GridListLoaded extends GridListState {
   final List<GridModel> values;
+  final bool mightHaveMore;
 
-  const GridListLoaded({this.values = const []});
+  const GridListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object> get props => [ values ];
+  List<Object> get props => [ values, mightHaveMore ];
 
   @override
   String toString() => 'GridListLoaded { values: $values }';

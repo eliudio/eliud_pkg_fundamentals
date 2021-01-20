@@ -22,18 +22,9 @@ abstract class LinkListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadLinkList extends LinkListEvent {
-  final String orderBy;
-  final bool descending;
+class LoadLinkList extends LinkListEvent {}
 
-  LoadLinkList({this.orderBy, this.descending});
-
-  @override
-  List<Object> get props => [orderBy, descending];
-
-}
-
-class LoadLinkListWithDetails extends LinkListEvent {}
+class NewPage extends LinkListEvent {}
 
 class AddLinkList extends LinkListEvent {
   final LinkModel value;
@@ -73,13 +64,14 @@ class DeleteLinkList extends LinkListEvent {
 
 class LinkListUpdated extends LinkListEvent {
   final List<LinkModel> value;
+  final bool mightHaveMore;
 
-  const LinkListUpdated({ this.value });
-
-  @override
-  List<Object> get props => [ value ];
+  const LinkListUpdated({ this.value, this.mightHaveMore });
 
   @override
-  String toString() => 'LinkListUpdated{ value: $value }';
+  List<Object> get props => [ value, mightHaveMore ];
+
+  @override
+  String toString() => 'LinkListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 

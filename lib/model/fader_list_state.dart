@@ -27,11 +27,12 @@ class FaderListLoading extends FaderListState {}
 
 class FaderListLoaded extends FaderListState {
   final List<FaderModel> values;
+  final bool mightHaveMore;
 
-  const FaderListLoaded({this.values = const []});
+  const FaderListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object> get props => [ values ];
+  List<Object> get props => [ values, mightHaveMore ];
 
   @override
   String toString() => 'FaderListLoaded { values: $values }';
