@@ -180,6 +180,12 @@ class GridFirestore implements GridRepository {
     return firestoreTimeStampToString(timeStamp);
   } 
 
+  Future<GridModel> changeValue(String documentId, String fieldName, num changeByThisValue) {
+    var change = FieldValue.increment(changeByThisValue);
+    return GridCollection.doc(documentId).update({fieldName: change}).then((v) => get(documentId));
+  }
+
+
   final String appId;
   GridFirestore(this.GridCollection, this.appId);
 

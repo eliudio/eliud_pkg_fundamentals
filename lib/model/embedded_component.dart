@@ -246,6 +246,11 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
   StreamSubscription<DocumentItemModel> listenTo(String documentId, DocumentItemChanged changed) {
     throw UnimplementedError();
   }
+
+  @override
+  Future<DocumentItemModel> changeValue(String documentId, String fieldName, num changeByThisValue) {
+    throw UnimplementedError();
+  }
   
 
     Future<void> deleteAll() {}
@@ -339,6 +344,11 @@ class LinkInMemoryRepository implements LinkRepository {
   
   @override
   StreamSubscription<LinkModel> listenTo(String documentId, LinkChanged changed) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<LinkModel> changeValue(String documentId, String fieldName, num changeByThisValue) {
     throw UnimplementedError();
   }
   
@@ -436,6 +446,11 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
   StreamSubscription<ListedItemModel> listenTo(String documentId, ListedItemChanged changed) {
     throw UnimplementedError();
   }
+
+  @override
+  Future<ListedItemModel> changeValue(String documentId, String fieldName, num changeByThisValue) {
+    throw UnimplementedError();
+  }
   
 
     Future<void> deleteAll() {}
@@ -531,6 +546,11 @@ class SectionInMemoryRepository implements SectionRepository {
   StreamSubscription<SectionModel> listenTo(String documentId, SectionChanged changed) {
     throw UnimplementedError();
   }
+
+  @override
+  Future<SectionModel> changeValue(String documentId, String fieldName, num changeByThisValue) {
+    throw UnimplementedError();
+  }
   
 
     Future<void> deleteAll() {}
@@ -624,6 +644,11 @@ class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
   
   @override
   StreamSubscription<TutorialEntryModel> listenTo(String documentId, TutorialEntryChanged changed) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<TutorialEntryModel> changeValue(String documentId, String fieldName, num changeByThisValue) {
     throw UnimplementedError();
   }
   

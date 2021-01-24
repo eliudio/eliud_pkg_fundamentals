@@ -180,6 +180,12 @@ class BookletFirestore implements BookletRepository {
     return firestoreTimeStampToString(timeStamp);
   } 
 
+  Future<BookletModel> changeValue(String documentId, String fieldName, num changeByThisValue) {
+    var change = FieldValue.increment(changeByThisValue);
+    return BookletCollection.doc(documentId).update({fieldName: change}).then((v) => get(documentId));
+  }
+
+
   final String appId;
   BookletFirestore(this.BookletCollection, this.appId);
 

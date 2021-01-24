@@ -180,6 +180,12 @@ class PlayStoreFirestore implements PlayStoreRepository {
     return firestoreTimeStampToString(timeStamp);
   } 
 
+  Future<PlayStoreModel> changeValue(String documentId, String fieldName, num changeByThisValue) {
+    var change = FieldValue.increment(changeByThisValue);
+    return PlayStoreCollection.doc(documentId).update({fieldName: change}).then((v) => get(documentId));
+  }
+
+
   final String appId;
   PlayStoreFirestore(this.PlayStoreCollection, this.appId);
 

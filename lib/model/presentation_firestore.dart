@@ -180,6 +180,12 @@ class PresentationFirestore implements PresentationRepository {
     return firestoreTimeStampToString(timeStamp);
   } 
 
+  Future<PresentationModel> changeValue(String documentId, String fieldName, num changeByThisValue) {
+    var change = FieldValue.increment(changeByThisValue);
+    return PresentationCollection.doc(documentId).update({fieldName: change}).then((v) => get(documentId));
+  }
+
+
   final String appId;
   PresentationFirestore(this.PresentationCollection, this.appId);
 

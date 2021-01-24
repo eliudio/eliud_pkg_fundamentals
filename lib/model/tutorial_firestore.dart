@@ -180,6 +180,12 @@ class TutorialFirestore implements TutorialRepository {
     return firestoreTimeStampToString(timeStamp);
   } 
 
+  Future<TutorialModel> changeValue(String documentId, String fieldName, num changeByThisValue) {
+    var change = FieldValue.increment(changeByThisValue);
+    return TutorialCollection.doc(documentId).update({fieldName: change}).then((v) => get(documentId));
+  }
+
+
   final String appId;
   TutorialFirestore(this.TutorialCollection, this.appId);
 

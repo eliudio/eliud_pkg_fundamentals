@@ -180,6 +180,12 @@ class DividerFirestore implements DividerRepository {
     return firestoreTimeStampToString(timeStamp);
   } 
 
+  Future<DividerModel> changeValue(String documentId, String fieldName, num changeByThisValue) {
+    var change = FieldValue.increment(changeByThisValue);
+    return DividerCollection.doc(documentId).update({fieldName: change}).then((v) => get(documentId));
+  }
+
+
   final String appId;
   DividerFirestore(this.DividerCollection, this.appId);
 

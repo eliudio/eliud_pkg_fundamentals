@@ -180,6 +180,12 @@ class SimpleImageFirestore implements SimpleImageRepository {
     return firestoreTimeStampToString(timeStamp);
   } 
 
+  Future<SimpleImageModel> changeValue(String documentId, String fieldName, num changeByThisValue) {
+    var change = FieldValue.increment(changeByThisValue);
+    return SimpleImageCollection.doc(documentId).update({fieldName: change}).then((v) => get(documentId));
+  }
+
+
   final String appId;
   SimpleImageFirestore(this.SimpleImageCollection, this.appId);
 

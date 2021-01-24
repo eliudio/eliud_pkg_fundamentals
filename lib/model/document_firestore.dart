@@ -180,6 +180,12 @@ class DocumentFirestore implements DocumentRepository {
     return firestoreTimeStampToString(timeStamp);
   } 
 
+  Future<DocumentModel> changeValue(String documentId, String fieldName, num changeByThisValue) {
+    var change = FieldValue.increment(changeByThisValue);
+    return DocumentCollection.doc(documentId).update({fieldName: change}).then((v) => get(documentId));
+  }
+
+
   final String appId;
   DocumentFirestore(this.DocumentCollection, this.appId);
 

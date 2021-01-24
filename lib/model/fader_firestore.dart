@@ -180,6 +180,12 @@ class FaderFirestore implements FaderRepository {
     return firestoreTimeStampToString(timeStamp);
   } 
 
+  Future<FaderModel> changeValue(String documentId, String fieldName, num changeByThisValue) {
+    var change = FieldValue.increment(changeByThisValue);
+    return FaderCollection.doc(documentId).update({fieldName: change}).then((v) => get(documentId));
+  }
+
+
   final String appId;
   FaderFirestore(this.FaderCollection, this.appId);
 
