@@ -114,12 +114,11 @@ class FulLScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var imageProvider = AbstractPlatform.platform.getImageProviderFromURL(image.imageURLOriginal);
     return Scaffold(
       body: GestureDetector(
         child:  PhotoView(
           initialScale: PhotoViewComputedScale.covered,
-          imageProvider: imageProvider),
+          imageProvider: NetworkImage(image.imageURLOriginal)),
         onTap: () {
            Navigator.pop(context);
           },

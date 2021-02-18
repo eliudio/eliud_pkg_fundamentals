@@ -1,16 +1,18 @@
 import 'dart:math';
 
 import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
+import 'package:eliud_core/model/image_model.dart';
 import 'package:eliud_core/tools/action/action_model.dart';
 import 'package:eliud_core/model/pos_size_model.dart';
 import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/screen_size.dart';
 import 'package:getwidget/components/carousel/gf_carousel.dart';
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class TheImageGF extends StatefulWidget {
   final Orientation orientation;
-  final List<ImageProvider> cachedImages;
+  final List<ImageModel> images;
   final List<PosSizeModel> positionsAndSizes;
   final List<ActionModel> actions;
   // The time to display 1 image
@@ -20,7 +22,7 @@ class TheImageGF extends StatefulWidget {
   // The duration of the transition between the images
   final int animationMilliseconds;
 
-  TheImageGF(this.cachedImages, this.positionsAndSizes, this.actions, this.orientation, this.imageSeconds, this.animationMilliseconds);
+  TheImageGF(this.images, this.positionsAndSizes, this.actions, this.orientation, this.imageSeconds, this.animationMilliseconds);
 
   @override
   State<StatefulWidget> createState() => TheImageGFState();
@@ -32,12 +34,12 @@ class TheImageGFState extends State<TheImageGF> {
     var list = <Widget>[];
     var maxHeight = 0.0;
     var maxWidth = 0.0;
-    for (var i = 0; i < widget.cachedImages.length; i++) {
-      if (widget.cachedImages[i] != null) {
+    for (var i = 0; i < widget.images.length; i++) {
+      if (widget.images[i] != null) {
         var w = FaderHelper.getIt(
             context,
             widget.positionsAndSizes[i],
-            widget.cachedImages[i],
+            widget.images[i],
             widget.orientation,
             widget.actions != null ? widget.actions[i] : null,
             i);
@@ -197,21 +199,23 @@ class FaderHelper {
   }
 
   static Widget getIt(BuildContext context, PosSizeModel posSizeModel,
-      ImageProvider imageProvider, Orientation orientation, ActionModel action, int index) {
-    if (imageProvider == null) {
+      ImageModel imageModel, Orientation orientation, ActionModel action, int index) {
+    if (imageModel == null) {
       return null;
     }
-    var fit = BoxFitHelper.  toBoxFit(posSizeModel, orientation);
+    var fit = BoxFitHelper.toBoxFit(posSizeModel, orientation);
     var width = BoxFitHelper.toWidth(posSizeModel, context, orientation);
     var height = BoxFitHelper.toHeight(posSizeModel, context, orientation);
     var alignment = BoxFitHelper.toAlignment(posSizeModel, orientation);
 
-    var realImage = Image(
-      image: imageProvider,
-      width: width,
-      height: height,
-      fit: fit,
-    );
+    var realImage = Center(
+          child: Image.network(
+            imageModel.imageURLOriginal,
+            fit: BoxFit.scaleDown,
+            height: height,
+            width: width,
+            alignment: Alignment.center,
+          ));
 
     var clip;
     if (posSizeModel.clip != null) {
