@@ -68,7 +68,7 @@ class SectionModel {
   String documentID;
   String title;
   String description;
-  ImageModel image;
+  MemberMediumModel image;
   RelativeImagePosition imagePositionRelative;
   SectionImageAlignment imageAlignment;
 
@@ -80,7 +80,7 @@ class SectionModel {
     assert(documentID != null);
   }
 
-  SectionModel copyWith({String documentID, String title, String description, ImageModel image, RelativeImagePosition imagePositionRelative, SectionImageAlignment imageAlignment, double imageWidth, List<LinkModel> links, }) {
+  SectionModel copyWith({String documentID, String title, String description, MemberMediumModel image, RelativeImagePosition imagePositionRelative, SectionImageAlignment imageAlignment, double imageWidth, List<LinkModel> links, }) {
     return SectionModel(documentID: documentID ?? this.documentID, title: title ?? this.title, description: description ?? this.description, image: image ?? this.image, imagePositionRelative: imagePositionRelative ?? this.imagePositionRelative, imageAlignment: imageAlignment ?? this.imageAlignment, imageWidth: imageWidth ?? this.imageWidth, links: links ?? this.links, );
   }
 
@@ -142,10 +142,10 @@ class SectionModel {
   static Future<SectionModel> fromEntityPlus(String documentID, SectionEntity entity, { String appId}) async {
     if (entity == null) return null;
 
-    ImageModel imageHolder;
+    MemberMediumModel imageHolder;
     if (entity.imageId != null) {
       try {
-        await imageRepository(appId: appId).get(entity.imageId).then((val) {
+        await memberMediumRepository(appId: appId).get(entity.imageId).then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}

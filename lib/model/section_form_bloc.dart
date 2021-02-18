@@ -89,7 +89,7 @@ class SectionFormBloc extends Bloc<SectionFormEvent, SectionFormState> {
       }
       if (event is ChangedSectionImage) {
         if (event.value != null)
-          newValue = currentState.value.copyWith(image: await imageRepository(appId: appId).get(event.value));
+          newValue = currentState.value.copyWith(image: await memberMediumRepository(appId: appId).get(event.value));
         else
           newValue = new SectionModel(
                                  documentID: currentState.value.documentID,

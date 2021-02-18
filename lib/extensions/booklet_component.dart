@@ -1,6 +1,7 @@
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
+import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_component.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
@@ -56,7 +57,7 @@ class BookletComponent extends AbstractBookletComponent {
     return Align(child: widget, alignment: Alignment.topCenter);
   }
 
-  Widget _addImage(BuildContext context, List<Widget> widgets, ImageModel image,
+  Widget _addImage(BuildContext context, List<Widget> widgets, MemberMediumModel image,
       RelativeImagePosition relativeImagePosition, SectionImageAlignment sectionImageAlignment, double imageSize) {
     var state = AccessBloc.getState(context);
     if (image == null) {
@@ -70,17 +71,16 @@ class BookletComponent extends AbstractBookletComponent {
     if (imageSize != null) {
       size = fullScreenWidth(context) * imageSize;
     }
-    var widgetImage =
-        AbstractPlatform.platform.getImage(state, image: image, width: size);
+    var widgetImage = Image.network(image.url, scale:1);
 
     if (relativeImagePosition == RelativeImagePosition.Aside) {
       if (sectionImageAlignment == SectionImageAlignment.Left) {
         return Table(border: null, children: [
           TableRow(children: [
-            Column(children: [_makeBox(widgets)]),
             Column(children: [
               widgetImage,
             ]),
+            Column(children: [_makeBox(widgets)]),
           ])
         ]);
       } else if (sectionImageAlignment == SectionImageAlignment.Center) {
