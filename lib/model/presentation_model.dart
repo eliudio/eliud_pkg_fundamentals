@@ -69,7 +69,7 @@ class PresentationModel {
   String appId;
   String title;
   List<BodyComponentModel> bodyComponents;
-  ImageModel image;
+  MemberMediumModel image;
   PresentationRelativeImagePosition imagePositionRelative;
   PresentationImageAlignment imageAlignment;
 
@@ -81,7 +81,7 @@ class PresentationModel {
     assert(documentID != null);
   }
 
-  PresentationModel copyWith({String documentID, String appId, String title, List<BodyComponentModel> bodyComponents, ImageModel image, PresentationRelativeImagePosition imagePositionRelative, PresentationImageAlignment imageAlignment, double imageWidth, ConditionsSimpleModel conditions, }) {
+  PresentationModel copyWith({String documentID, String appId, String title, List<BodyComponentModel> bodyComponents, MemberMediumModel image, PresentationRelativeImagePosition imagePositionRelative, PresentationImageAlignment imageAlignment, double imageWidth, ConditionsSimpleModel conditions, }) {
     return PresentationModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, title: title ?? this.title, bodyComponents: bodyComponents ?? this.bodyComponents, image: image ?? this.image, imagePositionRelative: imagePositionRelative ?? this.imagePositionRelative, imageAlignment: imageAlignment ?? this.imageAlignment, imageWidth: imageWidth ?? this.imageWidth, conditions: conditions ?? this.conditions, );
   }
 
@@ -147,10 +147,10 @@ class PresentationModel {
   static Future<PresentationModel> fromEntityPlus(String documentID, PresentationEntity entity, { String appId}) async {
     if (entity == null) return null;
 
-    ImageModel imageHolder;
+    MemberMediumModel imageHolder;
     if (entity.imageId != null) {
       try {
-        await imageRepository(appId: appId).get(entity.imageId).then((val) {
+        await memberMediumRepository(appId: appId).get(entity.imageId).then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}

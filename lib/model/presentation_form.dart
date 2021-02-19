@@ -306,7 +306,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
 
         children.add(
 
-                DropdownButtonComponentFactory().createNew(id: "images", value: _image, trigger: _onImageSelected, optional: true),
+                DropdownButtonComponentFactory().createNew(id: "memberMediums", value: _image, trigger: _onImageSelected, optional: true),
           );
 
 
