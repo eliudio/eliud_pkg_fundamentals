@@ -27,3 +27,4 @@ export '../model/section_cache.dart';
 export '../model/simple_image_cache.dart';
 export '../model/tutorial_cache.dart';
 export '../model/tutorial_entry_cache.dart';
+export '../model/photo_and_text_cache.dart';

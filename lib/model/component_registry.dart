@@ -26,6 +26,7 @@ import '../extensions/play_store_component.dart';
 import '../extensions/presentation_component.dart';
 import '../extensions/simple_image_component.dart';
 import '../extensions/tutorial_component.dart';
+import '../extensions/photo_and_text_component.dart';
 import 'package:eliud_pkg_fundamentals/model/internal_component.dart';
 
 
@@ -34,7 +35,7 @@ import 'package:eliud_pkg_fundamentals/model/internal_component.dart';
 class ComponentRegistry {
 
   void init() {
-    Registry.registry().addInternalComponents('eliud_pkg_fundamentals', ["booklets", "dividers", "documents", "faders", "grids", "playStores", "presentations", "simpleImages", "tutorials", ]);
+    Registry.registry().addInternalComponents('eliud_pkg_fundamentals', ["booklets", "dividers", "documents", "faders", "grids", "playStores", "presentations", "simpleImages", "tutorials", "photoAndTexts", ]);
 
     Registry.registry().register(componentName: "eliud_pkg_fundamentals_internalWidgets", componentConstructor: ListComponentFactory());
     Registry.registry().addDropDownSupporter("booklets", DropdownButtonComponentFactory());
@@ -55,6 +56,8 @@ class ComponentRegistry {
     Registry.registry().register(componentName: "simpleImages", componentConstructor: SimpleImageComponentConstructorDefault());
     Registry.registry().addDropDownSupporter("tutorials", DropdownButtonComponentFactory());
     Registry.registry().register(componentName: "tutorials", componentConstructor: TutorialComponentConstructorDefault());
+    Registry.registry().addDropDownSupporter("photoAndTexts", DropdownButtonComponentFactory());
+    Registry.registry().register(componentName: "photoAndTexts", componentConstructor: PhotoAndTextComponentConstructorDefault());
 
   }
 }

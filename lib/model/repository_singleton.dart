@@ -53,6 +53,9 @@ import '../model/tutorial_repository.dart';
 import '../model/tutorial_cache.dart';
 import '../model/tutorial_entry_repository.dart';
 import '../model/tutorial_entry_cache.dart';
+import '../model/photo_and_text_firestore.dart';
+import '../model/photo_and_text_repository.dart';
+import '../model/photo_and_text_cache.dart';
 
 import '../model/document_model.dart';
 import '../model/document_item_model.dart';
@@ -63,6 +66,7 @@ import '../model/presentation_model.dart';
 import '../model/section_model.dart';
 import '../model/simple_image_model.dart';
 import '../model/tutorial_entry_model.dart';
+import '../model/photo_and_text_model.dart';
 
 class RepositorySingleton extends AbstractRepositorySingleton {
     var _bookletRepository = HashMap<String, BookletRepository>();
@@ -74,6 +78,7 @@ class RepositorySingleton extends AbstractRepositorySingleton {
     var _presentationRepository = HashMap<String, PresentationRepository>();
     var _simpleImageRepository = HashMap<String, SimpleImageRepository>();
     var _tutorialRepository = HashMap<String, TutorialRepository>();
+    var _photoAndTextRepository = HashMap<String, PhotoAndTextRepository>();
 
     BookletRepository bookletRepository(String appId) {
       if (_bookletRepository[appId] == null) _bookletRepository[appId] = BookletCache(BookletFirestore(appRepository().getSubCollection(appId, 'booklet'), appId));
@@ -110,6 +115,10 @@ class RepositorySingleton extends AbstractRepositorySingleton {
     TutorialRepository tutorialRepository(String appId) {
       if (_tutorialRepository[appId] == null) _tutorialRepository[appId] = TutorialCache(TutorialFirestore(appRepository().getSubCollection(appId, 'tutorial'), appId));
       return _tutorialRepository[appId];
+    }
+    PhotoAndTextRepository photoAndTextRepository(String appId) {
+      if (_photoAndTextRepository[appId] == null) _photoAndTextRepository[appId] = PhotoAndTextCache(PhotoAndTextFirestore(appRepository().getSubCollection(appId, 'photoandtext'), appId));
+      return _photoAndTextRepository[appId];
     }
 
 }

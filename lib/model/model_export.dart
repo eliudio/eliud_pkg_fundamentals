@@ -27,3 +27,4 @@ export '../model/section_model.dart';
 export '../model/simple_image_model.dart';
 export '../model/tutorial_model.dart';
 export '../model/tutorial_entry_model.dart';
+export '../model/photo_and_text_model.dart';
