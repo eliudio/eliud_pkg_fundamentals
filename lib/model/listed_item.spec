@@ -39,7 +39,7 @@
     },
     {
       "fieldName": "image",
-      "fieldType": "Image",
+      "fieldType": "MemberMedium",
       "association": true,
       "optional": false,
       "group": "image"

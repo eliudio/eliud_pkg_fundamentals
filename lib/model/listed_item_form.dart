@@ -231,7 +231,7 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
 
         children.add(
 
-                DropdownButtonComponentFactory().createNew(id: "images", value: _image, trigger: _onImageSelected, optional: false),
+                DropdownButtonComponentFactory().createNew(id: "memberMediums", value: _image, trigger: _onImageSelected, optional: false),
           );
 
 

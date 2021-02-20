@@ -39,14 +39,14 @@ class ListedItemModel {
   String documentID;
   String description;
   ActionModel action;
-  ImageModel image;
+  MemberMediumModel image;
   PosSizeModel posSize;
 
   ListedItemModel({this.documentID, this.description, this.action, this.image, this.posSize, })  {
     assert(documentID != null);
   }
 
-  ListedItemModel copyWith({String documentID, String description, ActionModel action, ImageModel image, PosSizeModel posSize, }) {
+  ListedItemModel copyWith({String documentID, String description, ActionModel action, MemberMediumModel image, PosSizeModel posSize, }) {
     return ListedItemModel(documentID: documentID ?? this.documentID, description: description ?? this.description, action: action ?? this.action, image: image ?? this.image, posSize: posSize ?? this.posSize, );
   }
 
@@ -91,10 +91,10 @@ class ListedItemModel {
   static Future<ListedItemModel> fromEntityPlus(String documentID, ListedItemEntity entity, { String appId}) async {
     if (entity == null) return null;
 
-    ImageModel imageHolder;
+    MemberMediumModel imageHolder;
     if (entity.imageId != null) {
       try {
-        await imageRepository(appId: appId).get(entity.imageId).then((val) {
+        await memberMediumRepository(appId: appId).get(entity.imageId).then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}
