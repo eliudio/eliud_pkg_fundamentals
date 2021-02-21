@@ -154,9 +154,6 @@ class DocumentTextFieldFullScreenState
   Widget _document() {
     Widget w = DocumentRendererTool().render(
         context, widget.documentRenderer, value, widget.images, widget.bdm);
-    if ((widget.documentRenderer ==
-            DocumentRenderer.webview_flutter_no_list_not_web) ||
-        (widget.documentRenderer == DocumentRenderer.dynamic_widget)) return w;
     return ListView(children: <Widget>[w]);
   }
 

@@ -10,7 +10,10 @@ import 'package:eliud_pkg_fundamentals/model/document_item_model.dart';
 import 'package:eliud_pkg_fundamentals/model/document_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
+//import 'package:flutter_html/flutter_html.dart';
+//import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:flutter/material.dart';
+//import 'package:webview_flutter/webview_flutter.dart' as wv;
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'package:eliud_pkg_fundamentals/tools/document_processor_extended.dart';
@@ -56,12 +59,9 @@ class DocumentRendererTool {
     ));
   }
 
-*/
   Widget _flutterDocument(BuildContext context, String processedDocument) {
     debugPrint('DocumentRendererTool::_flutterDocument()');
     try {
-      // todo review HTML
-/*
       return Html(
         data: processedDocument,
         onLinkTap: (url) {
@@ -71,28 +71,26 @@ class DocumentRendererTool {
           // Display the image in large form.
         },
       );
-*/
-      return null;
     } catch (_) {
       return null;
     }
   }
+*/
 
+/*
   Widget _flutterWidgetFromDocumentNotWeb(
       BuildContext context, String processedDocument) {
     debugPrint('DocumentRendererTool::_flutterWidgetFromDocumentNotWeb()');
-    // TODO: HTML!!
     try {
-/*
-      return Html(
-        data: processedDocument,
+      return HtmlWidget(
+        processedDocument,
+        webView: true,
       );
-*/
-      return null;
     } catch (_) {
       return null;
     }
   }
+*/
 
   Widget _flutterMarkdownDocument(
       BuildContext context, String processedDocument) {
@@ -133,20 +131,7 @@ class DocumentRendererTool {
   Widget _rendered(BuildContext context, DocumentRenderer documentRenderer,
       String renderThis) {
     Widget theWidget;
-
-    // TODO: remove and REVIEW use of webview_flutter_no_list_not_web
     switch (documentRenderer) {
-/*
-      case DocumentRenderer.webview_flutter_no_list_not_web:
-        theWidget = _webViewRendererNotWeb(context, renderThis);
-        break;
-*/
-      case DocumentRenderer.flutter_html:
-        theWidget = _flutterDocument(context, renderThis);
-        break;
-      case DocumentRenderer.flutter_widget_from_html_not_web:
-        theWidget = _flutterWidgetFromDocumentNotWeb(context, renderThis);
-        break;
       case DocumentRenderer.flutter_markdown:
         theWidget = _flutterMarkdownDocument(context, renderThis);
         break;
@@ -158,7 +143,7 @@ class DocumentRendererTool {
     }
     if (theWidget == null) {
       debugPrint('DocumentRendererTool widget is null, fallback scenario');
-      theWidget = _flutterDocument(context, renderThis);
+      theWidget = _flutterMarkdownDocument(context, renderThis);
     }
     return theWidget;
   }

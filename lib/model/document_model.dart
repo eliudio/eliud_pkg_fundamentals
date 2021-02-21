@@ -35,17 +35,14 @@ import 'package:eliud_pkg_fundamentals/model/document_entity.dart';
 import 'package:eliud_core/tools/random.dart';
 
 enum DocumentRenderer {
-  flutter_html, flutter_widget_from_html_not_web, webview_flutter_no_list_not_web, flutter_markdown, dynamic_widget, Unknown
+  flutter_markdown, dynamic_widget, Unknown
 }
 
 
 DocumentRenderer toDocumentRenderer(int index) {
   switch (index) {
-    case 0: return DocumentRenderer.flutter_html;
-    case 1: return DocumentRenderer.flutter_widget_from_html_not_web;
-    case 2: return DocumentRenderer.webview_flutter_no_list_not_web;
-    case 3: return DocumentRenderer.flutter_markdown;
-    case 4: return DocumentRenderer.dynamic_widget;
+    case 0: return DocumentRenderer.flutter_markdown;
+    case 1: return DocumentRenderer.dynamic_widget;
   }
   return DocumentRenderer.Unknown;
 }

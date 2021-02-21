@@ -49,7 +49,7 @@
       "fieldType": "enum",
       "enumName": "DocumentRenderer",
       "group": "renderer",
-      "enumValues" : [ "flutter_html", "flutter_widget_from_html_not_web", "webview_flutter_no_list_not_web", "flutter_markdown", "dynamic_widget" ]
+      "enumValues" : [ "flutter_markdown", "dynamic_widget" ]
     },
     {
       "fieldName": "content",

@@ -269,45 +269,6 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
                     value: 0,
                     activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
                     groupValue: _documentRendererSelectedRadioTile,
-                    title: Text("flutter_html", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    subtitle: Text("flutter_html", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner() ? null : (val) {
-                      setSelectionDocumentRenderer(val);
-                    },
-                ),
-          );
-        children.add(
-
-                RadioListTile(
-                    value: 1,
-                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
-                    groupValue: _documentRendererSelectedRadioTile,
-                    title: Text("flutter_widget_from_html_not_web", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    subtitle: Text("flutter_widget_from_html_not_web", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner() ? null : (val) {
-                      setSelectionDocumentRenderer(val);
-                    },
-                ),
-          );
-        children.add(
-
-                RadioListTile(
-                    value: 2,
-                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
-                    groupValue: _documentRendererSelectedRadioTile,
-                    title: Text("webview_flutter_no_list_not_web", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    subtitle: Text("webview_flutter_no_list_not_web", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner() ? null : (val) {
-                      setSelectionDocumentRenderer(val);
-                    },
-                ),
-          );
-        children.add(
-
-                RadioListTile(
-                    value: 3,
-                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
-                    groupValue: _documentRendererSelectedRadioTile,
                     title: Text("flutter_markdown", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     subtitle: Text("flutter_markdown", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     onChanged: !accessState.memberIsOwner() ? null : (val) {
@@ -318,7 +279,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
         children.add(
 
                 RadioListTile(
-                    value: 4,
+                    value: 1,
                     activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
                     groupValue: _documentRendererSelectedRadioTile,
                     title: Text("dynamic_widget", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
