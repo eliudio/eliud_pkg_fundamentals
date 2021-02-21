@@ -8,8 +8,6 @@ import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/section_model.dart';
 import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
-import 'package:eliud_core/platform/platform.dart';
-import 'package:eliud_core/model/image_model.dart';
 import 'package:eliud_core/tools/component_constructor.dart';
 import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/screen_size.dart';

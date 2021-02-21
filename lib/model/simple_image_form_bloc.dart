@@ -93,7 +93,7 @@ class SimpleImageFormBloc extends Bloc<SimpleImageFormEvent, SimpleImageFormStat
       }
       if (event is ChangedSimpleImageImage) {
         if (event.value != null)
-          newValue = currentState.value.copyWith(image: await imageRepository(appId: appId).get(event.value));
+          newValue = currentState.value.copyWith(image: await memberMediumRepository(appId: appId).get(event.value));
         else
           newValue = new SimpleImageModel(
                                  documentID: currentState.value.documentID,

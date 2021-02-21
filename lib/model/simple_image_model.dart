@@ -39,14 +39,14 @@ class SimpleImageModel {
   String documentID;
   String appId;
   String title;
-  ImageModel image;
+  MemberMediumModel image;
   ConditionsSimpleModel conditions;
 
   SimpleImageModel({this.documentID, this.appId, this.title, this.image, this.conditions, })  {
     assert(documentID != null);
   }
 
-  SimpleImageModel copyWith({String documentID, String appId, String title, ImageModel image, ConditionsSimpleModel conditions, }) {
+  SimpleImageModel copyWith({String documentID, String appId, String title, MemberMediumModel image, ConditionsSimpleModel conditions, }) {
     return SimpleImageModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, title: title ?? this.title, image: image ?? this.image, conditions: conditions ?? this.conditions, );
   }
 
@@ -92,10 +92,10 @@ class SimpleImageModel {
   static Future<SimpleImageModel> fromEntityPlus(String documentID, SimpleImageEntity entity, { String appId}) async {
     if (entity == null) return null;
 
-    ImageModel imageHolder;
+    MemberMediumModel imageHolder;
     if (entity.imageId != null) {
       try {
-        await imageRepository(appId: appId).get(entity.imageId).then((val) {
+        await memberMediumRepository(appId: appId).get(entity.imageId).then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}

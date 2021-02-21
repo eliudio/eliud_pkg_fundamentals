@@ -1,6 +1,5 @@
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 import 'package:eliud_core/core/tools/document_processor.dart';
-import 'package:eliud_core/model/image_model.dart';
 import 'package:eliud_pkg_fundamentals/model/document_item_model.dart';
 import 'package:flutter/widgets.dart';
 

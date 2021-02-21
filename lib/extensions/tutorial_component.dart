@@ -1,18 +1,18 @@
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/tools/document_processor.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
+import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_component.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_model.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_repository.dart';
-import 'package:eliud_core/platform/platform.dart';
-import 'package:eliud_core/model/image_model.dart';
 import 'package:eliud_core/tools/component_constructor.dart';
 import 'package:eliud_pkg_fundamentals/tools/document_processor_extended.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 
 class TutorialComponentConstructorDefault implements ComponentConstructor {
@@ -48,7 +48,10 @@ class TutorialComponent extends AbstractTutorialComponent {
       widgets.add(_aBitSpace());
       if (element.image != null) {
         widgets.add(GestureDetector(
-          child: AbstractPlatform.platform.getImage(accessState, image: element.image),
+          child: FadeInImage.memoryNetwork(
+            placeholder: kTransparentImage,
+            image: element.image.url,
+          ),
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (_) {
               return FulLScreen(element.image);
@@ -108,7 +111,7 @@ class TutorialComponent extends AbstractTutorialComponent {
 }
 
 class FulLScreen extends StatelessWidget {
-  final ImageModel image;
+  final MemberMediumModel image;
 
   FulLScreen(this.image);
 
@@ -118,7 +121,7 @@ class FulLScreen extends StatelessWidget {
       body: GestureDetector(
         child:  PhotoView(
           initialScale: PhotoViewComputedScale.covered,
-          imageProvider: NetworkImage(image.imageURLOriginal)),
+          imageProvider: NetworkImage(image.url)),
         onTap: () {
            Navigator.pop(context);
           },
