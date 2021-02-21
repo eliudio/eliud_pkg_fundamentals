@@ -38,14 +38,14 @@ import 'package:eliud_core/tools/random.dart';
 class TutorialEntryModel {
   String documentID;
   String description;
-  ImageModel image;
+  MemberMediumModel image;
   String code;
 
   TutorialEntryModel({this.documentID, this.description, this.image, this.code, })  {
     assert(documentID != null);
   }
 
-  TutorialEntryModel copyWith({String documentID, String description, ImageModel image, String code, }) {
+  TutorialEntryModel copyWith({String documentID, String description, MemberMediumModel image, String code, }) {
     return TutorialEntryModel(documentID: documentID ?? this.documentID, description: description ?? this.description, image: image ?? this.image, code: code ?? this.code, );
   }
 
@@ -87,10 +87,10 @@ class TutorialEntryModel {
   static Future<TutorialEntryModel> fromEntityPlus(String documentID, TutorialEntryEntity entity, { String appId}) async {
     if (entity == null) return null;
 
-    ImageModel imageHolder;
+    MemberMediumModel imageHolder;
     if (entity.imageId != null) {
       try {
-        await imageRepository(appId: appId).get(entity.imageId).then((val) {
+        await memberMediumRepository(appId: appId).get(entity.imageId).then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}

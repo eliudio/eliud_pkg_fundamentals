@@ -40,13 +40,13 @@ class DocumentItemModel {
 
   // This is the reference which you can use inside your document to use to this image, e.g. <img src = \"\${REFERENCE}\"
   String reference;
-  ImageModel image;
+  MemberMediumModel image;
 
   DocumentItemModel({this.documentID, this.reference, this.image, })  {
     assert(documentID != null);
   }
 
-  DocumentItemModel copyWith({String documentID, String reference, ImageModel image, }) {
+  DocumentItemModel copyWith({String documentID, String reference, MemberMediumModel image, }) {
     return DocumentItemModel(documentID: documentID ?? this.documentID, reference: reference ?? this.reference, image: image ?? this.image, );
   }
 
@@ -85,10 +85,10 @@ class DocumentItemModel {
   static Future<DocumentItemModel> fromEntityPlus(String documentID, DocumentItemEntity entity, { String appId}) async {
     if (entity == null) return null;
 
-    ImageModel imageHolder;
+    MemberMediumModel imageHolder;
     if (entity.imageId != null) {
       try {
-        await imageRepository(appId: appId).get(entity.imageId).then((val) {
+        await memberMediumRepository(appId: appId).get(entity.imageId).then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}

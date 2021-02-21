@@ -172,6 +172,30 @@ class AdminApp extends AdminAppInstallerBase {
   }
 
 
+  PageModel _photoAndTextsPages() {
+    List<BodyComponentModel> components = List();
+    components.add(BodyComponentModel(
+      documentID: "internalWidget-photoAndTexts", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "photoAndTexts"));
+    PageModel page = PageModel(
+        conditions: ConditionsModel(
+          privilegeLevelRequired: PrivilegeLevelRequired.OwnerPrivilegeRequired,
+          packageCondition: null,
+          conditionOverride: null,
+        ),
+        appId: appId,
+        documentID: "eliud_pkg_fundamentals_photoandtexts_page",
+        title: "PhotoAndTexts",
+        drawer: _drawer,
+        endDrawer: _endDrawer,
+        appBar: _appBar,
+        homeMenu: _homeMenu,
+        bodyComponents: components,
+        layout: PageLayout.OnlyTheFirstComponent
+    );
+    return page;
+  }
+
+
   PageModel _playStoresPages() {
     List<BodyComponentModel> components = List();
     components.add(BodyComponentModel(
@@ -268,30 +292,6 @@ class AdminApp extends AdminAppInstallerBase {
   }
 
 
-  PageModel _photoAndTextsPages() {
-    List<BodyComponentModel> components = List();
-    components.add(BodyComponentModel(
-      documentID: "internalWidget-photoAndTexts", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "photoAndTexts"));
-    PageModel page = PageModel(
-        conditions: ConditionsModel(
-          privilegeLevelRequired: PrivilegeLevelRequired.OwnerPrivilegeRequired,
-          packageCondition: null,
-          conditionOverride: null,
-        ),
-        appId: appId,
-        documentID: "eliud_pkg_fundamentals_photoandtexts_page",
-        title: "PhotoAndTexts",
-        drawer: _drawer,
-        endDrawer: _endDrawer,
-        appBar: _appBar,
-        homeMenu: _homeMenu,
-        bodyComponents: components,
-        layout: PageLayout.OnlyTheFirstComponent
-    );
-    return page;
-  }
-
-
   Future<void> _setupAdminPages() {
 
     return pageRepository(appId: appId).add(_bookletsPages())
@@ -304,6 +304,8 @@ class AdminApp extends AdminAppInstallerBase {
 
         .then((_) => pageRepository(appId: appId).add(_gridsPages()))
 
+        .then((_) => pageRepository(appId: appId).add(_photoAndTextsPages()))
+
         .then((_) => pageRepository(appId: appId).add(_playStoresPages()))
 
         .then((_) => pageRepository(appId: appId).add(_presentationsPages()))
@@ -311,8 +313,6 @@ class AdminApp extends AdminAppInstallerBase {
         .then((_) => pageRepository(appId: appId).add(_simpleImagesPages()))
 
         .then((_) => pageRepository(appId: appId).add(_tutorialsPages()))
-
-        .then((_) => pageRepository(appId: appId).add(_photoAndTextsPages()))
 
     ;
   }
@@ -382,6 +382,16 @@ class AdminMenu extends AdminAppMenuInstallerBase {
 
     menuItems.add(
       MenuItemModel(
+        documentID: "PhotoAndTexts",
+        text: "PhotoAndTexts",
+        description: "PhotoAndTexts",
+        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
+        action: GotoPage(appId, pageID: "eliud_pkg_fundamentals_photoandtexts_page"))
+    );
+
+
+    menuItems.add(
+      MenuItemModel(
         documentID: "PlayStores",
         text: "PlayStores",
         description: "PlayStores",
@@ -417,16 +427,6 @@ class AdminMenu extends AdminAppMenuInstallerBase {
         description: "Tutorials",
         icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
         action: GotoPage(appId, pageID: "eliud_pkg_fundamentals_tutorials_page"))
-    );
-
-
-    menuItems.add(
-      MenuItemModel(
-        documentID: "PhotoAndTexts",
-        text: "PhotoAndTexts",
-        description: "PhotoAndTexts",
-        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
-        action: GotoPage(appId, pageID: "eliud_pkg_fundamentals_photoandtexts_page"))
     );
 
 

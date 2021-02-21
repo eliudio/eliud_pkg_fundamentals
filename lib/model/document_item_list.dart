@@ -247,7 +247,7 @@ class DocumentItemListItem extends StatelessWidget {
           tag: '${value.documentID}__DocumentItemheroTag',
           child: Container(
             width: fullScreenWidth(context),
-            child: Center( child: ImageHelper.getImageFromImageModel(imageModel: value.image, width: fullScreenWidth(context)))
+            child: Center( child: ImageHelper.getImageFromMediumModel(memberMediumModel: value.image, width: fullScreenWidth(context)))
           ),
         ),
         subtitle: (value.reference != null) && (value.reference.isNotEmpty)

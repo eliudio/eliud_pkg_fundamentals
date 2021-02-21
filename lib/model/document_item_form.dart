@@ -188,7 +188,7 @@ class _MyDocumentItemFormState extends State<MyDocumentItemForm> {
 
         children.add(
 
-                DropdownButtonComponentFactory().createNew(id: "images", value: _image, trigger: _onImageSelected, optional: false),
+                DropdownButtonComponentFactory().createNew(id: "memberMediums", value: _image, trigger: _onImageSelected, optional: false),
           );
 
 

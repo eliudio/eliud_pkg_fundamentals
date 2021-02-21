@@ -17,8 +17,8 @@ class ExtendedDocumentParameterProcessor extends DocumentParameterProcessor {
       if (images == null) return null;
       var index = images.indexWhere((element) => element.reference == k.value);
       var documentItemModel = images[index];
-      ImageModel image = documentItemModel.image;
-      if (index >= 0) return image.imageURLOriginal;
+      var image = documentItemModel.image;
+      if (index >= 0) return image.url;
     } catch (_) {
       debugPrint('DocumentParameterProcessor::image() error');
     }
