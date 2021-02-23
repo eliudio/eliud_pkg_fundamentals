@@ -57,6 +57,7 @@ class PhotoAndTextFormBloc extends Bloc<PhotoAndTextFormEvent, PhotoAndTextFormS
                                  name: "",
                                  title: "",
                                  contents: "",
+                                 percentageImageVisible: 0.0,
 
         ));
         yield loaded;
@@ -117,6 +118,7 @@ class PhotoAndTextFormBloc extends Bloc<PhotoAndTextFormEvent, PhotoAndTextFormS
                                  contents: currentState.value.contents,
                                  image: null,
                                  imagePosition: currentState.value.imagePosition,
+                                 percentageImageVisible: currentState.value.percentageImageVisible,
                                  conditions: currentState.value.conditions,
           );
         yield SubmittablePhotoAndTextForm(value: newValue);
@@ -127,6 +129,17 @@ class PhotoAndTextFormBloc extends Bloc<PhotoAndTextFormEvent, PhotoAndTextFormS
         newValue = currentState.value.copyWith(imagePosition: event.value);
         yield SubmittablePhotoAndTextForm(value: newValue);
 
+        return;
+      }
+      if (event is ChangedPhotoAndTextPercentageImageVisible) {
+        if (isDouble(event.value)) {
+          newValue = currentState.value.copyWith(percentageImageVisible: double.parse(event.value));
+          yield SubmittablePhotoAndTextForm(value: newValue);
+
+        } else {
+          newValue = currentState.value.copyWith(percentageImageVisible: 0.0);
+          yield PercentageImageVisiblePhotoAndTextFormError(message: "Value should be a number or decimal number", value: newValue);
+        }
         return;
       }
       if (event is ChangedPhotoAndTextConditions) {

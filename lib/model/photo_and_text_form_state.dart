@@ -175,6 +175,22 @@ class ImagePositionPhotoAndTextFormError extends PhotoAndTextFormError {
 }
 
 
+class PercentageImageVisiblePhotoAndTextFormError extends PhotoAndTextFormError { 
+  const PercentageImageVisiblePhotoAndTextFormError({ String message, PhotoAndTextModel value }): super(message: message, value: value);
+
+  @override
+  List<Object> get props => [ message, value ];
+
+  @override
+  String toString() {
+    return '''PercentageImageVisiblePhotoAndTextFormError {
+      value: $value,
+      message: $message,
+    }''';
+  }
+}
+
+
 class ConditionsPhotoAndTextFormError extends PhotoAndTextFormError { 
   const ConditionsPhotoAndTextFormError({ String message, PhotoAndTextModel value }): super(message: message, value: value);
 

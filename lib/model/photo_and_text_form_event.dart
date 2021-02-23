@@ -143,6 +143,18 @@ class ChangedPhotoAndTextImagePosition extends PhotoAndTextFormEvent {
   String toString() => 'ChangedPhotoAndTextImagePosition{ value: $value }';
 }
 
+class ChangedPhotoAndTextPercentageImageVisible extends PhotoAndTextFormEvent {
+  final String value;
+
+  ChangedPhotoAndTextPercentageImageVisible({this.value});
+
+  @override
+  List<Object> get props => [ value ];
+
+  @override
+  String toString() => 'ChangedPhotoAndTextPercentageImageVisible{ value: $value }';
+}
+
 class ChangedPhotoAndTextConditions extends PhotoAndTextFormEvent {
   final ConditionsSimpleModel value;
 

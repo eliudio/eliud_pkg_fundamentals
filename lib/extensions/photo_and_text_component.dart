@@ -21,15 +21,11 @@ class PhotoAndTextComponent extends AbstractPhotoAndTextComponent {
 
   @override
   Widget yourWidget(BuildContext context, PhotoAndTextModel value) {
-    // part of the new component
-
-    var isLeft = value.imagePosition == PhotoAndTextImagePosition.Left ? true : false;
     var title = value.title;
     var contents = value.contents;
     var textAlign = TextAlign.center;
     var image = value.image.url;
-    var percentageImageVisible = .5;
-    // end part of the new component
+    var percentageImageVisible = value.percentageImageVisible == null ? .5 : value.percentageImageVisible;
 
     // calculate the size of the image horizontally
     var width = value.image.mediumHeight / (value.image.mediumWidth * percentageImageVisible);
@@ -51,24 +47,42 @@ class PhotoAndTextComponent extends AbstractPhotoAndTextComponent {
         ]);
 
     if (ratio < 1) {
-      return ListView(
-        children: [
-          Image.network(image),
-          text,
-        ],
-      );
+      var isDrop = (value.imagePosition == PhotoAndTextImagePosition.LeftIfSpaceAvailableOtherwiseDrop) ||
+          (value.imagePosition == PhotoAndTextImagePosition.RightIfSpaceAvailableOtherwiseDrop);
+      if (isDrop) {
+        return Image.network(image);
+      } else {
+        var children;
+        var isTop = (value.imagePosition ==
+            PhotoAndTextImagePosition.LeftIfSpaceAvailableOtherwiseTop) ||
+            (value.imagePosition ==
+                PhotoAndTextImagePosition.RightIfSpaceAvailableOtherwiseTop);
+        if (isTop) {
+          children = [
+            Image.network(image),
+            text,
+          ];
+        } else {
+          children = [
+            text,
+            Image.network(image),
+          ];
+        }
+        return ListView(
+          shrinkWrap: true,
+          physics: ScrollPhysics(),
+          children: children,
+        );
+      }
     } else {
-      var fraction1 = Flexible(
-          child: FractionallySizedBox(
-            widthFactor: 1,
-          ));
-      var fraction2 = Flexible(
-          child: FractionallySizedBox(
-              alignment: Alignment.bottomRight,
-              heightFactor: 1,
-              widthFactor: 1,
-              child: text));
-
+      var fraction1 = Expanded(
+        flex: (10 * percentageImageVisible).toInt(),
+        child: Container(),
+      );
+      var fraction2 = Expanded(
+        flex: (10 - (10 * percentageImageVisible)).toInt(),
+        child: text);
+      var isLeft = value.imagePosition == PhotoAndTextImagePosition.LeftIfSpaceAvailableOtherwiseTop || value.imagePosition == PhotoAndTextImagePosition.LeftIfSpaceAvailableOtherwiseBottom;
       var row;
       if (isLeft) {
         row = Row(children: [
@@ -82,20 +96,19 @@ class PhotoAndTextComponent extends AbstractPhotoAndTextComponent {
         ]);
       }
 
-      return Container(
-          height: double.infinity,
-          width: double.infinity,
-          child: Stack(children: [
-            Container(
-                height: double.infinity,
-                width: double.infinity,
-                child: FittedBox(
-                  fit: BoxFit.fitHeight,
-                  alignment: isLeft ? Alignment.topLeft : Alignment.topRight,
-                  child: Image.network(image),
-                )),
+/*
+      return Stack(children: [
+            Image.network(image, alignment: isLeft ? Alignment.topLeft : Alignment.topRight),
             row
-          ]));
+          ]);
+*/
+      return Stack(children: [
+        Align(
+          alignment: Alignment.topRight,
+          child: Image.network(image),
+          ),
+        row
+      ]);
     }
   }
 

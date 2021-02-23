@@ -28,16 +28,17 @@ class PhotoAndTextEntity {
   final String contents;
   final String imageId;
   final int imagePosition;
+  final double percentageImageVisible;
   final ConditionsSimpleEntity conditions;
 
-  PhotoAndTextEntity({this.appId, this.name, this.title, this.contents, this.imageId, this.imagePosition, this.conditions, });
+  PhotoAndTextEntity({this.appId, this.name, this.title, this.contents, this.imageId, this.imagePosition, this.percentageImageVisible, this.conditions, });
 
 
-  List<Object> get props => [appId, name, title, contents, imageId, imagePosition, conditions, ];
+  List<Object> get props => [appId, name, title, contents, imageId, imagePosition, percentageImageVisible, conditions, ];
 
   @override
   String toString() {
-    return 'PhotoAndTextEntity{appId: $appId, name: $name, title: $title, contents: $contents, imageId: $imageId, imagePosition: $imagePosition, conditions: $conditions}';
+    return 'PhotoAndTextEntity{appId: $appId, name: $name, title: $title, contents: $contents, imageId: $imageId, imagePosition: $imagePosition, percentageImageVisible: $percentageImageVisible, conditions: $conditions}';
   }
 
   static PhotoAndTextEntity fromMap(Map map) {
@@ -55,6 +56,7 @@ class PhotoAndTextEntity {
       contents: map['contents'], 
       imageId: map['imageId'], 
       imagePosition: map['imagePosition'], 
+      percentageImageVisible: double.tryParse(map['percentageImageVisible'].toString()), 
       conditions: conditionsFromMap, 
     );
   }
@@ -77,6 +79,8 @@ class PhotoAndTextEntity {
       else theDocument["imageId"] = null;
     if (imagePosition != null) theDocument["imagePosition"] = imagePosition;
       else theDocument["imagePosition"] = null;
+    if (percentageImageVisible != null) theDocument["percentageImageVisible"] = percentageImageVisible;
+      else theDocument["percentageImageVisible"] = null;
     if (conditions != null) theDocument["conditions"] = conditionsMap;
       else theDocument["conditions"] = null;
     return theDocument;

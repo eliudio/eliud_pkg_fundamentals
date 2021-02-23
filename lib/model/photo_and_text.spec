@@ -63,8 +63,13 @@
       "displayName": "Position of the image",
       "fieldType": "enum",
       "enumName": "PhotoAndTextImagePosition",
-      "enumValues" : [ "Left", "Right" ],
+      "enumValues" : [ "LeftIfSpaceAvailableOtherwiseTop", "LeftIfSpaceAvailableOtherwiseDrop", "LeftIfSpaceAvailableOtherwiseBottom", "RightIfSpaceAvailableOtherwiseTop", "RightIfSpaceAvailableOtherwiseDrop", "RightIfSpaceAvailableOtherwiseBottom" ],
       "group": "imagePosition"
+    },
+    {
+      "fieldName": "percentageImageVisible",
+      "displayName": "Percentage Image Visible",
+      "fieldType": "double"
     },
     {
       "fieldName": "conditions",

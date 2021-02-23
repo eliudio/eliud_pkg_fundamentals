@@ -34,14 +34,18 @@ import 'package:eliud_pkg_fundamentals/model/photo_and_text_entity.dart';
 import 'package:eliud_core/tools/random.dart';
 
 enum PhotoAndTextImagePosition {
-  Left, Right, Unknown
+  LeftIfSpaceAvailableOtherwiseTop, LeftIfSpaceAvailableOtherwiseDrop, LeftIfSpaceAvailableOtherwiseBottom, RightIfSpaceAvailableOtherwiseTop, RightIfSpaceAvailableOtherwiseDrop, RightIfSpaceAvailableOtherwiseBottom, Unknown
 }
 
 
 PhotoAndTextImagePosition toPhotoAndTextImagePosition(int index) {
   switch (index) {
-    case 0: return PhotoAndTextImagePosition.Left;
-    case 1: return PhotoAndTextImagePosition.Right;
+    case 0: return PhotoAndTextImagePosition.LeftIfSpaceAvailableOtherwiseTop;
+    case 1: return PhotoAndTextImagePosition.LeftIfSpaceAvailableOtherwiseDrop;
+    case 2: return PhotoAndTextImagePosition.LeftIfSpaceAvailableOtherwiseBottom;
+    case 3: return PhotoAndTextImagePosition.RightIfSpaceAvailableOtherwiseTop;
+    case 4: return PhotoAndTextImagePosition.RightIfSpaceAvailableOtherwiseDrop;
+    case 5: return PhotoAndTextImagePosition.RightIfSpaceAvailableOtherwiseBottom;
   }
   return PhotoAndTextImagePosition.Unknown;
 }
@@ -55,18 +59,19 @@ class PhotoAndTextModel {
   String contents;
   MemberMediumModel image;
   PhotoAndTextImagePosition imagePosition;
+  double percentageImageVisible;
   ConditionsSimpleModel conditions;
 
-  PhotoAndTextModel({this.documentID, this.appId, this.name, this.title, this.contents, this.image, this.imagePosition, this.conditions, })  {
+  PhotoAndTextModel({this.documentID, this.appId, this.name, this.title, this.contents, this.image, this.imagePosition, this.percentageImageVisible, this.conditions, })  {
     assert(documentID != null);
   }
 
-  PhotoAndTextModel copyWith({String documentID, String appId, String name, String title, String contents, MemberMediumModel image, PhotoAndTextImagePosition imagePosition, ConditionsSimpleModel conditions, }) {
-    return PhotoAndTextModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, name: name ?? this.name, title: title ?? this.title, contents: contents ?? this.contents, image: image ?? this.image, imagePosition: imagePosition ?? this.imagePosition, conditions: conditions ?? this.conditions, );
+  PhotoAndTextModel copyWith({String documentID, String appId, String name, String title, String contents, MemberMediumModel image, PhotoAndTextImagePosition imagePosition, double percentageImageVisible, ConditionsSimpleModel conditions, }) {
+    return PhotoAndTextModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, name: name ?? this.name, title: title ?? this.title, contents: contents ?? this.contents, image: image ?? this.image, imagePosition: imagePosition ?? this.imagePosition, percentageImageVisible: percentageImageVisible ?? this.percentageImageVisible, conditions: conditions ?? this.conditions, );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ appId.hashCode ^ name.hashCode ^ title.hashCode ^ contents.hashCode ^ image.hashCode ^ imagePosition.hashCode ^ conditions.hashCode;
+  int get hashCode => documentID.hashCode ^ appId.hashCode ^ name.hashCode ^ title.hashCode ^ contents.hashCode ^ image.hashCode ^ imagePosition.hashCode ^ percentageImageVisible.hashCode ^ conditions.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -80,11 +85,12 @@ class PhotoAndTextModel {
           contents == other.contents &&
           image == other.image &&
           imagePosition == other.imagePosition &&
+          percentageImageVisible == other.percentageImageVisible &&
           conditions == other.conditions;
 
   @override
   String toString() {
-    return 'PhotoAndTextModel{documentID: $documentID, appId: $appId, name: $name, title: $title, contents: $contents, image: $image, imagePosition: $imagePosition, conditions: $conditions}';
+    return 'PhotoAndTextModel{documentID: $documentID, appId: $appId, name: $name, title: $title, contents: $contents, image: $image, imagePosition: $imagePosition, percentageImageVisible: $percentageImageVisible, conditions: $conditions}';
   }
 
   PhotoAndTextEntity toEntity({String appId}) {
@@ -95,6 +101,7 @@ class PhotoAndTextModel {
           contents: (contents != null) ? contents : null, 
           imageId: (image != null) ? image.documentID : null, 
           imagePosition: (imagePosition != null) ? imagePosition.index : null, 
+          percentageImageVisible: (percentageImageVisible != null) ? percentageImageVisible : null, 
           conditions: (conditions != null) ? conditions.toEntity(appId: appId) : null, 
     );
   }
@@ -108,6 +115,7 @@ class PhotoAndTextModel {
           title: entity.title, 
           contents: entity.contents, 
           imagePosition: toPhotoAndTextImagePosition(entity.imagePosition), 
+          percentageImageVisible: entity.percentageImageVisible, 
           conditions: 
             ConditionsSimpleModel.fromEntity(entity.conditions), 
     );
@@ -133,6 +141,7 @@ class PhotoAndTextModel {
           contents: entity.contents, 
           image: imageHolder, 
           imagePosition: toPhotoAndTextImagePosition(entity.imagePosition), 
+          percentageImageVisible: entity.percentageImageVisible, 
           conditions: 
             await ConditionsSimpleModel.fromEntityPlus(entity.conditions, appId: appId), 
     );

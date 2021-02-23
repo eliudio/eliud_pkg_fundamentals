@@ -137,6 +137,7 @@ class _MyPhotoAndTextFormState extends State<MyPhotoAndTextForm> {
   final TextEditingController _contentsController = TextEditingController();
   String _image;
   int _imagePositionSelectedRadioTile;
+  final TextEditingController _percentageImageVisibleController = TextEditingController();
 
 
   _MyPhotoAndTextFormState(this.formAction);
@@ -151,6 +152,7 @@ class _MyPhotoAndTextFormState extends State<MyPhotoAndTextForm> {
     _titleController.addListener(_onTitleChanged);
     _contentsController.addListener(_onContentsChanged);
     _imagePositionSelectedRadioTile = 0;
+    _percentageImageVisibleController.addListener(_onPercentageImageVisibleChanged);
   }
 
   @override
@@ -191,6 +193,10 @@ class _MyPhotoAndTextFormState extends State<MyPhotoAndTextForm> {
           _imagePositionSelectedRadioTile = state.value.imagePosition.index;
         else
           _imagePositionSelectedRadioTile = 0;
+        if (state.value.percentageImageVisible != null)
+          _percentageImageVisibleController.text = state.value.percentageImageVisible.toString();
+        else
+          _percentageImageVisibleController.text = "";
       }
       if (state is PhotoAndTextFormInitialized) {
         List<Widget> children = List();
@@ -241,6 +247,24 @@ class _MyPhotoAndTextFormState extends State<MyPhotoAndTextForm> {
         children.add(
 
                 DropdownButtonComponentFactory().createNew(id: "memberMediums", value: _image, trigger: _onImageSelected, optional: false),
+          );
+
+        children.add(
+
+                TextFormField(
+                style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
+                  readOnly: _readOnly(accessState, state),
+                  controller: _percentageImageVisibleController,
+                  decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
+                    labelText: 'Percentage Image Visible',
+                  ),
+                  keyboardType: TextInputType.number,
+                  autovalidate: true,
+                  validator: (_) {
+                    return state is PercentageImageVisiblePhotoAndTextFormError ? state.message : null;
+                  },
+                ),
           );
 
 
@@ -364,8 +388,8 @@ class _MyPhotoAndTextFormState extends State<MyPhotoAndTextForm> {
                     value: 0,
                     activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
                     groupValue: _imagePositionSelectedRadioTile,
-                    title: Text("Left", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    subtitle: Text("Left", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    title: Text("LeftIfSpaceAvailableOtherwiseTop", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    subtitle: Text("LeftIfSpaceAvailableOtherwiseTop", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     onChanged: !accessState.memberIsOwner() ? null : (val) {
                       setSelectionImagePosition(val);
                     },
@@ -377,8 +401,60 @@ class _MyPhotoAndTextFormState extends State<MyPhotoAndTextForm> {
                     value: 1,
                     activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
                     groupValue: _imagePositionSelectedRadioTile,
-                    title: Text("Right", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    subtitle: Text("Right", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    title: Text("LeftIfSpaceAvailableOtherwiseDrop", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    subtitle: Text("LeftIfSpaceAvailableOtherwiseDrop", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    onChanged: !accessState.memberIsOwner() ? null : (val) {
+                      setSelectionImagePosition(val);
+                    },
+                ),
+          );
+        children.add(
+
+                RadioListTile(
+                    value: 2,
+                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
+                    groupValue: _imagePositionSelectedRadioTile,
+                    title: Text("LeftIfSpaceAvailableOtherwiseBottom", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    subtitle: Text("LeftIfSpaceAvailableOtherwiseBottom", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    onChanged: !accessState.memberIsOwner() ? null : (val) {
+                      setSelectionImagePosition(val);
+                    },
+                ),
+          );
+        children.add(
+
+                RadioListTile(
+                    value: 3,
+                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
+                    groupValue: _imagePositionSelectedRadioTile,
+                    title: Text("RightIfSpaceAvailableOtherwiseTop", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    subtitle: Text("RightIfSpaceAvailableOtherwiseTop", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    onChanged: !accessState.memberIsOwner() ? null : (val) {
+                      setSelectionImagePosition(val);
+                    },
+                ),
+          );
+        children.add(
+
+                RadioListTile(
+                    value: 4,
+                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
+                    groupValue: _imagePositionSelectedRadioTile,
+                    title: Text("RightIfSpaceAvailableOtherwiseDrop", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    subtitle: Text("RightIfSpaceAvailableOtherwiseDrop", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    onChanged: !accessState.memberIsOwner() ? null : (val) {
+                      setSelectionImagePosition(val);
+                    },
+                ),
+          );
+        children.add(
+
+                RadioListTile(
+                    value: 5,
+                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
+                    groupValue: _imagePositionSelectedRadioTile,
+                    title: Text("RightIfSpaceAvailableOtherwiseBottom", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    subtitle: Text("RightIfSpaceAvailableOtherwiseBottom", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     onChanged: !accessState.memberIsOwner() ? null : (val) {
                       setSelectionImagePosition(val);
                     },
@@ -407,6 +483,7 @@ class _MyPhotoAndTextFormState extends State<MyPhotoAndTextForm> {
                               contents: state.value.contents, 
                               image: state.value.image, 
                               imagePosition: state.value.imagePosition, 
+                              percentageImageVisible: state.value.percentageImageVisible, 
                               conditions: state.value.conditions, 
                         )));
                       } else {
@@ -419,6 +496,7 @@ class _MyPhotoAndTextFormState extends State<MyPhotoAndTextForm> {
                               contents: state.value.contents, 
                               image: state.value.image, 
                               imagePosition: state.value.imagePosition, 
+                              percentageImageVisible: state.value.percentageImageVisible, 
                               conditions: state.value.conditions, 
                           )));
                       }
@@ -494,6 +572,11 @@ class _MyPhotoAndTextFormState extends State<MyPhotoAndTextForm> {
   }
 
 
+  void _onPercentageImageVisibleChanged() {
+    _myFormBloc.add(ChangedPhotoAndTextPercentageImageVisible(value: _percentageImageVisibleController.text));
+  }
+
+
 
   @override
   void dispose() {
@@ -502,6 +585,7 @@ class _MyPhotoAndTextFormState extends State<MyPhotoAndTextForm> {
     _nameController.dispose();
     _titleController.dispose();
     _contentsController.dispose();
+    _percentageImageVisibleController.dispose();
     super.dispose();
   }
 
