@@ -95,16 +95,9 @@ class PhotoAndTextComponent extends AbstractPhotoAndTextComponent {
           fraction1
         ]);
       }
-
-/*
-      return Stack(children: [
-            Image.network(image, alignment: isLeft ? Alignment.topLeft : Alignment.topRight),
-            row
-          ]);
-*/
       return Stack(children: [
         Align(
-          alignment: Alignment.topRight,
+          alignment: isLeft ? Alignment.topLeft : Alignment.topRight,
           child: Image.network(image),
           ),
         row
