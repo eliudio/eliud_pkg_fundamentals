@@ -21,7 +21,6 @@ export '../model/fader_repository.dart';
 export '../model/grid_repository.dart';
 export '../model/link_repository.dart';
 export '../model/listed_item_repository.dart';
-export '../model/photo_and_text_repository.dart';
 export '../model/play_store_repository.dart';
 export '../model/presentation_repository.dart';
 export '../model/section_repository.dart';

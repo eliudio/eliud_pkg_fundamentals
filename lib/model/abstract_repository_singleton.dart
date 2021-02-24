@@ -21,7 +21,6 @@ import '../model/fader_repository.dart';
 import '../model/grid_repository.dart';
 import '../model/link_repository.dart';
 import '../model/listed_item_repository.dart';
-import '../model/photo_and_text_repository.dart';
 import '../model/play_store_repository.dart';
 import '../model/presentation_repository.dart';
 import '../model/section_repository.dart';
@@ -39,7 +38,6 @@ DividerRepository dividerRepository({ String appId }) => AbstractRepositorySingl
 DocumentRepository documentRepository({ String appId }) => AbstractRepositorySingleton.singleton.documentRepository(appId);
 FaderRepository faderRepository({ String appId }) => AbstractRepositorySingleton.singleton.faderRepository(appId);
 GridRepository gridRepository({ String appId }) => AbstractRepositorySingleton.singleton.gridRepository(appId);
-PhotoAndTextRepository photoAndTextRepository({ String appId }) => AbstractRepositorySingleton.singleton.photoAndTextRepository(appId);
 PlayStoreRepository playStoreRepository({ String appId }) => AbstractRepositorySingleton.singleton.playStoreRepository(appId);
 PresentationRepository presentationRepository({ String appId }) => AbstractRepositorySingleton.singleton.presentationRepository(appId);
 SimpleImageRepository simpleImageRepository({ String appId }) => AbstractRepositorySingleton.singleton.simpleImageRepository(appId);
@@ -55,7 +53,6 @@ abstract class AbstractRepositorySingleton {
   DocumentRepository documentRepository(String appId);
   FaderRepository faderRepository(String appId);
   GridRepository gridRepository(String appId);
-  PhotoAndTextRepository photoAndTextRepository(String appId);
   PlayStoreRepository playStoreRepository(String appId);
   PresentationRepository presentationRepository(String appId);
   SimpleImageRepository simpleImageRepository(String appId);

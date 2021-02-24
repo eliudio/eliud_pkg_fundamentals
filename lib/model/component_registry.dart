@@ -22,7 +22,6 @@ import '../extensions/divider_component.dart';
 import '../extensions/document_component.dart';
 import '../extensions/fader_component.dart';
 import '../extensions/grid_component.dart';
-import '../extensions/photo_and_text_component.dart';
 import '../extensions/play_store_component.dart';
 import '../extensions/presentation_component.dart';
 import '../extensions/simple_image_component.dart';
@@ -37,7 +36,7 @@ import 'package:eliud_pkg_fundamentals/model/internal_component.dart';
 class ComponentRegistry {
 
   void init() {
-    Registry.registry().addInternalComponents('eliud_pkg_fundamentals', ["booklets", "dividers", "documents", "faders", "grids", "photoAndTexts", "playStores", "presentations", "simpleImages", "tutorials", "decoratedContents", "simpleTexts", ]);
+    Registry.registry().addInternalComponents('eliud_pkg_fundamentals', ["booklets", "dividers", "documents", "faders", "grids", "playStores", "presentations", "simpleImages", "tutorials", "decoratedContents", "simpleTexts", ]);
 
     Registry.registry().register(componentName: "eliud_pkg_fundamentals_internalWidgets", componentConstructor: ListComponentFactory());
     Registry.registry().addDropDownSupporter("booklets", DropdownButtonComponentFactory());
@@ -50,8 +49,6 @@ class ComponentRegistry {
     Registry.registry().register(componentName: "faders", componentConstructor: FaderComponentConstructorDefault());
     Registry.registry().addDropDownSupporter("grids", DropdownButtonComponentFactory());
     Registry.registry().register(componentName: "grids", componentConstructor: GridComponentConstructorDefault());
-    Registry.registry().addDropDownSupporter("photoAndTexts", DropdownButtonComponentFactory());
-    Registry.registry().register(componentName: "photoAndTexts", componentConstructor: PhotoAndTextComponentConstructorDefault());
     Registry.registry().addDropDownSupporter("playStores", DropdownButtonComponentFactory());
     Registry.registry().register(componentName: "playStores", componentConstructor: PlayStoreComponentConstructorDefault());
     Registry.registry().addDropDownSupporter("presentations", DropdownButtonComponentFactory());
