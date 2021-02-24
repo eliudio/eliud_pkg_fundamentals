@@ -27,6 +27,8 @@ import '../extensions/play_store_component.dart';
 import '../extensions/presentation_component.dart';
 import '../extensions/simple_image_component.dart';
 import '../extensions/tutorial_component.dart';
+import '../extensions/decorated_content_component.dart';
+import '../extensions/simple_text_component.dart';
 import 'package:eliud_pkg_fundamentals/model/internal_component.dart';
 
 
@@ -35,7 +37,7 @@ import 'package:eliud_pkg_fundamentals/model/internal_component.dart';
 class ComponentRegistry {
 
   void init() {
-    Registry.registry().addInternalComponents('eliud_pkg_fundamentals', ["booklets", "dividers", "documents", "faders", "grids", "photoAndTexts", "playStores", "presentations", "simpleImages", "tutorials", ]);
+    Registry.registry().addInternalComponents('eliud_pkg_fundamentals', ["booklets", "dividers", "documents", "faders", "grids", "photoAndTexts", "playStores", "presentations", "simpleImages", "tutorials", "decoratedContents", "simpleTexts", ]);
 
     Registry.registry().register(componentName: "eliud_pkg_fundamentals_internalWidgets", componentConstructor: ListComponentFactory());
     Registry.registry().addDropDownSupporter("booklets", DropdownButtonComponentFactory());
@@ -58,6 +60,10 @@ class ComponentRegistry {
     Registry.registry().register(componentName: "simpleImages", componentConstructor: SimpleImageComponentConstructorDefault());
     Registry.registry().addDropDownSupporter("tutorials", DropdownButtonComponentFactory());
     Registry.registry().register(componentName: "tutorials", componentConstructor: TutorialComponentConstructorDefault());
+    Registry.registry().addDropDownSupporter("decoratedContents", DropdownButtonComponentFactory());
+    Registry.registry().register(componentName: "decoratedContents", componentConstructor: DecoratedContentComponentConstructorDefault());
+    Registry.registry().addDropDownSupporter("simpleTexts", DropdownButtonComponentFactory());
+    Registry.registry().register(componentName: "simpleTexts", componentConstructor: SimpleTextComponentConstructorDefault());
 
   }
 }

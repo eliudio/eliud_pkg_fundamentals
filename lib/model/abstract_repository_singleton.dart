@@ -28,6 +28,8 @@ import '../model/section_repository.dart';
 import '../model/simple_image_repository.dart';
 import '../model/tutorial_repository.dart';
 import '../model/tutorial_entry_repository.dart';
+import '../model/decorated_content_repository.dart';
+import '../model/simple_text_repository.dart';
 import 'package:eliud_core/core/access/bloc/user_repository.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
@@ -42,6 +44,8 @@ PlayStoreRepository playStoreRepository({ String appId }) => AbstractRepositoryS
 PresentationRepository presentationRepository({ String appId }) => AbstractRepositorySingleton.singleton.presentationRepository(appId);
 SimpleImageRepository simpleImageRepository({ String appId }) => AbstractRepositorySingleton.singleton.simpleImageRepository(appId);
 TutorialRepository tutorialRepository({ String appId }) => AbstractRepositorySingleton.singleton.tutorialRepository(appId);
+DecoratedContentRepository decoratedContentRepository({ String appId }) => AbstractRepositorySingleton.singleton.decoratedContentRepository(appId);
+SimpleTextRepository simpleTextRepository({ String appId }) => AbstractRepositorySingleton.singleton.simpleTextRepository(appId);
 
 abstract class AbstractRepositorySingleton {
   static AbstractRepositorySingleton singleton;
@@ -56,6 +60,8 @@ abstract class AbstractRepositorySingleton {
   PresentationRepository presentationRepository(String appId);
   SimpleImageRepository simpleImageRepository(String appId);
   TutorialRepository tutorialRepository(String appId);
+  DecoratedContentRepository decoratedContentRepository(String appId);
+  SimpleTextRepository simpleTextRepository(String appId);
 
   void flush(String appId) {
   }

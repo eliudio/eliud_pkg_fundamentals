@@ -28,3 +28,5 @@ export '../model/section_repository.dart';
 export '../model/simple_image_repository.dart';
 export '../model/tutorial_repository.dart';
 export '../model/tutorial_entry_repository.dart';
+export '../model/decorated_content_repository.dart';
+export '../model/simple_text_repository.dart';
