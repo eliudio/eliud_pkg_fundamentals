@@ -18,6 +18,7 @@ import '../model/internal_component.dart';
 import 'package:eliud_core/tools/registry.dart';
 
 import '../extensions/booklet_component.dart';
+import '../extensions/decorated_content_component.dart';
 import '../extensions/divider_component.dart';
 import '../extensions/document_component.dart';
 import '../extensions/fader_component.dart';
@@ -25,9 +26,8 @@ import '../extensions/grid_component.dart';
 import '../extensions/play_store_component.dart';
 import '../extensions/presentation_component.dart';
 import '../extensions/simple_image_component.dart';
-import '../extensions/tutorial_component.dart';
-import '../extensions/decorated_content_component.dart';
 import '../extensions/simple_text_component.dart';
+import '../extensions/tutorial_component.dart';
 import 'package:eliud_pkg_fundamentals/model/internal_component.dart';
 
 
@@ -36,11 +36,13 @@ import 'package:eliud_pkg_fundamentals/model/internal_component.dart';
 class ComponentRegistry {
 
   void init() {
-    Registry.registry().addInternalComponents('eliud_pkg_fundamentals', ["booklets", "dividers", "documents", "faders", "grids", "playStores", "presentations", "simpleImages", "tutorials", "decoratedContents", "simpleTexts", ]);
+    Registry.registry().addInternalComponents('eliud_pkg_fundamentals', ["booklets", "decoratedContents", "dividers", "documents", "faders", "grids", "playStores", "presentations", "simpleImages", "simpleTexts", "tutorials", ]);
 
     Registry.registry().register(componentName: "eliud_pkg_fundamentals_internalWidgets", componentConstructor: ListComponentFactory());
     Registry.registry().addDropDownSupporter("booklets", DropdownButtonComponentFactory());
     Registry.registry().register(componentName: "booklets", componentConstructor: BookletComponentConstructorDefault());
+    Registry.registry().addDropDownSupporter("decoratedContents", DropdownButtonComponentFactory());
+    Registry.registry().register(componentName: "decoratedContents", componentConstructor: DecoratedContentComponentConstructorDefault());
     Registry.registry().addDropDownSupporter("dividers", DropdownButtonComponentFactory());
     Registry.registry().register(componentName: "dividers", componentConstructor: DividerComponentConstructorDefault());
     Registry.registry().addDropDownSupporter("documents", DropdownButtonComponentFactory());
@@ -55,12 +57,10 @@ class ComponentRegistry {
     Registry.registry().register(componentName: "presentations", componentConstructor: PresentationComponentConstructorDefault());
     Registry.registry().addDropDownSupporter("simpleImages", DropdownButtonComponentFactory());
     Registry.registry().register(componentName: "simpleImages", componentConstructor: SimpleImageComponentConstructorDefault());
-    Registry.registry().addDropDownSupporter("tutorials", DropdownButtonComponentFactory());
-    Registry.registry().register(componentName: "tutorials", componentConstructor: TutorialComponentConstructorDefault());
-    Registry.registry().addDropDownSupporter("decoratedContents", DropdownButtonComponentFactory());
-    Registry.registry().register(componentName: "decoratedContents", componentConstructor: DecoratedContentComponentConstructorDefault());
     Registry.registry().addDropDownSupporter("simpleTexts", DropdownButtonComponentFactory());
     Registry.registry().register(componentName: "simpleTexts", componentConstructor: SimpleTextComponentConstructorDefault());
+    Registry.registry().addDropDownSupporter("tutorials", DropdownButtonComponentFactory());
+    Registry.registry().register(componentName: "tutorials", componentConstructor: TutorialComponentConstructorDefault());
 
   }
 }

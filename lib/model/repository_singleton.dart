@@ -19,6 +19,9 @@ import 'dart:collection';
 import '../model/booklet_firestore.dart';
 import '../model/booklet_repository.dart';
 import '../model/booklet_cache.dart';
+import '../model/decorated_content_firestore.dart';
+import '../model/decorated_content_repository.dart';
+import '../model/decorated_content_cache.dart';
 import '../model/divider_firestore.dart';
 import '../model/divider_repository.dart';
 import '../model/divider_cache.dart';
@@ -48,17 +51,14 @@ import '../model/section_cache.dart';
 import '../model/simple_image_firestore.dart';
 import '../model/simple_image_repository.dart';
 import '../model/simple_image_cache.dart';
+import '../model/simple_text_firestore.dart';
+import '../model/simple_text_repository.dart';
+import '../model/simple_text_cache.dart';
 import '../model/tutorial_firestore.dart';
 import '../model/tutorial_repository.dart';
 import '../model/tutorial_cache.dart';
 import '../model/tutorial_entry_repository.dart';
 import '../model/tutorial_entry_cache.dart';
-import '../model/decorated_content_firestore.dart';
-import '../model/decorated_content_repository.dart';
-import '../model/decorated_content_cache.dart';
-import '../model/simple_text_firestore.dart';
-import '../model/simple_text_repository.dart';
-import '../model/simple_text_cache.dart';
 
 import '../model/document_model.dart';
 import '../model/document_item_model.dart';
@@ -72,6 +72,7 @@ import '../model/tutorial_entry_model.dart';
 
 class RepositorySingleton extends AbstractRepositorySingleton {
     var _bookletRepository = HashMap<String, BookletRepository>();
+    var _decoratedContentRepository = HashMap<String, DecoratedContentRepository>();
     var _dividerRepository = HashMap<String, DividerRepository>();
     var _documentRepository = HashMap<String, DocumentRepository>();
     var _faderRepository = HashMap<String, FaderRepository>();
@@ -79,13 +80,16 @@ class RepositorySingleton extends AbstractRepositorySingleton {
     var _playStoreRepository = HashMap<String, PlayStoreRepository>();
     var _presentationRepository = HashMap<String, PresentationRepository>();
     var _simpleImageRepository = HashMap<String, SimpleImageRepository>();
-    var _tutorialRepository = HashMap<String, TutorialRepository>();
-    var _decoratedContentRepository = HashMap<String, DecoratedContentRepository>();
     var _simpleTextRepository = HashMap<String, SimpleTextRepository>();
+    var _tutorialRepository = HashMap<String, TutorialRepository>();
 
     BookletRepository bookletRepository(String appId) {
       if (_bookletRepository[appId] == null) _bookletRepository[appId] = BookletCache(BookletFirestore(appRepository().getSubCollection(appId, 'booklet'), appId));
       return _bookletRepository[appId];
+    }
+    DecoratedContentRepository decoratedContentRepository(String appId) {
+      if (_decoratedContentRepository[appId] == null) _decoratedContentRepository[appId] = DecoratedContentCache(DecoratedContentFirestore(appRepository().getSubCollection(appId, 'decoratedcontent'), appId));
+      return _decoratedContentRepository[appId];
     }
     DividerRepository dividerRepository(String appId) {
       if (_dividerRepository[appId] == null) _dividerRepository[appId] = DividerCache(DividerFirestore(appRepository().getSubCollection(appId, 'divider'), appId));
@@ -115,17 +119,13 @@ class RepositorySingleton extends AbstractRepositorySingleton {
       if (_simpleImageRepository[appId] == null) _simpleImageRepository[appId] = SimpleImageCache(SimpleImageFirestore(appRepository().getSubCollection(appId, 'simpleimage'), appId));
       return _simpleImageRepository[appId];
     }
-    TutorialRepository tutorialRepository(String appId) {
-      if (_tutorialRepository[appId] == null) _tutorialRepository[appId] = TutorialCache(TutorialFirestore(appRepository().getSubCollection(appId, 'tutorial'), appId));
-      return _tutorialRepository[appId];
-    }
-    DecoratedContentRepository decoratedContentRepository(String appId) {
-      if (_decoratedContentRepository[appId] == null) _decoratedContentRepository[appId] = DecoratedContentCache(DecoratedContentFirestore(appRepository().getSubCollection(appId, 'decoratedcontent'), appId));
-      return _decoratedContentRepository[appId];
-    }
     SimpleTextRepository simpleTextRepository(String appId) {
       if (_simpleTextRepository[appId] == null) _simpleTextRepository[appId] = SimpleTextCache(SimpleTextFirestore(appRepository().getSubCollection(appId, 'simpletext'), appId));
       return _simpleTextRepository[appId];
+    }
+    TutorialRepository tutorialRepository(String appId) {
+      if (_tutorialRepository[appId] == null) _tutorialRepository[appId] = TutorialCache(TutorialFirestore(appRepository().getSubCollection(appId, 'tutorial'), appId));
+      return _tutorialRepository[appId];
     }
 
 }

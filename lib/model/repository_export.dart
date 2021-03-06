@@ -14,6 +14,7 @@
 */
 
 export '../model/booklet_repository.dart';
+export '../model/decorated_content_repository.dart';
 export '../model/divider_repository.dart';
 export '../model/document_repository.dart';
 export '../model/document_item_repository.dart';
@@ -25,7 +26,6 @@ export '../model/play_store_repository.dart';
 export '../model/presentation_repository.dart';
 export '../model/section_repository.dart';
 export '../model/simple_image_repository.dart';
+export '../model/simple_text_repository.dart';
 export '../model/tutorial_repository.dart';
 export '../model/tutorial_entry_repository.dart';
-export '../model/decorated_content_repository.dart';
-export '../model/simple_text_repository.dart';

@@ -26,4 +26,7 @@ abstract class FundamentalsPackage extends Package {
 
     AbstractRepositorySingleton.singleton = RepositorySingleton();
   }
+
+  @override
+  List<MemberCollectionInfo> getMemberCollectionInfo() => AbstractRepositorySingleton.collections;
 }
