@@ -239,6 +239,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.16.2"
+  cupertino_icons:
+    dependency: transitive
+    description:
+      name: cupertino_icons
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   dart2_constant:
     dependency: transitive
     description:
@@ -301,7 +308,7 @@ packages:
       name: equatable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.4"
+    version: "2.0.0"
   expandable:
     dependency: transitive
     description:
@@ -404,14 +411,14 @@ packages:
       name: flutter_colorpicker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.4"
+    version: "0.3.5"
   flutter_iconpicker:
     dependency: transitive
     description:
       name: flutter_iconpicker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.2"
+    version: "2.2.3"
   flutter_markdown:
     dependency: transitive
     description:
@@ -431,13 +438,20 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_widget_from_html_core:
+    dependency: transitive
+    description:
+      name: flutter_widget_from_html_core
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.2+1"
   font_awesome_flutter:
     dependency: transitive
     description:
       name: font_awesome_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.8.1"
+    version: "8.12.0"
   getwidget:
     dependency: "direct main"
     description:
@@ -571,6 +585,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
+  line_awesome_flutter:
+    dependency: transitive
+    description:
+      name: line_awesome_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   logging:
     dependency: transitive
     description:
@@ -627,6 +648,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.1"
+  outline_material_icons:
+    dependency: transitive
+    description:
+      name: outline_material_icons
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1"
   package_config:
     dependency: transitive
     description:
@@ -647,7 +675,7 @@ packages:
       name: path
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.7.0"
+    version: "1.8.0"
   path_provider:
     dependency: transitive
     description:
