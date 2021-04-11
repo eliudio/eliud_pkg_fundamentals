@@ -63,10 +63,10 @@ import 'package:eliud_pkg_fundamentals/model/decorated_content_form_state.dart';
 
 class DecoratedContentForm extends StatelessWidget {
   FormAction formAction;
-  DecoratedContentModel value;
-  ActionModel submitAction;
+  DecoratedContentModel? value;
+  ActionModel? submitAction;
 
-  DecoratedContentForm({Key key, @required this.formAction, @required this.value, this.submitAction}) : super(key: key);
+  DecoratedContentForm({Key? key, required this.formAction, required this.value, this.submitAction}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -94,14 +94,14 @@ class DecoratedContentForm extends StatelessWidget {
       return Scaffold(
         appBar: formAction == FormAction.UpdateAction ?
                 AppBar(
-                    title: Text("Update DecoratedContent", style: TextStyle(color: RgbHelper.color(rgbo: app.formAppBarTextColor))),
+                    title: Text("Update DecoratedContent", style: TextStyle(color: RgbHelper.color(rgbo: app!.formAppBarTextColor))),
                     flexibleSpace: Container(
-                        decoration: BoxDecorationHelper.boxDecoration(accessState, app.formAppBarBackground)),
+                        decoration: BoxDecorationHelper.boxDecoration(accessState, app!.formAppBarBackground)),
                   ) :
                 AppBar(
-                    title: Text("Add DecoratedContent", style: TextStyle(color: RgbHelper.color(rgbo: app.formAppBarTextColor))),
+                    title: Text("Add DecoratedContent", style: TextStyle(color: RgbHelper.color(rgbo: app!.formAppBarTextColor))),
                     flexibleSpace: Container(
-                        decoration: BoxDecorationHelper.boxDecoration(accessState, app.formAppBarBackground)),
+                        decoration: BoxDecorationHelper.boxDecoration(accessState, app!.formAppBarBackground)),
                 ),
         body: BlocProvider<DecoratedContentFormBloc >(
             create: (context) => DecoratedContentFormBloc(AccessBloc.appId(context),
@@ -117,8 +117,8 @@ class DecoratedContentForm extends StatelessWidget {
 
 
 class MyDecoratedContentForm extends StatefulWidget {
-  final FormAction formAction;
-  final ActionModel submitAction;
+  final FormAction? formAction;
+  final ActionModel? submitAction;
 
   MyDecoratedContentForm({this.formAction, this.submitAction});
 
@@ -127,13 +127,13 @@ class MyDecoratedContentForm extends StatefulWidget {
 
 
 class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
-  final FormAction formAction;
-  DecoratedContentFormBloc _myFormBloc;
+  final FormAction? formAction;
+  late DecoratedContentFormBloc _myFormBloc;
 
   final TextEditingController _documentIDController = TextEditingController();
   final TextEditingController _appIdController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-  int _decorationComponentPositionSelectedRadioTile;
+  int? _decorationComponentPositionSelectedRadioTile;
   final TextEditingController _percentageDecorationVisibleController = TextEditingController();
 
 
@@ -160,65 +160,65 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
       );
 
       if (state is DecoratedContentFormLoaded) {
-        if (state.value.documentID != null)
-          _documentIDController.text = state.value.documentID.toString();
+        if (state.value!.documentID != null)
+          _documentIDController.text = state.value!.documentID.toString();
         else
           _documentIDController.text = "";
-        if (state.value.appId != null)
-          _appIdController.text = state.value.appId.toString();
+        if (state.value!.appId != null)
+          _appIdController.text = state.value!.appId.toString();
         else
           _appIdController.text = "";
-        if (state.value.name != null)
-          _nameController.text = state.value.name.toString();
+        if (state.value!.name != null)
+          _nameController.text = state.value!.name.toString();
         else
           _nameController.text = "";
-        if (state.value.decorationComponentPosition != null)
-          _decorationComponentPositionSelectedRadioTile = state.value.decorationComponentPosition.index;
+        if (state.value!.decorationComponentPosition != null)
+          _decorationComponentPositionSelectedRadioTile = state.value!.decorationComponentPosition!.index;
         else
           _decorationComponentPositionSelectedRadioTile = 0;
-        if (state.value.percentageDecorationVisible != null)
-          _percentageDecorationVisibleController.text = state.value.percentageDecorationVisible.toString();
+        if (state.value!.percentageDecorationVisible != null)
+          _percentageDecorationVisibleController.text = state.value!.percentageDecorationVisible.toString();
         else
           _percentageDecorationVisibleController.text = "";
       }
       if (state is DecoratedContentFormInitialized) {
-        List<Widget> children = List();
+        List<Widget?> children = [];
          children.add(Container(
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: Text('General',
                       style: TextStyle(
-                          color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
+                          color: RgbHelper.color(rgbo: app!.formGroupTitleColor), fontWeight: FontWeight.bold)),
                 ));
 
         children.add(
 
-                ExtensionTypeField(state.value.decoratingComponentName, _onDecoratingComponentNameChanged)
+                ExtensionTypeField(state.value!.decoratingComponentName, _onDecoratingComponentNameChanged)
           );
 
         children.add(
 
-                ComponentIdField(componentName: state.value.decoratingComponentName, value: state.value.decoratingComponentId, trigger: _onDecoratingComponentIdChanged)
+                ComponentIdField(componentName: state.value!.decoratingComponentName, value: state.value!.decoratingComponentId, trigger: _onDecoratingComponentIdChanged)
           );
 
         children.add(
 
-                ExtensionTypeField(state.value.contentComponentName, _onContentComponentNameChanged)
+                ExtensionTypeField(state.value!.contentComponentName, _onContentComponentNameChanged)
           );
 
         children.add(
 
-                ComponentIdField(componentName: state.value.contentComponentName, value: state.value.contentComponentId, trigger: _onContentComponentIdChanged)
+                ComponentIdField(componentName: state.value!.contentComponentName, value: state.value!.contentComponentId, trigger: _onContentComponentIdChanged)
           );
 
         children.add(
 
                 TextFormField(
-                style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
+                style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor)),
                   readOnly: _readOnly(accessState, state),
                   controller: _percentageDecorationVisibleController,
                   decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
+                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app!.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app!.formFieldHeaderColor)),
                     labelText: 'Percentage Decoration Visible',
                   ),
                   keyboardType: TextInputType.number,
@@ -231,7 +231,7 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
 
 
         children.add(Container(height: 20.0));
-        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
+        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app!.dividerColor)));
 
 
          children.add(Container(
@@ -239,17 +239,17 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: Text('General',
                       style: TextStyle(
-                          color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
+                          color: RgbHelper.color(rgbo: app!.formGroupTitleColor), fontWeight: FontWeight.bold)),
                 ));
 
         children.add(
 
                 TextFormField(
-                style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
+                style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor)),
                   readOnly: (formAction == FormAction.UpdateAction),
                   controller: _documentIDController,
                   decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.vpn_key, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
+                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app!.formFieldFocusColor))),                    icon: Icon(Icons.vpn_key, color: RgbHelper.color(rgbo: app!.formFieldHeaderColor)),
                     labelText: 'Document ID',
                   ),
                   keyboardType: TextInputType.text,
@@ -263,11 +263,11 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
         children.add(
 
                 TextFormField(
-                style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
+                style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor)),
                   readOnly: _readOnly(accessState, state),
                   controller: _nameController,
                   decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
+                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app!.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app!.formFieldHeaderColor)),
                     labelText: 'Name',
                   ),
                   keyboardType: TextInputType.text,
@@ -280,7 +280,7 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
 
 
         children.add(Container(height: 20.0));
-        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
+        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app!.dividerColor)));
 
 
          children.add(Container(
@@ -288,13 +288,13 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: Text('Conditions',
                       style: TextStyle(
-                          color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
+                          color: RgbHelper.color(rgbo: app!.formGroupTitleColor), fontWeight: FontWeight.bold)),
                 ));
 
 
 
         children.add(Container(height: 20.0));
-        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
+        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app!.dividerColor)));
 
 
          children.add(Container(
@@ -302,18 +302,18 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: Text('Conditions',
                       style: TextStyle(
-                          color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
+                          color: RgbHelper.color(rgbo: app!.formGroupTitleColor), fontWeight: FontWeight.bold)),
                 ));
 
         children.add(
 
                 RadioListTile(
                     value: 0,
-                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
+                    activeColor: RgbHelper.color(rgbo: app!.formFieldTextColor),
                     groupValue: _decorationComponentPositionSelectedRadioTile,
-                    title: Text("LeftIfSpaceAvailableOtherwiseTop", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    subtitle: Text("LeftIfSpaceAvailableOtherwiseTop", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner() ? null : (val) {
+                    title: Text("LeftIfSpaceAvailableOtherwiseTop", style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),
+                    subtitle: Text("LeftIfSpaceAvailableOtherwiseTop", style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),
+                    onChanged: !accessState.memberIsOwner() ? null : (dynamic val) {
                       setSelectionDecorationComponentPosition(val);
                     },
                 ),
@@ -322,11 +322,11 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
 
                 RadioListTile(
                     value: 1,
-                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
+                    activeColor: RgbHelper.color(rgbo: app!.formFieldTextColor),
                     groupValue: _decorationComponentPositionSelectedRadioTile,
-                    title: Text("LeftIfSpaceAvailableOtherwiseDrop", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    subtitle: Text("LeftIfSpaceAvailableOtherwiseDrop", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner() ? null : (val) {
+                    title: Text("LeftIfSpaceAvailableOtherwiseDrop", style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),
+                    subtitle: Text("LeftIfSpaceAvailableOtherwiseDrop", style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),
+                    onChanged: !accessState.memberIsOwner() ? null : (dynamic val) {
                       setSelectionDecorationComponentPosition(val);
                     },
                 ),
@@ -335,11 +335,11 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
 
                 RadioListTile(
                     value: 2,
-                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
+                    activeColor: RgbHelper.color(rgbo: app!.formFieldTextColor),
                     groupValue: _decorationComponentPositionSelectedRadioTile,
-                    title: Text("LeftIfSpaceAvailableOtherwiseBottom", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    subtitle: Text("LeftIfSpaceAvailableOtherwiseBottom", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner() ? null : (val) {
+                    title: Text("LeftIfSpaceAvailableOtherwiseBottom", style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),
+                    subtitle: Text("LeftIfSpaceAvailableOtherwiseBottom", style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),
+                    onChanged: !accessState.memberIsOwner() ? null : (dynamic val) {
                       setSelectionDecorationComponentPosition(val);
                     },
                 ),
@@ -348,11 +348,11 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
 
                 RadioListTile(
                     value: 3,
-                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
+                    activeColor: RgbHelper.color(rgbo: app!.formFieldTextColor),
                     groupValue: _decorationComponentPositionSelectedRadioTile,
-                    title: Text("RightIfSpaceAvailableOtherwiseTop", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    subtitle: Text("RightIfSpaceAvailableOtherwiseTop", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner() ? null : (val) {
+                    title: Text("RightIfSpaceAvailableOtherwiseTop", style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),
+                    subtitle: Text("RightIfSpaceAvailableOtherwiseTop", style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),
+                    onChanged: !accessState.memberIsOwner() ? null : (dynamic val) {
                       setSelectionDecorationComponentPosition(val);
                     },
                 ),
@@ -361,11 +361,11 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
 
                 RadioListTile(
                     value: 4,
-                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
+                    activeColor: RgbHelper.color(rgbo: app!.formFieldTextColor),
                     groupValue: _decorationComponentPositionSelectedRadioTile,
-                    title: Text("RightIfSpaceAvailableOtherwiseDrop", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    subtitle: Text("RightIfSpaceAvailableOtherwiseDrop", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner() ? null : (val) {
+                    title: Text("RightIfSpaceAvailableOtherwiseDrop", style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),
+                    subtitle: Text("RightIfSpaceAvailableOtherwiseDrop", style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),
+                    onChanged: !accessState.memberIsOwner() ? null : (dynamic val) {
                       setSelectionDecorationComponentPosition(val);
                     },
                 ),
@@ -374,11 +374,11 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
 
                 RadioListTile(
                     value: 5,
-                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
+                    activeColor: RgbHelper.color(rgbo: app!.formFieldTextColor),
                     groupValue: _decorationComponentPositionSelectedRadioTile,
-                    title: Text("RightIfSpaceAvailableOtherwiseBottom", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    subtitle: Text("RightIfSpaceAvailableOtherwiseBottom", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
-                    onChanged: !accessState.memberIsOwner() ? null : (val) {
+                    title: Text("RightIfSpaceAvailableOtherwiseBottom", style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),
+                    subtitle: Text("RightIfSpaceAvailableOtherwiseBottom", style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),
+                    onChanged: !accessState.memberIsOwner() ? null : (dynamic val) {
                       setSelectionDecorationComponentPosition(val);
                     },
                 ),
@@ -386,59 +386,58 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
 
 
         children.add(Container(height: 20.0));
-        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
+        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app!.dividerColor)));
 
 
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
           children.add(RaisedButton(
-                  color: RgbHelper.color(rgbo: app.formSubmitButtonColor),
+                  color: RgbHelper.color(rgbo: app!.formSubmitButtonColor),
                   onPressed: _readOnly(accessState, state) ? null : () {
                     if (state is DecoratedContentFormError) {
                       return null;
                     } else {
                       if (formAction == FormAction.UpdateAction) {
                         BlocProvider.of<DecoratedContentListBloc>(context).add(
-                          UpdateDecoratedContentList(value: state.value.copyWith(
-                              documentID: state.value.documentID, 
-                              appId: state.value.appId, 
-                              name: state.value.name, 
-                              decoratingComponentName: state.value.decoratingComponentName, 
-                              decoratingComponentId: state.value.decoratingComponentId, 
-                              contentComponentName: state.value.contentComponentName, 
-                              contentComponentId: state.value.contentComponentId, 
-                              decorationComponentPosition: state.value.decorationComponentPosition, 
-                              percentageDecorationVisible: state.value.percentageDecorationVisible, 
-                              conditions: state.value.conditions, 
+                          UpdateDecoratedContentList(value: state.value!.copyWith(
+                              documentID: state.value!.documentID, 
+                              appId: state.value!.appId, 
+                              name: state.value!.name, 
+                              decoratingComponentName: state.value!.decoratingComponentName, 
+                              decoratingComponentId: state.value!.decoratingComponentId, 
+                              contentComponentName: state.value!.contentComponentName, 
+                              contentComponentId: state.value!.contentComponentId, 
+                              decorationComponentPosition: state.value!.decorationComponentPosition, 
+                              percentageDecorationVisible: state.value!.percentageDecorationVisible, 
+                              conditions: state.value!.conditions, 
                         )));
                       } else {
                         BlocProvider.of<DecoratedContentListBloc>(context).add(
                           AddDecoratedContentList(value: DecoratedContentModel(
-                              documentID: state.value.documentID, 
-                              appId: state.value.appId, 
-                              name: state.value.name, 
-                              decoratingComponentName: state.value.decoratingComponentName, 
-                              decoratingComponentId: state.value.decoratingComponentId, 
-                              contentComponentName: state.value.contentComponentName, 
-                              contentComponentId: state.value.contentComponentId, 
-                              decorationComponentPosition: state.value.decorationComponentPosition, 
-                              percentageDecorationVisible: state.value.percentageDecorationVisible, 
-                              conditions: state.value.conditions, 
+                              documentID: state.value!.documentID, 
+                              appId: state.value!.appId, 
+                              name: state.value!.name, 
+                              decoratingComponentName: state.value!.decoratingComponentName, 
+                              decoratingComponentId: state.value!.decoratingComponentId, 
+                              contentComponentName: state.value!.contentComponentName, 
+                              contentComponentId: state.value!.contentComponentId, 
+                              decorationComponentPosition: state.value!.decorationComponentPosition, 
+                              percentageDecorationVisible: state.value!.percentageDecorationVisible, 
+                              conditions: state.value!.conditions, 
                           )));
                       }
                       if (widget.submitAction != null) {
-                        eliudrouter.Router.navigateTo(context, widget.submitAction);
+                        eliudrouter.Router.navigateTo(context, widget.submitAction!);
                       } else {
                         Navigator.pop(context);
                       }
-                      return true;
                     }
                   },
-                  child: Text('Submit', style: TextStyle(color: RgbHelper.color(rgbo: app.formSubmitButtonTextColor))),
+                  child: Text('Submit', style: TextStyle(color: RgbHelper.color(rgbo: app!.formSubmitButtonTextColor))),
                 ));
 
         return Container(
           color: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? Colors.transparent : null,
-          decoration: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? null : BoxDecorationHelper.boxDecoration(accessState, app.formBackground),
+          decoration: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? null : BoxDecorationHelper.boxDecoration(accessState, app!.formBackground),
           padding:
           const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
             child: Form(
@@ -446,7 +445,7 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
               padding: const EdgeInsets.all(8),
               physics: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? NeverScrollableScrollPhysics() : null,
               shrinkWrap: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)),
-              children: children
+              children: children as List<Widget>
             ),
           )
         );
@@ -495,7 +494,7 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
   }
 
 
-  void setSelectionDecorationComponentPosition(int val) {
+  void setSelectionDecorationComponentPosition(int? val) {
     setState(() {
       _decorationComponentPositionSelectedRadioTile = val;
     });

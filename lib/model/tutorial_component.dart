@@ -25,7 +25,7 @@ import 'package:eliud_pkg_fundamentals/model/tutorial_component_state.dart';
 
 abstract class AbstractTutorialComponent extends StatelessWidget {
   static String componentName = "tutorials";
-  final String tutorialID;
+  final String? tutorialID;
 
   AbstractTutorialComponent({this.tutorialID});
 
@@ -63,7 +63,7 @@ abstract class AbstractTutorialComponent extends StatelessWidget {
     });
   }
 
-  Widget yourWidget(BuildContext context, TutorialModel value);
+  Widget yourWidget(BuildContext context, TutorialModel? value);
   Widget alertWidget({ title: String, content: String});
   TutorialRepository getTutorialRepository(BuildContext context);
 }

@@ -22,22 +22,22 @@ import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class ListedItemEntity {
-  final String description;
-  final ActionEntity action;
-  final String imageId;
-  final String posSizeId;
+  final String? description;
+  final ActionEntity? action;
+  final String? imageId;
+  final String? posSizeId;
 
   ListedItemEntity({this.description, this.action, this.imageId, this.posSizeId, });
 
 
-  List<Object> get props => [description, action, imageId, posSizeId, ];
+  List<Object?> get props => [description, action, imageId, posSizeId, ];
 
   @override
   String toString() {
     return 'ListedItemEntity{description: $description, action: $action, imageId: $imageId, posSizeId: $posSizeId}';
   }
 
-  static ListedItemEntity fromMap(Map map) {
+  static ListedItemEntity? fromMap(Map? map) {
     if (map == null) return null;
 
     var actionFromMap;
@@ -53,12 +53,12 @@ class ListedItemEntity {
     );
   }
 
-  Map<String, Object> toDocument() {
-    final Map<String, dynamic> actionMap = action != null 
-        ? action.toDocument()
+  Map<String, Object?> toDocument() {
+    final Map<String, dynamic>? actionMap = action != null 
+        ? action!.toDocument()
         : null;
 
-    Map<String, Object> theDocument = HashMap();
+    Map<String, Object?> theDocument = HashMap();
     if (description != null) theDocument["description"] = description;
       else theDocument["description"] = null;
     if (action != null) theDocument["action"] = actionMap;
@@ -70,8 +70,8 @@ class ListedItemEntity {
     return theDocument;
   }
 
-  static ListedItemEntity fromJsonString(String json) {
-    Map<String, dynamic> generationSpecificationMap = jsonDecode(json);
+  static ListedItemEntity? fromJsonString(String json) {
+    Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
     return fromMap(generationSpecificationMap);
   }
 

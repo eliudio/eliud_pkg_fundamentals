@@ -42,8 +42,8 @@ import 'package:eliud_pkg_fundamentals/model/document_form_state.dart';
 import 'package:eliud_pkg_fundamentals/model/document_repository.dart';
 
 class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
-  final FormAction formAction;
-  final String appId;
+  final FormAction? formAction;
+  final String? appId;
 
   DocumentFormBloc(this.appId, { this.formAction }): super(DocumentFormUninitialized());
   @override
@@ -68,20 +68,20 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
 
       if (event is InitialiseDocumentFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        DocumentFormLoaded loaded = DocumentFormLoaded(value: await documentRepository(appId: appId).get(event.value.documentID));
+        DocumentFormLoaded loaded = DocumentFormLoaded(value: await documentRepository(appId: appId)!.get(event!.value!.documentID));
         yield loaded;
         return;
       } else if (event is InitialiseDocumentFormNoLoadEvent) {
-        DocumentFormLoaded loaded = DocumentFormLoaded(value: event.value);
+        DocumentFormLoaded loaded = DocumentFormLoaded(value: event!.value);
         yield loaded;
         return;
       }
     } else if (currentState is DocumentFormInitialized) {
-      DocumentModel newValue = null;
+      DocumentModel? newValue = null;
       if (event is ChangedDocumentDocumentID) {
-        newValue = currentState.value.copyWith(documentID: event.value);
+        newValue = currentState.value!.copyWith(documentID: event!.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event.value, newValue).asStream();
+          yield* _isDocumentIDValid(event!.value, newValue).asStream();
         } else {
           yield SubmittableDocumentForm(value: newValue);
         }
@@ -89,61 +89,61 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
         return;
       }
       if (event is ChangedDocumentName) {
-        newValue = currentState.value.copyWith(name: event.value);
+        newValue = currentState.value!.copyWith(name: event!.value);
         yield SubmittableDocumentForm(value: newValue);
 
         return;
       }
       if (event is ChangedDocumentDocumentRenderer) {
-        newValue = currentState.value.copyWith(documentRenderer: event.value);
+        newValue = currentState.value!.copyWith(documentRenderer: event!.value);
         yield SubmittableDocumentForm(value: newValue);
 
         return;
       }
       if (event is ChangedDocumentContent) {
-        newValue = currentState.value.copyWith(content: event.value);
+        newValue = currentState.value!.copyWith(content: event!.value);
         yield SubmittableDocumentForm(value: newValue);
 
         return;
       }
       if (event is ChangedDocumentPadding) {
-        if (isDouble(event.value)) {
-          newValue = currentState.value.copyWith(padding: double.parse(event.value));
+        if (isDouble(event!.value!)) {
+          newValue = currentState.value!.copyWith(padding: double.parse(event!.value!));
           yield SubmittableDocumentForm(value: newValue);
 
         } else {
-          newValue = currentState.value.copyWith(padding: 0.0);
+          newValue = currentState.value!.copyWith(padding: 0.0);
           yield PaddingDocumentFormError(message: "Value should be a number or decimal number", value: newValue);
         }
         return;
       }
       if (event is ChangedDocumentImages) {
-        newValue = currentState.value.copyWith(images: event.value);
+        newValue = currentState.value!.copyWith(images: event!.value);
         yield SubmittableDocumentForm(value: newValue);
 
         return;
       }
       if (event is ChangedDocumentBackground) {
-        if (event.value != null)
-          newValue = currentState.value.copyWith(background: await backgroundRepository(appId: appId).get(event.value));
+        if (event!.value != null)
+          newValue = currentState.value!.copyWith(background: await backgroundRepository(appId: appId)!.get(event!.value));
         else
           newValue = new DocumentModel(
-                                 documentID: currentState.value.documentID,
-                                 appId: currentState.value.appId,
-                                 name: currentState.value.name,
-                                 documentRenderer: currentState.value.documentRenderer,
-                                 content: currentState.value.content,
-                                 padding: currentState.value.padding,
-                                 images: currentState.value.images,
+                                 documentID: currentState.value!.documentID,
+                                 appId: currentState.value!.appId,
+                                 name: currentState.value!.name,
+                                 documentRenderer: currentState.value!.documentRenderer,
+                                 content: currentState.value!.content,
+                                 padding: currentState.value!.padding,
+                                 images: currentState.value!.images,
                                  background: null,
-                                 conditions: currentState.value.conditions,
+                                 conditions: currentState.value!.conditions,
           );
         yield SubmittableDocumentForm(value: newValue);
 
         return;
       }
       if (event is ChangedDocumentConditions) {
-        newValue = currentState.value.copyWith(conditions: event.value);
+        newValue = currentState.value!.copyWith(conditions: event!.value);
         yield SubmittableDocumentForm(value: newValue);
 
         return;
@@ -154,10 +154,10 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
 
   DocumentIDDocumentFormError error(String message, DocumentModel newValue) => DocumentIDDocumentFormError(message: message, value: newValue);
 
-  Future<DocumentFormState> _isDocumentIDValid(String value, DocumentModel newValue) async {
+  Future<DocumentFormState> _isDocumentIDValid(String? value, DocumentModel newValue) async {
     if (value == null) return Future.value(error("Provide value for documentID", newValue));
     if (value.length == 0) return Future.value(error("Provide value for documentID", newValue));
-    Future<DocumentModel> findDocument = documentRepository(appId: appId).get(value);
+    Future<DocumentModel?> findDocument = documentRepository(appId: appId)!.get(value);
     return await findDocument.then((documentFound) {
       if (documentFound == null) {
         return SubmittableDocumentForm(value: newValue);

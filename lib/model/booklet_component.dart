@@ -25,7 +25,7 @@ import 'package:eliud_pkg_fundamentals/model/booklet_component_state.dart';
 
 abstract class AbstractBookletComponent extends StatelessWidget {
   static String componentName = "booklets";
-  final String bookletID;
+  final String? bookletID;
 
   AbstractBookletComponent({this.bookletID});
 
@@ -63,7 +63,7 @@ abstract class AbstractBookletComponent extends StatelessWidget {
     });
   }
 
-  Widget yourWidget(BuildContext context, BookletModel value);
+  Widget yourWidget(BuildContext context, BookletModel? value);
   Widget alertWidget({ title: String, content: String});
   BookletRepository getBookletRepository(BuildContext context);
 }

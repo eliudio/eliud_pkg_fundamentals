@@ -22,27 +22,27 @@ import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class DecoratedContentEntity {
-  final String appId;
-  final String name;
-  final String decoratingComponentName;
-  final String decoratingComponentId;
-  final String contentComponentName;
-  final String contentComponentId;
-  final int decorationComponentPosition;
-  final double percentageDecorationVisible;
-  final ConditionsSimpleEntity conditions;
+  final String? appId;
+  final String? name;
+  final String? decoratingComponentName;
+  final String? decoratingComponentId;
+  final String? contentComponentName;
+  final String? contentComponentId;
+  final int? decorationComponentPosition;
+  final double? percentageDecorationVisible;
+  final ConditionsSimpleEntity? conditions;
 
   DecoratedContentEntity({this.appId, this.name, this.decoratingComponentName, this.decoratingComponentId, this.contentComponentName, this.contentComponentId, this.decorationComponentPosition, this.percentageDecorationVisible, this.conditions, });
 
 
-  List<Object> get props => [appId, name, decoratingComponentName, decoratingComponentId, contentComponentName, contentComponentId, decorationComponentPosition, percentageDecorationVisible, conditions, ];
+  List<Object?> get props => [appId, name, decoratingComponentName, decoratingComponentId, contentComponentName, contentComponentId, decorationComponentPosition, percentageDecorationVisible, conditions, ];
 
   @override
   String toString() {
     return 'DecoratedContentEntity{appId: $appId, name: $name, decoratingComponentName: $decoratingComponentName, decoratingComponentId: $decoratingComponentId, contentComponentName: $contentComponentName, contentComponentId: $contentComponentId, decorationComponentPosition: $decorationComponentPosition, percentageDecorationVisible: $percentageDecorationVisible, conditions: $conditions}';
   }
 
-  static DecoratedContentEntity fromMap(Map map) {
+  static DecoratedContentEntity? fromMap(Map? map) {
     if (map == null) return null;
 
     var conditionsFromMap;
@@ -63,12 +63,12 @@ class DecoratedContentEntity {
     );
   }
 
-  Map<String, Object> toDocument() {
-    final Map<String, dynamic> conditionsMap = conditions != null 
-        ? conditions.toDocument()
+  Map<String, Object?> toDocument() {
+    final Map<String, dynamic>? conditionsMap = conditions != null 
+        ? conditions!.toDocument()
         : null;
 
-    Map<String, Object> theDocument = HashMap();
+    Map<String, Object?> theDocument = HashMap();
     if (appId != null) theDocument["appId"] = appId;
       else theDocument["appId"] = null;
     if (name != null) theDocument["name"] = name;
@@ -90,8 +90,8 @@ class DecoratedContentEntity {
     return theDocument;
   }
 
-  static DecoratedContentEntity fromJsonString(String json) {
-    Map<String, dynamic> generationSpecificationMap = jsonDecode(json);
+  static DecoratedContentEntity? fromJsonString(String json) {
+    Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
     return fromMap(generationSpecificationMap);
   }
 

@@ -36,16 +36,16 @@ import 'package:eliud_core/tools/random.dart';
 
 
 class TutorialEntryModel {
-  String documentID;
-  String description;
-  MemberMediumModel image;
-  String code;
+  String? documentID;
+  String? description;
+  MemberMediumModel? image;
+  String? code;
 
   TutorialEntryModel({this.documentID, this.description, this.image, this.code, })  {
     assert(documentID != null);
   }
 
-  TutorialEntryModel copyWith({String documentID, String description, MemberMediumModel image, String code, }) {
+  TutorialEntryModel copyWith({String? documentID, String? description, MemberMediumModel? image, String? code, }) {
     return TutorialEntryModel(documentID: documentID ?? this.documentID, description: description ?? this.description, image: image ?? this.image, code: code ?? this.code, );
   }
 
@@ -67,15 +67,15 @@ class TutorialEntryModel {
     return 'TutorialEntryModel{documentID: $documentID, description: $description, image: $image, code: $code}';
   }
 
-  TutorialEntryEntity toEntity({String appId}) {
+  TutorialEntryEntity toEntity({String? appId}) {
     return TutorialEntryEntity(
           description: (description != null) ? description : null, 
-          imageId: (image != null) ? image.documentID : null, 
+          imageId: (image != null) ? image!.documentID : null, 
           code: (code != null) ? code : null, 
     );
   }
 
-  static TutorialEntryModel fromEntity(String documentID, TutorialEntryEntity entity) {
+  static TutorialEntryModel? fromEntity(String documentID, TutorialEntryEntity? entity) {
     if (entity == null) return null;
     return TutorialEntryModel(
           documentID: documentID, 
@@ -84,13 +84,13 @@ class TutorialEntryModel {
     );
   }
 
-  static Future<TutorialEntryModel> fromEntityPlus(String documentID, TutorialEntryEntity entity, { String appId}) async {
+  static Future<TutorialEntryModel?> fromEntityPlus(String documentID, TutorialEntryEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
-    MemberMediumModel imageHolder;
+    MemberMediumModel? imageHolder;
     if (entity.imageId != null) {
       try {
-        await memberMediumRepository(appId: appId).get(entity.imageId).then((val) {
+        await memberMediumRepository(appId: appId)!.get(entity.imageId).then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}

@@ -21,7 +21,7 @@ abstract class DecoratedContentComponentEvent extends Equatable {
 }
 
 class FetchDecoratedContentComponent extends DecoratedContentComponentEvent {
-  final String id;
+  final String? id;
 
   FetchDecoratedContentComponent({ this.id });
 }

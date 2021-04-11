@@ -22,13 +22,13 @@ abstract class LinkFormState extends Equatable {
   const LinkFormState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 // Startup: menu has not been initialised yet and so we should show a "loading indicator" or something
 class LinkFormUninitialized extends LinkFormState {
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 
   @override
   String toString() {
@@ -38,22 +38,22 @@ class LinkFormUninitialized extends LinkFormState {
 
 // LinkModel has been initialised and hence LinkModel is available
 class LinkFormInitialized extends LinkFormState {
-  final LinkModel value;
+  final LinkModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   const LinkFormInitialized({ this.value });
 }
 
 // Menu has been initialised and hence a menu is available
 abstract class LinkFormError extends LinkFormInitialized {
-  final String message;
+  final String? message;
 
   @override
-  List<Object> get props => [ message, value ];
+  List<Object?> get props => [ message, value ];
 
-  const LinkFormError({this.message, LinkModel value }) : super(value: value);
+  const LinkFormError({this.message, LinkModel? value }) : super(value: value);
 
   @override
   String toString() {
@@ -64,10 +64,10 @@ abstract class LinkFormError extends LinkFormInitialized {
   }
 }
 class DocumentIDLinkFormError extends LinkFormError { 
-  const DocumentIDLinkFormError({ String message, LinkModel value }): super(message: message, value: value);
+  const DocumentIDLinkFormError({ String? message, LinkModel? value }): super(message: message, value: value);
 
   @override
-  List<Object> get props => [ message, value ];
+  List<Object?> get props => [ message, value ];
 
   @override
   String toString() {
@@ -80,10 +80,10 @@ class DocumentIDLinkFormError extends LinkFormError {
 
 
 class LinkTextLinkFormError extends LinkFormError { 
-  const LinkTextLinkFormError({ String message, LinkModel value }): super(message: message, value: value);
+  const LinkTextLinkFormError({ String? message, LinkModel? value }): super(message: message, value: value);
 
   @override
-  List<Object> get props => [ message, value ];
+  List<Object?> get props => [ message, value ];
 
   @override
   String toString() {
@@ -96,10 +96,10 @@ class LinkTextLinkFormError extends LinkFormError {
 
 
 class ActionLinkFormError extends LinkFormError { 
-  const ActionLinkFormError({ String message, LinkModel value }): super(message: message, value: value);
+  const ActionLinkFormError({ String? message, LinkModel? value }): super(message: message, value: value);
 
   @override
-  List<Object> get props => [ message, value ];
+  List<Object?> get props => [ message, value ];
 
   @override
   String toString() {
@@ -112,10 +112,10 @@ class ActionLinkFormError extends LinkFormError {
 
 
 class LinkFormLoaded extends LinkFormInitialized { 
-  const LinkFormLoaded({ LinkModel value }): super(value: value);
+  const LinkFormLoaded({ LinkModel? value }): super(value: value);
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() {
@@ -127,10 +127,10 @@ class LinkFormLoaded extends LinkFormInitialized {
 
 
 class SubmittableLinkForm extends LinkFormInitialized { 
-  const SubmittableLinkForm({ LinkModel value }): super(value: value);
+  const SubmittableLinkForm({ LinkModel? value }): super(value: value);
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() {

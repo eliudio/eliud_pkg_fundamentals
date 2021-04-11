@@ -22,13 +22,13 @@ abstract class DocumentItemFormState extends Equatable {
   const DocumentItemFormState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 // Startup: menu has not been initialised yet and so we should show a "loading indicator" or something
 class DocumentItemFormUninitialized extends DocumentItemFormState {
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 
   @override
   String toString() {
@@ -38,22 +38,22 @@ class DocumentItemFormUninitialized extends DocumentItemFormState {
 
 // DocumentItemModel has been initialised and hence DocumentItemModel is available
 class DocumentItemFormInitialized extends DocumentItemFormState {
-  final DocumentItemModel value;
+  final DocumentItemModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   const DocumentItemFormInitialized({ this.value });
 }
 
 // Menu has been initialised and hence a menu is available
 abstract class DocumentItemFormError extends DocumentItemFormInitialized {
-  final String message;
+  final String? message;
 
   @override
-  List<Object> get props => [ message, value ];
+  List<Object?> get props => [ message, value ];
 
-  const DocumentItemFormError({this.message, DocumentItemModel value }) : super(value: value);
+  const DocumentItemFormError({this.message, DocumentItemModel? value }) : super(value: value);
 
   @override
   String toString() {
@@ -64,10 +64,10 @@ abstract class DocumentItemFormError extends DocumentItemFormInitialized {
   }
 }
 class DocumentIDDocumentItemFormError extends DocumentItemFormError { 
-  const DocumentIDDocumentItemFormError({ String message, DocumentItemModel value }): super(message: message, value: value);
+  const DocumentIDDocumentItemFormError({ String? message, DocumentItemModel? value }): super(message: message, value: value);
 
   @override
-  List<Object> get props => [ message, value ];
+  List<Object?> get props => [ message, value ];
 
   @override
   String toString() {
@@ -80,10 +80,10 @@ class DocumentIDDocumentItemFormError extends DocumentItemFormError {
 
 
 class ReferenceDocumentItemFormError extends DocumentItemFormError { 
-  const ReferenceDocumentItemFormError({ String message, DocumentItemModel value }): super(message: message, value: value);
+  const ReferenceDocumentItemFormError({ String? message, DocumentItemModel? value }): super(message: message, value: value);
 
   @override
-  List<Object> get props => [ message, value ];
+  List<Object?> get props => [ message, value ];
 
   @override
   String toString() {
@@ -96,10 +96,10 @@ class ReferenceDocumentItemFormError extends DocumentItemFormError {
 
 
 class ImageDocumentItemFormError extends DocumentItemFormError { 
-  const ImageDocumentItemFormError({ String message, DocumentItemModel value }): super(message: message, value: value);
+  const ImageDocumentItemFormError({ String? message, DocumentItemModel? value }): super(message: message, value: value);
 
   @override
-  List<Object> get props => [ message, value ];
+  List<Object?> get props => [ message, value ];
 
   @override
   String toString() {
@@ -112,10 +112,10 @@ class ImageDocumentItemFormError extends DocumentItemFormError {
 
 
 class DocumentItemFormLoaded extends DocumentItemFormInitialized { 
-  const DocumentItemFormLoaded({ DocumentItemModel value }): super(value: value);
+  const DocumentItemFormLoaded({ DocumentItemModel? value }): super(value: value);
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() {
@@ -127,10 +127,10 @@ class DocumentItemFormLoaded extends DocumentItemFormInitialized {
 
 
 class SubmittableDocumentItemForm extends DocumentItemFormInitialized { 
-  const SubmittableDocumentItemForm({ DocumentItemModel value }): super(value: value);
+  const SubmittableDocumentItemForm({ DocumentItemModel? value }): super(value: value);
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() {

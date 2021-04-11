@@ -20,13 +20,13 @@ abstract class DocumentComponentState extends Equatable {
   const DocumentComponentState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class DocumentComponentUninitialized extends DocumentComponentState {}
 
 class DocumentComponentError extends DocumentComponentState {
-  final String message;
+  final String? message;
   DocumentComponentError({ this.message });
 }
 
@@ -35,16 +35,16 @@ class DocumentComponentPermissionDenied extends DocumentComponentState {
 }
 
 class DocumentComponentLoaded extends DocumentComponentState {
-  final DocumentModel value;
+  final DocumentModel? value;
 
   const DocumentComponentLoaded({ this.value });
 
-  DocumentComponentLoaded copyWith({ DocumentModel copyThis }) {
+  DocumentComponentLoaded copyWith({ DocumentModel? copyThis }) {
     return DocumentComponentLoaded(value: copyThis ?? this.value);
   }
 
   @override
-  List<Object> get props => [value];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'DocumentComponentLoaded { value: $value }';

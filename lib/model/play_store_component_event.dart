@@ -21,7 +21,7 @@ abstract class PlayStoreComponentEvent extends Equatable {
 }
 
 class FetchPlayStoreComponent extends PlayStoreComponentEvent {
-  final String id;
+  final String? id;
 
   FetchPlayStoreComponent({ this.id });
 }

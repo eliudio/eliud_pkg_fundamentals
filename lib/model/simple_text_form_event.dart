@@ -34,7 +34,7 @@ abstract class SimpleTextFormEvent extends Equatable {
   const SimpleTextFormEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class InitialiseNewSimpleTextFormEvent extends SimpleTextFormEvent {
@@ -42,90 +42,90 @@ class InitialiseNewSimpleTextFormEvent extends SimpleTextFormEvent {
 
 
 class InitialiseSimpleTextFormEvent extends SimpleTextFormEvent {
-  final SimpleTextModel value;
+  final SimpleTextModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   InitialiseSimpleTextFormEvent({this.value});
 }
 
 class InitialiseSimpleTextFormNoLoadEvent extends SimpleTextFormEvent {
-  final SimpleTextModel value;
+  final SimpleTextModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   InitialiseSimpleTextFormNoLoadEvent({this.value});
 }
 
 class ChangedSimpleTextDocumentID extends SimpleTextFormEvent {
-  final String value;
+  final String? value;
 
   ChangedSimpleTextDocumentID({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedSimpleTextDocumentID{ value: $value }';
 }
 
 class ChangedSimpleTextAppId extends SimpleTextFormEvent {
-  final String value;
+  final String? value;
 
   ChangedSimpleTextAppId({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedSimpleTextAppId{ value: $value }';
 }
 
 class ChangedSimpleTextTitle extends SimpleTextFormEvent {
-  final String value;
+  final String? value;
 
   ChangedSimpleTextTitle({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedSimpleTextTitle{ value: $value }';
 }
 
 class ChangedSimpleTextText extends SimpleTextFormEvent {
-  final String value;
+  final String? value;
 
   ChangedSimpleTextText({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedSimpleTextText{ value: $value }';
 }
 
 class ChangedSimpleTextConditions extends SimpleTextFormEvent {
-  final ConditionsSimpleModel value;
+  final ConditionsSimpleModel? value;
 
   ChangedSimpleTextConditions({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedSimpleTextConditions{ value: $value }';
 }
 
 class ChangedSimpleTextTextAlign extends SimpleTextFormEvent {
-  final SimpleTextAlign value;
+  final SimpleTextAlign? value;
 
   ChangedSimpleTextTextAlign({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedSimpleTextTextAlign{ value: $value }';

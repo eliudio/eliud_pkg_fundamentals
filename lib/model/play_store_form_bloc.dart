@@ -42,8 +42,8 @@ import 'package:eliud_pkg_fundamentals/model/play_store_form_state.dart';
 import 'package:eliud_pkg_fundamentals/model/play_store_repository.dart';
 
 class PlayStoreFormBloc extends Bloc<PlayStoreFormEvent, PlayStoreFormState> {
-  final FormAction formAction;
-  final String appId;
+  final FormAction? formAction;
+  final String? appId;
 
   PlayStoreFormBloc(this.appId, { this.formAction }): super(PlayStoreFormUninitialized());
   @override
@@ -65,20 +65,20 @@ class PlayStoreFormBloc extends Bloc<PlayStoreFormEvent, PlayStoreFormState> {
 
       if (event is InitialisePlayStoreFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        PlayStoreFormLoaded loaded = PlayStoreFormLoaded(value: await playStoreRepository(appId: appId).get(event.value.documentID));
+        PlayStoreFormLoaded loaded = PlayStoreFormLoaded(value: await playStoreRepository(appId: appId)!.get(event!.value!.documentID));
         yield loaded;
         return;
       } else if (event is InitialisePlayStoreFormNoLoadEvent) {
-        PlayStoreFormLoaded loaded = PlayStoreFormLoaded(value: event.value);
+        PlayStoreFormLoaded loaded = PlayStoreFormLoaded(value: event!.value);
         yield loaded;
         return;
       }
     } else if (currentState is PlayStoreFormInitialized) {
-      PlayStoreModel newValue = null;
+      PlayStoreModel? newValue = null;
       if (event is ChangedPlayStoreDocumentID) {
-        newValue = currentState.value.copyWith(documentID: event.value);
+        newValue = currentState.value!.copyWith(documentID: event!.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event.value, newValue).asStream();
+          yield* _isDocumentIDValid(event!.value, newValue).asStream();
         } else {
           yield SubmittablePlayStoreForm(value: newValue);
         }
@@ -86,28 +86,28 @@ class PlayStoreFormBloc extends Bloc<PlayStoreFormEvent, PlayStoreFormState> {
         return;
       }
       if (event is ChangedPlayStoreDescription) {
-        newValue = currentState.value.copyWith(description: event.value);
+        newValue = currentState.value!.copyWith(description: event!.value);
         yield SubmittablePlayStoreForm(value: newValue);
 
         return;
       }
       if (event is ChangedPlayStoreItemBackground) {
-        if (event.value != null)
-          newValue = currentState.value.copyWith(itemBackground: await backgroundRepository(appId: appId).get(event.value));
+        if (event!.value != null)
+          newValue = currentState.value!.copyWith(itemBackground: await backgroundRepository(appId: appId)!.get(event!.value));
         else
           newValue = new PlayStoreModel(
-                                 documentID: currentState.value.documentID,
-                                 appId: currentState.value.appId,
-                                 description: currentState.value.description,
+                                 documentID: currentState.value!.documentID,
+                                 appId: currentState.value!.appId,
+                                 description: currentState.value!.description,
                                  itemBackground: null,
-                                 conditions: currentState.value.conditions,
+                                 conditions: currentState.value!.conditions,
           );
         yield SubmittablePlayStoreForm(value: newValue);
 
         return;
       }
       if (event is ChangedPlayStoreConditions) {
-        newValue = currentState.value.copyWith(conditions: event.value);
+        newValue = currentState.value!.copyWith(conditions: event!.value);
         yield SubmittablePlayStoreForm(value: newValue);
 
         return;
@@ -118,10 +118,10 @@ class PlayStoreFormBloc extends Bloc<PlayStoreFormEvent, PlayStoreFormState> {
 
   DocumentIDPlayStoreFormError error(String message, PlayStoreModel newValue) => DocumentIDPlayStoreFormError(message: message, value: newValue);
 
-  Future<PlayStoreFormState> _isDocumentIDValid(String value, PlayStoreModel newValue) async {
+  Future<PlayStoreFormState> _isDocumentIDValid(String? value, PlayStoreModel newValue) async {
     if (value == null) return Future.value(error("Provide value for documentID", newValue));
     if (value.length == 0) return Future.value(error("Provide value for documentID", newValue));
-    Future<PlayStoreModel> findDocument = playStoreRepository(appId: appId).get(value);
+    Future<PlayStoreModel?> findDocument = playStoreRepository(appId: appId)!.get(value);
     return await findDocument.then((documentFound) {
       if (documentFound == null) {
         return SubmittablePlayStoreForm(value: newValue);

@@ -36,17 +36,17 @@ import 'package:eliud_core/tools/random.dart';
 
 
 class ListedItemModel {
-  String documentID;
-  String description;
-  ActionModel action;
-  MemberMediumModel image;
-  PosSizeModel posSize;
+  String? documentID;
+  String? description;
+  ActionModel? action;
+  MemberMediumModel? image;
+  PosSizeModel? posSize;
 
   ListedItemModel({this.documentID, this.description, this.action, this.image, this.posSize, })  {
     assert(documentID != null);
   }
 
-  ListedItemModel copyWith({String documentID, String description, ActionModel action, MemberMediumModel image, PosSizeModel posSize, }) {
+  ListedItemModel copyWith({String? documentID, String? description, ActionModel? action, MemberMediumModel? image, PosSizeModel? posSize, }) {
     return ListedItemModel(documentID: documentID ?? this.documentID, description: description ?? this.description, action: action ?? this.action, image: image ?? this.image, posSize: posSize ?? this.posSize, );
   }
 
@@ -69,16 +69,16 @@ class ListedItemModel {
     return 'ListedItemModel{documentID: $documentID, description: $description, action: $action, image: $image, posSize: $posSize}';
   }
 
-  ListedItemEntity toEntity({String appId}) {
+  ListedItemEntity toEntity({String? appId}) {
     return ListedItemEntity(
           description: (description != null) ? description : null, 
-          action: (action != null) ? action.toEntity(appId: appId) : null, 
-          imageId: (image != null) ? image.documentID : null, 
-          posSizeId: (posSize != null) ? posSize.documentID : null, 
+          action: (action != null) ? action!.toEntity(appId: appId) : null, 
+          imageId: (image != null) ? image!.documentID : null, 
+          posSizeId: (posSize != null) ? posSize!.documentID : null, 
     );
   }
 
-  static ListedItemModel fromEntity(String documentID, ListedItemEntity entity) {
+  static ListedItemModel? fromEntity(String documentID, ListedItemEntity? entity) {
     if (entity == null) return null;
     return ListedItemModel(
           documentID: documentID, 
@@ -88,22 +88,22 @@ class ListedItemModel {
     );
   }
 
-  static Future<ListedItemModel> fromEntityPlus(String documentID, ListedItemEntity entity, { String appId}) async {
+  static Future<ListedItemModel?> fromEntityPlus(String documentID, ListedItemEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
-    MemberMediumModel imageHolder;
+    MemberMediumModel? imageHolder;
     if (entity.imageId != null) {
       try {
-        await memberMediumRepository(appId: appId).get(entity.imageId).then((val) {
+        await memberMediumRepository(appId: appId)!.get(entity.imageId).then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}
     }
 
-    PosSizeModel posSizeHolder;
+    PosSizeModel? posSizeHolder;
     if (entity.posSizeId != null) {
       try {
-        await posSizeRepository(appId: appId).get(entity.posSizeId).then((val) {
+        await posSizeRepository(appId: appId)!.get(entity.posSizeId).then((val) {
           posSizeHolder = val;
         }).catchError((error) {});
       } catch (_) {}

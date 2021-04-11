@@ -42,8 +42,8 @@ import 'package:eliud_pkg_fundamentals/model/booklet_form_state.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_repository.dart';
 
 class BookletFormBloc extends Bloc<BookletFormEvent, BookletFormState> {
-  final FormAction formAction;
-  final String appId;
+  final FormAction? formAction;
+  final String? appId;
 
   BookletFormBloc(this.appId, { this.formAction }): super(BookletFormUninitialized());
   @override
@@ -66,20 +66,20 @@ class BookletFormBloc extends Bloc<BookletFormEvent, BookletFormState> {
 
       if (event is InitialiseBookletFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        BookletFormLoaded loaded = BookletFormLoaded(value: await bookletRepository(appId: appId).get(event.value.documentID));
+        BookletFormLoaded loaded = BookletFormLoaded(value: await bookletRepository(appId: appId)!.get(event!.value!.documentID));
         yield loaded;
         return;
       } else if (event is InitialiseBookletFormNoLoadEvent) {
-        BookletFormLoaded loaded = BookletFormLoaded(value: event.value);
+        BookletFormLoaded loaded = BookletFormLoaded(value: event!.value);
         yield loaded;
         return;
       }
     } else if (currentState is BookletFormInitialized) {
-      BookletModel newValue = null;
+      BookletModel? newValue = null;
       if (event is ChangedBookletDocumentID) {
-        newValue = currentState.value.copyWith(documentID: event.value);
+        newValue = currentState.value!.copyWith(documentID: event!.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event.value, newValue).asStream();
+          yield* _isDocumentIDValid(event!.value, newValue).asStream();
         } else {
           yield SubmittableBookletForm(value: newValue);
         }
@@ -87,19 +87,19 @@ class BookletFormBloc extends Bloc<BookletFormEvent, BookletFormState> {
         return;
       }
       if (event is ChangedBookletName) {
-        newValue = currentState.value.copyWith(name: event.value);
+        newValue = currentState.value!.copyWith(name: event!.value);
         yield SubmittableBookletForm(value: newValue);
 
         return;
       }
       if (event is ChangedBookletSections) {
-        newValue = currentState.value.copyWith(sections: event.value);
+        newValue = currentState.value!.copyWith(sections: event!.value);
         yield SubmittableBookletForm(value: newValue);
 
         return;
       }
       if (event is ChangedBookletConditions) {
-        newValue = currentState.value.copyWith(conditions: event.value);
+        newValue = currentState.value!.copyWith(conditions: event!.value);
         yield SubmittableBookletForm(value: newValue);
 
         return;
@@ -110,10 +110,10 @@ class BookletFormBloc extends Bloc<BookletFormEvent, BookletFormState> {
 
   DocumentIDBookletFormError error(String message, BookletModel newValue) => DocumentIDBookletFormError(message: message, value: newValue);
 
-  Future<BookletFormState> _isDocumentIDValid(String value, BookletModel newValue) async {
+  Future<BookletFormState> _isDocumentIDValid(String? value, BookletModel newValue) async {
     if (value == null) return Future.value(error("Provide value for documentID", newValue));
     if (value.length == 0) return Future.value(error("Provide value for documentID", newValue));
-    Future<BookletModel> findDocument = bookletRepository(appId: appId).get(value);
+    Future<BookletModel?> findDocument = bookletRepository(appId: appId)!.get(value);
     return await findDocument.then((documentFound) {
       if (documentFound == null) {
         return SubmittableBookletForm(value: newValue);

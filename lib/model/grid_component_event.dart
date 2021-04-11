@@ -21,7 +21,7 @@ abstract class GridComponentEvent extends Equatable {
 }
 
 class FetchGridComponent extends GridComponentEvent {
-  final String id;
+  final String? id;
 
   FetchGridComponent({ this.id });
 }

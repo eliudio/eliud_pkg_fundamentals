@@ -25,7 +25,7 @@ import 'package:eliud_pkg_fundamentals/model/simple_image_component_state.dart';
 
 abstract class AbstractSimpleImageComponent extends StatelessWidget {
   static String componentName = "simpleImages";
-  final String simpleImageID;
+  final String? simpleImageID;
 
   AbstractSimpleImageComponent({this.simpleImageID});
 
@@ -63,7 +63,7 @@ abstract class AbstractSimpleImageComponent extends StatelessWidget {
     });
   }
 
-  Widget yourWidget(BuildContext context, SimpleImageModel value);
+  Widget yourWidget(BuildContext context, SimpleImageModel? value);
   Widget alertWidget({ title: String, content: String});
   SimpleImageRepository getSimpleImageRepository(BuildContext context);
 }

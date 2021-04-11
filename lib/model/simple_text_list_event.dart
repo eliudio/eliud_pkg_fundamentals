@@ -19,7 +19,7 @@ import 'package:eliud_pkg_fundamentals/model/simple_text_model.dart';
 abstract class SimpleTextListEvent extends Equatable {
   const SimpleTextListEvent();
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class LoadSimpleTextList extends SimpleTextListEvent {}
@@ -27,49 +27,49 @@ class LoadSimpleTextList extends SimpleTextListEvent {}
 class NewPage extends SimpleTextListEvent {}
 
 class AddSimpleTextList extends SimpleTextListEvent {
-  final SimpleTextModel value;
+  final SimpleTextModel? value;
 
   const AddSimpleTextList({ this.value });
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'AddSimpleTextList{ value: $value }';
 }
 
 class UpdateSimpleTextList extends SimpleTextListEvent {
-  final SimpleTextModel value;
+  final SimpleTextModel? value;
 
   const UpdateSimpleTextList({ this.value });
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'UpdateSimpleTextList{ value: $value }';
 }
 
 class DeleteSimpleTextList extends SimpleTextListEvent {
-  final SimpleTextModel value;
+  final SimpleTextModel? value;
 
   const DeleteSimpleTextList({ this.value });
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'DeleteSimpleTextList{ value: $value }';
 }
 
 class SimpleTextListUpdated extends SimpleTextListEvent {
-  final List<SimpleTextModel> value;
-  final bool mightHaveMore;
+  final List<SimpleTextModel?>? value;
+  final bool? mightHaveMore;
 
   const SimpleTextListUpdated({ this.value, this.mightHaveMore });
 
   @override
-  List<Object> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [ value, mightHaveMore ];
 
   @override
   String toString() => 'SimpleTextListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';

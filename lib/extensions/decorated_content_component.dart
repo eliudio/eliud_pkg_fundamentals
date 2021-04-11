@@ -12,23 +12,23 @@ import 'package:flutter/material.dart';
 class DecoratedContentComponentConstructorDefault
     implements ComponentConstructor {
   @override
-  Widget createNew({String id, Map<String, Object> parameters}) {
+  Widget createNew({String? id, Map<String, Object>? parameters}) {
     return DecoratedContentComponent(decoratedContentID: id);
   }
 }
 
 class DecoratedContentComponent extends AbstractDecoratedContentComponent {
-  DecoratedContentComponent({String decoratedContentID})
+  DecoratedContentComponent({String? decoratedContentID})
       : super(decoratedContentID: decoratedContentID);
 
   @override
-  Widget yourWidget(BuildContext context, DecoratedContentModel value) {
-    var contents = Registry.registry().component(
-        componentName: value.contentComponentName,
-        id: value.contentComponentId);
-    var image = Registry.registry().component(
-        componentName: value.decoratingComponentName,
-        id: value.decoratingComponentId);
+  Widget yourWidget(BuildContext context, DecoratedContentModel? value) {
+    var contents = Registry.registry()!.component(
+        value!.contentComponentName!,
+        value.contentComponentId!);
+    var image = Registry.registry()!.component(
+        value.decoratingComponentName!,
+        value.decoratingComponentId!);
     var percentageImageVisible = value.percentageDecorationVisible == null
         ? .5
         : value.percentageDecorationVisible;
@@ -70,7 +70,7 @@ class DecoratedContentComponent extends AbstractDecoratedContentComponent {
       }
     } else {
       var fraction1 = Expanded(
-        flex: (10 * percentageImageVisible).toInt(),
+        flex: (10 * percentageImageVisible!).toInt(),
         child: Container(),
       );
       var fraction2 = Expanded(
@@ -104,6 +104,6 @@ class DecoratedContentComponent extends AbstractDecoratedContentComponent {
   DecoratedContentRepository getDecoratedContentRepository(
       BuildContext context) {
     return AbstractRepositorySingleton.singleton
-        .decoratedContentRepository(AccessBloc.appId(context));
+        .decoratedContentRepository(AccessBloc.appId(context))!;
   }
 }

@@ -20,13 +20,13 @@ abstract class SimpleImageComponentState extends Equatable {
   const SimpleImageComponentState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class SimpleImageComponentUninitialized extends SimpleImageComponentState {}
 
 class SimpleImageComponentError extends SimpleImageComponentState {
-  final String message;
+  final String? message;
   SimpleImageComponentError({ this.message });
 }
 
@@ -35,16 +35,16 @@ class SimpleImageComponentPermissionDenied extends SimpleImageComponentState {
 }
 
 class SimpleImageComponentLoaded extends SimpleImageComponentState {
-  final SimpleImageModel value;
+  final SimpleImageModel? value;
 
   const SimpleImageComponentLoaded({ this.value });
 
-  SimpleImageComponentLoaded copyWith({ SimpleImageModel copyThis }) {
+  SimpleImageComponentLoaded copyWith({ SimpleImageModel? copyThis }) {
     return SimpleImageComponentLoaded(value: copyThis ?? this.value);
   }
 
   @override
-  List<Object> get props => [value];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'SimpleImageComponentLoaded { value: $value }';

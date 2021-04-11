@@ -27,53 +27,59 @@ const _decoratedContentLimit = 5;
 
 class DecoratedContentListBloc extends Bloc<DecoratedContentListEvent, DecoratedContentListState> {
   final DecoratedContentRepository _decoratedContentRepository;
-  StreamSubscription _decoratedContentsListSubscription;
-  final EliudQuery eliudQuery;
+  StreamSubscription? _decoratedContentsListSubscription;
+  final EliudQuery? eliudQuery;
   int pages = 1;
-  final bool paged;
-  final String orderBy;
-  final bool descending;
-  final bool detailed;
+  final bool? paged;
+  final String? orderBy;
+  final bool? descending;
+  final bool? detailed;
 
-  DecoratedContentListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, @required DecoratedContentRepository decoratedContentRepository})
+  DecoratedContentListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required DecoratedContentRepository decoratedContentRepository})
       : assert(decoratedContentRepository != null),
         _decoratedContentRepository = decoratedContentRepository,
         super(DecoratedContentListLoading());
 
   Stream<DecoratedContentListState> _mapLoadDecoratedContentListToState() async* {
-    int amountNow =  (state is DecoratedContentListLoaded) ? (state as DecoratedContentListLoaded).values.length : 0;
+    int amountNow =  (state is DecoratedContentListLoaded) ? (state as DecoratedContentListLoaded).values!.length : 0;
     _decoratedContentsListSubscription?.cancel();
     _decoratedContentsListSubscription = _decoratedContentRepository.listen(
           (list) => add(DecoratedContentListUpdated(value: list, mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && (paged)) ? pages * _decoratedContentLimit : null
+      limit: ((paged != null) && paged!) ? pages * _decoratedContentLimit : null
     );
   }
 
   Stream<DecoratedContentListState> _mapLoadDecoratedContentListWithDetailsToState() async* {
-    int amountNow =  (state is DecoratedContentListLoaded) ? (state as DecoratedContentListLoaded).values.length : 0;
+    int amountNow =  (state is DecoratedContentListLoaded) ? (state as DecoratedContentListLoaded).values!.length : 0;
     _decoratedContentsListSubscription?.cancel();
     _decoratedContentsListSubscription = _decoratedContentRepository.listenWithDetails(
             (list) => add(DecoratedContentListUpdated(value: list, mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && (paged)) ? pages * _decoratedContentLimit : null
+        limit: ((paged != null) && paged!) ? pages * _decoratedContentLimit : null
     );
   }
 
   Stream<DecoratedContentListState> _mapAddDecoratedContentListToState(AddDecoratedContentList event) async* {
-    _decoratedContentRepository.add(event.value);
+    var value = event.value;
+    if (value != null) 
+      _decoratedContentRepository.add(value);
   }
 
   Stream<DecoratedContentListState> _mapUpdateDecoratedContentListToState(UpdateDecoratedContentList event) async* {
-    _decoratedContentRepository.update(event.value);
+    var value = event.value;
+    if (value != null) 
+      _decoratedContentRepository.update(value);
   }
 
   Stream<DecoratedContentListState> _mapDeleteDecoratedContentListToState(DeleteDecoratedContentList event) async* {
-    _decoratedContentRepository.delete(event.value);
+    var value = event.value;
+    if (value != null) 
+      _decoratedContentRepository.delete(value);
   }
 
   Stream<DecoratedContentListState> _mapDecoratedContentListUpdatedToState(
@@ -84,7 +90,7 @@ class DecoratedContentListBloc extends Bloc<DecoratedContentListEvent, Decorated
   @override
   Stream<DecoratedContentListState> mapEventToState(DecoratedContentListEvent event) async* {
     if (event is LoadDecoratedContentList) {
-      if ((detailed == null) || (!detailed)) {
+      if ((detailed == null) || (!detailed!)) {
         yield* _mapLoadDecoratedContentListToState();
       } else {
         yield* _mapLoadDecoratedContentListWithDetailsToState();

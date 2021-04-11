@@ -28,7 +28,7 @@ class PresentationHelper {
   }
 
   static Align _toAlignment(
-      PresentationImageAlignment sectionImageAlignment, Widget widget) {
+      PresentationImageAlignment? sectionImageAlignment, Widget widget) {
     if (sectionImageAlignment == PresentationImageAlignment.Left) {
       return Align(child: widget, alignment: Alignment.topLeft);
     }
@@ -43,10 +43,10 @@ class PresentationHelper {
   static Widget makeContainingTable(
       BuildContext context,
       List<Widget> widgets,
-      MemberMediumModel image,
-      PresentationRelativeImagePosition relativeImagePosition,
-      PresentationImageAlignment imageAlignment,
-      double imageSize) {
+      MemberMediumModel? image,
+      PresentationRelativeImagePosition? relativeImagePosition,
+      PresentationImageAlignment? imageAlignment,
+      double? imageSize) {
     var accessState = AccessBloc.getState(context);
     if (image == null) {
       return _makeBox(widgets);
@@ -61,11 +61,11 @@ class PresentationHelper {
       imageAlignment = PresentationImageAlignment.Left;
     }
 
-    double size;
+    double? size;
     if (imageSize != null) {
       size = fullScreenWidth(context) * imageSize;
     }
-    var widgetImage = Image.network(image.url);
+    var widgetImage = Image.network(image.url!);
 
     if (relativeImagePosition == PresentationRelativeImagePosition.Aside) {
       Widget column1;

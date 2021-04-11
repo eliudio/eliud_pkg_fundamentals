@@ -22,22 +22,22 @@ import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class SimpleImageEntity {
-  final String appId;
-  final String title;
-  final String imageId;
-  final ConditionsSimpleEntity conditions;
+  final String? appId;
+  final String? title;
+  final String? imageId;
+  final ConditionsSimpleEntity? conditions;
 
   SimpleImageEntity({this.appId, this.title, this.imageId, this.conditions, });
 
 
-  List<Object> get props => [appId, title, imageId, conditions, ];
+  List<Object?> get props => [appId, title, imageId, conditions, ];
 
   @override
   String toString() {
     return 'SimpleImageEntity{appId: $appId, title: $title, imageId: $imageId, conditions: $conditions}';
   }
 
-  static SimpleImageEntity fromMap(Map map) {
+  static SimpleImageEntity? fromMap(Map? map) {
     if (map == null) return null;
 
     var conditionsFromMap;
@@ -53,12 +53,12 @@ class SimpleImageEntity {
     );
   }
 
-  Map<String, Object> toDocument() {
-    final Map<String, dynamic> conditionsMap = conditions != null 
-        ? conditions.toDocument()
+  Map<String, Object?> toDocument() {
+    final Map<String, dynamic>? conditionsMap = conditions != null 
+        ? conditions!.toDocument()
         : null;
 
-    Map<String, Object> theDocument = HashMap();
+    Map<String, Object?> theDocument = HashMap();
     if (appId != null) theDocument["appId"] = appId;
       else theDocument["appId"] = null;
     if (title != null) theDocument["title"] = title;
@@ -70,8 +70,8 @@ class SimpleImageEntity {
     return theDocument;
   }
 
-  static SimpleImageEntity fromJsonString(String json) {
-    Map<String, dynamic> generationSpecificationMap = jsonDecode(json);
+  static SimpleImageEntity? fromJsonString(String json) {
+    Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
     return fromMap(generationSpecificationMap);
   }
 

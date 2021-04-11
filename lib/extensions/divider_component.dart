@@ -9,18 +9,18 @@ import 'package:eliud_pkg_fundamentals/model/divider_repository.dart';
 import 'package:flutter/material.dart';
 
 class DividerComponentConstructorDefault implements ComponentConstructor {
-  Widget createNew({String id, Map<String, Object> parameters}) {
+  Widget createNew({String? id, Map<String, Object>? parameters}) {
     return DividerComponent(dividerID: id);
   }
 }
 
 class DividerComponent extends AbstractDividerComponent {
-  DividerComponent({String dividerID}) : super(dividerID: dividerID);
+  DividerComponent({String? dividerID}) : super(dividerID: dividerID);
 
   @override
-  Widget yourWidget(BuildContext context, DividerModel value) {
+  Widget yourWidget(BuildContext context, DividerModel? value) {
     return Divider(
-      height: value.height ?? 0,
+      height: value!.height ?? 0,
       thickness: value.thickness ?? 0,
       indent: value.indent ?? 0,
       endIndent: value.endIndent ?? 0,
@@ -35,6 +35,6 @@ class DividerComponent extends AbstractDividerComponent {
 
   @override
   DividerRepository getDividerRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.dividerRepository(AccessBloc.appId(context));
+    return AbstractRepositorySingleton.singleton.dividerRepository(AccessBloc.appId(context))!;
   }
 }

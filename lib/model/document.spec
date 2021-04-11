@@ -57,7 +57,7 @@
       "remark": "Document content",
       "fieldType": "String",
       "iconName": "text_format",
-      "bespokeFormField": "DocumentTextField('Document', state.value.documentRenderer, state.value.content, state.value.images, state.value.background, _onContentChanged)",
+      "bespokeFormField": "DocumentTextField('Document', state.value!.documentRenderer, state.value!.content, state.value!.images, state.value!.background, _onContentChanged)",
       "group": "contents"
     },
     {

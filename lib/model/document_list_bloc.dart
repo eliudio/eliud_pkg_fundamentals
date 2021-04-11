@@ -27,53 +27,59 @@ const _documentLimit = 5;
 
 class DocumentListBloc extends Bloc<DocumentListEvent, DocumentListState> {
   final DocumentRepository _documentRepository;
-  StreamSubscription _documentsListSubscription;
-  final EliudQuery eliudQuery;
+  StreamSubscription? _documentsListSubscription;
+  final EliudQuery? eliudQuery;
   int pages = 1;
-  final bool paged;
-  final String orderBy;
-  final bool descending;
-  final bool detailed;
+  final bool? paged;
+  final String? orderBy;
+  final bool? descending;
+  final bool? detailed;
 
-  DocumentListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, @required DocumentRepository documentRepository})
+  DocumentListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required DocumentRepository documentRepository})
       : assert(documentRepository != null),
         _documentRepository = documentRepository,
         super(DocumentListLoading());
 
   Stream<DocumentListState> _mapLoadDocumentListToState() async* {
-    int amountNow =  (state is DocumentListLoaded) ? (state as DocumentListLoaded).values.length : 0;
+    int amountNow =  (state is DocumentListLoaded) ? (state as DocumentListLoaded).values!.length : 0;
     _documentsListSubscription?.cancel();
     _documentsListSubscription = _documentRepository.listen(
           (list) => add(DocumentListUpdated(value: list, mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && (paged)) ? pages * _documentLimit : null
+      limit: ((paged != null) && paged!) ? pages * _documentLimit : null
     );
   }
 
   Stream<DocumentListState> _mapLoadDocumentListWithDetailsToState() async* {
-    int amountNow =  (state is DocumentListLoaded) ? (state as DocumentListLoaded).values.length : 0;
+    int amountNow =  (state is DocumentListLoaded) ? (state as DocumentListLoaded).values!.length : 0;
     _documentsListSubscription?.cancel();
     _documentsListSubscription = _documentRepository.listenWithDetails(
             (list) => add(DocumentListUpdated(value: list, mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && (paged)) ? pages * _documentLimit : null
+        limit: ((paged != null) && paged!) ? pages * _documentLimit : null
     );
   }
 
   Stream<DocumentListState> _mapAddDocumentListToState(AddDocumentList event) async* {
-    _documentRepository.add(event.value);
+    var value = event.value;
+    if (value != null) 
+      _documentRepository.add(value);
   }
 
   Stream<DocumentListState> _mapUpdateDocumentListToState(UpdateDocumentList event) async* {
-    _documentRepository.update(event.value);
+    var value = event.value;
+    if (value != null) 
+      _documentRepository.update(value);
   }
 
   Stream<DocumentListState> _mapDeleteDocumentListToState(DeleteDocumentList event) async* {
-    _documentRepository.delete(event.value);
+    var value = event.value;
+    if (value != null) 
+      _documentRepository.delete(value);
   }
 
   Stream<DocumentListState> _mapDocumentListUpdatedToState(
@@ -84,7 +90,7 @@ class DocumentListBloc extends Bloc<DocumentListEvent, DocumentListState> {
   @override
   Stream<DocumentListState> mapEventToState(DocumentListEvent event) async* {
     if (event is LoadDocumentList) {
-      if ((detailed == null) || (!detailed)) {
+      if ((detailed == null) || (!detailed!)) {
         yield* _mapLoadDocumentListToState();
       } else {
         yield* _mapLoadDocumentListWithDetailsToState();

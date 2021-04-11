@@ -49,7 +49,7 @@
       "group": "shape",
       "fieldType": "Rgb",
       "iconName": "color_lens",
-      "bespokeFormField": "RgbField(\"Color\", state.value.color, _onColorChanged)"
+      "bespokeFormField": "RgbField(\"Color\", state.value!.color, _onColorChanged)"
     },
     {
       "fieldName": "height",

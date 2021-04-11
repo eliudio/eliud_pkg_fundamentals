@@ -27,53 +27,59 @@ const _tutorialEntryLimit = 5;
 
 class TutorialEntryListBloc extends Bloc<TutorialEntryListEvent, TutorialEntryListState> {
   final TutorialEntryRepository _tutorialEntryRepository;
-  StreamSubscription _tutorialEntrysListSubscription;
-  final EliudQuery eliudQuery;
+  StreamSubscription? _tutorialEntrysListSubscription;
+  final EliudQuery? eliudQuery;
   int pages = 1;
-  final bool paged;
-  final String orderBy;
-  final bool descending;
-  final bool detailed;
+  final bool? paged;
+  final String? orderBy;
+  final bool? descending;
+  final bool? detailed;
 
-  TutorialEntryListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, @required TutorialEntryRepository tutorialEntryRepository})
+  TutorialEntryListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required TutorialEntryRepository tutorialEntryRepository})
       : assert(tutorialEntryRepository != null),
         _tutorialEntryRepository = tutorialEntryRepository,
         super(TutorialEntryListLoading());
 
   Stream<TutorialEntryListState> _mapLoadTutorialEntryListToState() async* {
-    int amountNow =  (state is TutorialEntryListLoaded) ? (state as TutorialEntryListLoaded).values.length : 0;
+    int amountNow =  (state is TutorialEntryListLoaded) ? (state as TutorialEntryListLoaded).values!.length : 0;
     _tutorialEntrysListSubscription?.cancel();
     _tutorialEntrysListSubscription = _tutorialEntryRepository.listen(
           (list) => add(TutorialEntryListUpdated(value: list, mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && (paged)) ? pages * _tutorialEntryLimit : null
+      limit: ((paged != null) && paged!) ? pages * _tutorialEntryLimit : null
     );
   }
 
   Stream<TutorialEntryListState> _mapLoadTutorialEntryListWithDetailsToState() async* {
-    int amountNow =  (state is TutorialEntryListLoaded) ? (state as TutorialEntryListLoaded).values.length : 0;
+    int amountNow =  (state is TutorialEntryListLoaded) ? (state as TutorialEntryListLoaded).values!.length : 0;
     _tutorialEntrysListSubscription?.cancel();
     _tutorialEntrysListSubscription = _tutorialEntryRepository.listenWithDetails(
             (list) => add(TutorialEntryListUpdated(value: list, mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && (paged)) ? pages * _tutorialEntryLimit : null
+        limit: ((paged != null) && paged!) ? pages * _tutorialEntryLimit : null
     );
   }
 
   Stream<TutorialEntryListState> _mapAddTutorialEntryListToState(AddTutorialEntryList event) async* {
-    _tutorialEntryRepository.add(event.value);
+    var value = event.value;
+    if (value != null) 
+      _tutorialEntryRepository.add(value);
   }
 
   Stream<TutorialEntryListState> _mapUpdateTutorialEntryListToState(UpdateTutorialEntryList event) async* {
-    _tutorialEntryRepository.update(event.value);
+    var value = event.value;
+    if (value != null) 
+      _tutorialEntryRepository.update(value);
   }
 
   Stream<TutorialEntryListState> _mapDeleteTutorialEntryListToState(DeleteTutorialEntryList event) async* {
-    _tutorialEntryRepository.delete(event.value);
+    var value = event.value;
+    if (value != null) 
+      _tutorialEntryRepository.delete(value);
   }
 
   Stream<TutorialEntryListState> _mapTutorialEntryListUpdatedToState(
@@ -84,7 +90,7 @@ class TutorialEntryListBloc extends Bloc<TutorialEntryListEvent, TutorialEntryLi
   @override
   Stream<TutorialEntryListState> mapEventToState(TutorialEntryListEvent event) async* {
     if (event is LoadTutorialEntryList) {
-      if ((detailed == null) || (!detailed)) {
+      if ((detailed == null) || (!detailed!)) {
         yield* _mapLoadTutorialEntryListToState();
       } else {
         yield* _mapLoadTutorialEntryListWithDetailsToState();

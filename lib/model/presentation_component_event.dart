@@ -21,7 +21,7 @@ abstract class PresentationComponentEvent extends Equatable {
 }
 
 class FetchPresentationComponent extends PresentationComponentEvent {
-  final String id;
+  final String? id;
 
   FetchPresentationComponent({ this.id });
 }

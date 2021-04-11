@@ -63,10 +63,10 @@ import 'package:eliud_pkg_fundamentals/model/document_item_form_state.dart';
 
 class DocumentItemForm extends StatelessWidget {
   FormAction formAction;
-  DocumentItemModel value;
-  ActionModel submitAction;
+  DocumentItemModel? value;
+  ActionModel? submitAction;
 
-  DocumentItemForm({Key key, @required this.formAction, @required this.value, this.submitAction}) : super(key: key);
+  DocumentItemForm({Key? key, required this.formAction, required this.value, this.submitAction}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -92,14 +92,14 @@ class DocumentItemForm extends StatelessWidget {
       return Scaffold(
         appBar: formAction == FormAction.UpdateAction ?
                 AppBar(
-                    title: Text("Update DocumentItem", style: TextStyle(color: RgbHelper.color(rgbo: app.formAppBarTextColor))),
+                    title: Text("Update DocumentItem", style: TextStyle(color: RgbHelper.color(rgbo: app!.formAppBarTextColor))),
                     flexibleSpace: Container(
-                        decoration: BoxDecorationHelper.boxDecoration(accessState, app.formAppBarBackground)),
+                        decoration: BoxDecorationHelper.boxDecoration(accessState, app!.formAppBarBackground)),
                   ) :
                 AppBar(
-                    title: Text("Add DocumentItem", style: TextStyle(color: RgbHelper.color(rgbo: app.formAppBarTextColor))),
+                    title: Text("Add DocumentItem", style: TextStyle(color: RgbHelper.color(rgbo: app!.formAppBarTextColor))),
                     flexibleSpace: Container(
-                        decoration: BoxDecorationHelper.boxDecoration(accessState, app.formAppBarBackground)),
+                        decoration: BoxDecorationHelper.boxDecoration(accessState, app!.formAppBarBackground)),
                 ),
         body: BlocProvider<DocumentItemFormBloc >(
             create: (context) => DocumentItemFormBloc(AccessBloc.appId(context),
@@ -114,8 +114,8 @@ class DocumentItemForm extends StatelessWidget {
 
 
 class MyDocumentItemForm extends StatefulWidget {
-  final FormAction formAction;
-  final ActionModel submitAction;
+  final FormAction? formAction;
+  final ActionModel? submitAction;
 
   MyDocumentItemForm({this.formAction, this.submitAction});
 
@@ -124,12 +124,12 @@ class MyDocumentItemForm extends StatefulWidget {
 
 
 class _MyDocumentItemFormState extends State<MyDocumentItemForm> {
-  final FormAction formAction;
-  DocumentItemFormBloc _myFormBloc;
+  final FormAction? formAction;
+  late DocumentItemFormBloc _myFormBloc;
 
   final TextEditingController _documentIDController = TextEditingController();
   final TextEditingController _referenceController = TextEditingController();
-  String _image;
+  String? _image;
 
 
   _MyDocumentItemFormState(this.formAction);
@@ -152,29 +152,29 @@ class _MyDocumentItemFormState extends State<MyDocumentItemForm> {
       );
 
       if (state is DocumentItemFormLoaded) {
-        if (state.value.documentID != null)
-          _documentIDController.text = state.value.documentID.toString();
+        if (state.value!.documentID != null)
+          _documentIDController.text = state.value!.documentID.toString();
         else
           _documentIDController.text = "";
-        if (state.value.reference != null)
-          _referenceController.text = state.value.reference.toString();
+        if (state.value!.reference != null)
+          _referenceController.text = state.value!.reference.toString();
         else
           _referenceController.text = "";
-        if (state.value.image != null)
-          _image= state.value.image.documentID;
+        if (state.value!.image != null)
+          _image= state.value!.image!.documentID;
         else
           _image= "";
       }
       if (state is DocumentItemFormInitialized) {
-        List<Widget> children = List();
+        List<Widget?> children = [];
         children.add(
 
                 TextFormField(
-                style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
+                style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor)),
                   readOnly: _readOnly(accessState, state),
                   controller: _referenceController,
                   decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.vpn_key, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
+                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app!.formFieldFocusColor))),                    icon: Icon(Icons.vpn_key, color: RgbHelper.color(rgbo: app!.formFieldHeaderColor)),
                     labelText: 'Document Reference',
                     hintText: "This is the reference which you can use inside your document to use to this image, e.g. <img src = \"\${REFERENCE}\"",
                   ),
@@ -194,40 +194,39 @@ class _MyDocumentItemFormState extends State<MyDocumentItemForm> {
 
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
           children.add(RaisedButton(
-                  color: RgbHelper.color(rgbo: app.formSubmitButtonColor),
+                  color: RgbHelper.color(rgbo: app!.formSubmitButtonColor),
                   onPressed: _readOnly(accessState, state) ? null : () {
                     if (state is DocumentItemFormError) {
                       return null;
                     } else {
                       if (formAction == FormAction.UpdateAction) {
                         BlocProvider.of<DocumentItemListBloc>(context).add(
-                          UpdateDocumentItemList(value: state.value.copyWith(
-                              documentID: state.value.documentID, 
-                              reference: state.value.reference, 
-                              image: state.value.image, 
+                          UpdateDocumentItemList(value: state.value!.copyWith(
+                              documentID: state.value!.documentID, 
+                              reference: state.value!.reference, 
+                              image: state.value!.image, 
                         )));
                       } else {
                         BlocProvider.of<DocumentItemListBloc>(context).add(
                           AddDocumentItemList(value: DocumentItemModel(
-                              documentID: state.value.documentID, 
-                              reference: state.value.reference, 
-                              image: state.value.image, 
+                              documentID: state.value!.documentID, 
+                              reference: state.value!.reference, 
+                              image: state.value!.image, 
                           )));
                       }
                       if (widget.submitAction != null) {
-                        eliudrouter.Router.navigateTo(context, widget.submitAction);
+                        eliudrouter.Router.navigateTo(context, widget.submitAction!);
                       } else {
                         Navigator.pop(context);
                       }
-                      return true;
                     }
                   },
-                  child: Text('Submit', style: TextStyle(color: RgbHelper.color(rgbo: app.formSubmitButtonTextColor))),
+                  child: Text('Submit', style: TextStyle(color: RgbHelper.color(rgbo: app!.formSubmitButtonTextColor))),
                 ));
 
         return Container(
           color: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? Colors.transparent : null,
-          decoration: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? null : BoxDecorationHelper.boxDecoration(accessState, app.formBackground),
+          decoration: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? null : BoxDecorationHelper.boxDecoration(accessState, app!.formBackground),
           padding:
           const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
             child: Form(
@@ -235,7 +234,7 @@ class _MyDocumentItemFormState extends State<MyDocumentItemForm> {
               padding: const EdgeInsets.all(8),
               physics: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? NeverScrollableScrollPhysics() : null,
               shrinkWrap: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)),
-              children: children
+              children: children as List<Widget>
             ),
           )
         );
@@ -255,7 +254,7 @@ class _MyDocumentItemFormState extends State<MyDocumentItemForm> {
   }
 
 
-  void _onImageSelected(String val) {
+  void _onImageSelected(String? val) {
     setState(() {
       _image = val;
     });

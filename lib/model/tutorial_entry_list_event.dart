@@ -19,7 +19,7 @@ import 'package:eliud_pkg_fundamentals/model/tutorial_entry_model.dart';
 abstract class TutorialEntryListEvent extends Equatable {
   const TutorialEntryListEvent();
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class LoadTutorialEntryList extends TutorialEntryListEvent {}
@@ -27,49 +27,49 @@ class LoadTutorialEntryList extends TutorialEntryListEvent {}
 class NewPage extends TutorialEntryListEvent {}
 
 class AddTutorialEntryList extends TutorialEntryListEvent {
-  final TutorialEntryModel value;
+  final TutorialEntryModel? value;
 
   const AddTutorialEntryList({ this.value });
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'AddTutorialEntryList{ value: $value }';
 }
 
 class UpdateTutorialEntryList extends TutorialEntryListEvent {
-  final TutorialEntryModel value;
+  final TutorialEntryModel? value;
 
   const UpdateTutorialEntryList({ this.value });
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'UpdateTutorialEntryList{ value: $value }';
 }
 
 class DeleteTutorialEntryList extends TutorialEntryListEvent {
-  final TutorialEntryModel value;
+  final TutorialEntryModel? value;
 
   const DeleteTutorialEntryList({ this.value });
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'DeleteTutorialEntryList{ value: $value }';
 }
 
 class TutorialEntryListUpdated extends TutorialEntryListEvent {
-  final List<TutorialEntryModel> value;
-  final bool mightHaveMore;
+  final List<TutorialEntryModel?>? value;
+  final bool? mightHaveMore;
 
   const TutorialEntryListUpdated({ this.value, this.mightHaveMore });
 
   @override
-  List<Object> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [ value, mightHaveMore ];
 
   @override
   String toString() => 'TutorialEntryListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';

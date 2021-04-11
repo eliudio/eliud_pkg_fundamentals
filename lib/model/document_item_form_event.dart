@@ -34,7 +34,7 @@ abstract class DocumentItemFormEvent extends Equatable {
   const DocumentItemFormEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class InitialiseNewDocumentItemFormEvent extends DocumentItemFormEvent {
@@ -42,54 +42,54 @@ class InitialiseNewDocumentItemFormEvent extends DocumentItemFormEvent {
 
 
 class InitialiseDocumentItemFormEvent extends DocumentItemFormEvent {
-  final DocumentItemModel value;
+  final DocumentItemModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   InitialiseDocumentItemFormEvent({this.value});
 }
 
 class InitialiseDocumentItemFormNoLoadEvent extends DocumentItemFormEvent {
-  final DocumentItemModel value;
+  final DocumentItemModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   InitialiseDocumentItemFormNoLoadEvent({this.value});
 }
 
 class ChangedDocumentItemDocumentID extends DocumentItemFormEvent {
-  final String value;
+  final String? value;
 
   ChangedDocumentItemDocumentID({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedDocumentItemDocumentID{ value: $value }';
 }
 
 class ChangedDocumentItemReference extends DocumentItemFormEvent {
-  final String value;
+  final String? value;
 
   ChangedDocumentItemReference({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedDocumentItemReference{ value: $value }';
 }
 
 class ChangedDocumentItemImage extends DocumentItemFormEvent {
-  final String value;
+  final String? value;
 
   ChangedDocumentItemImage({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedDocumentItemImage{ value: $value }';

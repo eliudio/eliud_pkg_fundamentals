@@ -22,20 +22,20 @@ import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class DocumentItemEntity {
-  final String reference;
-  final String imageId;
+  final String? reference;
+  final String? imageId;
 
   DocumentItemEntity({this.reference, this.imageId, });
 
 
-  List<Object> get props => [reference, imageId, ];
+  List<Object?> get props => [reference, imageId, ];
 
   @override
   String toString() {
     return 'DocumentItemEntity{reference: $reference, imageId: $imageId}';
   }
 
-  static DocumentItemEntity fromMap(Map map) {
+  static DocumentItemEntity? fromMap(Map? map) {
     if (map == null) return null;
 
     return DocumentItemEntity(
@@ -44,8 +44,8 @@ class DocumentItemEntity {
     );
   }
 
-  Map<String, Object> toDocument() {
-    Map<String, Object> theDocument = HashMap();
+  Map<String, Object?> toDocument() {
+    Map<String, Object?> theDocument = HashMap();
     if (reference != null) theDocument["reference"] = reference;
       else theDocument["reference"] = null;
     if (imageId != null) theDocument["imageId"] = imageId;
@@ -53,8 +53,8 @@ class DocumentItemEntity {
     return theDocument;
   }
 
-  static DocumentItemEntity fromJsonString(String json) {
-    Map<String, dynamic> generationSpecificationMap = jsonDecode(json);
+  static DocumentItemEntity? fromJsonString(String json) {
+    Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
     return fromMap(generationSpecificationMap);
   }
 

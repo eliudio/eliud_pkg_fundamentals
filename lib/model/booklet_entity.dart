@@ -22,24 +22,24 @@ import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class BookletEntity {
-  final String appId;
-  final String name;
-  final List<SectionEntity> sections;
-  final ConditionsSimpleEntity conditions;
+  final String? appId;
+  final String? name;
+  final List<SectionEntity>? sections;
+  final ConditionsSimpleEntity? conditions;
 
   BookletEntity({this.appId, this.name, this.sections, this.conditions, });
 
 
-  List<Object> get props => [appId, name, sections, conditions, ];
+  List<Object?> get props => [appId, name, sections, conditions, ];
 
   @override
   String toString() {
-    String sectionsCsv = (sections == null) ? '' : sections.join(', ');
+    String sectionsCsv = (sections == null) ? '' : sections!.join(', ');
 
     return 'BookletEntity{appId: $appId, name: $name, sections: Section[] { $sectionsCsv }, conditions: $conditions}';
   }
 
-  static BookletEntity fromMap(Map map) {
+  static BookletEntity? fromMap(Map? map) {
     if (map == null) return null;
 
     var sectionsFromMap;
@@ -63,15 +63,15 @@ class BookletEntity {
     );
   }
 
-  Map<String, Object> toDocument() {
-    final List<Map<String, dynamic>> sectionsListMap = sections != null 
-        ? sections.map((item) => item.toDocument()).toList()
+  Map<String, Object?> toDocument() {
+    final List<Map<String?, dynamic>>? sectionsListMap = sections != null 
+        ? sections!.map((item) => item.toDocument()).toList()
         : null;
-    final Map<String, dynamic> conditionsMap = conditions != null 
-        ? conditions.toDocument()
+    final Map<String, dynamic>? conditionsMap = conditions != null 
+        ? conditions!.toDocument()
         : null;
 
-    Map<String, Object> theDocument = HashMap();
+    Map<String, Object?> theDocument = HashMap();
     if (appId != null) theDocument["appId"] = appId;
       else theDocument["appId"] = null;
     if (name != null) theDocument["name"] = name;
@@ -83,8 +83,8 @@ class BookletEntity {
     return theDocument;
   }
 
-  static BookletEntity fromJsonString(String json) {
-    Map<String, dynamic> generationSpecificationMap = jsonDecode(json);
+  static BookletEntity? fromJsonString(String json) {
+    Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
     return fromMap(generationSpecificationMap);
   }
 

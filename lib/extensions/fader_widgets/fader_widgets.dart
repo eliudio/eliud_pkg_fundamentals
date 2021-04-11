@@ -11,15 +11,15 @@ import 'package:flutter/material.dart';
 
 class TheImageGF extends StatefulWidget {
   final Orientation orientation;
-  final List<MemberMediumModel> images;
-  final List<PosSizeModel> positionsAndSizes;
-  final List<ActionModel> actions;
+  final List<MemberMediumModel?> images;
+  final List<PosSizeModel?> positionsAndSizes;
+  final List<ActionModel?> actions;
   // The time to display 1 image
-  final int imageSeconds;
+  final int? imageSeconds;
   // The animation to switch images.
 
   // The duration of the transition between the images
-  final int animationMilliseconds;
+  final int? animationMilliseconds;
 
   TheImageGF(this.images, this.positionsAndSizes, this.actions, this.orientation, this.imageSeconds, this.animationMilliseconds);
 
@@ -30,7 +30,7 @@ class TheImageGF extends StatefulWidget {
 class TheImageGFState extends State<TheImageGF> {
   @override
   Widget build(BuildContext context) {
-    var list = <Widget>[];
+    var list = <Widget?>[];
     var maxHeight = 0.0;
     var maxWidth = 0.0;
     for (var i = 0; i < widget.images.length; i++) {
@@ -43,9 +43,9 @@ class TheImageGFState extends State<TheImageGF> {
             widget.actions != null ? widget.actions[i] : null,
             i);
         var height = FaderHelper.getHeight(
-            context, widget.positionsAndSizes[i], widget.orientation);
+            context, widget.positionsAndSizes[i]!, widget.orientation)!;
         var width = FaderHelper.getWidth(
-            context, widget.positionsAndSizes[i], widget.orientation);
+            context, widget.positionsAndSizes[i]!, widget.orientation)!;
         maxHeight = max(height, maxHeight);
         maxWidth = max(width, maxWidth);
         list.add(w);
@@ -55,7 +55,7 @@ class TheImageGFState extends State<TheImageGF> {
     var viewPortFraction = maxWidth  / fullScreenWidth(context);
     return GFCarousel(
         height: maxHeight,
-        items: list,
+        items: list as List<Widget>,
         autoPlay: true,
         viewportFraction: viewPortFraction,
       );
@@ -187,29 +187,29 @@ class TheImageState extends State<TheImage> {
 */
 
 class FaderHelper {
-  static double getHeight(BuildContext context, PosSizeModel posSizeModel,
+  static double? getHeight(BuildContext context, PosSizeModel posSizeModel,
       Orientation orientation) {
     return  BoxFitHelper.toHeight(posSizeModel, context, orientation);
   }
 
-  static double getWidth(BuildContext context, PosSizeModel posSizeModel,
+  static double? getWidth(BuildContext context, PosSizeModel posSizeModel,
       Orientation orientation) {
     return BoxFitHelper.toWidth(posSizeModel, context, orientation);
   }
 
-  static Widget getIt(BuildContext context, PosSizeModel posSizeModel,
-      MemberMediumModel imageModel, Orientation orientation, ActionModel action, int index) {
+  static Widget? getIt(BuildContext context, PosSizeModel? posSizeModel,
+      MemberMediumModel? imageModel, Orientation orientation, ActionModel? action, int index) {
     if (imageModel == null) {
       return null;
     }
-    var fit = BoxFitHelper.toBoxFit(posSizeModel, orientation);
+    var fit = BoxFitHelper.toBoxFit(posSizeModel!, orientation);
     var width = BoxFitHelper.toWidth(posSizeModel, context, orientation);
     var height = BoxFitHelper.toHeight(posSizeModel, context, orientation);
     var alignment = BoxFitHelper.toAlignment(posSizeModel, orientation);
 
     var realImage = Center(
           child: Image.network(
-            imageModel.url,
+            imageModel.url!,
             fit: BoxFit.scaleDown,
             height: height,
             width: width,

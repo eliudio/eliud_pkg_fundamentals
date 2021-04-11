@@ -23,7 +23,7 @@ import 'package:eliud_pkg_fundamentals/model/decorated_content_repository.dart';
 import 'package:flutter/services.dart';
 
 class DecoratedContentComponentBloc extends Bloc<DecoratedContentComponentEvent, DecoratedContentComponentState> {
-  final DecoratedContentRepository decoratedContentRepository;
+  final DecoratedContentRepository? decoratedContentRepository;
 
   DecoratedContentComponentBloc({ this.decoratedContentRepository }): super(DecoratedContentComponentUninitialized());
   @override
@@ -33,9 +33,9 @@ class DecoratedContentComponentBloc extends Bloc<DecoratedContentComponentEvent,
       try {
         if (currentState is DecoratedContentComponentUninitialized) {
           bool permissionDenied = false;
-          final model = await decoratedContentRepository.get(event.id, onError: (error) {
+          final model = await decoratedContentRepository!.get(event.id, onError: (error) {
             // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
-            if ((error is PlatformException) &&  (error.message.startsWith("PERMISSION_DENIED"))) {
+            if ((error is PlatformException) &&  (error.message!.startsWith("PERMISSION_DENIED"))) {
               permissionDenied = true;
             }
           });
@@ -45,7 +45,7 @@ class DecoratedContentComponentBloc extends Bloc<DecoratedContentComponentEvent,
             if (model != null) {
               yield DecoratedContentComponentLoaded(value: model);
             } else {
-              String id = event.id;
+              String? id = event.id;
               yield DecoratedContentComponentError(
                   message: "DecoratedContent with id = '$id' not found");
             }

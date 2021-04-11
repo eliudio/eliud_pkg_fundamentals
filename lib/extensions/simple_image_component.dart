@@ -10,20 +10,20 @@ import 'package:transparent_image/transparent_image.dart';
 
 class SimpleImageComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({String id, Map<String, Object> parameters}) {
+  Widget createNew({String? id, Map<String, Object>? parameters}) {
     return SimpleImageComponent(simpleImageID: id);
   }
 }
 
 class SimpleImageComponent extends AbstractSimpleImageComponent {
-  SimpleImageComponent({String simpleImageID}) : super(simpleImageID: simpleImageID);
+  SimpleImageComponent({String? simpleImageID}) : super(simpleImageID: simpleImageID);
 
   @override
-  Widget yourWidget(BuildContext context, SimpleImageModel value) {
+  Widget yourWidget(BuildContext context, SimpleImageModel? value) {
     var state = AccessBloc.getState(context);
     return FadeInImage.memoryNetwork(
       placeholder: kTransparentImage,
-      image: value.image.url,
+      image: value!.image!.url!,
     );
 
   }
@@ -35,6 +35,6 @@ class SimpleImageComponent extends AbstractSimpleImageComponent {
 
   @override
   SimpleImageRepository getSimpleImageRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.simpleImageRepository(AccessBloc.appId(context));
+    return AbstractRepositorySingleton.singleton.simpleImageRepository(AccessBloc.appId(context))!;
   }
 }

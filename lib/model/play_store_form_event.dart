@@ -34,7 +34,7 @@ abstract class PlayStoreFormEvent extends Equatable {
   const PlayStoreFormEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class InitialiseNewPlayStoreFormEvent extends PlayStoreFormEvent {
@@ -42,78 +42,78 @@ class InitialiseNewPlayStoreFormEvent extends PlayStoreFormEvent {
 
 
 class InitialisePlayStoreFormEvent extends PlayStoreFormEvent {
-  final PlayStoreModel value;
+  final PlayStoreModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   InitialisePlayStoreFormEvent({this.value});
 }
 
 class InitialisePlayStoreFormNoLoadEvent extends PlayStoreFormEvent {
-  final PlayStoreModel value;
+  final PlayStoreModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   InitialisePlayStoreFormNoLoadEvent({this.value});
 }
 
 class ChangedPlayStoreDocumentID extends PlayStoreFormEvent {
-  final String value;
+  final String? value;
 
   ChangedPlayStoreDocumentID({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedPlayStoreDocumentID{ value: $value }';
 }
 
 class ChangedPlayStoreAppId extends PlayStoreFormEvent {
-  final String value;
+  final String? value;
 
   ChangedPlayStoreAppId({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedPlayStoreAppId{ value: $value }';
 }
 
 class ChangedPlayStoreDescription extends PlayStoreFormEvent {
-  final String value;
+  final String? value;
 
   ChangedPlayStoreDescription({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedPlayStoreDescription{ value: $value }';
 }
 
 class ChangedPlayStoreItemBackground extends PlayStoreFormEvent {
-  final String value;
+  final String? value;
 
   ChangedPlayStoreItemBackground({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedPlayStoreItemBackground{ value: $value }';
 }
 
 class ChangedPlayStoreConditions extends PlayStoreFormEvent {
-  final ConditionsSimpleModel value;
+  final ConditionsSimpleModel? value;
 
   ChangedPlayStoreConditions({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedPlayStoreConditions{ value: $value }';

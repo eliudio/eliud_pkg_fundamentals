@@ -22,26 +22,26 @@ import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class TutorialEntity {
-  final String appId;
-  final String name;
-  final String title;
-  final String description;
-  final List<TutorialEntryEntity> tutorialEntries;
-  final ConditionsSimpleEntity conditions;
+  final String? appId;
+  final String? name;
+  final String? title;
+  final String? description;
+  final List<TutorialEntryEntity>? tutorialEntries;
+  final ConditionsSimpleEntity? conditions;
 
   TutorialEntity({this.appId, this.name, this.title, this.description, this.tutorialEntries, this.conditions, });
 
 
-  List<Object> get props => [appId, name, title, description, tutorialEntries, conditions, ];
+  List<Object?> get props => [appId, name, title, description, tutorialEntries, conditions, ];
 
   @override
   String toString() {
-    String tutorialEntriesCsv = (tutorialEntries == null) ? '' : tutorialEntries.join(', ');
+    String tutorialEntriesCsv = (tutorialEntries == null) ? '' : tutorialEntries!.join(', ');
 
     return 'TutorialEntity{appId: $appId, name: $name, title: $title, description: $description, tutorialEntries: TutorialEntry[] { $tutorialEntriesCsv }, conditions: $conditions}';
   }
 
-  static TutorialEntity fromMap(Map map) {
+  static TutorialEntity? fromMap(Map? map) {
     if (map == null) return null;
 
     var tutorialEntriesFromMap;
@@ -67,15 +67,15 @@ class TutorialEntity {
     );
   }
 
-  Map<String, Object> toDocument() {
-    final List<Map<String, dynamic>> tutorialEntriesListMap = tutorialEntries != null 
-        ? tutorialEntries.map((item) => item.toDocument()).toList()
+  Map<String, Object?> toDocument() {
+    final List<Map<String?, dynamic>>? tutorialEntriesListMap = tutorialEntries != null 
+        ? tutorialEntries!.map((item) => item.toDocument()).toList()
         : null;
-    final Map<String, dynamic> conditionsMap = conditions != null 
-        ? conditions.toDocument()
+    final Map<String, dynamic>? conditionsMap = conditions != null 
+        ? conditions!.toDocument()
         : null;
 
-    Map<String, Object> theDocument = HashMap();
+    Map<String, Object?> theDocument = HashMap();
     if (appId != null) theDocument["appId"] = appId;
       else theDocument["appId"] = null;
     if (name != null) theDocument["name"] = name;
@@ -91,8 +91,8 @@ class TutorialEntity {
     return theDocument;
   }
 
-  static TutorialEntity fromJsonString(String json) {
-    Map<String, dynamic> generationSpecificationMap = jsonDecode(json);
+  static TutorialEntity? fromJsonString(String json) {
+    Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
     return fromMap(generationSpecificationMap);
   }
 

@@ -19,7 +19,7 @@ import 'package:eliud_pkg_fundamentals/model/link_model.dart';
 abstract class LinkListEvent extends Equatable {
   const LinkListEvent();
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class LoadLinkList extends LinkListEvent {}
@@ -27,49 +27,49 @@ class LoadLinkList extends LinkListEvent {}
 class NewPage extends LinkListEvent {}
 
 class AddLinkList extends LinkListEvent {
-  final LinkModel value;
+  final LinkModel? value;
 
   const AddLinkList({ this.value });
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'AddLinkList{ value: $value }';
 }
 
 class UpdateLinkList extends LinkListEvent {
-  final LinkModel value;
+  final LinkModel? value;
 
   const UpdateLinkList({ this.value });
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'UpdateLinkList{ value: $value }';
 }
 
 class DeleteLinkList extends LinkListEvent {
-  final LinkModel value;
+  final LinkModel? value;
 
   const DeleteLinkList({ this.value });
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'DeleteLinkList{ value: $value }';
 }
 
 class LinkListUpdated extends LinkListEvent {
-  final List<LinkModel> value;
-  final bool mightHaveMore;
+  final List<LinkModel?>? value;
+  final bool? mightHaveMore;
 
   const LinkListUpdated({ this.value, this.mightHaveMore });
 
   @override
-  List<Object> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [ value, mightHaveMore ];
 
   @override
   String toString() => 'LinkListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';

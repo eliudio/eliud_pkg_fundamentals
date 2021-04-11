@@ -27,53 +27,59 @@ const _faderLimit = 5;
 
 class FaderListBloc extends Bloc<FaderListEvent, FaderListState> {
   final FaderRepository _faderRepository;
-  StreamSubscription _fadersListSubscription;
-  final EliudQuery eliudQuery;
+  StreamSubscription? _fadersListSubscription;
+  final EliudQuery? eliudQuery;
   int pages = 1;
-  final bool paged;
-  final String orderBy;
-  final bool descending;
-  final bool detailed;
+  final bool? paged;
+  final String? orderBy;
+  final bool? descending;
+  final bool? detailed;
 
-  FaderListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, @required FaderRepository faderRepository})
+  FaderListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required FaderRepository faderRepository})
       : assert(faderRepository != null),
         _faderRepository = faderRepository,
         super(FaderListLoading());
 
   Stream<FaderListState> _mapLoadFaderListToState() async* {
-    int amountNow =  (state is FaderListLoaded) ? (state as FaderListLoaded).values.length : 0;
+    int amountNow =  (state is FaderListLoaded) ? (state as FaderListLoaded).values!.length : 0;
     _fadersListSubscription?.cancel();
     _fadersListSubscription = _faderRepository.listen(
           (list) => add(FaderListUpdated(value: list, mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && (paged)) ? pages * _faderLimit : null
+      limit: ((paged != null) && paged!) ? pages * _faderLimit : null
     );
   }
 
   Stream<FaderListState> _mapLoadFaderListWithDetailsToState() async* {
-    int amountNow =  (state is FaderListLoaded) ? (state as FaderListLoaded).values.length : 0;
+    int amountNow =  (state is FaderListLoaded) ? (state as FaderListLoaded).values!.length : 0;
     _fadersListSubscription?.cancel();
     _fadersListSubscription = _faderRepository.listenWithDetails(
             (list) => add(FaderListUpdated(value: list, mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && (paged)) ? pages * _faderLimit : null
+        limit: ((paged != null) && paged!) ? pages * _faderLimit : null
     );
   }
 
   Stream<FaderListState> _mapAddFaderListToState(AddFaderList event) async* {
-    _faderRepository.add(event.value);
+    var value = event.value;
+    if (value != null) 
+      _faderRepository.add(value);
   }
 
   Stream<FaderListState> _mapUpdateFaderListToState(UpdateFaderList event) async* {
-    _faderRepository.update(event.value);
+    var value = event.value;
+    if (value != null) 
+      _faderRepository.update(value);
   }
 
   Stream<FaderListState> _mapDeleteFaderListToState(DeleteFaderList event) async* {
-    _faderRepository.delete(event.value);
+    var value = event.value;
+    if (value != null) 
+      _faderRepository.delete(value);
   }
 
   Stream<FaderListState> _mapFaderListUpdatedToState(
@@ -84,7 +90,7 @@ class FaderListBloc extends Bloc<FaderListEvent, FaderListState> {
   @override
   Stream<FaderListState> mapEventToState(FaderListEvent event) async* {
     if (event is LoadFaderList) {
-      if ((detailed == null) || (!detailed)) {
+      if ((detailed == null) || (!detailed!)) {
         yield* _mapLoadFaderListToState();
       } else {
         yield* _mapLoadFaderListWithDetailsToState();

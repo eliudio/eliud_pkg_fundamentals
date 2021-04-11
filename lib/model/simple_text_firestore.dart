@@ -48,50 +48,50 @@ class SimpleTextFirestore implements SimpleTextRepository {
     return SimpleTextCollection.doc(value.documentID).update(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
 
-  SimpleTextModel _populateDoc(DocumentSnapshot value) {
+  SimpleTextModel? _populateDoc(DocumentSnapshot value) {
     return SimpleTextModel.fromEntity(value.id, SimpleTextEntity.fromMap(value.data()));
   }
 
-  Future<SimpleTextModel> _populateDocPlus(DocumentSnapshot value) async {
+  Future<SimpleTextModel?> _populateDocPlus(DocumentSnapshot value) async {
     return SimpleTextModel.fromEntityPlus(value.id, SimpleTextEntity.fromMap(value.data()), appId: appId);  }
 
-  Future<SimpleTextModel> get(String id, {Function(Exception) onError}) {
-    return SimpleTextCollection.doc(id).get().then((doc) {
+  Future<SimpleTextModel?> get(String? id, {Function(Exception)? onError}) {
+    return SimpleTextCollection.doc(id).get().then((doc) async {
       if (doc.data() != null)
-        return _populateDocPlus(doc);
+        return await _populateDocPlus(doc);
       else
         return null;
     }).catchError((Object e) {
       if (onError != null) {
-        onError(e);
+        onError(e as Exception);
       }
     });
   }
 
-  StreamSubscription<List<SimpleTextModel>> listen(SimpleTextModelTrigger trigger, {String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
-    Stream<List<SimpleTextModel>> stream;
-//    stream = getQuery(SimpleTextCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((data) {
+  StreamSubscription<List<SimpleTextModel?>> listen(SimpleTextModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery}) {
+    Stream<List<SimpleTextModel?>> stream;
+//    stream = getQuery(SimpleTextCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots().map((data) {
 //    The above line is replaced by the below line. The reason is because the same collection can not be subscribed to twice
 //    The reason we're subscribing twice to the same list, is because the close on bloc isn't called. This needs to be fixed.
 //    See https://github.com/felangel/bloc/issues/2073.
 //    In the meantime:
-      stream = getQuery(appRepository().getSubCollection(appId, 'simpletext'), orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((data) {
-      Iterable<SimpleTextModel> simpleTexts  = data.docs.map((doc) {
-        SimpleTextModel value = _populateDoc(doc);
+      stream = getQuery(appRepository()!.getSubCollection(appId, 'simpletext'), orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots().map((data) {
+      Iterable<SimpleTextModel?> simpleTexts  = data.docs.map((doc) {
+        SimpleTextModel? value = _populateDoc(doc);
         return value;
       }).toList();
-      return simpleTexts;
+      return simpleTexts as List<SimpleTextModel?>;
     });
     return stream.listen((listOfSimpleTextModels) {
       trigger(listOfSimpleTextModels);
     });
   }
 
-  StreamSubscription<List<SimpleTextModel>> listenWithDetails(SimpleTextModelTrigger trigger, {String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery}) {
-    Stream<List<SimpleTextModel>> stream;
+  StreamSubscription<List<SimpleTextModel?>> listenWithDetails(SimpleTextModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery}) {
+    Stream<List<SimpleTextModel?>> stream;
 //  stream = getQuery(SimpleTextCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots()
 //  see comment listen(...) above
-    stream = getQuery(appRepository().getSubCollection(appId, 'simpletext'), orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots()
+    stream = getQuery(appRepository()!.getSubCollection(appId, 'simpletext'), orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots()
         .asyncMap((data) async {
       return await Future.wait(data.docs.map((doc) =>  _populateDocPlus(doc)).toList());
     });
@@ -102,7 +102,7 @@ class SimpleTextFirestore implements SimpleTextRepository {
   }
 
   @override
-  StreamSubscription<SimpleTextModel> listenTo(String documentId, SimpleTextChanged changed) {
+  StreamSubscription<SimpleTextModel?> listenTo(String documentId, SimpleTextChanged changed) {
     var stream = SimpleTextCollection.doc(documentId)
         .snapshots()
         .asyncMap((data) {
@@ -113,9 +113,9 @@ class SimpleTextFirestore implements SimpleTextRepository {
     });
   }
 
-  Stream<List<SimpleTextModel>> values({String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) {
-    DocumentSnapshot lastDoc;
-    Stream<List<SimpleTextModel>> _values = getQuery(SimpleTextCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().map((snapshot) {
+  Stream<List<SimpleTextModel?>> values({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) {
+    DocumentSnapshot? lastDoc;
+    Stream<List<SimpleTextModel?>> _values = getQuery(SimpleTextCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots().map((snapshot) {
       return snapshot.docs.map((doc) {
         lastDoc = doc;
         return _populateDoc(doc);
@@ -124,9 +124,9 @@ class SimpleTextFirestore implements SimpleTextRepository {
     return _values;
   }
 
-  Stream<List<SimpleTextModel>> valuesWithDetails({String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) {
-    DocumentSnapshot lastDoc;
-    Stream<List<SimpleTextModel>> _values = getQuery(SimpleTextCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).snapshots().asyncMap((snapshot) {
+  Stream<List<SimpleTextModel?>> valuesWithDetails({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) {
+    DocumentSnapshot? lastDoc;
+    Stream<List<SimpleTextModel?>> _values = getQuery(SimpleTextCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots().asyncMap((snapshot) {
       return Future.wait(snapshot.docs.map((doc) {
         lastDoc = doc;
         return _populateDocPlus(doc);
@@ -136,9 +136,9 @@ class SimpleTextFirestore implements SimpleTextRepository {
     return _values;
   }
 
-  Future<List<SimpleTextModel>> valuesList({String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) async {
-    DocumentSnapshot lastDoc;
-    List<SimpleTextModel> _values = await getQuery(SimpleTextCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).get().then((value) {
+  Future<List<SimpleTextModel?>> valuesList({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) async {
+    DocumentSnapshot? lastDoc;
+    List<SimpleTextModel?> _values = await getQuery(SimpleTextCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.get().then((value) {
       var list = value.docs;
       return list.map((doc) { 
         lastDoc = doc;
@@ -149,9 +149,9 @@ class SimpleTextFirestore implements SimpleTextRepository {
     return _values;
   }
 
-  Future<List<SimpleTextModel>> valuesListWithDetails({String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery }) async {
-    DocumentSnapshot lastDoc;
-    List<SimpleTextModel> _values = await getQuery(SimpleTextCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId).get().then((value) {
+  Future<List<SimpleTextModel?>> valuesListWithDetails({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) async {
+    DocumentSnapshot? lastDoc;
+    List<SimpleTextModel?> _values = await getQuery(SimpleTextCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.get().then((value) {
       var list = value.docs;
       return Future.wait(list.map((doc) {
         lastDoc = doc;
@@ -176,11 +176,11 @@ class SimpleTextFirestore implements SimpleTextRepository {
     return SimpleTextCollection.doc(documentId).collection(name);
   }
 
-  String timeStampToString(dynamic timeStamp) {
+  String? timeStampToString(dynamic timeStamp) {
     return firestoreTimeStampToString(timeStamp);
   } 
 
-  Future<SimpleTextModel> changeValue(String documentId, String fieldName, num changeByThisValue) {
+  Future<SimpleTextModel?> changeValue(String documentId, String fieldName, num changeByThisValue) {
     var change = FieldValue.increment(changeByThisValue);
     return SimpleTextCollection.doc(documentId).update({fieldName: change}).then((v) => get(documentId));
   }

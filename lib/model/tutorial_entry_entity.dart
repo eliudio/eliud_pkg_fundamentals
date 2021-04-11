@@ -22,21 +22,21 @@ import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class TutorialEntryEntity {
-  final String description;
-  final String imageId;
-  final String code;
+  final String? description;
+  final String? imageId;
+  final String? code;
 
   TutorialEntryEntity({this.description, this.imageId, this.code, });
 
 
-  List<Object> get props => [description, imageId, code, ];
+  List<Object?> get props => [description, imageId, code, ];
 
   @override
   String toString() {
     return 'TutorialEntryEntity{description: $description, imageId: $imageId, code: $code}';
   }
 
-  static TutorialEntryEntity fromMap(Map map) {
+  static TutorialEntryEntity? fromMap(Map? map) {
     if (map == null) return null;
 
     return TutorialEntryEntity(
@@ -46,8 +46,8 @@ class TutorialEntryEntity {
     );
   }
 
-  Map<String, Object> toDocument() {
-    Map<String, Object> theDocument = HashMap();
+  Map<String, Object?> toDocument() {
+    Map<String, Object?> theDocument = HashMap();
     if (description != null) theDocument["description"] = description;
       else theDocument["description"] = null;
     if (imageId != null) theDocument["imageId"] = imageId;
@@ -57,8 +57,8 @@ class TutorialEntryEntity {
     return theDocument;
   }
 
-  static TutorialEntryEntity fromJsonString(String json) {
-    Map<String, dynamic> generationSpecificationMap = jsonDecode(json);
+  static TutorialEntryEntity? fromJsonString(String json) {
+    Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
     return fromMap(generationSpecificationMap);
   }
 

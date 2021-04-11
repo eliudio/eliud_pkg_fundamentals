@@ -43,7 +43,7 @@ enum PresentationImageAlignment {
 }
 
 
-PresentationRelativeImagePosition toPresentationRelativeImagePosition(int index) {
+PresentationRelativeImagePosition toPresentationRelativeImagePosition(int? index) {
   switch (index) {
     case 0: return PresentationRelativeImagePosition.Behind;
     case 1: return PresentationRelativeImagePosition.InFront;
@@ -54,7 +54,7 @@ PresentationRelativeImagePosition toPresentationRelativeImagePosition(int index)
   return PresentationRelativeImagePosition.Unknown;
 }
 
-PresentationImageAlignment toPresentationImageAlignment(int index) {
+PresentationImageAlignment toPresentationImageAlignment(int? index) {
   switch (index) {
     case 0: return PresentationImageAlignment.Left;
     case 1: return PresentationImageAlignment.Center;
@@ -65,23 +65,23 @@ PresentationImageAlignment toPresentationImageAlignment(int index) {
 
 
 class PresentationModel {
-  String documentID;
-  String appId;
-  String title;
-  List<BodyComponentModel> bodyComponents;
-  MemberMediumModel image;
-  PresentationRelativeImagePosition imagePositionRelative;
-  PresentationImageAlignment imageAlignment;
+  String? documentID;
+  String? appId;
+  String? title;
+  List<BodyComponentModel>? bodyComponents;
+  MemberMediumModel? image;
+  PresentationRelativeImagePosition? imagePositionRelative;
+  PresentationImageAlignment? imageAlignment;
 
   // Width of the image
-  double imageWidth;
-  ConditionsSimpleModel conditions;
+  double? imageWidth;
+  ConditionsSimpleModel? conditions;
 
   PresentationModel({this.documentID, this.appId, this.title, this.bodyComponents, this.image, this.imagePositionRelative, this.imageAlignment, this.imageWidth, this.conditions, })  {
     assert(documentID != null);
   }
 
-  PresentationModel copyWith({String documentID, String appId, String title, List<BodyComponentModel> bodyComponents, MemberMediumModel image, PresentationRelativeImagePosition imagePositionRelative, PresentationImageAlignment imageAlignment, double imageWidth, ConditionsSimpleModel conditions, }) {
+  PresentationModel copyWith({String? documentID, String? appId, String? title, List<BodyComponentModel>? bodyComponents, MemberMediumModel? image, PresentationRelativeImagePosition? imagePositionRelative, PresentationImageAlignment? imageAlignment, double? imageWidth, ConditionsSimpleModel? conditions, }) {
     return PresentationModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, title: title ?? this.title, bodyComponents: bodyComponents ?? this.bodyComponents, image: image ?? this.image, imagePositionRelative: imagePositionRelative ?? this.imagePositionRelative, imageAlignment: imageAlignment ?? this.imageAlignment, imageWidth: imageWidth ?? this.imageWidth, conditions: conditions ?? this.conditions, );
   }
 
@@ -105,27 +105,27 @@ class PresentationModel {
 
   @override
   String toString() {
-    String bodyComponentsCsv = (bodyComponents == null) ? '' : bodyComponents.join(', ');
+    String bodyComponentsCsv = (bodyComponents == null) ? '' : bodyComponents!.join(', ');
 
     return 'PresentationModel{documentID: $documentID, appId: $appId, title: $title, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, image: $image, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth, conditions: $conditions}';
   }
 
-  PresentationEntity toEntity({String appId}) {
+  PresentationEntity toEntity({String? appId}) {
     return PresentationEntity(
           appId: (appId != null) ? appId : null, 
           title: (title != null) ? title : null, 
           bodyComponents: (bodyComponents != null) ? bodyComponents
-            .map((item) => item.toEntity(appId: appId))
+            !.map((item) => item.toEntity(appId: appId))
             .toList() : null, 
-          imageId: (image != null) ? image.documentID : null, 
-          imagePositionRelative: (imagePositionRelative != null) ? imagePositionRelative.index : null, 
-          imageAlignment: (imageAlignment != null) ? imageAlignment.index : null, 
+          imageId: (image != null) ? image!.documentID : null, 
+          imagePositionRelative: (imagePositionRelative != null) ? imagePositionRelative!.index : null, 
+          imageAlignment: (imageAlignment != null) ? imageAlignment!.index : null, 
           imageWidth: (imageWidth != null) ? imageWidth : null, 
-          conditions: (conditions != null) ? conditions.toEntity(appId: appId) : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
     );
   }
 
-  static PresentationModel fromEntity(String documentID, PresentationEntity entity) {
+  static PresentationModel? fromEntity(String documentID, PresentationEntity? entity) {
     if (entity == null) return null;
     return PresentationModel(
           documentID: documentID, 
@@ -134,7 +134,7 @@ class PresentationModel {
           bodyComponents: 
             entity.bodyComponents == null ? null :
             entity.bodyComponents
-            .map((item) => BodyComponentModel.fromEntity(newRandomKey(), item))
+            !.map((item) => BodyComponentModel.fromEntity(newRandomKey(), item)!)
             .toList(), 
           imagePositionRelative: toPresentationRelativeImagePosition(entity.imagePositionRelative), 
           imageAlignment: toPresentationImageAlignment(entity.imageAlignment), 
@@ -144,13 +144,13 @@ class PresentationModel {
     );
   }
 
-  static Future<PresentationModel> fromEntityPlus(String documentID, PresentationEntity entity, { String appId}) async {
+  static Future<PresentationModel?> fromEntityPlus(String documentID, PresentationEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
-    MemberMediumModel imageHolder;
+    MemberMediumModel? imageHolder;
     if (entity.imageId != null) {
       try {
-        await memberMediumRepository(appId: appId).get(entity.imageId).then((val) {
+        await memberMediumRepository(appId: appId)!.get(entity.imageId).then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}
@@ -162,7 +162,7 @@ class PresentationModel {
           title: entity.title, 
           bodyComponents: 
             entity. bodyComponents == null ? null : new List<BodyComponentModel>.from(await Future.wait(entity. bodyComponents
-            .map((item) => BodyComponentModel.fromEntityPlus(newRandomKey(), item, appId: appId))
+            !.map((item) => BodyComponentModel.fromEntityPlus(newRandomKey(), item, appId: appId))
             .toList())), 
           image: imageHolder, 
           imagePositionRelative: toPresentationRelativeImagePosition(entity.imagePositionRelative), 

@@ -37,20 +37,20 @@ import 'package:eliud_core/tools/random.dart';
 
 
 class GridModel {
-  String documentID;
-  String appId;
-  String title;
-  List<BodyComponentModel> bodyComponents;
+  String? documentID;
+  String? appId;
+  String? title;
+  List<BodyComponentModel>? bodyComponents;
 
   // Specific gridview
-  GridViewModel gridView;
-  ConditionsSimpleModel conditions;
+  GridViewModel? gridView;
+  ConditionsSimpleModel? conditions;
 
   GridModel({this.documentID, this.appId, this.title, this.bodyComponents, this.gridView, this.conditions, })  {
     assert(documentID != null);
   }
 
-  GridModel copyWith({String documentID, String appId, String title, List<BodyComponentModel> bodyComponents, GridViewModel gridView, ConditionsSimpleModel conditions, }) {
+  GridModel copyWith({String? documentID, String? appId, String? title, List<BodyComponentModel>? bodyComponents, GridViewModel? gridView, ConditionsSimpleModel? conditions, }) {
     return GridModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, title: title ?? this.title, bodyComponents: bodyComponents ?? this.bodyComponents, gridView: gridView ?? this.gridView, conditions: conditions ?? this.conditions, );
   }
 
@@ -71,24 +71,24 @@ class GridModel {
 
   @override
   String toString() {
-    String bodyComponentsCsv = (bodyComponents == null) ? '' : bodyComponents.join(', ');
+    String bodyComponentsCsv = (bodyComponents == null) ? '' : bodyComponents!.join(', ');
 
     return 'GridModel{documentID: $documentID, appId: $appId, title: $title, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, gridView: $gridView, conditions: $conditions}';
   }
 
-  GridEntity toEntity({String appId}) {
+  GridEntity toEntity({String? appId}) {
     return GridEntity(
           appId: (appId != null) ? appId : null, 
           title: (title != null) ? title : null, 
           bodyComponents: (bodyComponents != null) ? bodyComponents
-            .map((item) => item.toEntity(appId: appId))
+            !.map((item) => item.toEntity(appId: appId))
             .toList() : null, 
-          gridViewId: (gridView != null) ? gridView.documentID : null, 
-          conditions: (conditions != null) ? conditions.toEntity(appId: appId) : null, 
+          gridViewId: (gridView != null) ? gridView!.documentID : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
     );
   }
 
-  static GridModel fromEntity(String documentID, GridEntity entity) {
+  static GridModel? fromEntity(String documentID, GridEntity? entity) {
     if (entity == null) return null;
     return GridModel(
           documentID: documentID, 
@@ -97,20 +97,20 @@ class GridModel {
           bodyComponents: 
             entity.bodyComponents == null ? null :
             entity.bodyComponents
-            .map((item) => BodyComponentModel.fromEntity(newRandomKey(), item))
+            !.map((item) => BodyComponentModel.fromEntity(newRandomKey(), item)!)
             .toList(), 
           conditions: 
             ConditionsSimpleModel.fromEntity(entity.conditions), 
     );
   }
 
-  static Future<GridModel> fromEntityPlus(String documentID, GridEntity entity, { String appId}) async {
+  static Future<GridModel?> fromEntityPlus(String documentID, GridEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
-    GridViewModel gridViewHolder;
+    GridViewModel? gridViewHolder;
     if (entity.gridViewId != null) {
       try {
-        await gridViewRepository(appId: appId).get(entity.gridViewId).then((val) {
+        await gridViewRepository(appId: appId)!.get(entity.gridViewId).then((val) {
           gridViewHolder = val;
         }).catchError((error) {});
       } catch (_) {}
@@ -122,7 +122,7 @@ class GridModel {
           title: entity.title, 
           bodyComponents: 
             entity. bodyComponents == null ? null : new List<BodyComponentModel>.from(await Future.wait(entity. bodyComponents
-            .map((item) => BodyComponentModel.fromEntityPlus(newRandomKey(), item, appId: appId))
+            !.map((item) => BodyComponentModel.fromEntityPlus(newRandomKey(), item, appId: appId))
             .toList())), 
           gridView: gridViewHolder, 
           conditions: 

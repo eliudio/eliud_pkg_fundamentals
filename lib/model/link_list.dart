@@ -45,50 +45,36 @@ import 'package:eliud_core/model/app_model.dart';
 import 'link_form.dart';
 
 
-typedef LinkWidgetProvider(LinkModel value);
+typedef LinkWidgetProvider(LinkModel? value);
 
 class LinkListWidget extends StatefulWidget with HasFab {
-  BackgroundModel listBackground;
-  LinkWidgetProvider widgetProvider;
-  bool readOnly;
-  String form;
-  LinkListWidgetState state;
-  bool isEmbedded;
+  BackgroundModel? listBackground;
+  LinkWidgetProvider? widgetProvider;
+  bool? readOnly;
+  String? form;
+  LinkListWidgetState? state;
+  bool? isEmbedded;
 
-  LinkListWidget({ Key key, this.readOnly, this.form, this.widgetProvider, this.isEmbedded, this.listBackground }): super(key: key);
+  LinkListWidget({ Key? key, this.readOnly, this.form, this.widgetProvider, this.isEmbedded, this.listBackground }): super(key: key);
 
   @override
   LinkListWidgetState createState() {
     state ??= LinkListWidgetState();
-    return state;
+    return state!;
   }
 
   @override
-  Widget fab(BuildContext context) {
-    if ((readOnly != null) && readOnly) return null;
+  Widget? fab(BuildContext context) {
+    if ((readOnly != null) && readOnly!) return null;
     state ??= LinkListWidgetState();
     var accessState = AccessBloc.getState(context);
-    return state.fab(context, accessState);
+    return state!.fab(context, accessState);
   }
 }
 
 class LinkListWidgetState extends State<LinkListWidget> {
-  LinkListBloc bloc;
-
   @override
-  void didChangeDependencies() {
-    bloc = BlocProvider.of<LinkListBloc>(context);
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose () {
-    if (bloc != null) bloc.close();
-    super.dispose();
-  }
-
-  @override
-  Widget fab(BuildContext aContext, AccessState accessState) {
+  Widget? fab(BuildContext aContext, AccessState accessState) {
     if (accessState is AppLoaded) {
       return !accessState.memberIsOwner() 
         ? null
@@ -100,7 +86,7 @@ class LinkListWidgetState extends State<LinkListWidget> {
         onPressed: () {
           Navigator.of(context).push(
             pageRouteBuilder(accessState.app, page: BlocProvider.value(
-                value: bloc,
+                value: BlocProvider.of<LinkListBloc>(context),
                 child: LinkForm(
                     value: null,
                     formAction: FormAction.AddAction)
@@ -124,15 +110,15 @@ class LinkListWidgetState extends State<LinkListWidget> {
           );
         } else if (state is LinkListLoaded) {
           final values = state.values;
-          if ((widget.isEmbedded != null) && (widget.isEmbedded)) {
-            List<Widget> children = List();
+          if ((widget.isEmbedded != null) && widget.isEmbedded!) {
+            var children = <Widget>[];
             children.add(theList(context, values, accessState));
             children.add(RaisedButton(
                     color: RgbHelper.color(rgbo: accessState.app.formSubmitButtonColor),
                     onPressed: () {
                       Navigator.of(context).push(
                                 pageRouteBuilder(accessState.app, page: BlocProvider.value(
-                                    value: bloc,
+                                    value: BlocProvider.of<LinkListBloc>(context),
                                     child: LinkForm(
                                         value: null,
                                         formAction: FormAction.AddAction)
@@ -174,7 +160,7 @@ class LinkListWidgetState extends State<LinkListWidget> {
         itemBuilder: (context, index) {
           final value = values[index];
           
-          if (widget.widgetProvider != null) return widget.widgetProvider(value);
+          if (widget.widgetProvider != null) return widget.widgetProvider!(value);
 
           return LinkListItem(
             value: value,
@@ -210,7 +196,7 @@ class LinkListWidgetState extends State<LinkListWidget> {
   }
   
   
-  Widget getForm(value, action) {
+  Widget? getForm(value, action) {
     if (widget.form == null) {
       return LinkForm(value: value, formAction: action);
     } else {
@@ -226,29 +212,29 @@ class LinkListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
   final AppModel app;
-  final LinkModel value;
+  final LinkModel? value;
 
   LinkListItem({
-    Key key,
-    @required this.onDismissed,
-    @required this.onTap,
-    @required this.value,
-    @required this.app,
+    Key? key,
+    required this.onDismissed,
+    required this.onTap,
+    required this.value,
+    required this.app,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key('__Link_item_${value.documentID}'),
+      key: Key('__Link_item_${value!.documentID}'),
       onDismissed: onDismissed,
       child: ListTile(
         onTap: onTap,
         title: Hero(
-          tag: '${value.documentID}__LinkheroTag',
+          tag: '${value!.documentID}__LinkheroTag',
           child: Container(
             width: fullScreenWidth(context),
             child: Center(child: Text(
-              value.linkText,
+              value!.linkText!,
               style: TextStyle(color: RgbHelper.color(rgbo: app.listTextItemColor)),
             )),
           ),

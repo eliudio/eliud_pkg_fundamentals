@@ -34,7 +34,7 @@ abstract class GridFormEvent extends Equatable {
   const GridFormEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class InitialiseNewGridFormEvent extends GridFormEvent {
@@ -42,90 +42,90 @@ class InitialiseNewGridFormEvent extends GridFormEvent {
 
 
 class InitialiseGridFormEvent extends GridFormEvent {
-  final GridModel value;
+  final GridModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   InitialiseGridFormEvent({this.value});
 }
 
 class InitialiseGridFormNoLoadEvent extends GridFormEvent {
-  final GridModel value;
+  final GridModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   InitialiseGridFormNoLoadEvent({this.value});
 }
 
 class ChangedGridDocumentID extends GridFormEvent {
-  final String value;
+  final String? value;
 
   ChangedGridDocumentID({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedGridDocumentID{ value: $value }';
 }
 
 class ChangedGridAppId extends GridFormEvent {
-  final String value;
+  final String? value;
 
   ChangedGridAppId({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedGridAppId{ value: $value }';
 }
 
 class ChangedGridTitle extends GridFormEvent {
-  final String value;
+  final String? value;
 
   ChangedGridTitle({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedGridTitle{ value: $value }';
 }
 
 class ChangedGridBodyComponents extends GridFormEvent {
-  final List<BodyComponentModel> value;
+  final List<BodyComponentModel>? value;
 
   ChangedGridBodyComponents({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedGridBodyComponents{ value: $value }';
 }
 
 class ChangedGridGridView extends GridFormEvent {
-  final String value;
+  final String? value;
 
   ChangedGridGridView({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedGridGridView{ value: $value }';
 }
 
 class ChangedGridConditions extends GridFormEvent {
-  final ConditionsSimpleModel value;
+  final ConditionsSimpleModel? value;
 
   ChangedGridConditions({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedGridConditions{ value: $value }';

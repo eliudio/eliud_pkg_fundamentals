@@ -25,7 +25,7 @@ import 'package:eliud_pkg_fundamentals/model/divider_component_state.dart';
 
 abstract class AbstractDividerComponent extends StatelessWidget {
   static String componentName = "dividers";
-  final String dividerID;
+  final String? dividerID;
 
   AbstractDividerComponent({this.dividerID});
 
@@ -63,7 +63,7 @@ abstract class AbstractDividerComponent extends StatelessWidget {
     });
   }
 
-  Widget yourWidget(BuildContext context, DividerModel value);
+  Widget yourWidget(BuildContext context, DividerModel? value);
   Widget alertWidget({ title: String, content: String});
   DividerRepository getDividerRepository(BuildContext context);
 }

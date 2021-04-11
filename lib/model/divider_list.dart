@@ -45,50 +45,36 @@ import 'package:eliud_core/model/app_model.dart';
 import 'divider_form.dart';
 
 
-typedef DividerWidgetProvider(DividerModel value);
+typedef DividerWidgetProvider(DividerModel? value);
 
 class DividerListWidget extends StatefulWidget with HasFab {
-  BackgroundModel listBackground;
-  DividerWidgetProvider widgetProvider;
-  bool readOnly;
-  String form;
-  DividerListWidgetState state;
-  bool isEmbedded;
+  BackgroundModel? listBackground;
+  DividerWidgetProvider? widgetProvider;
+  bool? readOnly;
+  String? form;
+  DividerListWidgetState? state;
+  bool? isEmbedded;
 
-  DividerListWidget({ Key key, this.readOnly, this.form, this.widgetProvider, this.isEmbedded, this.listBackground }): super(key: key);
+  DividerListWidget({ Key? key, this.readOnly, this.form, this.widgetProvider, this.isEmbedded, this.listBackground }): super(key: key);
 
   @override
   DividerListWidgetState createState() {
     state ??= DividerListWidgetState();
-    return state;
+    return state!;
   }
 
   @override
-  Widget fab(BuildContext context) {
-    if ((readOnly != null) && readOnly) return null;
+  Widget? fab(BuildContext context) {
+    if ((readOnly != null) && readOnly!) return null;
     state ??= DividerListWidgetState();
     var accessState = AccessBloc.getState(context);
-    return state.fab(context, accessState);
+    return state!.fab(context, accessState);
   }
 }
 
 class DividerListWidgetState extends State<DividerListWidget> {
-  DividerListBloc bloc;
-
   @override
-  void didChangeDependencies() {
-    bloc = BlocProvider.of<DividerListBloc>(context);
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose () {
-    if (bloc != null) bloc.close();
-    super.dispose();
-  }
-
-  @override
-  Widget fab(BuildContext aContext, AccessState accessState) {
+  Widget? fab(BuildContext aContext, AccessState accessState) {
     if (accessState is AppLoaded) {
       return !accessState.memberIsOwner() 
         ? null
@@ -100,7 +86,7 @@ class DividerListWidgetState extends State<DividerListWidget> {
         onPressed: () {
           Navigator.of(context).push(
             pageRouteBuilder(accessState.app, page: BlocProvider.value(
-                value: bloc,
+                value: BlocProvider.of<DividerListBloc>(context),
                 child: DividerForm(
                     value: null,
                     formAction: FormAction.AddAction)
@@ -124,15 +110,15 @@ class DividerListWidgetState extends State<DividerListWidget> {
           );
         } else if (state is DividerListLoaded) {
           final values = state.values;
-          if ((widget.isEmbedded != null) && (widget.isEmbedded)) {
-            List<Widget> children = List();
+          if ((widget.isEmbedded != null) && widget.isEmbedded!) {
+            var children = <Widget>[];
             children.add(theList(context, values, accessState));
             children.add(RaisedButton(
                     color: RgbHelper.color(rgbo: accessState.app.formSubmitButtonColor),
                     onPressed: () {
                       Navigator.of(context).push(
                                 pageRouteBuilder(accessState.app, page: BlocProvider.value(
-                                    value: bloc,
+                                    value: BlocProvider.of<DividerListBloc>(context),
                                     child: DividerForm(
                                         value: null,
                                         formAction: FormAction.AddAction)
@@ -174,7 +160,7 @@ class DividerListWidgetState extends State<DividerListWidget> {
         itemBuilder: (context, index) {
           final value = values[index];
           
-          if (widget.widgetProvider != null) return widget.widgetProvider(value);
+          if (widget.widgetProvider != null) return widget.widgetProvider!(value);
 
           return DividerListItem(
             value: value,
@@ -210,7 +196,7 @@ class DividerListWidgetState extends State<DividerListWidget> {
   }
   
   
-  Widget getForm(value, action) {
+  Widget? getForm(value, action) {
     if (widget.form == null) {
       return DividerForm(value: value, formAction: action);
     } else {
@@ -226,36 +212,36 @@ class DividerListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
   final AppModel app;
-  final DividerModel value;
+  final DividerModel? value;
 
   DividerListItem({
-    Key key,
-    @required this.onDismissed,
-    @required this.onTap,
-    @required this.value,
-    @required this.app,
+    Key? key,
+    required this.onDismissed,
+    required this.onTap,
+    required this.value,
+    required this.app,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key('__Divider_item_${value.documentID}'),
+      key: Key('__Divider_item_${value!.documentID}'),
       onDismissed: onDismissed,
       child: ListTile(
         onTap: onTap,
         title: Hero(
-          tag: '${value.documentID}__DividerheroTag',
+          tag: '${value!.documentID}__DividerheroTag',
           child: Container(
             width: fullScreenWidth(context),
             child: Center(child: Text(
-              value.documentID,
+              value!.documentID!,
               style: TextStyle(color: RgbHelper.color(rgbo: app.listTextItemColor)),
             )),
           ),
         ),
-        subtitle: (value.name != null) && (value.name.isNotEmpty)
+        subtitle: (value!.name != null) && (value!.name!.isNotEmpty)
             ? Center( child: Text(
-          value.name,
+          value!.name!,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(color: RgbHelper.color(rgbo: app.listTextItemColor)),

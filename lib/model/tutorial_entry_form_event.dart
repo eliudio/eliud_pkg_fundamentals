@@ -34,7 +34,7 @@ abstract class TutorialEntryFormEvent extends Equatable {
   const TutorialEntryFormEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class InitialiseNewTutorialEntryFormEvent extends TutorialEntryFormEvent {
@@ -42,66 +42,66 @@ class InitialiseNewTutorialEntryFormEvent extends TutorialEntryFormEvent {
 
 
 class InitialiseTutorialEntryFormEvent extends TutorialEntryFormEvent {
-  final TutorialEntryModel value;
+  final TutorialEntryModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   InitialiseTutorialEntryFormEvent({this.value});
 }
 
 class InitialiseTutorialEntryFormNoLoadEvent extends TutorialEntryFormEvent {
-  final TutorialEntryModel value;
+  final TutorialEntryModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   InitialiseTutorialEntryFormNoLoadEvent({this.value});
 }
 
 class ChangedTutorialEntryDocumentID extends TutorialEntryFormEvent {
-  final String value;
+  final String? value;
 
   ChangedTutorialEntryDocumentID({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedTutorialEntryDocumentID{ value: $value }';
 }
 
 class ChangedTutorialEntryDescription extends TutorialEntryFormEvent {
-  final String value;
+  final String? value;
 
   ChangedTutorialEntryDescription({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedTutorialEntryDescription{ value: $value }';
 }
 
 class ChangedTutorialEntryImage extends TutorialEntryFormEvent {
-  final String value;
+  final String? value;
 
   ChangedTutorialEntryImage({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedTutorialEntryImage{ value: $value }';
 }
 
 class ChangedTutorialEntryCode extends TutorialEntryFormEvent {
-  final String value;
+  final String? value;
 
   ChangedTutorialEntryCode({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedTutorialEntryCode{ value: $value }';

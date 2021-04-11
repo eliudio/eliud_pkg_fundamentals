@@ -21,7 +21,7 @@ abstract class TutorialComponentEvent extends Equatable {
 }
 
 class FetchTutorialComponent extends TutorialComponentEvent {
-  final String id;
+  final String? id;
 
   FetchTutorialComponent({ this.id });
 }

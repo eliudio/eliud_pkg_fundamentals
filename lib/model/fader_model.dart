@@ -37,23 +37,23 @@ import 'package:eliud_core/tools/random.dart';
 
 
 class FaderModel {
-  String documentID;
-  String appId;
-  String name;
+  String? documentID;
+  String? appId;
+  String? name;
 
   // The duration of the transition between the images
-  int animationMilliseconds;
+  int? animationMilliseconds;
 
   // The time to display 1 image
-  int imageSeconds;
-  List<ListedItemModel> items;
-  ConditionsSimpleModel conditions;
+  int? imageSeconds;
+  List<ListedItemModel>? items;
+  ConditionsSimpleModel? conditions;
 
   FaderModel({this.documentID, this.appId, this.name, this.animationMilliseconds, this.imageSeconds, this.items, this.conditions, })  {
     assert(documentID != null);
   }
 
-  FaderModel copyWith({String documentID, String appId, String name, int animationMilliseconds, int imageSeconds, List<ListedItemModel> items, ConditionsSimpleModel conditions, }) {
+  FaderModel copyWith({String? documentID, String? appId, String? name, int? animationMilliseconds, int? imageSeconds, List<ListedItemModel>? items, ConditionsSimpleModel? conditions, }) {
     return FaderModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, name: name ?? this.name, animationMilliseconds: animationMilliseconds ?? this.animationMilliseconds, imageSeconds: imageSeconds ?? this.imageSeconds, items: items ?? this.items, conditions: conditions ?? this.conditions, );
   }
 
@@ -75,25 +75,25 @@ class FaderModel {
 
   @override
   String toString() {
-    String itemsCsv = (items == null) ? '' : items.join(', ');
+    String itemsCsv = (items == null) ? '' : items!.join(', ');
 
     return 'FaderModel{documentID: $documentID, appId: $appId, name: $name, animationMilliseconds: $animationMilliseconds, imageSeconds: $imageSeconds, items: ListedItem[] { $itemsCsv }, conditions: $conditions}';
   }
 
-  FaderEntity toEntity({String appId}) {
+  FaderEntity toEntity({String? appId}) {
     return FaderEntity(
           appId: (appId != null) ? appId : null, 
           name: (name != null) ? name : null, 
           animationMilliseconds: (animationMilliseconds != null) ? animationMilliseconds : null, 
           imageSeconds: (imageSeconds != null) ? imageSeconds : null, 
           items: (items != null) ? items
-            .map((item) => item.toEntity(appId: appId))
+            !.map((item) => item.toEntity(appId: appId))
             .toList() : null, 
-          conditions: (conditions != null) ? conditions.toEntity(appId: appId) : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
     );
   }
 
-  static FaderModel fromEntity(String documentID, FaderEntity entity) {
+  static FaderModel? fromEntity(String documentID, FaderEntity? entity) {
     if (entity == null) return null;
     return FaderModel(
           documentID: documentID, 
@@ -104,14 +104,14 @@ class FaderModel {
           items: 
             entity.items == null ? null :
             entity.items
-            .map((item) => ListedItemModel.fromEntity(newRandomKey(), item))
+            !.map((item) => ListedItemModel.fromEntity(newRandomKey(), item)!)
             .toList(), 
           conditions: 
             ConditionsSimpleModel.fromEntity(entity.conditions), 
     );
   }
 
-  static Future<FaderModel> fromEntityPlus(String documentID, FaderEntity entity, { String appId}) async {
+  static Future<FaderModel?> fromEntityPlus(String documentID, FaderEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
     return FaderModel(
@@ -122,7 +122,7 @@ class FaderModel {
           imageSeconds: entity.imageSeconds, 
           items: 
             entity. items == null ? null : new List<ListedItemModel>.from(await Future.wait(entity. items
-            .map((item) => ListedItemModel.fromEntityPlus(newRandomKey(), item, appId: appId))
+            !.map((item) => ListedItemModel.fromEntityPlus(newRandomKey(), item, appId: appId))
             .toList())), 
           conditions: 
             await ConditionsSimpleModel.fromEntityPlus(entity.conditions, appId: appId), 

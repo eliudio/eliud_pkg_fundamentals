@@ -45,50 +45,36 @@ import 'package:eliud_core/model/app_model.dart';
 import 'document_item_form.dart';
 
 
-typedef DocumentItemWidgetProvider(DocumentItemModel value);
+typedef DocumentItemWidgetProvider(DocumentItemModel? value);
 
 class DocumentItemListWidget extends StatefulWidget with HasFab {
-  BackgroundModel listBackground;
-  DocumentItemWidgetProvider widgetProvider;
-  bool readOnly;
-  String form;
-  DocumentItemListWidgetState state;
-  bool isEmbedded;
+  BackgroundModel? listBackground;
+  DocumentItemWidgetProvider? widgetProvider;
+  bool? readOnly;
+  String? form;
+  DocumentItemListWidgetState? state;
+  bool? isEmbedded;
 
-  DocumentItemListWidget({ Key key, this.readOnly, this.form, this.widgetProvider, this.isEmbedded, this.listBackground }): super(key: key);
+  DocumentItemListWidget({ Key? key, this.readOnly, this.form, this.widgetProvider, this.isEmbedded, this.listBackground }): super(key: key);
 
   @override
   DocumentItemListWidgetState createState() {
     state ??= DocumentItemListWidgetState();
-    return state;
+    return state!;
   }
 
   @override
-  Widget fab(BuildContext context) {
-    if ((readOnly != null) && readOnly) return null;
+  Widget? fab(BuildContext context) {
+    if ((readOnly != null) && readOnly!) return null;
     state ??= DocumentItemListWidgetState();
     var accessState = AccessBloc.getState(context);
-    return state.fab(context, accessState);
+    return state!.fab(context, accessState);
   }
 }
 
 class DocumentItemListWidgetState extends State<DocumentItemListWidget> {
-  DocumentItemListBloc bloc;
-
   @override
-  void didChangeDependencies() {
-    bloc = BlocProvider.of<DocumentItemListBloc>(context);
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose () {
-    if (bloc != null) bloc.close();
-    super.dispose();
-  }
-
-  @override
-  Widget fab(BuildContext aContext, AccessState accessState) {
+  Widget? fab(BuildContext aContext, AccessState accessState) {
     if (accessState is AppLoaded) {
       return !accessState.memberIsOwner() 
         ? null
@@ -100,7 +86,7 @@ class DocumentItemListWidgetState extends State<DocumentItemListWidget> {
         onPressed: () {
           Navigator.of(context).push(
             pageRouteBuilder(accessState.app, page: BlocProvider.value(
-                value: bloc,
+                value: BlocProvider.of<DocumentItemListBloc>(context),
                 child: DocumentItemForm(
                     value: null,
                     formAction: FormAction.AddAction)
@@ -124,15 +110,15 @@ class DocumentItemListWidgetState extends State<DocumentItemListWidget> {
           );
         } else if (state is DocumentItemListLoaded) {
           final values = state.values;
-          if ((widget.isEmbedded != null) && (widget.isEmbedded)) {
-            List<Widget> children = List();
+          if ((widget.isEmbedded != null) && widget.isEmbedded!) {
+            var children = <Widget>[];
             children.add(theList(context, values, accessState));
             children.add(RaisedButton(
                     color: RgbHelper.color(rgbo: accessState.app.formSubmitButtonColor),
                     onPressed: () {
                       Navigator.of(context).push(
                                 pageRouteBuilder(accessState.app, page: BlocProvider.value(
-                                    value: bloc,
+                                    value: BlocProvider.of<DocumentItemListBloc>(context),
                                     child: DocumentItemForm(
                                         value: null,
                                         formAction: FormAction.AddAction)
@@ -174,7 +160,7 @@ class DocumentItemListWidgetState extends State<DocumentItemListWidget> {
         itemBuilder: (context, index) {
           final value = values[index];
           
-          if (widget.widgetProvider != null) return widget.widgetProvider(value);
+          if (widget.widgetProvider != null) return widget.widgetProvider!(value);
 
           return DocumentItemListItem(
             value: value,
@@ -210,7 +196,7 @@ class DocumentItemListWidgetState extends State<DocumentItemListWidget> {
   }
   
   
-  Widget getForm(value, action) {
+  Widget? getForm(value, action) {
     if (widget.form == null) {
       return DocumentItemForm(value: value, formAction: action);
     } else {
@@ -226,33 +212,33 @@ class DocumentItemListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
   final AppModel app;
-  final DocumentItemModel value;
+  final DocumentItemModel? value;
 
   DocumentItemListItem({
-    Key key,
-    @required this.onDismissed,
-    @required this.onTap,
-    @required this.value,
-    @required this.app,
+    Key? key,
+    required this.onDismissed,
+    required this.onTap,
+    required this.value,
+    required this.app,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key('__DocumentItem_item_${value.documentID}'),
+      key: Key('__DocumentItem_item_${value!.documentID}'),
       onDismissed: onDismissed,
       child: ListTile(
         onTap: onTap,
         title: Hero(
-          tag: '${value.documentID}__DocumentItemheroTag',
+          tag: '${value!.documentID}__DocumentItemheroTag',
           child: Container(
             width: fullScreenWidth(context),
-            child: Center( child: ImageHelper.getImageFromMediumModel(memberMediumModel: value.image, width: fullScreenWidth(context)))
+            child: Center( child: ImageHelper.getImageFromMediumModel(memberMediumModel: value!.image, width: fullScreenWidth(context)))
           ),
         ),
-        subtitle: (value.reference != null) && (value.reference.isNotEmpty)
+        subtitle: (value!.reference != null) && (value!.reference!.isNotEmpty)
             ? Center( child: Text(
-          value.reference,
+          value!.reference!,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(color: RgbHelper.color(rgbo: app.listTextItemColor)),

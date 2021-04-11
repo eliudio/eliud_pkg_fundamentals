@@ -22,28 +22,28 @@ import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class DocumentEntity {
-  final String appId;
-  final String name;
-  final int documentRenderer;
-  final String content;
-  final double padding;
-  final List<DocumentItemEntity> images;
-  final String backgroundId;
-  final ConditionsSimpleEntity conditions;
+  final String? appId;
+  final String? name;
+  final int? documentRenderer;
+  final String? content;
+  final double? padding;
+  final List<DocumentItemEntity>? images;
+  final String? backgroundId;
+  final ConditionsSimpleEntity? conditions;
 
   DocumentEntity({this.appId, this.name, this.documentRenderer, this.content, this.padding, this.images, this.backgroundId, this.conditions, });
 
 
-  List<Object> get props => [appId, name, documentRenderer, content, padding, images, backgroundId, conditions, ];
+  List<Object?> get props => [appId, name, documentRenderer, content, padding, images, backgroundId, conditions, ];
 
   @override
   String toString() {
-    String imagesCsv = (images == null) ? '' : images.join(', ');
+    String imagesCsv = (images == null) ? '' : images!.join(', ');
 
     return 'DocumentEntity{appId: $appId, name: $name, documentRenderer: $documentRenderer, content: $content, padding: $padding, images: DocumentItem[] { $imagesCsv }, backgroundId: $backgroundId, conditions: $conditions}';
   }
 
-  static DocumentEntity fromMap(Map map) {
+  static DocumentEntity? fromMap(Map? map) {
     if (map == null) return null;
 
     var imagesFromMap;
@@ -71,15 +71,15 @@ class DocumentEntity {
     );
   }
 
-  Map<String, Object> toDocument() {
-    final List<Map<String, dynamic>> imagesListMap = images != null 
-        ? images.map((item) => item.toDocument()).toList()
+  Map<String, Object?> toDocument() {
+    final List<Map<String?, dynamic>>? imagesListMap = images != null 
+        ? images!.map((item) => item.toDocument()).toList()
         : null;
-    final Map<String, dynamic> conditionsMap = conditions != null 
-        ? conditions.toDocument()
+    final Map<String, dynamic>? conditionsMap = conditions != null 
+        ? conditions!.toDocument()
         : null;
 
-    Map<String, Object> theDocument = HashMap();
+    Map<String, Object?> theDocument = HashMap();
     if (appId != null) theDocument["appId"] = appId;
       else theDocument["appId"] = null;
     if (name != null) theDocument["name"] = name;
@@ -99,8 +99,8 @@ class DocumentEntity {
     return theDocument;
   }
 
-  static DocumentEntity fromJsonString(String json) {
-    Map<String, dynamic> generationSpecificationMap = jsonDecode(json);
+  static DocumentEntity? fromJsonString(String json) {
+    Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
     return fromMap(generationSpecificationMap);
   }
 

@@ -20,13 +20,13 @@ abstract class PlayStoreComponentState extends Equatable {
   const PlayStoreComponentState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class PlayStoreComponentUninitialized extends PlayStoreComponentState {}
 
 class PlayStoreComponentError extends PlayStoreComponentState {
-  final String message;
+  final String? message;
   PlayStoreComponentError({ this.message });
 }
 
@@ -35,16 +35,16 @@ class PlayStoreComponentPermissionDenied extends PlayStoreComponentState {
 }
 
 class PlayStoreComponentLoaded extends PlayStoreComponentState {
-  final PlayStoreModel value;
+  final PlayStoreModel? value;
 
   const PlayStoreComponentLoaded({ this.value });
 
-  PlayStoreComponentLoaded copyWith({ PlayStoreModel copyThis }) {
+  PlayStoreComponentLoaded copyWith({ PlayStoreModel? copyThis }) {
     return PlayStoreComponentLoaded(value: copyThis ?? this.value);
   }
 
   @override
-  List<Object> get props => [value];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'PlayStoreComponentLoaded { value: $value }';

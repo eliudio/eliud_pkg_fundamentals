@@ -45,50 +45,36 @@ import 'package:eliud_core/model/app_model.dart';
 import 'presentation_form.dart';
 
 
-typedef PresentationWidgetProvider(PresentationModel value);
+typedef PresentationWidgetProvider(PresentationModel? value);
 
 class PresentationListWidget extends StatefulWidget with HasFab {
-  BackgroundModel listBackground;
-  PresentationWidgetProvider widgetProvider;
-  bool readOnly;
-  String form;
-  PresentationListWidgetState state;
-  bool isEmbedded;
+  BackgroundModel? listBackground;
+  PresentationWidgetProvider? widgetProvider;
+  bool? readOnly;
+  String? form;
+  PresentationListWidgetState? state;
+  bool? isEmbedded;
 
-  PresentationListWidget({ Key key, this.readOnly, this.form, this.widgetProvider, this.isEmbedded, this.listBackground }): super(key: key);
+  PresentationListWidget({ Key? key, this.readOnly, this.form, this.widgetProvider, this.isEmbedded, this.listBackground }): super(key: key);
 
   @override
   PresentationListWidgetState createState() {
     state ??= PresentationListWidgetState();
-    return state;
+    return state!;
   }
 
   @override
-  Widget fab(BuildContext context) {
-    if ((readOnly != null) && readOnly) return null;
+  Widget? fab(BuildContext context) {
+    if ((readOnly != null) && readOnly!) return null;
     state ??= PresentationListWidgetState();
     var accessState = AccessBloc.getState(context);
-    return state.fab(context, accessState);
+    return state!.fab(context, accessState);
   }
 }
 
 class PresentationListWidgetState extends State<PresentationListWidget> {
-  PresentationListBloc bloc;
-
   @override
-  void didChangeDependencies() {
-    bloc = BlocProvider.of<PresentationListBloc>(context);
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose () {
-    if (bloc != null) bloc.close();
-    super.dispose();
-  }
-
-  @override
-  Widget fab(BuildContext aContext, AccessState accessState) {
+  Widget? fab(BuildContext aContext, AccessState accessState) {
     if (accessState is AppLoaded) {
       return !accessState.memberIsOwner() 
         ? null
@@ -100,7 +86,7 @@ class PresentationListWidgetState extends State<PresentationListWidget> {
         onPressed: () {
           Navigator.of(context).push(
             pageRouteBuilder(accessState.app, page: BlocProvider.value(
-                value: bloc,
+                value: BlocProvider.of<PresentationListBloc>(context),
                 child: PresentationForm(
                     value: null,
                     formAction: FormAction.AddAction)
@@ -124,15 +110,15 @@ class PresentationListWidgetState extends State<PresentationListWidget> {
           );
         } else if (state is PresentationListLoaded) {
           final values = state.values;
-          if ((widget.isEmbedded != null) && (widget.isEmbedded)) {
-            List<Widget> children = List();
+          if ((widget.isEmbedded != null) && widget.isEmbedded!) {
+            var children = <Widget>[];
             children.add(theList(context, values, accessState));
             children.add(RaisedButton(
                     color: RgbHelper.color(rgbo: accessState.app.formSubmitButtonColor),
                     onPressed: () {
                       Navigator.of(context).push(
                                 pageRouteBuilder(accessState.app, page: BlocProvider.value(
-                                    value: bloc,
+                                    value: BlocProvider.of<PresentationListBloc>(context),
                                     child: PresentationForm(
                                         value: null,
                                         formAction: FormAction.AddAction)
@@ -174,7 +160,7 @@ class PresentationListWidgetState extends State<PresentationListWidget> {
         itemBuilder: (context, index) {
           final value = values[index];
           
-          if (widget.widgetProvider != null) return widget.widgetProvider(value);
+          if (widget.widgetProvider != null) return widget.widgetProvider!(value);
 
           return PresentationListItem(
             value: value,
@@ -210,7 +196,7 @@ class PresentationListWidgetState extends State<PresentationListWidget> {
   }
   
   
-  Widget getForm(value, action) {
+  Widget? getForm(value, action) {
     if (widget.form == null) {
       return PresentationForm(value: value, formAction: action);
     } else {
@@ -226,36 +212,36 @@ class PresentationListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
   final AppModel app;
-  final PresentationModel value;
+  final PresentationModel? value;
 
   PresentationListItem({
-    Key key,
-    @required this.onDismissed,
-    @required this.onTap,
-    @required this.value,
-    @required this.app,
+    Key? key,
+    required this.onDismissed,
+    required this.onTap,
+    required this.value,
+    required this.app,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key('__Presentation_item_${value.documentID}'),
+      key: Key('__Presentation_item_${value!.documentID}'),
       onDismissed: onDismissed,
       child: ListTile(
         onTap: onTap,
         title: Hero(
-          tag: '${value.documentID}__PresentationheroTag',
+          tag: '${value!.documentID}__PresentationheroTag',
           child: Container(
             width: fullScreenWidth(context),
             child: Center(child: Text(
-              value.documentID,
+              value!.documentID!,
               style: TextStyle(color: RgbHelper.color(rgbo: app.listTextItemColor)),
             )),
           ),
         ),
-        subtitle: (value.title != null) && (value.title.isNotEmpty)
+        subtitle: (value!.title != null) && (value!.title!.isNotEmpty)
             ? Center( child: Text(
-          value.title,
+          value!.title!,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(color: RgbHelper.color(rgbo: app.listTextItemColor)),

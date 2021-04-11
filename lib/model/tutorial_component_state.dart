@@ -20,13 +20,13 @@ abstract class TutorialComponentState extends Equatable {
   const TutorialComponentState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class TutorialComponentUninitialized extends TutorialComponentState {}
 
 class TutorialComponentError extends TutorialComponentState {
-  final String message;
+  final String? message;
   TutorialComponentError({ this.message });
 }
 
@@ -35,16 +35,16 @@ class TutorialComponentPermissionDenied extends TutorialComponentState {
 }
 
 class TutorialComponentLoaded extends TutorialComponentState {
-  final TutorialModel value;
+  final TutorialModel? value;
 
   const TutorialComponentLoaded({ this.value });
 
-  TutorialComponentLoaded copyWith({ TutorialModel copyThis }) {
+  TutorialComponentLoaded copyWith({ TutorialModel? copyThis }) {
     return TutorialComponentLoaded(value: copyThis ?? this.value);
   }
 
   @override
-  List<Object> get props => [value];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'TutorialComponentLoaded { value: $value }';

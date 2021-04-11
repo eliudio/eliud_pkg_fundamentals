@@ -42,7 +42,7 @@ import 'package:eliud_pkg_fundamentals/model/document_item_form_state.dart';
 import 'package:eliud_pkg_fundamentals/model/document_item_repository.dart';
 
 class DocumentItemFormBloc extends Bloc<DocumentItemFormEvent, DocumentItemFormState> {
-  final String appId;
+  final String? appId;
 
   DocumentItemFormBloc(this.appId, ): super(DocumentItemFormUninitialized());
   @override
@@ -62,29 +62,29 @@ class DocumentItemFormBloc extends Bloc<DocumentItemFormEvent, DocumentItemFormS
 
 
       if (event is InitialiseDocumentItemFormEvent) {
-        DocumentItemFormLoaded loaded = DocumentItemFormLoaded(value: event.value);
+        DocumentItemFormLoaded loaded = DocumentItemFormLoaded(value: event!.value);
         yield loaded;
         return;
       } else if (event is InitialiseDocumentItemFormNoLoadEvent) {
-        DocumentItemFormLoaded loaded = DocumentItemFormLoaded(value: event.value);
+        DocumentItemFormLoaded loaded = DocumentItemFormLoaded(value: event!.value);
         yield loaded;
         return;
       }
     } else if (currentState is DocumentItemFormInitialized) {
-      DocumentItemModel newValue = null;
+      DocumentItemModel? newValue = null;
       if (event is ChangedDocumentItemReference) {
-        newValue = currentState.value.copyWith(reference: event.value);
+        newValue = currentState.value!.copyWith(reference: event!.value);
         yield SubmittableDocumentItemForm(value: newValue);
 
         return;
       }
       if (event is ChangedDocumentItemImage) {
-        if (event.value != null)
-          newValue = currentState.value.copyWith(image: await memberMediumRepository(appId: appId).get(event.value));
+        if (event!.value != null)
+          newValue = currentState.value!.copyWith(image: await memberMediumRepository(appId: appId)!.get(event!.value));
         else
           newValue = new DocumentItemModel(
-                                 documentID: currentState.value.documentID,
-                                 reference: currentState.value.reference,
+                                 documentID: currentState.value!.documentID,
+                                 reference: currentState.value!.reference,
                                  image: null,
           );
         yield SubmittableDocumentItemForm(value: newValue);

@@ -42,7 +42,7 @@ import 'package:eliud_pkg_fundamentals/model/section_form_state.dart';
 import 'package:eliud_pkg_fundamentals/model/section_repository.dart';
 
 class SectionFormBloc extends Bloc<SectionFormEvent, SectionFormState> {
-  final String appId;
+  final String? appId;
 
   SectionFormBloc(this.appId, ): super(SectionFormUninitialized());
   @override
@@ -65,71 +65,71 @@ class SectionFormBloc extends Bloc<SectionFormEvent, SectionFormState> {
 
 
       if (event is InitialiseSectionFormEvent) {
-        SectionFormLoaded loaded = SectionFormLoaded(value: event.value);
+        SectionFormLoaded loaded = SectionFormLoaded(value: event!.value);
         yield loaded;
         return;
       } else if (event is InitialiseSectionFormNoLoadEvent) {
-        SectionFormLoaded loaded = SectionFormLoaded(value: event.value);
+        SectionFormLoaded loaded = SectionFormLoaded(value: event!.value);
         yield loaded;
         return;
       }
     } else if (currentState is SectionFormInitialized) {
-      SectionModel newValue = null;
+      SectionModel? newValue = null;
       if (event is ChangedSectionTitle) {
-        newValue = currentState.value.copyWith(title: event.value);
+        newValue = currentState.value!.copyWith(title: event!.value);
         yield SubmittableSectionForm(value: newValue);
 
         return;
       }
       if (event is ChangedSectionDescription) {
-        newValue = currentState.value.copyWith(description: event.value);
+        newValue = currentState.value!.copyWith(description: event!.value);
         yield SubmittableSectionForm(value: newValue);
 
         return;
       }
       if (event is ChangedSectionImage) {
-        if (event.value != null)
-          newValue = currentState.value.copyWith(image: await memberMediumRepository(appId: appId).get(event.value));
+        if (event!.value != null)
+          newValue = currentState.value!.copyWith(image: await memberMediumRepository(appId: appId)!.get(event!.value));
         else
           newValue = new SectionModel(
-                                 documentID: currentState.value.documentID,
-                                 title: currentState.value.title,
-                                 description: currentState.value.description,
+                                 documentID: currentState.value!.documentID,
+                                 title: currentState.value!.title,
+                                 description: currentState.value!.description,
                                  image: null,
-                                 imagePositionRelative: currentState.value.imagePositionRelative,
-                                 imageAlignment: currentState.value.imageAlignment,
-                                 imageWidth: currentState.value.imageWidth,
-                                 links: currentState.value.links,
+                                 imagePositionRelative: currentState.value!.imagePositionRelative,
+                                 imageAlignment: currentState.value!.imageAlignment,
+                                 imageWidth: currentState.value!.imageWidth,
+                                 links: currentState.value!.links,
           );
         yield SubmittableSectionForm(value: newValue);
 
         return;
       }
       if (event is ChangedSectionImagePositionRelative) {
-        newValue = currentState.value.copyWith(imagePositionRelative: event.value);
+        newValue = currentState.value!.copyWith(imagePositionRelative: event!.value);
         yield SubmittableSectionForm(value: newValue);
 
         return;
       }
       if (event is ChangedSectionImageAlignment) {
-        newValue = currentState.value.copyWith(imageAlignment: event.value);
+        newValue = currentState.value!.copyWith(imageAlignment: event!.value);
         yield SubmittableSectionForm(value: newValue);
 
         return;
       }
       if (event is ChangedSectionImageWidth) {
-        if (isDouble(event.value)) {
-          newValue = currentState.value.copyWith(imageWidth: double.parse(event.value));
+        if (isDouble(event!.value!)) {
+          newValue = currentState.value!.copyWith(imageWidth: double.parse(event!.value!));
           yield SubmittableSectionForm(value: newValue);
 
         } else {
-          newValue = currentState.value.copyWith(imageWidth: 0.0);
+          newValue = currentState.value!.copyWith(imageWidth: 0.0);
           yield ImageWidthSectionFormError(message: "Value should be a number or decimal number", value: newValue);
         }
         return;
       }
       if (event is ChangedSectionLinks) {
-        newValue = currentState.value.copyWith(links: event.value);
+        newValue = currentState.value!.copyWith(links: event!.value);
         yield SubmittableSectionForm(value: newValue);
 
         return;

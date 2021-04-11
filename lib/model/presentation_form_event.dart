@@ -34,7 +34,7 @@ abstract class PresentationFormEvent extends Equatable {
   const PresentationFormEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class InitialiseNewPresentationFormEvent extends PresentationFormEvent {
@@ -42,126 +42,126 @@ class InitialiseNewPresentationFormEvent extends PresentationFormEvent {
 
 
 class InitialisePresentationFormEvent extends PresentationFormEvent {
-  final PresentationModel value;
+  final PresentationModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   InitialisePresentationFormEvent({this.value});
 }
 
 class InitialisePresentationFormNoLoadEvent extends PresentationFormEvent {
-  final PresentationModel value;
+  final PresentationModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   InitialisePresentationFormNoLoadEvent({this.value});
 }
 
 class ChangedPresentationDocumentID extends PresentationFormEvent {
-  final String value;
+  final String? value;
 
   ChangedPresentationDocumentID({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedPresentationDocumentID{ value: $value }';
 }
 
 class ChangedPresentationAppId extends PresentationFormEvent {
-  final String value;
+  final String? value;
 
   ChangedPresentationAppId({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedPresentationAppId{ value: $value }';
 }
 
 class ChangedPresentationTitle extends PresentationFormEvent {
-  final String value;
+  final String? value;
 
   ChangedPresentationTitle({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedPresentationTitle{ value: $value }';
 }
 
 class ChangedPresentationBodyComponents extends PresentationFormEvent {
-  final List<BodyComponentModel> value;
+  final List<BodyComponentModel>? value;
 
   ChangedPresentationBodyComponents({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedPresentationBodyComponents{ value: $value }';
 }
 
 class ChangedPresentationImage extends PresentationFormEvent {
-  final String value;
+  final String? value;
 
   ChangedPresentationImage({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedPresentationImage{ value: $value }';
 }
 
 class ChangedPresentationImagePositionRelative extends PresentationFormEvent {
-  final PresentationRelativeImagePosition value;
+  final PresentationRelativeImagePosition? value;
 
   ChangedPresentationImagePositionRelative({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedPresentationImagePositionRelative{ value: $value }';
 }
 
 class ChangedPresentationImageAlignment extends PresentationFormEvent {
-  final PresentationImageAlignment value;
+  final PresentationImageAlignment? value;
 
   ChangedPresentationImageAlignment({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedPresentationImageAlignment{ value: $value }';
 }
 
 class ChangedPresentationImageWidth extends PresentationFormEvent {
-  final String value;
+  final String? value;
 
   ChangedPresentationImageWidth({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedPresentationImageWidth{ value: $value }';
 }
 
 class ChangedPresentationConditions extends PresentationFormEvent {
-  final ConditionsSimpleModel value;
+  final ConditionsSimpleModel? value;
 
   ChangedPresentationConditions({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedPresentationConditions{ value: $value }';

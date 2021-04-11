@@ -24,7 +24,7 @@ import 'package:flutter/services.dart';
 
 
 class PresentationComponentBloc extends Bloc<PresentationComponentEvent, PresentationComponentState> {
-  final PresentationRepository presentationRepository;
+  final PresentationRepository? presentationRepository;
 
   PresentationComponentBloc({ this.presentationRepository }): super(PresentationComponentUninitialized());
   @override
@@ -34,9 +34,9 @@ class PresentationComponentBloc extends Bloc<PresentationComponentEvent, Present
       try {
         if (currentState is PresentationComponentUninitialized) {
           bool permissionDenied = false;
-          final model = await presentationRepository.get(event.id, onError: (error) {
+          final model = await presentationRepository!.get(event.id, onError: (error) {
             // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
-            if ((error is PlatformException) &&  (error.message.startsWith("PERMISSION_DENIED"))) {
+            if ((error is PlatformException) &&  (error.message!.startsWith("PERMISSION_DENIED"))) {
               permissionDenied = true;
             }
           });
@@ -46,7 +46,7 @@ class PresentationComponentBloc extends Bloc<PresentationComponentEvent, Present
             if (model != null) {
               yield PresentationComponentLoaded(value: model);
             } else {
-              String id = event.id;
+              String? id = event.id;
               yield PresentationComponentError(
                   message: "Presentation with id = '$id' not found");
             }

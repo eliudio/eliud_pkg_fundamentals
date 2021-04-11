@@ -42,8 +42,8 @@ import 'package:eliud_pkg_fundamentals/model/divider_form_state.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_repository.dart';
 
 class DividerFormBloc extends Bloc<DividerFormEvent, DividerFormState> {
-  final FormAction formAction;
-  final String appId;
+  final FormAction? formAction;
+  final String? appId;
 
   DividerFormBloc(this.appId, { this.formAction }): super(DividerFormUninitialized());
   @override
@@ -70,20 +70,20 @@ class DividerFormBloc extends Bloc<DividerFormEvent, DividerFormState> {
 
       if (event is InitialiseDividerFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        DividerFormLoaded loaded = DividerFormLoaded(value: await dividerRepository(appId: appId).get(event.value.documentID));
+        DividerFormLoaded loaded = DividerFormLoaded(value: await dividerRepository(appId: appId)!.get(event!.value!.documentID));
         yield loaded;
         return;
       } else if (event is InitialiseDividerFormNoLoadEvent) {
-        DividerFormLoaded loaded = DividerFormLoaded(value: event.value);
+        DividerFormLoaded loaded = DividerFormLoaded(value: event!.value);
         yield loaded;
         return;
       }
     } else if (currentState is DividerFormInitialized) {
-      DividerModel newValue = null;
+      DividerModel? newValue = null;
       if (event is ChangedDividerDocumentID) {
-        newValue = currentState.value.copyWith(documentID: event.value);
+        newValue = currentState.value!.copyWith(documentID: event!.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event.value, newValue).asStream();
+          yield* _isDocumentIDValid(event!.value, newValue).asStream();
         } else {
           yield SubmittableDividerForm(value: newValue);
         }
@@ -91,63 +91,63 @@ class DividerFormBloc extends Bloc<DividerFormEvent, DividerFormState> {
         return;
       }
       if (event is ChangedDividerName) {
-        newValue = currentState.value.copyWith(name: event.value);
+        newValue = currentState.value!.copyWith(name: event!.value);
         yield SubmittableDividerForm(value: newValue);
 
         return;
       }
       if (event is ChangedDividerColor) {
-        newValue = currentState.value.copyWith(color: event.value);
+        newValue = currentState.value!.copyWith(color: event!.value);
         yield SubmittableDividerForm(value: newValue);
 
         return;
       }
       if (event is ChangedDividerHeight) {
-        if (isDouble(event.value)) {
-          newValue = currentState.value.copyWith(height: double.parse(event.value));
+        if (isDouble(event!.value!)) {
+          newValue = currentState.value!.copyWith(height: double.parse(event!.value!));
           yield SubmittableDividerForm(value: newValue);
 
         } else {
-          newValue = currentState.value.copyWith(height: 0.0);
+          newValue = currentState.value!.copyWith(height: 0.0);
           yield HeightDividerFormError(message: "Value should be a number or decimal number", value: newValue);
         }
         return;
       }
       if (event is ChangedDividerThickness) {
-        if (isDouble(event.value)) {
-          newValue = currentState.value.copyWith(thickness: double.parse(event.value));
+        if (isDouble(event!.value!)) {
+          newValue = currentState.value!.copyWith(thickness: double.parse(event!.value!));
           yield SubmittableDividerForm(value: newValue);
 
         } else {
-          newValue = currentState.value.copyWith(thickness: 0.0);
+          newValue = currentState.value!.copyWith(thickness: 0.0);
           yield ThicknessDividerFormError(message: "Value should be a number or decimal number", value: newValue);
         }
         return;
       }
       if (event is ChangedDividerIndent) {
-        if (isDouble(event.value)) {
-          newValue = currentState.value.copyWith(indent: double.parse(event.value));
+        if (isDouble(event!.value!)) {
+          newValue = currentState.value!.copyWith(indent: double.parse(event!.value!));
           yield SubmittableDividerForm(value: newValue);
 
         } else {
-          newValue = currentState.value.copyWith(indent: 0.0);
+          newValue = currentState.value!.copyWith(indent: 0.0);
           yield IndentDividerFormError(message: "Value should be a number or decimal number", value: newValue);
         }
         return;
       }
       if (event is ChangedDividerEndIndent) {
-        if (isDouble(event.value)) {
-          newValue = currentState.value.copyWith(endIndent: double.parse(event.value));
+        if (isDouble(event!.value!)) {
+          newValue = currentState.value!.copyWith(endIndent: double.parse(event!.value!));
           yield SubmittableDividerForm(value: newValue);
 
         } else {
-          newValue = currentState.value.copyWith(endIndent: 0.0);
+          newValue = currentState.value!.copyWith(endIndent: 0.0);
           yield EndIndentDividerFormError(message: "Value should be a number or decimal number", value: newValue);
         }
         return;
       }
       if (event is ChangedDividerConditions) {
-        newValue = currentState.value.copyWith(conditions: event.value);
+        newValue = currentState.value!.copyWith(conditions: event!.value);
         yield SubmittableDividerForm(value: newValue);
 
         return;
@@ -158,10 +158,10 @@ class DividerFormBloc extends Bloc<DividerFormEvent, DividerFormState> {
 
   DocumentIDDividerFormError error(String message, DividerModel newValue) => DocumentIDDividerFormError(message: message, value: newValue);
 
-  Future<DividerFormState> _isDocumentIDValid(String value, DividerModel newValue) async {
+  Future<DividerFormState> _isDocumentIDValid(String? value, DividerModel newValue) async {
     if (value == null) return Future.value(error("Provide value for documentID", newValue));
     if (value.length == 0) return Future.value(error("Provide value for documentID", newValue));
-    Future<DividerModel> findDocument = dividerRepository(appId: appId).get(value);
+    Future<DividerModel?> findDocument = dividerRepository(appId: appId)!.get(value);
     return await findDocument.then((documentFound) {
       if (documentFound == null) {
         return SubmittableDividerForm(value: newValue);

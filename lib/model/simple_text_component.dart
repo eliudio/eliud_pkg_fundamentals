@@ -25,7 +25,7 @@ import 'package:eliud_pkg_fundamentals/model/simple_text_component_state.dart';
 
 abstract class AbstractSimpleTextComponent extends StatelessWidget {
   static String componentName = "simpleTexts";
-  final String simpleTextID;
+  final String? simpleTextID;
 
   AbstractSimpleTextComponent({this.simpleTextID});
 
@@ -63,7 +63,7 @@ abstract class AbstractSimpleTextComponent extends StatelessWidget {
     });
   }
 
-  Widget yourWidget(BuildContext context, SimpleTextModel value);
+  Widget yourWidget(BuildContext context, SimpleTextModel? value);
   Widget alertWidget({ title: String, content: String});
   SimpleTextRepository getSimpleTextRepository(BuildContext context);
 }

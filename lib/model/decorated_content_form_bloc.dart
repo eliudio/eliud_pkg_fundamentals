@@ -42,8 +42,8 @@ import 'package:eliud_pkg_fundamentals/model/decorated_content_form_state.dart';
 import 'package:eliud_pkg_fundamentals/model/decorated_content_repository.dart';
 
 class DecoratedContentFormBloc extends Bloc<DecoratedContentFormEvent, DecoratedContentFormState> {
-  final FormAction formAction;
-  final String appId;
+  final FormAction? formAction;
+  final String? appId;
 
   DecoratedContentFormBloc(this.appId, { this.formAction }): super(DecoratedContentFormUninitialized());
   @override
@@ -70,20 +70,20 @@ class DecoratedContentFormBloc extends Bloc<DecoratedContentFormEvent, Decorated
 
       if (event is InitialiseDecoratedContentFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        DecoratedContentFormLoaded loaded = DecoratedContentFormLoaded(value: await decoratedContentRepository(appId: appId).get(event.value.documentID));
+        DecoratedContentFormLoaded loaded = DecoratedContentFormLoaded(value: await decoratedContentRepository(appId: appId)!.get(event!.value!.documentID));
         yield loaded;
         return;
       } else if (event is InitialiseDecoratedContentFormNoLoadEvent) {
-        DecoratedContentFormLoaded loaded = DecoratedContentFormLoaded(value: event.value);
+        DecoratedContentFormLoaded loaded = DecoratedContentFormLoaded(value: event!.value);
         yield loaded;
         return;
       }
     } else if (currentState is DecoratedContentFormInitialized) {
-      DecoratedContentModel newValue = null;
+      DecoratedContentModel? newValue = null;
       if (event is ChangedDecoratedContentDocumentID) {
-        newValue = currentState.value.copyWith(documentID: event.value);
+        newValue = currentState.value!.copyWith(documentID: event!.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event.value, newValue).asStream();
+          yield* _isDocumentIDValid(event!.value, newValue).asStream();
         } else {
           yield SubmittableDecoratedContentForm(value: newValue);
         }
@@ -91,54 +91,54 @@ class DecoratedContentFormBloc extends Bloc<DecoratedContentFormEvent, Decorated
         return;
       }
       if (event is ChangedDecoratedContentName) {
-        newValue = currentState.value.copyWith(name: event.value);
+        newValue = currentState.value!.copyWith(name: event!.value);
         yield SubmittableDecoratedContentForm(value: newValue);
 
         return;
       }
       if (event is ChangedDecoratedContentDecoratingComponentName) {
-        newValue = currentState.value.copyWith(decoratingComponentName: event.value);
+        newValue = currentState.value!.copyWith(decoratingComponentName: event!.value);
         yield SubmittableDecoratedContentForm(value: newValue);
 
         return;
       }
       if (event is ChangedDecoratedContentDecoratingComponentId) {
-        newValue = currentState.value.copyWith(decoratingComponentId: event.value);
+        newValue = currentState.value!.copyWith(decoratingComponentId: event!.value);
         yield SubmittableDecoratedContentForm(value: newValue);
 
         return;
       }
       if (event is ChangedDecoratedContentContentComponentName) {
-        newValue = currentState.value.copyWith(contentComponentName: event.value);
+        newValue = currentState.value!.copyWith(contentComponentName: event!.value);
         yield SubmittableDecoratedContentForm(value: newValue);
 
         return;
       }
       if (event is ChangedDecoratedContentContentComponentId) {
-        newValue = currentState.value.copyWith(contentComponentId: event.value);
+        newValue = currentState.value!.copyWith(contentComponentId: event!.value);
         yield SubmittableDecoratedContentForm(value: newValue);
 
         return;
       }
       if (event is ChangedDecoratedContentDecorationComponentPosition) {
-        newValue = currentState.value.copyWith(decorationComponentPosition: event.value);
+        newValue = currentState.value!.copyWith(decorationComponentPosition: event!.value);
         yield SubmittableDecoratedContentForm(value: newValue);
 
         return;
       }
       if (event is ChangedDecoratedContentPercentageDecorationVisible) {
-        if (isDouble(event.value)) {
-          newValue = currentState.value.copyWith(percentageDecorationVisible: double.parse(event.value));
+        if (isDouble(event!.value!)) {
+          newValue = currentState.value!.copyWith(percentageDecorationVisible: double.parse(event!.value!));
           yield SubmittableDecoratedContentForm(value: newValue);
 
         } else {
-          newValue = currentState.value.copyWith(percentageDecorationVisible: 0.0);
+          newValue = currentState.value!.copyWith(percentageDecorationVisible: 0.0);
           yield PercentageDecorationVisibleDecoratedContentFormError(message: "Value should be a number or decimal number", value: newValue);
         }
         return;
       }
       if (event is ChangedDecoratedContentConditions) {
-        newValue = currentState.value.copyWith(conditions: event.value);
+        newValue = currentState.value!.copyWith(conditions: event!.value);
         yield SubmittableDecoratedContentForm(value: newValue);
 
         return;
@@ -149,10 +149,10 @@ class DecoratedContentFormBloc extends Bloc<DecoratedContentFormEvent, Decorated
 
   DocumentIDDecoratedContentFormError error(String message, DecoratedContentModel newValue) => DocumentIDDecoratedContentFormError(message: message, value: newValue);
 
-  Future<DecoratedContentFormState> _isDocumentIDValid(String value, DecoratedContentModel newValue) async {
+  Future<DecoratedContentFormState> _isDocumentIDValid(String? value, DecoratedContentModel newValue) async {
     if (value == null) return Future.value(error("Provide value for documentID", newValue));
     if (value.length == 0) return Future.value(error("Provide value for documentID", newValue));
-    Future<DecoratedContentModel> findDocument = decoratedContentRepository(appId: appId).get(value);
+    Future<DecoratedContentModel?> findDocument = decoratedContentRepository(appId: appId)!.get(value);
     return await findDocument.then((documentFound) {
       if (documentFound == null) {
         return SubmittableDecoratedContentForm(value: newValue);

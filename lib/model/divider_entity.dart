@@ -22,26 +22,26 @@ import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class DividerEntity {
-  final String appId;
-  final String name;
-  final RgbEntity color;
-  final double height;
-  final double thickness;
-  final double indent;
-  final double endIndent;
-  final ConditionsSimpleEntity conditions;
+  final String? appId;
+  final String? name;
+  final RgbEntity? color;
+  final double? height;
+  final double? thickness;
+  final double? indent;
+  final double? endIndent;
+  final ConditionsSimpleEntity? conditions;
 
   DividerEntity({this.appId, this.name, this.color, this.height, this.thickness, this.indent, this.endIndent, this.conditions, });
 
 
-  List<Object> get props => [appId, name, color, height, thickness, indent, endIndent, conditions, ];
+  List<Object?> get props => [appId, name, color, height, thickness, indent, endIndent, conditions, ];
 
   @override
   String toString() {
     return 'DividerEntity{appId: $appId, name: $name, color: $color, height: $height, thickness: $thickness, indent: $indent, endIndent: $endIndent, conditions: $conditions}';
   }
 
-  static DividerEntity fromMap(Map map) {
+  static DividerEntity? fromMap(Map? map) {
     if (map == null) return null;
 
     var colorFromMap;
@@ -65,15 +65,15 @@ class DividerEntity {
     );
   }
 
-  Map<String, Object> toDocument() {
-    final Map<String, dynamic> colorMap = color != null 
-        ? color.toDocument()
+  Map<String, Object?> toDocument() {
+    final Map<String, dynamic>? colorMap = color != null 
+        ? color!.toDocument()
         : null;
-    final Map<String, dynamic> conditionsMap = conditions != null 
-        ? conditions.toDocument()
+    final Map<String, dynamic>? conditionsMap = conditions != null 
+        ? conditions!.toDocument()
         : null;
 
-    Map<String, Object> theDocument = HashMap();
+    Map<String, Object?> theDocument = HashMap();
     if (appId != null) theDocument["appId"] = appId;
       else theDocument["appId"] = null;
     if (name != null) theDocument["name"] = name;
@@ -93,8 +93,8 @@ class DividerEntity {
     return theDocument;
   }
 
-  static DividerEntity fromJsonString(String json) {
-    Map<String, dynamic> generationSpecificationMap = jsonDecode(json);
+  static DividerEntity? fromJsonString(String json) {
+    Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
     return fromMap(generationSpecificationMap);
   }
 

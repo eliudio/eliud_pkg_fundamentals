@@ -42,7 +42,7 @@ import 'package:eliud_pkg_fundamentals/model/listed_item_form_state.dart';
 import 'package:eliud_pkg_fundamentals/model/listed_item_repository.dart';
 
 class ListedItemFormBloc extends Bloc<ListedItemFormEvent, ListedItemFormState> {
-  final String appId;
+  final String? appId;
 
   ListedItemFormBloc(this.appId, ): super(ListedItemFormUninitialized());
   @override
@@ -62,52 +62,52 @@ class ListedItemFormBloc extends Bloc<ListedItemFormEvent, ListedItemFormState> 
 
 
       if (event is InitialiseListedItemFormEvent) {
-        ListedItemFormLoaded loaded = ListedItemFormLoaded(value: event.value);
+        ListedItemFormLoaded loaded = ListedItemFormLoaded(value: event!.value);
         yield loaded;
         return;
       } else if (event is InitialiseListedItemFormNoLoadEvent) {
-        ListedItemFormLoaded loaded = ListedItemFormLoaded(value: event.value);
+        ListedItemFormLoaded loaded = ListedItemFormLoaded(value: event!.value);
         yield loaded;
         return;
       }
     } else if (currentState is ListedItemFormInitialized) {
-      ListedItemModel newValue = null;
+      ListedItemModel? newValue = null;
       if (event is ChangedListedItemDescription) {
-        newValue = currentState.value.copyWith(description: event.value);
+        newValue = currentState.value!.copyWith(description: event!.value);
         yield SubmittableListedItemForm(value: newValue);
 
         return;
       }
       if (event is ChangedListedItemAction) {
-        newValue = currentState.value.copyWith(action: event.value);
+        newValue = currentState.value!.copyWith(action: event!.value);
         yield SubmittableListedItemForm(value: newValue);
 
         return;
       }
       if (event is ChangedListedItemImage) {
-        if (event.value != null)
-          newValue = currentState.value.copyWith(image: await memberMediumRepository(appId: appId).get(event.value));
+        if (event!.value != null)
+          newValue = currentState.value!.copyWith(image: await memberMediumRepository(appId: appId)!.get(event!.value));
         else
           newValue = new ListedItemModel(
-                                 documentID: currentState.value.documentID,
-                                 description: currentState.value.description,
-                                 action: currentState.value.action,
+                                 documentID: currentState.value!.documentID,
+                                 description: currentState.value!.description,
+                                 action: currentState.value!.action,
                                  image: null,
-                                 posSize: currentState.value.posSize,
+                                 posSize: currentState.value!.posSize,
           );
         yield SubmittableListedItemForm(value: newValue);
 
         return;
       }
       if (event is ChangedListedItemPosSize) {
-        if (event.value != null)
-          newValue = currentState.value.copyWith(posSize: await posSizeRepository(appId: appId).get(event.value));
+        if (event!.value != null)
+          newValue = currentState.value!.copyWith(posSize: await posSizeRepository(appId: appId)!.get(event!.value));
         else
           newValue = new ListedItemModel(
-                                 documentID: currentState.value.documentID,
-                                 description: currentState.value.description,
-                                 action: currentState.value.action,
-                                 image: currentState.value.image,
+                                 documentID: currentState.value!.documentID,
+                                 description: currentState.value!.description,
+                                 action: currentState.value!.action,
+                                 image: currentState.value!.image,
                                  posSize: null,
           );
         yield SubmittableListedItemForm(value: newValue);

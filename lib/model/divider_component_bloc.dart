@@ -23,7 +23,7 @@ import 'package:eliud_pkg_fundamentals/model/divider_repository.dart';
 import 'package:flutter/services.dart';
 
 class DividerComponentBloc extends Bloc<DividerComponentEvent, DividerComponentState> {
-  final DividerRepository dividerRepository;
+  final DividerRepository? dividerRepository;
 
   DividerComponentBloc({ this.dividerRepository }): super(DividerComponentUninitialized());
   @override
@@ -33,9 +33,9 @@ class DividerComponentBloc extends Bloc<DividerComponentEvent, DividerComponentS
       try {
         if (currentState is DividerComponentUninitialized) {
           bool permissionDenied = false;
-          final model = await dividerRepository.get(event.id, onError: (error) {
+          final model = await dividerRepository!.get(event.id, onError: (error) {
             // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
-            if ((error is PlatformException) &&  (error.message.startsWith("PERMISSION_DENIED"))) {
+            if ((error is PlatformException) &&  (error.message!.startsWith("PERMISSION_DENIED"))) {
               permissionDenied = true;
             }
           });
@@ -45,7 +45,7 @@ class DividerComponentBloc extends Bloc<DividerComponentEvent, DividerComponentS
             if (model != null) {
               yield DividerComponentLoaded(value: model);
             } else {
-              String id = event.id;
+              String? id = event.id;
               yield DividerComponentError(
                   message: "Divider with id = '$id' not found");
             }

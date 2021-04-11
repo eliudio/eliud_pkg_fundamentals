@@ -45,50 +45,36 @@ import 'package:eliud_core/model/app_model.dart';
 import 'decorated_content_form.dart';
 
 
-typedef DecoratedContentWidgetProvider(DecoratedContentModel value);
+typedef DecoratedContentWidgetProvider(DecoratedContentModel? value);
 
 class DecoratedContentListWidget extends StatefulWidget with HasFab {
-  BackgroundModel listBackground;
-  DecoratedContentWidgetProvider widgetProvider;
-  bool readOnly;
-  String form;
-  DecoratedContentListWidgetState state;
-  bool isEmbedded;
+  BackgroundModel? listBackground;
+  DecoratedContentWidgetProvider? widgetProvider;
+  bool? readOnly;
+  String? form;
+  DecoratedContentListWidgetState? state;
+  bool? isEmbedded;
 
-  DecoratedContentListWidget({ Key key, this.readOnly, this.form, this.widgetProvider, this.isEmbedded, this.listBackground }): super(key: key);
+  DecoratedContentListWidget({ Key? key, this.readOnly, this.form, this.widgetProvider, this.isEmbedded, this.listBackground }): super(key: key);
 
   @override
   DecoratedContentListWidgetState createState() {
     state ??= DecoratedContentListWidgetState();
-    return state;
+    return state!;
   }
 
   @override
-  Widget fab(BuildContext context) {
-    if ((readOnly != null) && readOnly) return null;
+  Widget? fab(BuildContext context) {
+    if ((readOnly != null) && readOnly!) return null;
     state ??= DecoratedContentListWidgetState();
     var accessState = AccessBloc.getState(context);
-    return state.fab(context, accessState);
+    return state!.fab(context, accessState);
   }
 }
 
 class DecoratedContentListWidgetState extends State<DecoratedContentListWidget> {
-  DecoratedContentListBloc bloc;
-
   @override
-  void didChangeDependencies() {
-    bloc = BlocProvider.of<DecoratedContentListBloc>(context);
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose () {
-    if (bloc != null) bloc.close();
-    super.dispose();
-  }
-
-  @override
-  Widget fab(BuildContext aContext, AccessState accessState) {
+  Widget? fab(BuildContext aContext, AccessState accessState) {
     if (accessState is AppLoaded) {
       return !accessState.memberIsOwner() 
         ? null
@@ -100,7 +86,7 @@ class DecoratedContentListWidgetState extends State<DecoratedContentListWidget> 
         onPressed: () {
           Navigator.of(context).push(
             pageRouteBuilder(accessState.app, page: BlocProvider.value(
-                value: bloc,
+                value: BlocProvider.of<DecoratedContentListBloc>(context),
                 child: DecoratedContentForm(
                     value: null,
                     formAction: FormAction.AddAction)
@@ -124,15 +110,15 @@ class DecoratedContentListWidgetState extends State<DecoratedContentListWidget> 
           );
         } else if (state is DecoratedContentListLoaded) {
           final values = state.values;
-          if ((widget.isEmbedded != null) && (widget.isEmbedded)) {
-            List<Widget> children = List();
+          if ((widget.isEmbedded != null) && widget.isEmbedded!) {
+            var children = <Widget>[];
             children.add(theList(context, values, accessState));
             children.add(RaisedButton(
                     color: RgbHelper.color(rgbo: accessState.app.formSubmitButtonColor),
                     onPressed: () {
                       Navigator.of(context).push(
                                 pageRouteBuilder(accessState.app, page: BlocProvider.value(
-                                    value: bloc,
+                                    value: BlocProvider.of<DecoratedContentListBloc>(context),
                                     child: DecoratedContentForm(
                                         value: null,
                                         formAction: FormAction.AddAction)
@@ -174,7 +160,7 @@ class DecoratedContentListWidgetState extends State<DecoratedContentListWidget> 
         itemBuilder: (context, index) {
           final value = values[index];
           
-          if (widget.widgetProvider != null) return widget.widgetProvider(value);
+          if (widget.widgetProvider != null) return widget.widgetProvider!(value);
 
           return DecoratedContentListItem(
             value: value,
@@ -210,7 +196,7 @@ class DecoratedContentListWidgetState extends State<DecoratedContentListWidget> 
   }
   
   
-  Widget getForm(value, action) {
+  Widget? getForm(value, action) {
     if (widget.form == null) {
       return DecoratedContentForm(value: value, formAction: action);
     } else {
@@ -226,36 +212,36 @@ class DecoratedContentListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
   final AppModel app;
-  final DecoratedContentModel value;
+  final DecoratedContentModel? value;
 
   DecoratedContentListItem({
-    Key key,
-    @required this.onDismissed,
-    @required this.onTap,
-    @required this.value,
-    @required this.app,
+    Key? key,
+    required this.onDismissed,
+    required this.onTap,
+    required this.value,
+    required this.app,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key('__DecoratedContent_item_${value.documentID}'),
+      key: Key('__DecoratedContent_item_${value!.documentID}'),
       onDismissed: onDismissed,
       child: ListTile(
         onTap: onTap,
         title: Hero(
-          tag: '${value.documentID}__DecoratedContentheroTag',
+          tag: '${value!.documentID}__DecoratedContentheroTag',
           child: Container(
             width: fullScreenWidth(context),
             child: Center(child: Text(
-              value.documentID,
+              value!.documentID!,
               style: TextStyle(color: RgbHelper.color(rgbo: app.listTextItemColor)),
             )),
           ),
         ),
-        subtitle: (value.name != null) && (value.name.isNotEmpty)
+        subtitle: (value!.name != null) && (value!.name!.isNotEmpty)
             ? Center( child: Text(
-          value.name,
+          value!.name!,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(color: RgbHelper.color(rgbo: app.listTextItemColor)),

@@ -34,7 +34,7 @@ abstract class TutorialFormEvent extends Equatable {
   const TutorialFormEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class InitialiseNewTutorialFormEvent extends TutorialFormEvent {
@@ -42,102 +42,102 @@ class InitialiseNewTutorialFormEvent extends TutorialFormEvent {
 
 
 class InitialiseTutorialFormEvent extends TutorialFormEvent {
-  final TutorialModel value;
+  final TutorialModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   InitialiseTutorialFormEvent({this.value});
 }
 
 class InitialiseTutorialFormNoLoadEvent extends TutorialFormEvent {
-  final TutorialModel value;
+  final TutorialModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   InitialiseTutorialFormNoLoadEvent({this.value});
 }
 
 class ChangedTutorialDocumentID extends TutorialFormEvent {
-  final String value;
+  final String? value;
 
   ChangedTutorialDocumentID({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedTutorialDocumentID{ value: $value }';
 }
 
 class ChangedTutorialAppId extends TutorialFormEvent {
-  final String value;
+  final String? value;
 
   ChangedTutorialAppId({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedTutorialAppId{ value: $value }';
 }
 
 class ChangedTutorialName extends TutorialFormEvent {
-  final String value;
+  final String? value;
 
   ChangedTutorialName({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedTutorialName{ value: $value }';
 }
 
 class ChangedTutorialTitle extends TutorialFormEvent {
-  final String value;
+  final String? value;
 
   ChangedTutorialTitle({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedTutorialTitle{ value: $value }';
 }
 
 class ChangedTutorialDescription extends TutorialFormEvent {
-  final String value;
+  final String? value;
 
   ChangedTutorialDescription({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedTutorialDescription{ value: $value }';
 }
 
 class ChangedTutorialTutorialEntries extends TutorialFormEvent {
-  final List<TutorialEntryModel> value;
+  final List<TutorialEntryModel>? value;
 
   ChangedTutorialTutorialEntries({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedTutorialTutorialEntries{ value: $value }';
 }
 
 class ChangedTutorialConditions extends TutorialFormEvent {
-  final ConditionsSimpleModel value;
+  final ConditionsSimpleModel? value;
 
   ChangedTutorialConditions({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedTutorialConditions{ value: $value }';

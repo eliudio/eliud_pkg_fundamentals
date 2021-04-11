@@ -36,17 +36,17 @@ import 'package:eliud_core/tools/random.dart';
 
 
 class PlayStoreModel {
-  String documentID;
-  String appId;
-  String description;
-  BackgroundModel itemBackground;
-  ConditionsSimpleModel conditions;
+  String? documentID;
+  String? appId;
+  String? description;
+  BackgroundModel? itemBackground;
+  ConditionsSimpleModel? conditions;
 
   PlayStoreModel({this.documentID, this.appId, this.description, this.itemBackground, this.conditions, })  {
     assert(documentID != null);
   }
 
-  PlayStoreModel copyWith({String documentID, String appId, String description, BackgroundModel itemBackground, ConditionsSimpleModel conditions, }) {
+  PlayStoreModel copyWith({String? documentID, String? appId, String? description, BackgroundModel? itemBackground, ConditionsSimpleModel? conditions, }) {
     return PlayStoreModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, description: description ?? this.description, itemBackground: itemBackground ?? this.itemBackground, conditions: conditions ?? this.conditions, );
   }
 
@@ -69,16 +69,16 @@ class PlayStoreModel {
     return 'PlayStoreModel{documentID: $documentID, appId: $appId, description: $description, itemBackground: $itemBackground, conditions: $conditions}';
   }
 
-  PlayStoreEntity toEntity({String appId}) {
+  PlayStoreEntity toEntity({String? appId}) {
     return PlayStoreEntity(
           appId: (appId != null) ? appId : null, 
           description: (description != null) ? description : null, 
-          itemBackgroundId: (itemBackground != null) ? itemBackground.documentID : null, 
-          conditions: (conditions != null) ? conditions.toEntity(appId: appId) : null, 
+          itemBackgroundId: (itemBackground != null) ? itemBackground!.documentID : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
     );
   }
 
-  static PlayStoreModel fromEntity(String documentID, PlayStoreEntity entity) {
+  static PlayStoreModel? fromEntity(String documentID, PlayStoreEntity? entity) {
     if (entity == null) return null;
     return PlayStoreModel(
           documentID: documentID, 
@@ -89,13 +89,13 @@ class PlayStoreModel {
     );
   }
 
-  static Future<PlayStoreModel> fromEntityPlus(String documentID, PlayStoreEntity entity, { String appId}) async {
+  static Future<PlayStoreModel?> fromEntityPlus(String documentID, PlayStoreEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
-    BackgroundModel itemBackgroundHolder;
+    BackgroundModel? itemBackgroundHolder;
     if (entity.itemBackgroundId != null) {
       try {
-        await backgroundRepository(appId: appId).get(entity.itemBackgroundId).then((val) {
+        await backgroundRepository(appId: appId)!.get(entity.itemBackgroundId).then((val) {
           itemBackgroundHolder = val;
         }).catchError((error) {});
       } catch (_) {}

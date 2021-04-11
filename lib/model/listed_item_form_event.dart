@@ -34,7 +34,7 @@ abstract class ListedItemFormEvent extends Equatable {
   const ListedItemFormEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class InitialiseNewListedItemFormEvent extends ListedItemFormEvent {
@@ -42,78 +42,78 @@ class InitialiseNewListedItemFormEvent extends ListedItemFormEvent {
 
 
 class InitialiseListedItemFormEvent extends ListedItemFormEvent {
-  final ListedItemModel value;
+  final ListedItemModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   InitialiseListedItemFormEvent({this.value});
 }
 
 class InitialiseListedItemFormNoLoadEvent extends ListedItemFormEvent {
-  final ListedItemModel value;
+  final ListedItemModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   InitialiseListedItemFormNoLoadEvent({this.value});
 }
 
 class ChangedListedItemDocumentID extends ListedItemFormEvent {
-  final String value;
+  final String? value;
 
   ChangedListedItemDocumentID({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedListedItemDocumentID{ value: $value }';
 }
 
 class ChangedListedItemDescription extends ListedItemFormEvent {
-  final String value;
+  final String? value;
 
   ChangedListedItemDescription({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedListedItemDescription{ value: $value }';
 }
 
 class ChangedListedItemAction extends ListedItemFormEvent {
-  final ActionModel value;
+  final ActionModel? value;
 
   ChangedListedItemAction({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedListedItemAction{ value: $value }';
 }
 
 class ChangedListedItemImage extends ListedItemFormEvent {
-  final String value;
+  final String? value;
 
   ChangedListedItemImage({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedListedItemImage{ value: $value }';
 }
 
 class ChangedListedItemPosSize extends ListedItemFormEvent {
-  final String value;
+  final String? value;
 
   ChangedListedItemPosSize({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedListedItemPosSize{ value: $value }';

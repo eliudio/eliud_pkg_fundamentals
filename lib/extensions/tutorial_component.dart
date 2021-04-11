@@ -17,13 +17,13 @@ import 'package:transparent_image/transparent_image.dart';
 
 class TutorialComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({String id, Map<String, Object> parameters}) {
+  Widget createNew({String? id, Map<String, Object>? parameters}) {
     return TutorialComponent(tutorialID: id);
   }
 }
 
 class TutorialComponent extends AbstractTutorialComponent {
-  TutorialComponent({String tutorialID})
+  TutorialComponent({String? tutorialID})
       : super(tutorialID: tutorialID);
 
   Widget _aBitSpace() => SizedBox(
@@ -32,25 +32,25 @@ class TutorialComponent extends AbstractTutorialComponent {
     );
 
   @override
-  Widget yourWidget(BuildContext context, TutorialModel value) {
+  Widget yourWidget(BuildContext context, TutorialModel? value) {
     var accessState = AccessBloc.getState(context);
     DocumentParameterProcessor documentParameterProcessor = ExtendedDocumentParameterProcessor(context, accessState);
     var widgets = <Widget>[];
     widgets.add(Text(
-      documentParameterProcessor.process(value.title),
+      documentParameterProcessor.process(value!.title!),
       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
     ));
     widgets.add(_aBitSpace());
-    value.tutorialEntries.forEach((element) {
+    value.tutorialEntries!.forEach((element) {
       widgets.add(Text(
-        documentParameterProcessor.process(element.description),
+        documentParameterProcessor.process(element.description!),
       ));
       widgets.add(_aBitSpace());
       if (element.image != null) {
         widgets.add(GestureDetector(
           child: FadeInImage.memoryNetwork(
             placeholder: kTransparentImage,
-            image: element.image.url,
+            image: element.image!.url!,
           ),
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -72,7 +72,7 @@ class TutorialComponent extends AbstractTutorialComponent {
         widgets.add(_aBitSpace());
       }
       if (element.code != null) {
-        widgets.add(MarkdownBody(selectable: true, data: '```\n' + element.code + '```'));
+        widgets.add(MarkdownBody(selectable: true, data: '```\n' + element.code! + '```'));
         widgets.add(
           Center(child:
           OutlineButton(
@@ -106,12 +106,12 @@ class TutorialComponent extends AbstractTutorialComponent {
 
   @override
   TutorialRepository getTutorialRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.tutorialRepository(AccessBloc.appId(context));
+    return AbstractRepositorySingleton.singleton.tutorialRepository(AccessBloc.appId(context))!;
   }
 }
 
 class FulLScreen extends StatelessWidget {
-  final MemberMediumModel image;
+  final MemberMediumModel? image;
 
   FulLScreen(this.image);
 
@@ -121,7 +121,7 @@ class FulLScreen extends StatelessWidget {
       body: GestureDetector(
         child:  PhotoView(
           initialScale: PhotoViewComputedScale.covered,
-          imageProvider: NetworkImage(image.url)),
+          imageProvider: NetworkImage(image!.url!)),
         onTap: () {
            Navigator.pop(context);
           },

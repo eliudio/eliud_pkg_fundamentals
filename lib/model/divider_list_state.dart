@@ -20,19 +20,19 @@ abstract class DividerListState extends Equatable {
   const DividerListState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class DividerListLoading extends DividerListState {}
 
 class DividerListLoaded extends DividerListState {
-  final List<DividerModel> values;
-  final bool mightHaveMore;
+  final List<DividerModel?>? values;
+  final bool? mightHaveMore;
 
   const DividerListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object> get props => [ values, mightHaveMore ];
+  List<Object?> get props => [ values, mightHaveMore ];
 
   @override
   String toString() => 'DividerListLoaded { values: $values }';

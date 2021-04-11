@@ -21,7 +21,7 @@ abstract class SimpleImageComponentEvent extends Equatable {
 }
 
 class FetchSimpleImageComponent extends SimpleImageComponentEvent {
-  final String id;
+  final String? id;
 
   FetchSimpleImageComponent({ this.id });
 }

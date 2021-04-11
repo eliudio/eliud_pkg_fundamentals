@@ -20,13 +20,13 @@ abstract class BookletComponentState extends Equatable {
   const BookletComponentState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class BookletComponentUninitialized extends BookletComponentState {}
 
 class BookletComponentError extends BookletComponentState {
-  final String message;
+  final String? message;
   BookletComponentError({ this.message });
 }
 
@@ -35,16 +35,16 @@ class BookletComponentPermissionDenied extends BookletComponentState {
 }
 
 class BookletComponentLoaded extends BookletComponentState {
-  final BookletModel value;
+  final BookletModel? value;
 
   const BookletComponentLoaded({ this.value });
 
-  BookletComponentLoaded copyWith({ BookletModel copyThis }) {
+  BookletComponentLoaded copyWith({ BookletModel? copyThis }) {
     return BookletComponentLoaded(value: copyThis ?? this.value);
   }
 
   @override
-  List<Object> get props => [value];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'BookletComponentLoaded { value: $value }';

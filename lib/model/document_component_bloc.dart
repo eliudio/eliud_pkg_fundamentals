@@ -24,7 +24,7 @@ import 'package:flutter/services.dart';
 
 
 class DocumentComponentBloc extends Bloc<DocumentComponentEvent, DocumentComponentState> {
-  final DocumentRepository documentRepository;
+  final DocumentRepository? documentRepository;
 
   DocumentComponentBloc({ this.documentRepository }): super(DocumentComponentUninitialized());
   @override
@@ -34,9 +34,9 @@ class DocumentComponentBloc extends Bloc<DocumentComponentEvent, DocumentCompone
       try {
         if (currentState is DocumentComponentUninitialized) {
           bool permissionDenied = false;
-          final model = await documentRepository.get(event.id, onError: (error) {
+          final model = await documentRepository!.get(event.id, onError: (error) {
             // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
-            if ((error is PlatformException) &&  (error.message.startsWith("PERMISSION_DENIED"))) {
+            if ((error is PlatformException) &&  (error.message!.startsWith("PERMISSION_DENIED"))) {
               permissionDenied = true;
             }
           });
@@ -46,7 +46,7 @@ class DocumentComponentBloc extends Bloc<DocumentComponentEvent, DocumentCompone
             if (model != null) {
               yield DocumentComponentLoaded(value: model);
             } else {
-              String id = event.id;
+              String? id = event.id;
               yield DocumentComponentError(
                   message: "Document with id = '$id' not found");
             }

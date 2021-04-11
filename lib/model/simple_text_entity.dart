@@ -22,23 +22,23 @@ import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class SimpleTextEntity {
-  final String appId;
-  final String title;
-  final String text;
-  final ConditionsSimpleEntity conditions;
-  final int textAlign;
+  final String? appId;
+  final String? title;
+  final String? text;
+  final ConditionsSimpleEntity? conditions;
+  final int? textAlign;
 
   SimpleTextEntity({this.appId, this.title, this.text, this.conditions, this.textAlign, });
 
 
-  List<Object> get props => [appId, title, text, conditions, textAlign, ];
+  List<Object?> get props => [appId, title, text, conditions, textAlign, ];
 
   @override
   String toString() {
     return 'SimpleTextEntity{appId: $appId, title: $title, text: $text, conditions: $conditions, textAlign: $textAlign}';
   }
 
-  static SimpleTextEntity fromMap(Map map) {
+  static SimpleTextEntity? fromMap(Map? map) {
     if (map == null) return null;
 
     var conditionsFromMap;
@@ -55,12 +55,12 @@ class SimpleTextEntity {
     );
   }
 
-  Map<String, Object> toDocument() {
-    final Map<String, dynamic> conditionsMap = conditions != null 
-        ? conditions.toDocument()
+  Map<String, Object?> toDocument() {
+    final Map<String, dynamic>? conditionsMap = conditions != null 
+        ? conditions!.toDocument()
         : null;
 
-    Map<String, Object> theDocument = HashMap();
+    Map<String, Object?> theDocument = HashMap();
     if (appId != null) theDocument["appId"] = appId;
       else theDocument["appId"] = null;
     if (title != null) theDocument["title"] = title;
@@ -74,8 +74,8 @@ class SimpleTextEntity {
     return theDocument;
   }
 
-  static SimpleTextEntity fromJsonString(String json) {
-    Map<String, dynamic> generationSpecificationMap = jsonDecode(json);
+  static SimpleTextEntity? fromJsonString(String json) {
+    Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
     return fromMap(generationSpecificationMap);
   }
 

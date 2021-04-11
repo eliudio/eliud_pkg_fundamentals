@@ -20,13 +20,13 @@ abstract class GridComponentState extends Equatable {
   const GridComponentState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class GridComponentUninitialized extends GridComponentState {}
 
 class GridComponentError extends GridComponentState {
-  final String message;
+  final String? message;
   GridComponentError({ this.message });
 }
 
@@ -35,16 +35,16 @@ class GridComponentPermissionDenied extends GridComponentState {
 }
 
 class GridComponentLoaded extends GridComponentState {
-  final GridModel value;
+  final GridModel? value;
 
   const GridComponentLoaded({ this.value });
 
-  GridComponentLoaded copyWith({ GridModel copyThis }) {
+  GridComponentLoaded copyWith({ GridModel? copyThis }) {
     return GridComponentLoaded(value: copyThis ?? this.value);
   }
 
   @override
-  List<Object> get props => [value];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'GridComponentLoaded { value: $value }';

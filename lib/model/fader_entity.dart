@@ -22,26 +22,26 @@ import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class FaderEntity {
-  final String appId;
-  final String name;
-  final int animationMilliseconds;
-  final int imageSeconds;
-  final List<ListedItemEntity> items;
-  final ConditionsSimpleEntity conditions;
+  final String? appId;
+  final String? name;
+  final int? animationMilliseconds;
+  final int? imageSeconds;
+  final List<ListedItemEntity>? items;
+  final ConditionsSimpleEntity? conditions;
 
   FaderEntity({this.appId, this.name, this.animationMilliseconds, this.imageSeconds, this.items, this.conditions, });
 
 
-  List<Object> get props => [appId, name, animationMilliseconds, imageSeconds, items, conditions, ];
+  List<Object?> get props => [appId, name, animationMilliseconds, imageSeconds, items, conditions, ];
 
   @override
   String toString() {
-    String itemsCsv = (items == null) ? '' : items.join(', ');
+    String itemsCsv = (items == null) ? '' : items!.join(', ');
 
     return 'FaderEntity{appId: $appId, name: $name, animationMilliseconds: $animationMilliseconds, imageSeconds: $imageSeconds, items: ListedItem[] { $itemsCsv }, conditions: $conditions}';
   }
 
-  static FaderEntity fromMap(Map map) {
+  static FaderEntity? fromMap(Map? map) {
     if (map == null) return null;
 
     var itemsFromMap;
@@ -67,15 +67,15 @@ class FaderEntity {
     );
   }
 
-  Map<String, Object> toDocument() {
-    final List<Map<String, dynamic>> itemsListMap = items != null 
-        ? items.map((item) => item.toDocument()).toList()
+  Map<String, Object?> toDocument() {
+    final List<Map<String?, dynamic>>? itemsListMap = items != null 
+        ? items!.map((item) => item.toDocument()).toList()
         : null;
-    final Map<String, dynamic> conditionsMap = conditions != null 
-        ? conditions.toDocument()
+    final Map<String, dynamic>? conditionsMap = conditions != null 
+        ? conditions!.toDocument()
         : null;
 
-    Map<String, Object> theDocument = HashMap();
+    Map<String, Object?> theDocument = HashMap();
     if (appId != null) theDocument["appId"] = appId;
       else theDocument["appId"] = null;
     if (name != null) theDocument["name"] = name;
@@ -91,8 +91,8 @@ class FaderEntity {
     return theDocument;
   }
 
-  static FaderEntity fromJsonString(String json) {
-    Map<String, dynamic> generationSpecificationMap = jsonDecode(json);
+  static FaderEntity? fromJsonString(String json) {
+    Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
     return fromMap(generationSpecificationMap);
   }
 

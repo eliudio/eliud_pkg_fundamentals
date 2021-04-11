@@ -25,7 +25,7 @@ import 'package:eliud_pkg_fundamentals/model/fader_component_state.dart';
 
 abstract class AbstractFaderComponent extends StatelessWidget {
   static String componentName = "faders";
-  final String faderID;
+  final String? faderID;
 
   AbstractFaderComponent({this.faderID});
 
@@ -63,7 +63,7 @@ abstract class AbstractFaderComponent extends StatelessWidget {
     });
   }
 
-  Widget yourWidget(BuildContext context, FaderModel value);
+  Widget yourWidget(BuildContext context, FaderModel? value);
   Widget alertWidget({ title: String, content: String});
   FaderRepository getFaderRepository(BuildContext context);
 }

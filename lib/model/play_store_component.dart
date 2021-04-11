@@ -25,7 +25,7 @@ import 'package:eliud_pkg_fundamentals/model/play_store_component_state.dart';
 
 abstract class AbstractPlayStoreComponent extends StatelessWidget {
   static String componentName = "playStores";
-  final String playStoreID;
+  final String? playStoreID;
 
   AbstractPlayStoreComponent({this.playStoreID});
 
@@ -63,7 +63,7 @@ abstract class AbstractPlayStoreComponent extends StatelessWidget {
     });
   }
 
-  Widget yourWidget(BuildContext context, PlayStoreModel value);
+  Widget yourWidget(BuildContext context, PlayStoreModel? value);
   Widget alertWidget({ title: String, content: String});
   PlayStoreRepository getPlayStoreRepository(BuildContext context);
 }

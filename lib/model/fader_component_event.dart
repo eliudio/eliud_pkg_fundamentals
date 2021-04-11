@@ -21,7 +21,7 @@ abstract class FaderComponentEvent extends Equatable {
 }
 
 class FetchFaderComponent extends FaderComponentEvent {
-  final String id;
+  final String? id;
 
   FetchFaderComponent({ this.id });
 }

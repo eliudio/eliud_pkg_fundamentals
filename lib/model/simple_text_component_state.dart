@@ -20,13 +20,13 @@ abstract class SimpleTextComponentState extends Equatable {
   const SimpleTextComponentState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class SimpleTextComponentUninitialized extends SimpleTextComponentState {}
 
 class SimpleTextComponentError extends SimpleTextComponentState {
-  final String message;
+  final String? message;
   SimpleTextComponentError({ this.message });
 }
 
@@ -35,16 +35,16 @@ class SimpleTextComponentPermissionDenied extends SimpleTextComponentState {
 }
 
 class SimpleTextComponentLoaded extends SimpleTextComponentState {
-  final SimpleTextModel value;
+  final SimpleTextModel? value;
 
   const SimpleTextComponentLoaded({ this.value });
 
-  SimpleTextComponentLoaded copyWith({ SimpleTextModel copyThis }) {
+  SimpleTextComponentLoaded copyWith({ SimpleTextModel? copyThis }) {
     return SimpleTextComponentLoaded(value: copyThis ?? this.value);
   }
 
   @override
-  List<Object> get props => [value];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'SimpleTextComponentLoaded { value: $value }';

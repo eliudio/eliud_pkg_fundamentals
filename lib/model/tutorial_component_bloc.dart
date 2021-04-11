@@ -23,7 +23,7 @@ import 'package:eliud_pkg_fundamentals/model/tutorial_repository.dart';
 import 'package:flutter/services.dart';
 
 class TutorialComponentBloc extends Bloc<TutorialComponentEvent, TutorialComponentState> {
-  final TutorialRepository tutorialRepository;
+  final TutorialRepository? tutorialRepository;
 
   TutorialComponentBloc({ this.tutorialRepository }): super(TutorialComponentUninitialized());
   @override
@@ -33,9 +33,9 @@ class TutorialComponentBloc extends Bloc<TutorialComponentEvent, TutorialCompone
       try {
         if (currentState is TutorialComponentUninitialized) {
           bool permissionDenied = false;
-          final model = await tutorialRepository.get(event.id, onError: (error) {
+          final model = await tutorialRepository!.get(event.id, onError: (error) {
             // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
-            if ((error is PlatformException) &&  (error.message.startsWith("PERMISSION_DENIED"))) {
+            if ((error is PlatformException) &&  (error.message!.startsWith("PERMISSION_DENIED"))) {
               permissionDenied = true;
             }
           });
@@ -45,7 +45,7 @@ class TutorialComponentBloc extends Bloc<TutorialComponentEvent, TutorialCompone
             if (model != null) {
               yield TutorialComponentLoaded(value: model);
             } else {
-              String id = event.id;
+              String? id = event.id;
               yield TutorialComponentError(
                   message: "Tutorial with id = '$id' not found");
             }

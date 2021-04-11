@@ -34,7 +34,7 @@ abstract class SectionFormEvent extends Equatable {
   const SectionFormEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class InitialiseNewSectionFormEvent extends SectionFormEvent {
@@ -42,114 +42,114 @@ class InitialiseNewSectionFormEvent extends SectionFormEvent {
 
 
 class InitialiseSectionFormEvent extends SectionFormEvent {
-  final SectionModel value;
+  final SectionModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   InitialiseSectionFormEvent({this.value});
 }
 
 class InitialiseSectionFormNoLoadEvent extends SectionFormEvent {
-  final SectionModel value;
+  final SectionModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   InitialiseSectionFormNoLoadEvent({this.value});
 }
 
 class ChangedSectionDocumentID extends SectionFormEvent {
-  final String value;
+  final String? value;
 
   ChangedSectionDocumentID({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedSectionDocumentID{ value: $value }';
 }
 
 class ChangedSectionTitle extends SectionFormEvent {
-  final String value;
+  final String? value;
 
   ChangedSectionTitle({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedSectionTitle{ value: $value }';
 }
 
 class ChangedSectionDescription extends SectionFormEvent {
-  final String value;
+  final String? value;
 
   ChangedSectionDescription({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedSectionDescription{ value: $value }';
 }
 
 class ChangedSectionImage extends SectionFormEvent {
-  final String value;
+  final String? value;
 
   ChangedSectionImage({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedSectionImage{ value: $value }';
 }
 
 class ChangedSectionImagePositionRelative extends SectionFormEvent {
-  final RelativeImagePosition value;
+  final RelativeImagePosition? value;
 
   ChangedSectionImagePositionRelative({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedSectionImagePositionRelative{ value: $value }';
 }
 
 class ChangedSectionImageAlignment extends SectionFormEvent {
-  final SectionImageAlignment value;
+  final SectionImageAlignment? value;
 
   ChangedSectionImageAlignment({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedSectionImageAlignment{ value: $value }';
 }
 
 class ChangedSectionImageWidth extends SectionFormEvent {
-  final String value;
+  final String? value;
 
   ChangedSectionImageWidth({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedSectionImageWidth{ value: $value }';
 }
 
 class ChangedSectionLinks extends SectionFormEvent {
-  final List<LinkModel> value;
+  final List<LinkModel>? value;
 
   ChangedSectionLinks({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedSectionLinks{ value: $value }';

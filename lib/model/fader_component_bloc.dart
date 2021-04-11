@@ -23,7 +23,7 @@ import 'package:eliud_pkg_fundamentals/model/fader_repository.dart';
 import 'package:flutter/services.dart';
 
 class FaderComponentBloc extends Bloc<FaderComponentEvent, FaderComponentState> {
-  final FaderRepository faderRepository;
+  final FaderRepository? faderRepository;
 
   FaderComponentBloc({ this.faderRepository }): super(FaderComponentUninitialized());
   @override
@@ -33,9 +33,9 @@ class FaderComponentBloc extends Bloc<FaderComponentEvent, FaderComponentState> 
       try {
         if (currentState is FaderComponentUninitialized) {
           bool permissionDenied = false;
-          final model = await faderRepository.get(event.id, onError: (error) {
+          final model = await faderRepository!.get(event.id, onError: (error) {
             // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
-            if ((error is PlatformException) &&  (error.message.startsWith("PERMISSION_DENIED"))) {
+            if ((error is PlatformException) &&  (error.message!.startsWith("PERMISSION_DENIED"))) {
               permissionDenied = true;
             }
           });
@@ -45,7 +45,7 @@ class FaderComponentBloc extends Bloc<FaderComponentEvent, FaderComponentState> 
             if (model != null) {
               yield FaderComponentLoaded(value: model);
             } else {
-              String id = event.id;
+              String? id = event.id;
               yield FaderComponentError(
                   message: "Fader with id = '$id' not found");
             }

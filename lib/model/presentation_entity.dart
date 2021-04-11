@@ -22,28 +22,28 @@ import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class PresentationEntity {
-  final String appId;
-  final String title;
-  final List<BodyComponentEntity> bodyComponents;
-  final String imageId;
-  final int imagePositionRelative;
-  final int imageAlignment;
-  final double imageWidth;
-  final ConditionsSimpleEntity conditions;
+  final String? appId;
+  final String? title;
+  final List<BodyComponentEntity>? bodyComponents;
+  final String? imageId;
+  final int? imagePositionRelative;
+  final int? imageAlignment;
+  final double? imageWidth;
+  final ConditionsSimpleEntity? conditions;
 
   PresentationEntity({this.appId, this.title, this.bodyComponents, this.imageId, this.imagePositionRelative, this.imageAlignment, this.imageWidth, this.conditions, });
 
 
-  List<Object> get props => [appId, title, bodyComponents, imageId, imagePositionRelative, imageAlignment, imageWidth, conditions, ];
+  List<Object?> get props => [appId, title, bodyComponents, imageId, imagePositionRelative, imageAlignment, imageWidth, conditions, ];
 
   @override
   String toString() {
-    String bodyComponentsCsv = (bodyComponents == null) ? '' : bodyComponents.join(', ');
+    String bodyComponentsCsv = (bodyComponents == null) ? '' : bodyComponents!.join(', ');
 
     return 'PresentationEntity{appId: $appId, title: $title, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, imageId: $imageId, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth, conditions: $conditions}';
   }
 
-  static PresentationEntity fromMap(Map map) {
+  static PresentationEntity? fromMap(Map? map) {
     if (map == null) return null;
 
     var bodyComponentsFromMap;
@@ -71,15 +71,15 @@ class PresentationEntity {
     );
   }
 
-  Map<String, Object> toDocument() {
-    final List<Map<String, dynamic>> bodyComponentsListMap = bodyComponents != null 
-        ? bodyComponents.map((item) => item.toDocument()).toList()
+  Map<String, Object?> toDocument() {
+    final List<Map<String?, dynamic>>? bodyComponentsListMap = bodyComponents != null 
+        ? bodyComponents!.map((item) => item.toDocument()).toList()
         : null;
-    final Map<String, dynamic> conditionsMap = conditions != null 
-        ? conditions.toDocument()
+    final Map<String, dynamic>? conditionsMap = conditions != null 
+        ? conditions!.toDocument()
         : null;
 
-    Map<String, Object> theDocument = HashMap();
+    Map<String, Object?> theDocument = HashMap();
     if (appId != null) theDocument["appId"] = appId;
       else theDocument["appId"] = null;
     if (title != null) theDocument["title"] = title;
@@ -99,8 +99,8 @@ class PresentationEntity {
     return theDocument;
   }
 
-  static PresentationEntity fromJsonString(String json) {
-    Map<String, dynamic> generationSpecificationMap = jsonDecode(json);
+  static PresentationEntity? fromJsonString(String json) {
+    Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
     return fromMap(generationSpecificationMap);
   }
 

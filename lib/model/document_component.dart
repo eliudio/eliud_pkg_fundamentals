@@ -25,7 +25,7 @@ import 'package:eliud_pkg_fundamentals/model/document_component_state.dart';
 
 abstract class AbstractDocumentComponent extends StatelessWidget {
   static String componentName = "documents";
-  final String documentID;
+  final String? documentID;
 
   AbstractDocumentComponent({this.documentID});
 
@@ -63,7 +63,7 @@ abstract class AbstractDocumentComponent extends StatelessWidget {
     });
   }
 
-  Widget yourWidget(BuildContext context, DocumentModel value);
+  Widget yourWidget(BuildContext context, DocumentModel? value);
   Widget alertWidget({ title: String, content: String});
   DocumentRepository getDocumentRepository(BuildContext context);
 }

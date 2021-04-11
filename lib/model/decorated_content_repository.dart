@@ -33,29 +33,29 @@ import 'dart:async';
 import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
-typedef DecoratedContentModelTrigger(List<DecoratedContentModel> list);
-typedef DecoratedContentChanged(DecoratedContentModel value);
+typedef DecoratedContentModelTrigger(List<DecoratedContentModel?> list);
+typedef DecoratedContentChanged(DecoratedContentModel? value);
 
 abstract class DecoratedContentRepository {
   Future<DecoratedContentModel> add(DecoratedContentModel value);
   Future<void> delete(DecoratedContentModel value);
-  Future<DecoratedContentModel> get(String id, { Function(Exception) onError });
+  Future<DecoratedContentModel?> get(String? id, { Function(Exception)? onError });
   Future<DecoratedContentModel> update(DecoratedContentModel value);
 
-  Stream<List<DecoratedContentModel>> values({String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery });
-  Stream<List<DecoratedContentModel>> valuesWithDetails({String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery });
-  Future<List<DecoratedContentModel>> valuesList({String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery });
-  Future<List<DecoratedContentModel>> valuesListWithDetails({String orderBy, bool descending, Object startAfter, int limit, SetLastDoc setLastDoc, int privilegeLevel, EliudQuery eliudQuery });
+  Stream<List<DecoratedContentModel?>> values({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery });
+  Stream<List<DecoratedContentModel?>> valuesWithDetails({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery });
+  Future<List<DecoratedContentModel?>> valuesList({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery });
+  Future<List<DecoratedContentModel?>> valuesListWithDetails({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery });
 
-  StreamSubscription<List<DecoratedContentModel>> listen(DecoratedContentModelTrigger trigger, {String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery });
-  StreamSubscription<List<DecoratedContentModel>> listenWithDetails(DecoratedContentModelTrigger trigger, {String orderBy, bool descending, Object startAfter, int limit, int privilegeLevel, EliudQuery eliudQuery });
-  StreamSubscription<DecoratedContentModel> listenTo(String documentId, DecoratedContentChanged changed);
+  StreamSubscription<List<DecoratedContentModel?>> listen(DecoratedContentModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
+  StreamSubscription<List<DecoratedContentModel?>> listenWithDetails(DecoratedContentModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
+  StreamSubscription<DecoratedContentModel?> listenTo(String documentId, DecoratedContentChanged changed);
   void flush();
   
-  String timeStampToString(dynamic timeStamp);
+  String? timeStampToString(dynamic timeStamp);
 
   dynamic getSubCollection(String documentId, String name);
-  Future<DecoratedContentModel> changeValue(String documentId, String fieldName, num changeByThisValue);
+  Future<DecoratedContentModel?> changeValue(String documentId, String fieldName, num changeByThisValue);
 
   Future<void> deleteAll();
 }

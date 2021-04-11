@@ -63,10 +63,10 @@ import 'package:eliud_pkg_fundamentals/model/listed_item_form_state.dart';
 
 class ListedItemForm extends StatelessWidget {
   FormAction formAction;
-  ListedItemModel value;
-  ActionModel submitAction;
+  ListedItemModel? value;
+  ActionModel? submitAction;
 
-  ListedItemForm({Key key, @required this.formAction, @required this.value, this.submitAction}) : super(key: key);
+  ListedItemForm({Key? key, required this.formAction, required this.value, this.submitAction}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -92,14 +92,14 @@ class ListedItemForm extends StatelessWidget {
       return Scaffold(
         appBar: formAction == FormAction.UpdateAction ?
                 AppBar(
-                    title: Text("Update ListedItem", style: TextStyle(color: RgbHelper.color(rgbo: app.formAppBarTextColor))),
+                    title: Text("Update ListedItem", style: TextStyle(color: RgbHelper.color(rgbo: app!.formAppBarTextColor))),
                     flexibleSpace: Container(
-                        decoration: BoxDecorationHelper.boxDecoration(accessState, app.formAppBarBackground)),
+                        decoration: BoxDecorationHelper.boxDecoration(accessState, app!.formAppBarBackground)),
                   ) :
                 AppBar(
-                    title: Text("Add ListedItem", style: TextStyle(color: RgbHelper.color(rgbo: app.formAppBarTextColor))),
+                    title: Text("Add ListedItem", style: TextStyle(color: RgbHelper.color(rgbo: app!.formAppBarTextColor))),
                     flexibleSpace: Container(
-                        decoration: BoxDecorationHelper.boxDecoration(accessState, app.formAppBarBackground)),
+                        decoration: BoxDecorationHelper.boxDecoration(accessState, app!.formAppBarBackground)),
                 ),
         body: BlocProvider<ListedItemFormBloc >(
             create: (context) => ListedItemFormBloc(AccessBloc.appId(context),
@@ -114,8 +114,8 @@ class ListedItemForm extends StatelessWidget {
 
 
 class MyListedItemForm extends StatefulWidget {
-  final FormAction formAction;
-  final ActionModel submitAction;
+  final FormAction? formAction;
+  final ActionModel? submitAction;
 
   MyListedItemForm({this.formAction, this.submitAction});
 
@@ -124,13 +124,13 @@ class MyListedItemForm extends StatefulWidget {
 
 
 class _MyListedItemFormState extends State<MyListedItemForm> {
-  final FormAction formAction;
-  ListedItemFormBloc _myFormBloc;
+  final FormAction? formAction;
+  late ListedItemFormBloc _myFormBloc;
 
   final TextEditingController _documentIDController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  String _image;
-  String _posSize;
+  String? _image;
+  String? _posSize;
 
 
   _MyListedItemFormState(this.formAction);
@@ -153,41 +153,41 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
       );
 
       if (state is ListedItemFormLoaded) {
-        if (state.value.documentID != null)
-          _documentIDController.text = state.value.documentID.toString();
+        if (state.value!.documentID != null)
+          _documentIDController.text = state.value!.documentID.toString();
         else
           _documentIDController.text = "";
-        if (state.value.description != null)
-          _descriptionController.text = state.value.description.toString();
+        if (state.value!.description != null)
+          _descriptionController.text = state.value!.description.toString();
         else
           _descriptionController.text = "";
-        if (state.value.image != null)
-          _image= state.value.image.documentID;
+        if (state.value!.image != null)
+          _image= state.value!.image!.documentID;
         else
           _image= "";
-        if (state.value.posSize != null)
-          _posSize= state.value.posSize.documentID;
+        if (state.value!.posSize != null)
+          _posSize= state.value!.posSize!.documentID;
         else
           _posSize= "";
       }
       if (state is ListedItemFormInitialized) {
-        List<Widget> children = List();
+        List<Widget?> children = [];
          children.add(Container(
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: Text('General',
                       style: TextStyle(
-                          color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
+                          color: RgbHelper.color(rgbo: app!.formGroupTitleColor), fontWeight: FontWeight.bold)),
                 ));
 
         children.add(
 
                 TextFormField(
-                style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
+                style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor)),
                   readOnly: _readOnly(accessState, state),
                   controller: _descriptionController,
                   decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
+                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app!.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app!.formFieldHeaderColor)),
                     labelText: 'description',
                   ),
                   keyboardType: TextInputType.text,
@@ -200,7 +200,7 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
 
 
         children.add(Container(height: 20.0));
-        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
+        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app!.dividerColor)));
 
 
          children.add(Container(
@@ -208,17 +208,17 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: Text('Action',
                       style: TextStyle(
-                          color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
+                          color: RgbHelper.color(rgbo: app!.formGroupTitleColor), fontWeight: FontWeight.bold)),
                 ));
 
         children.add(
 
-                ActionField(AccessBloc.appId(context), state.value.action, _onActionChanged)
+                ActionField(AccessBloc.appId(context), state.value!.action, _onActionChanged)
           );
 
 
         children.add(Container(height: 20.0));
-        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
+        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app!.dividerColor)));
 
 
          children.add(Container(
@@ -226,7 +226,7 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: Text('Image',
                       style: TextStyle(
-                          color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
+                          color: RgbHelper.color(rgbo: app!.formGroupTitleColor), fontWeight: FontWeight.bold)),
                 ));
 
         children.add(
@@ -236,7 +236,7 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
 
 
         children.add(Container(height: 20.0));
-        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
+        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app!.dividerColor)));
 
 
          children.add(Container(
@@ -244,7 +244,7 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: Text('Position and Size',
                       style: TextStyle(
-                          color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
+                          color: RgbHelper.color(rgbo: app!.formGroupTitleColor), fontWeight: FontWeight.bold)),
                 ));
 
         children.add(
@@ -254,49 +254,48 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
 
 
         children.add(Container(height: 20.0));
-        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
+        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app!.dividerColor)));
 
 
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
           children.add(RaisedButton(
-                  color: RgbHelper.color(rgbo: app.formSubmitButtonColor),
+                  color: RgbHelper.color(rgbo: app!.formSubmitButtonColor),
                   onPressed: _readOnly(accessState, state) ? null : () {
                     if (state is ListedItemFormError) {
                       return null;
                     } else {
                       if (formAction == FormAction.UpdateAction) {
                         BlocProvider.of<ListedItemListBloc>(context).add(
-                          UpdateListedItemList(value: state.value.copyWith(
-                              documentID: state.value.documentID, 
-                              description: state.value.description, 
-                              action: state.value.action, 
-                              image: state.value.image, 
-                              posSize: state.value.posSize, 
+                          UpdateListedItemList(value: state.value!.copyWith(
+                              documentID: state.value!.documentID, 
+                              description: state.value!.description, 
+                              action: state.value!.action, 
+                              image: state.value!.image, 
+                              posSize: state.value!.posSize, 
                         )));
                       } else {
                         BlocProvider.of<ListedItemListBloc>(context).add(
                           AddListedItemList(value: ListedItemModel(
-                              documentID: state.value.documentID, 
-                              description: state.value.description, 
-                              action: state.value.action, 
-                              image: state.value.image, 
-                              posSize: state.value.posSize, 
+                              documentID: state.value!.documentID, 
+                              description: state.value!.description, 
+                              action: state.value!.action, 
+                              image: state.value!.image, 
+                              posSize: state.value!.posSize, 
                           )));
                       }
                       if (widget.submitAction != null) {
-                        eliudrouter.Router.navigateTo(context, widget.submitAction);
+                        eliudrouter.Router.navigateTo(context, widget.submitAction!);
                       } else {
                         Navigator.pop(context);
                       }
-                      return true;
                     }
                   },
-                  child: Text('Submit', style: TextStyle(color: RgbHelper.color(rgbo: app.formSubmitButtonTextColor))),
+                  child: Text('Submit', style: TextStyle(color: RgbHelper.color(rgbo: app!.formSubmitButtonTextColor))),
                 ));
 
         return Container(
           color: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? Colors.transparent : null,
-          decoration: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? null : BoxDecorationHelper.boxDecoration(accessState, app.formBackground),
+          decoration: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? null : BoxDecorationHelper.boxDecoration(accessState, app!.formBackground),
           padding:
           const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
             child: Form(
@@ -304,7 +303,7 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
               padding: const EdgeInsets.all(8),
               physics: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? NeverScrollableScrollPhysics() : null,
               shrinkWrap: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)),
-              children: children
+              children: children as List<Widget>
             ),
           )
         );
@@ -330,7 +329,7 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
   }
 
 
-  void _onImageSelected(String val) {
+  void _onImageSelected(String? val) {
     setState(() {
       _image = val;
     });
@@ -338,7 +337,7 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
   }
 
 
-  void _onPosSizeSelected(String val) {
+  void _onPosSizeSelected(String? val) {
     setState(() {
       _posSize = val;
     });

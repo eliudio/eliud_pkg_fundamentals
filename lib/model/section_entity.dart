@@ -22,27 +22,27 @@ import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class SectionEntity {
-  final String title;
-  final String description;
-  final String imageId;
-  final int imagePositionRelative;
-  final int imageAlignment;
-  final double imageWidth;
-  final List<LinkEntity> links;
+  final String? title;
+  final String? description;
+  final String? imageId;
+  final int? imagePositionRelative;
+  final int? imageAlignment;
+  final double? imageWidth;
+  final List<LinkEntity>? links;
 
   SectionEntity({this.title, this.description, this.imageId, this.imagePositionRelative, this.imageAlignment, this.imageWidth, this.links, });
 
 
-  List<Object> get props => [title, description, imageId, imagePositionRelative, imageAlignment, imageWidth, links, ];
+  List<Object?> get props => [title, description, imageId, imagePositionRelative, imageAlignment, imageWidth, links, ];
 
   @override
   String toString() {
-    String linksCsv = (links == null) ? '' : links.join(', ');
+    String linksCsv = (links == null) ? '' : links!.join(', ');
 
     return 'SectionEntity{title: $title, description: $description, imageId: $imageId, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth, links: Link[] { $linksCsv }}';
   }
 
-  static SectionEntity fromMap(Map map) {
+  static SectionEntity? fromMap(Map? map) {
     if (map == null) return null;
 
     var linksFromMap;
@@ -65,12 +65,12 @@ class SectionEntity {
     );
   }
 
-  Map<String, Object> toDocument() {
-    final List<Map<String, dynamic>> linksListMap = links != null 
-        ? links.map((item) => item.toDocument()).toList()
+  Map<String, Object?> toDocument() {
+    final List<Map<String?, dynamic>>? linksListMap = links != null 
+        ? links!.map((item) => item.toDocument()).toList()
         : null;
 
-    Map<String, Object> theDocument = HashMap();
+    Map<String, Object?> theDocument = HashMap();
     if (title != null) theDocument["title"] = title;
       else theDocument["title"] = null;
     if (description != null) theDocument["description"] = description;
@@ -88,8 +88,8 @@ class SectionEntity {
     return theDocument;
   }
 
-  static SectionEntity fromJsonString(String json) {
-    Map<String, dynamic> generationSpecificationMap = jsonDecode(json);
+  static SectionEntity? fromJsonString(String json) {
+    Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
     return fromMap(generationSpecificationMap);
   }
 

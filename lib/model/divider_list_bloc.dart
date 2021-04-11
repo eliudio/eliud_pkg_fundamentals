@@ -27,53 +27,59 @@ const _dividerLimit = 5;
 
 class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
   final DividerRepository _dividerRepository;
-  StreamSubscription _dividersListSubscription;
-  final EliudQuery eliudQuery;
+  StreamSubscription? _dividersListSubscription;
+  final EliudQuery? eliudQuery;
   int pages = 1;
-  final bool paged;
-  final String orderBy;
-  final bool descending;
-  final bool detailed;
+  final bool? paged;
+  final String? orderBy;
+  final bool? descending;
+  final bool? detailed;
 
-  DividerListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, @required DividerRepository dividerRepository})
+  DividerListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required DividerRepository dividerRepository})
       : assert(dividerRepository != null),
         _dividerRepository = dividerRepository,
         super(DividerListLoading());
 
   Stream<DividerListState> _mapLoadDividerListToState() async* {
-    int amountNow =  (state is DividerListLoaded) ? (state as DividerListLoaded).values.length : 0;
+    int amountNow =  (state is DividerListLoaded) ? (state as DividerListLoaded).values!.length : 0;
     _dividersListSubscription?.cancel();
     _dividersListSubscription = _dividerRepository.listen(
           (list) => add(DividerListUpdated(value: list, mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && (paged)) ? pages * _dividerLimit : null
+      limit: ((paged != null) && paged!) ? pages * _dividerLimit : null
     );
   }
 
   Stream<DividerListState> _mapLoadDividerListWithDetailsToState() async* {
-    int amountNow =  (state is DividerListLoaded) ? (state as DividerListLoaded).values.length : 0;
+    int amountNow =  (state is DividerListLoaded) ? (state as DividerListLoaded).values!.length : 0;
     _dividersListSubscription?.cancel();
     _dividersListSubscription = _dividerRepository.listenWithDetails(
             (list) => add(DividerListUpdated(value: list, mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && (paged)) ? pages * _dividerLimit : null
+        limit: ((paged != null) && paged!) ? pages * _dividerLimit : null
     );
   }
 
   Stream<DividerListState> _mapAddDividerListToState(AddDividerList event) async* {
-    _dividerRepository.add(event.value);
+    var value = event.value;
+    if (value != null) 
+      _dividerRepository.add(value);
   }
 
   Stream<DividerListState> _mapUpdateDividerListToState(UpdateDividerList event) async* {
-    _dividerRepository.update(event.value);
+    var value = event.value;
+    if (value != null) 
+      _dividerRepository.update(value);
   }
 
   Stream<DividerListState> _mapDeleteDividerListToState(DeleteDividerList event) async* {
-    _dividerRepository.delete(event.value);
+    var value = event.value;
+    if (value != null) 
+      _dividerRepository.delete(value);
   }
 
   Stream<DividerListState> _mapDividerListUpdatedToState(
@@ -84,7 +90,7 @@ class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
   @override
   Stream<DividerListState> mapEventToState(DividerListEvent event) async* {
     if (event is LoadDividerList) {
-      if ((detailed == null) || (!detailed)) {
+      if ((detailed == null) || (!detailed!)) {
         yield* _mapLoadDividerListToState();
       } else {
         yield* _mapLoadDividerListWithDetailsToState();

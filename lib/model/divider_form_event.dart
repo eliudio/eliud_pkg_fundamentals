@@ -34,7 +34,7 @@ abstract class DividerFormEvent extends Equatable {
   const DividerFormEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class InitialiseNewDividerFormEvent extends DividerFormEvent {
@@ -42,126 +42,126 @@ class InitialiseNewDividerFormEvent extends DividerFormEvent {
 
 
 class InitialiseDividerFormEvent extends DividerFormEvent {
-  final DividerModel value;
+  final DividerModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   InitialiseDividerFormEvent({this.value});
 }
 
 class InitialiseDividerFormNoLoadEvent extends DividerFormEvent {
-  final DividerModel value;
+  final DividerModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   InitialiseDividerFormNoLoadEvent({this.value});
 }
 
 class ChangedDividerDocumentID extends DividerFormEvent {
-  final String value;
+  final String? value;
 
   ChangedDividerDocumentID({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedDividerDocumentID{ value: $value }';
 }
 
 class ChangedDividerAppId extends DividerFormEvent {
-  final String value;
+  final String? value;
 
   ChangedDividerAppId({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedDividerAppId{ value: $value }';
 }
 
 class ChangedDividerName extends DividerFormEvent {
-  final String value;
+  final String? value;
 
   ChangedDividerName({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedDividerName{ value: $value }';
 }
 
 class ChangedDividerColor extends DividerFormEvent {
-  final RgbModel value;
+  final RgbModel? value;
 
   ChangedDividerColor({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedDividerColor{ value: $value }';
 }
 
 class ChangedDividerHeight extends DividerFormEvent {
-  final String value;
+  final String? value;
 
   ChangedDividerHeight({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedDividerHeight{ value: $value }';
 }
 
 class ChangedDividerThickness extends DividerFormEvent {
-  final String value;
+  final String? value;
 
   ChangedDividerThickness({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedDividerThickness{ value: $value }';
 }
 
 class ChangedDividerIndent extends DividerFormEvent {
-  final String value;
+  final String? value;
 
   ChangedDividerIndent({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedDividerIndent{ value: $value }';
 }
 
 class ChangedDividerEndIndent extends DividerFormEvent {
-  final String value;
+  final String? value;
 
   ChangedDividerEndIndent({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedDividerEndIndent{ value: $value }';
 }
 
 class ChangedDividerConditions extends DividerFormEvent {
-  final ConditionsSimpleModel value;
+  final ConditionsSimpleModel? value;
 
   ChangedDividerConditions({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedDividerConditions{ value: $value }';

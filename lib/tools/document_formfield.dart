@@ -15,11 +15,11 @@ typedef DocumentTextFieldTrigger(String value);
 
 class DocumentTextField extends StatefulWidget {
   final String label;
-  final DocumentRenderer documentRenderer;
-  String documentValue;
-  final List<DocumentItemModel> images;
+  final DocumentRenderer? documentRenderer;
+  String? documentValue;
+  final List<DocumentItemModel>? images;
   final DocumentTextFieldTrigger trigger;
-  final BackgroundModel bdm;
+  final BackgroundModel? bdm;
 
   DocumentTextField(this.label, this.documentRenderer, this.documentValue,
       this.images, this.bdm, this.trigger);
@@ -39,7 +39,7 @@ class DocumentTextFieldState extends State<DocumentTextField> {
 
   Widget _buildExcludeDocument(
       AccessState accessState, BuildContext context) {
-    var app = AccessBloc.app(context);
+    var app = AccessBloc.app(context)!;
     return RaisedButton.icon(
         onPressed: () => _fullScreen(accessState),
         icon: Icon(Icons.fullscreen),
@@ -90,7 +90,7 @@ class DocumentTextFieldState extends State<DocumentTextField> {
                                     child: DocumentRendererTool().render(
                                         context,
                                         widget.documentRenderer,
-                                        widget.documentValue,
+                                        widget.documentValue!,
                                         widget.images,
                                         widget.bdm))))
                       ])
@@ -120,10 +120,10 @@ class DocumentTextFieldState extends State<DocumentTextField> {
 
 class DocumentTextFieldFullScreen extends StatefulWidget {
   final String label;
-  final DocumentRenderer documentRenderer;
-  final String documentValue;
-  final List<DocumentItemModel> images;
-  final BackgroundModel bdm;
+  final DocumentRenderer? documentRenderer;
+  final String? documentValue;
+  final List<DocumentItemModel>? images;
+  final BackgroundModel? bdm;
   final DocumentTextFieldTrigger trigger;
 
   DocumentTextFieldFullScreen(this.label, this.documentRenderer,
@@ -137,7 +137,7 @@ class DocumentTextFieldFullScreen extends StatefulWidget {
 
 class DocumentTextFieldFullScreenState
     extends State<DocumentTextFieldFullScreen> {
-  String value;
+  String? value;
 
   @override
   void initState() {
@@ -153,7 +153,7 @@ class DocumentTextFieldFullScreenState
 
   Widget _document() {
     Widget w = DocumentRendererTool().render(
-        context, widget.documentRenderer, value, widget.images, widget.bdm);
+        context, widget.documentRenderer, value!, widget.images, widget.bdm);
     return ListView(children: <Widget>[w]);
   }
 

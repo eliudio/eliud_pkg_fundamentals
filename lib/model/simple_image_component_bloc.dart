@@ -24,7 +24,7 @@ import 'package:flutter/services.dart';
 
 
 class SimpleImageComponentBloc extends Bloc<SimpleImageComponentEvent, SimpleImageComponentState> {
-  final SimpleImageRepository simpleImageRepository;
+  final SimpleImageRepository? simpleImageRepository;
 
   SimpleImageComponentBloc({ this.simpleImageRepository }): super(SimpleImageComponentUninitialized());
   @override
@@ -34,9 +34,9 @@ class SimpleImageComponentBloc extends Bloc<SimpleImageComponentEvent, SimpleIma
       try {
         if (currentState is SimpleImageComponentUninitialized) {
           bool permissionDenied = false;
-          final model = await simpleImageRepository.get(event.id, onError: (error) {
+          final model = await simpleImageRepository!.get(event.id, onError: (error) {
             // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
-            if ((error is PlatformException) &&  (error.message.startsWith("PERMISSION_DENIED"))) {
+            if ((error is PlatformException) &&  (error.message!.startsWith("PERMISSION_DENIED"))) {
               permissionDenied = true;
             }
           });
@@ -46,7 +46,7 @@ class SimpleImageComponentBloc extends Bloc<SimpleImageComponentEvent, SimpleIma
             if (model != null) {
               yield SimpleImageComponentLoaded(value: model);
             } else {
-              String id = event.id;
+              String? id = event.id;
               yield SimpleImageComponentError(
                   message: "SimpleImage with id = '$id' not found");
             }

@@ -21,7 +21,7 @@ abstract class DocumentComponentEvent extends Equatable {
 }
 
 class FetchDocumentComponent extends DocumentComponentEvent {
-  final String id;
+  final String? id;
 
   FetchDocumentComponent({ this.id });
 }

@@ -20,19 +20,19 @@ abstract class SimpleImageListState extends Equatable {
   const SimpleImageListState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class SimpleImageListLoading extends SimpleImageListState {}
 
 class SimpleImageListLoaded extends SimpleImageListState {
-  final List<SimpleImageModel> values;
-  final bool mightHaveMore;
+  final List<SimpleImageModel?>? values;
+  final bool? mightHaveMore;
 
   const SimpleImageListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object> get props => [ values, mightHaveMore ];
+  List<Object?> get props => [ values, mightHaveMore ];
 
   @override
   String toString() => 'SimpleImageListLoaded { values: $values }';

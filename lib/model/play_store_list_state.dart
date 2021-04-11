@@ -20,19 +20,19 @@ abstract class PlayStoreListState extends Equatable {
   const PlayStoreListState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class PlayStoreListLoading extends PlayStoreListState {}
 
 class PlayStoreListLoaded extends PlayStoreListState {
-  final List<PlayStoreModel> values;
-  final bool mightHaveMore;
+  final List<PlayStoreModel?>? values;
+  final bool? mightHaveMore;
 
   const PlayStoreListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object> get props => [ values, mightHaveMore ];
+  List<Object?> get props => [ values, mightHaveMore ];
 
   @override
   String toString() => 'PlayStoreListLoaded { values: $values }';

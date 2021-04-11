@@ -12,18 +12,18 @@ import 'package:eliud_pkg_fundamentals/extensions/fader_widgets/fader_widgets.da
 
 class FaderComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({String id, Map<String, Object> parameters}) {
+  Widget createNew({String? id, Map<String, Object>? parameters}) {
     return FaderComponent(faderID: id);
   }
 }
 
 class FaderComponent extends AbstractFaderComponent {
-  FaderComponent({String faderID}) : super(faderID: faderID);
+  FaderComponent({String? faderID}) : super(faderID: faderID);
 
   @override
-  Widget yourWidget(BuildContext context, FaderModel value) {
+  Widget yourWidget(BuildContext context, FaderModel? value) {
     var accessState = AccessBloc.getState(context);
-    var items = value.items;
+    var items = value!.items!;
     var images = items.map((li) => li.image).toList();
     var positionsAndSizes = items.map((element) => element.posSize).toList();
     var actions = items.map((element) => element.action).toList();
@@ -38,6 +38,6 @@ class FaderComponent extends AbstractFaderComponent {
 
   @override
   FaderRepository getFaderRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.faderRepository(AccessBloc.appId(context));
+    return AbstractRepositorySingleton.singleton.faderRepository(AccessBloc.appId(context))!;
   }
 }

@@ -36,29 +36,29 @@ import 'package:eliud_core/tools/random.dart';
 
 
 class DividerModel {
-  String documentID;
-  String appId;
-  String name;
-  RgbModel color;
+  String? documentID;
+  String? appId;
+  String? name;
+  RgbModel? color;
 
   // The divider's height extent. The divider itself is always drawn as a horizontal line that is centered within the height specified by this value.
-  double height;
+  double? height;
 
   // The thickness of the line drawn within the divider. A divider with a thickness of 0.0 is always drawn as a line with a height of exactly one device pixel.
-  double thickness;
+  double? thickness;
 
   // The amount of empty space to the leading edge of the divider.
-  double indent;
+  double? indent;
 
   // The amount of empty space to the trailing edge of the divider.
-  double endIndent;
-  ConditionsSimpleModel conditions;
+  double? endIndent;
+  ConditionsSimpleModel? conditions;
 
   DividerModel({this.documentID, this.appId, this.name, this.color, this.height, this.thickness, this.indent, this.endIndent, this.conditions, })  {
     assert(documentID != null);
   }
 
-  DividerModel copyWith({String documentID, String appId, String name, RgbModel color, double height, double thickness, double indent, double endIndent, ConditionsSimpleModel conditions, }) {
+  DividerModel copyWith({String? documentID, String? appId, String? name, RgbModel? color, double? height, double? thickness, double? indent, double? endIndent, ConditionsSimpleModel? conditions, }) {
     return DividerModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, name: name ?? this.name, color: color ?? this.color, height: height ?? this.height, thickness: thickness ?? this.thickness, indent: indent ?? this.indent, endIndent: endIndent ?? this.endIndent, conditions: conditions ?? this.conditions, );
   }
 
@@ -85,20 +85,20 @@ class DividerModel {
     return 'DividerModel{documentID: $documentID, appId: $appId, name: $name, color: $color, height: $height, thickness: $thickness, indent: $indent, endIndent: $endIndent, conditions: $conditions}';
   }
 
-  DividerEntity toEntity({String appId}) {
+  DividerEntity toEntity({String? appId}) {
     return DividerEntity(
           appId: (appId != null) ? appId : null, 
           name: (name != null) ? name : null, 
-          color: (color != null) ? color.toEntity(appId: appId) : null, 
+          color: (color != null) ? color!.toEntity(appId: appId) : null, 
           height: (height != null) ? height : null, 
           thickness: (thickness != null) ? thickness : null, 
           indent: (indent != null) ? indent : null, 
           endIndent: (endIndent != null) ? endIndent : null, 
-          conditions: (conditions != null) ? conditions.toEntity(appId: appId) : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
     );
   }
 
-  static DividerModel fromEntity(String documentID, DividerEntity entity) {
+  static DividerModel? fromEntity(String documentID, DividerEntity? entity) {
     if (entity == null) return null;
     return DividerModel(
           documentID: documentID, 
@@ -115,7 +115,7 @@ class DividerModel {
     );
   }
 
-  static Future<DividerModel> fromEntityPlus(String documentID, DividerEntity entity, { String appId}) async {
+  static Future<DividerModel?> fromEntityPlus(String documentID, DividerEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
     return DividerModel(

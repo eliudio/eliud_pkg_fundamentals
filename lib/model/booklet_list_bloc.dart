@@ -27,53 +27,59 @@ const _bookletLimit = 5;
 
 class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
   final BookletRepository _bookletRepository;
-  StreamSubscription _bookletsListSubscription;
-  final EliudQuery eliudQuery;
+  StreamSubscription? _bookletsListSubscription;
+  final EliudQuery? eliudQuery;
   int pages = 1;
-  final bool paged;
-  final String orderBy;
-  final bool descending;
-  final bool detailed;
+  final bool? paged;
+  final String? orderBy;
+  final bool? descending;
+  final bool? detailed;
 
-  BookletListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, @required BookletRepository bookletRepository})
+  BookletListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required BookletRepository bookletRepository})
       : assert(bookletRepository != null),
         _bookletRepository = bookletRepository,
         super(BookletListLoading());
 
   Stream<BookletListState> _mapLoadBookletListToState() async* {
-    int amountNow =  (state is BookletListLoaded) ? (state as BookletListLoaded).values.length : 0;
+    int amountNow =  (state is BookletListLoaded) ? (state as BookletListLoaded).values!.length : 0;
     _bookletsListSubscription?.cancel();
     _bookletsListSubscription = _bookletRepository.listen(
           (list) => add(BookletListUpdated(value: list, mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && (paged)) ? pages * _bookletLimit : null
+      limit: ((paged != null) && paged!) ? pages * _bookletLimit : null
     );
   }
 
   Stream<BookletListState> _mapLoadBookletListWithDetailsToState() async* {
-    int amountNow =  (state is BookletListLoaded) ? (state as BookletListLoaded).values.length : 0;
+    int amountNow =  (state is BookletListLoaded) ? (state as BookletListLoaded).values!.length : 0;
     _bookletsListSubscription?.cancel();
     _bookletsListSubscription = _bookletRepository.listenWithDetails(
             (list) => add(BookletListUpdated(value: list, mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && (paged)) ? pages * _bookletLimit : null
+        limit: ((paged != null) && paged!) ? pages * _bookletLimit : null
     );
   }
 
   Stream<BookletListState> _mapAddBookletListToState(AddBookletList event) async* {
-    _bookletRepository.add(event.value);
+    var value = event.value;
+    if (value != null) 
+      _bookletRepository.add(value);
   }
 
   Stream<BookletListState> _mapUpdateBookletListToState(UpdateBookletList event) async* {
-    _bookletRepository.update(event.value);
+    var value = event.value;
+    if (value != null) 
+      _bookletRepository.update(value);
   }
 
   Stream<BookletListState> _mapDeleteBookletListToState(DeleteBookletList event) async* {
-    _bookletRepository.delete(event.value);
+    var value = event.value;
+    if (value != null) 
+      _bookletRepository.delete(value);
   }
 
   Stream<BookletListState> _mapBookletListUpdatedToState(
@@ -84,7 +90,7 @@ class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
   @override
   Stream<BookletListState> mapEventToState(BookletListEvent event) async* {
     if (event is LoadBookletList) {
-      if ((detailed == null) || (!detailed)) {
+      if ((detailed == null) || (!detailed!)) {
         yield* _mapLoadBookletListToState();
       } else {
         yield* _mapLoadBookletListWithDetailsToState();

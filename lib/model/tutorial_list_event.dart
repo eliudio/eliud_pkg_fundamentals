@@ -19,7 +19,7 @@ import 'package:eliud_pkg_fundamentals/model/tutorial_model.dart';
 abstract class TutorialListEvent extends Equatable {
   const TutorialListEvent();
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class LoadTutorialList extends TutorialListEvent {}
@@ -27,49 +27,49 @@ class LoadTutorialList extends TutorialListEvent {}
 class NewPage extends TutorialListEvent {}
 
 class AddTutorialList extends TutorialListEvent {
-  final TutorialModel value;
+  final TutorialModel? value;
 
   const AddTutorialList({ this.value });
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'AddTutorialList{ value: $value }';
 }
 
 class UpdateTutorialList extends TutorialListEvent {
-  final TutorialModel value;
+  final TutorialModel? value;
 
   const UpdateTutorialList({ this.value });
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'UpdateTutorialList{ value: $value }';
 }
 
 class DeleteTutorialList extends TutorialListEvent {
-  final TutorialModel value;
+  final TutorialModel? value;
 
   const DeleteTutorialList({ this.value });
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'DeleteTutorialList{ value: $value }';
 }
 
 class TutorialListUpdated extends TutorialListEvent {
-  final List<TutorialModel> value;
-  final bool mightHaveMore;
+  final List<TutorialModel?>? value;
+  final bool? mightHaveMore;
 
   const TutorialListUpdated({ this.value, this.mightHaveMore });
 
   @override
-  List<Object> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [ value, mightHaveMore ];
 
   @override
   String toString() => 'TutorialListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';

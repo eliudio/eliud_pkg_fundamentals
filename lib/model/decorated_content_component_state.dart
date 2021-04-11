@@ -20,13 +20,13 @@ abstract class DecoratedContentComponentState extends Equatable {
   const DecoratedContentComponentState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class DecoratedContentComponentUninitialized extends DecoratedContentComponentState {}
 
 class DecoratedContentComponentError extends DecoratedContentComponentState {
-  final String message;
+  final String? message;
   DecoratedContentComponentError({ this.message });
 }
 
@@ -35,16 +35,16 @@ class DecoratedContentComponentPermissionDenied extends DecoratedContentComponen
 }
 
 class DecoratedContentComponentLoaded extends DecoratedContentComponentState {
-  final DecoratedContentModel value;
+  final DecoratedContentModel? value;
 
   const DecoratedContentComponentLoaded({ this.value });
 
-  DecoratedContentComponentLoaded copyWith({ DecoratedContentModel copyThis }) {
+  DecoratedContentComponentLoaded copyWith({ DecoratedContentModel? copyThis }) {
     return DecoratedContentComponentLoaded(value: copyThis ?? this.value);
   }
 
   @override
-  List<Object> get props => [value];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'DecoratedContentComponentLoaded { value: $value }';

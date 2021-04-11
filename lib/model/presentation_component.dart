@@ -25,7 +25,7 @@ import 'package:eliud_pkg_fundamentals/model/presentation_component_state.dart';
 
 abstract class AbstractPresentationComponent extends StatelessWidget {
   static String componentName = "presentations";
-  final String presentationID;
+  final String? presentationID;
 
   AbstractPresentationComponent({this.presentationID});
 
@@ -63,7 +63,7 @@ abstract class AbstractPresentationComponent extends StatelessWidget {
     });
   }
 
-  Widget yourWidget(BuildContext context, PresentationModel value);
+  Widget yourWidget(BuildContext context, PresentationModel? value);
   Widget alertWidget({ title: String, content: String});
   PresentationRepository getPresentationRepository(BuildContext context);
 }

@@ -11,21 +11,21 @@ import 'package:flutter/material.dart';
 
 class PresentationComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({String id, Map<String, Object> parameters}) {
+  Widget createNew({String? id, Map<String, Object>? parameters}) {
     return PresentationComponent(presentationID: id, parameters: parameters,);
   }
 }
 
 class PresentationComponent extends AbstractPresentationComponent {
-  Map<String, Object> parameters;
+  Map<String, Object>? parameters;
 
-  PresentationComponent({String presentationID, this.parameters}) : super(presentationID: presentationID);
+  PresentationComponent({String? presentationID, this.parameters}) : super(presentationID: presentationID);
 
   @override
-  Widget yourWidget(BuildContext context, PresentationModel value) {
-    var widgets = value.bodyComponents
-        .map((model) => Registry.registry().component(
-        componentName: model.componentName, id: model.componentId, parameters: parameters))
+  Widget yourWidget(BuildContext context, PresentationModel? value) {
+    var widgets = value!.bodyComponents!
+        .map((model) => Registry.registry()!.component(
+        model!.componentName!, model.componentId!, parameters: parameters))
         .toList();
     return PresentationHelper.makeContainingTable(context, widgets, value.image, value.imagePositionRelative, value.imageAlignment, value.imageWidth);
   }
@@ -37,6 +37,6 @@ class PresentationComponent extends AbstractPresentationComponent {
 
   @override
   PresentationRepository getPresentationRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.presentationRepository(AccessBloc.appId(context));
+    return AbstractRepositorySingleton.singleton.presentationRepository(AccessBloc.appId(context))!;
   }
 }

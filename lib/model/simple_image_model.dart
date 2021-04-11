@@ -36,17 +36,17 @@ import 'package:eliud_core/tools/random.dart';
 
 
 class SimpleImageModel {
-  String documentID;
-  String appId;
-  String title;
-  MemberMediumModel image;
-  ConditionsSimpleModel conditions;
+  String? documentID;
+  String? appId;
+  String? title;
+  MemberMediumModel? image;
+  ConditionsSimpleModel? conditions;
 
   SimpleImageModel({this.documentID, this.appId, this.title, this.image, this.conditions, })  {
     assert(documentID != null);
   }
 
-  SimpleImageModel copyWith({String documentID, String appId, String title, MemberMediumModel image, ConditionsSimpleModel conditions, }) {
+  SimpleImageModel copyWith({String? documentID, String? appId, String? title, MemberMediumModel? image, ConditionsSimpleModel? conditions, }) {
     return SimpleImageModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, title: title ?? this.title, image: image ?? this.image, conditions: conditions ?? this.conditions, );
   }
 
@@ -69,16 +69,16 @@ class SimpleImageModel {
     return 'SimpleImageModel{documentID: $documentID, appId: $appId, title: $title, image: $image, conditions: $conditions}';
   }
 
-  SimpleImageEntity toEntity({String appId}) {
+  SimpleImageEntity toEntity({String? appId}) {
     return SimpleImageEntity(
           appId: (appId != null) ? appId : null, 
           title: (title != null) ? title : null, 
-          imageId: (image != null) ? image.documentID : null, 
-          conditions: (conditions != null) ? conditions.toEntity(appId: appId) : null, 
+          imageId: (image != null) ? image!.documentID : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
     );
   }
 
-  static SimpleImageModel fromEntity(String documentID, SimpleImageEntity entity) {
+  static SimpleImageModel? fromEntity(String documentID, SimpleImageEntity? entity) {
     if (entity == null) return null;
     return SimpleImageModel(
           documentID: documentID, 
@@ -89,13 +89,13 @@ class SimpleImageModel {
     );
   }
 
-  static Future<SimpleImageModel> fromEntityPlus(String documentID, SimpleImageEntity entity, { String appId}) async {
+  static Future<SimpleImageModel?> fromEntityPlus(String documentID, SimpleImageEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
-    MemberMediumModel imageHolder;
+    MemberMediumModel? imageHolder;
     if (entity.imageId != null) {
       try {
-        await memberMediumRepository(appId: appId).get(entity.imageId).then((val) {
+        await memberMediumRepository(appId: appId)!.get(entity.imageId).then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}

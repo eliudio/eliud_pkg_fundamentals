@@ -27,53 +27,59 @@ const _linkLimit = 5;
 
 class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
   final LinkRepository _linkRepository;
-  StreamSubscription _linksListSubscription;
-  final EliudQuery eliudQuery;
+  StreamSubscription? _linksListSubscription;
+  final EliudQuery? eliudQuery;
   int pages = 1;
-  final bool paged;
-  final String orderBy;
-  final bool descending;
-  final bool detailed;
+  final bool? paged;
+  final String? orderBy;
+  final bool? descending;
+  final bool? detailed;
 
-  LinkListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, @required LinkRepository linkRepository})
+  LinkListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required LinkRepository linkRepository})
       : assert(linkRepository != null),
         _linkRepository = linkRepository,
         super(LinkListLoading());
 
   Stream<LinkListState> _mapLoadLinkListToState() async* {
-    int amountNow =  (state is LinkListLoaded) ? (state as LinkListLoaded).values.length : 0;
+    int amountNow =  (state is LinkListLoaded) ? (state as LinkListLoaded).values!.length : 0;
     _linksListSubscription?.cancel();
     _linksListSubscription = _linkRepository.listen(
           (list) => add(LinkListUpdated(value: list, mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && (paged)) ? pages * _linkLimit : null
+      limit: ((paged != null) && paged!) ? pages * _linkLimit : null
     );
   }
 
   Stream<LinkListState> _mapLoadLinkListWithDetailsToState() async* {
-    int amountNow =  (state is LinkListLoaded) ? (state as LinkListLoaded).values.length : 0;
+    int amountNow =  (state is LinkListLoaded) ? (state as LinkListLoaded).values!.length : 0;
     _linksListSubscription?.cancel();
     _linksListSubscription = _linkRepository.listenWithDetails(
             (list) => add(LinkListUpdated(value: list, mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && (paged)) ? pages * _linkLimit : null
+        limit: ((paged != null) && paged!) ? pages * _linkLimit : null
     );
   }
 
   Stream<LinkListState> _mapAddLinkListToState(AddLinkList event) async* {
-    _linkRepository.add(event.value);
+    var value = event.value;
+    if (value != null) 
+      _linkRepository.add(value);
   }
 
   Stream<LinkListState> _mapUpdateLinkListToState(UpdateLinkList event) async* {
-    _linkRepository.update(event.value);
+    var value = event.value;
+    if (value != null) 
+      _linkRepository.update(value);
   }
 
   Stream<LinkListState> _mapDeleteLinkListToState(DeleteLinkList event) async* {
-    _linkRepository.delete(event.value);
+    var value = event.value;
+    if (value != null) 
+      _linkRepository.delete(value);
   }
 
   Stream<LinkListState> _mapLinkListUpdatedToState(
@@ -84,7 +90,7 @@ class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
   @override
   Stream<LinkListState> mapEventToState(LinkListEvent event) async* {
     if (event is LoadLinkList) {
-      if ((detailed == null) || (!detailed)) {
+      if ((detailed == null) || (!detailed!)) {
         yield* _mapLoadLinkListToState();
       } else {
         yield* _mapLoadLinkListWithDetailsToState();

@@ -38,7 +38,7 @@ enum SimpleTextAlign {
 }
 
 
-SimpleTextAlign toSimpleTextAlign(int index) {
+SimpleTextAlign toSimpleTextAlign(int? index) {
   switch (index) {
     case 0: return SimpleTextAlign.Left;
     case 1: return SimpleTextAlign.Center;
@@ -52,18 +52,18 @@ SimpleTextAlign toSimpleTextAlign(int index) {
 
 
 class SimpleTextModel {
-  String documentID;
-  String appId;
-  String title;
-  String text;
-  ConditionsSimpleModel conditions;
-  SimpleTextAlign textAlign;
+  String? documentID;
+  String? appId;
+  String? title;
+  String? text;
+  ConditionsSimpleModel? conditions;
+  SimpleTextAlign? textAlign;
 
   SimpleTextModel({this.documentID, this.appId, this.title, this.text, this.conditions, this.textAlign, })  {
     assert(documentID != null);
   }
 
-  SimpleTextModel copyWith({String documentID, String appId, String title, String text, ConditionsSimpleModel conditions, SimpleTextAlign textAlign, }) {
+  SimpleTextModel copyWith({String? documentID, String? appId, String? title, String? text, ConditionsSimpleModel? conditions, SimpleTextAlign? textAlign, }) {
     return SimpleTextModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, title: title ?? this.title, text: text ?? this.text, conditions: conditions ?? this.conditions, textAlign: textAlign ?? this.textAlign, );
   }
 
@@ -87,17 +87,17 @@ class SimpleTextModel {
     return 'SimpleTextModel{documentID: $documentID, appId: $appId, title: $title, text: $text, conditions: $conditions, textAlign: $textAlign}';
   }
 
-  SimpleTextEntity toEntity({String appId}) {
+  SimpleTextEntity toEntity({String? appId}) {
     return SimpleTextEntity(
           appId: (appId != null) ? appId : null, 
           title: (title != null) ? title : null, 
           text: (text != null) ? text : null, 
-          conditions: (conditions != null) ? conditions.toEntity(appId: appId) : null, 
-          textAlign: (textAlign != null) ? textAlign.index : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
+          textAlign: (textAlign != null) ? textAlign!.index : null, 
     );
   }
 
-  static SimpleTextModel fromEntity(String documentID, SimpleTextEntity entity) {
+  static SimpleTextModel? fromEntity(String documentID, SimpleTextEntity? entity) {
     if (entity == null) return null;
     return SimpleTextModel(
           documentID: documentID, 
@@ -110,7 +110,7 @@ class SimpleTextModel {
     );
   }
 
-  static Future<SimpleTextModel> fromEntityPlus(String documentID, SimpleTextEntity entity, { String appId}) async {
+  static Future<SimpleTextModel?> fromEntityPlus(String documentID, SimpleTextEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
     return SimpleTextModel(

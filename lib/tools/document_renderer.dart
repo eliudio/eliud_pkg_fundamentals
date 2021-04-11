@@ -123,7 +123,7 @@ class DocumentRendererTool {
           print(snapshot.error);
         }
         return snapshot.hasData
-            ? snapshot.data
+            ? snapshot.data!
             : Center(
                 child: DelayedCircularProgressIndicator(),
               );
@@ -131,9 +131,9 @@ class DocumentRendererTool {
     );
   }
 
-  Widget _rendered(BuildContext context, DocumentRenderer documentRenderer,
+  Widget _rendered(BuildContext context, DocumentRenderer? documentRenderer,
       String renderThis) {
-    Widget theWidget;
+    Widget? theWidget;
     switch (documentRenderer) {
       case DocumentRenderer.flutter_markdown:
         theWidget = _flutterMarkdownDocument(context, renderThis);
@@ -153,10 +153,10 @@ class DocumentRendererTool {
 
   Widget render(
       BuildContext context,
-      DocumentRenderer documentRenderer,
+      DocumentRenderer? documentRenderer,
       String document,
-      List<DocumentItemModel> images,
-      BackgroundModel bdm) {
+      List<DocumentItemModel>? images,
+      BackgroundModel? bdm) {
     var accessState = AccessBloc.getState(context);
     DocumentParameterProcessor documentParameterProcessor = ExtendedDocumentParameterProcessor(context, accessState, images: images);
     return Container(

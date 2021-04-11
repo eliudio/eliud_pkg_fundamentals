@@ -45,50 +45,36 @@ import 'package:eliud_core/model/app_model.dart';
 import 'grid_form.dart';
 
 
-typedef GridWidgetProvider(GridModel value);
+typedef GridWidgetProvider(GridModel? value);
 
 class GridListWidget extends StatefulWidget with HasFab {
-  BackgroundModel listBackground;
-  GridWidgetProvider widgetProvider;
-  bool readOnly;
-  String form;
-  GridListWidgetState state;
-  bool isEmbedded;
+  BackgroundModel? listBackground;
+  GridWidgetProvider? widgetProvider;
+  bool? readOnly;
+  String? form;
+  GridListWidgetState? state;
+  bool? isEmbedded;
 
-  GridListWidget({ Key key, this.readOnly, this.form, this.widgetProvider, this.isEmbedded, this.listBackground }): super(key: key);
+  GridListWidget({ Key? key, this.readOnly, this.form, this.widgetProvider, this.isEmbedded, this.listBackground }): super(key: key);
 
   @override
   GridListWidgetState createState() {
     state ??= GridListWidgetState();
-    return state;
+    return state!;
   }
 
   @override
-  Widget fab(BuildContext context) {
-    if ((readOnly != null) && readOnly) return null;
+  Widget? fab(BuildContext context) {
+    if ((readOnly != null) && readOnly!) return null;
     state ??= GridListWidgetState();
     var accessState = AccessBloc.getState(context);
-    return state.fab(context, accessState);
+    return state!.fab(context, accessState);
   }
 }
 
 class GridListWidgetState extends State<GridListWidget> {
-  GridListBloc bloc;
-
   @override
-  void didChangeDependencies() {
-    bloc = BlocProvider.of<GridListBloc>(context);
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose () {
-    if (bloc != null) bloc.close();
-    super.dispose();
-  }
-
-  @override
-  Widget fab(BuildContext aContext, AccessState accessState) {
+  Widget? fab(BuildContext aContext, AccessState accessState) {
     if (accessState is AppLoaded) {
       return !accessState.memberIsOwner() 
         ? null
@@ -100,7 +86,7 @@ class GridListWidgetState extends State<GridListWidget> {
         onPressed: () {
           Navigator.of(context).push(
             pageRouteBuilder(accessState.app, page: BlocProvider.value(
-                value: bloc,
+                value: BlocProvider.of<GridListBloc>(context),
                 child: GridForm(
                     value: null,
                     formAction: FormAction.AddAction)
@@ -124,15 +110,15 @@ class GridListWidgetState extends State<GridListWidget> {
           );
         } else if (state is GridListLoaded) {
           final values = state.values;
-          if ((widget.isEmbedded != null) && (widget.isEmbedded)) {
-            List<Widget> children = List();
+          if ((widget.isEmbedded != null) && widget.isEmbedded!) {
+            var children = <Widget>[];
             children.add(theList(context, values, accessState));
             children.add(RaisedButton(
                     color: RgbHelper.color(rgbo: accessState.app.formSubmitButtonColor),
                     onPressed: () {
                       Navigator.of(context).push(
                                 pageRouteBuilder(accessState.app, page: BlocProvider.value(
-                                    value: bloc,
+                                    value: BlocProvider.of<GridListBloc>(context),
                                     child: GridForm(
                                         value: null,
                                         formAction: FormAction.AddAction)
@@ -174,7 +160,7 @@ class GridListWidgetState extends State<GridListWidget> {
         itemBuilder: (context, index) {
           final value = values[index];
           
-          if (widget.widgetProvider != null) return widget.widgetProvider(value);
+          if (widget.widgetProvider != null) return widget.widgetProvider!(value);
 
           return GridListItem(
             value: value,
@@ -210,7 +196,7 @@ class GridListWidgetState extends State<GridListWidget> {
   }
   
   
-  Widget getForm(value, action) {
+  Widget? getForm(value, action) {
     if (widget.form == null) {
       return GridForm(value: value, formAction: action);
     } else {
@@ -226,36 +212,36 @@ class GridListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
   final AppModel app;
-  final GridModel value;
+  final GridModel? value;
 
   GridListItem({
-    Key key,
-    @required this.onDismissed,
-    @required this.onTap,
-    @required this.value,
-    @required this.app,
+    Key? key,
+    required this.onDismissed,
+    required this.onTap,
+    required this.value,
+    required this.app,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key('__Grid_item_${value.documentID}'),
+      key: Key('__Grid_item_${value!.documentID}'),
       onDismissed: onDismissed,
       child: ListTile(
         onTap: onTap,
         title: Hero(
-          tag: '${value.documentID}__GridheroTag',
+          tag: '${value!.documentID}__GridheroTag',
           child: Container(
             width: fullScreenWidth(context),
             child: Center(child: Text(
-              value.documentID,
+              value!.documentID!,
               style: TextStyle(color: RgbHelper.color(rgbo: app.listTextItemColor)),
             )),
           ),
         ),
-        subtitle: (value.title != null) && (value.title.isNotEmpty)
+        subtitle: (value!.title != null) && (value!.title!.isNotEmpty)
             ? Center( child: Text(
-          value.title,
+          value!.title!,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(color: RgbHelper.color(rgbo: app.listTextItemColor)),

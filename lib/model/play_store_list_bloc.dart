@@ -27,53 +27,59 @@ const _playStoreLimit = 5;
 
 class PlayStoreListBloc extends Bloc<PlayStoreListEvent, PlayStoreListState> {
   final PlayStoreRepository _playStoreRepository;
-  StreamSubscription _playStoresListSubscription;
-  final EliudQuery eliudQuery;
+  StreamSubscription? _playStoresListSubscription;
+  final EliudQuery? eliudQuery;
   int pages = 1;
-  final bool paged;
-  final String orderBy;
-  final bool descending;
-  final bool detailed;
+  final bool? paged;
+  final String? orderBy;
+  final bool? descending;
+  final bool? detailed;
 
-  PlayStoreListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, @required PlayStoreRepository playStoreRepository})
+  PlayStoreListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required PlayStoreRepository playStoreRepository})
       : assert(playStoreRepository != null),
         _playStoreRepository = playStoreRepository,
         super(PlayStoreListLoading());
 
   Stream<PlayStoreListState> _mapLoadPlayStoreListToState() async* {
-    int amountNow =  (state is PlayStoreListLoaded) ? (state as PlayStoreListLoaded).values.length : 0;
+    int amountNow =  (state is PlayStoreListLoaded) ? (state as PlayStoreListLoaded).values!.length : 0;
     _playStoresListSubscription?.cancel();
     _playStoresListSubscription = _playStoreRepository.listen(
           (list) => add(PlayStoreListUpdated(value: list, mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && (paged)) ? pages * _playStoreLimit : null
+      limit: ((paged != null) && paged!) ? pages * _playStoreLimit : null
     );
   }
 
   Stream<PlayStoreListState> _mapLoadPlayStoreListWithDetailsToState() async* {
-    int amountNow =  (state is PlayStoreListLoaded) ? (state as PlayStoreListLoaded).values.length : 0;
+    int amountNow =  (state is PlayStoreListLoaded) ? (state as PlayStoreListLoaded).values!.length : 0;
     _playStoresListSubscription?.cancel();
     _playStoresListSubscription = _playStoreRepository.listenWithDetails(
             (list) => add(PlayStoreListUpdated(value: list, mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && (paged)) ? pages * _playStoreLimit : null
+        limit: ((paged != null) && paged!) ? pages * _playStoreLimit : null
     );
   }
 
   Stream<PlayStoreListState> _mapAddPlayStoreListToState(AddPlayStoreList event) async* {
-    _playStoreRepository.add(event.value);
+    var value = event.value;
+    if (value != null) 
+      _playStoreRepository.add(value);
   }
 
   Stream<PlayStoreListState> _mapUpdatePlayStoreListToState(UpdatePlayStoreList event) async* {
-    _playStoreRepository.update(event.value);
+    var value = event.value;
+    if (value != null) 
+      _playStoreRepository.update(value);
   }
 
   Stream<PlayStoreListState> _mapDeletePlayStoreListToState(DeletePlayStoreList event) async* {
-    _playStoreRepository.delete(event.value);
+    var value = event.value;
+    if (value != null) 
+      _playStoreRepository.delete(value);
   }
 
   Stream<PlayStoreListState> _mapPlayStoreListUpdatedToState(
@@ -84,7 +90,7 @@ class PlayStoreListBloc extends Bloc<PlayStoreListEvent, PlayStoreListState> {
   @override
   Stream<PlayStoreListState> mapEventToState(PlayStoreListEvent event) async* {
     if (event is LoadPlayStoreList) {
-      if ((detailed == null) || (!detailed)) {
+      if ((detailed == null) || (!detailed!)) {
         yield* _mapLoadPlayStoreListToState();
       } else {
         yield* _mapLoadPlayStoreListWithDetailsToState();

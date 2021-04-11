@@ -16,13 +16,13 @@ import 'package:flutter/material.dart';
 
 class PlayStoreComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({String id, Map<String, Object> parameters}) {
+  Widget createNew({String? id, Map<String, Object>? parameters}) {
     return PlayStoreBase(id);
   }
 }
 
 class PlayStoreBase extends AbstractPlayStoreComponent {
-  final String id;
+  final String? id;
 
   PlayStoreBase(this.id) : super(playStoreID: id);
 
@@ -33,17 +33,17 @@ class PlayStoreBase extends AbstractPlayStoreComponent {
 
   @override
   PlayStoreRepository getPlayStoreRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.playStoreRepository(AccessBloc.appId(context));
+    return AbstractRepositorySingleton.singleton.playStoreRepository(AccessBloc.appId(context))!;
   }
 
   @override
-  Widget yourWidget(BuildContext context, PlayStoreModel value) {
+  Widget yourWidget(BuildContext context, PlayStoreModel? value) {
     return PlayStore(value);
   }
 }
 
 class PlayStore extends StatefulWidget {
-  final PlayStoreModel playStoreModel;
+  final PlayStoreModel? playStoreModel;
 
   PlayStore(this.playStoreModel);
 
@@ -56,7 +56,7 @@ class PlayStore extends StatefulWidget {
 class PlayStoreState extends State<PlayStore> {
   PlayStoreState();
 
-  Widget _buildStack(double size, Widget image, String name) => Container(
+  Widget _buildStack(double size, Widget image, String? name) => Container(
     height: size,
     width: size,
     child: image,
@@ -64,11 +64,11 @@ class PlayStoreState extends State<PlayStore> {
   
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<AppModel>>(
-      future:  AbstractMainRepositorySingleton.singleton.appRepository().valuesList(),
-      builder: (BuildContext context, AsyncSnapshot<List<AppModel>> snapshot) {
+    return FutureBuilder<List<AppModel?>>(
+      future:  AbstractMainRepositorySingleton.singleton.appRepository()!.valuesList(),
+      builder: (BuildContext context, AsyncSnapshot<List<AppModel?>> snapshot) {
         if (snapshot.hasData) {
-          return _build(context, snapshot.data);
+          return _build(context, snapshot.data!);
         } else {
           return Center(
             child: DelayedCircularProgressIndicator(),
@@ -78,13 +78,13 @@ class PlayStoreState extends State<PlayStore> {
     );
   }
 
-  Widget _build(BuildContext context, List<AppModel> apps) {
+  Widget _build(BuildContext context, List<AppModel?> apps) {
     var appID = AccessBloc.appId(context);
 
     var size = 150.0;
     var components = <Widget>[];
     apps.forEach((model) {
-      if (!AccessBloc.isPlayStoreApp(context, model.documentID)) {
+      if (!AccessBloc.isPlayStoreApp(context, model!.documentID!)) {
         var children = <Widget>[];
         children.add(GestureDetector(
             onTap: () async {
@@ -92,7 +92,7 @@ class PlayStoreState extends State<PlayStore> {
             },
             child: _buildStack(
                 size - 40,
-                ImageHelper.getImageFromURL(url: model.logoURL),
+                ImageHelper.getImageFromURL(url: model.logoURL!),
                 model.title)));
         components.add(Column(children: children));
       }

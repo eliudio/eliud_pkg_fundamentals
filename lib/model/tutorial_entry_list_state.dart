@@ -20,19 +20,19 @@ abstract class TutorialEntryListState extends Equatable {
   const TutorialEntryListState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class TutorialEntryListLoading extends TutorialEntryListState {}
 
 class TutorialEntryListLoaded extends TutorialEntryListState {
-  final List<TutorialEntryModel> values;
-  final bool mightHaveMore;
+  final List<TutorialEntryModel?>? values;
+  final bool? mightHaveMore;
 
   const TutorialEntryListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object> get props => [ values, mightHaveMore ];
+  List<Object?> get props => [ values, mightHaveMore ];
 
   @override
   String toString() => 'TutorialEntryListLoaded { values: $values }';

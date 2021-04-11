@@ -24,7 +24,7 @@ import 'package:flutter/services.dart';
 
 
 class PlayStoreComponentBloc extends Bloc<PlayStoreComponentEvent, PlayStoreComponentState> {
-  final PlayStoreRepository playStoreRepository;
+  final PlayStoreRepository? playStoreRepository;
 
   PlayStoreComponentBloc({ this.playStoreRepository }): super(PlayStoreComponentUninitialized());
   @override
@@ -34,9 +34,9 @@ class PlayStoreComponentBloc extends Bloc<PlayStoreComponentEvent, PlayStoreComp
       try {
         if (currentState is PlayStoreComponentUninitialized) {
           bool permissionDenied = false;
-          final model = await playStoreRepository.get(event.id, onError: (error) {
+          final model = await playStoreRepository!.get(event.id, onError: (error) {
             // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
-            if ((error is PlatformException) &&  (error.message.startsWith("PERMISSION_DENIED"))) {
+            if ((error is PlatformException) &&  (error.message!.startsWith("PERMISSION_DENIED"))) {
               permissionDenied = true;
             }
           });
@@ -46,7 +46,7 @@ class PlayStoreComponentBloc extends Bloc<PlayStoreComponentEvent, PlayStoreComp
             if (model != null) {
               yield PlayStoreComponentLoaded(value: model);
             } else {
-              String id = event.id;
+              String? id = event.id;
               yield PlayStoreComponentError(
                   message: "PlayStore with id = '$id' not found");
             }

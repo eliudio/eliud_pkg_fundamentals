@@ -27,53 +27,59 @@ const _sectionLimit = 5;
 
 class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
   final SectionRepository _sectionRepository;
-  StreamSubscription _sectionsListSubscription;
-  final EliudQuery eliudQuery;
+  StreamSubscription? _sectionsListSubscription;
+  final EliudQuery? eliudQuery;
   int pages = 1;
-  final bool paged;
-  final String orderBy;
-  final bool descending;
-  final bool detailed;
+  final bool? paged;
+  final String? orderBy;
+  final bool? descending;
+  final bool? detailed;
 
-  SectionListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, @required SectionRepository sectionRepository})
+  SectionListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required SectionRepository sectionRepository})
       : assert(sectionRepository != null),
         _sectionRepository = sectionRepository,
         super(SectionListLoading());
 
   Stream<SectionListState> _mapLoadSectionListToState() async* {
-    int amountNow =  (state is SectionListLoaded) ? (state as SectionListLoaded).values.length : 0;
+    int amountNow =  (state is SectionListLoaded) ? (state as SectionListLoaded).values!.length : 0;
     _sectionsListSubscription?.cancel();
     _sectionsListSubscription = _sectionRepository.listen(
           (list) => add(SectionListUpdated(value: list, mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && (paged)) ? pages * _sectionLimit : null
+      limit: ((paged != null) && paged!) ? pages * _sectionLimit : null
     );
   }
 
   Stream<SectionListState> _mapLoadSectionListWithDetailsToState() async* {
-    int amountNow =  (state is SectionListLoaded) ? (state as SectionListLoaded).values.length : 0;
+    int amountNow =  (state is SectionListLoaded) ? (state as SectionListLoaded).values!.length : 0;
     _sectionsListSubscription?.cancel();
     _sectionsListSubscription = _sectionRepository.listenWithDetails(
             (list) => add(SectionListUpdated(value: list, mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && (paged)) ? pages * _sectionLimit : null
+        limit: ((paged != null) && paged!) ? pages * _sectionLimit : null
     );
   }
 
   Stream<SectionListState> _mapAddSectionListToState(AddSectionList event) async* {
-    _sectionRepository.add(event.value);
+    var value = event.value;
+    if (value != null) 
+      _sectionRepository.add(value);
   }
 
   Stream<SectionListState> _mapUpdateSectionListToState(UpdateSectionList event) async* {
-    _sectionRepository.update(event.value);
+    var value = event.value;
+    if (value != null) 
+      _sectionRepository.update(value);
   }
 
   Stream<SectionListState> _mapDeleteSectionListToState(DeleteSectionList event) async* {
-    _sectionRepository.delete(event.value);
+    var value = event.value;
+    if (value != null) 
+      _sectionRepository.delete(value);
   }
 
   Stream<SectionListState> _mapSectionListUpdatedToState(
@@ -84,7 +90,7 @@ class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
   @override
   Stream<SectionListState> mapEventToState(SectionListEvent event) async* {
     if (event is LoadSectionList) {
-      if ((detailed == null) || (!detailed)) {
+      if ((detailed == null) || (!detailed!)) {
         yield* _mapLoadSectionListToState();
       } else {
         yield* _mapLoadSectionListWithDetailsToState();

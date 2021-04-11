@@ -53,7 +53,7 @@ class AdminApp extends AdminAppInstallerBase {
 
 
   PageModel _bookletsPages() {
-    List<BodyComponentModel> components = List();
+    List<BodyComponentModel> components = [];
     components.add(BodyComponentModel(
       documentID: "internalWidget-booklets", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "booklets"));
     PageModel page = PageModel(
@@ -77,7 +77,7 @@ class AdminApp extends AdminAppInstallerBase {
 
 
   PageModel _decoratedContentsPages() {
-    List<BodyComponentModel> components = List();
+    List<BodyComponentModel> components = [];
     components.add(BodyComponentModel(
       documentID: "internalWidget-decoratedContents", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "decoratedContents"));
     PageModel page = PageModel(
@@ -101,7 +101,7 @@ class AdminApp extends AdminAppInstallerBase {
 
 
   PageModel _dividersPages() {
-    List<BodyComponentModel> components = List();
+    List<BodyComponentModel> components = [];
     components.add(BodyComponentModel(
       documentID: "internalWidget-dividers", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "dividers"));
     PageModel page = PageModel(
@@ -125,7 +125,7 @@ class AdminApp extends AdminAppInstallerBase {
 
 
   PageModel _documentsPages() {
-    List<BodyComponentModel> components = List();
+    List<BodyComponentModel> components = [];
     components.add(BodyComponentModel(
       documentID: "internalWidget-documents", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "documents"));
     PageModel page = PageModel(
@@ -149,7 +149,7 @@ class AdminApp extends AdminAppInstallerBase {
 
 
   PageModel _fadersPages() {
-    List<BodyComponentModel> components = List();
+    List<BodyComponentModel> components = [];
     components.add(BodyComponentModel(
       documentID: "internalWidget-faders", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "faders"));
     PageModel page = PageModel(
@@ -173,7 +173,7 @@ class AdminApp extends AdminAppInstallerBase {
 
 
   PageModel _gridsPages() {
-    List<BodyComponentModel> components = List();
+    List<BodyComponentModel> components = [];
     components.add(BodyComponentModel(
       documentID: "internalWidget-grids", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "grids"));
     PageModel page = PageModel(
@@ -197,7 +197,7 @@ class AdminApp extends AdminAppInstallerBase {
 
 
   PageModel _playStoresPages() {
-    List<BodyComponentModel> components = List();
+    List<BodyComponentModel> components = [];
     components.add(BodyComponentModel(
       documentID: "internalWidget-playStores", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "playStores"));
     PageModel page = PageModel(
@@ -221,7 +221,7 @@ class AdminApp extends AdminAppInstallerBase {
 
 
   PageModel _presentationsPages() {
-    List<BodyComponentModel> components = List();
+    List<BodyComponentModel> components = [];
     components.add(BodyComponentModel(
       documentID: "internalWidget-presentations", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "presentations"));
     PageModel page = PageModel(
@@ -245,7 +245,7 @@ class AdminApp extends AdminAppInstallerBase {
 
 
   PageModel _simpleImagesPages() {
-    List<BodyComponentModel> components = List();
+    List<BodyComponentModel> components = [];
     components.add(BodyComponentModel(
       documentID: "internalWidget-simpleImages", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "simpleImages"));
     PageModel page = PageModel(
@@ -269,7 +269,7 @@ class AdminApp extends AdminAppInstallerBase {
 
 
   PageModel _simpleTextsPages() {
-    List<BodyComponentModel> components = List();
+    List<BodyComponentModel> components = [];
     components.add(BodyComponentModel(
       documentID: "internalWidget-simpleTexts", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "simpleTexts"));
     PageModel page = PageModel(
@@ -293,7 +293,7 @@ class AdminApp extends AdminAppInstallerBase {
 
 
   PageModel _tutorialsPages() {
-    List<BodyComponentModel> components = List();
+    List<BodyComponentModel> components = [];
     components.add(BodyComponentModel(
       documentID: "internalWidget-tutorials", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "tutorials"));
     PageModel page = PageModel(
@@ -318,27 +318,27 @@ class AdminApp extends AdminAppInstallerBase {
 
   Future<void> _setupAdminPages() {
 
-    return pageRepository(appId: appId).add(_bookletsPages())
+    return pageRepository(appId: appId)!.add(_bookletsPages())
 
-        .then((_) => pageRepository(appId: appId).add(_decoratedContentsPages()))
+        .then((_) => pageRepository(appId: appId)!.add(_decoratedContentsPages()))
 
-        .then((_) => pageRepository(appId: appId).add(_dividersPages()))
+        .then((_) => pageRepository(appId: appId)!.add(_dividersPages()))
 
-        .then((_) => pageRepository(appId: appId).add(_documentsPages()))
+        .then((_) => pageRepository(appId: appId)!.add(_documentsPages()))
 
-        .then((_) => pageRepository(appId: appId).add(_fadersPages()))
+        .then((_) => pageRepository(appId: appId)!.add(_fadersPages()))
 
-        .then((_) => pageRepository(appId: appId).add(_gridsPages()))
+        .then((_) => pageRepository(appId: appId)!.add(_gridsPages()))
 
-        .then((_) => pageRepository(appId: appId).add(_playStoresPages()))
+        .then((_) => pageRepository(appId: appId)!.add(_playStoresPages()))
 
-        .then((_) => pageRepository(appId: appId).add(_presentationsPages()))
+        .then((_) => pageRepository(appId: appId)!.add(_presentationsPages()))
 
-        .then((_) => pageRepository(appId: appId).add(_simpleImagesPages()))
+        .then((_) => pageRepository(appId: appId)!.add(_simpleImagesPages()))
 
-        .then((_) => pageRepository(appId: appId).add(_simpleTextsPages()))
+        .then((_) => pageRepository(appId: appId)!.add(_simpleTextsPages()))
 
-        .then((_) => pageRepository(appId: appId).add(_tutorialsPages()))
+        .then((_) => pageRepository(appId: appId)!.add(_tutorialsPages()))
 
     ;
   }
@@ -354,7 +354,7 @@ class AdminApp extends AdminAppInstallerBase {
 class AdminMenu extends AdminAppMenuInstallerBase {
 
   Future<MenuDefModel> menu(String appId) async {
-    List<MenuItemModel> menuItems = List<MenuItemModel>();
+    var menuItems = <MenuItemModel>[];
 
     menuItems.add(
       MenuItemModel(
@@ -473,7 +473,7 @@ class AdminMenu extends AdminAppMenuInstallerBase {
       name: "eliud_pkg_fundamentals",
       menuItems: menuItems
     );
-    await menuDefRepository(appId: appId).add(menu);
+    await menuDefRepository(appId: appId)!.add(menu);
     return menu;
   }
 }

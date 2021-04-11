@@ -20,13 +20,13 @@ abstract class FaderComponentState extends Equatable {
   const FaderComponentState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class FaderComponentUninitialized extends FaderComponentState {}
 
 class FaderComponentError extends FaderComponentState {
-  final String message;
+  final String? message;
   FaderComponentError({ this.message });
 }
 
@@ -35,16 +35,16 @@ class FaderComponentPermissionDenied extends FaderComponentState {
 }
 
 class FaderComponentLoaded extends FaderComponentState {
-  final FaderModel value;
+  final FaderModel? value;
 
   const FaderComponentLoaded({ this.value });
 
-  FaderComponentLoaded copyWith({ FaderModel copyThis }) {
+  FaderComponentLoaded copyWith({ FaderModel? copyThis }) {
     return FaderComponentLoaded(value: copyThis ?? this.value);
   }
 
   @override
-  List<Object> get props => [value];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'FaderComponentLoaded { value: $value }';

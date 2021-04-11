@@ -25,7 +25,7 @@ import 'package:eliud_pkg_fundamentals/model/grid_component_state.dart';
 
 abstract class AbstractGridComponent extends StatelessWidget {
   static String componentName = "grids";
-  final String gridID;
+  final String? gridID;
 
   AbstractGridComponent({this.gridID});
 
@@ -63,7 +63,7 @@ abstract class AbstractGridComponent extends StatelessWidget {
     });
   }
 
-  Widget yourWidget(BuildContext context, GridModel value);
+  Widget yourWidget(BuildContext context, GridModel? value);
   Widget alertWidget({ title: String, content: String});
   GridRepository getGridRepository(BuildContext context);
 }

@@ -42,8 +42,8 @@ import 'package:eliud_pkg_fundamentals/model/presentation_form_state.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_repository.dart';
 
 class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormState> {
-  final FormAction formAction;
-  final String appId;
+  final FormAction? formAction;
+  final String? appId;
 
   PresentationFormBloc(this.appId, { this.formAction }): super(PresentationFormUninitialized());
   @override
@@ -67,20 +67,20 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
 
       if (event is InitialisePresentationFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        PresentationFormLoaded loaded = PresentationFormLoaded(value: await presentationRepository(appId: appId).get(event.value.documentID));
+        PresentationFormLoaded loaded = PresentationFormLoaded(value: await presentationRepository(appId: appId)!.get(event!.value!.documentID));
         yield loaded;
         return;
       } else if (event is InitialisePresentationFormNoLoadEvent) {
-        PresentationFormLoaded loaded = PresentationFormLoaded(value: event.value);
+        PresentationFormLoaded loaded = PresentationFormLoaded(value: event!.value);
         yield loaded;
         return;
       }
     } else if (currentState is PresentationFormInitialized) {
-      PresentationModel newValue = null;
+      PresentationModel? newValue = null;
       if (event is ChangedPresentationDocumentID) {
-        newValue = currentState.value.copyWith(documentID: event.value);
+        newValue = currentState.value!.copyWith(documentID: event!.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event.value, newValue).asStream();
+          yield* _isDocumentIDValid(event!.value, newValue).asStream();
         } else {
           yield SubmittablePresentationForm(value: newValue);
         }
@@ -88,61 +88,61 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
         return;
       }
       if (event is ChangedPresentationTitle) {
-        newValue = currentState.value.copyWith(title: event.value);
+        newValue = currentState.value!.copyWith(title: event!.value);
         yield SubmittablePresentationForm(value: newValue);
 
         return;
       }
       if (event is ChangedPresentationBodyComponents) {
-        newValue = currentState.value.copyWith(bodyComponents: event.value);
+        newValue = currentState.value!.copyWith(bodyComponents: event!.value);
         yield SubmittablePresentationForm(value: newValue);
 
         return;
       }
       if (event is ChangedPresentationImage) {
-        if (event.value != null)
-          newValue = currentState.value.copyWith(image: await memberMediumRepository(appId: appId).get(event.value));
+        if (event!.value != null)
+          newValue = currentState.value!.copyWith(image: await memberMediumRepository(appId: appId)!.get(event!.value));
         else
           newValue = new PresentationModel(
-                                 documentID: currentState.value.documentID,
-                                 appId: currentState.value.appId,
-                                 title: currentState.value.title,
-                                 bodyComponents: currentState.value.bodyComponents,
+                                 documentID: currentState.value!.documentID,
+                                 appId: currentState.value!.appId,
+                                 title: currentState.value!.title,
+                                 bodyComponents: currentState.value!.bodyComponents,
                                  image: null,
-                                 imagePositionRelative: currentState.value.imagePositionRelative,
-                                 imageAlignment: currentState.value.imageAlignment,
-                                 imageWidth: currentState.value.imageWidth,
-                                 conditions: currentState.value.conditions,
+                                 imagePositionRelative: currentState.value!.imagePositionRelative,
+                                 imageAlignment: currentState.value!.imageAlignment,
+                                 imageWidth: currentState.value!.imageWidth,
+                                 conditions: currentState.value!.conditions,
           );
         yield SubmittablePresentationForm(value: newValue);
 
         return;
       }
       if (event is ChangedPresentationImagePositionRelative) {
-        newValue = currentState.value.copyWith(imagePositionRelative: event.value);
+        newValue = currentState.value!.copyWith(imagePositionRelative: event!.value);
         yield SubmittablePresentationForm(value: newValue);
 
         return;
       }
       if (event is ChangedPresentationImageAlignment) {
-        newValue = currentState.value.copyWith(imageAlignment: event.value);
+        newValue = currentState.value!.copyWith(imageAlignment: event!.value);
         yield SubmittablePresentationForm(value: newValue);
 
         return;
       }
       if (event is ChangedPresentationImageWidth) {
-        if (isDouble(event.value)) {
-          newValue = currentState.value.copyWith(imageWidth: double.parse(event.value));
+        if (isDouble(event!.value!)) {
+          newValue = currentState.value!.copyWith(imageWidth: double.parse(event!.value!));
           yield SubmittablePresentationForm(value: newValue);
 
         } else {
-          newValue = currentState.value.copyWith(imageWidth: 0.0);
+          newValue = currentState.value!.copyWith(imageWidth: 0.0);
           yield ImageWidthPresentationFormError(message: "Value should be a number or decimal number", value: newValue);
         }
         return;
       }
       if (event is ChangedPresentationConditions) {
-        newValue = currentState.value.copyWith(conditions: event.value);
+        newValue = currentState.value!.copyWith(conditions: event!.value);
         yield SubmittablePresentationForm(value: newValue);
 
         return;
@@ -153,10 +153,10 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
 
   DocumentIDPresentationFormError error(String message, PresentationModel newValue) => DocumentIDPresentationFormError(message: message, value: newValue);
 
-  Future<PresentationFormState> _isDocumentIDValid(String value, PresentationModel newValue) async {
+  Future<PresentationFormState> _isDocumentIDValid(String? value, PresentationModel newValue) async {
     if (value == null) return Future.value(error("Provide value for documentID", newValue));
     if (value.length == 0) return Future.value(error("Provide value for documentID", newValue));
-    Future<PresentationModel> findDocument = presentationRepository(appId: appId).get(value);
+    Future<PresentationModel?> findDocument = presentationRepository(appId: appId)!.get(value);
     return await findDocument.then((documentFound) {
       if (documentFound == null) {
         return SubmittablePresentationForm(value: newValue);

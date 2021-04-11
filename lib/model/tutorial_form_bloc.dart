@@ -42,8 +42,8 @@ import 'package:eliud_pkg_fundamentals/model/tutorial_form_state.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_repository.dart';
 
 class TutorialFormBloc extends Bloc<TutorialFormEvent, TutorialFormState> {
-  final FormAction formAction;
-  final String appId;
+  final FormAction? formAction;
+  final String? appId;
 
   TutorialFormBloc(this.appId, { this.formAction }): super(TutorialFormUninitialized());
   @override
@@ -68,20 +68,20 @@ class TutorialFormBloc extends Bloc<TutorialFormEvent, TutorialFormState> {
 
       if (event is InitialiseTutorialFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        TutorialFormLoaded loaded = TutorialFormLoaded(value: await tutorialRepository(appId: appId).get(event.value.documentID));
+        TutorialFormLoaded loaded = TutorialFormLoaded(value: await tutorialRepository(appId: appId)!.get(event!.value!.documentID));
         yield loaded;
         return;
       } else if (event is InitialiseTutorialFormNoLoadEvent) {
-        TutorialFormLoaded loaded = TutorialFormLoaded(value: event.value);
+        TutorialFormLoaded loaded = TutorialFormLoaded(value: event!.value);
         yield loaded;
         return;
       }
     } else if (currentState is TutorialFormInitialized) {
-      TutorialModel newValue = null;
+      TutorialModel? newValue = null;
       if (event is ChangedTutorialDocumentID) {
-        newValue = currentState.value.copyWith(documentID: event.value);
+        newValue = currentState.value!.copyWith(documentID: event!.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event.value, newValue).asStream();
+          yield* _isDocumentIDValid(event!.value, newValue).asStream();
         } else {
           yield SubmittableTutorialForm(value: newValue);
         }
@@ -89,31 +89,31 @@ class TutorialFormBloc extends Bloc<TutorialFormEvent, TutorialFormState> {
         return;
       }
       if (event is ChangedTutorialName) {
-        newValue = currentState.value.copyWith(name: event.value);
+        newValue = currentState.value!.copyWith(name: event!.value);
         yield SubmittableTutorialForm(value: newValue);
 
         return;
       }
       if (event is ChangedTutorialTitle) {
-        newValue = currentState.value.copyWith(title: event.value);
+        newValue = currentState.value!.copyWith(title: event!.value);
         yield SubmittableTutorialForm(value: newValue);
 
         return;
       }
       if (event is ChangedTutorialDescription) {
-        newValue = currentState.value.copyWith(description: event.value);
+        newValue = currentState.value!.copyWith(description: event!.value);
         yield SubmittableTutorialForm(value: newValue);
 
         return;
       }
       if (event is ChangedTutorialTutorialEntries) {
-        newValue = currentState.value.copyWith(tutorialEntries: event.value);
+        newValue = currentState.value!.copyWith(tutorialEntries: event!.value);
         yield SubmittableTutorialForm(value: newValue);
 
         return;
       }
       if (event is ChangedTutorialConditions) {
-        newValue = currentState.value.copyWith(conditions: event.value);
+        newValue = currentState.value!.copyWith(conditions: event!.value);
         yield SubmittableTutorialForm(value: newValue);
 
         return;
@@ -124,10 +124,10 @@ class TutorialFormBloc extends Bloc<TutorialFormEvent, TutorialFormState> {
 
   DocumentIDTutorialFormError error(String message, TutorialModel newValue) => DocumentIDTutorialFormError(message: message, value: newValue);
 
-  Future<TutorialFormState> _isDocumentIDValid(String value, TutorialModel newValue) async {
+  Future<TutorialFormState> _isDocumentIDValid(String? value, TutorialModel newValue) async {
     if (value == null) return Future.value(error("Provide value for documentID", newValue));
     if (value.length == 0) return Future.value(error("Provide value for documentID", newValue));
-    Future<TutorialModel> findDocument = tutorialRepository(appId: appId).get(value);
+    Future<TutorialModel?> findDocument = tutorialRepository(appId: appId)!.get(value);
     return await findDocument.then((documentFound) {
       if (documentFound == null) {
         return SubmittableTutorialForm(value: newValue);

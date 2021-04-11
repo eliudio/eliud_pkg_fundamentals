@@ -23,7 +23,7 @@ import 'package:eliud_pkg_fundamentals/model/simple_text_repository.dart';
 import 'package:flutter/services.dart';
 
 class SimpleTextComponentBloc extends Bloc<SimpleTextComponentEvent, SimpleTextComponentState> {
-  final SimpleTextRepository simpleTextRepository;
+  final SimpleTextRepository? simpleTextRepository;
 
   SimpleTextComponentBloc({ this.simpleTextRepository }): super(SimpleTextComponentUninitialized());
   @override
@@ -33,9 +33,9 @@ class SimpleTextComponentBloc extends Bloc<SimpleTextComponentEvent, SimpleTextC
       try {
         if (currentState is SimpleTextComponentUninitialized) {
           bool permissionDenied = false;
-          final model = await simpleTextRepository.get(event.id, onError: (error) {
+          final model = await simpleTextRepository!.get(event.id, onError: (error) {
             // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
-            if ((error is PlatformException) &&  (error.message.startsWith("PERMISSION_DENIED"))) {
+            if ((error is PlatformException) &&  (error.message!.startsWith("PERMISSION_DENIED"))) {
               permissionDenied = true;
             }
           });
@@ -45,7 +45,7 @@ class SimpleTextComponentBloc extends Bloc<SimpleTextComponentEvent, SimpleTextC
             if (model != null) {
               yield SimpleTextComponentLoaded(value: model);
             } else {
-              String id = event.id;
+              String? id = event.id;
               yield SimpleTextComponentError(
                   message: "SimpleText with id = '$id' not found");
             }

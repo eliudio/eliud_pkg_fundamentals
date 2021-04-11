@@ -6,18 +6,18 @@ import 'package:flutter/widgets.dart';
 const String IMAGE = 'image';
 
 class ExtendedDocumentParameterProcessor extends DocumentParameterProcessor {
-  List<DocumentItemModel> images;
+  List<DocumentItemModel>? images;
 
   ExtendedDocumentParameterProcessor(BuildContext context, AccessState state, {this.images})
       : super(context, state);
 
-  String image(KeyValue k) {
+  String? image(KeyValue k) {
     try {
       if (images == null) return null;
-      var index = images.indexWhere((element) => element.reference == k.value);
-      var documentItemModel = images[index];
+      var index = images!.indexWhere((element) => element.reference == k.value);
+      var documentItemModel = images![index];
       var image = documentItemModel.image;
-      if (index >= 0) return image.url;
+      if (index >= 0) return image!.url;
     } catch (_) {
       debugPrint('DocumentParameterProcessor::image() error');
     }

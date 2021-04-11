@@ -16,13 +16,13 @@ import 'package:flutter/material.dart';
 
 class BookletComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({String id, Map<String, Object> parameters}) {
+  Widget createNew({String? id, Map<String, Object>? parameters}) {
     return BookletComponent(bookletID: id);
   }
 }
 
 class BookletComponent extends AbstractBookletComponent {
-  BookletComponent({String bookletID}) : super(bookletID: bookletID);
+  BookletComponent({String? bookletID}) : super(bookletID: bookletID);
 
   Widget _aBitSpace() => SizedBox(height: 30);
 
@@ -47,7 +47,7 @@ class BookletComponent extends AbstractBookletComponent {
     return groupThis;
   }
 
-  Align _toAlignment(SectionImageAlignment sectionImageAlignment, Widget widget) {
+  Align _toAlignment(SectionImageAlignment? sectionImageAlignment, Widget widget) {
     if (sectionImageAlignment == SectionImageAlignment.Left) return Align(child: widget, alignment: Alignment.topLeft);
     if (sectionImageAlignment == SectionImageAlignment.Right) return Align(child: widget, alignment: Alignment.topRight);
 
@@ -55,8 +55,8 @@ class BookletComponent extends AbstractBookletComponent {
     return Align(child: widget, alignment: Alignment.topCenter);
   }
 
-  Widget _addImage(BuildContext context, List<Widget> widgets, MemberMediumModel image,
-      RelativeImagePosition relativeImagePosition, SectionImageAlignment sectionImageAlignment, double imageSize) {
+  Widget _addImage(BuildContext context, List<Widget> widgets, MemberMediumModel? image,
+      RelativeImagePosition? relativeImagePosition, SectionImageAlignment? sectionImageAlignment, double? imageSize) {
     var state = AccessBloc.getState(context);
     if (image == null) {
       return _makeBox(widgets);
@@ -69,7 +69,7 @@ class BookletComponent extends AbstractBookletComponent {
     if (imageSize != null) {
       size = fullScreenWidth(context) * imageSize;
     }
-    var widgetImage = Image.network(image.url, scale:1);
+    var widgetImage = Image.network(image.url!, scale:1);
 
     if (relativeImagePosition == RelativeImagePosition.Aside) {
       if (sectionImageAlignment == SectionImageAlignment.Left) {
@@ -128,35 +128,35 @@ class BookletComponent extends AbstractBookletComponent {
   }
 
   @override
-  Widget yourWidget(BuildContext context, BookletModel value) {
+  Widget yourWidget(BuildContext context, BookletModel? value) {
     var accessState = AccessBloc.getState(context);
     var documentParameterProcessor =
         ExtendedDocumentParameterProcessor(context, accessState);
 
     var groupedWidgets = <Widget>[];
 
-    value.sections.forEach((element) {
+    value!.sections!.forEach((element) {
       var widgets = <Widget>[];
 
       widgets.add(Text(
-        documentParameterProcessor.process(element.title),
+        documentParameterProcessor.process(element.title!),
         style: accessState is AppLoaded ? FontTools.textStyle(accessState.app.h3) : null,
       ));
       widgets.add(_aBitSpace());
       widgets.add(Text(
-          documentParameterProcessor.process(element.description),
+          documentParameterProcessor.process(element.description!),
           style: accessState is AppLoaded ? FontTools.textStyle(accessState.app.fontText) : null));
       widgets.add(_aBitSpace());
-      if (element.links != null && element.links.isNotEmpty) {
+      if (element.links != null && element.links!.isNotEmpty) {
         var children = <Widget>[];
-        element.links.forEach((link) {
+        element.links!.forEach((link) {
           children.add(OutlineButton(
               child: Text(
-                link.linkText,
+                link.linkText!,
                 style: accessState is AppLoaded ? FontTools.textStyle(accessState.app.fontLink) : null,
               ),
               onPressed: () {
-                EliudRouter.Router.navigateTo(context, link.action);
+                EliudRouter.Router.navigateTo(context, link.action!);
               },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0))));
@@ -190,6 +190,6 @@ class BookletComponent extends AbstractBookletComponent {
 
   @override
   BookletRepository getBookletRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.bookletRepository(AccessBloc.appId(context));
+    return AbstractRepositorySingleton.singleton.bookletRepository(AccessBloc.appId(context))!;
   }
 }

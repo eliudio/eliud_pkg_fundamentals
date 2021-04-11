@@ -19,7 +19,7 @@ import 'package:eliud_pkg_fundamentals/model/decorated_content_model.dart';
 abstract class DecoratedContentListEvent extends Equatable {
   const DecoratedContentListEvent();
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class LoadDecoratedContentList extends DecoratedContentListEvent {}
@@ -27,49 +27,49 @@ class LoadDecoratedContentList extends DecoratedContentListEvent {}
 class NewPage extends DecoratedContentListEvent {}
 
 class AddDecoratedContentList extends DecoratedContentListEvent {
-  final DecoratedContentModel value;
+  final DecoratedContentModel? value;
 
   const AddDecoratedContentList({ this.value });
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'AddDecoratedContentList{ value: $value }';
 }
 
 class UpdateDecoratedContentList extends DecoratedContentListEvent {
-  final DecoratedContentModel value;
+  final DecoratedContentModel? value;
 
   const UpdateDecoratedContentList({ this.value });
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'UpdateDecoratedContentList{ value: $value }';
 }
 
 class DeleteDecoratedContentList extends DecoratedContentListEvent {
-  final DecoratedContentModel value;
+  final DecoratedContentModel? value;
 
   const DeleteDecoratedContentList({ this.value });
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'DeleteDecoratedContentList{ value: $value }';
 }
 
 class DecoratedContentListUpdated extends DecoratedContentListEvent {
-  final List<DecoratedContentModel> value;
-  final bool mightHaveMore;
+  final List<DecoratedContentModel?>? value;
+  final bool? mightHaveMore;
 
   const DecoratedContentListUpdated({ this.value, this.mightHaveMore });
 
   @override
-  List<Object> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [ value, mightHaveMore ];
 
   @override
   String toString() => 'DecoratedContentListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';

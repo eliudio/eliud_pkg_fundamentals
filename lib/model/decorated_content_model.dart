@@ -38,7 +38,7 @@ enum DecorationComponentPosition {
 }
 
 
-DecorationComponentPosition toDecorationComponentPosition(int index) {
+DecorationComponentPosition toDecorationComponentPosition(int? index) {
   switch (index) {
     case 0: return DecorationComponentPosition.LeftIfSpaceAvailableOtherwiseTop;
     case 1: return DecorationComponentPosition.LeftIfSpaceAvailableOtherwiseDrop;
@@ -52,30 +52,30 @@ DecorationComponentPosition toDecorationComponentPosition(int index) {
 
 
 class DecoratedContentModel {
-  String documentID;
-  String appId;
-  String name;
+  String? documentID;
+  String? appId;
+  String? name;
 
   // The component name of the decoration
-  String decoratingComponentName;
+  String? decoratingComponentName;
 
   // For that specific component, e.g. 'carousel', which Component ID, i.e. which carousel to include in the page
-  String decoratingComponentId;
+  String? decoratingComponentId;
 
   // The component name of the content
-  String contentComponentName;
+  String? contentComponentName;
 
   // For that specific component, e.g. 'carousel', which Component ID, i.e. which carousel to include in the page
-  String contentComponentId;
-  DecorationComponentPosition decorationComponentPosition;
-  double percentageDecorationVisible;
-  ConditionsSimpleModel conditions;
+  String? contentComponentId;
+  DecorationComponentPosition? decorationComponentPosition;
+  double? percentageDecorationVisible;
+  ConditionsSimpleModel? conditions;
 
   DecoratedContentModel({this.documentID, this.appId, this.name, this.decoratingComponentName, this.decoratingComponentId, this.contentComponentName, this.contentComponentId, this.decorationComponentPosition, this.percentageDecorationVisible, this.conditions, })  {
     assert(documentID != null);
   }
 
-  DecoratedContentModel copyWith({String documentID, String appId, String name, String decoratingComponentName, String decoratingComponentId, String contentComponentName, String contentComponentId, DecorationComponentPosition decorationComponentPosition, double percentageDecorationVisible, ConditionsSimpleModel conditions, }) {
+  DecoratedContentModel copyWith({String? documentID, String? appId, String? name, String? decoratingComponentName, String? decoratingComponentId, String? contentComponentName, String? contentComponentId, DecorationComponentPosition? decorationComponentPosition, double? percentageDecorationVisible, ConditionsSimpleModel? conditions, }) {
     return DecoratedContentModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, name: name ?? this.name, decoratingComponentName: decoratingComponentName ?? this.decoratingComponentName, decoratingComponentId: decoratingComponentId ?? this.decoratingComponentId, contentComponentName: contentComponentName ?? this.contentComponentName, contentComponentId: contentComponentId ?? this.contentComponentId, decorationComponentPosition: decorationComponentPosition ?? this.decorationComponentPosition, percentageDecorationVisible: percentageDecorationVisible ?? this.percentageDecorationVisible, conditions: conditions ?? this.conditions, );
   }
 
@@ -103,7 +103,7 @@ class DecoratedContentModel {
     return 'DecoratedContentModel{documentID: $documentID, appId: $appId, name: $name, decoratingComponentName: $decoratingComponentName, decoratingComponentId: $decoratingComponentId, contentComponentName: $contentComponentName, contentComponentId: $contentComponentId, decorationComponentPosition: $decorationComponentPosition, percentageDecorationVisible: $percentageDecorationVisible, conditions: $conditions}';
   }
 
-  DecoratedContentEntity toEntity({String appId}) {
+  DecoratedContentEntity toEntity({String? appId}) {
     return DecoratedContentEntity(
           appId: (appId != null) ? appId : null, 
           name: (name != null) ? name : null, 
@@ -111,13 +111,13 @@ class DecoratedContentModel {
           decoratingComponentId: (decoratingComponentId != null) ? decoratingComponentId : null, 
           contentComponentName: (contentComponentName != null) ? contentComponentName : null, 
           contentComponentId: (contentComponentId != null) ? contentComponentId : null, 
-          decorationComponentPosition: (decorationComponentPosition != null) ? decorationComponentPosition.index : null, 
+          decorationComponentPosition: (decorationComponentPosition != null) ? decorationComponentPosition!.index : null, 
           percentageDecorationVisible: (percentageDecorationVisible != null) ? percentageDecorationVisible : null, 
-          conditions: (conditions != null) ? conditions.toEntity(appId: appId) : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
     );
   }
 
-  static DecoratedContentModel fromEntity(String documentID, DecoratedContentEntity entity) {
+  static DecoratedContentModel? fromEntity(String documentID, DecoratedContentEntity? entity) {
     if (entity == null) return null;
     return DecoratedContentModel(
           documentID: documentID, 
@@ -134,7 +134,7 @@ class DecoratedContentModel {
     );
   }
 
-  static Future<DecoratedContentModel> fromEntityPlus(String documentID, DecoratedContentEntity entity, { String appId}) async {
+  static Future<DecoratedContentModel?> fromEntityPlus(String documentID, DecoratedContentEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
     return DecoratedContentModel(

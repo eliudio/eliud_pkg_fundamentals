@@ -43,7 +43,7 @@ enum SectionImageAlignment {
 }
 
 
-RelativeImagePosition toRelativeImagePosition(int index) {
+RelativeImagePosition toRelativeImagePosition(int? index) {
   switch (index) {
     case 0: return RelativeImagePosition.Behind;
     case 1: return RelativeImagePosition.InFront;
@@ -54,7 +54,7 @@ RelativeImagePosition toRelativeImagePosition(int index) {
   return RelativeImagePosition.Unknown;
 }
 
-SectionImageAlignment toSectionImageAlignment(int index) {
+SectionImageAlignment toSectionImageAlignment(int? index) {
   switch (index) {
     case 0: return SectionImageAlignment.Left;
     case 1: return SectionImageAlignment.Center;
@@ -65,22 +65,22 @@ SectionImageAlignment toSectionImageAlignment(int index) {
 
 
 class SectionModel {
-  String documentID;
-  String title;
-  String description;
-  MemberMediumModel image;
-  RelativeImagePosition imagePositionRelative;
-  SectionImageAlignment imageAlignment;
+  String? documentID;
+  String? title;
+  String? description;
+  MemberMediumModel? image;
+  RelativeImagePosition? imagePositionRelative;
+  SectionImageAlignment? imageAlignment;
 
   // Width of the image
-  double imageWidth;
-  List<LinkModel> links;
+  double? imageWidth;
+  List<LinkModel>? links;
 
   SectionModel({this.documentID, this.title, this.description, this.image, this.imagePositionRelative, this.imageAlignment, this.imageWidth, this.links, })  {
     assert(documentID != null);
   }
 
-  SectionModel copyWith({String documentID, String title, String description, MemberMediumModel image, RelativeImagePosition imagePositionRelative, SectionImageAlignment imageAlignment, double imageWidth, List<LinkModel> links, }) {
+  SectionModel copyWith({String? documentID, String? title, String? description, MemberMediumModel? image, RelativeImagePosition? imagePositionRelative, SectionImageAlignment? imageAlignment, double? imageWidth, List<LinkModel>? links, }) {
     return SectionModel(documentID: documentID ?? this.documentID, title: title ?? this.title, description: description ?? this.description, image: image ?? this.image, imagePositionRelative: imagePositionRelative ?? this.imagePositionRelative, imageAlignment: imageAlignment ?? this.imageAlignment, imageWidth: imageWidth ?? this.imageWidth, links: links ?? this.links, );
   }
 
@@ -103,26 +103,26 @@ class SectionModel {
 
   @override
   String toString() {
-    String linksCsv = (links == null) ? '' : links.join(', ');
+    String linksCsv = (links == null) ? '' : links!.join(', ');
 
     return 'SectionModel{documentID: $documentID, title: $title, description: $description, image: $image, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth, links: Link[] { $linksCsv }}';
   }
 
-  SectionEntity toEntity({String appId}) {
+  SectionEntity toEntity({String? appId}) {
     return SectionEntity(
           title: (title != null) ? title : null, 
           description: (description != null) ? description : null, 
-          imageId: (image != null) ? image.documentID : null, 
-          imagePositionRelative: (imagePositionRelative != null) ? imagePositionRelative.index : null, 
-          imageAlignment: (imageAlignment != null) ? imageAlignment.index : null, 
+          imageId: (image != null) ? image!.documentID : null, 
+          imagePositionRelative: (imagePositionRelative != null) ? imagePositionRelative!.index : null, 
+          imageAlignment: (imageAlignment != null) ? imageAlignment!.index : null, 
           imageWidth: (imageWidth != null) ? imageWidth : null, 
           links: (links != null) ? links
-            .map((item) => item.toEntity(appId: appId))
+            !.map((item) => item.toEntity(appId: appId))
             .toList() : null, 
     );
   }
 
-  static SectionModel fromEntity(String documentID, SectionEntity entity) {
+  static SectionModel? fromEntity(String documentID, SectionEntity? entity) {
     if (entity == null) return null;
     return SectionModel(
           documentID: documentID, 
@@ -134,18 +134,18 @@ class SectionModel {
           links: 
             entity.links == null ? null :
             entity.links
-            .map((item) => LinkModel.fromEntity(newRandomKey(), item))
+            !.map((item) => LinkModel.fromEntity(newRandomKey(), item)!)
             .toList(), 
     );
   }
 
-  static Future<SectionModel> fromEntityPlus(String documentID, SectionEntity entity, { String appId}) async {
+  static Future<SectionModel?> fromEntityPlus(String documentID, SectionEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
-    MemberMediumModel imageHolder;
+    MemberMediumModel? imageHolder;
     if (entity.imageId != null) {
       try {
-        await memberMediumRepository(appId: appId).get(entity.imageId).then((val) {
+        await memberMediumRepository(appId: appId)!.get(entity.imageId).then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}
@@ -161,7 +161,7 @@ class SectionModel {
           imageWidth: entity.imageWidth, 
           links: 
             entity. links == null ? null : new List<LinkModel>.from(await Future.wait(entity. links
-            .map((item) => LinkModel.fromEntityPlus(newRandomKey(), item, appId: appId))
+            !.map((item) => LinkModel.fromEntityPlus(newRandomKey(), item, appId: appId))
             .toList())), 
     );
   }

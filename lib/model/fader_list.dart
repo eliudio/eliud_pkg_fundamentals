@@ -45,50 +45,36 @@ import 'package:eliud_core/model/app_model.dart';
 import 'fader_form.dart';
 
 
-typedef FaderWidgetProvider(FaderModel value);
+typedef FaderWidgetProvider(FaderModel? value);
 
 class FaderListWidget extends StatefulWidget with HasFab {
-  BackgroundModel listBackground;
-  FaderWidgetProvider widgetProvider;
-  bool readOnly;
-  String form;
-  FaderListWidgetState state;
-  bool isEmbedded;
+  BackgroundModel? listBackground;
+  FaderWidgetProvider? widgetProvider;
+  bool? readOnly;
+  String? form;
+  FaderListWidgetState? state;
+  bool? isEmbedded;
 
-  FaderListWidget({ Key key, this.readOnly, this.form, this.widgetProvider, this.isEmbedded, this.listBackground }): super(key: key);
+  FaderListWidget({ Key? key, this.readOnly, this.form, this.widgetProvider, this.isEmbedded, this.listBackground }): super(key: key);
 
   @override
   FaderListWidgetState createState() {
     state ??= FaderListWidgetState();
-    return state;
+    return state!;
   }
 
   @override
-  Widget fab(BuildContext context) {
-    if ((readOnly != null) && readOnly) return null;
+  Widget? fab(BuildContext context) {
+    if ((readOnly != null) && readOnly!) return null;
     state ??= FaderListWidgetState();
     var accessState = AccessBloc.getState(context);
-    return state.fab(context, accessState);
+    return state!.fab(context, accessState);
   }
 }
 
 class FaderListWidgetState extends State<FaderListWidget> {
-  FaderListBloc bloc;
-
   @override
-  void didChangeDependencies() {
-    bloc = BlocProvider.of<FaderListBloc>(context);
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose () {
-    if (bloc != null) bloc.close();
-    super.dispose();
-  }
-
-  @override
-  Widget fab(BuildContext aContext, AccessState accessState) {
+  Widget? fab(BuildContext aContext, AccessState accessState) {
     if (accessState is AppLoaded) {
       return !accessState.memberIsOwner() 
         ? null
@@ -100,7 +86,7 @@ class FaderListWidgetState extends State<FaderListWidget> {
         onPressed: () {
           Navigator.of(context).push(
             pageRouteBuilder(accessState.app, page: BlocProvider.value(
-                value: bloc,
+                value: BlocProvider.of<FaderListBloc>(context),
                 child: FaderForm(
                     value: null,
                     formAction: FormAction.AddAction)
@@ -124,15 +110,15 @@ class FaderListWidgetState extends State<FaderListWidget> {
           );
         } else if (state is FaderListLoaded) {
           final values = state.values;
-          if ((widget.isEmbedded != null) && (widget.isEmbedded)) {
-            List<Widget> children = List();
+          if ((widget.isEmbedded != null) && widget.isEmbedded!) {
+            var children = <Widget>[];
             children.add(theList(context, values, accessState));
             children.add(RaisedButton(
                     color: RgbHelper.color(rgbo: accessState.app.formSubmitButtonColor),
                     onPressed: () {
                       Navigator.of(context).push(
                                 pageRouteBuilder(accessState.app, page: BlocProvider.value(
-                                    value: bloc,
+                                    value: BlocProvider.of<FaderListBloc>(context),
                                     child: FaderForm(
                                         value: null,
                                         formAction: FormAction.AddAction)
@@ -174,7 +160,7 @@ class FaderListWidgetState extends State<FaderListWidget> {
         itemBuilder: (context, index) {
           final value = values[index];
           
-          if (widget.widgetProvider != null) return widget.widgetProvider(value);
+          if (widget.widgetProvider != null) return widget.widgetProvider!(value);
 
           return FaderListItem(
             value: value,
@@ -210,7 +196,7 @@ class FaderListWidgetState extends State<FaderListWidget> {
   }
   
   
-  Widget getForm(value, action) {
+  Widget? getForm(value, action) {
     if (widget.form == null) {
       return FaderForm(value: value, formAction: action);
     } else {
@@ -226,36 +212,36 @@ class FaderListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
   final AppModel app;
-  final FaderModel value;
+  final FaderModel? value;
 
   FaderListItem({
-    Key key,
-    @required this.onDismissed,
-    @required this.onTap,
-    @required this.value,
-    @required this.app,
+    Key? key,
+    required this.onDismissed,
+    required this.onTap,
+    required this.value,
+    required this.app,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key('__Fader_item_${value.documentID}'),
+      key: Key('__Fader_item_${value!.documentID}'),
       onDismissed: onDismissed,
       child: ListTile(
         onTap: onTap,
         title: Hero(
-          tag: '${value.documentID}__FaderheroTag',
+          tag: '${value!.documentID}__FaderheroTag',
           child: Container(
             width: fullScreenWidth(context),
             child: Center(child: Text(
-              value.documentID,
+              value!.documentID!,
               style: TextStyle(color: RgbHelper.color(rgbo: app.listTextItemColor)),
             )),
           ),
         ),
-        subtitle: (value.name != null) && (value.name.isNotEmpty)
+        subtitle: (value!.name != null) && (value!.name!.isNotEmpty)
             ? Center( child: Text(
-          value.name,
+          value!.name!,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(color: RgbHelper.color(rgbo: app.listTextItemColor)),

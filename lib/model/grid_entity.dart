@@ -22,25 +22,25 @@ import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class GridEntity {
-  final String appId;
-  final String title;
-  final List<BodyComponentEntity> bodyComponents;
-  final String gridViewId;
-  final ConditionsSimpleEntity conditions;
+  final String? appId;
+  final String? title;
+  final List<BodyComponentEntity>? bodyComponents;
+  final String? gridViewId;
+  final ConditionsSimpleEntity? conditions;
 
   GridEntity({this.appId, this.title, this.bodyComponents, this.gridViewId, this.conditions, });
 
 
-  List<Object> get props => [appId, title, bodyComponents, gridViewId, conditions, ];
+  List<Object?> get props => [appId, title, bodyComponents, gridViewId, conditions, ];
 
   @override
   String toString() {
-    String bodyComponentsCsv = (bodyComponents == null) ? '' : bodyComponents.join(', ');
+    String bodyComponentsCsv = (bodyComponents == null) ? '' : bodyComponents!.join(', ');
 
     return 'GridEntity{appId: $appId, title: $title, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, gridViewId: $gridViewId, conditions: $conditions}';
   }
 
-  static GridEntity fromMap(Map map) {
+  static GridEntity? fromMap(Map? map) {
     if (map == null) return null;
 
     var bodyComponentsFromMap;
@@ -65,15 +65,15 @@ class GridEntity {
     );
   }
 
-  Map<String, Object> toDocument() {
-    final List<Map<String, dynamic>> bodyComponentsListMap = bodyComponents != null 
-        ? bodyComponents.map((item) => item.toDocument()).toList()
+  Map<String, Object?> toDocument() {
+    final List<Map<String?, dynamic>>? bodyComponentsListMap = bodyComponents != null 
+        ? bodyComponents!.map((item) => item.toDocument()).toList()
         : null;
-    final Map<String, dynamic> conditionsMap = conditions != null 
-        ? conditions.toDocument()
+    final Map<String, dynamic>? conditionsMap = conditions != null 
+        ? conditions!.toDocument()
         : null;
 
-    Map<String, Object> theDocument = HashMap();
+    Map<String, Object?> theDocument = HashMap();
     if (appId != null) theDocument["appId"] = appId;
       else theDocument["appId"] = null;
     if (title != null) theDocument["title"] = title;
@@ -87,8 +87,8 @@ class GridEntity {
     return theDocument;
   }
 
-  static GridEntity fromJsonString(String json) {
-    Map<String, dynamic> generationSpecificationMap = jsonDecode(json);
+  static GridEntity? fromJsonString(String json) {
+    Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
     return fromMap(generationSpecificationMap);
   }
 

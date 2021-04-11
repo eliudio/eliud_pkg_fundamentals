@@ -20,19 +20,19 @@ abstract class BookletListState extends Equatable {
   const BookletListState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class BookletListLoading extends BookletListState {}
 
 class BookletListLoaded extends BookletListState {
-  final List<BookletModel> values;
-  final bool mightHaveMore;
+  final List<BookletModel?>? values;
+  final bool? mightHaveMore;
 
   const BookletListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object> get props => [ values, mightHaveMore ];
+  List<Object?> get props => [ values, mightHaveMore ];
 
   @override
   String toString() => 'BookletListLoaded { values: $values }';

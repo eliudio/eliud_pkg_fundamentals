@@ -45,50 +45,36 @@ import 'package:eliud_core/model/app_model.dart';
 import 'play_store_form.dart';
 
 
-typedef PlayStoreWidgetProvider(PlayStoreModel value);
+typedef PlayStoreWidgetProvider(PlayStoreModel? value);
 
 class PlayStoreListWidget extends StatefulWidget with HasFab {
-  BackgroundModel listBackground;
-  PlayStoreWidgetProvider widgetProvider;
-  bool readOnly;
-  String form;
-  PlayStoreListWidgetState state;
-  bool isEmbedded;
+  BackgroundModel? listBackground;
+  PlayStoreWidgetProvider? widgetProvider;
+  bool? readOnly;
+  String? form;
+  PlayStoreListWidgetState? state;
+  bool? isEmbedded;
 
-  PlayStoreListWidget({ Key key, this.readOnly, this.form, this.widgetProvider, this.isEmbedded, this.listBackground }): super(key: key);
+  PlayStoreListWidget({ Key? key, this.readOnly, this.form, this.widgetProvider, this.isEmbedded, this.listBackground }): super(key: key);
 
   @override
   PlayStoreListWidgetState createState() {
     state ??= PlayStoreListWidgetState();
-    return state;
+    return state!;
   }
 
   @override
-  Widget fab(BuildContext context) {
-    if ((readOnly != null) && readOnly) return null;
+  Widget? fab(BuildContext context) {
+    if ((readOnly != null) && readOnly!) return null;
     state ??= PlayStoreListWidgetState();
     var accessState = AccessBloc.getState(context);
-    return state.fab(context, accessState);
+    return state!.fab(context, accessState);
   }
 }
 
 class PlayStoreListWidgetState extends State<PlayStoreListWidget> {
-  PlayStoreListBloc bloc;
-
   @override
-  void didChangeDependencies() {
-    bloc = BlocProvider.of<PlayStoreListBloc>(context);
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose () {
-    if (bloc != null) bloc.close();
-    super.dispose();
-  }
-
-  @override
-  Widget fab(BuildContext aContext, AccessState accessState) {
+  Widget? fab(BuildContext aContext, AccessState accessState) {
     if (accessState is AppLoaded) {
       return !accessState.memberIsOwner() 
         ? null
@@ -100,7 +86,7 @@ class PlayStoreListWidgetState extends State<PlayStoreListWidget> {
         onPressed: () {
           Navigator.of(context).push(
             pageRouteBuilder(accessState.app, page: BlocProvider.value(
-                value: bloc,
+                value: BlocProvider.of<PlayStoreListBloc>(context),
                 child: PlayStoreForm(
                     value: null,
                     formAction: FormAction.AddAction)
@@ -124,15 +110,15 @@ class PlayStoreListWidgetState extends State<PlayStoreListWidget> {
           );
         } else if (state is PlayStoreListLoaded) {
           final values = state.values;
-          if ((widget.isEmbedded != null) && (widget.isEmbedded)) {
-            List<Widget> children = List();
+          if ((widget.isEmbedded != null) && widget.isEmbedded!) {
+            var children = <Widget>[];
             children.add(theList(context, values, accessState));
             children.add(RaisedButton(
                     color: RgbHelper.color(rgbo: accessState.app.formSubmitButtonColor),
                     onPressed: () {
                       Navigator.of(context).push(
                                 pageRouteBuilder(accessState.app, page: BlocProvider.value(
-                                    value: bloc,
+                                    value: BlocProvider.of<PlayStoreListBloc>(context),
                                     child: PlayStoreForm(
                                         value: null,
                                         formAction: FormAction.AddAction)
@@ -174,7 +160,7 @@ class PlayStoreListWidgetState extends State<PlayStoreListWidget> {
         itemBuilder: (context, index) {
           final value = values[index];
           
-          if (widget.widgetProvider != null) return widget.widgetProvider(value);
+          if (widget.widgetProvider != null) return widget.widgetProvider!(value);
 
           return PlayStoreListItem(
             value: value,
@@ -210,7 +196,7 @@ class PlayStoreListWidgetState extends State<PlayStoreListWidget> {
   }
   
   
-  Widget getForm(value, action) {
+  Widget? getForm(value, action) {
     if (widget.form == null) {
       return PlayStoreForm(value: value, formAction: action);
     } else {
@@ -226,36 +212,36 @@ class PlayStoreListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
   final AppModel app;
-  final PlayStoreModel value;
+  final PlayStoreModel? value;
 
   PlayStoreListItem({
-    Key key,
-    @required this.onDismissed,
-    @required this.onTap,
-    @required this.value,
-    @required this.app,
+    Key? key,
+    required this.onDismissed,
+    required this.onTap,
+    required this.value,
+    required this.app,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key('__PlayStore_item_${value.documentID}'),
+      key: Key('__PlayStore_item_${value!.documentID}'),
       onDismissed: onDismissed,
       child: ListTile(
         onTap: onTap,
         title: Hero(
-          tag: '${value.documentID}__PlayStoreheroTag',
+          tag: '${value!.documentID}__PlayStoreheroTag',
           child: Container(
             width: fullScreenWidth(context),
             child: Center(child: Text(
-              value.documentID,
+              value!.documentID!,
               style: TextStyle(color: RgbHelper.color(rgbo: app.listTextItemColor)),
             )),
           ),
         ),
-        subtitle: (value.description != null) && (value.description.isNotEmpty)
+        subtitle: (value!.description != null) && (value!.description!.isNotEmpty)
             ? Center( child: Text(
-          value.description,
+          value!.description!,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(color: RgbHelper.color(rgbo: app.listTextItemColor)),

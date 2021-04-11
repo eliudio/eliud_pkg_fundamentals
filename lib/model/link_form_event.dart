@@ -30,7 +30,7 @@ abstract class LinkFormEvent extends Equatable {
   const LinkFormEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class InitialiseNewLinkFormEvent extends LinkFormEvent {
@@ -38,54 +38,54 @@ class InitialiseNewLinkFormEvent extends LinkFormEvent {
 
 
 class InitialiseLinkFormEvent extends LinkFormEvent {
-  final LinkModel value;
+  final LinkModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   InitialiseLinkFormEvent({this.value});
 }
 
 class InitialiseLinkFormNoLoadEvent extends LinkFormEvent {
-  final LinkModel value;
+  final LinkModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   InitialiseLinkFormNoLoadEvent({this.value});
 }
 
 class ChangedLinkDocumentID extends LinkFormEvent {
-  final String value;
+  final String? value;
 
   ChangedLinkDocumentID({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedLinkDocumentID{ value: $value }';
 }
 
 class ChangedLinkLinkText extends LinkFormEvent {
-  final String value;
+  final String? value;
 
   ChangedLinkLinkText({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedLinkLinkText{ value: $value }';
 }
 
 class ChangedLinkAction extends LinkFormEvent {
-  final ActionModel value;
+  final ActionModel? value;
 
   ChangedLinkAction({this.value});
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'ChangedLinkAction{ value: $value }';

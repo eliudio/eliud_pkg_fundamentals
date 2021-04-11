@@ -21,7 +21,7 @@ abstract class DividerComponentEvent extends Equatable {
 }
 
 class FetchDividerComponent extends DividerComponentEvent {
-  final String id;
+  final String? id;
 
   FetchDividerComponent({ this.id });
 }

@@ -42,8 +42,8 @@ import 'package:eliud_pkg_fundamentals/model/grid_form_state.dart';
 import 'package:eliud_pkg_fundamentals/model/grid_repository.dart';
 
 class GridFormBloc extends Bloc<GridFormEvent, GridFormState> {
-  final FormAction formAction;
-  final String appId;
+  final FormAction? formAction;
+  final String? appId;
 
   GridFormBloc(this.appId, { this.formAction }): super(GridFormUninitialized());
   @override
@@ -66,20 +66,20 @@ class GridFormBloc extends Bloc<GridFormEvent, GridFormState> {
 
       if (event is InitialiseGridFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        GridFormLoaded loaded = GridFormLoaded(value: await gridRepository(appId: appId).get(event.value.documentID));
+        GridFormLoaded loaded = GridFormLoaded(value: await gridRepository(appId: appId)!.get(event!.value!.documentID));
         yield loaded;
         return;
       } else if (event is InitialiseGridFormNoLoadEvent) {
-        GridFormLoaded loaded = GridFormLoaded(value: event.value);
+        GridFormLoaded loaded = GridFormLoaded(value: event!.value);
         yield loaded;
         return;
       }
     } else if (currentState is GridFormInitialized) {
-      GridModel newValue = null;
+      GridModel? newValue = null;
       if (event is ChangedGridDocumentID) {
-        newValue = currentState.value.copyWith(documentID: event.value);
+        newValue = currentState.value!.copyWith(documentID: event!.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event.value, newValue).asStream();
+          yield* _isDocumentIDValid(event!.value, newValue).asStream();
         } else {
           yield SubmittableGridForm(value: newValue);
         }
@@ -87,35 +87,35 @@ class GridFormBloc extends Bloc<GridFormEvent, GridFormState> {
         return;
       }
       if (event is ChangedGridTitle) {
-        newValue = currentState.value.copyWith(title: event.value);
+        newValue = currentState.value!.copyWith(title: event!.value);
         yield SubmittableGridForm(value: newValue);
 
         return;
       }
       if (event is ChangedGridBodyComponents) {
-        newValue = currentState.value.copyWith(bodyComponents: event.value);
+        newValue = currentState.value!.copyWith(bodyComponents: event!.value);
         yield SubmittableGridForm(value: newValue);
 
         return;
       }
       if (event is ChangedGridGridView) {
-        if (event.value != null)
-          newValue = currentState.value.copyWith(gridView: await gridViewRepository(appId: appId).get(event.value));
+        if (event!.value != null)
+          newValue = currentState.value!.copyWith(gridView: await gridViewRepository(appId: appId)!.get(event!.value));
         else
           newValue = new GridModel(
-                                 documentID: currentState.value.documentID,
-                                 appId: currentState.value.appId,
-                                 title: currentState.value.title,
-                                 bodyComponents: currentState.value.bodyComponents,
+                                 documentID: currentState.value!.documentID,
+                                 appId: currentState.value!.appId,
+                                 title: currentState.value!.title,
+                                 bodyComponents: currentState.value!.bodyComponents,
                                  gridView: null,
-                                 conditions: currentState.value.conditions,
+                                 conditions: currentState.value!.conditions,
           );
         yield SubmittableGridForm(value: newValue);
 
         return;
       }
       if (event is ChangedGridConditions) {
-        newValue = currentState.value.copyWith(conditions: event.value);
+        newValue = currentState.value!.copyWith(conditions: event!.value);
         yield SubmittableGridForm(value: newValue);
 
         return;
@@ -126,10 +126,10 @@ class GridFormBloc extends Bloc<GridFormEvent, GridFormState> {
 
   DocumentIDGridFormError error(String message, GridModel newValue) => DocumentIDGridFormError(message: message, value: newValue);
 
-  Future<GridFormState> _isDocumentIDValid(String value, GridModel newValue) async {
+  Future<GridFormState> _isDocumentIDValid(String? value, GridModel newValue) async {
     if (value == null) return Future.value(error("Provide value for documentID", newValue));
     if (value.length == 0) return Future.value(error("Provide value for documentID", newValue));
-    Future<GridModel> findDocument = gridRepository(appId: appId).get(value);
+    Future<GridModel?> findDocument = gridRepository(appId: appId)!.get(value);
     return await findDocument.then((documentFound) {
       if (documentFound == null) {
         return SubmittableGridForm(value: newValue);

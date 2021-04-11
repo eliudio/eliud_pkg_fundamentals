@@ -14,15 +14,15 @@ import 'package:transparent_image/transparent_image.dart';
 
 class SimpleTextComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({String id, Map<String, Object> parameters}) {
+  Widget createNew({String? id, Map<String, Object>? parameters}) {
     return SimpleTextComponent(simpleTextID: id);
   }
 }
 
 class SimpleTextComponent extends AbstractSimpleTextComponent {
-  SimpleTextComponent({String simpleTextID}) : super(simpleTextID: simpleTextID);
+  SimpleTextComponent({String? simpleTextID}) : super(simpleTextID: simpleTextID);
 
-  TextAlign toTextAlign(SimpleTextAlign textAlign) {
+  TextAlign toTextAlign(SimpleTextAlign? textAlign) {
     switch (textAlign) {
       case SimpleTextAlign.Left: return TextAlign.left;
       case SimpleTextAlign.Center: return TextAlign.center;
@@ -32,20 +32,21 @@ class SimpleTextComponent extends AbstractSimpleTextComponent {
       case SimpleTextAlign.Start: return TextAlign.start;
       case SimpleTextAlign.Unknown: return TextAlign.left;
     }
+    return TextAlign.left;
   }
 
   @override
-  Widget yourWidget(BuildContext context, SimpleTextModel value) {
-    var app = AccessBloc.app(context);
+  Widget yourWidget(BuildContext context, SimpleTextModel? value) {
+    var app = AccessBloc.app(context)!;
     var text = ListView(
         shrinkWrap: true,
         physics: ScrollPhysics(),
         children: [
-          Text(value.title,
+          Text(value!.title!,
               textAlign: toTextAlign(value.textAlign),
               style: FontTools.textStyle(app.h1)),
           Container(height: 20),
-          Text(value.text,
+          Text(value.text!,
             style: FontTools.textStyle(app.h5),
             textAlign: toTextAlign(value.textAlign),
           )
@@ -60,6 +61,6 @@ class SimpleTextComponent extends AbstractSimpleTextComponent {
 
   @override
   SimpleTextRepository getSimpleTextRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.simpleTextRepository(AccessBloc.appId(context));
+    return AbstractRepositorySingleton.singleton.simpleTextRepository(AccessBloc.appId(context))!;
   }
 }

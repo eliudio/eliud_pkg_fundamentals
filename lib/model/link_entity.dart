@@ -21,20 +21,20 @@ import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class LinkEntity {
-  final String linkText;
-  final ActionEntity action;
+  final String? linkText;
+  final ActionEntity? action;
 
   LinkEntity({this.linkText, this.action, });
 
 
-  List<Object> get props => [linkText, action, ];
+  List<Object?> get props => [linkText, action, ];
 
   @override
   String toString() {
     return 'LinkEntity{linkText: $linkText, action: $action}';
   }
 
-  static LinkEntity fromMap(Map map) {
+  static LinkEntity? fromMap(Map? map) {
     if (map == null) return null;
 
     var actionFromMap;
@@ -48,12 +48,12 @@ class LinkEntity {
     );
   }
 
-  Map<String, Object> toDocument() {
-    final Map<String, dynamic> actionMap = action != null 
-        ? action.toDocument()
+  Map<String, Object?> toDocument() {
+    final Map<String, dynamic>? actionMap = action != null 
+        ? action!.toDocument()
         : null;
 
-    Map<String, Object> theDocument = HashMap();
+    Map<String, Object?> theDocument = HashMap();
     if (linkText != null) theDocument["linkText"] = linkText;
       else theDocument["linkText"] = null;
     if (action != null) theDocument["action"] = actionMap;
@@ -61,8 +61,8 @@ class LinkEntity {
     return theDocument;
   }
 
-  static LinkEntity fromJsonString(String json) {
-    Map<String, dynamic> generationSpecificationMap = jsonDecode(json);
+  static LinkEntity? fromJsonString(String json) {
+    Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
     return fromMap(generationSpecificationMap);
   }
 

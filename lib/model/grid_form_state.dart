@@ -22,13 +22,13 @@ abstract class GridFormState extends Equatable {
   const GridFormState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 // Startup: menu has not been initialised yet and so we should show a "loading indicator" or something
 class GridFormUninitialized extends GridFormState {
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 
   @override
   String toString() {
@@ -38,22 +38,22 @@ class GridFormUninitialized extends GridFormState {
 
 // GridModel has been initialised and hence GridModel is available
 class GridFormInitialized extends GridFormState {
-  final GridModel value;
+  final GridModel? value;
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   const GridFormInitialized({ this.value });
 }
 
 // Menu has been initialised and hence a menu is available
 abstract class GridFormError extends GridFormInitialized {
-  final String message;
+  final String? message;
 
   @override
-  List<Object> get props => [ message, value ];
+  List<Object?> get props => [ message, value ];
 
-  const GridFormError({this.message, GridModel value }) : super(value: value);
+  const GridFormError({this.message, GridModel? value }) : super(value: value);
 
   @override
   String toString() {
@@ -64,10 +64,10 @@ abstract class GridFormError extends GridFormInitialized {
   }
 }
 class DocumentIDGridFormError extends GridFormError { 
-  const DocumentIDGridFormError({ String message, GridModel value }): super(message: message, value: value);
+  const DocumentIDGridFormError({ String? message, GridModel? value }): super(message: message, value: value);
 
   @override
-  List<Object> get props => [ message, value ];
+  List<Object?> get props => [ message, value ];
 
   @override
   String toString() {
@@ -80,10 +80,10 @@ class DocumentIDGridFormError extends GridFormError {
 
 
 class AppIdGridFormError extends GridFormError { 
-  const AppIdGridFormError({ String message, GridModel value }): super(message: message, value: value);
+  const AppIdGridFormError({ String? message, GridModel? value }): super(message: message, value: value);
 
   @override
-  List<Object> get props => [ message, value ];
+  List<Object?> get props => [ message, value ];
 
   @override
   String toString() {
@@ -96,10 +96,10 @@ class AppIdGridFormError extends GridFormError {
 
 
 class TitleGridFormError extends GridFormError { 
-  const TitleGridFormError({ String message, GridModel value }): super(message: message, value: value);
+  const TitleGridFormError({ String? message, GridModel? value }): super(message: message, value: value);
 
   @override
-  List<Object> get props => [ message, value ];
+  List<Object?> get props => [ message, value ];
 
   @override
   String toString() {
@@ -112,10 +112,10 @@ class TitleGridFormError extends GridFormError {
 
 
 class BodyComponentsGridFormError extends GridFormError { 
-  const BodyComponentsGridFormError({ String message, GridModel value }): super(message: message, value: value);
+  const BodyComponentsGridFormError({ String? message, GridModel? value }): super(message: message, value: value);
 
   @override
-  List<Object> get props => [ message, value ];
+  List<Object?> get props => [ message, value ];
 
   @override
   String toString() {
@@ -128,10 +128,10 @@ class BodyComponentsGridFormError extends GridFormError {
 
 
 class GridViewGridFormError extends GridFormError { 
-  const GridViewGridFormError({ String message, GridModel value }): super(message: message, value: value);
+  const GridViewGridFormError({ String? message, GridModel? value }): super(message: message, value: value);
 
   @override
-  List<Object> get props => [ message, value ];
+  List<Object?> get props => [ message, value ];
 
   @override
   String toString() {
@@ -144,10 +144,10 @@ class GridViewGridFormError extends GridFormError {
 
 
 class ConditionsGridFormError extends GridFormError { 
-  const ConditionsGridFormError({ String message, GridModel value }): super(message: message, value: value);
+  const ConditionsGridFormError({ String? message, GridModel? value }): super(message: message, value: value);
 
   @override
-  List<Object> get props => [ message, value ];
+  List<Object?> get props => [ message, value ];
 
   @override
   String toString() {
@@ -160,10 +160,10 @@ class ConditionsGridFormError extends GridFormError {
 
 
 class GridFormLoaded extends GridFormInitialized { 
-  const GridFormLoaded({ GridModel value }): super(value: value);
+  const GridFormLoaded({ GridModel? value }): super(value: value);
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() {
@@ -175,10 +175,10 @@ class GridFormLoaded extends GridFormInitialized {
 
 
 class SubmittableGridForm extends GridFormInitialized { 
-  const SubmittableGridForm({ GridModel value }): super(value: value);
+  const SubmittableGridForm({ GridModel? value }): super(value: value);
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() {

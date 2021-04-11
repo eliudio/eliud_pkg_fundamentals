@@ -24,7 +24,7 @@ import 'package:flutter/services.dart';
 
 
 class GridComponentBloc extends Bloc<GridComponentEvent, GridComponentState> {
-  final GridRepository gridRepository;
+  final GridRepository? gridRepository;
 
   GridComponentBloc({ this.gridRepository }): super(GridComponentUninitialized());
   @override
@@ -34,9 +34,9 @@ class GridComponentBloc extends Bloc<GridComponentEvent, GridComponentState> {
       try {
         if (currentState is GridComponentUninitialized) {
           bool permissionDenied = false;
-          final model = await gridRepository.get(event.id, onError: (error) {
+          final model = await gridRepository!.get(event.id, onError: (error) {
             // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
-            if ((error is PlatformException) &&  (error.message.startsWith("PERMISSION_DENIED"))) {
+            if ((error is PlatformException) &&  (error.message!.startsWith("PERMISSION_DENIED"))) {
               permissionDenied = true;
             }
           });
@@ -46,7 +46,7 @@ class GridComponentBloc extends Bloc<GridComponentEvent, GridComponentState> {
             if (model != null) {
               yield GridComponentLoaded(value: model);
             } else {
-              String id = event.id;
+              String? id = event.id;
               yield GridComponentError(
                   message: "Grid with id = '$id' not found");
             }

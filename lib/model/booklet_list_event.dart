@@ -19,7 +19,7 @@ import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
 abstract class BookletListEvent extends Equatable {
   const BookletListEvent();
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class LoadBookletList extends BookletListEvent {}
@@ -27,49 +27,49 @@ class LoadBookletList extends BookletListEvent {}
 class NewPage extends BookletListEvent {}
 
 class AddBookletList extends BookletListEvent {
-  final BookletModel value;
+  final BookletModel? value;
 
   const AddBookletList({ this.value });
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'AddBookletList{ value: $value }';
 }
 
 class UpdateBookletList extends BookletListEvent {
-  final BookletModel value;
+  final BookletModel? value;
 
   const UpdateBookletList({ this.value });
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'UpdateBookletList{ value: $value }';
 }
 
 class DeleteBookletList extends BookletListEvent {
-  final BookletModel value;
+  final BookletModel? value;
 
   const DeleteBookletList({ this.value });
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'DeleteBookletList{ value: $value }';
 }
 
 class BookletListUpdated extends BookletListEvent {
-  final List<BookletModel> value;
-  final bool mightHaveMore;
+  final List<BookletModel?>? value;
+  final bool? mightHaveMore;
 
   const BookletListUpdated({ this.value, this.mightHaveMore });
 
   @override
-  List<Object> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [ value, mightHaveMore ];
 
   @override
   String toString() => 'BookletListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';

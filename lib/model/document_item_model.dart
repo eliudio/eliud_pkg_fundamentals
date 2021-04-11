@@ -36,17 +36,17 @@ import 'package:eliud_core/tools/random.dart';
 
 
 class DocumentItemModel {
-  String documentID;
+  String? documentID;
 
   // This is the reference which you can use inside your document to use to this image, e.g. <img src = \"\${REFERENCE}\"
-  String reference;
-  MemberMediumModel image;
+  String? reference;
+  MemberMediumModel? image;
 
   DocumentItemModel({this.documentID, this.reference, this.image, })  {
     assert(documentID != null);
   }
 
-  DocumentItemModel copyWith({String documentID, String reference, MemberMediumModel image, }) {
+  DocumentItemModel copyWith({String? documentID, String? reference, MemberMediumModel? image, }) {
     return DocumentItemModel(documentID: documentID ?? this.documentID, reference: reference ?? this.reference, image: image ?? this.image, );
   }
 
@@ -67,14 +67,14 @@ class DocumentItemModel {
     return 'DocumentItemModel{documentID: $documentID, reference: $reference, image: $image}';
   }
 
-  DocumentItemEntity toEntity({String appId}) {
+  DocumentItemEntity toEntity({String? appId}) {
     return DocumentItemEntity(
           reference: (reference != null) ? reference : null, 
-          imageId: (image != null) ? image.documentID : null, 
+          imageId: (image != null) ? image!.documentID : null, 
     );
   }
 
-  static DocumentItemModel fromEntity(String documentID, DocumentItemEntity entity) {
+  static DocumentItemModel? fromEntity(String documentID, DocumentItemEntity? entity) {
     if (entity == null) return null;
     return DocumentItemModel(
           documentID: documentID, 
@@ -82,13 +82,13 @@ class DocumentItemModel {
     );
   }
 
-  static Future<DocumentItemModel> fromEntityPlus(String documentID, DocumentItemEntity entity, { String appId}) async {
+  static Future<DocumentItemModel?> fromEntityPlus(String documentID, DocumentItemEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
-    MemberMediumModel imageHolder;
+    MemberMediumModel? imageHolder;
     if (entity.imageId != null) {
       try {
-        await memberMediumRepository(appId: appId).get(entity.imageId).then((val) {
+        await memberMediumRepository(appId: appId)!.get(entity.imageId).then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}

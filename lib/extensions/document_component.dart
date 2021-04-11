@@ -9,17 +9,17 @@ import 'package:eliud_pkg_fundamentals/tools/document_renderer.dart';
 import 'package:flutter/material.dart';
 
 class DocumentComponentConstructorDefault implements ComponentConstructor {
-  Widget createNew({String id, Map<String, Object> parameters}) {
+  Widget createNew({String? id, Map<String, Object>? parameters}) {
     return DocumentComponent(documentID: id);
   }
 }
 
 class DocumentComponent extends AbstractDocumentComponent {
-  DocumentComponent({String documentID}) : super(documentID: documentID);
+  DocumentComponent({String? documentID}) : super(documentID: documentID);
 
   @override
-  Widget yourWidget(BuildContext context, DocumentModel value) {
-    return DocumentRendererTool().render(context, value.documentRenderer, value.content, value.images, value.background);
+  Widget yourWidget(BuildContext context, DocumentModel? value) {
+    return DocumentRendererTool().render(context, value!.documentRenderer, value.content!, value.images, value.background);
   }
 
   @override
@@ -29,6 +29,6 @@ class DocumentComponent extends AbstractDocumentComponent {
 
   @override
   DocumentRepository getDocumentRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.documentRepository(AccessBloc.appId(context));
+    return AbstractRepositorySingleton.singleton.documentRepository(AccessBloc.appId(context))!;
   }
 }

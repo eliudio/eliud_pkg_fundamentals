@@ -11,19 +11,19 @@ import 'package:eliud_pkg_fundamentals/model/grid_component.dart';
 
 class GridComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({String id, Map<String, Object> parameters}) {
+  Widget createNew({String? id, Map<String, Object>? parameters}) {
     return GridComponent(gridID: id);
   }
 }
 
 class GridComponent extends AbstractGridComponent {
-  GridComponent({String gridID}) : super(gridID: gridID);
+  GridComponent({String? gridID}) : super(gridID: gridID);
 
   @override
-  Widget yourWidget(BuildContext context, GridModel value) {
-    var components = value.bodyComponents
-        .map((model) => Registry.registry().component(
-        componentName: model.componentName, id: model.componentId))
+  Widget yourWidget(BuildContext context, GridModel? value) {
+    var components = value!.bodyComponents!
+        .map((model) => Registry.registry()!.component(
+        model!.componentName!, model.componentId!))
         .toList();
     if (components.isNotEmpty) {
       return GridViewHelper.container(context, components, value.gridView);
@@ -39,6 +39,6 @@ class GridComponent extends AbstractGridComponent {
 
   @override
   GridRepository getGridRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.gridRepository(AccessBloc.appId(context));
+    return AbstractRepositorySingleton.singleton.gridRepository(AccessBloc.appId(context))!;
   }
 }

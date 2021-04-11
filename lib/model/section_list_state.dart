@@ -20,19 +20,19 @@ abstract class SectionListState extends Equatable {
   const SectionListState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class SectionListLoading extends SectionListState {}
 
 class SectionListLoaded extends SectionListState {
-  final List<SectionModel> values;
-  final bool mightHaveMore;
+  final List<SectionModel?>? values;
+  final bool? mightHaveMore;
 
   const SectionListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object> get props => [ values, mightHaveMore ];
+  List<Object?> get props => [ values, mightHaveMore ];
 
   @override
   String toString() => 'SectionListLoaded { values: $values }';

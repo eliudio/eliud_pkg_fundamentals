@@ -20,13 +20,13 @@ abstract class DividerComponentState extends Equatable {
   const DividerComponentState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class DividerComponentUninitialized extends DividerComponentState {}
 
 class DividerComponentError extends DividerComponentState {
-  final String message;
+  final String? message;
   DividerComponentError({ this.message });
 }
 
@@ -35,16 +35,16 @@ class DividerComponentPermissionDenied extends DividerComponentState {
 }
 
 class DividerComponentLoaded extends DividerComponentState {
-  final DividerModel value;
+  final DividerModel? value;
 
   const DividerComponentLoaded({ this.value });
 
-  DividerComponentLoaded copyWith({ DividerModel copyThis }) {
+  DividerComponentLoaded copyWith({ DividerModel? copyThis }) {
     return DividerComponentLoaded(value: copyThis ?? this.value);
   }
 
   @override
-  List<Object> get props => [value];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'DividerComponentLoaded { value: $value }';

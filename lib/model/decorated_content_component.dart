@@ -25,7 +25,7 @@ import 'package:eliud_pkg_fundamentals/model/decorated_content_component_state.d
 
 abstract class AbstractDecoratedContentComponent extends StatelessWidget {
   static String componentName = "decoratedContents";
-  final String decoratedContentID;
+  final String? decoratedContentID;
 
   AbstractDecoratedContentComponent({this.decoratedContentID});
 
@@ -63,7 +63,7 @@ abstract class AbstractDecoratedContentComponent extends StatelessWidget {
     });
   }
 
-  Widget yourWidget(BuildContext context, DecoratedContentModel value);
+  Widget yourWidget(BuildContext context, DecoratedContentModel? value);
   Widget alertWidget({ title: String, content: String});
   DecoratedContentRepository getDecoratedContentRepository(BuildContext context);
 }

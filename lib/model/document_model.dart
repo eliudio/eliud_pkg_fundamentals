@@ -39,7 +39,7 @@ enum DocumentRenderer {
 }
 
 
-DocumentRenderer toDocumentRenderer(int index) {
+DocumentRenderer toDocumentRenderer(int? index) {
   switch (index) {
     case 0: return DocumentRenderer.flutter_markdown;
     case 1: return DocumentRenderer.dynamic_widget;
@@ -49,27 +49,27 @@ DocumentRenderer toDocumentRenderer(int index) {
 
 
 class DocumentModel {
-  String documentID;
-  String appId;
-  String name;
+  String? documentID;
+  String? appId;
+  String? name;
 
   // Document renderer. Different renderers offer different functionality
-  DocumentRenderer documentRenderer;
+  DocumentRenderer? documentRenderer;
 
   // Document content
-  String content;
+  String? content;
 
   // Left, right, top and bottom padding.
-  double padding;
-  List<DocumentItemModel> images;
-  BackgroundModel background;
-  ConditionsSimpleModel conditions;
+  double? padding;
+  List<DocumentItemModel>? images;
+  BackgroundModel? background;
+  ConditionsSimpleModel? conditions;
 
   DocumentModel({this.documentID, this.appId, this.name, this.documentRenderer, this.content, this.padding, this.images, this.background, this.conditions, })  {
     assert(documentID != null);
   }
 
-  DocumentModel copyWith({String documentID, String appId, String name, DocumentRenderer documentRenderer, String content, double padding, List<DocumentItemModel> images, BackgroundModel background, ConditionsSimpleModel conditions, }) {
+  DocumentModel copyWith({String? documentID, String? appId, String? name, DocumentRenderer? documentRenderer, String? content, double? padding, List<DocumentItemModel>? images, BackgroundModel? background, ConditionsSimpleModel? conditions, }) {
     return DocumentModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, name: name ?? this.name, documentRenderer: documentRenderer ?? this.documentRenderer, content: content ?? this.content, padding: padding ?? this.padding, images: images ?? this.images, background: background ?? this.background, conditions: conditions ?? this.conditions, );
   }
 
@@ -93,27 +93,27 @@ class DocumentModel {
 
   @override
   String toString() {
-    String imagesCsv = (images == null) ? '' : images.join(', ');
+    String imagesCsv = (images == null) ? '' : images!.join(', ');
 
     return 'DocumentModel{documentID: $documentID, appId: $appId, name: $name, documentRenderer: $documentRenderer, content: $content, padding: $padding, images: DocumentItem[] { $imagesCsv }, background: $background, conditions: $conditions}';
   }
 
-  DocumentEntity toEntity({String appId}) {
+  DocumentEntity toEntity({String? appId}) {
     return DocumentEntity(
           appId: (appId != null) ? appId : null, 
           name: (name != null) ? name : null, 
-          documentRenderer: (documentRenderer != null) ? documentRenderer.index : null, 
+          documentRenderer: (documentRenderer != null) ? documentRenderer!.index : null, 
           content: (content != null) ? content : null, 
           padding: (padding != null) ? padding : null, 
           images: (images != null) ? images
-            .map((item) => item.toEntity(appId: appId))
+            !.map((item) => item.toEntity(appId: appId))
             .toList() : null, 
-          backgroundId: (background != null) ? background.documentID : null, 
-          conditions: (conditions != null) ? conditions.toEntity(appId: appId) : null, 
+          backgroundId: (background != null) ? background!.documentID : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
     );
   }
 
-  static DocumentModel fromEntity(String documentID, DocumentEntity entity) {
+  static DocumentModel? fromEntity(String documentID, DocumentEntity? entity) {
     if (entity == null) return null;
     return DocumentModel(
           documentID: documentID, 
@@ -125,20 +125,20 @@ class DocumentModel {
           images: 
             entity.images == null ? null :
             entity.images
-            .map((item) => DocumentItemModel.fromEntity(newRandomKey(), item))
+            !.map((item) => DocumentItemModel.fromEntity(newRandomKey(), item)!)
             .toList(), 
           conditions: 
             ConditionsSimpleModel.fromEntity(entity.conditions), 
     );
   }
 
-  static Future<DocumentModel> fromEntityPlus(String documentID, DocumentEntity entity, { String appId}) async {
+  static Future<DocumentModel?> fromEntityPlus(String documentID, DocumentEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
-    BackgroundModel backgroundHolder;
+    BackgroundModel? backgroundHolder;
     if (entity.backgroundId != null) {
       try {
-        await backgroundRepository(appId: appId).get(entity.backgroundId).then((val) {
+        await backgroundRepository(appId: appId)!.get(entity.backgroundId).then((val) {
           backgroundHolder = val;
         }).catchError((error) {});
       } catch (_) {}
@@ -153,7 +153,7 @@ class DocumentModel {
           padding: entity.padding, 
           images: 
             entity. images == null ? null : new List<DocumentItemModel>.from(await Future.wait(entity. images
-            .map((item) => DocumentItemModel.fromEntityPlus(newRandomKey(), item, appId: appId))
+            !.map((item) => DocumentItemModel.fromEntityPlus(newRandomKey(), item, appId: appId))
             .toList())), 
           background: backgroundHolder, 
           conditions: 

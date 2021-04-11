@@ -20,13 +20,13 @@ abstract class PresentationComponentState extends Equatable {
   const PresentationComponentState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class PresentationComponentUninitialized extends PresentationComponentState {}
 
 class PresentationComponentError extends PresentationComponentState {
-  final String message;
+  final String? message;
   PresentationComponentError({ this.message });
 }
 
@@ -35,16 +35,16 @@ class PresentationComponentPermissionDenied extends PresentationComponentState {
 }
 
 class PresentationComponentLoaded extends PresentationComponentState {
-  final PresentationModel value;
+  final PresentationModel? value;
 
   const PresentationComponentLoaded({ this.value });
 
-  PresentationComponentLoaded copyWith({ PresentationModel copyThis }) {
+  PresentationComponentLoaded copyWith({ PresentationModel? copyThis }) {
     return PresentationComponentLoaded(value: copyThis ?? this.value);
   }
 
   @override
-  List<Object> get props => [value];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'PresentationComponentLoaded { value: $value }';

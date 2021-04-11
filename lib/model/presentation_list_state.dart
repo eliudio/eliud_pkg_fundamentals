@@ -20,19 +20,19 @@ abstract class PresentationListState extends Equatable {
   const PresentationListState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class PresentationListLoading extends PresentationListState {}
 
 class PresentationListLoaded extends PresentationListState {
-  final List<PresentationModel> values;
-  final bool mightHaveMore;
+  final List<PresentationModel?>? values;
+  final bool? mightHaveMore;
 
   const PresentationListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object> get props => [ values, mightHaveMore ];
+  List<Object?> get props => [ values, mightHaveMore ];
 
   @override
   String toString() => 'PresentationListLoaded { values: $values }';

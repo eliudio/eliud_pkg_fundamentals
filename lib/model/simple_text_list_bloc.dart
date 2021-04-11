@@ -27,53 +27,59 @@ const _simpleTextLimit = 5;
 
 class SimpleTextListBloc extends Bloc<SimpleTextListEvent, SimpleTextListState> {
   final SimpleTextRepository _simpleTextRepository;
-  StreamSubscription _simpleTextsListSubscription;
-  final EliudQuery eliudQuery;
+  StreamSubscription? _simpleTextsListSubscription;
+  final EliudQuery? eliudQuery;
   int pages = 1;
-  final bool paged;
-  final String orderBy;
-  final bool descending;
-  final bool detailed;
+  final bool? paged;
+  final String? orderBy;
+  final bool? descending;
+  final bool? detailed;
 
-  SimpleTextListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, @required SimpleTextRepository simpleTextRepository})
+  SimpleTextListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required SimpleTextRepository simpleTextRepository})
       : assert(simpleTextRepository != null),
         _simpleTextRepository = simpleTextRepository,
         super(SimpleTextListLoading());
 
   Stream<SimpleTextListState> _mapLoadSimpleTextListToState() async* {
-    int amountNow =  (state is SimpleTextListLoaded) ? (state as SimpleTextListLoaded).values.length : 0;
+    int amountNow =  (state is SimpleTextListLoaded) ? (state as SimpleTextListLoaded).values!.length : 0;
     _simpleTextsListSubscription?.cancel();
     _simpleTextsListSubscription = _simpleTextRepository.listen(
           (list) => add(SimpleTextListUpdated(value: list, mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && (paged)) ? pages * _simpleTextLimit : null
+      limit: ((paged != null) && paged!) ? pages * _simpleTextLimit : null
     );
   }
 
   Stream<SimpleTextListState> _mapLoadSimpleTextListWithDetailsToState() async* {
-    int amountNow =  (state is SimpleTextListLoaded) ? (state as SimpleTextListLoaded).values.length : 0;
+    int amountNow =  (state is SimpleTextListLoaded) ? (state as SimpleTextListLoaded).values!.length : 0;
     _simpleTextsListSubscription?.cancel();
     _simpleTextsListSubscription = _simpleTextRepository.listenWithDetails(
             (list) => add(SimpleTextListUpdated(value: list, mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && (paged)) ? pages * _simpleTextLimit : null
+        limit: ((paged != null) && paged!) ? pages * _simpleTextLimit : null
     );
   }
 
   Stream<SimpleTextListState> _mapAddSimpleTextListToState(AddSimpleTextList event) async* {
-    _simpleTextRepository.add(event.value);
+    var value = event.value;
+    if (value != null) 
+      _simpleTextRepository.add(value);
   }
 
   Stream<SimpleTextListState> _mapUpdateSimpleTextListToState(UpdateSimpleTextList event) async* {
-    _simpleTextRepository.update(event.value);
+    var value = event.value;
+    if (value != null) 
+      _simpleTextRepository.update(value);
   }
 
   Stream<SimpleTextListState> _mapDeleteSimpleTextListToState(DeleteSimpleTextList event) async* {
-    _simpleTextRepository.delete(event.value);
+    var value = event.value;
+    if (value != null) 
+      _simpleTextRepository.delete(value);
   }
 
   Stream<SimpleTextListState> _mapSimpleTextListUpdatedToState(
@@ -84,7 +90,7 @@ class SimpleTextListBloc extends Bloc<SimpleTextListEvent, SimpleTextListState> 
   @override
   Stream<SimpleTextListState> mapEventToState(SimpleTextListEvent event) async* {
     if (event is LoadSimpleTextList) {
-      if ((detailed == null) || (!detailed)) {
+      if ((detailed == null) || (!detailed!)) {
         yield* _mapLoadSimpleTextListToState();
       } else {
         yield* _mapLoadSimpleTextListWithDetailsToState();

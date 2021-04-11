@@ -20,19 +20,19 @@ abstract class SimpleTextListState extends Equatable {
   const SimpleTextListState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class SimpleTextListLoading extends SimpleTextListState {}
 
 class SimpleTextListLoaded extends SimpleTextListState {
-  final List<SimpleTextModel> values;
-  final bool mightHaveMore;
+  final List<SimpleTextModel?>? values;
+  final bool? mightHaveMore;
 
   const SimpleTextListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object> get props => [ values, mightHaveMore ];
+  List<Object?> get props => [ values, mightHaveMore ];
 
   @override
   String toString() => 'SimpleTextListLoaded { values: $values }';

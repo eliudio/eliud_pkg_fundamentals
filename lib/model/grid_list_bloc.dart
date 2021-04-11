@@ -27,53 +27,59 @@ const _gridLimit = 5;
 
 class GridListBloc extends Bloc<GridListEvent, GridListState> {
   final GridRepository _gridRepository;
-  StreamSubscription _gridsListSubscription;
-  final EliudQuery eliudQuery;
+  StreamSubscription? _gridsListSubscription;
+  final EliudQuery? eliudQuery;
   int pages = 1;
-  final bool paged;
-  final String orderBy;
-  final bool descending;
-  final bool detailed;
+  final bool? paged;
+  final String? orderBy;
+  final bool? descending;
+  final bool? detailed;
 
-  GridListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, @required GridRepository gridRepository})
+  GridListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required GridRepository gridRepository})
       : assert(gridRepository != null),
         _gridRepository = gridRepository,
         super(GridListLoading());
 
   Stream<GridListState> _mapLoadGridListToState() async* {
-    int amountNow =  (state is GridListLoaded) ? (state as GridListLoaded).values.length : 0;
+    int amountNow =  (state is GridListLoaded) ? (state as GridListLoaded).values!.length : 0;
     _gridsListSubscription?.cancel();
     _gridsListSubscription = _gridRepository.listen(
           (list) => add(GridListUpdated(value: list, mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && (paged)) ? pages * _gridLimit : null
+      limit: ((paged != null) && paged!) ? pages * _gridLimit : null
     );
   }
 
   Stream<GridListState> _mapLoadGridListWithDetailsToState() async* {
-    int amountNow =  (state is GridListLoaded) ? (state as GridListLoaded).values.length : 0;
+    int amountNow =  (state is GridListLoaded) ? (state as GridListLoaded).values!.length : 0;
     _gridsListSubscription?.cancel();
     _gridsListSubscription = _gridRepository.listenWithDetails(
             (list) => add(GridListUpdated(value: list, mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && (paged)) ? pages * _gridLimit : null
+        limit: ((paged != null) && paged!) ? pages * _gridLimit : null
     );
   }
 
   Stream<GridListState> _mapAddGridListToState(AddGridList event) async* {
-    _gridRepository.add(event.value);
+    var value = event.value;
+    if (value != null) 
+      _gridRepository.add(value);
   }
 
   Stream<GridListState> _mapUpdateGridListToState(UpdateGridList event) async* {
-    _gridRepository.update(event.value);
+    var value = event.value;
+    if (value != null) 
+      _gridRepository.update(value);
   }
 
   Stream<GridListState> _mapDeleteGridListToState(DeleteGridList event) async* {
-    _gridRepository.delete(event.value);
+    var value = event.value;
+    if (value != null) 
+      _gridRepository.delete(value);
   }
 
   Stream<GridListState> _mapGridListUpdatedToState(
@@ -84,7 +90,7 @@ class GridListBloc extends Bloc<GridListEvent, GridListState> {
   @override
   Stream<GridListState> mapEventToState(GridListEvent event) async* {
     if (event is LoadGridList) {
-      if ((detailed == null) || (!detailed)) {
+      if ((detailed == null) || (!detailed!)) {
         yield* _mapLoadGridListToState();
       } else {
         yield* _mapLoadGridListWithDetailsToState();

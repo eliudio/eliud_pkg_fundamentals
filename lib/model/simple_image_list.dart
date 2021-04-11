@@ -45,50 +45,36 @@ import 'package:eliud_core/model/app_model.dart';
 import 'simple_image_form.dart';
 
 
-typedef SimpleImageWidgetProvider(SimpleImageModel value);
+typedef SimpleImageWidgetProvider(SimpleImageModel? value);
 
 class SimpleImageListWidget extends StatefulWidget with HasFab {
-  BackgroundModel listBackground;
-  SimpleImageWidgetProvider widgetProvider;
-  bool readOnly;
-  String form;
-  SimpleImageListWidgetState state;
-  bool isEmbedded;
+  BackgroundModel? listBackground;
+  SimpleImageWidgetProvider? widgetProvider;
+  bool? readOnly;
+  String? form;
+  SimpleImageListWidgetState? state;
+  bool? isEmbedded;
 
-  SimpleImageListWidget({ Key key, this.readOnly, this.form, this.widgetProvider, this.isEmbedded, this.listBackground }): super(key: key);
+  SimpleImageListWidget({ Key? key, this.readOnly, this.form, this.widgetProvider, this.isEmbedded, this.listBackground }): super(key: key);
 
   @override
   SimpleImageListWidgetState createState() {
     state ??= SimpleImageListWidgetState();
-    return state;
+    return state!;
   }
 
   @override
-  Widget fab(BuildContext context) {
-    if ((readOnly != null) && readOnly) return null;
+  Widget? fab(BuildContext context) {
+    if ((readOnly != null) && readOnly!) return null;
     state ??= SimpleImageListWidgetState();
     var accessState = AccessBloc.getState(context);
-    return state.fab(context, accessState);
+    return state!.fab(context, accessState);
   }
 }
 
 class SimpleImageListWidgetState extends State<SimpleImageListWidget> {
-  SimpleImageListBloc bloc;
-
   @override
-  void didChangeDependencies() {
-    bloc = BlocProvider.of<SimpleImageListBloc>(context);
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose () {
-    if (bloc != null) bloc.close();
-    super.dispose();
-  }
-
-  @override
-  Widget fab(BuildContext aContext, AccessState accessState) {
+  Widget? fab(BuildContext aContext, AccessState accessState) {
     if (accessState is AppLoaded) {
       return !accessState.memberIsOwner() 
         ? null
@@ -100,7 +86,7 @@ class SimpleImageListWidgetState extends State<SimpleImageListWidget> {
         onPressed: () {
           Navigator.of(context).push(
             pageRouteBuilder(accessState.app, page: BlocProvider.value(
-                value: bloc,
+                value: BlocProvider.of<SimpleImageListBloc>(context),
                 child: SimpleImageForm(
                     value: null,
                     formAction: FormAction.AddAction)
@@ -124,15 +110,15 @@ class SimpleImageListWidgetState extends State<SimpleImageListWidget> {
           );
         } else if (state is SimpleImageListLoaded) {
           final values = state.values;
-          if ((widget.isEmbedded != null) && (widget.isEmbedded)) {
-            List<Widget> children = List();
+          if ((widget.isEmbedded != null) && widget.isEmbedded!) {
+            var children = <Widget>[];
             children.add(theList(context, values, accessState));
             children.add(RaisedButton(
                     color: RgbHelper.color(rgbo: accessState.app.formSubmitButtonColor),
                     onPressed: () {
                       Navigator.of(context).push(
                                 pageRouteBuilder(accessState.app, page: BlocProvider.value(
-                                    value: bloc,
+                                    value: BlocProvider.of<SimpleImageListBloc>(context),
                                     child: SimpleImageForm(
                                         value: null,
                                         formAction: FormAction.AddAction)
@@ -174,7 +160,7 @@ class SimpleImageListWidgetState extends State<SimpleImageListWidget> {
         itemBuilder: (context, index) {
           final value = values[index];
           
-          if (widget.widgetProvider != null) return widget.widgetProvider(value);
+          if (widget.widgetProvider != null) return widget.widgetProvider!(value);
 
           return SimpleImageListItem(
             value: value,
@@ -210,7 +196,7 @@ class SimpleImageListWidgetState extends State<SimpleImageListWidget> {
   }
   
   
-  Widget getForm(value, action) {
+  Widget? getForm(value, action) {
     if (widget.form == null) {
       return SimpleImageForm(value: value, formAction: action);
     } else {
@@ -226,36 +212,36 @@ class SimpleImageListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
   final AppModel app;
-  final SimpleImageModel value;
+  final SimpleImageModel? value;
 
   SimpleImageListItem({
-    Key key,
-    @required this.onDismissed,
-    @required this.onTap,
-    @required this.value,
-    @required this.app,
+    Key? key,
+    required this.onDismissed,
+    required this.onTap,
+    required this.value,
+    required this.app,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key('__SimpleImage_item_${value.documentID}'),
+      key: Key('__SimpleImage_item_${value!.documentID}'),
       onDismissed: onDismissed,
       child: ListTile(
         onTap: onTap,
         title: Hero(
-          tag: '${value.documentID}__SimpleImageheroTag',
+          tag: '${value!.documentID}__SimpleImageheroTag',
           child: Container(
             width: fullScreenWidth(context),
             child: Center(child: Text(
-              value.documentID,
+              value!.documentID!,
               style: TextStyle(color: RgbHelper.color(rgbo: app.listTextItemColor)),
             )),
           ),
         ),
-        subtitle: (value.title != null) && (value.title.isNotEmpty)
+        subtitle: (value!.title != null) && (value!.title!.isNotEmpty)
             ? Center( child: Text(
-          value.title,
+          value!.title!,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(color: RgbHelper.color(rgbo: app.listTextItemColor)),

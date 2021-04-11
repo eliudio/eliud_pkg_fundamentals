@@ -19,7 +19,7 @@ import 'package:eliud_pkg_fundamentals/model/document_model.dart';
 abstract class DocumentListEvent extends Equatable {
   const DocumentListEvent();
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class LoadDocumentList extends DocumentListEvent {}
@@ -27,49 +27,49 @@ class LoadDocumentList extends DocumentListEvent {}
 class NewPage extends DocumentListEvent {}
 
 class AddDocumentList extends DocumentListEvent {
-  final DocumentModel value;
+  final DocumentModel? value;
 
   const AddDocumentList({ this.value });
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'AddDocumentList{ value: $value }';
 }
 
 class UpdateDocumentList extends DocumentListEvent {
-  final DocumentModel value;
+  final DocumentModel? value;
 
   const UpdateDocumentList({ this.value });
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'UpdateDocumentList{ value: $value }';
 }
 
 class DeleteDocumentList extends DocumentListEvent {
-  final DocumentModel value;
+  final DocumentModel? value;
 
   const DeleteDocumentList({ this.value });
 
   @override
-  List<Object> get props => [ value ];
+  List<Object?> get props => [ value ];
 
   @override
   String toString() => 'DeleteDocumentList{ value: $value }';
 }
 
 class DocumentListUpdated extends DocumentListEvent {
-  final List<DocumentModel> value;
-  final bool mightHaveMore;
+  final List<DocumentModel?>? value;
+  final bool? mightHaveMore;
 
   const DocumentListUpdated({ this.value, this.mightHaveMore });
 
   @override
-  List<Object> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [ value, mightHaveMore ];
 
   @override
   String toString() => 'DocumentListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';

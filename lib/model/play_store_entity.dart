@@ -22,22 +22,22 @@ import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class PlayStoreEntity {
-  final String appId;
-  final String description;
-  final String itemBackgroundId;
-  final ConditionsSimpleEntity conditions;
+  final String? appId;
+  final String? description;
+  final String? itemBackgroundId;
+  final ConditionsSimpleEntity? conditions;
 
   PlayStoreEntity({this.appId, this.description, this.itemBackgroundId, this.conditions, });
 
 
-  List<Object> get props => [appId, description, itemBackgroundId, conditions, ];
+  List<Object?> get props => [appId, description, itemBackgroundId, conditions, ];
 
   @override
   String toString() {
     return 'PlayStoreEntity{appId: $appId, description: $description, itemBackgroundId: $itemBackgroundId, conditions: $conditions}';
   }
 
-  static PlayStoreEntity fromMap(Map map) {
+  static PlayStoreEntity? fromMap(Map? map) {
     if (map == null) return null;
 
     var conditionsFromMap;
@@ -53,12 +53,12 @@ class PlayStoreEntity {
     );
   }
 
-  Map<String, Object> toDocument() {
-    final Map<String, dynamic> conditionsMap = conditions != null 
-        ? conditions.toDocument()
+  Map<String, Object?> toDocument() {
+    final Map<String, dynamic>? conditionsMap = conditions != null 
+        ? conditions!.toDocument()
         : null;
 
-    Map<String, Object> theDocument = HashMap();
+    Map<String, Object?> theDocument = HashMap();
     if (appId != null) theDocument["appId"] = appId;
       else theDocument["appId"] = null;
     if (description != null) theDocument["description"] = description;
@@ -70,8 +70,8 @@ class PlayStoreEntity {
     return theDocument;
   }
 
-  static PlayStoreEntity fromJsonString(String json) {
-    Map<String, dynamic> generationSpecificationMap = jsonDecode(json);
+  static PlayStoreEntity? fromJsonString(String json) {
+    Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
     return fromMap(generationSpecificationMap);
   }
 

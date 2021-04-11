@@ -20,19 +20,19 @@ abstract class LinkListState extends Equatable {
   const LinkListState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class LinkListLoading extends LinkListState {}
 
 class LinkListLoaded extends LinkListState {
-  final List<LinkModel> values;
-  final bool mightHaveMore;
+  final List<LinkModel?>? values;
+  final bool? mightHaveMore;
 
   const LinkListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object> get props => [ values, mightHaveMore ];
+  List<Object?> get props => [ values, mightHaveMore ];
 
   @override
   String toString() => 'LinkListLoaded { values: $values }';

@@ -20,19 +20,19 @@ abstract class DocumentItemListState extends Equatable {
   const DocumentItemListState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class DocumentItemListLoading extends DocumentItemListState {}
 
 class DocumentItemListLoaded extends DocumentItemListState {
-  final List<DocumentItemModel> values;
-  final bool mightHaveMore;
+  final List<DocumentItemModel?>? values;
+  final bool? mightHaveMore;
 
   const DocumentItemListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object> get props => [ values, mightHaveMore ];
+  List<Object?> get props => [ values, mightHaveMore ];
 
   @override
   String toString() => 'DocumentItemListLoaded { values: $values }';

@@ -21,7 +21,7 @@ abstract class SimpleTextComponentEvent extends Equatable {
 }
 
 class FetchSimpleTextComponent extends SimpleTextComponentEvent {
-  final String id;
+  final String? id;
 
   FetchSimpleTextComponent({ this.id });
 }

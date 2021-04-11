@@ -23,7 +23,7 @@ import 'package:eliud_pkg_fundamentals/model/booklet_repository.dart';
 import 'package:flutter/services.dart';
 
 class BookletComponentBloc extends Bloc<BookletComponentEvent, BookletComponentState> {
-  final BookletRepository bookletRepository;
+  final BookletRepository? bookletRepository;
 
   BookletComponentBloc({ this.bookletRepository }): super(BookletComponentUninitialized());
   @override
@@ -33,9 +33,9 @@ class BookletComponentBloc extends Bloc<BookletComponentEvent, BookletComponentS
       try {
         if (currentState is BookletComponentUninitialized) {
           bool permissionDenied = false;
-          final model = await bookletRepository.get(event.id, onError: (error) {
+          final model = await bookletRepository!.get(event.id, onError: (error) {
             // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
-            if ((error is PlatformException) &&  (error.message.startsWith("PERMISSION_DENIED"))) {
+            if ((error is PlatformException) &&  (error.message!.startsWith("PERMISSION_DENIED"))) {
               permissionDenied = true;
             }
           });
@@ -45,7 +45,7 @@ class BookletComponentBloc extends Bloc<BookletComponentEvent, BookletComponentS
             if (model != null) {
               yield BookletComponentLoaded(value: model);
             } else {
-              String id = event.id;
+              String? id = event.id;
               yield BookletComponentError(
                   message: "Booklet with id = '$id' not found");
             }

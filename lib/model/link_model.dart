@@ -32,15 +32,15 @@ import 'package:eliud_core/tools/random.dart';
 
 
 class LinkModel {
-  String documentID;
-  String linkText;
-  ActionModel action;
+  String? documentID;
+  String? linkText;
+  ActionModel? action;
 
   LinkModel({this.documentID, this.linkText, this.action, })  {
     assert(documentID != null);
   }
 
-  LinkModel copyWith({String documentID, String linkText, ActionModel action, }) {
+  LinkModel copyWith({String? documentID, String? linkText, ActionModel? action, }) {
     return LinkModel(documentID: documentID ?? this.documentID, linkText: linkText ?? this.linkText, action: action ?? this.action, );
   }
 
@@ -61,14 +61,14 @@ class LinkModel {
     return 'LinkModel{documentID: $documentID, linkText: $linkText, action: $action}';
   }
 
-  LinkEntity toEntity({String appId}) {
+  LinkEntity toEntity({String? appId}) {
     return LinkEntity(
           linkText: (linkText != null) ? linkText : null, 
-          action: (action != null) ? action.toEntity(appId: appId) : null, 
+          action: (action != null) ? action!.toEntity(appId: appId) : null, 
     );
   }
 
-  static LinkModel fromEntity(String documentID, LinkEntity entity) {
+  static LinkModel? fromEntity(String documentID, LinkEntity? entity) {
     if (entity == null) return null;
     return LinkModel(
           documentID: documentID, 
@@ -78,7 +78,7 @@ class LinkModel {
     );
   }
 
-  static Future<LinkModel> fromEntityPlus(String documentID, LinkEntity entity, { String appId}) async {
+  static Future<LinkModel?> fromEntityPlus(String documentID, LinkEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
     return LinkModel(

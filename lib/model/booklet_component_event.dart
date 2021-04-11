@@ -21,7 +21,7 @@ abstract class BookletComponentEvent extends Equatable {
 }
 
 class FetchBookletComponent extends BookletComponentEvent {
-  final String id;
+  final String? id;
 
   FetchBookletComponent({ this.id });
 }

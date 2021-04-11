@@ -20,19 +20,19 @@ abstract class GridListState extends Equatable {
   const GridListState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class GridListLoading extends GridListState {}
 
 class GridListLoaded extends GridListState {
-  final List<GridModel> values;
-  final bool mightHaveMore;
+  final List<GridModel?>? values;
+  final bool? mightHaveMore;
 
   const GridListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object> get props => [ values, mightHaveMore ];
+  List<Object?> get props => [ values, mightHaveMore ];
 
   @override
   String toString() => 'GridListLoaded { values: $values }';

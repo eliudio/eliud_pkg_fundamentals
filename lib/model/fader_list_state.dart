@@ -20,19 +20,19 @@ abstract class FaderListState extends Equatable {
   const FaderListState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class FaderListLoading extends FaderListState {}
 
 class FaderListLoaded extends FaderListState {
-  final List<FaderModel> values;
-  final bool mightHaveMore;
+  final List<FaderModel?>? values;
+  final bool? mightHaveMore;
 
   const FaderListLoaded({this.mightHaveMore, this.values = const []});
 
   @override
-  List<Object> get props => [ values, mightHaveMore ];
+  List<Object?> get props => [ values, mightHaveMore ];
 
   @override
   String toString() => 'FaderListLoaded { values: $values }';
