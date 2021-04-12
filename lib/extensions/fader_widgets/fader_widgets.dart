@@ -13,7 +13,7 @@ class TheImageGF extends StatefulWidget {
   final Orientation orientation;
   final List<MemberMediumModel?> images;
   final List<PosSizeModel?> positionsAndSizes;
-  final List<ActionModel?> actions;
+  final List<ActionModel?>? actions;
   // The time to display 1 image
   final int? imageSeconds;
   // The animation to switch images.
@@ -40,7 +40,7 @@ class TheImageGFState extends State<TheImageGF> {
             widget.positionsAndSizes[i],
             widget.images[i],
             widget.orientation,
-            widget.actions != null ? widget.actions[i] : null,
+            widget.actions != null ? widget.actions![i] : null,
             i);
         var height = FaderHelper.getHeight(
             context, widget.positionsAndSizes[i]!, widget.orientation)!;
