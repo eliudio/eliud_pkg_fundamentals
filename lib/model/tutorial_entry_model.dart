@@ -90,10 +90,12 @@ class TutorialEntryModel {
     MemberMediumModel? imageHolder;
     if (entity.imageId != null) {
       try {
-        await memberMediumRepository(appId: appId)!.get(entity.imageId).then((val) {
-          imageHolder = val;
-        }).catchError((error) {});
-      } catch (_) {}
+          imageHolder = await memberMediumRepository(appId: appId)!.get(entity.imageId);
+      } on Exception catch(e) {
+        print('Error whilst trying to initialise image');
+        print('Error whilst retrieving memberMedium with id ${entity.imageId}');
+        print('Exception: $e');
+      }
     }
 
     return TutorialEntryModel(

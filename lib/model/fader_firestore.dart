@@ -55,17 +55,18 @@ class FaderFirestore implements FaderRepository {
   Future<FaderModel?> _populateDocPlus(DocumentSnapshot value) async {
     return FaderModel.fromEntityPlus(value.id, FaderEntity.fromMap(value.data()), appId: appId);  }
 
-  Future<FaderModel?> get(String? id, {Function(Exception)? onError}) {
-    return FaderCollection.doc(id).get().then((doc) async {
-      if (doc.data() != null)
-        return await _populateDocPlus(doc);
-      else
-        return null;
-    }).catchError((Object e) {
+  Future<FaderModel?> get(String? id, {Function(Exception)? onError}) async {
+    try {
+      var collection = FaderCollection.doc(id);
+      var doc = await collection.get();
+      return await _populateDocPlus(doc);
+    } on Exception catch(e) {
+      print("Error whilst retrieving Fader with id $id");
+      print("Exceptoin: $e");
       if (onError != null) {
-        onError(e as Exception);
+        onError(e);
       }
-    });
+    };
   }
 
   StreamSubscription<List<FaderModel?>> listen(FaderModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery}) {

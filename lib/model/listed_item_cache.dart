@@ -53,13 +53,12 @@ class ListedItemCache implements ListedItemRepository {
     return Future.value();
   }
 
-  Future<ListedItemModel> get(String? id, {Function(Exception)? onError}) {
-    ListedItemModel? value = fullCache[id];
+  Future<ListedItemModel> get(String? id, {Function(Exception)? onError}) async {
+    var value = fullCache[id];
     if (value != null) return refreshRelations(value);
-    return reference.get(id, onError: onError).then((value) {
-      fullCache[id] = value;
-      return value!;
-    });
+    value = await reference.get(id, onError: onError);
+    fullCache[id] = value;
+    return Future.value(value);
   }
 
   Future<ListedItemModel> update(ListedItemModel value) {

@@ -55,17 +55,18 @@ class DocumentFirestore implements DocumentRepository {
   Future<DocumentModel?> _populateDocPlus(DocumentSnapshot value) async {
     return DocumentModel.fromEntityPlus(value.id, DocumentEntity.fromMap(value.data()), appId: appId);  }
 
-  Future<DocumentModel?> get(String? id, {Function(Exception)? onError}) {
-    return DocumentCollection.doc(id).get().then((doc) async {
-      if (doc.data() != null)
-        return await _populateDocPlus(doc);
-      else
-        return null;
-    }).catchError((Object e) {
+  Future<DocumentModel?> get(String? id, {Function(Exception)? onError}) async {
+    try {
+      var collection = DocumentCollection.doc(id);
+      var doc = await collection.get();
+      return await _populateDocPlus(doc);
+    } on Exception catch(e) {
+      print("Error whilst retrieving Document with id $id");
+      print("Exceptoin: $e");
       if (onError != null) {
-        onError(e as Exception);
+        onError(e);
       }
-    });
+    };
   }
 
   StreamSubscription<List<DocumentModel?>> listen(DocumentModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery}) {

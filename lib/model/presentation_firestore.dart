@@ -55,17 +55,18 @@ class PresentationFirestore implements PresentationRepository {
   Future<PresentationModel?> _populateDocPlus(DocumentSnapshot value) async {
     return PresentationModel.fromEntityPlus(value.id, PresentationEntity.fromMap(value.data()), appId: appId);  }
 
-  Future<PresentationModel?> get(String? id, {Function(Exception)? onError}) {
-    return PresentationCollection.doc(id).get().then((doc) async {
-      if (doc.data() != null)
-        return await _populateDocPlus(doc);
-      else
-        return null;
-    }).catchError((Object e) {
+  Future<PresentationModel?> get(String? id, {Function(Exception)? onError}) async {
+    try {
+      var collection = PresentationCollection.doc(id);
+      var doc = await collection.get();
+      return await _populateDocPlus(doc);
+    } on Exception catch(e) {
+      print("Error whilst retrieving Presentation with id $id");
+      print("Exceptoin: $e");
       if (onError != null) {
-        onError(e as Exception);
+        onError(e);
       }
-    });
+    };
   }
 
   StreamSubscription<List<PresentationModel?>> listen(PresentationModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery}) {

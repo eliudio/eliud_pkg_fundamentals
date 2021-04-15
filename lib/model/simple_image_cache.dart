@@ -53,13 +53,12 @@ class SimpleImageCache implements SimpleImageRepository {
     return Future.value();
   }
 
-  Future<SimpleImageModel> get(String? id, {Function(Exception)? onError}) {
-    SimpleImageModel? value = fullCache[id];
+  Future<SimpleImageModel> get(String? id, {Function(Exception)? onError}) async {
+    var value = fullCache[id];
     if (value != null) return refreshRelations(value);
-    return reference.get(id, onError: onError).then((value) {
-      fullCache[id] = value;
-      return value!;
-    });
+    value = await reference.get(id, onError: onError);
+    fullCache[id] = value;
+    return Future.value(value);
   }
 
   Future<SimpleImageModel> update(SimpleImageModel value) {

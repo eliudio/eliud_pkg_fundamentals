@@ -138,10 +138,12 @@ class DocumentModel {
     BackgroundModel? backgroundHolder;
     if (entity.backgroundId != null) {
       try {
-        await backgroundRepository(appId: appId)!.get(entity.backgroundId).then((val) {
-          backgroundHolder = val;
-        }).catchError((error) {});
-      } catch (_) {}
+          backgroundHolder = await backgroundRepository(appId: appId)!.get(entity.backgroundId);
+      } on Exception catch(e) {
+        print('Error whilst trying to initialise background');
+        print('Error whilst retrieving background with id ${entity.backgroundId}');
+        print('Exception: $e');
+      }
     }
 
     return DocumentModel(

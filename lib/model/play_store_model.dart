@@ -95,10 +95,12 @@ class PlayStoreModel {
     BackgroundModel? itemBackgroundHolder;
     if (entity.itemBackgroundId != null) {
       try {
-        await backgroundRepository(appId: appId)!.get(entity.itemBackgroundId).then((val) {
-          itemBackgroundHolder = val;
-        }).catchError((error) {});
-      } catch (_) {}
+          itemBackgroundHolder = await backgroundRepository(appId: appId)!.get(entity.itemBackgroundId);
+      } on Exception catch(e) {
+        print('Error whilst trying to initialise itemBackground');
+        print('Error whilst retrieving background with id ${entity.itemBackgroundId}');
+        print('Exception: $e');
+      }
     }
 
     return PlayStoreModel(

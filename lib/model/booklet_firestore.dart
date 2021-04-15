@@ -55,17 +55,18 @@ class BookletFirestore implements BookletRepository {
   Future<BookletModel?> _populateDocPlus(DocumentSnapshot value) async {
     return BookletModel.fromEntityPlus(value.id, BookletEntity.fromMap(value.data()), appId: appId);  }
 
-  Future<BookletModel?> get(String? id, {Function(Exception)? onError}) {
-    return BookletCollection.doc(id).get().then((doc) async {
-      if (doc.data() != null)
-        return await _populateDocPlus(doc);
-      else
-        return null;
-    }).catchError((Object e) {
+  Future<BookletModel?> get(String? id, {Function(Exception)? onError}) async {
+    try {
+      var collection = BookletCollection.doc(id);
+      var doc = await collection.get();
+      return await _populateDocPlus(doc);
+    } on Exception catch(e) {
+      print("Error whilst retrieving Booklet with id $id");
+      print("Exceptoin: $e");
       if (onError != null) {
-        onError(e as Exception);
+        onError(e);
       }
-    });
+    };
   }
 
   StreamSubscription<List<BookletModel?>> listen(BookletModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery}) {

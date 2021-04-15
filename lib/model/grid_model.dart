@@ -110,10 +110,12 @@ class GridModel {
     GridViewModel? gridViewHolder;
     if (entity.gridViewId != null) {
       try {
-        await gridViewRepository(appId: appId)!.get(entity.gridViewId).then((val) {
-          gridViewHolder = val;
-        }).catchError((error) {});
-      } catch (_) {}
+          gridViewHolder = await gridViewRepository(appId: appId)!.get(entity.gridViewId);
+      } on Exception catch(e) {
+        print('Error whilst trying to initialise gridView');
+        print('Error whilst retrieving gridView with id ${entity.gridViewId}');
+        print('Exception: $e');
+      }
     }
 
     return GridModel(

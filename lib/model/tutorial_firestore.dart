@@ -55,17 +55,18 @@ class TutorialFirestore implements TutorialRepository {
   Future<TutorialModel?> _populateDocPlus(DocumentSnapshot value) async {
     return TutorialModel.fromEntityPlus(value.id, TutorialEntity.fromMap(value.data()), appId: appId);  }
 
-  Future<TutorialModel?> get(String? id, {Function(Exception)? onError}) {
-    return TutorialCollection.doc(id).get().then((doc) async {
-      if (doc.data() != null)
-        return await _populateDocPlus(doc);
-      else
-        return null;
-    }).catchError((Object e) {
+  Future<TutorialModel?> get(String? id, {Function(Exception)? onError}) async {
+    try {
+      var collection = TutorialCollection.doc(id);
+      var doc = await collection.get();
+      return await _populateDocPlus(doc);
+    } on Exception catch(e) {
+      print("Error whilst retrieving Tutorial with id $id");
+      print("Exceptoin: $e");
       if (onError != null) {
-        onError(e as Exception);
+        onError(e);
       }
-    });
+    };
   }
 
   StreamSubscription<List<TutorialModel?>> listen(TutorialModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery}) {
