@@ -30,7 +30,7 @@ class TheImageGF extends StatefulWidget {
 class TheImageGFState extends State<TheImageGF> {
   @override
   Widget build(BuildContext context) {
-    var list = <Widget?>[];
+    var list = <Widget>[];
     var maxHeight = 0.0;
     var maxWidth = 0.0;
     for (var i = 0; i < widget.images.length; i++) {
@@ -48,14 +48,15 @@ class TheImageGFState extends State<TheImageGF> {
             context, widget.positionsAndSizes[i]!, widget.orientation)!;
         maxHeight = max(height, maxHeight);
         maxWidth = max(width, maxWidth);
-        list.add(w);
+        if (w != null)
+          list.add(w);
       }
     }
 
     var viewPortFraction = maxWidth  / fullScreenWidth(context);
     return GFCarousel(
         height: maxHeight,
-        items: list as List<Widget>,
+        items: list,
         autoPlay: true,
         viewportFraction: viewPortFraction,
       );

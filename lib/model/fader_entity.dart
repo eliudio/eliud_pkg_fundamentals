@@ -50,7 +50,7 @@ class FaderEntity {
     if (itemsFromMap != null)
       itemsList = (map['items'] as List<dynamic>)
         .map((dynamic item) =>
-        ListedItemEntity.fromMap(item as Map))
+        ListedItemEntity.fromMap(item as Map)!)
         .toList();
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];

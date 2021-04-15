@@ -51,7 +51,7 @@ class SectionEntity {
     if (linksFromMap != null)
       linksList = (map['links'] as List<dynamic>)
         .map((dynamic item) =>
-        LinkEntity.fromMap(item as Map))
+        LinkEntity.fromMap(item as Map)!)
         .toList();
 
     return SectionEntity(

@@ -48,7 +48,7 @@ class BookletEntity {
     if (sectionsFromMap != null)
       sectionsList = (map['sections'] as List<dynamic>)
         .map((dynamic item) =>
-        SectionEntity.fromMap(item as Map))
+        SectionEntity.fromMap(item as Map)!)
         .toList();
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];

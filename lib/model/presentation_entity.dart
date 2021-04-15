@@ -52,7 +52,7 @@ class PresentationEntity {
     if (bodyComponentsFromMap != null)
       bodyComponentsList = (map['bodyComponents'] as List<dynamic>)
         .map((dynamic item) =>
-        BodyComponentEntity.fromMap(item as Map))
+        BodyComponentEntity.fromMap(item as Map)!)
         .toList();
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];

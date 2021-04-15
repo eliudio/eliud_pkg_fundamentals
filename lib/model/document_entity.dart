@@ -52,7 +52,7 @@ class DocumentEntity {
     if (imagesFromMap != null)
       imagesList = (map['images'] as List<dynamic>)
         .map((dynamic item) =>
-        DocumentItemEntity.fromMap(item as Map))
+        DocumentItemEntity.fromMap(item as Map)!)
         .toList();
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];

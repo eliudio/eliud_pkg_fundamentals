@@ -50,7 +50,7 @@ class TutorialEntity {
     if (tutorialEntriesFromMap != null)
       tutorialEntriesList = (map['tutorialEntries'] as List<dynamic>)
         .map((dynamic item) =>
-        TutorialEntryEntity.fromMap(item as Map))
+        TutorialEntryEntity.fromMap(item as Map)!)
         .toList();
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
