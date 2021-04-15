@@ -9,7 +9,7 @@ import 'package:eliud_pkg_fundamentals/model/divider_repository.dart';
 import 'package:flutter/material.dart';
 
 class DividerComponentConstructorDefault implements ComponentConstructor {
-  Widget createNew({String? id, Map<String, Object>? parameters}) {
+  Widget createNew({String? id, Map<String, dynamic>? parameters}) {
     return DividerComponent(dividerID: id);
   }
 }

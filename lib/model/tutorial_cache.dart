@@ -53,12 +53,12 @@ class TutorialCache implements TutorialRepository {
     return Future.value();
   }
 
-  Future<TutorialModel> get(String? id, {Function(Exception)? onError}) async {
+  Future<TutorialModel?> get(String? id, {Function(Exception)? onError}) async {
     var value = fullCache[id];
     if (value != null) return refreshRelations(value);
     value = await reference.get(id, onError: onError);
     fullCache[id] = value;
-    return Future.value(value);
+    return value;
   }
 
   Future<TutorialModel> update(TutorialModel value) {

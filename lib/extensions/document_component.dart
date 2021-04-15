@@ -9,7 +9,7 @@ import 'package:eliud_pkg_fundamentals/tools/document_renderer.dart';
 import 'package:flutter/material.dart';
 
 class DocumentComponentConstructorDefault implements ComponentConstructor {
-  Widget createNew({String? id, Map<String, Object>? parameters}) {
+  Widget createNew({String? id, Map<String, dynamic>? parameters}) {
     return DocumentComponent(documentID: id);
   }
 }

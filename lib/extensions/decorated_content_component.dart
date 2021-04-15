@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 class DecoratedContentComponentConstructorDefault
     implements ComponentConstructor {
   @override
-  Widget createNew({String? id, Map<String, Object>? parameters}) {
+  Widget createNew({String? id, Map<String, dynamic>? parameters}) {
     return DecoratedContentComponent(decoratedContentID: id);
   }
 }

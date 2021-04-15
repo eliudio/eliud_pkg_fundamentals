@@ -17,7 +17,7 @@ import 'package:transparent_image/transparent_image.dart';
 
 class TutorialComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({String? id, Map<String, Object>? parameters}) {
+  Widget createNew({String? id, Map<String, dynamic>? parameters}) {
     return TutorialComponent(tutorialID: id);
   }
 }

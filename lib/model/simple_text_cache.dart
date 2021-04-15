@@ -53,12 +53,12 @@ class SimpleTextCache implements SimpleTextRepository {
     return Future.value();
   }
 
-  Future<SimpleTextModel> get(String? id, {Function(Exception)? onError}) async {
+  Future<SimpleTextModel?> get(String? id, {Function(Exception)? onError}) async {
     var value = fullCache[id];
     if (value != null) return refreshRelations(value);
     value = await reference.get(id, onError: onError);
     fullCache[id] = value;
-    return Future.value(value);
+    return value;
   }
 
   Future<SimpleTextModel> update(SimpleTextModel value) {

@@ -14,7 +14,7 @@ import 'package:transparent_image/transparent_image.dart';
 
 class SimpleTextComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({String? id, Map<String, Object>? parameters}) {
+  Widget createNew({String? id, Map<String, dynamic>? parameters}) {
     return SimpleTextComponent(simpleTextID: id);
   }
 }

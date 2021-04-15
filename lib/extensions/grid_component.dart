@@ -11,7 +11,7 @@ import 'package:eliud_pkg_fundamentals/model/grid_component.dart';
 
 class GridComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({String? id, Map<String, Object>? parameters}) {
+  Widget createNew({String? id, Map<String, dynamic>? parameters}) {
     return GridComponent(gridID: id);
   }
 }

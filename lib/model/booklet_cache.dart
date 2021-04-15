@@ -53,12 +53,12 @@ class BookletCache implements BookletRepository {
     return Future.value();
   }
 
-  Future<BookletModel> get(String? id, {Function(Exception)? onError}) async {
+  Future<BookletModel?> get(String? id, {Function(Exception)? onError}) async {
     var value = fullCache[id];
     if (value != null) return refreshRelations(value);
     value = await reference.get(id, onError: onError);
     fullCache[id] = value;
-    return Future.value(value);
+    return value;
   }
 
   Future<BookletModel> update(BookletModel value) {
