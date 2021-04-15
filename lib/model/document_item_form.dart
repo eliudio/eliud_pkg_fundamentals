@@ -166,7 +166,7 @@ class _MyDocumentItemFormState extends State<MyDocumentItemForm> {
           _image= "";
       }
       if (state is DocumentItemFormInitialized) {
-        List<Widget?> children = [];
+        List<Widget> children = [];
         children.add(
 
                 TextFormField(

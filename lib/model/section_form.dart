@@ -190,7 +190,7 @@ class _MySectionFormState extends State<MySectionForm> {
           _imageWidthController.text = "";
       }
       if (state is SectionFormInitialized) {
-        List<Widget?> children = [];
+        List<Widget> children = [];
          children.add(Container(
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
