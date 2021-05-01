@@ -62,31 +62,31 @@ class ListedItemFormBloc extends Bloc<ListedItemFormEvent, ListedItemFormState> 
 
 
       if (event is InitialiseListedItemFormEvent) {
-        ListedItemFormLoaded loaded = ListedItemFormLoaded(value: event!.value);
+        ListedItemFormLoaded loaded = ListedItemFormLoaded(value: event.value);
         yield loaded;
         return;
       } else if (event is InitialiseListedItemFormNoLoadEvent) {
-        ListedItemFormLoaded loaded = ListedItemFormLoaded(value: event!.value);
+        ListedItemFormLoaded loaded = ListedItemFormLoaded(value: event.value);
         yield loaded;
         return;
       }
     } else if (currentState is ListedItemFormInitialized) {
       ListedItemModel? newValue = null;
       if (event is ChangedListedItemDescription) {
-        newValue = currentState.value!.copyWith(description: event!.value);
+        newValue = currentState.value!.copyWith(description: event.value);
         yield SubmittableListedItemForm(value: newValue);
 
         return;
       }
       if (event is ChangedListedItemAction) {
-        newValue = currentState.value!.copyWith(action: event!.value);
+        newValue = currentState.value!.copyWith(action: event.value);
         yield SubmittableListedItemForm(value: newValue);
 
         return;
       }
       if (event is ChangedListedItemImage) {
-        if (event!.value != null)
-          newValue = currentState.value!.copyWith(image: await memberMediumRepository(appId: appId)!.get(event!.value));
+        if (event.value != null)
+          newValue = currentState.value!.copyWith(image: await memberMediumRepository(appId: appId)!.get(event.value));
         else
           newValue = new ListedItemModel(
                                  documentID: currentState.value!.documentID,
@@ -100,8 +100,8 @@ class ListedItemFormBloc extends Bloc<ListedItemFormEvent, ListedItemFormState> 
         return;
       }
       if (event is ChangedListedItemPosSize) {
-        if (event!.value != null)
-          newValue = currentState.value!.copyWith(posSize: await posSizeRepository(appId: appId)!.get(event!.value));
+        if (event.value != null)
+          newValue = currentState.value!.copyWith(posSize: await posSizeRepository(appId: appId)!.get(event.value));
         else
           newValue = new ListedItemModel(
                                  documentID: currentState.value!.documentID,

@@ -25,7 +25,7 @@ class PresentationComponent extends AbstractPresentationComponent {
   Widget yourWidget(BuildContext context, PresentationModel? value) {
     var widgets = value!.bodyComponents!
         .map((model) => Registry.registry()!.component(
-        model!.componentName!, model.componentId!, parameters: parameters))
+        model.componentName!, model.componentId!, parameters: parameters))
         .toList();
     return PresentationHelper.makeContainingTable(context, widgets, value.image, value.imagePositionRelative, value.imageAlignment, value.imageWidth);
   }

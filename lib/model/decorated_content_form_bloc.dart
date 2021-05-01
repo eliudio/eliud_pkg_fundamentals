@@ -70,20 +70,20 @@ class DecoratedContentFormBloc extends Bloc<DecoratedContentFormEvent, Decorated
 
       if (event is InitialiseDecoratedContentFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        DecoratedContentFormLoaded loaded = DecoratedContentFormLoaded(value: await decoratedContentRepository(appId: appId)!.get(event!.value!.documentID));
+        DecoratedContentFormLoaded loaded = DecoratedContentFormLoaded(value: await decoratedContentRepository(appId: appId)!.get(event.value!.documentID));
         yield loaded;
         return;
       } else if (event is InitialiseDecoratedContentFormNoLoadEvent) {
-        DecoratedContentFormLoaded loaded = DecoratedContentFormLoaded(value: event!.value);
+        DecoratedContentFormLoaded loaded = DecoratedContentFormLoaded(value: event.value);
         yield loaded;
         return;
       }
     } else if (currentState is DecoratedContentFormInitialized) {
       DecoratedContentModel? newValue = null;
       if (event is ChangedDecoratedContentDocumentID) {
-        newValue = currentState.value!.copyWith(documentID: event!.value);
+        newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event!.value, newValue).asStream();
+          yield* _isDocumentIDValid(event.value, newValue).asStream();
         } else {
           yield SubmittableDecoratedContentForm(value: newValue);
         }
@@ -91,44 +91,44 @@ class DecoratedContentFormBloc extends Bloc<DecoratedContentFormEvent, Decorated
         return;
       }
       if (event is ChangedDecoratedContentName) {
-        newValue = currentState.value!.copyWith(name: event!.value);
+        newValue = currentState.value!.copyWith(name: event.value);
         yield SubmittableDecoratedContentForm(value: newValue);
 
         return;
       }
       if (event is ChangedDecoratedContentDecoratingComponentName) {
-        newValue = currentState.value!.copyWith(decoratingComponentName: event!.value);
+        newValue = currentState.value!.copyWith(decoratingComponentName: event.value);
         yield SubmittableDecoratedContentForm(value: newValue);
 
         return;
       }
       if (event is ChangedDecoratedContentDecoratingComponentId) {
-        newValue = currentState.value!.copyWith(decoratingComponentId: event!.value);
+        newValue = currentState.value!.copyWith(decoratingComponentId: event.value);
         yield SubmittableDecoratedContentForm(value: newValue);
 
         return;
       }
       if (event is ChangedDecoratedContentContentComponentName) {
-        newValue = currentState.value!.copyWith(contentComponentName: event!.value);
+        newValue = currentState.value!.copyWith(contentComponentName: event.value);
         yield SubmittableDecoratedContentForm(value: newValue);
 
         return;
       }
       if (event is ChangedDecoratedContentContentComponentId) {
-        newValue = currentState.value!.copyWith(contentComponentId: event!.value);
+        newValue = currentState.value!.copyWith(contentComponentId: event.value);
         yield SubmittableDecoratedContentForm(value: newValue);
 
         return;
       }
       if (event is ChangedDecoratedContentDecorationComponentPosition) {
-        newValue = currentState.value!.copyWith(decorationComponentPosition: event!.value);
+        newValue = currentState.value!.copyWith(decorationComponentPosition: event.value);
         yield SubmittableDecoratedContentForm(value: newValue);
 
         return;
       }
       if (event is ChangedDecoratedContentPercentageDecorationVisible) {
-        if (isDouble(event!.value!)) {
-          newValue = currentState.value!.copyWith(percentageDecorationVisible: double.parse(event!.value!));
+        if (isDouble(event.value!)) {
+          newValue = currentState.value!.copyWith(percentageDecorationVisible: double.parse(event.value!));
           yield SubmittableDecoratedContentForm(value: newValue);
 
         } else {
@@ -138,7 +138,7 @@ class DecoratedContentFormBloc extends Bloc<DecoratedContentFormEvent, Decorated
         return;
       }
       if (event is ChangedDecoratedContentConditions) {
-        newValue = currentState.value!.copyWith(conditions: event!.value);
+        newValue = currentState.value!.copyWith(conditions: event.value);
         yield SubmittableDecoratedContentForm(value: newValue);
 
         return;

@@ -68,20 +68,20 @@ class TutorialFormBloc extends Bloc<TutorialFormEvent, TutorialFormState> {
 
       if (event is InitialiseTutorialFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        TutorialFormLoaded loaded = TutorialFormLoaded(value: await tutorialRepository(appId: appId)!.get(event!.value!.documentID));
+        TutorialFormLoaded loaded = TutorialFormLoaded(value: await tutorialRepository(appId: appId)!.get(event.value!.documentID));
         yield loaded;
         return;
       } else if (event is InitialiseTutorialFormNoLoadEvent) {
-        TutorialFormLoaded loaded = TutorialFormLoaded(value: event!.value);
+        TutorialFormLoaded loaded = TutorialFormLoaded(value: event.value);
         yield loaded;
         return;
       }
     } else if (currentState is TutorialFormInitialized) {
       TutorialModel? newValue = null;
       if (event is ChangedTutorialDocumentID) {
-        newValue = currentState.value!.copyWith(documentID: event!.value);
+        newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event!.value, newValue).asStream();
+          yield* _isDocumentIDValid(event.value, newValue).asStream();
         } else {
           yield SubmittableTutorialForm(value: newValue);
         }
@@ -89,31 +89,31 @@ class TutorialFormBloc extends Bloc<TutorialFormEvent, TutorialFormState> {
         return;
       }
       if (event is ChangedTutorialName) {
-        newValue = currentState.value!.copyWith(name: event!.value);
+        newValue = currentState.value!.copyWith(name: event.value);
         yield SubmittableTutorialForm(value: newValue);
 
         return;
       }
       if (event is ChangedTutorialTitle) {
-        newValue = currentState.value!.copyWith(title: event!.value);
+        newValue = currentState.value!.copyWith(title: event.value);
         yield SubmittableTutorialForm(value: newValue);
 
         return;
       }
       if (event is ChangedTutorialDescription) {
-        newValue = currentState.value!.copyWith(description: event!.value);
+        newValue = currentState.value!.copyWith(description: event.value);
         yield SubmittableTutorialForm(value: newValue);
 
         return;
       }
       if (event is ChangedTutorialTutorialEntries) {
-        newValue = currentState.value!.copyWith(tutorialEntries: event!.value);
+        newValue = currentState.value!.copyWith(tutorialEntries: event.value);
         yield SubmittableTutorialForm(value: newValue);
 
         return;
       }
       if (event is ChangedTutorialConditions) {
-        newValue = currentState.value!.copyWith(conditions: event!.value);
+        newValue = currentState.value!.copyWith(conditions: event.value);
         yield SubmittableTutorialForm(value: newValue);
 
         return;

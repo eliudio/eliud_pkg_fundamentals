@@ -65,20 +65,20 @@ class PlayStoreFormBloc extends Bloc<PlayStoreFormEvent, PlayStoreFormState> {
 
       if (event is InitialisePlayStoreFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        PlayStoreFormLoaded loaded = PlayStoreFormLoaded(value: await playStoreRepository(appId: appId)!.get(event!.value!.documentID));
+        PlayStoreFormLoaded loaded = PlayStoreFormLoaded(value: await playStoreRepository(appId: appId)!.get(event.value!.documentID));
         yield loaded;
         return;
       } else if (event is InitialisePlayStoreFormNoLoadEvent) {
-        PlayStoreFormLoaded loaded = PlayStoreFormLoaded(value: event!.value);
+        PlayStoreFormLoaded loaded = PlayStoreFormLoaded(value: event.value);
         yield loaded;
         return;
       }
     } else if (currentState is PlayStoreFormInitialized) {
       PlayStoreModel? newValue = null;
       if (event is ChangedPlayStoreDocumentID) {
-        newValue = currentState.value!.copyWith(documentID: event!.value);
+        newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event!.value, newValue).asStream();
+          yield* _isDocumentIDValid(event.value, newValue).asStream();
         } else {
           yield SubmittablePlayStoreForm(value: newValue);
         }
@@ -86,14 +86,14 @@ class PlayStoreFormBloc extends Bloc<PlayStoreFormEvent, PlayStoreFormState> {
         return;
       }
       if (event is ChangedPlayStoreDescription) {
-        newValue = currentState.value!.copyWith(description: event!.value);
+        newValue = currentState.value!.copyWith(description: event.value);
         yield SubmittablePlayStoreForm(value: newValue);
 
         return;
       }
       if (event is ChangedPlayStoreItemBackground) {
-        if (event!.value != null)
-          newValue = currentState.value!.copyWith(itemBackground: await backgroundRepository(appId: appId)!.get(event!.value));
+        if (event.value != null)
+          newValue = currentState.value!.copyWith(itemBackground: await backgroundRepository(appId: appId)!.get(event.value));
         else
           newValue = new PlayStoreModel(
                                  documentID: currentState.value!.documentID,
@@ -107,7 +107,7 @@ class PlayStoreFormBloc extends Bloc<PlayStoreFormEvent, PlayStoreFormState> {
         return;
       }
       if (event is ChangedPlayStoreConditions) {
-        newValue = currentState.value!.copyWith(conditions: event!.value);
+        newValue = currentState.value!.copyWith(conditions: event.value);
         yield SubmittablePlayStoreForm(value: newValue);
 
         return;

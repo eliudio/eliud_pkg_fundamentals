@@ -65,20 +65,20 @@ class SimpleImageFormBloc extends Bloc<SimpleImageFormEvent, SimpleImageFormStat
 
       if (event is InitialiseSimpleImageFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        SimpleImageFormLoaded loaded = SimpleImageFormLoaded(value: await simpleImageRepository(appId: appId)!.get(event!.value!.documentID));
+        SimpleImageFormLoaded loaded = SimpleImageFormLoaded(value: await simpleImageRepository(appId: appId)!.get(event.value!.documentID));
         yield loaded;
         return;
       } else if (event is InitialiseSimpleImageFormNoLoadEvent) {
-        SimpleImageFormLoaded loaded = SimpleImageFormLoaded(value: event!.value);
+        SimpleImageFormLoaded loaded = SimpleImageFormLoaded(value: event.value);
         yield loaded;
         return;
       }
     } else if (currentState is SimpleImageFormInitialized) {
       SimpleImageModel? newValue = null;
       if (event is ChangedSimpleImageDocumentID) {
-        newValue = currentState.value!.copyWith(documentID: event!.value);
+        newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event!.value, newValue).asStream();
+          yield* _isDocumentIDValid(event.value, newValue).asStream();
         } else {
           yield SubmittableSimpleImageForm(value: newValue);
         }
@@ -86,14 +86,14 @@ class SimpleImageFormBloc extends Bloc<SimpleImageFormEvent, SimpleImageFormStat
         return;
       }
       if (event is ChangedSimpleImageTitle) {
-        newValue = currentState.value!.copyWith(title: event!.value);
+        newValue = currentState.value!.copyWith(title: event.value);
         yield SubmittableSimpleImageForm(value: newValue);
 
         return;
       }
       if (event is ChangedSimpleImageImage) {
-        if (event!.value != null)
-          newValue = currentState.value!.copyWith(image: await memberMediumRepository(appId: appId)!.get(event!.value));
+        if (event.value != null)
+          newValue = currentState.value!.copyWith(image: await memberMediumRepository(appId: appId)!.get(event.value));
         else
           newValue = new SimpleImageModel(
                                  documentID: currentState.value!.documentID,
@@ -107,7 +107,7 @@ class SimpleImageFormBloc extends Bloc<SimpleImageFormEvent, SimpleImageFormStat
         return;
       }
       if (event is ChangedSimpleImageConditions) {
-        newValue = currentState.value!.copyWith(conditions: event!.value);
+        newValue = currentState.value!.copyWith(conditions: event.value);
         yield SubmittableSimpleImageForm(value: newValue);
 
         return;

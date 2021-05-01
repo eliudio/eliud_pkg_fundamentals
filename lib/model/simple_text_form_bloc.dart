@@ -66,20 +66,20 @@ class SimpleTextFormBloc extends Bloc<SimpleTextFormEvent, SimpleTextFormState> 
 
       if (event is InitialiseSimpleTextFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        SimpleTextFormLoaded loaded = SimpleTextFormLoaded(value: await simpleTextRepository(appId: appId)!.get(event!.value!.documentID));
+        SimpleTextFormLoaded loaded = SimpleTextFormLoaded(value: await simpleTextRepository(appId: appId)!.get(event.value!.documentID));
         yield loaded;
         return;
       } else if (event is InitialiseSimpleTextFormNoLoadEvent) {
-        SimpleTextFormLoaded loaded = SimpleTextFormLoaded(value: event!.value);
+        SimpleTextFormLoaded loaded = SimpleTextFormLoaded(value: event.value);
         yield loaded;
         return;
       }
     } else if (currentState is SimpleTextFormInitialized) {
       SimpleTextModel? newValue = null;
       if (event is ChangedSimpleTextDocumentID) {
-        newValue = currentState.value!.copyWith(documentID: event!.value);
+        newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event!.value, newValue).asStream();
+          yield* _isDocumentIDValid(event.value, newValue).asStream();
         } else {
           yield SubmittableSimpleTextForm(value: newValue);
         }
@@ -87,25 +87,25 @@ class SimpleTextFormBloc extends Bloc<SimpleTextFormEvent, SimpleTextFormState> 
         return;
       }
       if (event is ChangedSimpleTextTitle) {
-        newValue = currentState.value!.copyWith(title: event!.value);
+        newValue = currentState.value!.copyWith(title: event.value);
         yield SubmittableSimpleTextForm(value: newValue);
 
         return;
       }
       if (event is ChangedSimpleTextText) {
-        newValue = currentState.value!.copyWith(text: event!.value);
+        newValue = currentState.value!.copyWith(text: event.value);
         yield SubmittableSimpleTextForm(value: newValue);
 
         return;
       }
       if (event is ChangedSimpleTextConditions) {
-        newValue = currentState.value!.copyWith(conditions: event!.value);
+        newValue = currentState.value!.copyWith(conditions: event.value);
         yield SubmittableSimpleTextForm(value: newValue);
 
         return;
       }
       if (event is ChangedSimpleTextTextAlign) {
-        newValue = currentState.value!.copyWith(textAlign: event!.value);
+        newValue = currentState.value!.copyWith(textAlign: event.value);
         yield SubmittableSimpleTextForm(value: newValue);
 
         return;

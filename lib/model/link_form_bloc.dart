@@ -58,24 +58,24 @@ class LinkFormBloc extends Bloc<LinkFormEvent, LinkFormState> {
 
 
       if (event is InitialiseLinkFormEvent) {
-        LinkFormLoaded loaded = LinkFormLoaded(value: event!.value);
+        LinkFormLoaded loaded = LinkFormLoaded(value: event.value);
         yield loaded;
         return;
       } else if (event is InitialiseLinkFormNoLoadEvent) {
-        LinkFormLoaded loaded = LinkFormLoaded(value: event!.value);
+        LinkFormLoaded loaded = LinkFormLoaded(value: event.value);
         yield loaded;
         return;
       }
     } else if (currentState is LinkFormInitialized) {
       LinkModel? newValue = null;
       if (event is ChangedLinkLinkText) {
-        newValue = currentState.value!.copyWith(linkText: event!.value);
+        newValue = currentState.value!.copyWith(linkText: event.value);
         yield SubmittableLinkForm(value: newValue);
 
         return;
       }
       if (event is ChangedLinkAction) {
-        newValue = currentState.value!.copyWith(action: event!.value);
+        newValue = currentState.value!.copyWith(action: event.value);
         yield SubmittableLinkForm(value: newValue);
 
         return;

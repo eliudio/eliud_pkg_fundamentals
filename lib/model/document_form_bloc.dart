@@ -68,20 +68,20 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
 
       if (event is InitialiseDocumentFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        DocumentFormLoaded loaded = DocumentFormLoaded(value: await documentRepository(appId: appId)!.get(event!.value!.documentID));
+        DocumentFormLoaded loaded = DocumentFormLoaded(value: await documentRepository(appId: appId)!.get(event.value!.documentID));
         yield loaded;
         return;
       } else if (event is InitialiseDocumentFormNoLoadEvent) {
-        DocumentFormLoaded loaded = DocumentFormLoaded(value: event!.value);
+        DocumentFormLoaded loaded = DocumentFormLoaded(value: event.value);
         yield loaded;
         return;
       }
     } else if (currentState is DocumentFormInitialized) {
       DocumentModel? newValue = null;
       if (event is ChangedDocumentDocumentID) {
-        newValue = currentState.value!.copyWith(documentID: event!.value);
+        newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event!.value, newValue).asStream();
+          yield* _isDocumentIDValid(event.value, newValue).asStream();
         } else {
           yield SubmittableDocumentForm(value: newValue);
         }
@@ -89,26 +89,26 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
         return;
       }
       if (event is ChangedDocumentName) {
-        newValue = currentState.value!.copyWith(name: event!.value);
+        newValue = currentState.value!.copyWith(name: event.value);
         yield SubmittableDocumentForm(value: newValue);
 
         return;
       }
       if (event is ChangedDocumentDocumentRenderer) {
-        newValue = currentState.value!.copyWith(documentRenderer: event!.value);
+        newValue = currentState.value!.copyWith(documentRenderer: event.value);
         yield SubmittableDocumentForm(value: newValue);
 
         return;
       }
       if (event is ChangedDocumentContent) {
-        newValue = currentState.value!.copyWith(content: event!.value);
+        newValue = currentState.value!.copyWith(content: event.value);
         yield SubmittableDocumentForm(value: newValue);
 
         return;
       }
       if (event is ChangedDocumentPadding) {
-        if (isDouble(event!.value!)) {
-          newValue = currentState.value!.copyWith(padding: double.parse(event!.value!));
+        if (isDouble(event.value!)) {
+          newValue = currentState.value!.copyWith(padding: double.parse(event.value!));
           yield SubmittableDocumentForm(value: newValue);
 
         } else {
@@ -118,14 +118,14 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
         return;
       }
       if (event is ChangedDocumentImages) {
-        newValue = currentState.value!.copyWith(images: event!.value);
+        newValue = currentState.value!.copyWith(images: event.value);
         yield SubmittableDocumentForm(value: newValue);
 
         return;
       }
       if (event is ChangedDocumentBackground) {
-        if (event!.value != null)
-          newValue = currentState.value!.copyWith(background: await backgroundRepository(appId: appId)!.get(event!.value));
+        if (event.value != null)
+          newValue = currentState.value!.copyWith(background: await backgroundRepository(appId: appId)!.get(event.value));
         else
           newValue = new DocumentModel(
                                  documentID: currentState.value!.documentID,
@@ -143,7 +143,7 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
         return;
       }
       if (event is ChangedDocumentConditions) {
-        newValue = currentState.value!.copyWith(conditions: event!.value);
+        newValue = currentState.value!.copyWith(conditions: event.value);
         yield SubmittableDocumentForm(value: newValue);
 
         return;

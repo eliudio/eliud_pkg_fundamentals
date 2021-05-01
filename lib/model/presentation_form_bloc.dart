@@ -67,20 +67,20 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
 
       if (event is InitialisePresentationFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        PresentationFormLoaded loaded = PresentationFormLoaded(value: await presentationRepository(appId: appId)!.get(event!.value!.documentID));
+        PresentationFormLoaded loaded = PresentationFormLoaded(value: await presentationRepository(appId: appId)!.get(event.value!.documentID));
         yield loaded;
         return;
       } else if (event is InitialisePresentationFormNoLoadEvent) {
-        PresentationFormLoaded loaded = PresentationFormLoaded(value: event!.value);
+        PresentationFormLoaded loaded = PresentationFormLoaded(value: event.value);
         yield loaded;
         return;
       }
     } else if (currentState is PresentationFormInitialized) {
       PresentationModel? newValue = null;
       if (event is ChangedPresentationDocumentID) {
-        newValue = currentState.value!.copyWith(documentID: event!.value);
+        newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event!.value, newValue).asStream();
+          yield* _isDocumentIDValid(event.value, newValue).asStream();
         } else {
           yield SubmittablePresentationForm(value: newValue);
         }
@@ -88,20 +88,20 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
         return;
       }
       if (event is ChangedPresentationTitle) {
-        newValue = currentState.value!.copyWith(title: event!.value);
+        newValue = currentState.value!.copyWith(title: event.value);
         yield SubmittablePresentationForm(value: newValue);
 
         return;
       }
       if (event is ChangedPresentationBodyComponents) {
-        newValue = currentState.value!.copyWith(bodyComponents: event!.value);
+        newValue = currentState.value!.copyWith(bodyComponents: event.value);
         yield SubmittablePresentationForm(value: newValue);
 
         return;
       }
       if (event is ChangedPresentationImage) {
-        if (event!.value != null)
-          newValue = currentState.value!.copyWith(image: await memberMediumRepository(appId: appId)!.get(event!.value));
+        if (event.value != null)
+          newValue = currentState.value!.copyWith(image: await memberMediumRepository(appId: appId)!.get(event.value));
         else
           newValue = new PresentationModel(
                                  documentID: currentState.value!.documentID,
@@ -119,20 +119,20 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
         return;
       }
       if (event is ChangedPresentationImagePositionRelative) {
-        newValue = currentState.value!.copyWith(imagePositionRelative: event!.value);
+        newValue = currentState.value!.copyWith(imagePositionRelative: event.value);
         yield SubmittablePresentationForm(value: newValue);
 
         return;
       }
       if (event is ChangedPresentationImageAlignment) {
-        newValue = currentState.value!.copyWith(imageAlignment: event!.value);
+        newValue = currentState.value!.copyWith(imageAlignment: event.value);
         yield SubmittablePresentationForm(value: newValue);
 
         return;
       }
       if (event is ChangedPresentationImageWidth) {
-        if (isDouble(event!.value!)) {
-          newValue = currentState.value!.copyWith(imageWidth: double.parse(event!.value!));
+        if (isDouble(event.value!)) {
+          newValue = currentState.value!.copyWith(imageWidth: double.parse(event.value!));
           yield SubmittablePresentationForm(value: newValue);
 
         } else {
@@ -142,7 +142,7 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
         return;
       }
       if (event is ChangedPresentationConditions) {
-        newValue = currentState.value!.copyWith(conditions: event!.value);
+        newValue = currentState.value!.copyWith(conditions: event.value);
         yield SubmittablePresentationForm(value: newValue);
 
         return;

@@ -72,6 +72,7 @@ class DecoratedContentForm extends StatelessWidget {
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
     var app = AccessBloc.app(context);
+    if (app == null) return Text("No app available");
     if (formAction == FormAction.ShowData) {
       return BlocProvider<DecoratedContentFormBloc >(
             create: (context) => DecoratedContentFormBloc(AccessBloc.appId(context),
@@ -94,14 +95,14 @@ class DecoratedContentForm extends StatelessWidget {
       return Scaffold(
         appBar: formAction == FormAction.UpdateAction ?
                 AppBar(
-                    title: Text("Update DecoratedContent", style: TextStyle(color: RgbHelper.color(rgbo: app!.formAppBarTextColor))),
+                    title: Text("Update DecoratedContent", style: TextStyle(color: RgbHelper.color(rgbo: app.formAppBarTextColor))),
                     flexibleSpace: Container(
-                        decoration: BoxDecorationHelper.boxDecoration(accessState, app!.formAppBarBackground)),
+                        decoration: BoxDecorationHelper.boxDecoration(accessState, app.formAppBarBackground)),
                   ) :
                 AppBar(
-                    title: Text("Add DecoratedContent", style: TextStyle(color: RgbHelper.color(rgbo: app!.formAppBarTextColor))),
+                    title: Text("Add DecoratedContent", style: TextStyle(color: RgbHelper.color(rgbo: app.formAppBarTextColor))),
                     flexibleSpace: Container(
-                        decoration: BoxDecorationHelper.boxDecoration(accessState, app!.formAppBarBackground)),
+                        decoration: BoxDecorationHelper.boxDecoration(accessState, app.formAppBarBackground)),
                 ),
         body: BlocProvider<DecoratedContentFormBloc >(
             create: (context) => DecoratedContentFormBloc(AccessBloc.appId(context),
@@ -153,6 +154,7 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
   @override
   Widget build(BuildContext context) {
     var app = AccessBloc.app(context);
+    if (app == null) return Text('No app available');
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<DecoratedContentFormBloc, DecoratedContentFormState>(builder: (context, state) {
       if (state is DecoratedContentFormUninitialized) return Center(
@@ -188,7 +190,7 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: Text('General',
                       style: TextStyle(
-                          color: RgbHelper.color(rgbo: app!.formGroupTitleColor), fontWeight: FontWeight.bold)),
+                          color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
                 ));
 
         children.add(
@@ -214,11 +216,11 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
         children.add(
 
                 TextFormField(
-                style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor)),
+                style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
                   readOnly: _readOnly(accessState, state),
                   controller: _percentageDecorationVisibleController,
                   decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app!.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app!.formFieldHeaderColor)),
+                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
                     labelText: 'Percentage Decoration Visible',
                   ),
                   keyboardType: TextInputType.number,
@@ -231,7 +233,7 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
 
 
         children.add(Container(height: 20.0));
-        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app!.dividerColor)));
+        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
 
 
          children.add(Container(
@@ -239,17 +241,17 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: Text('General',
                       style: TextStyle(
-                          color: RgbHelper.color(rgbo: app!.formGroupTitleColor), fontWeight: FontWeight.bold)),
+                          color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
                 ));
 
         children.add(
 
                 TextFormField(
-                style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor)),
+                style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
                   readOnly: (formAction == FormAction.UpdateAction),
                   controller: _documentIDController,
                   decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app!.formFieldFocusColor))),                    icon: Icon(Icons.vpn_key, color: RgbHelper.color(rgbo: app!.formFieldHeaderColor)),
+                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.vpn_key, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
                     labelText: 'Document ID',
                   ),
                   keyboardType: TextInputType.text,
@@ -263,11 +265,11 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
         children.add(
 
                 TextFormField(
-                style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor)),
+                style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor)),
                   readOnly: _readOnly(accessState, state),
                   controller: _nameController,
                   decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app!.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app!.formFieldHeaderColor)),
+                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldTextColor))),                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: RgbHelper.color(rgbo: app.formFieldFocusColor))),                    icon: Icon(Icons.text_format, color: RgbHelper.color(rgbo: app.formFieldHeaderColor)),
                     labelText: 'Name',
                   ),
                   keyboardType: TextInputType.text,
@@ -280,7 +282,7 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
 
 
         children.add(Container(height: 20.0));
-        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app!.dividerColor)));
+        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
 
 
          children.add(Container(
@@ -288,13 +290,13 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: Text('Conditions',
                       style: TextStyle(
-                          color: RgbHelper.color(rgbo: app!.formGroupTitleColor), fontWeight: FontWeight.bold)),
+                          color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
                 ));
 
 
 
         children.add(Container(height: 20.0));
-        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app!.dividerColor)));
+        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
 
 
          children.add(Container(
@@ -302,17 +304,17 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: Text('Conditions',
                       style: TextStyle(
-                          color: RgbHelper.color(rgbo: app!.formGroupTitleColor), fontWeight: FontWeight.bold)),
+                          color: RgbHelper.color(rgbo: app.formGroupTitleColor), fontWeight: FontWeight.bold)),
                 ));
 
         children.add(
 
                 RadioListTile(
                     value: 0,
-                    activeColor: RgbHelper.color(rgbo: app!.formFieldTextColor),
+                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
                     groupValue: _decorationComponentPositionSelectedRadioTile,
-                    title: Text("LeftIfSpaceAvailableOtherwiseTop", style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),
-                    subtitle: Text("LeftIfSpaceAvailableOtherwiseTop", style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),
+                    title: Text("LeftIfSpaceAvailableOtherwiseTop", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    subtitle: Text("LeftIfSpaceAvailableOtherwiseTop", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     onChanged: !accessState.memberIsOwner() ? null : (dynamic val) {
                       setSelectionDecorationComponentPosition(val);
                     },
@@ -322,10 +324,10 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
 
                 RadioListTile(
                     value: 1,
-                    activeColor: RgbHelper.color(rgbo: app!.formFieldTextColor),
+                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
                     groupValue: _decorationComponentPositionSelectedRadioTile,
-                    title: Text("LeftIfSpaceAvailableOtherwiseDrop", style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),
-                    subtitle: Text("LeftIfSpaceAvailableOtherwiseDrop", style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),
+                    title: Text("LeftIfSpaceAvailableOtherwiseDrop", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    subtitle: Text("LeftIfSpaceAvailableOtherwiseDrop", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     onChanged: !accessState.memberIsOwner() ? null : (dynamic val) {
                       setSelectionDecorationComponentPosition(val);
                     },
@@ -335,10 +337,10 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
 
                 RadioListTile(
                     value: 2,
-                    activeColor: RgbHelper.color(rgbo: app!.formFieldTextColor),
+                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
                     groupValue: _decorationComponentPositionSelectedRadioTile,
-                    title: Text("LeftIfSpaceAvailableOtherwiseBottom", style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),
-                    subtitle: Text("LeftIfSpaceAvailableOtherwiseBottom", style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),
+                    title: Text("LeftIfSpaceAvailableOtherwiseBottom", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    subtitle: Text("LeftIfSpaceAvailableOtherwiseBottom", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     onChanged: !accessState.memberIsOwner() ? null : (dynamic val) {
                       setSelectionDecorationComponentPosition(val);
                     },
@@ -348,10 +350,10 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
 
                 RadioListTile(
                     value: 3,
-                    activeColor: RgbHelper.color(rgbo: app!.formFieldTextColor),
+                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
                     groupValue: _decorationComponentPositionSelectedRadioTile,
-                    title: Text("RightIfSpaceAvailableOtherwiseTop", style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),
-                    subtitle: Text("RightIfSpaceAvailableOtherwiseTop", style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),
+                    title: Text("RightIfSpaceAvailableOtherwiseTop", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    subtitle: Text("RightIfSpaceAvailableOtherwiseTop", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     onChanged: !accessState.memberIsOwner() ? null : (dynamic val) {
                       setSelectionDecorationComponentPosition(val);
                     },
@@ -361,10 +363,10 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
 
                 RadioListTile(
                     value: 4,
-                    activeColor: RgbHelper.color(rgbo: app!.formFieldTextColor),
+                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
                     groupValue: _decorationComponentPositionSelectedRadioTile,
-                    title: Text("RightIfSpaceAvailableOtherwiseDrop", style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),
-                    subtitle: Text("RightIfSpaceAvailableOtherwiseDrop", style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),
+                    title: Text("RightIfSpaceAvailableOtherwiseDrop", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    subtitle: Text("RightIfSpaceAvailableOtherwiseDrop", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     onChanged: !accessState.memberIsOwner() ? null : (dynamic val) {
                       setSelectionDecorationComponentPosition(val);
                     },
@@ -374,10 +376,10 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
 
                 RadioListTile(
                     value: 5,
-                    activeColor: RgbHelper.color(rgbo: app!.formFieldTextColor),
+                    activeColor: RgbHelper.color(rgbo: app.formFieldTextColor),
                     groupValue: _decorationComponentPositionSelectedRadioTile,
-                    title: Text("RightIfSpaceAvailableOtherwiseBottom", style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),
-                    subtitle: Text("RightIfSpaceAvailableOtherwiseBottom", style: TextStyle(color: RgbHelper.color(rgbo: app!.formFieldTextColor))),
+                    title: Text("RightIfSpaceAvailableOtherwiseBottom", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
+                    subtitle: Text("RightIfSpaceAvailableOtherwiseBottom", style: TextStyle(color: RgbHelper.color(rgbo: app.formFieldTextColor))),
                     onChanged: !accessState.memberIsOwner() ? null : (dynamic val) {
                       setSelectionDecorationComponentPosition(val);
                     },
@@ -386,12 +388,12 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
 
 
         children.add(Container(height: 20.0));
-        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app!.dividerColor)));
+        children.add(Divider(height: 1.0, thickness: 1.0, color: RgbHelper.color(rgbo: app.dividerColor)));
 
 
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
           children.add(RaisedButton(
-                  color: RgbHelper.color(rgbo: app!.formSubmitButtonColor),
+                  color: RgbHelper.color(rgbo: app.formSubmitButtonColor),
                   onPressed: _readOnly(accessState, state) ? null : () {
                     if (state is DecoratedContentFormError) {
                       return null;
@@ -432,12 +434,12 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
                       }
                     }
                   },
-                  child: Text('Submit', style: TextStyle(color: RgbHelper.color(rgbo: app!.formSubmitButtonTextColor))),
+                  child: Text('Submit', style: TextStyle(color: RgbHelper.color(rgbo: app.formSubmitButtonTextColor))),
                 ));
 
         return Container(
           color: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? Colors.transparent : null,
-          decoration: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? null : BoxDecorationHelper.boxDecoration(accessState, app!.formBackground),
+          decoration: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? null : BoxDecorationHelper.boxDecoration(accessState, app.formBackground),
           padding:
           const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
             child: Form(

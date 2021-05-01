@@ -66,20 +66,20 @@ class BookletFormBloc extends Bloc<BookletFormEvent, BookletFormState> {
 
       if (event is InitialiseBookletFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        BookletFormLoaded loaded = BookletFormLoaded(value: await bookletRepository(appId: appId)!.get(event!.value!.documentID));
+        BookletFormLoaded loaded = BookletFormLoaded(value: await bookletRepository(appId: appId)!.get(event.value!.documentID));
         yield loaded;
         return;
       } else if (event is InitialiseBookletFormNoLoadEvent) {
-        BookletFormLoaded loaded = BookletFormLoaded(value: event!.value);
+        BookletFormLoaded loaded = BookletFormLoaded(value: event.value);
         yield loaded;
         return;
       }
     } else if (currentState is BookletFormInitialized) {
       BookletModel? newValue = null;
       if (event is ChangedBookletDocumentID) {
-        newValue = currentState.value!.copyWith(documentID: event!.value);
+        newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event!.value, newValue).asStream();
+          yield* _isDocumentIDValid(event.value, newValue).asStream();
         } else {
           yield SubmittableBookletForm(value: newValue);
         }
@@ -87,19 +87,19 @@ class BookletFormBloc extends Bloc<BookletFormEvent, BookletFormState> {
         return;
       }
       if (event is ChangedBookletName) {
-        newValue = currentState.value!.copyWith(name: event!.value);
+        newValue = currentState.value!.copyWith(name: event.value);
         yield SubmittableBookletForm(value: newValue);
 
         return;
       }
       if (event is ChangedBookletSections) {
-        newValue = currentState.value!.copyWith(sections: event!.value);
+        newValue = currentState.value!.copyWith(sections: event.value);
         yield SubmittableBookletForm(value: newValue);
 
         return;
       }
       if (event is ChangedBookletConditions) {
-        newValue = currentState.value!.copyWith(conditions: event!.value);
+        newValue = currentState.value!.copyWith(conditions: event.value);
         yield SubmittableBookletForm(value: newValue);
 
         return;

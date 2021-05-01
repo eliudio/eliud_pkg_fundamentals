@@ -70,20 +70,20 @@ class DividerFormBloc extends Bloc<DividerFormEvent, DividerFormState> {
 
       if (event is InitialiseDividerFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
-        DividerFormLoaded loaded = DividerFormLoaded(value: await dividerRepository(appId: appId)!.get(event!.value!.documentID));
+        DividerFormLoaded loaded = DividerFormLoaded(value: await dividerRepository(appId: appId)!.get(event.value!.documentID));
         yield loaded;
         return;
       } else if (event is InitialiseDividerFormNoLoadEvent) {
-        DividerFormLoaded loaded = DividerFormLoaded(value: event!.value);
+        DividerFormLoaded loaded = DividerFormLoaded(value: event.value);
         yield loaded;
         return;
       }
     } else if (currentState is DividerFormInitialized) {
       DividerModel? newValue = null;
       if (event is ChangedDividerDocumentID) {
-        newValue = currentState.value!.copyWith(documentID: event!.value);
+        newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event!.value, newValue).asStream();
+          yield* _isDocumentIDValid(event.value, newValue).asStream();
         } else {
           yield SubmittableDividerForm(value: newValue);
         }
@@ -91,20 +91,20 @@ class DividerFormBloc extends Bloc<DividerFormEvent, DividerFormState> {
         return;
       }
       if (event is ChangedDividerName) {
-        newValue = currentState.value!.copyWith(name: event!.value);
+        newValue = currentState.value!.copyWith(name: event.value);
         yield SubmittableDividerForm(value: newValue);
 
         return;
       }
       if (event is ChangedDividerColor) {
-        newValue = currentState.value!.copyWith(color: event!.value);
+        newValue = currentState.value!.copyWith(color: event.value);
         yield SubmittableDividerForm(value: newValue);
 
         return;
       }
       if (event is ChangedDividerHeight) {
-        if (isDouble(event!.value!)) {
-          newValue = currentState.value!.copyWith(height: double.parse(event!.value!));
+        if (isDouble(event.value!)) {
+          newValue = currentState.value!.copyWith(height: double.parse(event.value!));
           yield SubmittableDividerForm(value: newValue);
 
         } else {
@@ -114,8 +114,8 @@ class DividerFormBloc extends Bloc<DividerFormEvent, DividerFormState> {
         return;
       }
       if (event is ChangedDividerThickness) {
-        if (isDouble(event!.value!)) {
-          newValue = currentState.value!.copyWith(thickness: double.parse(event!.value!));
+        if (isDouble(event.value!)) {
+          newValue = currentState.value!.copyWith(thickness: double.parse(event.value!));
           yield SubmittableDividerForm(value: newValue);
 
         } else {
@@ -125,8 +125,8 @@ class DividerFormBloc extends Bloc<DividerFormEvent, DividerFormState> {
         return;
       }
       if (event is ChangedDividerIndent) {
-        if (isDouble(event!.value!)) {
-          newValue = currentState.value!.copyWith(indent: double.parse(event!.value!));
+        if (isDouble(event.value!)) {
+          newValue = currentState.value!.copyWith(indent: double.parse(event.value!));
           yield SubmittableDividerForm(value: newValue);
 
         } else {
@@ -136,8 +136,8 @@ class DividerFormBloc extends Bloc<DividerFormEvent, DividerFormState> {
         return;
       }
       if (event is ChangedDividerEndIndent) {
-        if (isDouble(event!.value!)) {
-          newValue = currentState.value!.copyWith(endIndent: double.parse(event!.value!));
+        if (isDouble(event.value!)) {
+          newValue = currentState.value!.copyWith(endIndent: double.parse(event.value!));
           yield SubmittableDividerForm(value: newValue);
 
         } else {
@@ -147,7 +147,7 @@ class DividerFormBloc extends Bloc<DividerFormEvent, DividerFormState> {
         return;
       }
       if (event is ChangedDividerConditions) {
-        newValue = currentState.value!.copyWith(conditions: event!.value);
+        newValue = currentState.value!.copyWith(conditions: event.value);
         yield SubmittableDividerForm(value: newValue);
 
         return;

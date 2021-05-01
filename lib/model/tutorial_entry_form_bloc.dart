@@ -63,25 +63,25 @@ class TutorialEntryFormBloc extends Bloc<TutorialEntryFormEvent, TutorialEntryFo
 
 
       if (event is InitialiseTutorialEntryFormEvent) {
-        TutorialEntryFormLoaded loaded = TutorialEntryFormLoaded(value: event!.value);
+        TutorialEntryFormLoaded loaded = TutorialEntryFormLoaded(value: event.value);
         yield loaded;
         return;
       } else if (event is InitialiseTutorialEntryFormNoLoadEvent) {
-        TutorialEntryFormLoaded loaded = TutorialEntryFormLoaded(value: event!.value);
+        TutorialEntryFormLoaded loaded = TutorialEntryFormLoaded(value: event.value);
         yield loaded;
         return;
       }
     } else if (currentState is TutorialEntryFormInitialized) {
       TutorialEntryModel? newValue = null;
       if (event is ChangedTutorialEntryDescription) {
-        newValue = currentState.value!.copyWith(description: event!.value);
+        newValue = currentState.value!.copyWith(description: event.value);
         yield SubmittableTutorialEntryForm(value: newValue);
 
         return;
       }
       if (event is ChangedTutorialEntryImage) {
-        if (event!.value != null)
-          newValue = currentState.value!.copyWith(image: await memberMediumRepository(appId: appId)!.get(event!.value));
+        if (event.value != null)
+          newValue = currentState.value!.copyWith(image: await memberMediumRepository(appId: appId)!.get(event.value));
         else
           newValue = new TutorialEntryModel(
                                  documentID: currentState.value!.documentID,
@@ -94,7 +94,7 @@ class TutorialEntryFormBloc extends Bloc<TutorialEntryFormEvent, TutorialEntryFo
         return;
       }
       if (event is ChangedTutorialEntryCode) {
-        newValue = currentState.value!.copyWith(code: event!.value);
+        newValue = currentState.value!.copyWith(code: event.value);
         yield SubmittableTutorialEntryForm(value: newValue);
 
         return;

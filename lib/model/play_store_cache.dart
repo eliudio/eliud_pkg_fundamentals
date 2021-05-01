@@ -42,13 +42,13 @@ class PlayStoreCache implements PlayStoreRepository {
 
   Future<PlayStoreModel> add(PlayStoreModel value) {
     return reference.add(value).then((newValue) {
-      fullCache[value!.documentID] = newValue;
+      fullCache[value.documentID] = newValue;
       return newValue;
     });
   }
 
   Future<void> delete(PlayStoreModel value){
-    fullCache.remove(value!.documentID);
+    fullCache.remove(value.documentID);
     reference.delete(value);
     return Future.value();
   }
@@ -63,7 +63,7 @@ class PlayStoreCache implements PlayStoreRepository {
 
   Future<PlayStoreModel> update(PlayStoreModel value) {
     return reference.update(value).then((newValue) {
-      fullCache[value!.documentID] = newValue;
+      fullCache[value.documentID] = newValue;
       return newValue;
     });
   }

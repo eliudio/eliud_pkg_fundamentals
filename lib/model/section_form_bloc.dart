@@ -65,31 +65,31 @@ class SectionFormBloc extends Bloc<SectionFormEvent, SectionFormState> {
 
 
       if (event is InitialiseSectionFormEvent) {
-        SectionFormLoaded loaded = SectionFormLoaded(value: event!.value);
+        SectionFormLoaded loaded = SectionFormLoaded(value: event.value);
         yield loaded;
         return;
       } else if (event is InitialiseSectionFormNoLoadEvent) {
-        SectionFormLoaded loaded = SectionFormLoaded(value: event!.value);
+        SectionFormLoaded loaded = SectionFormLoaded(value: event.value);
         yield loaded;
         return;
       }
     } else if (currentState is SectionFormInitialized) {
       SectionModel? newValue = null;
       if (event is ChangedSectionTitle) {
-        newValue = currentState.value!.copyWith(title: event!.value);
+        newValue = currentState.value!.copyWith(title: event.value);
         yield SubmittableSectionForm(value: newValue);
 
         return;
       }
       if (event is ChangedSectionDescription) {
-        newValue = currentState.value!.copyWith(description: event!.value);
+        newValue = currentState.value!.copyWith(description: event.value);
         yield SubmittableSectionForm(value: newValue);
 
         return;
       }
       if (event is ChangedSectionImage) {
-        if (event!.value != null)
-          newValue = currentState.value!.copyWith(image: await memberMediumRepository(appId: appId)!.get(event!.value));
+        if (event.value != null)
+          newValue = currentState.value!.copyWith(image: await memberMediumRepository(appId: appId)!.get(event.value));
         else
           newValue = new SectionModel(
                                  documentID: currentState.value!.documentID,
@@ -106,20 +106,20 @@ class SectionFormBloc extends Bloc<SectionFormEvent, SectionFormState> {
         return;
       }
       if (event is ChangedSectionImagePositionRelative) {
-        newValue = currentState.value!.copyWith(imagePositionRelative: event!.value);
+        newValue = currentState.value!.copyWith(imagePositionRelative: event.value);
         yield SubmittableSectionForm(value: newValue);
 
         return;
       }
       if (event is ChangedSectionImageAlignment) {
-        newValue = currentState.value!.copyWith(imageAlignment: event!.value);
+        newValue = currentState.value!.copyWith(imageAlignment: event.value);
         yield SubmittableSectionForm(value: newValue);
 
         return;
       }
       if (event is ChangedSectionImageWidth) {
-        if (isDouble(event!.value!)) {
-          newValue = currentState.value!.copyWith(imageWidth: double.parse(event!.value!));
+        if (isDouble(event.value!)) {
+          newValue = currentState.value!.copyWith(imageWidth: double.parse(event.value!));
           yield SubmittableSectionForm(value: newValue);
 
         } else {
@@ -129,7 +129,7 @@ class SectionFormBloc extends Bloc<SectionFormEvent, SectionFormState> {
         return;
       }
       if (event is ChangedSectionLinks) {
-        newValue = currentState.value!.copyWith(links: event!.value);
+        newValue = currentState.value!.copyWith(links: event.value);
         yield SubmittableSectionForm(value: newValue);
 
         return;

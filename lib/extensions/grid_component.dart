@@ -23,7 +23,7 @@ class GridComponent extends AbstractGridComponent {
   Widget yourWidget(BuildContext context, GridModel? value) {
     var components = value!.bodyComponents!
         .map((model) => Registry.registry()!.component(
-        model!.componentName!, model.componentId!))
+        model.componentName!, model.componentId!))
         .toList();
     if (components.isNotEmpty) {
       return GridViewHelper.container(context, components, value.gridView);
