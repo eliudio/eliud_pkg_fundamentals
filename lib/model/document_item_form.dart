@@ -93,7 +93,7 @@ class DocumentItemForm extends StatelessWidget {
           );
     } else {
       return Scaffold(
-        appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().constructAppBar(context, formAction == FormAction.UpdateAction ? 'Update DocumentItem' : 'Add DocumentItem'),
+        appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update DocumentItem' : 'Add DocumentItem'),
         body: BlocProvider<DocumentItemFormBloc >(
             create: (context) => DocumentItemFormBloc(AccessBloc.appId(context),
                                        
@@ -163,7 +163,7 @@ class _MyDocumentItemFormState extends State<MyDocumentItemForm> {
         List<Widget> children = [];
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, 'Document Reference', Icons.vpn_key, _readOnly(accessState, state), _referenceController, FieldType.String, validator: (_) => state is ReferenceDocumentItemFormError ? state.message : null, hintText: 'This is the reference which you can use inside your document to use to this image, e.g. <img src = \"\${REFERENCE}\"')
+                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, labelText: 'Document Reference', icon: Icons.vpn_key, readOnly: _readOnly(accessState, state), textEditingController: _referenceController, keyboardType: TextInputType.text, validator: (_) => state is ReferenceDocumentItemFormError ? state.message : null, hintText: 'field.remark')
           );
 
         children.add(
@@ -173,7 +173,7 @@ class _MyDocumentItemFormState extends State<MyDocumentItemForm> {
 
 
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
-          children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().submitButton(context, 'Submit',
+          children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().button(context, label: 'Submit',
                   onPressed: _readOnly(accessState, state) ? null : () {
                     if (state is DocumentItemFormError) {
                       return null;

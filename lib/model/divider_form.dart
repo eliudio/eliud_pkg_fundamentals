@@ -95,7 +95,7 @@ class DividerForm extends StatelessWidget {
           );
     } else {
       return Scaffold(
-        appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().constructAppBar(context, formAction == FormAction.UpdateAction ? 'Update Divider' : 'Add Divider'),
+        appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update Divider' : 'Add Divider'),
         body: BlocProvider<DividerFormBloc >(
             create: (context) => DividerFormBloc(AccessBloc.appId(context),
                                        formAction: formAction,
@@ -197,12 +197,12 @@ class _MyDividerFormState extends State<MyDividerForm> {
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, 'Document ID', Icons.vpn_key, (formAction == FormAction.UpdateAction), _documentIDController, FieldType.String, validator: (_) => state is DocumentIDDividerFormError ? state.message : null, hintText: 'null')
+                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, labelText: 'Document ID', icon: Icons.vpn_key, readOnly: (formAction == FormAction.UpdateAction), textEditingController: _documentIDController, keyboardType: TextInputType.text, validator: (_) => state is DocumentIDDividerFormError ? state.message : null, hintText: null)
           );
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, 'Name', Icons.text_format, _readOnly(accessState, state), _nameController, FieldType.String, validator: (_) => state is NameDividerFormError ? state.message : null, hintText: 'null')
+                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, labelText: 'Name', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _nameController, keyboardType: TextInputType.text, validator: (_) => state is NameDividerFormError ? state.message : null, hintText: null)
           );
 
 
@@ -223,22 +223,22 @@ class _MyDividerFormState extends State<MyDividerForm> {
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, 'Height', Icons.vertical_align_top, _readOnly(accessState, state), _heightController, FieldType.Double, validator: (_) => state is HeightDividerFormError ? state.message : null, hintText: 'The divider's height extent. The divider itself is always drawn as a horizontal line that is centered within the height specified by this value.')
+                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, labelText: 'Height', icon: Icons.vertical_align_top, readOnly: _readOnly(accessState, state), textEditingController: _heightController, keyboardType: TextInputType.number, validator: (_) => state is HeightDividerFormError ? state.message : null, hintText: 'field.remark')
           );
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, 'Thickness', Icons.vertical_align_center, _readOnly(accessState, state), _thicknessController, FieldType.Double, validator: (_) => state is ThicknessDividerFormError ? state.message : null, hintText: 'The thickness of the line drawn within the divider. A divider with a thickness of 0.0 is always drawn as a line with a height of exactly one device pixel.')
+                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, labelText: 'Thickness', icon: Icons.vertical_align_center, readOnly: _readOnly(accessState, state), textEditingController: _thicknessController, keyboardType: TextInputType.number, validator: (_) => state is ThicknessDividerFormError ? state.message : null, hintText: 'field.remark')
           );
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, 'Indent', Icons.format_indent_increase, _readOnly(accessState, state), _indentController, FieldType.Double, validator: (_) => state is IndentDividerFormError ? state.message : null, hintText: 'The amount of empty space to the leading edge of the divider.')
+                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, labelText: 'Indent', icon: Icons.format_indent_increase, readOnly: _readOnly(accessState, state), textEditingController: _indentController, keyboardType: TextInputType.number, validator: (_) => state is IndentDividerFormError ? state.message : null, hintText: 'field.remark')
           );
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, 'End Indent', Icons.format_indent_decrease, _readOnly(accessState, state), _endIndentController, FieldType.Double, validator: (_) => state is EndIndentDividerFormError ? state.message : null, hintText: 'The amount of empty space to the trailing edge of the divider.')
+                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, labelText: 'End Indent', icon: Icons.format_indent_decrease, readOnly: _readOnly(accessState, state), textEditingController: _endIndentController, keyboardType: TextInputType.number, validator: (_) => state is EndIndentDividerFormError ? state.message : null, hintText: 'field.remark')
           );
 
 
@@ -259,7 +259,7 @@ class _MyDividerFormState extends State<MyDividerForm> {
 
 
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
-          children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().submitButton(context, 'Submit',
+          children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().button(context, label: 'Submit',
                   onPressed: _readOnly(accessState, state) ? null : () {
                     if (state is DividerFormError) {
                       return null;

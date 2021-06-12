@@ -88,7 +88,7 @@ class LinkForm extends StatelessWidget {
           );
     } else {
       return Scaffold(
-        appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().constructAppBar(context, formAction == FormAction.UpdateAction ? 'Update Link' : 'Add Link'),
+        appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update Link' : 'Add Link'),
         body: BlocProvider<LinkFormBloc >(
             create: (context) => LinkFormBloc(AccessBloc.appId(context),
                                        
@@ -159,7 +159,7 @@ class _MyLinkFormState extends State<MyLinkForm> {
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, 'Link text', Icons.text_format, _readOnly(accessState, state), _linkTextController, FieldType.String, validator: (_) => state is LinkTextLinkFormError ? state.message : null, hintText: 'null')
+                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, labelText: 'Link text', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _linkTextController, keyboardType: TextInputType.text, validator: (_) => state is LinkTextLinkFormError ? state.message : null, hintText: null)
           );
 
 
@@ -184,7 +184,7 @@ class _MyLinkFormState extends State<MyLinkForm> {
 
 
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
-          children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().submitButton(context, 'Submit',
+          children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().button(context, label: 'Submit',
                   onPressed: _readOnly(accessState, state) ? null : () {
                     if (state is LinkFormError) {
                       return null;

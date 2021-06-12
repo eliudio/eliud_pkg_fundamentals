@@ -95,7 +95,7 @@ class FaderForm extends StatelessWidget {
           );
     } else {
       return Scaffold(
-        appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().constructAppBar(context, formAction == FormAction.UpdateAction ? 'Update Fader' : 'Add Fader'),
+        appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update Fader' : 'Add Fader'),
         body: BlocProvider<FaderFormBloc >(
             create: (context) => FaderFormBloc(AccessBloc.appId(context),
                                        formAction: formAction,
@@ -185,12 +185,12 @@ class _MyFaderFormState extends State<MyFaderForm> {
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, 'Document ID', Icons.vpn_key, (formAction == FormAction.UpdateAction), _documentIDController, FieldType.String, validator: (_) => state is DocumentIDFaderFormError ? state.message : null, hintText: 'null')
+                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, labelText: 'Document ID', icon: Icons.vpn_key, readOnly: (formAction == FormAction.UpdateAction), textEditingController: _documentIDController, keyboardType: TextInputType.text, validator: (_) => state is DocumentIDFaderFormError ? state.message : null, hintText: null)
           );
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, 'Name', Icons.text_format, _readOnly(accessState, state), _nameController, FieldType.String, validator: (_) => state is NameFaderFormError ? state.message : null, hintText: 'null')
+                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, labelText: 'Name', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _nameController, keyboardType: TextInputType.text, validator: (_) => state is NameFaderFormError ? state.message : null, hintText: null)
           );
 
 
@@ -236,12 +236,12 @@ class _MyFaderFormState extends State<MyFaderForm> {
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, 'Animation Time (millisec)', Icons.text_format, _readOnly(accessState, state), _animationMillisecondsController, FieldType.Int, validator: (_) => state is AnimationMillisecondsFaderFormError ? state.message : null, hintText: 'The duration of the transition between the images')
+                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, labelText: 'Animation Time (millisec)', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _animationMillisecondsController, keyboardType: TextInputType.number, validator: (_) => state is AnimationMillisecondsFaderFormError ? state.message : null, hintText: 'field.remark')
           );
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, 'Image time (seconds)', Icons.text_format, _readOnly(accessState, state), _imageSecondsController, FieldType.Int, validator: (_) => state is ImageSecondsFaderFormError ? state.message : null, hintText: 'The time to display 1 image')
+                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, labelText: 'Image time (seconds)', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _imageSecondsController, keyboardType: TextInputType.number, validator: (_) => state is ImageSecondsFaderFormError ? state.message : null, hintText: 'field.remark')
           );
 
 
@@ -262,7 +262,7 @@ class _MyFaderFormState extends State<MyFaderForm> {
 
 
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
-          children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().submitButton(context, 'Submit',
+          children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().button(context, label: 'Submit',
                   onPressed: _readOnly(accessState, state) ? null : () {
                     if (state is FaderFormError) {
                       return null;

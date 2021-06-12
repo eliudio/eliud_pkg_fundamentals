@@ -131,7 +131,7 @@ class ListedItemCache implements ListedItemRepository {
     MemberMediumModel? imageHolder;
     if (model.image != null) {
       try {
-        await memberMediumRepository(appId: model.image!.appId)!.get(model.image!.documentID).then((val) {
+        await memberMediumRepository()!.get(model.image!.documentID).then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}
@@ -140,7 +140,7 @@ class ListedItemCache implements ListedItemRepository {
     PosSizeModel? posSizeHolder;
     if (model.posSize != null) {
       try {
-        await posSizeRepository(appId: model.posSize!.appId)!.get(model.posSize!.documentID).then((val) {
+        await posSizeRepository()!.get(model.posSize!.documentID).then((val) {
           posSizeHolder = val;
         }).catchError((error) {});
       } catch (_) {}

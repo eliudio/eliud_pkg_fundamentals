@@ -131,7 +131,7 @@ class PlayStoreCache implements PlayStoreRepository {
     BackgroundModel? itemBackgroundHolder;
     if (model.itemBackground != null) {
       try {
-        await backgroundRepository(appId: model.itemBackground!.appId)!.get(model.itemBackground!.documentID).then((val) {
+        await backgroundRepository(appId: model.appId)!.get(model.itemBackground!.documentID).then((val) {
           itemBackgroundHolder = val;
         }).catchError((error) {});
       } catch (_) {}

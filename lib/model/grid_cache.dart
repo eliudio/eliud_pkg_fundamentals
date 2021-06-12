@@ -131,7 +131,7 @@ class GridCache implements GridRepository {
     GridViewModel? gridViewHolder;
     if (model.gridView != null) {
       try {
-        await gridViewRepository(appId: model.gridView!.appId)!.get(model.gridView!.documentID).then((val) {
+        await gridViewRepository(appId: model.appId)!.get(model.gridView!.documentID).then((val) {
           gridViewHolder = val;
         }).catchError((error) {});
       } catch (_) {}

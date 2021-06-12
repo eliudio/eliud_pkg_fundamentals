@@ -95,7 +95,7 @@ class PresentationForm extends StatelessWidget {
           );
     } else {
       return Scaffold(
-        appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().constructAppBar(context, formAction == FormAction.UpdateAction ? 'Update Presentation' : 'Add Presentation'),
+        appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update Presentation' : 'Add Presentation'),
         body: BlocProvider<PresentationFormBloc >(
             create: (context) => PresentationFormBloc(AccessBloc.appId(context),
                                        formAction: formAction,
@@ -207,17 +207,17 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, 'Document ID', Icons.vpn_key, (formAction == FormAction.UpdateAction), _documentIDController, FieldType.String, validator: (_) => state is DocumentIDPresentationFormError ? state.message : null, hintText: 'null')
+                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, labelText: 'Document ID', icon: Icons.vpn_key, readOnly: (formAction == FormAction.UpdateAction), textEditingController: _documentIDController, keyboardType: TextInputType.text, validator: (_) => state is DocumentIDPresentationFormError ? state.message : null, hintText: null)
           );
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, 'Title', Icons.text_format, _readOnly(accessState, state), _titleController, FieldType.String, validator: (_) => state is TitlePresentationFormError ? state.message : null, hintText: 'null')
+                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, labelText: 'Title', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _titleController, keyboardType: TextInputType.text, validator: (_) => state is TitlePresentationFormError ? state.message : null, hintText: null)
           );
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, 'Image Width (% of screen width)', Icons.text_format, _readOnly(accessState, state), _imageWidthController, FieldType.Double, validator: (_) => state is ImageWidthPresentationFormError ? state.message : null, hintText: 'Width of the image')
+                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, labelText: 'Image Width (% of screen width)', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _imageWidthController, keyboardType: TextInputType.number, validator: (_) => state is ImageWidthPresentationFormError ? state.message : null, hintText: 'field.remark')
           );
 
 
@@ -329,7 +329,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
 
 
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
-          children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().submitButton(context, 'Submit',
+          children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().button(context, label: 'Submit',
                   onPressed: _readOnly(accessState, state) ? null : () {
                     if (state is PresentationFormError) {
                       return null;
