@@ -13,8 +13,8 @@
 
 */
 
-import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
+import 'package:equatable/equatable.dart';
 
 abstract class BookletComponentState extends Equatable {
   const BookletComponentState();

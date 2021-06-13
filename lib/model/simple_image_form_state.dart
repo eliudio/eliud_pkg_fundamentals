@@ -13,9 +13,10 @@
 
 */
 
-import 'simple_image_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+
+import 'simple_image_model.dart';
 
 @immutable
 abstract class SimpleImageFormState extends Equatable {

@@ -14,13 +14,12 @@
 */
 
 import 'dart:async';
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
-import 'package:eliud_pkg_fundamentals/model/fader_repository.dart';
+import 'package:bloc/bloc.dart';
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_list_state.dart';
-import 'package:eliud_core/tools/query/query_tools.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_repository.dart';
 
 
 const _faderLimit = 5;

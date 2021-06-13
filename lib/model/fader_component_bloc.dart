@@ -14,9 +14,8 @@
 */
 
 import 'dart:async';
-import 'package:bloc/bloc.dart';
 
-import 'package:eliud_pkg_fundamentals/model/fader_model.dart';
+import 'package:bloc/bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_repository.dart';

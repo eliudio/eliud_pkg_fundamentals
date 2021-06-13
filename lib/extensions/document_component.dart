@@ -1,10 +1,10 @@
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
+import 'package:eliud_core/tools/component_constructor.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/document_component.dart';
 import 'package:eliud_pkg_fundamentals/model/document_model.dart';
 import 'package:eliud_pkg_fundamentals/model/document_repository.dart';
-import 'package:eliud_core/tools/component_constructor.dart';
 import 'package:eliud_pkg_fundamentals/tools/document_renderer.dart';
 import 'package:flutter/material.dart';
 

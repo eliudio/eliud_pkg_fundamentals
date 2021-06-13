@@ -1,16 +1,17 @@
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
+import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
+import 'package:eliud_core/style/style_registry.dart';
+import 'package:eliud_core/tools/component_constructor.dart';
+import 'package:eliud_core/tools/etc.dart';
+import 'package:eliud_core/tools/screen_size.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_component.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/section_model.dart';
-import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
-import 'package:eliud_core/tools/component_constructor.dart';
-import 'package:eliud_core/tools/etc.dart';
-import 'package:eliud_core/tools/screen_size.dart';
 import 'package:eliud_pkg_fundamentals/tools/document_processor_extended.dart';
 import 'package:flutter/material.dart';
 
@@ -47,29 +48,41 @@ class BookletComponent extends AbstractBookletComponent {
     return groupThis;
   }
 
-  Align _toAlignment(SectionImageAlignment? sectionImageAlignment, Widget widget) {
-    if (sectionImageAlignment == SectionImageAlignment.Left) return Align(child: widget, alignment: Alignment.topLeft);
-    if (sectionImageAlignment == SectionImageAlignment.Right) return Align(child: widget, alignment: Alignment.topRight);
+  Align _toAlignment(
+      SectionImageAlignment? sectionImageAlignment, Widget widget) {
+    if (sectionImageAlignment == SectionImageAlignment.Left)
+      return Align(child: widget, alignment: Alignment.topLeft);
+    if (sectionImageAlignment == SectionImageAlignment.Right)
+      return Align(child: widget, alignment: Alignment.topRight);
 
     // default center
     return Align(child: widget, alignment: Alignment.topCenter);
   }
 
-  Widget _addImage(BuildContext context, List<Widget> widgets, MemberMediumModel? image,
-      RelativeImagePosition? relativeImagePosition, SectionImageAlignment? sectionImageAlignment, double? imageSize) {
+  Widget _addImage(
+      BuildContext context,
+      List<Widget> widgets,
+      MemberMediumModel? image,
+      RelativeImagePosition? relativeImagePosition,
+      SectionImageAlignment? sectionImageAlignment,
+      double? imageSize) {
     var state = AccessBloc.getState(context);
     if (image == null) {
       return _makeBox(widgets);
     }
 
-    if ((relativeImagePosition == null) || (relativeImagePosition == RelativeImagePosition.Unknown)) relativeImagePosition = RelativeImagePosition.Above;
-    if ((sectionImageAlignment == null)  || (sectionImageAlignment == SectionImageAlignment.Unknown)) sectionImageAlignment = SectionImageAlignment.Left;
+    if ((relativeImagePosition == null) ||
+        (relativeImagePosition == RelativeImagePosition.Unknown))
+      relativeImagePosition = RelativeImagePosition.Above;
+    if ((sectionImageAlignment == null) ||
+        (sectionImageAlignment == SectionImageAlignment.Unknown))
+      sectionImageAlignment = SectionImageAlignment.Left;
 
     double size;
     if (imageSize != null) {
       size = fullScreenWidth(context) * imageSize;
     }
-    var widgetImage = Image.network(image.url!, scale:1);
+    var widgetImage = Image.network(image.url!, scale: 1);
 
     if (relativeImagePosition == RelativeImagePosition.Aside) {
       if (sectionImageAlignment == SectionImageAlignment.Left) {
@@ -137,29 +150,24 @@ class BookletComponent extends AbstractBookletComponent {
 
     value!.sections!.forEach((element) {
       var widgets = <Widget>[];
-
-      widgets.add(Text(
-        documentParameterProcessor.process(element.title!),
-        style: accessState is AppLoaded ? FontTools.textStyle(accessState.app.h3) : null,
-      ));
+      var frontEndStyle =
+          StyleRegistry.registry().styleWithContext(context).frontEndStyle();
+      widgets.add(frontEndStyle.h3(
+          context, documentParameterProcessor.process(element.title!)));
       widgets.add(_aBitSpace());
-      widgets.add(Text(
-          documentParameterProcessor.process(element.description!),
-          style: accessState is AppLoaded ? FontTools.textStyle(accessState.app.fontText) : null));
+      widgets.add(frontEndStyle.text(
+          context, documentParameterProcessor.process(element.description!)));
       widgets.add(_aBitSpace());
       if (element.links != null && element.links!.isNotEmpty) {
         var children = <Widget>[];
         element.links!.forEach((link) {
-          children.add(OutlineButton(
-              child: Text(
-                link.linkText!,
-                style: accessState is AppLoaded ? FontTools.textStyle(accessState.app.fontLink) : null,
-              ),
-              onPressed: () {
-                EliudRouter.Router.navigateTo(context, link.action!);
-              },
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0))));
+          children.add(frontEndStyle.button(
+            context,
+            label: link.linkText!,
+            onPressed: () {
+              EliudRouter.Router.navigateTo(context, link.action!);
+            },
+          ));
         });
         widgets.add(Wrap(
           spacing: 8.0,
@@ -172,8 +180,13 @@ class BookletComponent extends AbstractBookletComponent {
         widgets.add(_aBitSpace());
       }
 
-      groupedWidgets
-          .add(_addImage(context, widgets, element.image, element.imagePositionRelative, element.imageAlignment, element.imageWidth));
+      groupedWidgets.add(_addImage(
+          context,
+          widgets,
+          element.image,
+          element.imagePositionRelative,
+          element.imageAlignment,
+          element.imageWidth));
     });
 
     return ListView(
@@ -190,6 +203,7 @@ class BookletComponent extends AbstractBookletComponent {
 
   @override
   BookletRepository getBookletRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.bookletRepository(AccessBloc.appId(context))!;
+    return AbstractRepositorySingleton.singleton
+        .bookletRepository(AccessBloc.appId(context))!;
   }
 }

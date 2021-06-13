@@ -13,15 +13,14 @@
 
 */
 
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eliud_core/core/widgets/progress_indicator.dart';
-
 import 'package:eliud_pkg_fundamentals/model/document_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/document_component_event.dart';
+import 'package:eliud_pkg_fundamentals/model/document_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/document_model.dart';
 import 'package:eliud_pkg_fundamentals/model/document_repository.dart';
-import 'package:eliud_pkg_fundamentals/model/document_component_state.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class AbstractDocumentComponent extends StatelessWidget {
   static String componentName = "documents";

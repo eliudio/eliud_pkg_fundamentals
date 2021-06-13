@@ -8,15 +8,13 @@ import 'package:eliud_core/tools/action/action_model.dart';
 import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_pkg_fundamentals/model/document_item_model.dart';
 import 'package:eliud_pkg_fundamentals/model/document_model.dart';
+import 'package:eliud_pkg_fundamentals/tools/document_processor_extended.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 //import 'package:flutter_html/flutter_html.dart';
 //import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:flutter/material.dart';
 //import 'package:webview_flutter/webview_flutter.dart' as wv;
 import 'package:flutter_markdown/flutter_markdown.dart';
-
-import 'package:eliud_pkg_fundamentals/tools/document_processor_extended.dart';
 
 class ActionListener /*implements ClickListener*/ {
   final BuildContext context;

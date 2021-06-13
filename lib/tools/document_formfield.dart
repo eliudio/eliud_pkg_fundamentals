@@ -1,15 +1,14 @@
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 import 'package:eliud_core/model/background_model.dart';
-import 'package:eliud_core/tools/etc.dart';
+import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/router_builders.dart';
 import 'package:eliud_core/tools/screen_size.dart';
 import 'package:eliud_pkg_fundamentals/model/document_item_model.dart';
 import 'package:eliud_pkg_fundamentals/model/document_model.dart';
+import 'package:eliud_pkg_fundamentals/tools/document_renderer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:eliud_pkg_fundamentals/tools/document_renderer.dart';
 
 typedef DocumentTextFieldTrigger(String value);
 
@@ -37,16 +36,15 @@ class DocumentTextFieldState extends State<DocumentTextField> {
     return _buildExcludeDocument(accessState, context);
   }
 
-  Widget _buildExcludeDocument(
-      AccessState accessState, BuildContext context) {
+  Widget _buildExcludeDocument(AccessState accessState, BuildContext context) {
     var app = AccessBloc.app(context)!;
-    return RaisedButton.icon(
-        onPressed: () => _fullScreen(accessState),
-        icon: Icon(Icons.fullscreen),
-        label: Text(widget.label,
-            style: TextStyle(
-                color: RgbHelper.color(rgbo: app.formSubmitButtonTextColor))),
-        color: RgbHelper.color(rgbo: app.formSubmitButtonColor));
+    return StyleRegistry.registry()
+        .styleWithContext(context)
+        .frontEndStyle()
+        .button(context,
+            label: widget.label,
+            icon: Icon(Icons.fullscreen),
+            onPressed: () => _fullScreen(accessState));
   }
 
   // Not used at the moment, but is a candidate
@@ -68,15 +66,14 @@ class DocumentTextFieldState extends State<DocumentTextField> {
                             child: Container(
                                 child: SizedBox(
                                     width: fullWidth,
-                                    child: RaisedButton.icon(
-                                        onPressed: () => _fullScreen(accessState),
-                                        icon: Icon(Icons.fullscreen),
-                                        label: Text(widget.label),
-                                        color: accessState is AppLoaded
-                                            ? RgbHelper.color(
-                                                rgbo: accessState
-                                                    .app.formSubmitButtonColor)
-                                            : null))))
+                                    child: StyleRegistry.registry()
+                                        .styleWithContext(context)
+                                        .frontEndStyle()
+                                        .button(context,
+                                            label: widget.label,
+                                            icon: Icon(Icons.fullscreen),
+                                            onPressed: () =>
+                                                _fullScreen(accessState)))))
                       ]),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -165,11 +162,13 @@ class DocumentTextFieldFullScreenState
           child: Scaffold(
             appBar: AppBar(
                 automaticallyImplyLeading: true,
-                flexibleSpace: accessState is AppLoaded
+                flexibleSpace:
+                    /*accessState is AppLoaded
                     ? Container(
                         decoration: BoxDecorationHelper.boxDecoration(
                             accessState, accessState.app.formAppBarBackground))
-                    : null,
+                    : */
+                    null,
                 title: Text(widget.label),
                 leading: IconButton(
                   icon: Icon(Icons.arrow_back),
@@ -178,29 +177,15 @@ class DocumentTextFieldFullScreenState
                 bottom: TabBar(
                   isScrollable: true,
                   tabs: [
-                    Tab(
-                        icon: Icon(Icons.create,
-                            color: accessState is AppLoaded
-                                ? RgbHelper.color(
-                                    rgbo: accessState.app.formFieldHeaderColor)
-                                : null)),
-                    Tab(
-                        icon: Icon(Icons.remove_red_eye,
-                            color: accessState is AppLoaded
-                                ? RgbHelper.color(
-                                    rgbo: accessState.app.formFieldHeaderColor)
-                                : null)),
+                    Tab(icon: Icon(Icons.create, color: Colors.red)),
+                    Tab(icon: Icon(Icons.remove_red_eye, color: Colors.red)),
                   ],
                 )),
             body: TabBarView(
               children: <Widget>[
                 TextFormField(
                   readOnly: !accessState.memberIsOwner(),
-                  style: accessState is AppLoaded
-                      ? TextStyle(
-                          color: RgbHelper.color(
-                              rgbo: accessState.app.formFieldTextColor))
-                      : null,
+                  style: TextStyle(color: Colors.black),
                   initialValue: value,
                   decoration: InputDecoration(
                     fillColor: Colors.white,

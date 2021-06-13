@@ -13,9 +13,10 @@
 
 */
 
-import 'presentation_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+
+import 'presentation_model.dart';
 
 @immutable
 abstract class PresentationFormState extends Equatable {

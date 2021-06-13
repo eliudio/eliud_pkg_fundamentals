@@ -13,9 +13,10 @@
 
 */
 
-import 'document_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+
+import 'document_model.dart';
 
 @immutable
 abstract class DocumentFormState extends Equatable {

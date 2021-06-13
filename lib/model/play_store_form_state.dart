@@ -13,9 +13,10 @@
 
 */
 
-import 'play_store_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+
+import 'play_store_model.dart';
 
 @immutable
 abstract class PlayStoreFormState extends Equatable {

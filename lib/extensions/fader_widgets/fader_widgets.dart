@@ -2,12 +2,12 @@ import 'dart:math';
 
 import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
 import 'package:eliud_core/model/member_medium_model.dart';
-import 'package:eliud_core/tools/action/action_model.dart';
 import 'package:eliud_core/model/pos_size_model.dart';
+import 'package:eliud_core/tools/action/action_model.dart';
 import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/screen_size.dart';
-import 'package:getwidget/components/carousel/gf_carousel.dart';
 import 'package:flutter/material.dart';
+import 'package:getwidget/components/carousel/gf_carousel.dart';
 
 class TheImageGF extends StatefulWidget {
   final Orientation orientation;

@@ -13,8 +13,8 @@
 
 */
 
-import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_model.dart';
+import 'package:equatable/equatable.dart';
 
 abstract class FaderListEvent extends Equatable {
   const FaderListEvent();

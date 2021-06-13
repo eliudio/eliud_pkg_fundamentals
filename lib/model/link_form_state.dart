@@ -13,9 +13,10 @@
 
 */
 
-import 'link_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+
+import 'link_model.dart';
 
 @immutable
 abstract class LinkFormState extends Equatable {

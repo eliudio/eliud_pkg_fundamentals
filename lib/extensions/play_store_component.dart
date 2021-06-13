@@ -1,17 +1,17 @@
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
-import 'package:eliud_core/core/widgets/progress_indicator.dart';
-import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
-import 'package:eliud_pkg_fundamentals/model/play_store_component.dart';
-import 'package:eliud_pkg_fundamentals/model/play_store_model.dart';
-import 'package:eliud_pkg_fundamentals/model/play_store_repository.dart';
 import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
 import 'package:eliud_core/core/widgets/alert_widget.dart';
+import 'package:eliud_core/core/widgets/progress_indicator.dart';
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/tools/action/action_model.dart';
 import 'package:eliud_core/tools/component_constructor.dart';
 import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
 import 'package:eliud_core/tools/screen_size.dart';
+import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals/model/play_store_component.dart';
+import 'package:eliud_pkg_fundamentals/model/play_store_model.dart';
+import 'package:eliud_pkg_fundamentals/model/play_store_repository.dart';
 import 'package:flutter/material.dart';
 
 class PlayStoreComponentConstructorDefault implements ComponentConstructor {

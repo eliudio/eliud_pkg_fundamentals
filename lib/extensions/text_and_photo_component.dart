@@ -1,12 +1,13 @@
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
+import 'package:eliud_core/style/style_registry.dart';
+import 'package:eliud_core/tools/component_constructor.dart';
+import 'package:eliud_core/tools/etc.dart';
+import 'package:eliud_core/tools/screen_size.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_component.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_repository.dart';
-import 'package:eliud_core/tools/component_constructor.dart';
-import 'package:eliud_core/tools/etc.dart';
-import 'package:eliud_core/tools/screen_size.dart';
 import 'package:flutter/material.dart';
 
 class BookletComponentConstructorDefault implements ComponentConstructor {
@@ -24,23 +25,26 @@ class BookletComponent extends AbstractBookletComponent {
     // part of the new component
     bool isLeft = false;
     var title = "Title";
-    var contents = "sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj \nasdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd ";
+    var contents =
+        "sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj \nasdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd ";
     var textAlign = TextAlign.center;
 
+    var frontEndStyle =
+        StyleRegistry.registry().styleWithContext(context).frontEndStyle();
     var app = AccessBloc.app(context)!;
     var ratio = screenRatio(context);
-    var text = ListView(
-        shrinkWrap: true,
-        physics: ScrollPhysics(),
-        children: [
-      Text(title,
-          textAlign: textAlign,
-          style: FontTools.textStyle(app.h1)),
-      Container(height: 20),
-      Text(contents,
-        style: FontTools.textStyle(app.h5),
+    var text = ListView(shrinkWrap: true, physics: ScrollPhysics(), children: [
+      frontEndStyle.h1(
+        context,
+        title,
         textAlign: textAlign,
-      )
+      ),
+      Container(height: 20),
+      frontEndStyle.h5(
+        context,
+        contents,
+        textAlign: textAlign,
+      ),
     ]);
 
     if (ratio < 1) {
@@ -53,8 +57,8 @@ class BookletComponent extends AbstractBookletComponent {
     } else {
       var fraction1 = Flexible(
           child: FractionallySizedBox(
-            widthFactor: 1,
-          ));
+        widthFactor: 1,
+      ));
       var fraction2 = Flexible(
           child: FractionallySizedBox(
               alignment: Alignment.bottomRight,
@@ -64,15 +68,9 @@ class BookletComponent extends AbstractBookletComponent {
 
       var row;
       if (isLeft) {
-        row = Row(children: [
-          fraction1,
-          fraction2
-        ]);
+        row = Row(children: [fraction1, fraction2]);
       } else {
-        row = Row(children: [
-          fraction2,
-          fraction1
-        ]);
+        row = Row(children: [fraction2, fraction1]);
       }
 
       return Container(

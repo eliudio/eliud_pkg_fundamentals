@@ -13,8 +13,8 @@
 
 */
 
-import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_model.dart';
+import 'package:equatable/equatable.dart';
 
 abstract class DividerListState extends Equatable {
   const DividerListState();

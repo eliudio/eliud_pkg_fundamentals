@@ -13,8 +13,8 @@
 
 */
 
-import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_model.dart';
+import 'package:equatable/equatable.dart';
 
 abstract class PresentationListEvent extends Equatable {
   const PresentationListEvent();
