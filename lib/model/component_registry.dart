@@ -15,7 +15,7 @@
 
 
 import '../model/internal_component.dart';
-import 'package:eliud_core/tools/registry.dart';
+import 'package:eliud_core/core/registry.dart';
 
 import '../extensions/booklet_component.dart';
 import '../extensions/decorated_content_component.dart';

@@ -13,8 +13,8 @@
 
 */
 
-import 'package:eliud_pkg_fundamentals/model/decorated_content_model.dart';
 import 'package:equatable/equatable.dart';
+import 'package:eliud_pkg_fundamentals/model/decorated_content_model.dart';
 
 abstract class DecoratedContentListState extends Equatable {
   const DecoratedContentListState();

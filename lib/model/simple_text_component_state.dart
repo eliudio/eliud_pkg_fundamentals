@@ -13,8 +13,8 @@
 
 */
 
-import 'package:eliud_pkg_fundamentals/model/simple_text_model.dart';
 import 'package:equatable/equatable.dart';
+import 'package:eliud_pkg_fundamentals/model/simple_text_model.dart';
 
 abstract class SimpleTextComponentState extends Equatable {
   const SimpleTextComponentState();

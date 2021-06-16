@@ -14,12 +14,13 @@
 */
 
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
-import 'package:eliud_core/tools/query/query_tools.dart';
+import 'package:meta/meta.dart';
+
+import 'package:eliud_pkg_fundamentals/model/document_item_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/document_item_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/document_item_list_state.dart';
-import 'package:eliud_pkg_fundamentals/model/document_item_repository.dart';
+import 'package:eliud_core/tools/query/query_tools.dart';
 
 
 const _documentItemLimit = 5;

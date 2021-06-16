@@ -13,10 +13,9 @@
 
 */
 
+import 'fader_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-
-import 'fader_model.dart';
 
 @immutable
 abstract class FaderFormState extends Equatable {

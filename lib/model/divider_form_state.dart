@@ -13,10 +13,9 @@
 
 */
 
+import 'divider_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-
-import 'divider_model.dart';
 
 @immutable
 abstract class DividerFormState extends Equatable {

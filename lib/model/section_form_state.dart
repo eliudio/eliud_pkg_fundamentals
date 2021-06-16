@@ -13,10 +13,9 @@
 
 */
 
+import 'section_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-
-import 'section_model.dart';
 
 @immutable
 abstract class SectionFormState extends Equatable {

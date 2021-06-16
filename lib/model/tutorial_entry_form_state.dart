@@ -13,10 +13,9 @@
 
 */
 
+import 'tutorial_entry_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-
-import 'tutorial_entry_model.dart';
 
 @immutable
 abstract class TutorialEntryFormState extends Equatable {
