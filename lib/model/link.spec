@@ -51,6 +51,6 @@
     }
   ],
   "listFields": {
-    "title": "linkText"
+    "title": "linkText!"
   }
 }

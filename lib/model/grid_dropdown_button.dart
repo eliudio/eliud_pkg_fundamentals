@@ -66,8 +66,8 @@ class GridDropdownButtonWidgetState extends State<GridDropdownButtonWidget> {
 
 List<Widget> widgets(GridModel pm) {
 var widgets = <Widget>[];
-if (pm.documentID != null) widgets.add(new Text(pm.documentID!));
-if (pm.title != null) widgets.add(new Text(pm.title!));
+if (pm.documentID! != null) widgets.add(new Text(pm.documentID!));
+if (pm.title! != null) widgets.add(new Text(pm.title!));
 return widgets;
 }
 

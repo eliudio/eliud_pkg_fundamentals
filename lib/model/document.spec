@@ -121,8 +121,8 @@
     }
  ],
   "listFields": {
-    "title": "documentID",
-    "subTitle": "name"
+    "title": "documentID!",
+    "subTitle": "name!"
   },
   "depends": ["eliud_core"]
 }

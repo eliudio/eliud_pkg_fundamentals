@@ -34,15 +34,16 @@ class SimpleTextComponent extends AbstractSimpleTextComponent {
 
   @override
   Widget yourWidget(BuildContext context, SimpleTextModel? value) {
+    if (value == null) return Text('No simple text');
     var app = AccessBloc.app(context)!;
     var frontEndStyle = StyleRegistry.registry().styleWithContext(context).frontEndStyle();
     var text = ListView(
         shrinkWrap: true,
         physics: ScrollPhysics(),
         children: [
-          frontEndStyle.h1(context, value!.title!),
+          frontEndStyle.h1(context, value.title!),
           Container(height: 20),
-          frontEndStyle.h5(context, value!.text!, textAlign: toTextAlign(value.textAlign)),
+          frontEndStyle.h5(context, value.text!, textAlign: toTextAlign(value.textAlign)),
         ]);
     return text;
   }

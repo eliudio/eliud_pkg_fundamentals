@@ -66,8 +66,8 @@ class DecoratedContentDropdownButtonWidgetState extends State<DecoratedContentDr
 
 List<Widget> widgets(DecoratedContentModel pm) {
 var widgets = <Widget>[];
-if (pm.documentID != null) widgets.add(new Text(pm.documentID!));
-if (pm.name != null) widgets.add(new Text(pm.name!));
+if (pm.documentID! != null) widgets.add(new Text(pm.documentID!));
+if (pm.name! != null) widgets.add(new Text(pm.name!));
 return widgets;
 }
 

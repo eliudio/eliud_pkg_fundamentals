@@ -102,8 +102,8 @@
     }
   ],
   "listFields": {
-    "title": "title",
-    "subTitle": "description"
+    "title": "title!",
+    "subTitle": "description!"
   },
   "depends": ["eliud_core"]
 }

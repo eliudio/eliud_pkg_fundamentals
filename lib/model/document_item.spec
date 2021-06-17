@@ -43,9 +43,9 @@
     }
   ],
   "listFields": {
-    "title": "image",
+    "title": "image!",
     "imageTitle": true,
-    "subTitle": "reference"
+    "subTitle": "reference!"
   },
   "depends": ["eliud_core"]
 }
