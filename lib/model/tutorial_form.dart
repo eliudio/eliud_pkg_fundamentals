@@ -13,7 +13,6 @@
 
 */
 
-import 'package:eliud_core/core/widgets/progress_indicator.dart';
 import 'package:eliud_core/core/global_data.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
@@ -150,7 +149,7 @@ class _MyTutorialFormState extends State<MyTutorialForm> {
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<TutorialFormBloc, TutorialFormState>(builder: (context, state) {
       if (state is TutorialFormUninitialized) return Center(
-        child: DelayedCircularProgressIndicator(),
+        child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context),
       );
 
       if (state is TutorialFormLoaded) {
@@ -287,7 +286,7 @@ class _MyTutorialFormState extends State<MyTutorialForm> {
           ), formAction!
         );
       } else {
-        return DelayedCircularProgressIndicator();
+        return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
       }
     });
   }

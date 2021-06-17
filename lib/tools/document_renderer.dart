@@ -2,8 +2,8 @@
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
 import 'package:eliud_core/core/tools/document_processor.dart';
-import 'package:eliud_core/core/widgets/progress_indicator.dart';
 import 'package:eliud_core/model/background_model.dart';
+import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/action/action_model.dart';
 import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_pkg_fundamentals/model/document_item_model.dart';
@@ -122,9 +122,7 @@ class DocumentRendererTool {
         }
         return snapshot.hasData
             ? snapshot.data!
-            : Center(
-                child: DelayedCircularProgressIndicator(),
-              );
+            : StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
       },
     );
   }

@@ -1,8 +1,8 @@
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
 import 'package:eliud_core/core/widgets/alert_widget.dart';
-import 'package:eliud_core/core/widgets/progress_indicator.dart';
 import 'package:eliud_core/model/app_model.dart';
+import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/action/action_model.dart';
 import 'package:eliud_core/tools/component_constructor.dart';
 import 'package:eliud_core/tools/etc.dart';
@@ -70,9 +70,7 @@ class PlayStoreState extends State<PlayStore> {
         if (snapshot.hasData) {
           return _build(context, snapshot.data!);
         } else {
-          return Center(
-            child: DelayedCircularProgressIndicator(),
-          );
+          return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
         }
       },
     );
