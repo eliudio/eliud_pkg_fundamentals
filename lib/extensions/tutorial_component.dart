@@ -2,6 +2,7 @@ import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/tools/document_processor.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
+import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/component_constructor.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_component.dart';
@@ -14,7 +15,6 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-
 class TutorialComponentConstructorDefault implements ComponentConstructor {
   @override
   Widget createNew({String? id, Map<String, dynamic>? parameters}) {
@@ -23,18 +23,18 @@ class TutorialComponentConstructorDefault implements ComponentConstructor {
 }
 
 class TutorialComponent extends AbstractTutorialComponent {
-  TutorialComponent({String? tutorialID})
-      : super(tutorialID: tutorialID);
+  TutorialComponent({String? tutorialID}) : super(tutorialID: tutorialID);
 
   Widget _aBitSpace() => SizedBox(
-      height: 20,
-      child: null,
-    );
+        height: 20,
+        child: null,
+      );
 
   @override
   Widget yourWidget(BuildContext context, TutorialModel? value) {
     var accessState = AccessBloc.getState(context);
-    DocumentParameterProcessor documentParameterProcessor = ExtendedDocumentParameterProcessor(context, accessState);
+    DocumentParameterProcessor documentParameterProcessor =
+        ExtendedDocumentParameterProcessor(context, accessState);
     var widgets = <Widget>[];
     widgets.add(Text(
       documentParameterProcessor.process(value!.title!),
@@ -59,29 +59,30 @@ class TutorialComponent extends AbstractTutorialComponent {
           },
         ));
 
-        widgets.add(Center(child: OutlineButton(
-            child: Text('Fullscreen'),
-            onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return FulLScreen(element.image);
-              }));
-            },
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))
-        )));
+        widgets.add(Center(
+            child: StyleRegistry.registry()
+                .styleWithContext(context)
+                .frontEndStyle()
+                .buttonStyle()
+                .button(context, label: 'Fullscreen', onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) {
+            return FulLScreen(element.image);
+          }));
+        })));
 
         widgets.add(_aBitSpace());
       }
       if (element.code != null) {
-        widgets.add(MarkdownBody(selectable: true, data: '```\n' + element.code! + '```'));
-        widgets.add(
-          Center(child:
-          OutlineButton(
-              child: Text('Copy to clipboard'),
-              onPressed: (){
-                Clipboard.setData(ClipboardData(text: element.code));
-              },
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))
-          )));
+        widgets.add(MarkdownBody(
+            selectable: true, data: '```\n' + element.code! + '```'));
+        widgets.add(Center(
+            child: OutlineButton(
+                child: Text('Copy to clipboard'),
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(text: element.code));
+                },
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0)))));
         widgets.add(_aBitSpace());
       }
     });
@@ -106,7 +107,8 @@ class TutorialComponent extends AbstractTutorialComponent {
 
   @override
   TutorialRepository getTutorialRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.tutorialRepository(AccessBloc.appId(context))!;
+    return AbstractRepositorySingleton.singleton
+        .tutorialRepository(AccessBloc.appId(context))!;
   }
 }
 
@@ -119,12 +121,12 @@ class FulLScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GestureDetector(
-        child:  PhotoView(
-          initialScale: PhotoViewComputedScale.covered,
-          imageProvider: NetworkImage(image!.url!)),
+        child: PhotoView(
+            initialScale: PhotoViewComputedScale.covered,
+            imageProvider: NetworkImage(image!.url!)),
         onTap: () {
-           Navigator.pop(context);
-          },
+          Navigator.pop(context);
+        },
       ),
     );
   }
