@@ -100,7 +100,7 @@ class ListedItemListWidgetState extends State<ListedItemListWidget> {
     if (accessState is AppLoaded) {
       return BlocBuilder<ListedItemListBloc, ListedItemListState>(builder: (context, state) {
         if (state is ListedItemListLoading) {
-          return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+          return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
         } else if (state is ListedItemListLoaded) {
           final values = state.values;
           if ((widget.isEmbedded != null) && widget.isEmbedded!) {
@@ -130,7 +130,7 @@ class ListedItemListWidgetState extends State<ListedItemListWidget> {
             return theList(context, values, accessState);
           }
         } else {
-          return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+          return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
         }
       });
     } else {

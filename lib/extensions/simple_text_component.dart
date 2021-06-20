@@ -41,9 +41,9 @@ class SimpleTextComponent extends AbstractSimpleTextComponent {
         shrinkWrap: true,
         physics: ScrollPhysics(),
         children: [
-          frontEndStyle.h1(context, value.title!),
+          frontEndStyle.textStyle().h1(context, value.title!),
           Container(height: 20),
-          frontEndStyle.h5(context, value.text!, textAlign: toTextAlign(value.textAlign)),
+          frontEndStyle.textStyle().h5(context, value.text!, textAlign: toTextAlign(value.textAlign)),
         ]);
     return text;
   }

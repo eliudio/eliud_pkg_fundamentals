@@ -70,7 +70,7 @@ class PlayStoreState extends State<PlayStore> {
         if (snapshot.hasData) {
           return _build(context, snapshot.data!);
         } else {
-          return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+          return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicatorStyle().progressIndicator(context);
         }
       },
     );

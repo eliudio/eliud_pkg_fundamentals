@@ -40,7 +40,7 @@ class DocumentTextFieldState extends State<DocumentTextField> {
     var app = AccessBloc.app(context)!;
     return StyleRegistry.registry()
         .styleWithContext(context)
-        .frontEndStyle()
+        .frontEndStyle().buttonStyle()
         .button(context,
             label: widget.label,
             icon: Icon(Icons.fullscreen),
@@ -68,7 +68,7 @@ class DocumentTextFieldState extends State<DocumentTextField> {
                                     width: fullWidth,
                                     child: StyleRegistry.registry()
                                         .styleWithContext(context)
-                                        .frontEndStyle()
+                                        .frontEndStyle().buttonStyle()
                                         .button(context,
                                             label: widget.label,
                                             icon: Icon(Icons.fullscreen),

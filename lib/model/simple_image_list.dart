@@ -100,7 +100,7 @@ class SimpleImageListWidgetState extends State<SimpleImageListWidget> {
     if (accessState is AppLoaded) {
       return BlocBuilder<SimpleImageListBloc, SimpleImageListState>(builder: (context, state) {
         if (state is SimpleImageListLoading) {
-          return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+          return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
         } else if (state is SimpleImageListLoaded) {
           final values = state.values;
           if ((widget.isEmbedded != null) && widget.isEmbedded!) {
@@ -130,7 +130,7 @@ class SimpleImageListWidgetState extends State<SimpleImageListWidget> {
             return theList(context, values, accessState);
           }
         } else {
-          return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+          return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
         }
       });
     } else {

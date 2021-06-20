@@ -135,7 +135,7 @@ class _MyLinkFormState extends State<MyLinkForm> {
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<LinkFormBloc, LinkFormState>(builder: (context, state) {
       if (state is LinkFormUninitialized) return Center(
-        child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context),
+        child: StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context),
       );
 
       if (state is LinkFormLoaded) {
@@ -222,7 +222,7 @@ class _MyLinkFormState extends State<MyLinkForm> {
           ), formAction!
         );
       } else {
-        return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+        return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
       }
     });
   }

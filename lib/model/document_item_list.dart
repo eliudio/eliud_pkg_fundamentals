@@ -100,7 +100,7 @@ class DocumentItemListWidgetState extends State<DocumentItemListWidget> {
     if (accessState is AppLoaded) {
       return BlocBuilder<DocumentItemListBloc, DocumentItemListState>(builder: (context, state) {
         if (state is DocumentItemListLoading) {
-          return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+          return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
         } else if (state is DocumentItemListLoaded) {
           final values = state.values;
           if ((widget.isEmbedded != null) && widget.isEmbedded!) {
@@ -130,7 +130,7 @@ class DocumentItemListWidgetState extends State<DocumentItemListWidget> {
             return theList(context, values, accessState);
           }
         } else {
-          return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+          return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
         }
       });
     } else {

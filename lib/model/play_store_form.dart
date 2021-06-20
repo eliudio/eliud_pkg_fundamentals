@@ -146,7 +146,7 @@ class _MyPlayStoreFormState extends State<MyPlayStoreForm> {
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<PlayStoreFormBloc, PlayStoreFormState>(builder: (context, state) {
       if (state is PlayStoreFormUninitialized) return Center(
-        child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context),
+        child: StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context),
       );
 
       if (state is PlayStoreFormLoaded) {
@@ -262,7 +262,7 @@ class _MyPlayStoreFormState extends State<MyPlayStoreForm> {
           ), formAction!
         );
       } else {
-        return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+        return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
       }
     });
   }

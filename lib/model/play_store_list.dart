@@ -100,7 +100,7 @@ class PlayStoreListWidgetState extends State<PlayStoreListWidget> {
     if (accessState is AppLoaded) {
       return BlocBuilder<PlayStoreListBloc, PlayStoreListState>(builder: (context, state) {
         if (state is PlayStoreListLoading) {
-          return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+          return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
         } else if (state is PlayStoreListLoaded) {
           final values = state.values;
           if ((widget.isEmbedded != null) && widget.isEmbedded!) {
@@ -130,7 +130,7 @@ class PlayStoreListWidgetState extends State<PlayStoreListWidget> {
             return theList(context, values, accessState);
           }
         } else {
-          return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+          return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
         }
       });
     } else {

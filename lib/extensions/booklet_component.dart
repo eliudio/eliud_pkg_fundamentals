@@ -152,16 +152,17 @@ class BookletComponent extends AbstractBookletComponent {
       var widgets = <Widget>[];
       var frontEndStyle =
           StyleRegistry.registry().styleWithContext(context).frontEndStyle();
-      widgets.add(frontEndStyle.h3(
-          context, documentParameterProcessor.process(element.title!)));
+      widgets.add(frontEndStyle
+          .textStyle()
+          .h3(context, documentParameterProcessor.process(element.title!)));
       widgets.add(_aBitSpace());
-      widgets.add(frontEndStyle.text(
+      widgets.add(frontEndStyle.textStyle().text(
           context, documentParameterProcessor.process(element.description!)));
       widgets.add(_aBitSpace());
       if (element.links != null && element.links!.isNotEmpty) {
         var children = <Widget>[];
         element.links!.forEach((link) {
-          children.add(frontEndStyle.button(
+          children.add(frontEndStyle.buttonStyle().button(
             context,
             label: link.linkText!,
             onPressed: () {

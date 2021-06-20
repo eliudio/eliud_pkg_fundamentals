@@ -30,7 +30,8 @@ class ActionListener /*implements ClickListener*/ {
     var scheme = uri.scheme;
     if (scheme == "page") {
       // todo, check if access rights to this page, if not... show "???!!!"
-      ActionModel action = GotoPage(appID, pageID: authority); // construct from event
+      ActionModel action =
+          GotoPage(appID, pageID: authority); // construct from event
       EliudRouter.Router.navigateTo(context, action);
     }
   }
@@ -107,6 +108,7 @@ class DocumentRendererTool {
         .build(jsonString, context, new ActionListener(context));
 */
   }
+
 /*
   Future<Widget> _buildWidget(BuildContext context, String jsonString) async {
     return Text('dynamic_widget not supported. ' + jsonString);
@@ -122,7 +124,11 @@ class DocumentRendererTool {
         }
         return snapshot.hasData
             ? snapshot.data!
-            : StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+            : StyleRegistry.registry()
+                .styleWithContext(context)
+                .frontEndStyle()
+                .progressIndicatorStyle()
+                .progressIndicator(context);
       },
     );
   }
@@ -147,16 +153,15 @@ class DocumentRendererTool {
     return theWidget;
   }
 
-  Widget render(
-      BuildContext context,
-      DocumentRenderer? documentRenderer,
-      String document,
-      List<DocumentItemModel>? images,
-      BackgroundModel? bdm) {
+  Widget render(BuildContext context, DocumentRenderer? documentRenderer,
+      String document, List<DocumentItemModel>? images, BackgroundModel? bdm) {
     var accessState = AccessBloc.getState(context);
-    DocumentParameterProcessor documentParameterProcessor = ExtendedDocumentParameterProcessor(context, accessState, images: images);
+    DocumentParameterProcessor documentParameterProcessor =
+        ExtendedDocumentParameterProcessor(context, accessState,
+            images: images);
     return Container(
-        child: _rendered(context, documentRenderer, documentParameterProcessor.process(document)),
+        child: _rendered(context, documentRenderer,
+            documentParameterProcessor.process(document)),
         decoration: BoxDecorationHelper.boxDecoration(accessState, bdm));
   }
 }

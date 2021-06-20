@@ -152,7 +152,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<PresentationFormBloc, PresentationFormState>(builder: (context, state) {
       if (state is PresentationFormUninitialized) return Center(
-        child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context),
+        child: StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context),
       );
 
       if (state is PresentationFormLoaded) {
@@ -379,7 +379,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
           ), formAction!
         );
       } else {
-        return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+        return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
       }
     });
   }

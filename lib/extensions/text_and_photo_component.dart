@@ -34,13 +34,13 @@ class BookletComponent extends AbstractBookletComponent {
     var app = AccessBloc.app(context)!;
     var ratio = screenRatio(context);
     var text = ListView(shrinkWrap: true, physics: ScrollPhysics(), children: [
-      frontEndStyle.h1(
+      frontEndStyle.textStyle().h1(
         context,
         title,
         textAlign: textAlign,
       ),
       Container(height: 20),
-      frontEndStyle.h5(
+      frontEndStyle.textStyle().h5(
         context,
         contents,
         textAlign: textAlign,

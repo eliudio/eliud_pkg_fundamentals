@@ -153,7 +153,7 @@ class _MyDividerFormState extends State<MyDividerForm> {
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<DividerFormBloc, DividerFormState>(builder: (context, state) {
       if (state is DividerFormUninitialized) return Center(
-        child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context),
+        child: StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context),
       );
 
       if (state is DividerFormLoaded) {
@@ -309,7 +309,7 @@ class _MyDividerFormState extends State<MyDividerForm> {
           ), formAction!
         );
       } else {
-        return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+        return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
       }
     });
   }

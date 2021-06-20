@@ -149,7 +149,7 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<DecoratedContentFormBloc, DecoratedContentFormState>(builder: (context, state) {
       if (state is DecoratedContentFormUninitialized) return Center(
-        child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context),
+        child: StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context),
       );
 
       if (state is DecoratedContentFormLoaded) {
@@ -335,7 +335,7 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
           ), formAction!
         );
       } else {
-        return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+        return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
       }
     });
   }

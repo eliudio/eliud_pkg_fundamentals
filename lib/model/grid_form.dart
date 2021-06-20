@@ -146,7 +146,7 @@ class _MyGridFormState extends State<MyGridForm> {
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<GridFormBloc, GridFormState>(builder: (context, state) {
       if (state is GridFormUninitialized) return Center(
-        child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context),
+        child: StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context),
       );
 
       if (state is GridFormLoaded) {
@@ -294,7 +294,7 @@ class _MyGridFormState extends State<MyGridForm> {
           ), formAction!
         );
       } else {
-        return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+        return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
       }
     });
   }

@@ -100,7 +100,7 @@ class DecoratedContentListWidgetState extends State<DecoratedContentListWidget> 
     if (accessState is AppLoaded) {
       return BlocBuilder<DecoratedContentListBloc, DecoratedContentListState>(builder: (context, state) {
         if (state is DecoratedContentListLoading) {
-          return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+          return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
         } else if (state is DecoratedContentListLoaded) {
           final values = state.values;
           if ((widget.isEmbedded != null) && widget.isEmbedded!) {
@@ -130,7 +130,7 @@ class DecoratedContentListWidgetState extends State<DecoratedContentListWidget> 
             return theList(context, values, accessState);
           }
         } else {
-          return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+          return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
         }
       });
     } else {

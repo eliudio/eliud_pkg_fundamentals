@@ -146,7 +146,7 @@ class _MySimpleImageFormState extends State<MySimpleImageForm> {
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<SimpleImageFormBloc, SimpleImageFormState>(builder: (context, state) {
       if (state is SimpleImageFormUninitialized) return Center(
-        child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context),
+        child: StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context),
       );
 
       if (state is SimpleImageFormLoaded) {
@@ -273,7 +273,7 @@ class _MySimpleImageFormState extends State<MySimpleImageForm> {
           ), formAction!
         );
       } else {
-        return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+        return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
       }
     });
   }

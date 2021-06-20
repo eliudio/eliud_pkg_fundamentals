@@ -100,7 +100,7 @@ class TutorialListWidgetState extends State<TutorialListWidget> {
     if (accessState is AppLoaded) {
       return BlocBuilder<TutorialListBloc, TutorialListState>(builder: (context, state) {
         if (state is TutorialListLoading) {
-          return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+          return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
         } else if (state is TutorialListLoaded) {
           final values = state.values;
           if ((widget.isEmbedded != null) && widget.isEmbedded!) {
@@ -130,7 +130,7 @@ class TutorialListWidgetState extends State<TutorialListWidget> {
             return theList(context, values, accessState);
           }
         } else {
-          return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+          return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
         }
       });
     } else {

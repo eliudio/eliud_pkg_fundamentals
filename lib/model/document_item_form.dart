@@ -141,7 +141,7 @@ class _MyDocumentItemFormState extends State<MyDocumentItemForm> {
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<DocumentItemFormBloc, DocumentItemFormState>(builder: (context, state) {
       if (state is DocumentItemFormUninitialized) return Center(
-        child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context),
+        child: StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context),
       );
 
       if (state is DocumentItemFormLoaded) {
@@ -211,7 +211,7 @@ class _MyDocumentItemFormState extends State<MyDocumentItemForm> {
           ), formAction!
         );
       } else {
-        return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+        return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
       }
     });
   }

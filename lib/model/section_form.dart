@@ -149,7 +149,7 @@ class _MySectionFormState extends State<MySectionForm> {
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<SectionFormBloc, SectionFormState>(builder: (context, state) {
       if (state is SectionFormUninitialized) return Center(
-        child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context),
+        child: StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context),
       );
 
       if (state is SectionFormLoaded) {
@@ -351,7 +351,7 @@ class _MySectionFormState extends State<MySectionForm> {
           ), formAction!
         );
       } else {
-        return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+        return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
       }
     });
   }

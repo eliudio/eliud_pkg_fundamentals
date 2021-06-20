@@ -145,7 +145,7 @@ class _MyBookletFormState extends State<MyBookletForm> {
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<BookletFormBloc, BookletFormState>(builder: (context, state) {
       if (state is BookletFormUninitialized) return Center(
-        child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context),
+        child: StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context),
       );
 
       if (state is BookletFormLoaded) {
@@ -282,7 +282,7 @@ class _MyBookletFormState extends State<MyBookletForm> {
           ), formAction!
         );
       } else {
-        return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+        return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
       }
     });
   }

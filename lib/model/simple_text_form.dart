@@ -149,7 +149,7 @@ class _MySimpleTextFormState extends State<MySimpleTextForm> {
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<SimpleTextFormBloc, SimpleTextFormState>(builder: (context, state) {
       if (state is SimpleTextFormUninitialized) return Center(
-        child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context),
+        child: StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context),
       );
 
       if (state is SimpleTextFormLoaded) {
@@ -307,7 +307,7 @@ class _MySimpleTextFormState extends State<MySimpleTextForm> {
           ), formAction!
         );
       } else {
-        return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+        return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
       }
     });
   }

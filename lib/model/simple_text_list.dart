@@ -100,7 +100,7 @@ class SimpleTextListWidgetState extends State<SimpleTextListWidget> {
     if (accessState is AppLoaded) {
       return BlocBuilder<SimpleTextListBloc, SimpleTextListState>(builder: (context, state) {
         if (state is SimpleTextListLoading) {
-          return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+          return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
         } else if (state is SimpleTextListLoaded) {
           final values = state.values;
           if ((widget.isEmbedded != null) && widget.isEmbedded!) {
@@ -130,7 +130,7 @@ class SimpleTextListWidgetState extends State<SimpleTextListWidget> {
             return theList(context, values, accessState);
           }
         } else {
-          return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+          return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
         }
       });
     } else {

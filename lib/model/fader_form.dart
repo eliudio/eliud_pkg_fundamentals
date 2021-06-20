@@ -149,7 +149,7 @@ class _MyFaderFormState extends State<MyFaderForm> {
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<FaderFormBloc, FaderFormState>(builder: (context, state) {
       if (state is FaderFormUninitialized) return Center(
-        child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context),
+        child: StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context),
       );
 
       if (state is FaderFormLoaded) {
@@ -308,7 +308,7 @@ class _MyFaderFormState extends State<MyFaderForm> {
           ), formAction!
         );
       } else {
-        return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+        return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
       }
     });
   }

@@ -149,7 +149,7 @@ class _MyTutorialFormState extends State<MyTutorialForm> {
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<TutorialFormBloc, TutorialFormState>(builder: (context, state) {
       if (state is TutorialFormUninitialized) return Center(
-        child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context),
+        child: StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context),
       );
 
       if (state is TutorialFormLoaded) {
@@ -286,7 +286,7 @@ class _MyTutorialFormState extends State<MyTutorialForm> {
           ), formAction!
         );
       } else {
-        return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+        return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
       }
     });
   }

@@ -142,7 +142,7 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<ListedItemFormBloc, ListedItemFormState>(builder: (context, state) {
       if (state is ListedItemFormUninitialized) return Center(
-        child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context),
+        child: StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context),
       );
 
       if (state is ListedItemFormLoaded) {
@@ -273,7 +273,7 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
           ), formAction!
         );
       } else {
-        return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicator(context);
+        return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
       }
     });
   }
