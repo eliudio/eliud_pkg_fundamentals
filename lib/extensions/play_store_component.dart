@@ -33,7 +33,8 @@ class PlayStoreBase extends AbstractPlayStoreComponent {
 
   @override
   PlayStoreRepository getPlayStoreRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.playStoreRepository(AccessBloc.appId(context))!;
+    return AbstractRepositorySingleton.singleton
+        .playStoreRepository(AccessBloc.appId(context))!;
   }
 
   @override
@@ -57,20 +58,26 @@ class PlayStoreState extends State<PlayStore> {
   PlayStoreState();
 
   Widget _buildStack(double size, Widget image, String? name) => Container(
-    height: size,
-    width: size,
-    child: image,
-  );
-  
+        height: size,
+        width: size,
+        child: image,
+      );
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<AppModel?>>(
-      future:  AbstractMainRepositorySingleton.singleton.appRepository()!.valuesList(),
+      future: AbstractMainRepositorySingleton.singleton
+          .appRepository()!
+          .valuesList(),
       builder: (BuildContext context, AsyncSnapshot<List<AppModel?>> snapshot) {
         if (snapshot.hasData) {
           return _build(context, snapshot.data!);
         } else {
-          return StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicatorStyle().progressIndicator(context);
+          return StyleRegistry.registry()
+              .styleWithContext(context)
+              .frontEndStyle()
+              .progressIndicatorStyle()
+              .progressIndicator(context);
         }
       },
     );
@@ -84,27 +91,35 @@ class PlayStoreState extends State<PlayStore> {
     apps.forEach((model) {
       if (!AccessBloc.isPlayStoreApp(context, model!.documentID!)) {
         var children = <Widget>[];
-        children.add(GestureDetector(
-            onTap: () async {
-              EliudRouter.Router.navigateTo(context, SwitchApp(appID, toAppID: model.documentID));
-            },
-            child: _buildStack(
-                size - 40,
-                ImageHelper.getImageFromURL(url: model.logoURL!),
-                model.title)));
+        children.add(StyleRegistry.registry()
+            .styleWithContext(context)
+            .frontEndStyle()
+            .containerStyle()
+            .actionContainer(context,
+                child: GestureDetector(
+                    onTap: () async {
+                      EliudRouter.Router.navigateTo(
+                          context, SwitchApp(appID, toAppID: model.documentID));
+                    },
+                    child: Container(
+                        width: 100, height: 100,
+                        padding: const EdgeInsets.all(4.0),
+                        child: Image.network(model.logoURL!),
+                        ))));
         components.add(Column(children: children));
       }
     });
 
     var count = (fullScreenWidth(context) / size).floor() + 1;
-    var rows = ((components.length -1) / count).floor() + 1;
+    var rows = ((components.length - 1) / count).floor() + 1;
     var fullHeight = rows * size;
     // end tests
 
     if (components.isNotEmpty) {
       return Container(
           height: fullHeight,
-          child: GridView.extent(maxCrossAxisExtent: size,
+          child: GridView.extent(
+              maxCrossAxisExtent: size,
               padding: const EdgeInsets.all(0),
               mainAxisSpacing: 0,
               crossAxisSpacing: 0,
