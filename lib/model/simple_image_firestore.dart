@@ -61,10 +61,11 @@ class SimpleImageFirestore implements SimpleImageRepository {
       var doc = await collection.get();
       return await _populateDocPlus(doc);
     } on Exception catch(e) {
-      print("Error whilst retrieving SimpleImage with id $id");
-      print("Exceptoin: $e");
       if (onError != null) {
         onError(e);
+      } else {
+        print("Error whilst retrieving SimpleImage with id $id");
+        print("Exceptoin: $e");
       }
     };
   }
