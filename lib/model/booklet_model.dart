@@ -84,6 +84,7 @@ class BookletModel {
 
   static BookletModel? fromEntity(String documentID, BookletEntity? entity) {
     if (entity == null) return null;
+    var counter = 0;
     return BookletModel(
           documentID: documentID, 
           appId: entity.appId, 
@@ -91,7 +92,10 @@ class BookletModel {
           sections: 
             entity.sections == null ? null :
             entity.sections
-            !.map((item) => SectionModel.fromEntity(newRandomKey(), item)!)
+            !.map((item) {
+              counter++; 
+              return SectionModel.fromEntity(counter.toString(), item)!;
+            })
             .toList(), 
           conditions: 
             ConditionsSimpleModel.fromEntity(entity.conditions), 
@@ -101,13 +105,16 @@ class BookletModel {
   static Future<BookletModel?> fromEntityPlus(String documentID, BookletEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
+    var counter = 0;
     return BookletModel(
           documentID: documentID, 
           appId: entity.appId, 
           name: entity.name, 
           sections: 
-            entity. sections == null ? null : new List<SectionModel>.from(await Future.wait(entity. sections
-            !.map((item) => SectionModel.fromEntityPlus(newRandomKey(), item, appId: appId))
+            entity. sections == null ? null : List<SectionModel>.from(await Future.wait(entity. sections
+            !.map((item) {
+            counter++;
+            return SectionModel.fromEntityPlus(counter.toString(), item, appId: appId);})
             .toList())), 
           conditions: 
             await ConditionsSimpleModel.fromEntityPlus(entity.conditions, appId: appId), 

@@ -98,6 +98,7 @@ class SimpleTextModel {
 
   static SimpleTextModel? fromEntity(String documentID, SimpleTextEntity? entity) {
     if (entity == null) return null;
+    var counter = 0;
     return SimpleTextModel(
           documentID: documentID, 
           appId: entity.appId, 
@@ -112,6 +113,7 @@ class SimpleTextModel {
   static Future<SimpleTextModel?> fromEntityPlus(String documentID, SimpleTextEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
+    var counter = 0;
     return SimpleTextModel(
           documentID: documentID, 
           appId: entity.appId, 

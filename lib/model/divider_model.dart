@@ -99,6 +99,7 @@ class DividerModel {
 
   static DividerModel? fromEntity(String documentID, DividerEntity? entity) {
     if (entity == null) return null;
+    var counter = 0;
     return DividerModel(
           documentID: documentID, 
           appId: entity.appId, 
@@ -117,6 +118,7 @@ class DividerModel {
   static Future<DividerModel?> fromEntityPlus(String documentID, DividerEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
+    var counter = 0;
     return DividerModel(
           documentID: documentID, 
           appId: entity.appId, 

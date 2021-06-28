@@ -114,6 +114,7 @@ class DocumentModel {
 
   static DocumentModel? fromEntity(String documentID, DocumentEntity? entity) {
     if (entity == null) return null;
+    var counter = 0;
     return DocumentModel(
           documentID: documentID, 
           appId: entity.appId, 
@@ -124,7 +125,10 @@ class DocumentModel {
           images: 
             entity.images == null ? null :
             entity.images
-            !.map((item) => DocumentItemModel.fromEntity(newRandomKey(), item)!)
+            !.map((item) {
+              counter++; 
+              return DocumentItemModel.fromEntity(counter.toString(), item)!;
+            })
             .toList(), 
           conditions: 
             ConditionsSimpleModel.fromEntity(entity.conditions), 
@@ -145,6 +149,7 @@ class DocumentModel {
       }
     }
 
+    var counter = 0;
     return DocumentModel(
           documentID: documentID, 
           appId: entity.appId, 
@@ -153,8 +158,10 @@ class DocumentModel {
           content: entity.content, 
           padding: entity.padding, 
           images: 
-            entity. images == null ? null : new List<DocumentItemModel>.from(await Future.wait(entity. images
-            !.map((item) => DocumentItemModel.fromEntityPlus(newRandomKey(), item, appId: appId))
+            entity. images == null ? null : List<DocumentItemModel>.from(await Future.wait(entity. images
+            !.map((item) {
+            counter++;
+            return DocumentItemModel.fromEntityPlus(counter.toString(), item, appId: appId);})
             .toList())), 
           background: backgroundHolder, 
           conditions: 

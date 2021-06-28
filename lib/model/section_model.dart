@@ -123,6 +123,7 @@ class SectionModel {
 
   static SectionModel? fromEntity(String documentID, SectionEntity? entity) {
     if (entity == null) return null;
+    var counter = 0;
     return SectionModel(
           documentID: documentID, 
           title: entity.title, 
@@ -133,7 +134,10 @@ class SectionModel {
           links: 
             entity.links == null ? null :
             entity.links
-            !.map((item) => LinkModel.fromEntity(newRandomKey(), item)!)
+            !.map((item) {
+              counter++; 
+              return LinkModel.fromEntity(counter.toString(), item)!;
+            })
             .toList(), 
     );
   }
@@ -152,6 +156,7 @@ class SectionModel {
       }
     }
 
+    var counter = 0;
     return SectionModel(
           documentID: documentID, 
           title: entity.title, 
@@ -161,8 +166,10 @@ class SectionModel {
           imageAlignment: toSectionImageAlignment(entity.imageAlignment), 
           imageWidth: entity.imageWidth, 
           links: 
-            entity. links == null ? null : new List<LinkModel>.from(await Future.wait(entity. links
-            !.map((item) => LinkModel.fromEntityPlus(newRandomKey(), item, appId: appId))
+            entity. links == null ? null : List<LinkModel>.from(await Future.wait(entity. links
+            !.map((item) {
+            counter++;
+            return LinkModel.fromEntityPlus(counter.toString(), item, appId: appId);})
             .toList())), 
     );
   }

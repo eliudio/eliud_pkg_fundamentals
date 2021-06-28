@@ -69,6 +69,7 @@ class LinkModel {
 
   static LinkModel? fromEntity(String documentID, LinkEntity? entity) {
     if (entity == null) return null;
+    var counter = 0;
     return LinkModel(
           documentID: documentID, 
           linkText: entity.linkText, 
@@ -80,6 +81,7 @@ class LinkModel {
   static Future<LinkModel?> fromEntityPlus(String documentID, LinkEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
+    var counter = 0;
     return LinkModel(
           documentID: documentID, 
           linkText: entity.linkText, 

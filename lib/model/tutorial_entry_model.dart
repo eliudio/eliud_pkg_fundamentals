@@ -76,6 +76,7 @@ class TutorialEntryModel {
 
   static TutorialEntryModel? fromEntity(String documentID, TutorialEntryEntity? entity) {
     if (entity == null) return null;
+    var counter = 0;
     return TutorialEntryModel(
           documentID: documentID, 
           description: entity.description, 
@@ -97,6 +98,7 @@ class TutorialEntryModel {
       }
     }
 
+    var counter = 0;
     return TutorialEntryModel(
           documentID: documentID, 
           description: entity.description, 

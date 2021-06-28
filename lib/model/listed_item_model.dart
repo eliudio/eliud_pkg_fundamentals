@@ -79,6 +79,7 @@ class ListedItemModel {
 
   static ListedItemModel? fromEntity(String documentID, ListedItemEntity? entity) {
     if (entity == null) return null;
+    var counter = 0;
     return ListedItemModel(
           documentID: documentID, 
           description: entity.description, 
@@ -112,6 +113,7 @@ class ListedItemModel {
       }
     }
 
+    var counter = 0;
     return ListedItemModel(
           documentID: documentID, 
           description: entity.description, 

@@ -79,6 +79,7 @@ class PlayStoreModel {
 
   static PlayStoreModel? fromEntity(String documentID, PlayStoreEntity? entity) {
     if (entity == null) return null;
+    var counter = 0;
     return PlayStoreModel(
           documentID: documentID, 
           appId: entity.appId, 
@@ -102,6 +103,7 @@ class PlayStoreModel {
       }
     }
 
+    var counter = 0;
     return PlayStoreModel(
           documentID: documentID, 
           appId: entity.appId, 

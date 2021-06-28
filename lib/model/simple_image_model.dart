@@ -79,6 +79,7 @@ class SimpleImageModel {
 
   static SimpleImageModel? fromEntity(String documentID, SimpleImageEntity? entity) {
     if (entity == null) return null;
+    var counter = 0;
     return SimpleImageModel(
           documentID: documentID, 
           appId: entity.appId, 
@@ -102,6 +103,7 @@ class SimpleImageModel {
       }
     }
 
+    var counter = 0;
     return SimpleImageModel(
           documentID: documentID, 
           appId: entity.appId, 

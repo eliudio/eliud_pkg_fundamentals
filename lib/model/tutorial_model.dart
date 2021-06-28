@@ -90,6 +90,7 @@ class TutorialModel {
 
   static TutorialModel? fromEntity(String documentID, TutorialEntity? entity) {
     if (entity == null) return null;
+    var counter = 0;
     return TutorialModel(
           documentID: documentID, 
           appId: entity.appId, 
@@ -99,7 +100,10 @@ class TutorialModel {
           tutorialEntries: 
             entity.tutorialEntries == null ? null :
             entity.tutorialEntries
-            !.map((item) => TutorialEntryModel.fromEntity(newRandomKey(), item)!)
+            !.map((item) {
+              counter++; 
+              return TutorialEntryModel.fromEntity(counter.toString(), item)!;
+            })
             .toList(), 
           conditions: 
             ConditionsSimpleModel.fromEntity(entity.conditions), 
@@ -109,6 +113,7 @@ class TutorialModel {
   static Future<TutorialModel?> fromEntityPlus(String documentID, TutorialEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
+    var counter = 0;
     return TutorialModel(
           documentID: documentID, 
           appId: entity.appId, 
@@ -116,8 +121,10 @@ class TutorialModel {
           title: entity.title, 
           description: entity.description, 
           tutorialEntries: 
-            entity. tutorialEntries == null ? null : new List<TutorialEntryModel>.from(await Future.wait(entity. tutorialEntries
-            !.map((item) => TutorialEntryModel.fromEntityPlus(newRandomKey(), item, appId: appId))
+            entity. tutorialEntries == null ? null : List<TutorialEntryModel>.from(await Future.wait(entity. tutorialEntries
+            !.map((item) {
+            counter++;
+            return TutorialEntryModel.fromEntityPlus(counter.toString(), item, appId: appId);})
             .toList())), 
           conditions: 
             await ConditionsSimpleModel.fromEntityPlus(entity.conditions, appId: appId), 

@@ -94,6 +94,7 @@ class FaderModel {
 
   static FaderModel? fromEntity(String documentID, FaderEntity? entity) {
     if (entity == null) return null;
+    var counter = 0;
     return FaderModel(
           documentID: documentID, 
           appId: entity.appId, 
@@ -103,7 +104,10 @@ class FaderModel {
           items: 
             entity.items == null ? null :
             entity.items
-            !.map((item) => ListedItemModel.fromEntity(newRandomKey(), item)!)
+            !.map((item) {
+              counter++; 
+              return ListedItemModel.fromEntity(counter.toString(), item)!;
+            })
             .toList(), 
           conditions: 
             ConditionsSimpleModel.fromEntity(entity.conditions), 
@@ -113,6 +117,7 @@ class FaderModel {
   static Future<FaderModel?> fromEntityPlus(String documentID, FaderEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
+    var counter = 0;
     return FaderModel(
           documentID: documentID, 
           appId: entity.appId, 
@@ -120,8 +125,10 @@ class FaderModel {
           animationMilliseconds: entity.animationMilliseconds, 
           imageSeconds: entity.imageSeconds, 
           items: 
-            entity. items == null ? null : new List<ListedItemModel>.from(await Future.wait(entity. items
-            !.map((item) => ListedItemModel.fromEntityPlus(newRandomKey(), item, appId: appId))
+            entity. items == null ? null : List<ListedItemModel>.from(await Future.wait(entity. items
+            !.map((item) {
+            counter++;
+            return ListedItemModel.fromEntityPlus(counter.toString(), item, appId: appId);})
             .toList())), 
           conditions: 
             await ConditionsSimpleModel.fromEntityPlus(entity.conditions, appId: appId), 

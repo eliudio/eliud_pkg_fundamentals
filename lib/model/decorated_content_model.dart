@@ -118,6 +118,7 @@ class DecoratedContentModel {
 
   static DecoratedContentModel? fromEntity(String documentID, DecoratedContentEntity? entity) {
     if (entity == null) return null;
+    var counter = 0;
     return DecoratedContentModel(
           documentID: documentID, 
           appId: entity.appId, 
@@ -136,6 +137,7 @@ class DecoratedContentModel {
   static Future<DecoratedContentModel?> fromEntityPlus(String documentID, DecoratedContentEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
+    var counter = 0;
     return DecoratedContentModel(
           documentID: documentID, 
           appId: entity.appId, 

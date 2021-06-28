@@ -126,6 +126,7 @@ class PresentationModel {
 
   static PresentationModel? fromEntity(String documentID, PresentationEntity? entity) {
     if (entity == null) return null;
+    var counter = 0;
     return PresentationModel(
           documentID: documentID, 
           appId: entity.appId, 
@@ -133,7 +134,10 @@ class PresentationModel {
           bodyComponents: 
             entity.bodyComponents == null ? null :
             entity.bodyComponents
-            !.map((item) => BodyComponentModel.fromEntity(newRandomKey(), item)!)
+            !.map((item) {
+              counter++; 
+              return BodyComponentModel.fromEntity(counter.toString(), item)!;
+            })
             .toList(), 
           imagePositionRelative: toPresentationRelativeImagePosition(entity.imagePositionRelative), 
           imageAlignment: toPresentationImageAlignment(entity.imageAlignment), 
@@ -157,13 +161,16 @@ class PresentationModel {
       }
     }
 
+    var counter = 0;
     return PresentationModel(
           documentID: documentID, 
           appId: entity.appId, 
           title: entity.title, 
           bodyComponents: 
-            entity. bodyComponents == null ? null : new List<BodyComponentModel>.from(await Future.wait(entity. bodyComponents
-            !.map((item) => BodyComponentModel.fromEntityPlus(newRandomKey(), item, appId: appId))
+            entity. bodyComponents == null ? null : List<BodyComponentModel>.from(await Future.wait(entity. bodyComponents
+            !.map((item) {
+            counter++;
+            return BodyComponentModel.fromEntityPlus(counter.toString(), item, appId: appId);})
             .toList())), 
           image: imageHolder, 
           imagePositionRelative: toPresentationRelativeImagePosition(entity.imagePositionRelative), 

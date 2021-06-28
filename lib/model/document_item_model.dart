@@ -75,6 +75,7 @@ class DocumentItemModel {
 
   static DocumentItemModel? fromEntity(String documentID, DocumentItemEntity? entity) {
     if (entity == null) return null;
+    var counter = 0;
     return DocumentItemModel(
           documentID: documentID, 
           reference: entity.reference, 
@@ -95,6 +96,7 @@ class DocumentItemModel {
       }
     }
 
+    var counter = 0;
     return DocumentItemModel(
           documentID: documentID, 
           reference: entity.reference, 
