@@ -42,8 +42,9 @@ class SectionEntity {
     return 'SectionEntity{title: $title, description: $description, imageId: $imageId, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth, links: Link[] { $linksCsv }}';
   }
 
-  static SectionEntity? fromMap(Map? map) {
-    if (map == null) return null;
+  static SectionEntity? fromMap(Object? o) {
+    if (o == null) return null;
+    var map = o as Map<String, dynamic>;
 
     var linksFromMap;
     linksFromMap = map['links'];

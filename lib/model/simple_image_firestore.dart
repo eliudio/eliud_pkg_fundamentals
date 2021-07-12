@@ -49,11 +49,11 @@ class SimpleImageFirestore implements SimpleImageRepository {
   }
 
   SimpleImageModel? _populateDoc(DocumentSnapshot value) {
-    return SimpleImageModel.fromEntity(value.id, SimpleImageEntity.fromMap(value.data() as Map<String, dynamic>));
+    return SimpleImageModel.fromEntity(value.id, SimpleImageEntity.fromMap(value.data()));
   }
 
   Future<SimpleImageModel?> _populateDocPlus(DocumentSnapshot value) async {
-    return SimpleImageModel.fromEntityPlus(value.id, SimpleImageEntity.fromMap(value.data() as Map<String, dynamic>), appId: appId);  }
+    return SimpleImageModel.fromEntityPlus(value.id, SimpleImageEntity.fromMap(value.data()), appId: appId);  }
 
   Future<SimpleImageModel?> get(String? id, {Function(Exception)? onError}) async {
     try {

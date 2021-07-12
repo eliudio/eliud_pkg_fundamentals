@@ -35,8 +35,9 @@ class DocumentItemEntity {
     return 'DocumentItemEntity{reference: $reference, imageId: $imageId}';
   }
 
-  static DocumentItemEntity? fromMap(Map? map) {
-    if (map == null) return null;
+  static DocumentItemEntity? fromMap(Object? o) {
+    if (o == null) return null;
+    var map = o as Map<String, dynamic>;
 
     return DocumentItemEntity(
       reference: map['reference'], 

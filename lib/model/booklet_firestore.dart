@@ -49,11 +49,11 @@ class BookletFirestore implements BookletRepository {
   }
 
   BookletModel? _populateDoc(DocumentSnapshot value) {
-    return BookletModel.fromEntity(value.id, BookletEntity.fromMap(value.data() as Map<String, dynamic>));
+    return BookletModel.fromEntity(value.id, BookletEntity.fromMap(value.data()));
   }
 
   Future<BookletModel?> _populateDocPlus(DocumentSnapshot value) async {
-    return BookletModel.fromEntityPlus(value.id, BookletEntity.fromMap(value.data() as Map<String, dynamic>), appId: appId);  }
+    return BookletModel.fromEntityPlus(value.id, BookletEntity.fromMap(value.data()), appId: appId);  }
 
   Future<BookletModel?> get(String? id, {Function(Exception)? onError}) async {
     try {

@@ -49,11 +49,11 @@ class PlayStoreFirestore implements PlayStoreRepository {
   }
 
   PlayStoreModel? _populateDoc(DocumentSnapshot value) {
-    return PlayStoreModel.fromEntity(value.id, PlayStoreEntity.fromMap(value.data() as Map<String, dynamic>));
+    return PlayStoreModel.fromEntity(value.id, PlayStoreEntity.fromMap(value.data()));
   }
 
   Future<PlayStoreModel?> _populateDocPlus(DocumentSnapshot value) async {
-    return PlayStoreModel.fromEntityPlus(value.id, PlayStoreEntity.fromMap(value.data() as Map<String, dynamic>), appId: appId);  }
+    return PlayStoreModel.fromEntityPlus(value.id, PlayStoreEntity.fromMap(value.data()), appId: appId);  }
 
   Future<PlayStoreModel?> get(String? id, {Function(Exception)? onError}) async {
     try {

@@ -49,11 +49,11 @@ class DecoratedContentFirestore implements DecoratedContentRepository {
   }
 
   DecoratedContentModel? _populateDoc(DocumentSnapshot value) {
-    return DecoratedContentModel.fromEntity(value.id, DecoratedContentEntity.fromMap(value.data() as Map<String, dynamic>));
+    return DecoratedContentModel.fromEntity(value.id, DecoratedContentEntity.fromMap(value.data()));
   }
 
   Future<DecoratedContentModel?> _populateDocPlus(DocumentSnapshot value) async {
-    return DecoratedContentModel.fromEntityPlus(value.id, DecoratedContentEntity.fromMap(value.data() as Map<String, dynamic>), appId: appId);  }
+    return DecoratedContentModel.fromEntityPlus(value.id, DecoratedContentEntity.fromMap(value.data()), appId: appId);  }
 
   Future<DecoratedContentModel?> get(String? id, {Function(Exception)? onError}) async {
     try {

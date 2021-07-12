@@ -41,8 +41,9 @@ class DividerEntity {
     return 'DividerEntity{appId: $appId, name: $name, color: $color, height: $height, thickness: $thickness, indent: $indent, endIndent: $endIndent, conditions: $conditions}';
   }
 
-  static DividerEntity? fromMap(Map? map) {
-    if (map == null) return null;
+  static DividerEntity? fromMap(Object? o) {
+    if (o == null) return null;
+    var map = o as Map<String, dynamic>;
 
     var colorFromMap;
     colorFromMap = map['color'];

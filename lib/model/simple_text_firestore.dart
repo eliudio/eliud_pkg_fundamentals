@@ -49,11 +49,11 @@ class SimpleTextFirestore implements SimpleTextRepository {
   }
 
   SimpleTextModel? _populateDoc(DocumentSnapshot value) {
-    return SimpleTextModel.fromEntity(value.id, SimpleTextEntity.fromMap(value.data() as Map<String, dynamic>));
+    return SimpleTextModel.fromEntity(value.id, SimpleTextEntity.fromMap(value.data()));
   }
 
   Future<SimpleTextModel?> _populateDocPlus(DocumentSnapshot value) async {
-    return SimpleTextModel.fromEntityPlus(value.id, SimpleTextEntity.fromMap(value.data() as Map<String, dynamic>), appId: appId);  }
+    return SimpleTextModel.fromEntityPlus(value.id, SimpleTextEntity.fromMap(value.data()), appId: appId);  }
 
   Future<SimpleTextModel?> get(String? id, {Function(Exception)? onError}) async {
     try {

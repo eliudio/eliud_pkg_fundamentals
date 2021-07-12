@@ -40,8 +40,9 @@ class GridEntity {
     return 'GridEntity{appId: $appId, title: $title, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, gridViewId: $gridViewId, conditions: $conditions}';
   }
 
-  static GridEntity? fromMap(Map? map) {
-    if (map == null) return null;
+  static GridEntity? fromMap(Object? o) {
+    if (o == null) return null;
+    var map = o as Map<String, dynamic>;
 
     var bodyComponentsFromMap;
     bodyComponentsFromMap = map['bodyComponents'];

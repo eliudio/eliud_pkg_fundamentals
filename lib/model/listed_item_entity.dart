@@ -37,8 +37,9 @@ class ListedItemEntity {
     return 'ListedItemEntity{description: $description, action: $action, imageId: $imageId, posSizeId: $posSizeId}';
   }
 
-  static ListedItemEntity? fromMap(Map? map) {
-    if (map == null) return null;
+  static ListedItemEntity? fromMap(Object? o) {
+    if (o == null) return null;
+    var map = o as Map<String, dynamic>;
 
     var actionFromMap;
     actionFromMap = map['action'];

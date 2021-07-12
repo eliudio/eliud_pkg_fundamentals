@@ -36,8 +36,9 @@ class TutorialEntryEntity {
     return 'TutorialEntryEntity{description: $description, imageId: $imageId, code: $code}';
   }
 
-  static TutorialEntryEntity? fromMap(Map? map) {
-    if (map == null) return null;
+  static TutorialEntryEntity? fromMap(Object? o) {
+    if (o == null) return null;
+    var map = o as Map<String, dynamic>;
 
     return TutorialEntryEntity(
       description: map['description'], 

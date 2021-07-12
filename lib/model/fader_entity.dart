@@ -41,8 +41,9 @@ class FaderEntity {
     return 'FaderEntity{appId: $appId, name: $name, animationMilliseconds: $animationMilliseconds, imageSeconds: $imageSeconds, items: ListedItem[] { $itemsCsv }, conditions: $conditions}';
   }
 
-  static FaderEntity? fromMap(Map? map) {
-    if (map == null) return null;
+  static FaderEntity? fromMap(Object? o) {
+    if (o == null) return null;
+    var map = o as Map<String, dynamic>;
 
     var itemsFromMap;
     itemsFromMap = map['items'];

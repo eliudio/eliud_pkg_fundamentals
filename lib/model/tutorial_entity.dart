@@ -41,8 +41,9 @@ class TutorialEntity {
     return 'TutorialEntity{appId: $appId, name: $name, title: $title, description: $description, tutorialEntries: TutorialEntry[] { $tutorialEntriesCsv }, conditions: $conditions}';
   }
 
-  static TutorialEntity? fromMap(Map? map) {
-    if (map == null) return null;
+  static TutorialEntity? fromMap(Object? o) {
+    if (o == null) return null;
+    var map = o as Map<String, dynamic>;
 
     var tutorialEntriesFromMap;
     tutorialEntriesFromMap = map['tutorialEntries'];

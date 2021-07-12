@@ -49,11 +49,11 @@ class PresentationFirestore implements PresentationRepository {
   }
 
   PresentationModel? _populateDoc(DocumentSnapshot value) {
-    return PresentationModel.fromEntity(value.id, PresentationEntity.fromMap(value.data() as Map<String, dynamic>));
+    return PresentationModel.fromEntity(value.id, PresentationEntity.fromMap(value.data()));
   }
 
   Future<PresentationModel?> _populateDocPlus(DocumentSnapshot value) async {
-    return PresentationModel.fromEntityPlus(value.id, PresentationEntity.fromMap(value.data() as Map<String, dynamic>), appId: appId);  }
+    return PresentationModel.fromEntityPlus(value.id, PresentationEntity.fromMap(value.data()), appId: appId);  }
 
   Future<PresentationModel?> get(String? id, {Function(Exception)? onError}) async {
     try {

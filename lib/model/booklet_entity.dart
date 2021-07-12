@@ -39,8 +39,9 @@ class BookletEntity {
     return 'BookletEntity{appId: $appId, name: $name, sections: Section[] { $sectionsCsv }, conditions: $conditions}';
   }
 
-  static BookletEntity? fromMap(Map? map) {
-    if (map == null) return null;
+  static BookletEntity? fromMap(Object? o) {
+    if (o == null) return null;
+    var map = o as Map<String, dynamic>;
 
     var sectionsFromMap;
     sectionsFromMap = map['sections'];

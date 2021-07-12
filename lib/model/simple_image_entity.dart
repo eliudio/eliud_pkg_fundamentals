@@ -37,8 +37,9 @@ class SimpleImageEntity {
     return 'SimpleImageEntity{appId: $appId, title: $title, imageId: $imageId, conditions: $conditions}';
   }
 
-  static SimpleImageEntity? fromMap(Map? map) {
-    if (map == null) return null;
+  static SimpleImageEntity? fromMap(Object? o) {
+    if (o == null) return null;
+    var map = o as Map<String, dynamic>;
 
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];

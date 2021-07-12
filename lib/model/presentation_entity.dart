@@ -43,8 +43,9 @@ class PresentationEntity {
     return 'PresentationEntity{appId: $appId, title: $title, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, imageId: $imageId, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth, conditions: $conditions}';
   }
 
-  static PresentationEntity? fromMap(Map? map) {
-    if (map == null) return null;
+  static PresentationEntity? fromMap(Object? o) {
+    if (o == null) return null;
+    var map = o as Map<String, dynamic>;
 
     var bodyComponentsFromMap;
     bodyComponentsFromMap = map['bodyComponents'];

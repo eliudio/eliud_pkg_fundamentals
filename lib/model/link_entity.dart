@@ -34,8 +34,9 @@ class LinkEntity {
     return 'LinkEntity{linkText: $linkText, action: $action}';
   }
 
-  static LinkEntity? fromMap(Map? map) {
-    if (map == null) return null;
+  static LinkEntity? fromMap(Object? o) {
+    if (o == null) return null;
+    var map = o as Map<String, dynamic>;
 
     var actionFromMap;
     actionFromMap = map['action'];

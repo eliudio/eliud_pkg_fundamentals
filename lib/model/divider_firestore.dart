@@ -49,11 +49,11 @@ class DividerFirestore implements DividerRepository {
   }
 
   DividerModel? _populateDoc(DocumentSnapshot value) {
-    return DividerModel.fromEntity(value.id, DividerEntity.fromMap(value.data() as Map<String, dynamic>));
+    return DividerModel.fromEntity(value.id, DividerEntity.fromMap(value.data()));
   }
 
   Future<DividerModel?> _populateDocPlus(DocumentSnapshot value) async {
-    return DividerModel.fromEntityPlus(value.id, DividerEntity.fromMap(value.data() as Map<String, dynamic>), appId: appId);  }
+    return DividerModel.fromEntityPlus(value.id, DividerEntity.fromMap(value.data()), appId: appId);  }
 
   Future<DividerModel?> get(String? id, {Function(Exception)? onError}) async {
     try {

@@ -49,11 +49,11 @@ class GridFirestore implements GridRepository {
   }
 
   GridModel? _populateDoc(DocumentSnapshot value) {
-    return GridModel.fromEntity(value.id, GridEntity.fromMap(value.data() as Map<String, dynamic>));
+    return GridModel.fromEntity(value.id, GridEntity.fromMap(value.data()));
   }
 
   Future<GridModel?> _populateDocPlus(DocumentSnapshot value) async {
-    return GridModel.fromEntityPlus(value.id, GridEntity.fromMap(value.data() as Map<String, dynamic>), appId: appId);  }
+    return GridModel.fromEntityPlus(value.id, GridEntity.fromMap(value.data()), appId: appId);  }
 
   Future<GridModel?> get(String? id, {Function(Exception)? onError}) async {
     try {
