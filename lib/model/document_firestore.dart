@@ -49,11 +49,11 @@ class DocumentFirestore implements DocumentRepository {
   }
 
   DocumentModel? _populateDoc(DocumentSnapshot value) {
-    return DocumentModel.fromEntity(value.id, DocumentEntity.fromMap(value.data()));
+    return DocumentModel.fromEntity(value.id, DocumentEntity.fromMap(value.data() as Map<String, dynamic>));
   }
 
   Future<DocumentModel?> _populateDocPlus(DocumentSnapshot value) async {
-    return DocumentModel.fromEntityPlus(value.id, DocumentEntity.fromMap(value.data()), appId: appId);  }
+    return DocumentModel.fromEntityPlus(value.id, DocumentEntity.fromMap(value.data() as Map<String, dynamic>), appId: appId);  }
 
   Future<DocumentModel?> get(String? id, {Function(Exception)? onError}) async {
     try {

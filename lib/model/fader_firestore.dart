@@ -49,11 +49,11 @@ class FaderFirestore implements FaderRepository {
   }
 
   FaderModel? _populateDoc(DocumentSnapshot value) {
-    return FaderModel.fromEntity(value.id, FaderEntity.fromMap(value.data()));
+    return FaderModel.fromEntity(value.id, FaderEntity.fromMap(value.data() as Map<String, dynamic>));
   }
 
   Future<FaderModel?> _populateDocPlus(DocumentSnapshot value) async {
-    return FaderModel.fromEntityPlus(value.id, FaderEntity.fromMap(value.data()), appId: appId);  }
+    return FaderModel.fromEntityPlus(value.id, FaderEntity.fromMap(value.data() as Map<String, dynamic>), appId: appId);  }
 
   Future<FaderModel?> get(String? id, {Function(Exception)? onError}) async {
     try {

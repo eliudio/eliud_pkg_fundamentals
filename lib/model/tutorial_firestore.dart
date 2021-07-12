@@ -49,11 +49,11 @@ class TutorialFirestore implements TutorialRepository {
   }
 
   TutorialModel? _populateDoc(DocumentSnapshot value) {
-    return TutorialModel.fromEntity(value.id, TutorialEntity.fromMap(value.data()));
+    return TutorialModel.fromEntity(value.id, TutorialEntity.fromMap(value.data() as Map<String, dynamic>));
   }
 
   Future<TutorialModel?> _populateDocPlus(DocumentSnapshot value) async {
-    return TutorialModel.fromEntityPlus(value.id, TutorialEntity.fromMap(value.data()), appId: appId);  }
+    return TutorialModel.fromEntityPlus(value.id, TutorialEntity.fromMap(value.data() as Map<String, dynamic>), appId: appId);  }
 
   Future<TutorialModel?> get(String? id, {Function(Exception)? onError}) async {
     try {
