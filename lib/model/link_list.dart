@@ -152,7 +152,7 @@ class LinkListWidgetState extends State<LinkListWidget> {
 
           return LinkListItem(
             value: value,
-            app: accessState.app,
+//            app: accessState.app,
             onDismissed: (direction) {
               BlocProvider.of<LinkListBloc>(context)
                   .add(DeleteLinkList(value: value));
@@ -199,7 +199,6 @@ class LinkListWidgetState extends State<LinkListWidget> {
 class LinkListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
-  final AppModel app;
   final LinkModel? value;
 
   LinkListItem({
@@ -207,7 +206,6 @@ class LinkListItem extends StatelessWidget {
     required this.onDismissed,
     required this.onTap,
     required this.value,
-    required this.app,
   }) : super(key: key);
 
   @override

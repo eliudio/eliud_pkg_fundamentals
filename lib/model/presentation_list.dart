@@ -152,7 +152,7 @@ class PresentationListWidgetState extends State<PresentationListWidget> {
 
           return PresentationListItem(
             value: value,
-            app: accessState.app,
+//            app: accessState.app,
             onDismissed: (direction) {
               BlocProvider.of<PresentationListBloc>(context)
                   .add(DeletePresentationList(value: value));
@@ -199,7 +199,6 @@ class PresentationListWidgetState extends State<PresentationListWidget> {
 class PresentationListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
-  final AppModel app;
   final PresentationModel? value;
 
   PresentationListItem({
@@ -207,7 +206,6 @@ class PresentationListItem extends StatelessWidget {
     required this.onDismissed,
     required this.onTap,
     required this.value,
-    required this.app,
   }) : super(key: key);
 
   @override

@@ -152,7 +152,7 @@ class DecoratedContentListWidgetState extends State<DecoratedContentListWidget> 
 
           return DecoratedContentListItem(
             value: value,
-            app: accessState.app,
+//            app: accessState.app,
             onDismissed: (direction) {
               BlocProvider.of<DecoratedContentListBloc>(context)
                   .add(DeleteDecoratedContentList(value: value));
@@ -199,7 +199,6 @@ class DecoratedContentListWidgetState extends State<DecoratedContentListWidget> 
 class DecoratedContentListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
-  final AppModel app;
   final DecoratedContentModel? value;
 
   DecoratedContentListItem({
@@ -207,7 +206,6 @@ class DecoratedContentListItem extends StatelessWidget {
     required this.onDismissed,
     required this.onTap,
     required this.value,
-    required this.app,
   }) : super(key: key);
 
   @override

@@ -152,7 +152,7 @@ class PlayStoreListWidgetState extends State<PlayStoreListWidget> {
 
           return PlayStoreListItem(
             value: value,
-            app: accessState.app,
+//            app: accessState.app,
             onDismissed: (direction) {
               BlocProvider.of<PlayStoreListBloc>(context)
                   .add(DeletePlayStoreList(value: value));
@@ -199,7 +199,6 @@ class PlayStoreListWidgetState extends State<PlayStoreListWidget> {
 class PlayStoreListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
-  final AppModel app;
   final PlayStoreModel? value;
 
   PlayStoreListItem({
@@ -207,7 +206,6 @@ class PlayStoreListItem extends StatelessWidget {
     required this.onDismissed,
     required this.onTap,
     required this.value,
-    required this.app,
   }) : super(key: key);
 
   @override

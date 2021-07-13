@@ -152,7 +152,7 @@ class TutorialListWidgetState extends State<TutorialListWidget> {
 
           return TutorialListItem(
             value: value,
-            app: accessState.app,
+//            app: accessState.app,
             onDismissed: (direction) {
               BlocProvider.of<TutorialListBloc>(context)
                   .add(DeleteTutorialList(value: value));
@@ -199,7 +199,6 @@ class TutorialListWidgetState extends State<TutorialListWidget> {
 class TutorialListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
-  final AppModel app;
   final TutorialModel? value;
 
   TutorialListItem({
@@ -207,7 +206,6 @@ class TutorialListItem extends StatelessWidget {
     required this.onDismissed,
     required this.onTap,
     required this.value,
-    required this.app,
   }) : super(key: key);
 
   @override

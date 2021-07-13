@@ -152,7 +152,7 @@ class ListedItemListWidgetState extends State<ListedItemListWidget> {
 
           return ListedItemListItem(
             value: value,
-            app: accessState.app,
+//            app: accessState.app,
             onDismissed: (direction) {
               BlocProvider.of<ListedItemListBloc>(context)
                   .add(DeleteListedItemList(value: value));
@@ -199,7 +199,6 @@ class ListedItemListWidgetState extends State<ListedItemListWidget> {
 class ListedItemListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
-  final AppModel app;
   final ListedItemModel? value;
 
   ListedItemListItem({
@@ -207,7 +206,6 @@ class ListedItemListItem extends StatelessWidget {
     required this.onDismissed,
     required this.onTap,
     required this.value,
-    required this.app,
   }) : super(key: key);
 
   @override

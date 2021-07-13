@@ -152,7 +152,7 @@ class SimpleTextListWidgetState extends State<SimpleTextListWidget> {
 
           return SimpleTextListItem(
             value: value,
-            app: accessState.app,
+//            app: accessState.app,
             onDismissed: (direction) {
               BlocProvider.of<SimpleTextListBloc>(context)
                   .add(DeleteSimpleTextList(value: value));
@@ -199,7 +199,6 @@ class SimpleTextListWidgetState extends State<SimpleTextListWidget> {
 class SimpleTextListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
-  final AppModel app;
   final SimpleTextModel? value;
 
   SimpleTextListItem({
@@ -207,7 +206,6 @@ class SimpleTextListItem extends StatelessWidget {
     required this.onDismissed,
     required this.onTap,
     required this.value,
-    required this.app,
   }) : super(key: key);
 
   @override

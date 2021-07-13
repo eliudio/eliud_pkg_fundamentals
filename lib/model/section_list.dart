@@ -152,7 +152,7 @@ class SectionListWidgetState extends State<SectionListWidget> {
 
           return SectionListItem(
             value: value,
-            app: accessState.app,
+//            app: accessState.app,
             onDismissed: (direction) {
               BlocProvider.of<SectionListBloc>(context)
                   .add(DeleteSectionList(value: value));
@@ -199,7 +199,6 @@ class SectionListWidgetState extends State<SectionListWidget> {
 class SectionListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
-  final AppModel app;
   final SectionModel? value;
 
   SectionListItem({
@@ -207,7 +206,6 @@ class SectionListItem extends StatelessWidget {
     required this.onDismissed,
     required this.onTap,
     required this.value,
-    required this.app,
   }) : super(key: key);
 
   @override

@@ -152,7 +152,7 @@ class TutorialEntryListWidgetState extends State<TutorialEntryListWidget> {
 
           return TutorialEntryListItem(
             value: value,
-            app: accessState.app,
+//            app: accessState.app,
             onDismissed: (direction) {
               BlocProvider.of<TutorialEntryListBloc>(context)
                   .add(DeleteTutorialEntryList(value: value));
@@ -199,7 +199,6 @@ class TutorialEntryListWidgetState extends State<TutorialEntryListWidget> {
 class TutorialEntryListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
-  final AppModel app;
   final TutorialEntryModel? value;
 
   TutorialEntryListItem({
@@ -207,7 +206,6 @@ class TutorialEntryListItem extends StatelessWidget {
     required this.onDismissed,
     required this.onTap,
     required this.value,
-    required this.app,
   }) : super(key: key);
 
   @override

@@ -152,7 +152,7 @@ class DocumentItemListWidgetState extends State<DocumentItemListWidget> {
 
           return DocumentItemListItem(
             value: value,
-            app: accessState.app,
+//            app: accessState.app,
             onDismissed: (direction) {
               BlocProvider.of<DocumentItemListBloc>(context)
                   .add(DeleteDocumentItemList(value: value));
@@ -199,7 +199,6 @@ class DocumentItemListWidgetState extends State<DocumentItemListWidget> {
 class DocumentItemListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
-  final AppModel app;
   final DocumentItemModel? value;
 
   DocumentItemListItem({
@@ -207,7 +206,6 @@ class DocumentItemListItem extends StatelessWidget {
     required this.onDismissed,
     required this.onTap,
     required this.value,
-    required this.app,
   }) : super(key: key);
 
   @override

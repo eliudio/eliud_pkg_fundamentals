@@ -152,7 +152,7 @@ class SimpleImageListWidgetState extends State<SimpleImageListWidget> {
 
           return SimpleImageListItem(
             value: value,
-            app: accessState.app,
+//            app: accessState.app,
             onDismissed: (direction) {
               BlocProvider.of<SimpleImageListBloc>(context)
                   .add(DeleteSimpleImageList(value: value));
@@ -199,7 +199,6 @@ class SimpleImageListWidgetState extends State<SimpleImageListWidget> {
 class SimpleImageListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
-  final AppModel app;
   final SimpleImageModel? value;
 
   SimpleImageListItem({
@@ -207,7 +206,6 @@ class SimpleImageListItem extends StatelessWidget {
     required this.onDismissed,
     required this.onTap,
     required this.value,
-    required this.app,
   }) : super(key: key);
 
   @override

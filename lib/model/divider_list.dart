@@ -152,7 +152,7 @@ class DividerListWidgetState extends State<DividerListWidget> {
 
           return DividerListItem(
             value: value,
-            app: accessState.app,
+//            app: accessState.app,
             onDismissed: (direction) {
               BlocProvider.of<DividerListBloc>(context)
                   .add(DeleteDividerList(value: value));
@@ -199,7 +199,6 @@ class DividerListWidgetState extends State<DividerListWidget> {
 class DividerListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
-  final AppModel app;
   final DividerModel? value;
 
   DividerListItem({
@@ -207,7 +206,6 @@ class DividerListItem extends StatelessWidget {
     required this.onDismissed,
     required this.onTap,
     required this.value,
-    required this.app,
   }) : super(key: key);
 
   @override

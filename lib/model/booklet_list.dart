@@ -152,7 +152,7 @@ class BookletListWidgetState extends State<BookletListWidget> {
 
           return BookletListItem(
             value: value,
-            app: accessState.app,
+//            app: accessState.app,
             onDismissed: (direction) {
               BlocProvider.of<BookletListBloc>(context)
                   .add(DeleteBookletList(value: value));
@@ -199,7 +199,6 @@ class BookletListWidgetState extends State<BookletListWidget> {
 class BookletListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
-  final AppModel app;
   final BookletModel? value;
 
   BookletListItem({
@@ -207,7 +206,6 @@ class BookletListItem extends StatelessWidget {
     required this.onDismissed,
     required this.onTap,
     required this.value,
-    required this.app,
   }) : super(key: key);
 
   @override

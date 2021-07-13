@@ -152,7 +152,7 @@ class GridListWidgetState extends State<GridListWidget> {
 
           return GridListItem(
             value: value,
-            app: accessState.app,
+//            app: accessState.app,
             onDismissed: (direction) {
               BlocProvider.of<GridListBloc>(context)
                   .add(DeleteGridList(value: value));
@@ -199,7 +199,6 @@ class GridListWidgetState extends State<GridListWidget> {
 class GridListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
-  final AppModel app;
   final GridModel? value;
 
   GridListItem({
@@ -207,7 +206,6 @@ class GridListItem extends StatelessWidget {
     required this.onDismissed,
     required this.onTap,
     required this.value,
-    required this.app,
   }) : super(key: key);
 
   @override

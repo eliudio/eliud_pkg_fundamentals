@@ -152,7 +152,7 @@ class FaderListWidgetState extends State<FaderListWidget> {
 
           return FaderListItem(
             value: value,
-            app: accessState.app,
+//            app: accessState.app,
             onDismissed: (direction) {
               BlocProvider.of<FaderListBloc>(context)
                   .add(DeleteFaderList(value: value));
@@ -199,7 +199,6 @@ class FaderListWidgetState extends State<FaderListWidget> {
 class FaderListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
-  final AppModel app;
   final FaderModel? value;
 
   FaderListItem({
@@ -207,7 +206,6 @@ class FaderListItem extends StatelessWidget {
     required this.onDismissed,
     required this.onTap,
     required this.value,
-    required this.app,
   }) : super(key: key);
 
   @override
