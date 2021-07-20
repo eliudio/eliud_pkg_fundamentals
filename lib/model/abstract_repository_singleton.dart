@@ -64,5 +64,16 @@ abstract class AbstractRepositorySingleton {
   TutorialRepository? tutorialRepository(String? appId);
 
   void flush(String? appId) {
+    bookletRepository(appId)!.flush();
+    decoratedContentRepository(appId)!.flush();
+    dividerRepository(appId)!.flush();
+    documentRepository(appId)!.flush();
+    faderRepository(appId)!.flush();
+    gridRepository(appId)!.flush();
+    playStoreRepository(appId)!.flush();
+    presentationRepository(appId)!.flush();
+    simpleImageRepository(appId)!.flush();
+    simpleTextRepository(appId)!.flush();
+    tutorialRepository(appId)!.flush();
   }
 }
