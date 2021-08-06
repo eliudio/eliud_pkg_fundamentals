@@ -23,7 +23,6 @@ import 'package:eliud_pkg_fundamentals/model/simple_image_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
 
-const _simpleImageLimit = 5;
 
 class SimpleImageListBloc extends Bloc<SimpleImageListEvent, SimpleImageListState> {
   final SimpleImageRepository _simpleImageRepository;
@@ -34,8 +33,9 @@ class SimpleImageListBloc extends Bloc<SimpleImageListEvent, SimpleImageListStat
   final String? orderBy;
   final bool? descending;
   final bool? detailed;
+  final int simpleImageLimit;
 
-  SimpleImageListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required SimpleImageRepository simpleImageRepository})
+  SimpleImageListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required SimpleImageRepository simpleImageRepository, this.simpleImageLimit = 5})
       : assert(simpleImageRepository != null),
         _simpleImageRepository = simpleImageRepository,
         super(SimpleImageListLoading());
@@ -48,7 +48,7 @@ class SimpleImageListBloc extends Bloc<SimpleImageListEvent, SimpleImageListStat
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * _simpleImageLimit : null
+      limit: ((paged != null) && paged!) ? pages * simpleImageLimit : null
     );
   }
 
@@ -60,7 +60,7 @@ class SimpleImageListBloc extends Bloc<SimpleImageListEvent, SimpleImageListStat
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * _simpleImageLimit : null
+        limit: ((paged != null) && paged!) ? pages * simpleImageLimit : null
     );
   }
 

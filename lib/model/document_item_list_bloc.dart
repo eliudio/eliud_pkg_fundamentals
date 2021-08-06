@@ -23,7 +23,6 @@ import 'package:eliud_pkg_fundamentals/model/document_item_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
 
-const _documentItemLimit = 5;
 
 class DocumentItemListBloc extends Bloc<DocumentItemListEvent, DocumentItemListState> {
   final DocumentItemRepository _documentItemRepository;
@@ -34,8 +33,9 @@ class DocumentItemListBloc extends Bloc<DocumentItemListEvent, DocumentItemListS
   final String? orderBy;
   final bool? descending;
   final bool? detailed;
+  final int documentItemLimit;
 
-  DocumentItemListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required DocumentItemRepository documentItemRepository})
+  DocumentItemListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required DocumentItemRepository documentItemRepository, this.documentItemLimit = 5})
       : assert(documentItemRepository != null),
         _documentItemRepository = documentItemRepository,
         super(DocumentItemListLoading());
@@ -48,7 +48,7 @@ class DocumentItemListBloc extends Bloc<DocumentItemListEvent, DocumentItemListS
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * _documentItemLimit : null
+      limit: ((paged != null) && paged!) ? pages * documentItemLimit : null
     );
   }
 
@@ -60,7 +60,7 @@ class DocumentItemListBloc extends Bloc<DocumentItemListEvent, DocumentItemListS
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * _documentItemLimit : null
+        limit: ((paged != null) && paged!) ? pages * documentItemLimit : null
     );
   }
 

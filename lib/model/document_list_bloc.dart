@@ -23,7 +23,6 @@ import 'package:eliud_pkg_fundamentals/model/document_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
 
-const _documentLimit = 5;
 
 class DocumentListBloc extends Bloc<DocumentListEvent, DocumentListState> {
   final DocumentRepository _documentRepository;
@@ -34,8 +33,9 @@ class DocumentListBloc extends Bloc<DocumentListEvent, DocumentListState> {
   final String? orderBy;
   final bool? descending;
   final bool? detailed;
+  final int documentLimit;
 
-  DocumentListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required DocumentRepository documentRepository})
+  DocumentListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required DocumentRepository documentRepository, this.documentLimit = 5})
       : assert(documentRepository != null),
         _documentRepository = documentRepository,
         super(DocumentListLoading());
@@ -48,7 +48,7 @@ class DocumentListBloc extends Bloc<DocumentListEvent, DocumentListState> {
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * _documentLimit : null
+      limit: ((paged != null) && paged!) ? pages * documentLimit : null
     );
   }
 
@@ -60,7 +60,7 @@ class DocumentListBloc extends Bloc<DocumentListEvent, DocumentListState> {
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * _documentLimit : null
+        limit: ((paged != null) && paged!) ? pages * documentLimit : null
     );
   }
 

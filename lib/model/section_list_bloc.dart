@@ -23,7 +23,6 @@ import 'package:eliud_pkg_fundamentals/model/section_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
 
-const _sectionLimit = 5;
 
 class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
   final SectionRepository _sectionRepository;
@@ -34,8 +33,9 @@ class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
   final String? orderBy;
   final bool? descending;
   final bool? detailed;
+  final int sectionLimit;
 
-  SectionListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required SectionRepository sectionRepository})
+  SectionListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required SectionRepository sectionRepository, this.sectionLimit = 5})
       : assert(sectionRepository != null),
         _sectionRepository = sectionRepository,
         super(SectionListLoading());
@@ -48,7 +48,7 @@ class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * _sectionLimit : null
+      limit: ((paged != null) && paged!) ? pages * sectionLimit : null
     );
   }
 
@@ -60,7 +60,7 @@ class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * _sectionLimit : null
+        limit: ((paged != null) && paged!) ? pages * sectionLimit : null
     );
   }
 

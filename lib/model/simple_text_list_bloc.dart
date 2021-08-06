@@ -23,7 +23,6 @@ import 'package:eliud_pkg_fundamentals/model/simple_text_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
 
-const _simpleTextLimit = 5;
 
 class SimpleTextListBloc extends Bloc<SimpleTextListEvent, SimpleTextListState> {
   final SimpleTextRepository _simpleTextRepository;
@@ -34,8 +33,9 @@ class SimpleTextListBloc extends Bloc<SimpleTextListEvent, SimpleTextListState> 
   final String? orderBy;
   final bool? descending;
   final bool? detailed;
+  final int simpleTextLimit;
 
-  SimpleTextListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required SimpleTextRepository simpleTextRepository})
+  SimpleTextListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required SimpleTextRepository simpleTextRepository, this.simpleTextLimit = 5})
       : assert(simpleTextRepository != null),
         _simpleTextRepository = simpleTextRepository,
         super(SimpleTextListLoading());
@@ -48,7 +48,7 @@ class SimpleTextListBloc extends Bloc<SimpleTextListEvent, SimpleTextListState> 
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * _simpleTextLimit : null
+      limit: ((paged != null) && paged!) ? pages * simpleTextLimit : null
     );
   }
 
@@ -60,7 +60,7 @@ class SimpleTextListBloc extends Bloc<SimpleTextListEvent, SimpleTextListState> 
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * _simpleTextLimit : null
+        limit: ((paged != null) && paged!) ? pages * simpleTextLimit : null
     );
   }
 

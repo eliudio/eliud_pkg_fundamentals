@@ -23,7 +23,6 @@ import 'package:eliud_pkg_fundamentals/model/fader_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
 
-const _faderLimit = 5;
 
 class FaderListBloc extends Bloc<FaderListEvent, FaderListState> {
   final FaderRepository _faderRepository;
@@ -34,8 +33,9 @@ class FaderListBloc extends Bloc<FaderListEvent, FaderListState> {
   final String? orderBy;
   final bool? descending;
   final bool? detailed;
+  final int faderLimit;
 
-  FaderListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required FaderRepository faderRepository})
+  FaderListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required FaderRepository faderRepository, this.faderLimit = 5})
       : assert(faderRepository != null),
         _faderRepository = faderRepository,
         super(FaderListLoading());
@@ -48,7 +48,7 @@ class FaderListBloc extends Bloc<FaderListEvent, FaderListState> {
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * _faderLimit : null
+      limit: ((paged != null) && paged!) ? pages * faderLimit : null
     );
   }
 
@@ -60,7 +60,7 @@ class FaderListBloc extends Bloc<FaderListEvent, FaderListState> {
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * _faderLimit : null
+        limit: ((paged != null) && paged!) ? pages * faderLimit : null
     );
   }
 

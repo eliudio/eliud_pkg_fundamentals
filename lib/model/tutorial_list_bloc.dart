@@ -23,7 +23,6 @@ import 'package:eliud_pkg_fundamentals/model/tutorial_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
 
-const _tutorialLimit = 5;
 
 class TutorialListBloc extends Bloc<TutorialListEvent, TutorialListState> {
   final TutorialRepository _tutorialRepository;
@@ -34,8 +33,9 @@ class TutorialListBloc extends Bloc<TutorialListEvent, TutorialListState> {
   final String? orderBy;
   final bool? descending;
   final bool? detailed;
+  final int tutorialLimit;
 
-  TutorialListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required TutorialRepository tutorialRepository})
+  TutorialListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required TutorialRepository tutorialRepository, this.tutorialLimit = 5})
       : assert(tutorialRepository != null),
         _tutorialRepository = tutorialRepository,
         super(TutorialListLoading());
@@ -48,7 +48,7 @@ class TutorialListBloc extends Bloc<TutorialListEvent, TutorialListState> {
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * _tutorialLimit : null
+      limit: ((paged != null) && paged!) ? pages * tutorialLimit : null
     );
   }
 
@@ -60,7 +60,7 @@ class TutorialListBloc extends Bloc<TutorialListEvent, TutorialListState> {
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * _tutorialLimit : null
+        limit: ((paged != null) && paged!) ? pages * tutorialLimit : null
     );
   }
 

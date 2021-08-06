@@ -23,7 +23,6 @@ import 'package:eliud_pkg_fundamentals/model/divider_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
 
-const _dividerLimit = 5;
 
 class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
   final DividerRepository _dividerRepository;
@@ -34,8 +33,9 @@ class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
   final String? orderBy;
   final bool? descending;
   final bool? detailed;
+  final int dividerLimit;
 
-  DividerListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required DividerRepository dividerRepository})
+  DividerListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required DividerRepository dividerRepository, this.dividerLimit = 5})
       : assert(dividerRepository != null),
         _dividerRepository = dividerRepository,
         super(DividerListLoading());
@@ -48,7 +48,7 @@ class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * _dividerLimit : null
+      limit: ((paged != null) && paged!) ? pages * dividerLimit : null
     );
   }
 
@@ -60,7 +60,7 @@ class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * _dividerLimit : null
+        limit: ((paged != null) && paged!) ? pages * dividerLimit : null
     );
   }
 

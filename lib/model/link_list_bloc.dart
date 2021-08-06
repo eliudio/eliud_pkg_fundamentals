@@ -23,7 +23,6 @@ import 'package:eliud_pkg_fundamentals/model/link_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
 
-const _linkLimit = 5;
 
 class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
   final LinkRepository _linkRepository;
@@ -34,8 +33,9 @@ class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
   final String? orderBy;
   final bool? descending;
   final bool? detailed;
+  final int linkLimit;
 
-  LinkListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required LinkRepository linkRepository})
+  LinkListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required LinkRepository linkRepository, this.linkLimit = 5})
       : assert(linkRepository != null),
         _linkRepository = linkRepository,
         super(LinkListLoading());
@@ -48,7 +48,7 @@ class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * _linkLimit : null
+      limit: ((paged != null) && paged!) ? pages * linkLimit : null
     );
   }
 
@@ -60,7 +60,7 @@ class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * _linkLimit : null
+        limit: ((paged != null) && paged!) ? pages * linkLimit : null
     );
   }
 

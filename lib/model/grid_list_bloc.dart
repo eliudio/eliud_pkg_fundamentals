@@ -23,7 +23,6 @@ import 'package:eliud_pkg_fundamentals/model/grid_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
 
-const _gridLimit = 5;
 
 class GridListBloc extends Bloc<GridListEvent, GridListState> {
   final GridRepository _gridRepository;
@@ -34,8 +33,9 @@ class GridListBloc extends Bloc<GridListEvent, GridListState> {
   final String? orderBy;
   final bool? descending;
   final bool? detailed;
+  final int gridLimit;
 
-  GridListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required GridRepository gridRepository})
+  GridListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required GridRepository gridRepository, this.gridLimit = 5})
       : assert(gridRepository != null),
         _gridRepository = gridRepository,
         super(GridListLoading());
@@ -48,7 +48,7 @@ class GridListBloc extends Bloc<GridListEvent, GridListState> {
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * _gridLimit : null
+      limit: ((paged != null) && paged!) ? pages * gridLimit : null
     );
   }
 
@@ -60,7 +60,7 @@ class GridListBloc extends Bloc<GridListEvent, GridListState> {
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * _gridLimit : null
+        limit: ((paged != null) && paged!) ? pages * gridLimit : null
     );
   }
 

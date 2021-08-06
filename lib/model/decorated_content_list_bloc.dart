@@ -23,7 +23,6 @@ import 'package:eliud_pkg_fundamentals/model/decorated_content_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
 
-const _decoratedContentLimit = 5;
 
 class DecoratedContentListBloc extends Bloc<DecoratedContentListEvent, DecoratedContentListState> {
   final DecoratedContentRepository _decoratedContentRepository;
@@ -34,8 +33,9 @@ class DecoratedContentListBloc extends Bloc<DecoratedContentListEvent, Decorated
   final String? orderBy;
   final bool? descending;
   final bool? detailed;
+  final int decoratedContentLimit;
 
-  DecoratedContentListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required DecoratedContentRepository decoratedContentRepository})
+  DecoratedContentListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required DecoratedContentRepository decoratedContentRepository, this.decoratedContentLimit = 5})
       : assert(decoratedContentRepository != null),
         _decoratedContentRepository = decoratedContentRepository,
         super(DecoratedContentListLoading());
@@ -48,7 +48,7 @@ class DecoratedContentListBloc extends Bloc<DecoratedContentListEvent, Decorated
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * _decoratedContentLimit : null
+      limit: ((paged != null) && paged!) ? pages * decoratedContentLimit : null
     );
   }
 
@@ -60,7 +60,7 @@ class DecoratedContentListBloc extends Bloc<DecoratedContentListEvent, Decorated
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * _decoratedContentLimit : null
+        limit: ((paged != null) && paged!) ? pages * decoratedContentLimit : null
     );
   }
 

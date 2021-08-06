@@ -23,7 +23,6 @@ import 'package:eliud_pkg_fundamentals/model/presentation_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
 
-const _presentationLimit = 5;
 
 class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListState> {
   final PresentationRepository _presentationRepository;
@@ -34,8 +33,9 @@ class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListS
   final String? orderBy;
   final bool? descending;
   final bool? detailed;
+  final int presentationLimit;
 
-  PresentationListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required PresentationRepository presentationRepository})
+  PresentationListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required PresentationRepository presentationRepository, this.presentationLimit = 5})
       : assert(presentationRepository != null),
         _presentationRepository = presentationRepository,
         super(PresentationListLoading());
@@ -48,7 +48,7 @@ class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListS
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * _presentationLimit : null
+      limit: ((paged != null) && paged!) ? pages * presentationLimit : null
     );
   }
 
@@ -60,7 +60,7 @@ class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListS
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * _presentationLimit : null
+        limit: ((paged != null) && paged!) ? pages * presentationLimit : null
     );
   }
 

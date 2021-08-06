@@ -23,7 +23,6 @@ import 'package:eliud_pkg_fundamentals/model/booklet_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
 
-const _bookletLimit = 5;
 
 class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
   final BookletRepository _bookletRepository;
@@ -34,8 +33,9 @@ class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
   final String? orderBy;
   final bool? descending;
   final bool? detailed;
+  final int bookletLimit;
 
-  BookletListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required BookletRepository bookletRepository})
+  BookletListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required BookletRepository bookletRepository, this.bookletLimit = 5})
       : assert(bookletRepository != null),
         _bookletRepository = bookletRepository,
         super(BookletListLoading());
@@ -48,7 +48,7 @@ class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * _bookletLimit : null
+      limit: ((paged != null) && paged!) ? pages * bookletLimit : null
     );
   }
 
@@ -60,7 +60,7 @@ class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * _bookletLimit : null
+        limit: ((paged != null) && paged!) ? pages * bookletLimit : null
     );
   }
 

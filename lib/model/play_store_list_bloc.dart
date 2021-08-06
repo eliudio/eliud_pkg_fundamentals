@@ -23,7 +23,6 @@ import 'package:eliud_pkg_fundamentals/model/play_store_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
 
-const _playStoreLimit = 5;
 
 class PlayStoreListBloc extends Bloc<PlayStoreListEvent, PlayStoreListState> {
   final PlayStoreRepository _playStoreRepository;
@@ -34,8 +33,9 @@ class PlayStoreListBloc extends Bloc<PlayStoreListEvent, PlayStoreListState> {
   final String? orderBy;
   final bool? descending;
   final bool? detailed;
+  final int playStoreLimit;
 
-  PlayStoreListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required PlayStoreRepository playStoreRepository})
+  PlayStoreListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required PlayStoreRepository playStoreRepository, this.playStoreLimit = 5})
       : assert(playStoreRepository != null),
         _playStoreRepository = playStoreRepository,
         super(PlayStoreListLoading());
@@ -48,7 +48,7 @@ class PlayStoreListBloc extends Bloc<PlayStoreListEvent, PlayStoreListState> {
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * _playStoreLimit : null
+      limit: ((paged != null) && paged!) ? pages * playStoreLimit : null
     );
   }
 
@@ -60,7 +60,7 @@ class PlayStoreListBloc extends Bloc<PlayStoreListEvent, PlayStoreListState> {
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * _playStoreLimit : null
+        limit: ((paged != null) && paged!) ? pages * playStoreLimit : null
     );
   }
 
