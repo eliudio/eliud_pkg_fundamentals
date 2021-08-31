@@ -16,15 +16,15 @@ import 'package:flutter/material.dart';
 
 class PlayStoreComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({String? id, Map<String, dynamic>? parameters}) {
-    return PlayStoreBase(id);
+  Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
+    return PlayStoreBase(id, key: key);
   }
 }
 
 class PlayStoreBase extends AbstractPlayStoreComponent {
   final String? id;
 
-  PlayStoreBase(this.id) : super(playStoreID: id);
+  PlayStoreBase(this.id, {Key? key, }) : super(key: key, playStoreID: id);
 
   @override
   Widget alertWidget({title = String, content = String}) {

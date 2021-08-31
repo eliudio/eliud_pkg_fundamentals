@@ -17,13 +17,13 @@ import 'package:transparent_image/transparent_image.dart';
 
 class TutorialComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({String? id, Map<String, dynamic>? parameters}) {
+  Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
     return TutorialComponent(tutorialID: id);
   }
 }
 
 class TutorialComponent extends AbstractTutorialComponent {
-  TutorialComponent({String? tutorialID}) : super(tutorialID: tutorialID);
+  TutorialComponent({Key? key, required String tutorialID}) : super(key: key, tutorialID: tutorialID);
 
   Widget _aBitSpace() => SizedBox(
         height: 20,

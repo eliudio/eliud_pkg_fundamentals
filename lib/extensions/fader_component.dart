@@ -11,13 +11,13 @@ import 'package:flutter/material.dart';
 
 class FaderComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({String? id, Map<String, dynamic>? parameters}) {
-    return FaderComponent(faderID: id);
+  Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
+    return FaderComponent(key: key, faderID: id);
   }
 }
 
 class FaderComponent extends AbstractFaderComponent {
-  FaderComponent({String? faderID}) : super(faderID: faderID);
+  FaderComponent({Key? key, required String faderID}) : super(key: key, faderID: faderID);
 
   @override
   Widget yourWidget(BuildContext context, FaderModel? value) {

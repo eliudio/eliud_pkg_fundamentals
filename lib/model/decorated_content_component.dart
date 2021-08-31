@@ -27,7 +27,7 @@ abstract class AbstractDecoratedContentComponent extends StatelessWidget {
   static String componentName = "decoratedContents";
   final String? decoratedContentID;
 
-  AbstractDecoratedContentComponent({this.decoratedContentID});
+  AbstractDecoratedContentComponent({Key? key, this.decoratedContentID}): super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -27,7 +27,7 @@ abstract class AbstractSimpleImageComponent extends StatelessWidget {
   static String componentName = "simpleImages";
   final String? simpleImageID;
 
-  AbstractSimpleImageComponent({this.simpleImageID});
+  AbstractSimpleImageComponent({Key? key, this.simpleImageID}): super(key: key);
 
   @override
   Widget build(BuildContext context) {

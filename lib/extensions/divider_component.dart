@@ -9,13 +9,13 @@ import 'package:eliud_pkg_fundamentals/model/divider_repository.dart';
 import 'package:flutter/material.dart';
 
 class DividerComponentConstructorDefault implements ComponentConstructor {
-  Widget createNew({String? id, Map<String, dynamic>? parameters}) {
-    return DividerComponent(dividerID: id);
+  Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
+    return DividerComponent(key: key, dividerID: id);
   }
 }
 
 class DividerComponent extends AbstractDividerComponent {
-  DividerComponent({String? dividerID}) : super(dividerID: dividerID);
+  DividerComponent({Key? key, required String dividerID}) : super(key: key, dividerID: dividerID);
 
   @override
   Widget yourWidget(BuildContext context, DividerModel? value) {

@@ -27,7 +27,7 @@ abstract class AbstractDocumentComponent extends StatelessWidget {
   static String componentName = "documents";
   final String? documentID;
 
-  AbstractDocumentComponent({this.documentID});
+  AbstractDocumentComponent({Key? key, this.documentID}): super(key: key);
 
   @override
   Widget build(BuildContext context) {

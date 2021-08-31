@@ -27,7 +27,7 @@ abstract class AbstractGridComponent extends StatelessWidget {
   static String componentName = "grids";
   final String? gridID;
 
-  AbstractGridComponent({this.gridID});
+  AbstractGridComponent({Key? key, this.gridID}): super(key: key);
 
   @override
   Widget build(BuildContext context) {

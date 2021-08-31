@@ -27,7 +27,7 @@ abstract class AbstractFaderComponent extends StatelessWidget {
   static String componentName = "faders";
   final String? faderID;
 
-  AbstractFaderComponent({this.faderID});
+  AbstractFaderComponent({Key? key, this.faderID}): super(key: key);
 
   @override
   Widget build(BuildContext context) {

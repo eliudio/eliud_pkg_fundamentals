@@ -11,15 +11,15 @@ import 'package:flutter/material.dart';
 
 class PresentationComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({String? id, Map<String, dynamic>? parameters}) {
-    return PresentationComponent(presentationID: id, parameters: parameters,);
+  Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
+    return PresentationComponent(key: key, presentationID: id, parameters: parameters,);
   }
 }
 
 class PresentationComponent extends AbstractPresentationComponent {
   Map<String, dynamic>? parameters;
 
-  PresentationComponent({String? presentationID, this.parameters}) : super(presentationID: presentationID);
+  PresentationComponent({Key? key, required String presentationID, this.parameters}) : super(key: key, presentationID: presentationID);
 
   @override
   Widget yourWidget(BuildContext context, PresentationModel? value) {

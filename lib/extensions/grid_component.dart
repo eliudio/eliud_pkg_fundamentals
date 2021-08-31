@@ -11,13 +11,13 @@ import 'package:flutter/material.dart';
 
 class GridComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({String? id, Map<String, dynamic>? parameters}) {
-    return GridComponent(gridID: id);
+  Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
+    return GridComponent(key: key, gridID: id);
   }
 }
 
 class GridComponent extends AbstractGridComponent {
-  GridComponent({String? gridID}) : super(gridID: gridID);
+  GridComponent({Key? key, required String gridID}) : super(key: key, gridID: gridID);
 
   @override
   Widget yourWidget(BuildContext context, GridModel? value) {

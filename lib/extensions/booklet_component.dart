@@ -17,13 +17,13 @@ import 'package:flutter/material.dart';
 
 class BookletComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({String? id, Map<String, dynamic>? parameters}) {
-    return BookletComponent(bookletID: id);
+  Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
+    return BookletComponent(key: key, bookletID: id);
   }
 }
 
 class BookletComponent extends AbstractBookletComponent {
-  BookletComponent({String? bookletID}) : super(bookletID: bookletID);
+  BookletComponent({Key? key, required String bookletID}) : super(key: key, bookletID: bookletID);
 
   Widget _aBitSpace() => SizedBox(height: 30);
 

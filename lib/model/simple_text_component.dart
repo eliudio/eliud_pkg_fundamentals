@@ -27,7 +27,7 @@ abstract class AbstractSimpleTextComponent extends StatelessWidget {
   static String componentName = "simpleTexts";
   final String? simpleTextID;
 
-  AbstractSimpleTextComponent({this.simpleTextID});
+  AbstractSimpleTextComponent({Key? key, this.simpleTextID}): super(key: key);
 
   @override
   Widget build(BuildContext context) {

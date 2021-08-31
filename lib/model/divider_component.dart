@@ -27,7 +27,7 @@ abstract class AbstractDividerComponent extends StatelessWidget {
   static String componentName = "dividers";
   final String? dividerID;
 
-  AbstractDividerComponent({this.dividerID});
+  AbstractDividerComponent({Key? key, this.dividerID}): super(key: key);
 
   @override
   Widget build(BuildContext context) {

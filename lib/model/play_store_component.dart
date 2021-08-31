@@ -27,7 +27,7 @@ abstract class AbstractPlayStoreComponent extends StatelessWidget {
   static String componentName = "playStores";
   final String? playStoreID;
 
-  AbstractPlayStoreComponent({this.playStoreID});
+  AbstractPlayStoreComponent({Key? key, this.playStoreID}): super(key: key);
 
   @override
   Widget build(BuildContext context) {

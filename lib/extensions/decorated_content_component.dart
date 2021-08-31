@@ -12,14 +12,14 @@ import 'package:flutter/material.dart';
 class DecoratedContentComponentConstructorDefault
     implements ComponentConstructor {
   @override
-  Widget createNew({String? id, Map<String, dynamic>? parameters}) {
-    return DecoratedContentComponent(decoratedContentID: id);
+  Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
+    return DecoratedContentComponent(key: key, decoratedContentID: id);
   }
 }
 
 class DecoratedContentComponent extends AbstractDecoratedContentComponent {
-  DecoratedContentComponent({String? decoratedContentID})
-      : super(decoratedContentID: decoratedContentID);
+  DecoratedContentComponent({Key? key, required String decoratedContentID})
+      : super(key: key, decoratedContentID: decoratedContentID);
 
   @override
   Widget yourWidget(BuildContext context, DecoratedContentModel? value) {

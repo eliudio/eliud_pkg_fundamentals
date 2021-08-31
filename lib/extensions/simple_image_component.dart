@@ -10,13 +10,13 @@ import 'package:transparent_image/transparent_image.dart';
 
 class SimpleImageComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({String? id, Map<String, dynamic>? parameters}) {
-    return SimpleImageComponent(simpleImageID: id);
+  Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
+    return SimpleImageComponent(key: key, simpleImageID: id);
   }
 }
 
 class SimpleImageComponent extends AbstractSimpleImageComponent {
-  SimpleImageComponent({String? simpleImageID}) : super(simpleImageID: simpleImageID);
+  SimpleImageComponent({Key? key, required String simpleImageID}) : super(key: key, simpleImageID: simpleImageID);
 
   @override
   Widget yourWidget(BuildContext context, SimpleImageModel? value) {

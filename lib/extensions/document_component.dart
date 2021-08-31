@@ -9,13 +9,13 @@ import 'package:eliud_pkg_fundamentals/tools/document_renderer.dart';
 import 'package:flutter/material.dart';
 
 class DocumentComponentConstructorDefault implements ComponentConstructor {
-  Widget createNew({String? id, Map<String, dynamic>? parameters}) {
-    return DocumentComponent(documentID: id);
+  Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
+    return DocumentComponent(key: key, documentID: id);
   }
 }
 
 class DocumentComponent extends AbstractDocumentComponent {
-  DocumentComponent({String? documentID}) : super(documentID: documentID);
+  DocumentComponent({Key? key, required String documentID}) : super(key: key, documentID: documentID);
 
   @override
   Widget yourWidget(BuildContext context, DocumentModel? value) {

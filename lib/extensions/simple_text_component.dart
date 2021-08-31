@@ -11,13 +11,13 @@ import 'package:flutter/material.dart';
 
 class SimpleTextComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({String? id, Map<String, dynamic>? parameters}) {
-    return SimpleTextComponent(simpleTextID: id);
+  Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
+    return SimpleTextComponent(key: key, simpleTextID: id);
   }
 }
 
 class SimpleTextComponent extends AbstractSimpleTextComponent {
-  SimpleTextComponent({String? simpleTextID}) : super(simpleTextID: simpleTextID);
+  SimpleTextComponent({Key? key, required String simpleTextID}) : super(key: key, simpleTextID: simpleTextID);
 
   TextAlign toTextAlign(SimpleTextAlign? textAlign) {
     switch (textAlign) {
