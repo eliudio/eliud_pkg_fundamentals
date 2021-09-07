@@ -61,10 +61,10 @@ class TutorialDropdownButtonWidgetState extends State<TutorialDropdownButtonWidg
     super.dispose();
   }
 
-List<Widget> widgets(TutorialModel pm) {
+List<Widget> widgets(TutorialModel value) {
 var widgets = <Widget>[];
-if (pm.documentID! != null) widgets.add(new Text(pm.documentID!));
-if (pm.name! != null) widgets.add(new Text(pm.name!));
+widgets.add(value!.documentID != null ? Center(child: StyleRegistry.registry().styleWithContext(context).adminListStyle().listItem(context, value!.documentID!)) : Container());
+widgets.add(value!.name != null ? Center(child: StyleRegistry.registry().styleWithContext(context).adminListStyle().listItem(context, value!.name!)) : Container());
 return widgets;
 }
 

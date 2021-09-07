@@ -51,6 +51,6 @@
     }
   ],
   "listFields": {
-    "title": "linkText!"
+    "title": "value!.linkText != null ? Center(child: StyleRegistry.registry().styleWithContext(context).adminListStyle().listItem(context, value!.linkText!)) : Container()"
   }
 }

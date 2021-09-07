@@ -199,7 +199,7 @@ class LinkListWidgetState extends State<LinkListWidget> {
 class LinkListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
-  final LinkModel? value;
+  final LinkModel value;
 
   LinkListItem({
     Key? key,
@@ -215,13 +215,7 @@ class LinkListItem extends StatelessWidget {
       onDismissed: onDismissed,
       child: ListTile(
         onTap: onTap,
-        title: Hero(
-          tag: '${value!.documentID}__LinkheroTag',
-          child: Container(
-            width: fullScreenWidth(context),
-            child: Center(child: StyleRegistry.registry().styleWithContext(context).adminListStyle().listItem(context, value!.linkText!)),
-          ),
-        ),
+        title: value!.linkText != null ? Center(child: StyleRegistry.registry().styleWithContext(context).adminListStyle().listItem(context, value!.linkText!)) : Container(),
       ),
     );
   }

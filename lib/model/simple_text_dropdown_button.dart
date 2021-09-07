@@ -61,10 +61,10 @@ class SimpleTextDropdownButtonWidgetState extends State<SimpleTextDropdownButton
     super.dispose();
   }
 
-List<Widget> widgets(SimpleTextModel pm) {
+List<Widget> widgets(SimpleTextModel value) {
 var widgets = <Widget>[];
-if (pm.documentID! != null) widgets.add(new Text(pm.documentID!));
-if (pm.title! != null) widgets.add(new Text(pm.title!));
+widgets.add(value!.documentID != null ? Center(child: StyleRegistry.registry().styleWithContext(context).adminListStyle().listItem(context, value!.documentID!)) : Container());
+widgets.add(value!.title != null ? Center(child: StyleRegistry.registry().styleWithContext(context).adminListStyle().listItem(context, value!.title!)) : Container());
 return widgets;
 }
 

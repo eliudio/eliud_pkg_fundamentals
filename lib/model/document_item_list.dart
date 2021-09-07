@@ -199,7 +199,7 @@ class DocumentItemListWidgetState extends State<DocumentItemListWidget> {
 class DocumentItemListItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
-  final DocumentItemModel? value;
+  final DocumentItemModel value;
 
   DocumentItemListItem({
     Key? key,
@@ -215,16 +215,8 @@ class DocumentItemListItem extends StatelessWidget {
       onDismissed: onDismissed,
       child: ListTile(
         onTap: onTap,
-        title: Hero(
-          tag: '${value!.documentID}__DocumentItemheroTag',
-          child: Container(
-            width: fullScreenWidth(context),
-            child: Center( child: ImageHelper.getImageFromMediumModel(memberMediumModel: value!.image!, width: fullScreenWidth(context)))
-          ),
-        ),
-        subtitle: (value!.reference! != null) && (value!.reference!.isNotEmpty)
-            ? Center(child: StyleRegistry.registry().styleWithContext(context).adminListStyle().listItem(context, value!.reference!))
-            : null,
+        title: ImageHelper.getImageFromMediumModel(memberMediumModel: value!.image!, width: fullScreenWidth(context)),
+        subtitle: value!.reference != null ? Center(child: StyleRegistry.registry().styleWithContext(context).adminListStyle().listItem(context, value!.reference!)) : Container(),
       ),
     );
   }
