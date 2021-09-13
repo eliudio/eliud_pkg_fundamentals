@@ -211,12 +211,12 @@ class DocumentItemListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key('__DocumentItem_item_${value!.documentID}'),
+      key: Key('__DocumentItem_item_${value.documentID}'),
       onDismissed: onDismissed,
       child: ListTile(
         onTap: onTap,
-        title: ImageHelper.getImageFromMediumModel(memberMediumModel: value!.image!, width: fullScreenWidth(context)),
-        subtitle: value!.reference != null ? Center(child: StyleRegistry.registry().styleWithContext(context).adminListStyle().listItem(context, value!.reference!)) : Container(),
+        title: ImageHelper.getImageFromMediumModel(memberMediumModel: value.image!, width: fullScreenWidth(context)),
+        subtitle: value.reference != null ? Center(child: StyleRegistry.registry().styleWithContext(context).adminListStyle().listItem(context, value.reference!)) : Container(),
       ),
     );
   }

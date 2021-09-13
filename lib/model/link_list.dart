@@ -211,11 +211,11 @@ class LinkListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key('__Link_item_${value!.documentID}'),
+      key: Key('__Link_item_${value.documentID}'),
       onDismissed: onDismissed,
       child: ListTile(
         onTap: onTap,
-        title: value!.linkText != null ? Center(child: StyleRegistry.registry().styleWithContext(context).adminListStyle().listItem(context, value!.linkText!)) : Container(),
+        title: value.linkText != null ? Center(child: StyleRegistry.registry().styleWithContext(context).adminListStyle().listItem(context, value.linkText!)) : Container(),
       ),
     );
   }

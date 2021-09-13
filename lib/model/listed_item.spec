@@ -71,7 +71,7 @@
     }
   ],
   "listFields": {
-    "title": "value!.description != null ? Center(child: StyleRegistry.registry().styleWithContext(context).adminListStyle().listItem(context, value!.description!)) : Container()"
+    "title": "value.description != null ? Center(child: StyleRegistry.registry().styleWithContext(context).adminListStyle().listItem(context, value.description!)) : Container()"
   },
   "depends": ["eliud_core"]
 }
