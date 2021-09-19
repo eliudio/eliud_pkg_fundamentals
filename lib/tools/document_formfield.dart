@@ -1,6 +1,7 @@
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/access/bloc/access_state.dart';
 import 'package:eliud_core/model/background_model.dart';
+import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/router_builders.dart';
 import 'package:eliud_core/tools/screen_size.dart';
@@ -38,10 +39,7 @@ class DocumentTextFieldState extends State<DocumentTextField> {
 
   Widget _buildExcludeDocument(AccessState accessState, BuildContext context) {
     var app = AccessBloc.app(context)!;
-    return StyleRegistry.registry()
-        .styleWithContext(context)
-        .frontEndStyle().buttonStyle()
-        .button(context,
+    return button(context,
             label: widget.label,
             icon: Icon(Icons.fullscreen),
             onPressed: () => _fullScreen(accessState));
@@ -66,10 +64,7 @@ class DocumentTextFieldState extends State<DocumentTextField> {
                             child: Container(
                                 child: SizedBox(
                                     width: fullWidth,
-                                    child: StyleRegistry.registry()
-                                        .styleWithContext(context)
-                                        .frontEndStyle().buttonStyle()
-                                        .button(context,
+                                    child: button(context,
                                             label: widget.label,
                                             icon: Icon(Icons.fullscreen),
                                             onPressed: () =>

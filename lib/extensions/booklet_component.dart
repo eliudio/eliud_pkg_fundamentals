@@ -3,6 +3,8 @@ import 'package:eliud_core/core/access/bloc/access_state.dart';
 import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
+import 'package:eliud_core/style/frontend/has_button.dart';
+import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/component_constructor.dart';
 import 'package:eliud_core/tools/etc.dart';
@@ -150,19 +152,15 @@ class BookletComponent extends AbstractBookletComponent {
 
     value!.sections!.forEach((element) {
       var widgets = <Widget>[];
-      var frontEndStyle =
-          StyleRegistry.registry().styleWithContext(context).frontEndStyle();
-      widgets.add(frontEndStyle
-          .textStyle()
-          .h3(context, documentParameterProcessor.process(element.title!)));
+      widgets.add(h3(context, documentParameterProcessor.process(element.title!)));
       widgets.add(_aBitSpace());
-      widgets.add(frontEndStyle.textStyle().text(
+      widgets.add(text(
           context, documentParameterProcessor.process(element.description!)));
       widgets.add(_aBitSpace());
       if (element.links != null && element.links!.isNotEmpty) {
         var children = <Widget>[];
         element.links!.forEach((link) {
-          children.add(frontEndStyle.buttonStyle().button(
+          children.add(button(
             context,
             label: link.linkText!,
             onPressed: () {

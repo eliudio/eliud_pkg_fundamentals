@@ -2,6 +2,7 @@ import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/tools/document_processor.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
+import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/component_constructor.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
@@ -60,11 +61,7 @@ class TutorialComponent extends AbstractTutorialComponent {
         ));
 
         widgets.add(Center(
-            child: StyleRegistry.registry()
-                .styleWithContext(context)
-                .frontEndStyle()
-                .buttonStyle()
-                .button(context, label: 'Fullscreen', onPressed: () {
+            child: button(context, label: 'Fullscreen', onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (_) {
             return FulLScreen(element.image);
           }));

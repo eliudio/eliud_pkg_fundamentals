@@ -1,5 +1,6 @@
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
+import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/component_constructor.dart';
 import 'package:eliud_core/tools/etc.dart';
@@ -36,14 +37,13 @@ class SimpleTextComponent extends AbstractSimpleTextComponent {
   Widget yourWidget(BuildContext context, SimpleTextModel? value) {
     if (value == null) return Text('No simple text');
     var app = AccessBloc.app(context)!;
-    var frontEndStyle = StyleRegistry.registry().styleWithContext(context).frontEndStyle();
     var text = ListView(
         shrinkWrap: true,
         physics: ScrollPhysics(),
         children: [
-          frontEndStyle.textStyle().h1(context, value.title!),
+          h1(context, value.title!),
           Container(height: 20),
-          frontEndStyle.textStyle().h5(context, value.text!, textAlign: toTextAlign(value.textAlign)),
+          h5(context, value.text!, textAlign: toTextAlign(value.textAlign)),
         ]);
     return text;
   }
