@@ -6,7 +6,7 @@ import 'package:eliud_core/style/frontend/has_container.dart';
 import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/action/action_model.dart';
-import 'package:eliud_core/tools/component_constructor.dart';
+import 'package:eliud_core/tools/component/component_constructor.dart';
 import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
 import 'package:eliud_core/tools/screen_size.dart';

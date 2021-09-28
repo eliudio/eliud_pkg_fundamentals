@@ -6,7 +6,7 @@ import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/style/style_registry.dart';
-import 'package:eliud_core/tools/component_constructor.dart';
+import 'package:eliud_core/tools/component/component_constructor.dart';
 import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/screen_size.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';

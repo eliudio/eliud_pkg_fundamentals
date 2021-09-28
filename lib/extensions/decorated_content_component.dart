@@ -1,6 +1,6 @@
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
-import 'package:eliud_core/tools/component_constructor.dart';
+import 'package:eliud_core/tools/component/component_constructor.dart';
 import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_core/tools/screen_size.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
@@ -12,7 +12,8 @@ import 'package:flutter/material.dart';
 class DecoratedContentComponentConstructorDefault
     implements ComponentConstructor {
   @override
-  Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
+  Widget createNew(
+      {Key? key, required String id, Map<String, dynamic>? parameters}) {
     return DecoratedContentComponent(key: key, decoratedContentID: id);
   }
 }
@@ -23,12 +24,10 @@ class DecoratedContentComponent extends AbstractDecoratedContentComponent {
 
   @override
   Widget yourWidget(BuildContext context, DecoratedContentModel? value) {
-    var contents = Registry.registry()!.component(
-        value!.contentComponentName!,
-        value.contentComponentId!);
+    var contents = Registry.registry()!
+        .component(value!.contentComponentName!, value.contentComponentId!);
     var image = Registry.registry()!.component(
-        value.decoratingComponentName!,
-        value.decoratingComponentId!);
+        value.decoratingComponentName!, value.decoratingComponentId!);
     var percentageImageVisible = value.percentageDecorationVisible == null
         ? .5
         : value.percentageDecorationVisible;
