@@ -215,7 +215,7 @@ class LinkListItem extends StatelessWidget {
       onDismissed: onDismissed,
       child: ListTile(
         onTap: onTap,
-        title: value.linkText != null ? Center(child: StyleRegistry.registry().styleWithContext(context).adminListStyle().listItem(context, value.linkText!)) : Container(),
+        title: value.linkText != null ? Center(child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().textStyle().text(context, value.linkText!)) : Container(),
       ),
     );
   }
