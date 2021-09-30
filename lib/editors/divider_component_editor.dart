@@ -4,7 +4,7 @@ import 'package:eliud_core/style/frontend/has_dialog_field.dart';
 import 'package:eliud_core/style/frontend/has_list_tile.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/tools/component/component_spec.dart';
-import 'package:eliud_core/tools/widgets/editor/editor_header_widget.dart';
+import 'package:eliud_core/tools/widgets/header_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_model.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +58,8 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
   @override
   Widget build(BuildContext context) {
     return ListView(shrinkWrap: true, physics: ScrollPhysics(), children: [
-      EditorHeaderWidget(
+      HeaderWidget(
+        title: 'Divider',
         okAction: () async {
           var appId = AccessBloc.appId(context);
           if (widget.create) {
