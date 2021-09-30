@@ -4,6 +4,7 @@ import 'package:eliud_core/style/frontend/has_dialog_field.dart';
 import 'package:eliud_core/style/frontend/has_list_tile.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/tools/component/component_spec.dart';
+import 'package:eliud_core/tools/widgets/condition_simple_widget.dart';
 import 'package:eliud_core/tools/widgets/header_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_model.dart';
@@ -76,6 +77,10 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
           return true;
         },
         cancelAction: () {},
+      ),
+      getListTile(context,
+        leading: Icon(Icons.security),
+        title: ConditionsSimpleWidget(value: widget.model.conditions!,)
       ),
       getListTile(context,
           leading: Icon(Icons.vpn_key),
