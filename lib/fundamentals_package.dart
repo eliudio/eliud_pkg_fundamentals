@@ -10,6 +10,8 @@ import 'package:eliud_pkg_fundamentals/model/repository_singleton.dart';
 import 'package:flutter_bloc/src/bloc_provider.dart';
 
 abstract class FundamentalsPackage extends Package {
+  FundamentalsPackage() : super('eliud_pkg_fundamentals');
+
   @override
   BlocProvider? createMainBloc(NavigatorBloc navigatorBloc, AccessBloc accessBloc) => null;
 
