@@ -1,4 +1,5 @@
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/style/frontend/has_container.dart';
 import 'package:eliud_core/style/frontend/has_dialog.dart';
 import 'package:eliud_core/style/frontend/has_dialog_field.dart';
 import 'package:eliud_core/style/frontend/has_list_tile.dart';
@@ -34,11 +35,13 @@ class DividerComponentEditorConstructor extends ComponentEditorConstructor {
 
   @override
   void updateComponentWithID(BuildContext context, String id) async {
-    var divider = await dividerRepository(appId: AccessBloc.appId(context)!)!.get(id);
+    var divider =
+        await dividerRepository(appId: AccessBloc.appId(context)!)!.get(id);
     if (divider != null) {
       _openIt(context, false, divider);
     } else {
-      openErrorDialog(context, title: 'Error', errorMessage: 'Cannot find divider with id $id');
+      openErrorDialog(context,
+          title: 'Error', errorMessage: 'Cannot find divider with id $id');
     }
   }
 }
@@ -64,11 +67,14 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
         okAction: () async {
           var appId = AccessBloc.appId(context);
           if (widget.create) {
-            var existingModel = await dividerRepository(appId: appId)!.get(widget.model.documentID);
+            var existingModel = await dividerRepository(appId: appId)!
+                .get(widget.model.documentID);
             if (existingModel == null) {
               dividerRepository(appId: appId)!.add(widget.model);
             } else {
-              openErrorDialog(context, title: 'Error', errorMessage: 'Divider with this ID already exists');
+              openErrorDialog(context,
+                  title: 'Error',
+                  errorMessage: 'Divider with this ID already exists');
               return false;
             }
           } else {
@@ -78,36 +84,45 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
         },
         cancelAction: () {},
       ),
-      getListTile(context,
-        leading: Icon(Icons.security),
-        title: ConditionsSimpleWidget(value: widget.model.conditions!,)
-      ),
-      getListTile(context,
-          leading: Icon(Icons.vpn_key),
-          title: widget.create ? dialogField(
-            context,
-            initialValue: widget.model.documentID,
-            valueChanged:  (value) {
-              widget.model.documentID = value;
-            },
-            decoration: const InputDecoration(
-              hintText: 'Identifier',
-              labelText: 'Identifier',
-            ),
-          ) : text(context, widget.model.documentID!)),
-      getListTile(context,
-          leading: Icon(Icons.description),
-          title: dialogField(
-            context,
-            initialValue: widget.model.name,
-            valueChanged: (value) {
-              widget.model.name = value;
-            },
-            decoration: const InputDecoration(
-              hintText: 'Name',
-              labelText: 'Name',
-            ),
-          ))
+      topicContainer(context,
+          title: 'General',
+          collapsible: true,
+          collapsed: true,
+          children: [
+            getListTile(context,
+                leading: Icon(Icons.vpn_key),
+                title: widget.create
+                    ? dialogField(
+                        context,
+                        initialValue: widget.model.documentID,
+                        valueChanged: (value) {
+                          widget.model.documentID = value;
+                        },
+                        decoration: const InputDecoration(
+                          hintText: 'Identifier',
+                          labelText: 'Identifier',
+                        ),
+                      )
+                    : text(context, widget.model.documentID!)),
+            getListTile(context,
+                leading: Icon(Icons.security),
+                title: ConditionsSimpleWidget(
+                  value: widget.model.conditions!,
+                )),
+            getListTile(context,
+                leading: Icon(Icons.description),
+                title: dialogField(
+                  context,
+                  initialValue: widget.model.name,
+                  valueChanged: (value) {
+                    widget.model.name = value;
+                  },
+                  decoration: const InputDecoration(
+                    hintText: 'Name',
+                    labelText: 'Name',
+                  ),
+                )),
+          ])
     ]);
   }
 }
