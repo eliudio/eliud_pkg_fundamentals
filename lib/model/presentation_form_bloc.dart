@@ -102,7 +102,7 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
       }
       if (event is ChangedPresentationImage) {
         if (event.value != null)
-          newValue = currentState.value!.copyWith(image: await memberMediumRepository(appId: appId)!.get(event.value));
+          newValue = currentState.value!.copyWith(image: await platformMediumRepository(appId: appId)!.get(event.value));
         else
           newValue = new PresentationModel(
                                  documentID: currentState.value!.documentID,

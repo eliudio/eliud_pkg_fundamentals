@@ -39,14 +39,14 @@ class SimpleImageModel {
   String? documentID;
   String? appId;
   String? title;
-  MemberMediumModel? image;
+  PlatformMediumModel? image;
   ConditionsSimpleModel? conditions;
 
   SimpleImageModel({this.documentID, this.appId, this.title, this.image, this.conditions, })  {
     assert(documentID != null);
   }
 
-  SimpleImageModel copyWith({String? documentID, String? appId, String? title, MemberMediumModel? image, ConditionsSimpleModel? conditions, }) {
+  SimpleImageModel copyWith({String? documentID, String? appId, String? title, PlatformMediumModel? image, ConditionsSimpleModel? conditions, }) {
     return SimpleImageModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, title: title ?? this.title, image: image ?? this.image, conditions: conditions ?? this.conditions, );
   }
 
@@ -93,13 +93,13 @@ class SimpleImageModel {
   static Future<SimpleImageModel?> fromEntityPlus(String documentID, SimpleImageEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
-    MemberMediumModel? imageHolder;
+    PlatformMediumModel? imageHolder;
     if (entity.imageId != null) {
       try {
-          imageHolder = await memberMediumRepository(appId: appId)!.get(entity.imageId);
+          imageHolder = await platformMediumRepository(appId: appId)!.get(entity.imageId);
       } on Exception catch(e) {
         print('Error whilst trying to initialise image');
-        print('Error whilst retrieving memberMedium with id ${entity.imageId}');
+        print('Error whilst retrieving platformMedium with id ${entity.imageId}');
         print('Exception: $e');
       }
     }

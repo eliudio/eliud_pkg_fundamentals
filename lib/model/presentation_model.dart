@@ -69,7 +69,7 @@ class PresentationModel {
   String? appId;
   String? title;
   List<BodyComponentModel>? bodyComponents;
-  MemberMediumModel? image;
+  PlatformMediumModel? image;
   PresentationRelativeImagePosition? imagePositionRelative;
   PresentationImageAlignment? imageAlignment;
 
@@ -81,7 +81,7 @@ class PresentationModel {
     assert(documentID != null);
   }
 
-  PresentationModel copyWith({String? documentID, String? appId, String? title, List<BodyComponentModel>? bodyComponents, MemberMediumModel? image, PresentationRelativeImagePosition? imagePositionRelative, PresentationImageAlignment? imageAlignment, double? imageWidth, ConditionsSimpleModel? conditions, }) {
+  PresentationModel copyWith({String? documentID, String? appId, String? title, List<BodyComponentModel>? bodyComponents, PlatformMediumModel? image, PresentationRelativeImagePosition? imagePositionRelative, PresentationImageAlignment? imageAlignment, double? imageWidth, ConditionsSimpleModel? conditions, }) {
     return PresentationModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, title: title ?? this.title, bodyComponents: bodyComponents ?? this.bodyComponents, image: image ?? this.image, imagePositionRelative: imagePositionRelative ?? this.imagePositionRelative, imageAlignment: imageAlignment ?? this.imageAlignment, imageWidth: imageWidth ?? this.imageWidth, conditions: conditions ?? this.conditions, );
   }
 
@@ -151,13 +151,13 @@ class PresentationModel {
   static Future<PresentationModel?> fromEntityPlus(String documentID, PresentationEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
-    MemberMediumModel? imageHolder;
+    PlatformMediumModel? imageHolder;
     if (entity.imageId != null) {
       try {
-          imageHolder = await memberMediumRepository(appId: appId)!.get(entity.imageId);
+          imageHolder = await platformMediumRepository(appId: appId)!.get(entity.imageId);
       } on Exception catch(e) {
         print('Error whilst trying to initialise image');
-        print('Error whilst retrieving memberMedium with id ${entity.imageId}');
+        print('Error whilst retrieving platformMedium with id ${entity.imageId}');
         print('Exception: $e');
       }
     }

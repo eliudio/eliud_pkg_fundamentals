@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
 import 'package:eliud_core/model/member_medium_model.dart';
+import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/model/pos_size_model.dart';
 import 'package:eliud_core/tools/action/action_model.dart';
 import 'package:eliud_core/tools/etc.dart';
@@ -11,7 +12,7 @@ import 'package:getwidget/components/carousel/gf_carousel.dart';
 
 class TheImageGF extends StatefulWidget {
   final Orientation orientation;
-  final List<MemberMediumModel?> images;
+  final List<PlatformMediumModel?> images;
   final List<PosSizeModel?> positionsAndSizes;
   final List<ActionModel?>? actions;
   // The time to display 1 image
@@ -199,7 +200,7 @@ class FaderHelper {
   }
 
   static Widget? getIt(BuildContext context, PosSizeModel? posSizeModel,
-      MemberMediumModel? imageModel, Orientation orientation, ActionModel? action, int index) {
+      PlatformMediumModel? imageModel, Orientation orientation, ActionModel? action, int index) {
     if (imageModel == null) {
       return null;
     }

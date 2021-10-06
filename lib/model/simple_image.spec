@@ -43,7 +43,7 @@
     },
     {
       "fieldName": "image",
-      "fieldType": "MemberMedium",
+      "fieldType": "PlatformMedium",
       "association": true,
       "optional": false,
       "iconName": "add_a_photo",

@@ -128,10 +128,10 @@ class ListedItemCache implements ListedItemRepository {
 
   static Future<ListedItemModel> refreshRelations(ListedItemModel model) async {
 
-    MemberMediumModel? imageHolder;
+    PlatformMediumModel? imageHolder;
     if (model.image != null) {
       try {
-        await memberMediumRepository()!.get(model.image!.documentID).then((val) {
+        await platformMediumRepository()!.get(model.image!.documentID).then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}

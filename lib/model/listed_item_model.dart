@@ -39,14 +39,14 @@ class ListedItemModel {
   String? documentID;
   String? description;
   ActionModel? action;
-  MemberMediumModel? image;
+  PlatformMediumModel? image;
   PosSizeModel? posSize;
 
   ListedItemModel({this.documentID, this.description, this.action, this.image, this.posSize, })  {
     assert(documentID != null);
   }
 
-  ListedItemModel copyWith({String? documentID, String? description, ActionModel? action, MemberMediumModel? image, PosSizeModel? posSize, }) {
+  ListedItemModel copyWith({String? documentID, String? description, ActionModel? action, PlatformMediumModel? image, PosSizeModel? posSize, }) {
     return ListedItemModel(documentID: documentID ?? this.documentID, description: description ?? this.description, action: action ?? this.action, image: image ?? this.image, posSize: posSize ?? this.posSize, );
   }
 
@@ -92,13 +92,13 @@ class ListedItemModel {
   static Future<ListedItemModel?> fromEntityPlus(String documentID, ListedItemEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
-    MemberMediumModel? imageHolder;
+    PlatformMediumModel? imageHolder;
     if (entity.imageId != null) {
       try {
-          imageHolder = await memberMediumRepository(appId: appId)!.get(entity.imageId);
+          imageHolder = await platformMediumRepository(appId: appId)!.get(entity.imageId);
       } on Exception catch(e) {
         print('Error whilst trying to initialise image');
-        print('Error whilst retrieving memberMedium with id ${entity.imageId}');
+        print('Error whilst retrieving platformMedium with id ${entity.imageId}');
         print('Exception: $e');
       }
     }

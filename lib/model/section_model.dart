@@ -68,7 +68,7 @@ class SectionModel {
   String? documentID;
   String? title;
   String? description;
-  MemberMediumModel? image;
+  PlatformMediumModel? image;
   RelativeImagePosition? imagePositionRelative;
   SectionImageAlignment? imageAlignment;
 
@@ -80,7 +80,7 @@ class SectionModel {
     assert(documentID != null);
   }
 
-  SectionModel copyWith({String? documentID, String? title, String? description, MemberMediumModel? image, RelativeImagePosition? imagePositionRelative, SectionImageAlignment? imageAlignment, double? imageWidth, List<LinkModel>? links, }) {
+  SectionModel copyWith({String? documentID, String? title, String? description, PlatformMediumModel? image, RelativeImagePosition? imagePositionRelative, SectionImageAlignment? imageAlignment, double? imageWidth, List<LinkModel>? links, }) {
     return SectionModel(documentID: documentID ?? this.documentID, title: title ?? this.title, description: description ?? this.description, image: image ?? this.image, imagePositionRelative: imagePositionRelative ?? this.imagePositionRelative, imageAlignment: imageAlignment ?? this.imageAlignment, imageWidth: imageWidth ?? this.imageWidth, links: links ?? this.links, );
   }
 
@@ -146,13 +146,13 @@ class SectionModel {
   static Future<SectionModel?> fromEntityPlus(String documentID, SectionEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
-    MemberMediumModel? imageHolder;
+    PlatformMediumModel? imageHolder;
     if (entity.imageId != null) {
       try {
-          imageHolder = await memberMediumRepository(appId: appId)!.get(entity.imageId);
+          imageHolder = await platformMediumRepository(appId: appId)!.get(entity.imageId);
       } on Exception catch(e) {
         print('Error whilst trying to initialise image');
-        print('Error whilst retrieving memberMedium with id ${entity.imageId}');
+        print('Error whilst retrieving platformMedium with id ${entity.imageId}');
         print('Exception: $e');
       }
     }

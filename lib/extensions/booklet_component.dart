@@ -3,6 +3,7 @@ import 'package:eliud_core/core/access/bloc/access_state.dart';
 import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
+import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/style/style_registry.dart';
@@ -64,7 +65,7 @@ class BookletComponent extends AbstractBookletComponent {
   Widget _addImage(
       BuildContext context,
       List<Widget> widgets,
-      MemberMediumModel? image,
+      PlatformMediumModel? image,
       RelativeImagePosition? relativeImagePosition,
       SectionImageAlignment? sectionImageAlignment,
       double? imageSize) {

@@ -128,10 +128,10 @@ class SimpleImageCache implements SimpleImageRepository {
 
   static Future<SimpleImageModel> refreshRelations(SimpleImageModel model) async {
 
-    MemberMediumModel? imageHolder;
+    PlatformMediumModel? imageHolder;
     if (model.image != null) {
       try {
-        await memberMediumRepository(appId: model.appId)!.get(model.image!.documentID).then((val) {
+        await platformMediumRepository(appId: model.appId)!.get(model.image!.documentID).then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}

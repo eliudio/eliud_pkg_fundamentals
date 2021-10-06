@@ -87,7 +87,7 @@ class ListedItemFormBloc extends Bloc<ListedItemFormEvent, ListedItemFormState> 
       }
       if (event is ChangedListedItemImage) {
         if (event.value != null)
-          newValue = currentState.value!.copyWith(image: await memberMediumRepository(appId: appId)!.get(event.value));
+          newValue = currentState.value!.copyWith(image: await platformMediumRepository(appId: appId)!.get(event.value));
         else
           newValue = new ListedItemModel(
                                  documentID: currentState.value!.documentID,
