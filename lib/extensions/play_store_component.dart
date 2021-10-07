@@ -21,6 +21,9 @@ class PlayStoreComponentConstructorDefault implements ComponentConstructor {
   Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
     return PlayStoreBase(id, key: key);
   }
+
+  @override
+  Future<dynamic> getModel({required String appId, required String id}) async => await playStoreRepository(appId: appId)!.get(id);
 }
 
 class PlayStoreBase extends AbstractPlayStoreComponent {

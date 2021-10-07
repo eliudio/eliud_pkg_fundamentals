@@ -1,5 +1,7 @@
 import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/access/bloc/access_state.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
+import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/tools/component/component_constructor.dart';
 import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_pkg_fundamentals/extensions/presentation/presentation_helper.dart';
@@ -14,6 +16,9 @@ class PresentationComponentConstructorDefault implements ComponentConstructor {
   Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
     return PresentationComponent(key: key, presentationID: id, parameters: parameters,);
   }
+
+  @override
+  Future<dynamic> getModel({required String appId, required String id}) async => await presentationRepository(appId: appId)!.get(id);
 }
 
 class PresentationComponent extends AbstractPresentationComponent {
@@ -23,11 +28,19 @@ class PresentationComponent extends AbstractPresentationComponent {
 
   @override
   Widget yourWidget(BuildContext context, PresentationModel? value) {
-    var widgets = value!.bodyComponents!
-        .map((model) => Registry.registry()!.component(
-        model.componentName!, model.componentId!, parameters: parameters))
-        .toList();
-    return PresentationHelper.makeContainingTable(context, widgets, value.image, value.imagePositionRelative, value.imageAlignment, value.imageWidth);
+    var appLoaded = AccessBloc.getState(context);
+    if (appLoaded is AppLoaded) {
+      var widgets = value!.bodyComponents!
+          .map((model) =>
+          Registry.registry()!.component(appLoaded,
+              model.componentName!, model.componentId!, parameters: parameters))
+          .toList();
+      return PresentationHelper.makeContainingTable(
+          context, widgets, value.image, value.imagePositionRelative,
+          value.imageAlignment, value.imageWidth);
+    } else {
+      return text(context, 'App not loaded');
+    }
   }
 
   @override

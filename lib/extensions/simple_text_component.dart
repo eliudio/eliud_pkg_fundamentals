@@ -15,6 +15,9 @@ class SimpleTextComponentConstructorDefault implements ComponentConstructor {
   Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
     return SimpleTextComponent(key: key, simpleTextID: id);
   }
+
+  @override
+  Future<dynamic> getModel({required String appId, required String id}) async => await simpleTextRepository(appId: appId)!.get(id);
 }
 
 class SimpleTextComponent extends AbstractSimpleTextComponent {

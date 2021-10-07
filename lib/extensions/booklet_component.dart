@@ -23,6 +23,9 @@ class BookletComponentConstructorDefault implements ComponentConstructor {
   Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
     return BookletComponent(key: key, bookletID: id);
   }
+
+  @override
+  Future<dynamic> getModel({required String appId, required String id}) async => await bookletRepository(appId: appId)!.get(id);
 }
 
 class BookletComponent extends AbstractBookletComponent {

@@ -21,6 +21,9 @@ class TutorialComponentConstructorDefault implements ComponentConstructor {
   Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
     return TutorialComponent(tutorialID: id);
   }
+
+  @override
+  Future<dynamic> getModel({required String appId, required String id}) async => await tutorialRepository(appId: appId)!.get(id);
 }
 
 class TutorialComponent extends AbstractTutorialComponent {

@@ -14,6 +14,9 @@ class FaderComponentConstructorDefault implements ComponentConstructor {
   Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
     return FaderComponent(key: key, faderID: id);
   }
+
+  @override
+  Future<dynamic> getModel({required String appId, required String id}) async => await faderRepository(appId: appId)!.get(id);
 }
 
 class FaderComponent extends AbstractFaderComponent {

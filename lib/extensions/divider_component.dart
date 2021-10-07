@@ -13,6 +13,9 @@ class DividerComponentConstructorDefault implements ComponentConstructor {
   Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
     return DividerComponent(key: key, dividerID: id);
   }
+
+  @override
+  Future<dynamic> getModel({required String appId, required String id}) async => await dividerRepository(appId: appId)!.get(id);
 }
 
 class DividerComponent extends AbstractDividerComponent {

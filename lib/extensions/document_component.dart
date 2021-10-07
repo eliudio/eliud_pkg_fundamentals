@@ -13,6 +13,9 @@ class DocumentComponentConstructorDefault implements ComponentConstructor {
   Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
     return DocumentComponent(key: key, documentID: id);
   }
+
+  @override
+  Future<dynamic> getModel({required String appId, required String id}) async => await documentRepository(appId: appId)!.get(id);
 }
 
 class DocumentComponent extends AbstractDocumentComponent {

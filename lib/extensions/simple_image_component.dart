@@ -13,6 +13,9 @@ class SimpleImageComponentConstructorDefault implements ComponentConstructor {
   Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
     return SimpleImageComponent(key: key, simpleImageID: id);
   }
+
+  @override
+  Future<dynamic> getModel({required String appId, required String id}) async => await simpleImageRepository(appId: appId)!.get(id);
 }
 
 class SimpleImageComponent extends AbstractSimpleImageComponent {
