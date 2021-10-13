@@ -14,6 +14,7 @@
 */
 
 import 'package:equatable/equatable.dart';
+import 'package:eliud_pkg_fundamentals/model/decorated_content_model.dart';
 
 abstract class DecoratedContentComponentEvent extends Equatable {
   @override
@@ -25,4 +26,11 @@ class FetchDecoratedContentComponent extends DecoratedContentComponentEvent {
 
   FetchDecoratedContentComponent({ this.id });
 }
+
+class DecoratedContentComponentUpdated extends DecoratedContentComponentEvent {
+  final DecoratedContentModel value;
+
+  DecoratedContentComponentUpdated({ required this.value });
+}
+
 

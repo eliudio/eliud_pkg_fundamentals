@@ -14,6 +14,7 @@
 */
 
 import 'package:equatable/equatable.dart';
+import 'package:eliud_pkg_fundamentals/model/simple_image_model.dart';
 
 abstract class SimpleImageComponentEvent extends Equatable {
   @override
@@ -25,4 +26,11 @@ class FetchSimpleImageComponent extends SimpleImageComponentEvent {
 
   FetchSimpleImageComponent({ this.id });
 }
+
+class SimpleImageComponentUpdated extends SimpleImageComponentEvent {
+  final SimpleImageModel value;
+
+  SimpleImageComponentUpdated({ required this.value });
+}
+
 

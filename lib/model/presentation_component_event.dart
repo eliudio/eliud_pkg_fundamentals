@@ -14,6 +14,7 @@
 */
 
 import 'package:equatable/equatable.dart';
+import 'package:eliud_pkg_fundamentals/model/presentation_model.dart';
 
 abstract class PresentationComponentEvent extends Equatable {
   @override
@@ -25,4 +26,11 @@ class FetchPresentationComponent extends PresentationComponentEvent {
 
   FetchPresentationComponent({ this.id });
 }
+
+class PresentationComponentUpdated extends PresentationComponentEvent {
+  final PresentationModel value;
+
+  PresentationComponentUpdated({ required this.value });
+}
+
 

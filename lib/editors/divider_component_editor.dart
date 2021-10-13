@@ -13,45 +13,46 @@ import 'package:flutter/material.dart';
 
 class DividerComponentEditorConstructor extends ComponentEditorConstructor {
   @override
-  void updateComponent(BuildContext context, model) {
-    _openIt(context, false, model.copyWith());
+  void updateComponent(BuildContext context, model, EditorFeedback feedback) {
+    _openIt(context, false, model.copyWith(), feedback);
   }
 
   @override
-  void createNewComponent(BuildContext context) {
+  void createNewComponent(BuildContext context, EditorFeedback feedback) {
     _openIt(context, true,
-        DividerModel(documentID: 'new identifier', name: 'New divider'));
+        DividerModel(documentID: 'new identifier', name: 'New divider'), feedback);
   }
 
-  void _openIt(BuildContext context, bool create, DividerModel model) {
+  @override
+  void updateComponentWithID(BuildContext context, String id, EditorFeedback feedback) async {
+    var divider =
+        await dividerRepository(appId: AccessBloc.appId(context)!)!.get(id);
+    if (divider != null) {
+      _openIt(context, false, divider, feedback);
+    } else {
+      openErrorDialog(context,
+          title: 'Error', errorMessage: 'Cannot find divider with id $id');
+    }
+  }
+
+  void _openIt(BuildContext context, bool create, DividerModel model, EditorFeedback feedback) {
     openComplexDialog(
       context,
       title: create ? 'Create divider' : 'Update divider',
       includeHeading: false,
       widthFraction: .9,
-      child: DividerComponentEditor(model: model, create: create),
+      child: DividerComponentEditor(model: model, create: create, feedback: feedback),
     );
-  }
-
-  @override
-  void updateComponentWithID(BuildContext context, String id) async {
-    var divider =
-        await dividerRepository(appId: AccessBloc.appId(context)!)!.get(id);
-    if (divider != null) {
-      _openIt(context, false, divider);
-    } else {
-      openErrorDialog(context,
-          title: 'Error', errorMessage: 'Cannot find divider with id $id');
-    }
   }
 }
 
 class DividerComponentEditor extends StatefulWidget {
   final DividerModel model;
   final bool create;
+  final EditorFeedback feedback;
 
   const DividerComponentEditor(
-      {Key? key, required this.model, required this.create})
+      {Key? key, required this.model, required this.create, required this.feedback})
       : super(key: key);
 
   @override
@@ -70,16 +71,18 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
             var existingModel = await dividerRepository(appId: appId)!
                 .get(widget.model.documentID);
             if (existingModel == null) {
-              dividerRepository(appId: appId)!.add(widget.model);
+              await dividerRepository(appId: appId)!.add(widget.model);
             } else {
               openErrorDialog(context,
                   title: 'Error',
                   errorMessage: 'Divider with this ID already exists');
+              widget.feedback(false);
               return false;
             }
           } else {
-            dividerRepository(appId: appId)!.update(widget.model);
+            await dividerRepository(appId: appId)!.update(widget.model);
           }
+          widget.feedback(true);
           return true;
         },
         cancelAction: () {},

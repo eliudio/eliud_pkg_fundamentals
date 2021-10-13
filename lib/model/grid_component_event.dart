@@ -14,6 +14,7 @@
 */
 
 import 'package:equatable/equatable.dart';
+import 'package:eliud_pkg_fundamentals/model/grid_model.dart';
 
 abstract class GridComponentEvent extends Equatable {
   @override
@@ -25,4 +26,11 @@ class FetchGridComponent extends GridComponentEvent {
 
   FetchGridComponent({ this.id });
 }
+
+class GridComponentUpdated extends GridComponentEvent {
+  final GridModel value;
+
+  GridComponentUpdated({ required this.value });
+}
+
 

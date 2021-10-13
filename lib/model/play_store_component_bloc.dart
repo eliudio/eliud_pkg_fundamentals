@@ -25,42 +25,30 @@ import 'package:flutter/services.dart';
 
 class PlayStoreComponentBloc extends Bloc<PlayStoreComponentEvent, PlayStoreComponentState> {
   final PlayStoreRepository? playStoreRepository;
+  StreamSubscription? _playStoreSubscription;
+
+  Stream<PlayStoreComponentState> _mapLoadPlayStoreComponentUpdateToState(String documentId) async* {
+    _playStoreSubscription?.cancel();
+    _playStoreSubscription = playStoreRepository!.listenTo(documentId, (value) {
+      if (value != null) add(PlayStoreComponentUpdated(value: value));
+    });
+  }
 
   PlayStoreComponentBloc({ this.playStoreRepository }): super(PlayStoreComponentUninitialized());
+
   @override
   Stream<PlayStoreComponentState> mapEventToState(PlayStoreComponentEvent event) async* {
     final currentState = state;
     if (event is FetchPlayStoreComponent) {
-      try {
-        if (currentState is PlayStoreComponentUninitialized) {
-          bool permissionDenied = false;
-          final model = await playStoreRepository!.get(event.id, onError: (error) {
-            // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
-            if ((error is PlatformException) &&  (error.message!.startsWith("PERMISSION_DENIED"))) {
-              permissionDenied = true;
-            }
-          });
-          if (permissionDenied) {
-            yield PlayStoreComponentPermissionDenied();
-          } else {
-            if (model != null) {
-              yield PlayStoreComponentLoaded(value: model);
-            } else {
-              String? id = event.id;
-              yield PlayStoreComponentError(
-                  message: "PlayStore with id = '$id' not found");
-            }
-          }
-          return;
-        }
-      } catch (_) {
-        yield PlayStoreComponentError(message: "Unknown error whilst retrieving PlayStore");
-      }
+      yield* _mapLoadPlayStoreComponentUpdateToState(event.id!);
+    } else if (event is PlayStoreComponentUpdated) {
+      yield PlayStoreComponentLoaded(value: event.value);
     }
   }
 
   @override
   Future<void> close() {
+    _playStoreSubscription?.cancel();
     return super.close();
   }
 

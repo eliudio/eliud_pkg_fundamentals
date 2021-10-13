@@ -82,7 +82,7 @@ class TutorialEntryFormBloc extends Bloc<TutorialEntryFormEvent, TutorialEntryFo
       }
       if (event is ChangedTutorialEntryImage) {
         if (event.value != null)
-          newValue = currentState.value!.copyWith(image: await memberMediumRepository(appId: appId)!.get(event.value));
+          newValue = currentState.value!.copyWith(image: await platformMediumRepository(appId: appId)!.get(event.value));
         else
           newValue = new TutorialEntryModel(
                                  documentID: currentState.value!.documentID,

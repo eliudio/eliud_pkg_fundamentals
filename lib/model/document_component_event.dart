@@ -14,6 +14,7 @@
 */
 
 import 'package:equatable/equatable.dart';
+import 'package:eliud_pkg_fundamentals/model/document_model.dart';
 
 abstract class DocumentComponentEvent extends Equatable {
   @override
@@ -25,4 +26,11 @@ class FetchDocumentComponent extends DocumentComponentEvent {
 
   FetchDocumentComponent({ this.id });
 }
+
+class DocumentComponentUpdated extends DocumentComponentEvent {
+  final DocumentModel value;
+
+  DocumentComponentUpdated({ required this.value });
+}
+
 

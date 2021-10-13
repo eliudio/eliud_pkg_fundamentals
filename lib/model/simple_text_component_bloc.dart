@@ -24,42 +24,30 @@ import 'package:flutter/services.dart';
 
 class SimpleTextComponentBloc extends Bloc<SimpleTextComponentEvent, SimpleTextComponentState> {
   final SimpleTextRepository? simpleTextRepository;
+  StreamSubscription? _simpleTextSubscription;
+
+  Stream<SimpleTextComponentState> _mapLoadSimpleTextComponentUpdateToState(String documentId) async* {
+    _simpleTextSubscription?.cancel();
+    _simpleTextSubscription = simpleTextRepository!.listenTo(documentId, (value) {
+      if (value != null) add(SimpleTextComponentUpdated(value: value));
+    });
+  }
 
   SimpleTextComponentBloc({ this.simpleTextRepository }): super(SimpleTextComponentUninitialized());
+
   @override
   Stream<SimpleTextComponentState> mapEventToState(SimpleTextComponentEvent event) async* {
     final currentState = state;
     if (event is FetchSimpleTextComponent) {
-      try {
-        if (currentState is SimpleTextComponentUninitialized) {
-          bool permissionDenied = false;
-          final model = await simpleTextRepository!.get(event.id, onError: (error) {
-            // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
-            if ((error is PlatformException) &&  (error.message!.startsWith("PERMISSION_DENIED"))) {
-              permissionDenied = true;
-            }
-          });
-          if (permissionDenied) {
-            yield SimpleTextComponentPermissionDenied();
-          } else {
-            if (model != null) {
-              yield SimpleTextComponentLoaded(value: model);
-            } else {
-              String? id = event.id;
-              yield SimpleTextComponentError(
-                  message: "SimpleText with id = '$id' not found");
-            }
-          }
-          return;
-        }
-      } catch (_) {
-        yield SimpleTextComponentError(message: "Unknown error whilst retrieving SimpleText");
-      }
+      yield* _mapLoadSimpleTextComponentUpdateToState(event.id!);
+    } else if (event is SimpleTextComponentUpdated) {
+      yield SimpleTextComponentLoaded(value: event.value);
     }
   }
 
   @override
   Future<void> close() {
+    _simpleTextSubscription?.cancel();
     return super.close();
   }
 

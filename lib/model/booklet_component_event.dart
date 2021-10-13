@@ -14,6 +14,7 @@
 */
 
 import 'package:equatable/equatable.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
 
 abstract class BookletComponentEvent extends Equatable {
   @override
@@ -25,4 +26,11 @@ class FetchBookletComponent extends BookletComponentEvent {
 
   FetchBookletComponent({ this.id });
 }
+
+class BookletComponentUpdated extends BookletComponentEvent {
+  final BookletModel value;
+
+  BookletComponentUpdated({ required this.value });
+}
+
 

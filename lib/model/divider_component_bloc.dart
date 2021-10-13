@@ -24,42 +24,30 @@ import 'package:flutter/services.dart';
 
 class DividerComponentBloc extends Bloc<DividerComponentEvent, DividerComponentState> {
   final DividerRepository? dividerRepository;
+  StreamSubscription? _dividerSubscription;
+
+  Stream<DividerComponentState> _mapLoadDividerComponentUpdateToState(String documentId) async* {
+    _dividerSubscription?.cancel();
+    _dividerSubscription = dividerRepository!.listenTo(documentId, (value) {
+      if (value != null) add(DividerComponentUpdated(value: value));
+    });
+  }
 
   DividerComponentBloc({ this.dividerRepository }): super(DividerComponentUninitialized());
+
   @override
   Stream<DividerComponentState> mapEventToState(DividerComponentEvent event) async* {
     final currentState = state;
     if (event is FetchDividerComponent) {
-      try {
-        if (currentState is DividerComponentUninitialized) {
-          bool permissionDenied = false;
-          final model = await dividerRepository!.get(event.id, onError: (error) {
-            // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
-            if ((error is PlatformException) &&  (error.message!.startsWith("PERMISSION_DENIED"))) {
-              permissionDenied = true;
-            }
-          });
-          if (permissionDenied) {
-            yield DividerComponentPermissionDenied();
-          } else {
-            if (model != null) {
-              yield DividerComponentLoaded(value: model);
-            } else {
-              String? id = event.id;
-              yield DividerComponentError(
-                  message: "Divider with id = '$id' not found");
-            }
-          }
-          return;
-        }
-      } catch (_) {
-        yield DividerComponentError(message: "Unknown error whilst retrieving Divider");
-      }
+      yield* _mapLoadDividerComponentUpdateToState(event.id!);
+    } else if (event is DividerComponentUpdated) {
+      yield DividerComponentLoaded(value: event.value);
     }
   }
 
   @override
   Future<void> close() {
+    _dividerSubscription?.cancel();
     return super.close();
   }
 

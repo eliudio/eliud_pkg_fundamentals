@@ -25,42 +25,30 @@ import 'package:flutter/services.dart';
 
 class SimpleImageComponentBloc extends Bloc<SimpleImageComponentEvent, SimpleImageComponentState> {
   final SimpleImageRepository? simpleImageRepository;
+  StreamSubscription? _simpleImageSubscription;
+
+  Stream<SimpleImageComponentState> _mapLoadSimpleImageComponentUpdateToState(String documentId) async* {
+    _simpleImageSubscription?.cancel();
+    _simpleImageSubscription = simpleImageRepository!.listenTo(documentId, (value) {
+      if (value != null) add(SimpleImageComponentUpdated(value: value));
+    });
+  }
 
   SimpleImageComponentBloc({ this.simpleImageRepository }): super(SimpleImageComponentUninitialized());
+
   @override
   Stream<SimpleImageComponentState> mapEventToState(SimpleImageComponentEvent event) async* {
     final currentState = state;
     if (event is FetchSimpleImageComponent) {
-      try {
-        if (currentState is SimpleImageComponentUninitialized) {
-          bool permissionDenied = false;
-          final model = await simpleImageRepository!.get(event.id, onError: (error) {
-            // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
-            if ((error is PlatformException) &&  (error.message!.startsWith("PERMISSION_DENIED"))) {
-              permissionDenied = true;
-            }
-          });
-          if (permissionDenied) {
-            yield SimpleImageComponentPermissionDenied();
-          } else {
-            if (model != null) {
-              yield SimpleImageComponentLoaded(value: model);
-            } else {
-              String? id = event.id;
-              yield SimpleImageComponentError(
-                  message: "SimpleImage with id = '$id' not found");
-            }
-          }
-          return;
-        }
-      } catch (_) {
-        yield SimpleImageComponentError(message: "Unknown error whilst retrieving SimpleImage");
-      }
+      yield* _mapLoadSimpleImageComponentUpdateToState(event.id!);
+    } else if (event is SimpleImageComponentUpdated) {
+      yield SimpleImageComponentLoaded(value: event.value);
     }
   }
 
   @override
   Future<void> close() {
+    _simpleImageSubscription?.cancel();
     return super.close();
   }
 

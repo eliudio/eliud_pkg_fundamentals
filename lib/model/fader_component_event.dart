@@ -14,6 +14,7 @@
 */
 
 import 'package:equatable/equatable.dart';
+import 'package:eliud_pkg_fundamentals/model/fader_model.dart';
 
 abstract class FaderComponentEvent extends Equatable {
   @override
@@ -25,4 +26,11 @@ class FetchFaderComponent extends FaderComponentEvent {
 
   FetchFaderComponent({ this.id });
 }
+
+class FaderComponentUpdated extends FaderComponentEvent {
+  final FaderModel value;
+
+  FaderComponentUpdated({ required this.value });
+}
+
 

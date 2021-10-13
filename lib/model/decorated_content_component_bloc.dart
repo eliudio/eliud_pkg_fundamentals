@@ -24,42 +24,30 @@ import 'package:flutter/services.dart';
 
 class DecoratedContentComponentBloc extends Bloc<DecoratedContentComponentEvent, DecoratedContentComponentState> {
   final DecoratedContentRepository? decoratedContentRepository;
+  StreamSubscription? _decoratedContentSubscription;
+
+  Stream<DecoratedContentComponentState> _mapLoadDecoratedContentComponentUpdateToState(String documentId) async* {
+    _decoratedContentSubscription?.cancel();
+    _decoratedContentSubscription = decoratedContentRepository!.listenTo(documentId, (value) {
+      if (value != null) add(DecoratedContentComponentUpdated(value: value));
+    });
+  }
 
   DecoratedContentComponentBloc({ this.decoratedContentRepository }): super(DecoratedContentComponentUninitialized());
+
   @override
   Stream<DecoratedContentComponentState> mapEventToState(DecoratedContentComponentEvent event) async* {
     final currentState = state;
     if (event is FetchDecoratedContentComponent) {
-      try {
-        if (currentState is DecoratedContentComponentUninitialized) {
-          bool permissionDenied = false;
-          final model = await decoratedContentRepository!.get(event.id, onError: (error) {
-            // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
-            if ((error is PlatformException) &&  (error.message!.startsWith("PERMISSION_DENIED"))) {
-              permissionDenied = true;
-            }
-          });
-          if (permissionDenied) {
-            yield DecoratedContentComponentPermissionDenied();
-          } else {
-            if (model != null) {
-              yield DecoratedContentComponentLoaded(value: model);
-            } else {
-              String? id = event.id;
-              yield DecoratedContentComponentError(
-                  message: "DecoratedContent with id = '$id' not found");
-            }
-          }
-          return;
-        }
-      } catch (_) {
-        yield DecoratedContentComponentError(message: "Unknown error whilst retrieving DecoratedContent");
-      }
+      yield* _mapLoadDecoratedContentComponentUpdateToState(event.id!);
+    } else if (event is DecoratedContentComponentUpdated) {
+      yield DecoratedContentComponentLoaded(value: event.value);
     }
   }
 
   @override
   Future<void> close() {
+    _decoratedContentSubscription?.cancel();
     return super.close();
   }
 

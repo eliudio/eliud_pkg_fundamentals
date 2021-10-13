@@ -24,42 +24,30 @@ import 'package:flutter/services.dart';
 
 class TutorialComponentBloc extends Bloc<TutorialComponentEvent, TutorialComponentState> {
   final TutorialRepository? tutorialRepository;
+  StreamSubscription? _tutorialSubscription;
+
+  Stream<TutorialComponentState> _mapLoadTutorialComponentUpdateToState(String documentId) async* {
+    _tutorialSubscription?.cancel();
+    _tutorialSubscription = tutorialRepository!.listenTo(documentId, (value) {
+      if (value != null) add(TutorialComponentUpdated(value: value));
+    });
+  }
 
   TutorialComponentBloc({ this.tutorialRepository }): super(TutorialComponentUninitialized());
+
   @override
   Stream<TutorialComponentState> mapEventToState(TutorialComponentEvent event) async* {
     final currentState = state;
     if (event is FetchTutorialComponent) {
-      try {
-        if (currentState is TutorialComponentUninitialized) {
-          bool permissionDenied = false;
-          final model = await tutorialRepository!.get(event.id, onError: (error) {
-            // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
-            if ((error is PlatformException) &&  (error.message!.startsWith("PERMISSION_DENIED"))) {
-              permissionDenied = true;
-            }
-          });
-          if (permissionDenied) {
-            yield TutorialComponentPermissionDenied();
-          } else {
-            if (model != null) {
-              yield TutorialComponentLoaded(value: model);
-            } else {
-              String? id = event.id;
-              yield TutorialComponentError(
-                  message: "Tutorial with id = '$id' not found");
-            }
-          }
-          return;
-        }
-      } catch (_) {
-        yield TutorialComponentError(message: "Unknown error whilst retrieving Tutorial");
-      }
+      yield* _mapLoadTutorialComponentUpdateToState(event.id!);
+    } else if (event is TutorialComponentUpdated) {
+      yield TutorialComponentLoaded(value: event.value);
     }
   }
 
   @override
   Future<void> close() {
+    _tutorialSubscription?.cancel();
     return super.close();
   }
 

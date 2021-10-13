@@ -24,42 +24,30 @@ import 'package:flutter/services.dart';
 
 class BookletComponentBloc extends Bloc<BookletComponentEvent, BookletComponentState> {
   final BookletRepository? bookletRepository;
+  StreamSubscription? _bookletSubscription;
+
+  Stream<BookletComponentState> _mapLoadBookletComponentUpdateToState(String documentId) async* {
+    _bookletSubscription?.cancel();
+    _bookletSubscription = bookletRepository!.listenTo(documentId, (value) {
+      if (value != null) add(BookletComponentUpdated(value: value));
+    });
+  }
 
   BookletComponentBloc({ this.bookletRepository }): super(BookletComponentUninitialized());
+
   @override
   Stream<BookletComponentState> mapEventToState(BookletComponentEvent event) async* {
     final currentState = state;
     if (event is FetchBookletComponent) {
-      try {
-        if (currentState is BookletComponentUninitialized) {
-          bool permissionDenied = false;
-          final model = await bookletRepository!.get(event.id, onError: (error) {
-            // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
-            if ((error is PlatformException) &&  (error.message!.startsWith("PERMISSION_DENIED"))) {
-              permissionDenied = true;
-            }
-          });
-          if (permissionDenied) {
-            yield BookletComponentPermissionDenied();
-          } else {
-            if (model != null) {
-              yield BookletComponentLoaded(value: model);
-            } else {
-              String? id = event.id;
-              yield BookletComponentError(
-                  message: "Booklet with id = '$id' not found");
-            }
-          }
-          return;
-        }
-      } catch (_) {
-        yield BookletComponentError(message: "Unknown error whilst retrieving Booklet");
-      }
+      yield* _mapLoadBookletComponentUpdateToState(event.id!);
+    } else if (event is BookletComponentUpdated) {
+      yield BookletComponentLoaded(value: event.value);
     }
   }
 
   @override
   Future<void> close() {
+    _bookletSubscription?.cancel();
     return super.close();
   }
 

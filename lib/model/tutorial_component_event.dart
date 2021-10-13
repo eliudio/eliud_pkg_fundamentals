@@ -14,6 +14,7 @@
 */
 
 import 'package:equatable/equatable.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_model.dart';
 
 abstract class TutorialComponentEvent extends Equatable {
   @override
@@ -25,4 +26,11 @@ class FetchTutorialComponent extends TutorialComponentEvent {
 
   FetchTutorialComponent({ this.id });
 }
+
+class TutorialComponentUpdated extends TutorialComponentEvent {
+  final TutorialModel value;
+
+  TutorialComponentUpdated({ required this.value });
+}
+
 

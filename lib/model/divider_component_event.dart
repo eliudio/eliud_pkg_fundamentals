@@ -14,6 +14,7 @@
 */
 
 import 'package:equatable/equatable.dart';
+import 'package:eliud_pkg_fundamentals/model/divider_model.dart';
 
 abstract class DividerComponentEvent extends Equatable {
   @override
@@ -25,4 +26,11 @@ class FetchDividerComponent extends DividerComponentEvent {
 
   FetchDividerComponent({ this.id });
 }
+
+class DividerComponentUpdated extends DividerComponentEvent {
+  final DividerModel value;
+
+  DividerComponentUpdated({ required this.value });
+}
+
 

@@ -25,42 +25,30 @@ import 'package:flutter/services.dart';
 
 class PresentationComponentBloc extends Bloc<PresentationComponentEvent, PresentationComponentState> {
   final PresentationRepository? presentationRepository;
+  StreamSubscription? _presentationSubscription;
+
+  Stream<PresentationComponentState> _mapLoadPresentationComponentUpdateToState(String documentId) async* {
+    _presentationSubscription?.cancel();
+    _presentationSubscription = presentationRepository!.listenTo(documentId, (value) {
+      if (value != null) add(PresentationComponentUpdated(value: value));
+    });
+  }
 
   PresentationComponentBloc({ this.presentationRepository }): super(PresentationComponentUninitialized());
+
   @override
   Stream<PresentationComponentState> mapEventToState(PresentationComponentEvent event) async* {
     final currentState = state;
     if (event is FetchPresentationComponent) {
-      try {
-        if (currentState is PresentationComponentUninitialized) {
-          bool permissionDenied = false;
-          final model = await presentationRepository!.get(event.id, onError: (error) {
-            // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
-            if ((error is PlatformException) &&  (error.message!.startsWith("PERMISSION_DENIED"))) {
-              permissionDenied = true;
-            }
-          });
-          if (permissionDenied) {
-            yield PresentationComponentPermissionDenied();
-          } else {
-            if (model != null) {
-              yield PresentationComponentLoaded(value: model);
-            } else {
-              String? id = event.id;
-              yield PresentationComponentError(
-                  message: "Presentation with id = '$id' not found");
-            }
-          }
-          return;
-        }
-      } catch (_) {
-        yield PresentationComponentError(message: "Unknown error whilst retrieving Presentation");
-      }
+      yield* _mapLoadPresentationComponentUpdateToState(event.id!);
+    } else if (event is PresentationComponentUpdated) {
+      yield PresentationComponentLoaded(value: event.value);
     }
   }
 
   @override
   Future<void> close() {
+    _presentationSubscription?.cancel();
     return super.close();
   }
 

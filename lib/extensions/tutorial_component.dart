@@ -2,6 +2,7 @@ import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/core/tools/document_processor.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
+import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/component/component_constructor.dart';
@@ -113,7 +114,7 @@ class TutorialComponent extends AbstractTutorialComponent {
 }
 
 class FulLScreen extends StatelessWidget {
-  final MemberMediumModel? image;
+  final PlatformMediumModel? image;
 
   FulLScreen(this.image);
 

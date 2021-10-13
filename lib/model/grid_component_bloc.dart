@@ -25,42 +25,30 @@ import 'package:flutter/services.dart';
 
 class GridComponentBloc extends Bloc<GridComponentEvent, GridComponentState> {
   final GridRepository? gridRepository;
+  StreamSubscription? _gridSubscription;
+
+  Stream<GridComponentState> _mapLoadGridComponentUpdateToState(String documentId) async* {
+    _gridSubscription?.cancel();
+    _gridSubscription = gridRepository!.listenTo(documentId, (value) {
+      if (value != null) add(GridComponentUpdated(value: value));
+    });
+  }
 
   GridComponentBloc({ this.gridRepository }): super(GridComponentUninitialized());
+
   @override
   Stream<GridComponentState> mapEventToState(GridComponentEvent event) async* {
     final currentState = state;
     if (event is FetchGridComponent) {
-      try {
-        if (currentState is GridComponentUninitialized) {
-          bool permissionDenied = false;
-          final model = await gridRepository!.get(event.id, onError: (error) {
-            // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
-            if ((error is PlatformException) &&  (error.message!.startsWith("PERMISSION_DENIED"))) {
-              permissionDenied = true;
-            }
-          });
-          if (permissionDenied) {
-            yield GridComponentPermissionDenied();
-          } else {
-            if (model != null) {
-              yield GridComponentLoaded(value: model);
-            } else {
-              String? id = event.id;
-              yield GridComponentError(
-                  message: "Grid with id = '$id' not found");
-            }
-          }
-          return;
-        }
-      } catch (_) {
-        yield GridComponentError(message: "Unknown error whilst retrieving Grid");
-      }
+      yield* _mapLoadGridComponentUpdateToState(event.id!);
+    } else if (event is GridComponentUpdated) {
+      yield GridComponentLoaded(value: event.value);
     }
   }
 
   @override
   Future<void> close() {
+    _gridSubscription?.cancel();
     return super.close();
   }
 

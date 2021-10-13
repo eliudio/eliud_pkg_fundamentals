@@ -14,6 +14,7 @@
 */
 
 import 'package:equatable/equatable.dart';
+import 'package:eliud_pkg_fundamentals/model/simple_text_model.dart';
 
 abstract class SimpleTextComponentEvent extends Equatable {
   @override
@@ -25,4 +26,11 @@ class FetchSimpleTextComponent extends SimpleTextComponentEvent {
 
   FetchSimpleTextComponent({ this.id });
 }
+
+class SimpleTextComponentUpdated extends SimpleTextComponentEvent {
+  final SimpleTextModel value;
+
+  SimpleTextComponentUpdated({ required this.value });
+}
+
 

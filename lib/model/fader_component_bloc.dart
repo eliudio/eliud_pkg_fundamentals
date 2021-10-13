@@ -24,42 +24,30 @@ import 'package:flutter/services.dart';
 
 class FaderComponentBloc extends Bloc<FaderComponentEvent, FaderComponentState> {
   final FaderRepository? faderRepository;
+  StreamSubscription? _faderSubscription;
+
+  Stream<FaderComponentState> _mapLoadFaderComponentUpdateToState(String documentId) async* {
+    _faderSubscription?.cancel();
+    _faderSubscription = faderRepository!.listenTo(documentId, (value) {
+      if (value != null) add(FaderComponentUpdated(value: value));
+    });
+  }
 
   FaderComponentBloc({ this.faderRepository }): super(FaderComponentUninitialized());
+
   @override
   Stream<FaderComponentState> mapEventToState(FaderComponentEvent event) async* {
     final currentState = state;
     if (event is FetchFaderComponent) {
-      try {
-        if (currentState is FaderComponentUninitialized) {
-          bool permissionDenied = false;
-          final model = await faderRepository!.get(event.id, onError: (error) {
-            // Unfortunatly the below is currently the only way we know how to identify if a document is read protected
-            if ((error is PlatformException) &&  (error.message!.startsWith("PERMISSION_DENIED"))) {
-              permissionDenied = true;
-            }
-          });
-          if (permissionDenied) {
-            yield FaderComponentPermissionDenied();
-          } else {
-            if (model != null) {
-              yield FaderComponentLoaded(value: model);
-            } else {
-              String? id = event.id;
-              yield FaderComponentError(
-                  message: "Fader with id = '$id' not found");
-            }
-          }
-          return;
-        }
-      } catch (_) {
-        yield FaderComponentError(message: "Unknown error whilst retrieving Fader");
-      }
+      yield* _mapLoadFaderComponentUpdateToState(event.id!);
+    } else if (event is FaderComponentUpdated) {
+      yield FaderComponentLoaded(value: event.value);
     }
   }
 
   @override
   Future<void> close() {
+    _faderSubscription?.cancel();
     return super.close();
   }
 
