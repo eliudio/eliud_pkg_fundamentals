@@ -124,23 +124,6 @@ import 'package:eliud_core/model/entity_export.dart';
 import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-import 'package:eliud_pkg_fundamentals/model/play_store_list_bloc.dart';
-import 'package:eliud_pkg_fundamentals/model/play_store_list.dart';
-import 'package:eliud_pkg_fundamentals/model/play_store_dropdown_button.dart';
-import 'package:eliud_pkg_fundamentals/model/play_store_list_event.dart';
-
-import 'package:eliud_core/model/repository_export.dart';
-import 'package:eliud_core/model/abstract_repository_singleton.dart';
-import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
-import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
-import 'package:eliud_core/model/model_export.dart';
-import '../tools/bespoke_models.dart';
-import 'package:eliud_pkg_fundamentals/model/model_export.dart';
-import 'package:eliud_core/model/entity_export.dart';
-import '../tools/bespoke_entities.dart';
-import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
-
 import 'package:eliud_pkg_fundamentals/model/presentation_list_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_list.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_dropdown_button.dart';
@@ -238,7 +221,6 @@ class DropdownButtonComponentFactory implements ComponentDropDown {
     if (id == "documents") return true;
     if (id == "faders") return true;
     if (id == "grids") return true;
-    if (id == "playStores") return true;
     if (id == "presentations") return true;
     if (id == "simpleImages") return true;
     if (id == "simpleTexts") return true;
@@ -264,9 +246,6 @@ class DropdownButtonComponentFactory implements ComponentDropDown {
       return DropdownButtonComponent(componentId: id, value: value, trigger: trigger, optional: optional);
 
     if (id == "grids")
-      return DropdownButtonComponent(componentId: id, value: value, trigger: trigger, optional: optional);
-
-    if (id == "playStores")
       return DropdownButtonComponent(componentId: id, value: value, trigger: trigger, optional: optional);
 
     if (id == "presentations")
@@ -312,7 +291,6 @@ class ListComponent extends StatelessWidget with HasFab {
     if (componentId == 'documents') return _documentBuild(context);
     if (componentId == 'faders') return _faderBuild(context);
     if (componentId == 'grids') return _gridBuild(context);
-    if (componentId == 'playStores') return _playStoreBuild(context);
     if (componentId == 'presentations') return _presentationBuild(context);
     if (componentId == 'simpleImages') return _simpleImageBuild(context);
     if (componentId == 'simpleTexts') return _simpleTextBuild(context);
@@ -327,7 +305,6 @@ class ListComponent extends StatelessWidget with HasFab {
     if (componentId == 'documents') widget = DocumentListWidget();
     if (componentId == 'faders') widget = FaderListWidget();
     if (componentId == 'grids') widget = GridListWidget();
-    if (componentId == 'playStores') widget = PlayStoreListWidget();
     if (componentId == 'presentations') widget = PresentationListWidget();
     if (componentId == 'simpleImages') widget = SimpleImageListWidget();
     if (componentId == 'simpleTexts') widget = SimpleTextListWidget();
@@ -412,19 +389,6 @@ class ListComponent extends StatelessWidget with HasFab {
     );
   }
 
-  Widget _playStoreBuild(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<PlayStoreListBloc>(
-          create: (context) => PlayStoreListBloc(
-            playStoreRepository: playStoreRepository(appId: AccessBloc.appId(context))!,
-          )..add(LoadPlayStoreList()),
-        )
-      ],
-      child: widget!,
-    );
-  }
-
   Widget _presentationBuild(BuildContext context) {
     return MultiBlocProvider(
       providers: [
@@ -499,7 +463,6 @@ class DropdownButtonComponent extends StatelessWidget {
     if (componentId == 'documents') return _documentBuild(context);
     if (componentId == 'faders') return _faderBuild(context);
     if (componentId == 'grids') return _gridBuild(context);
-    if (componentId == 'playStores') return _playStoreBuild(context);
     if (componentId == 'presentations') return _presentationBuild(context);
     if (componentId == 'simpleImages') return _simpleImageBuild(context);
     if (componentId == 'simpleTexts') return _simpleTextBuild(context);
@@ -583,19 +546,6 @@ class DropdownButtonComponent extends StatelessWidget {
         )
       ],
       child: GridDropdownButtonWidget(value: value, trigger: trigger, optional: optional),
-    );
-  }
-
-  Widget _playStoreBuild(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<PlayStoreListBloc>(
-          create: (context) => PlayStoreListBloc(
-            playStoreRepository: playStoreRepository(appId: AccessBloc.appId(context))!,
-          )..add(LoadPlayStoreList()),
-        )
-      ],
-      child: PlayStoreDropdownButtonWidget(value: value, trigger: trigger, optional: optional),
     );
   }
 

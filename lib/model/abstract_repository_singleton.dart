@@ -22,7 +22,6 @@ import '../model/fader_repository.dart';
 import '../model/grid_repository.dart';
 import '../model/link_repository.dart';
 import '../model/listed_item_repository.dart';
-import '../model/play_store_repository.dart';
 import '../model/presentation_repository.dart';
 import '../model/section_repository.dart';
 import '../model/simple_image_repository.dart';
@@ -40,7 +39,6 @@ DividerRepository? dividerRepository({ String? appId }) => AbstractRepositorySin
 DocumentRepository? documentRepository({ String? appId }) => AbstractRepositorySingleton.singleton.documentRepository(appId);
 FaderRepository? faderRepository({ String? appId }) => AbstractRepositorySingleton.singleton.faderRepository(appId);
 GridRepository? gridRepository({ String? appId }) => AbstractRepositorySingleton.singleton.gridRepository(appId);
-PlayStoreRepository? playStoreRepository({ String? appId }) => AbstractRepositorySingleton.singleton.playStoreRepository(appId);
 PresentationRepository? presentationRepository({ String? appId }) => AbstractRepositorySingleton.singleton.presentationRepository(appId);
 SimpleImageRepository? simpleImageRepository({ String? appId }) => AbstractRepositorySingleton.singleton.simpleImageRepository(appId);
 SimpleTextRepository? simpleTextRepository({ String? appId }) => AbstractRepositorySingleton.singleton.simpleTextRepository(appId);
@@ -57,7 +55,6 @@ abstract class AbstractRepositorySingleton {
   DocumentRepository? documentRepository(String? appId);
   FaderRepository? faderRepository(String? appId);
   GridRepository? gridRepository(String? appId);
-  PlayStoreRepository? playStoreRepository(String? appId);
   PresentationRepository? presentationRepository(String? appId);
   SimpleImageRepository? simpleImageRepository(String? appId);
   SimpleTextRepository? simpleTextRepository(String? appId);
@@ -70,7 +67,6 @@ abstract class AbstractRepositorySingleton {
     documentRepository(appId)!.flush();
     faderRepository(appId)!.flush();
     gridRepository(appId)!.flush();
-    playStoreRepository(appId)!.flush();
     presentationRepository(appId)!.flush();
     simpleImageRepository(appId)!.flush();
     simpleTextRepository(appId)!.flush();

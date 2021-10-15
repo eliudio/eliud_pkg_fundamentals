@@ -22,7 +22,6 @@ export '../model/fader_model.dart';
 export '../model/grid_model.dart';
 export '../model/link_model.dart';
 export '../model/listed_item_model.dart';
-export '../model/play_store_model.dart';
 export '../model/presentation_model.dart';
 export '../model/section_model.dart';
 export '../model/simple_image_model.dart';

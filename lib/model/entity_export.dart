@@ -22,7 +22,6 @@ export '../model/fader_entity.dart';
 export '../model/grid_entity.dart';
 export '../model/link_entity.dart';
 export '../model/listed_item_entity.dart';
-export '../model/play_store_entity.dart';
 export '../model/presentation_entity.dart';
 export '../model/section_entity.dart';
 export '../model/simple_image_entity.dart';

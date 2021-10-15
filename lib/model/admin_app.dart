@@ -196,30 +196,6 @@ class AdminApp extends AdminAppInstallerBase {
   }
 
 
-  PageModel _playStoresPages() {
-    List<BodyComponentModel> components = [];
-    components.add(BodyComponentModel(
-      documentID: "internalWidget-playStores", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "playStores"));
-    PageModel page = PageModel(
-        conditions: ConditionsModel(
-          privilegeLevelRequired: PrivilegeLevelRequired.OwnerPrivilegeRequired,
-          packageCondition: null,
-          conditionOverride: null,
-        ),
-        appId: appId,
-        documentID: "eliud_pkg_fundamentals_playstores_page",
-        title: "PlayStores",
-        drawer: _drawer,
-        endDrawer: _endDrawer,
-        appBar: _appBar,
-        homeMenu: _homeMenu,
-        bodyComponents: components,
-        layout: PageLayout.OnlyTheFirstComponent
-    );
-    return page;
-  }
-
-
   PageModel _presentationsPages() {
     List<BodyComponentModel> components = [];
     components.add(BodyComponentModel(
@@ -330,8 +306,6 @@ class AdminApp extends AdminAppInstallerBase {
 
         .then((_) => pageRepository(appId: appId)!.add(_gridsPages()))
 
-        .then((_) => pageRepository(appId: appId)!.add(_playStoresPages()))
-
         .then((_) => pageRepository(appId: appId)!.add(_presentationsPages()))
 
         .then((_) => pageRepository(appId: appId)!.add(_simpleImagesPages()))
@@ -413,16 +387,6 @@ class AdminMenu extends AdminAppMenuInstallerBase {
         description: "Grids",
         icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
         action: GotoPage(appId, pageID: "eliud_pkg_fundamentals_grids_page"))
-    );
-
-
-    menuItems.add(
-      MenuItemModel(
-        documentID: "PlayStores",
-        text: "PlayStores",
-        description: "PlayStores",
-        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
-        action: GotoPage(appId, pageID: "eliud_pkg_fundamentals_playstores_page"))
     );
 
 

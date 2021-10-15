@@ -40,9 +40,6 @@ import '../model/link_repository.dart';
 import '../model/link_cache.dart';
 import '../model/listed_item_repository.dart';
 import '../model/listed_item_cache.dart';
-import '../model/play_store_firestore.dart';
-import '../model/play_store_repository.dart';
-import '../model/play_store_cache.dart';
 import '../model/presentation_firestore.dart';
 import '../model/presentation_repository.dart';
 import '../model/presentation_cache.dart';
@@ -64,7 +61,6 @@ import '../model/document_model.dart';
 import '../model/document_item_model.dart';
 import '../model/grid_model.dart';
 import '../model/listed_item_model.dart';
-import '../model/play_store_model.dart';
 import '../model/presentation_model.dart';
 import '../model/section_model.dart';
 import '../model/simple_image_model.dart';
@@ -77,7 +73,6 @@ class RepositorySingleton extends AbstractRepositorySingleton {
     var _documentRepository = HashMap<String, DocumentRepository>();
     var _faderRepository = HashMap<String, FaderRepository>();
     var _gridRepository = HashMap<String, GridRepository>();
-    var _playStoreRepository = HashMap<String, PlayStoreRepository>();
     var _presentationRepository = HashMap<String, PresentationRepository>();
     var _simpleImageRepository = HashMap<String, SimpleImageRepository>();
     var _simpleTextRepository = HashMap<String, SimpleTextRepository>();
@@ -106,10 +101,6 @@ class RepositorySingleton extends AbstractRepositorySingleton {
     GridRepository? gridRepository(String? appId) {
       if ((appId != null) && (_gridRepository[appId] == null)) _gridRepository[appId] = GridCache(GridFirestore(appRepository()!.getSubCollection(appId, 'grid'), appId));
       return _gridRepository[appId];
-    }
-    PlayStoreRepository? playStoreRepository(String? appId) {
-      if ((appId != null) && (_playStoreRepository[appId] == null)) _playStoreRepository[appId] = PlayStoreCache(PlayStoreFirestore(appRepository()!.getSubCollection(appId, 'playstore'), appId));
-      return _playStoreRepository[appId];
     }
     PresentationRepository? presentationRepository(String? appId) {
       if ((appId != null) && (_presentationRepository[appId] == null)) _presentationRepository[appId] = PresentationCache(PresentationFirestore(appRepository()!.getSubCollection(appId, 'presentation'), appId));

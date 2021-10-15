@@ -36,9 +36,6 @@ import 'fader_component_selector.dart';
 import '../extensions/grid_component.dart';
 import '../editors/grid_component_editor.dart';
 import 'grid_component_selector.dart';
-import '../extensions/play_store_component.dart';
-import '../editors/play_store_component_editor.dart';
-import 'play_store_component_selector.dart';
 import '../extensions/presentation_component.dart';
 import '../editors/presentation_component_editor.dart';
 import 'presentation_component_selector.dart';
@@ -59,7 +56,7 @@ import 'package:eliud_pkg_fundamentals/model/internal_component.dart';
 class ComponentRegistry {
 
   void init() {
-    Registry.registry()!.addInternalComponents('eliud_pkg_fundamentals', ["booklets", "decoratedContents", "dividers", "documents", "faders", "grids", "playStores", "presentations", "simpleImages", "simpleTexts", "tutorials", ]);
+    Registry.registry()!.addInternalComponents('eliud_pkg_fundamentals', ["booklets", "decoratedContents", "dividers", "documents", "faders", "grids", "presentations", "simpleImages", "simpleTexts", "tutorials", ]);
 
     Registry.registry()!.register(componentName: "eliud_pkg_fundamentals_internalWidgets", componentConstructor: ListComponentFactory());
     Registry.registry()!.addDropDownSupporter("booklets", DropdownButtonComponentFactory());
@@ -74,8 +71,6 @@ class ComponentRegistry {
     Registry.registry()!.register(componentName: "faders", componentConstructor: FaderComponentConstructorDefault());
     Registry.registry()!.addDropDownSupporter("grids", DropdownButtonComponentFactory());
     Registry.registry()!.register(componentName: "grids", componentConstructor: GridComponentConstructorDefault());
-    Registry.registry()!.addDropDownSupporter("playStores", DropdownButtonComponentFactory());
-    Registry.registry()!.register(componentName: "playStores", componentConstructor: PlayStoreComponentConstructorDefault());
     Registry.registry()!.addDropDownSupporter("presentations", DropdownButtonComponentFactory());
     Registry.registry()!.register(componentName: "presentations", componentConstructor: PresentationComponentConstructorDefault());
     Registry.registry()!.addDropDownSupporter("simpleImages", DropdownButtonComponentFactory());
@@ -91,7 +86,6 @@ class ComponentRegistry {
       ComponentSpec('documents', DocumentComponentConstructorDefault(), DocumentComponentSelector(), DocumentComponentEditorConstructor(), ), 
       ComponentSpec('faders', FaderComponentConstructorDefault(), FaderComponentSelector(), FaderComponentEditorConstructor(), ), 
       ComponentSpec('grids', GridComponentConstructorDefault(), GridComponentSelector(), GridComponentEditorConstructor(), ), 
-      ComponentSpec('playStores', PlayStoreComponentConstructorDefault(), PlayStoreComponentSelector(), PlayStoreComponentEditorConstructor(), ), 
       ComponentSpec('presentations', PresentationComponentConstructorDefault(), PresentationComponentSelector(), PresentationComponentEditorConstructor(), ), 
       ComponentSpec('simpleImages', SimpleImageComponentConstructorDefault(), SimpleImageComponentSelector(), SimpleImageComponentEditorConstructor(), ), 
       ComponentSpec('simpleTexts', SimpleTextComponentConstructorDefault(), SimpleTextComponentSelector(), SimpleTextComponentEditorConstructor(), ), 
