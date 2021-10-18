@@ -19,12 +19,16 @@ class DividerComponentEditorConstructor extends ComponentEditorConstructor {
 
   @override
   void createNewComponent(BuildContext context, EditorFeedback feedback) {
-    _openIt(context, true,
-        DividerModel(documentID: 'new identifier', name: 'New divider'), feedback);
+    _openIt(
+        context,
+        true,
+        DividerModel(documentID: 'new identifier', name: 'New divider'),
+        feedback);
   }
 
   @override
-  void updateComponentWithID(BuildContext context, String id, EditorFeedback feedback) async {
+  void updateComponentWithID(
+      BuildContext context, String id, EditorFeedback feedback) async {
     var divider =
         await dividerRepository(appId: AccessBloc.appId(context)!)!.get(id);
     if (divider != null) {
@@ -35,13 +39,15 @@ class DividerComponentEditorConstructor extends ComponentEditorConstructor {
     }
   }
 
-  void _openIt(BuildContext context, bool create, DividerModel model, EditorFeedback feedback) {
+  void _openIt(BuildContext context, bool create, DividerModel model,
+      EditorFeedback feedback) {
     openComplexDialog(
       context,
       title: create ? 'Create divider' : 'Update divider',
       includeHeading: false,
       widthFraction: .9,
-      child: DividerComponentEditor(model: model, create: create, feedback: feedback),
+      child: DividerComponentEditor(
+          model: model, create: create, feedback: feedback),
     );
   }
 }
@@ -52,7 +58,10 @@ class DividerComponentEditor extends StatefulWidget {
   final EditorFeedback feedback;
 
   const DividerComponentEditor(
-      {Key? key, required this.model, required this.create, required this.feedback})
+      {Key? key,
+      required this.model,
+      required this.create,
+      required this.feedback})
       : super(key: key);
 
   @override
@@ -85,7 +94,9 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
           widget.feedback(true);
           return true;
         },
-        cancelAction: () {},
+        cancelAction: () async {
+          return true;
+        },
       ),
       topicContainer(context,
           title: 'General',
