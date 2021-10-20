@@ -89,7 +89,7 @@ class DividerListWidgetState extends State<DividerListWidget> {
         },
       );
     } else {
-      return Text('App not loaded');
+      return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
     }
   }
 
@@ -133,7 +133,7 @@ class DividerListWidgetState extends State<DividerListWidget> {
         }
       });
     } else {
-      return Text("App not loaded");
+      return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
     } 
   }
   
