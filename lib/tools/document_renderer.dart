@@ -22,18 +22,19 @@ class ActionListener /*implements ClickListener*/ {
 
   ActionListener(this.context);
 
-  @override
   void onClicked(String event) {
     var appID = AccessBloc.appId(context);
-    // todo: work with substring, as url.parse seems to discard case sensitivity
-    var uri = Uri.parse(event);
-    var authority = uri.authority;
-    var scheme = uri.scheme;
-    if (scheme == "page") {
-      // todo, check if access rights to this page, if not... show "???!!!"
-      ActionModel action =
-          GotoPage(appID, pageID: authority); // construct from event
-      EliudRouter.Router.navigateTo(context, action);
+    if (appID != null) {
+      // todo: work with substring, as url.parse seems to discard case sensitivity
+      var uri = Uri.parse(event);
+      var authority = uri.authority;
+      var scheme = uri.scheme;
+      if (scheme == "page") {
+        // todo, check if access rights to this page, if not... show "???!!!"
+        ActionModel action =
+        GotoPage(appID, pageID: authority); // construct from event
+        EliudRouter.Router.navigateTo(context, action);
+      }
     }
   }
 }
