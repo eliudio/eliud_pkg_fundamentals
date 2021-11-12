@@ -13,7 +13,7 @@
 
 */
 
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/style/frontend/has_divider.dart';
 import 'package:eliud_core/style/frontend/has_list_tile.dart';
@@ -38,7 +38,7 @@ class GridComponentSelector extends ComponentSelector {
     return BlocProvider<GridListBloc>(
           create: (context) => GridListBloc(
             gridRepository:
-                gridRepository(appId: AccessBloc.appId(context))!,
+                gridRepository(appId: AccessBloc.currentAppId(context))!,
           )..add(LoadGridList()),
       child: SelectGridWidget(
           height: height,

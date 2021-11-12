@@ -1,7 +1,9 @@
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
-import 'package:eliud_core/core/access/bloc/access_state.dart';
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
+import 'package:eliud_core/core/blocs/access/state/access_determined.dart';
+import 'package:eliud_core/core/blocs/access/state/access_state.dart';
 import 'package:eliud_core/model/background_model.dart';
 import 'package:eliud_core/style/frontend/has_button.dart';
+import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/router_builders.dart';
 import 'package:eliud_core/tools/screen_size.dart';
@@ -10,6 +12,7 @@ import 'package:eliud_pkg_fundamentals/model/document_model.dart';
 import 'package:eliud_pkg_fundamentals/tools/document_renderer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 typedef DocumentTextFieldTrigger(String value);
 
@@ -33,12 +36,18 @@ class DocumentTextField extends StatefulWidget {
 class DocumentTextFieldState extends State<DocumentTextField> {
   @override
   Widget build(BuildContext context) {
-    var accessState = AccessBloc.getState(context);
-    return _buildExcludeDocument(accessState, context);
+    return BlocBuilder<AccessBloc, AccessState>(
+        builder: (context, accessState) {
+          if (accessState is AccessDetermined) {
+            return _buildExcludeDocument(accessState, context);
+          } else {
+            return progressIndicator(context);
+          }
+        });
   }
 
   Widget _buildExcludeDocument(AccessState accessState, BuildContext context) {
-    var app = AccessBloc.app(context)!;
+    var app = AccessBloc.currentApp(context);
     return button(context,
             label: widget.label,
             icon: Icon(Icons.fullscreen),
@@ -81,6 +90,7 @@ class DocumentTextFieldState extends State<DocumentTextField> {
                                     height: 250,
                                     child: DocumentRendererTool().render(
                                         context,
+                                        accessState,
                                         widget.documentRenderer,
                                         widget.documentValue!,
                                         widget.images,
@@ -90,8 +100,8 @@ class DocumentTextFieldState extends State<DocumentTextField> {
   }
 
   void _fullScreen(AccessState appState) async {
-    if (appState is AppLoaded) {
-      Navigator.of(context).push(pageRouteBuilder(appState.app,
+    if (appState is AccessDetermined) {
+      await Navigator.of(context).push(pageRouteBuilder(appState.currentApp,
           page: DocumentTextFieldFullScreen(
               widget.label,
               widget.documentRenderer,
@@ -122,7 +132,7 @@ class DocumentTextFieldFullScreen extends StatefulWidget {
       this.documentValue, this.images, this.bdm, this.trigger);
 
   @override
-  createState() {
+  DocumentTextFieldFullScreenState createState() {
     return DocumentTextFieldFullScreenState();
   }
 }
@@ -139,17 +149,23 @@ class DocumentTextFieldFullScreenState
 
   @override
   Widget build(BuildContext context) {
-    var accessState = AccessBloc.getState(context);
-    return tabs(accessState);
+    return BlocBuilder<AccessBloc, AccessState>(
+        builder: (context, accessState) {
+          if (accessState is AccessDetermined) {
+            return tabs(accessState);
+          } else {
+            return progressIndicator(context);
+          }
+        });
   }
 
-  Widget _document() {
-    Widget w = DocumentRendererTool().render(
-        context, widget.documentRenderer, value!, widget.images, widget.bdm);
+  Widget _document(AccessState accessState) {
+    var w = DocumentRendererTool().render(
+        context, accessState, widget.documentRenderer, value!, widget.images, widget.bdm);
     return ListView(children: <Widget>[w]);
   }
 
-  Widget tabs(AccessState accessState) {
+  Widget tabs(AccessDetermined accessState) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: DefaultTabController(
@@ -179,7 +195,7 @@ class DocumentTextFieldFullScreenState
             body: TabBarView(
               children: <Widget>[
                 TextFormField(
-                  readOnly: !accessState.memberIsOwner(),
+                  readOnly: !accessState.memberIsOwner(accessState.currentAppId()),
                   style: TextStyle(color: Colors.black),
                   initialValue: value,
                   decoration: InputDecoration(
@@ -192,7 +208,7 @@ class DocumentTextFieldFullScreenState
                   maxLines: null,
                   autovalidate: true,
                 ),
-                _document()
+                _document(accessState)
               ],
             ),
           ),

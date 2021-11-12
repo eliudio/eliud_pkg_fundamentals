@@ -13,8 +13,9 @@
 
 */
 
-import 'package:eliud_core/core/access/bloc/access_state.dart';
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/blocs/access/state/access_state.dart';
+import 'package:eliud_core/core/blocs/access/state/logged_in.dart';
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import '../tools/bespoke_models.dart';
 import 'package:eliud_core/core/navigate/router.dart' as eliudrouter;
 import 'package:eliud_core/tools/screen_size.dart';
@@ -71,11 +72,11 @@ class DocumentForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var app = AccessBloc.app(context);
+    var app = AccessBloc.currentApp(context);
     if (app == null) return Text("No app available");
     if (formAction == FormAction.ShowData) {
       return BlocProvider<DocumentFormBloc >(
-            create: (context) => DocumentFormBloc(AccessBloc.appId(context),
+            create: (context) => DocumentFormBloc(AccessBloc.currentAppId(context),
                                        formAction: formAction,
 
                                                 )..add(InitialiseDocumentFormEvent(value: value)),
@@ -84,7 +85,7 @@ class DocumentForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<DocumentFormBloc >(
-            create: (context) => DocumentFormBloc(AccessBloc.appId(context),
+            create: (context) => DocumentFormBloc(AccessBloc.currentAppId(context),
                                        formAction: formAction,
 
                                                 )..add(InitialiseDocumentFormNoLoadEvent(value: value)),
@@ -95,7 +96,7 @@ class DocumentForm extends StatelessWidget {
       return Scaffold(
         appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update Document' : 'Add Document'),
         body: BlocProvider<DocumentFormBloc >(
-            create: (context) => DocumentFormBloc(AccessBloc.appId(context),
+            create: (context) => DocumentFormBloc(AccessBloc.currentAppId(context),
                                        formAction: formAction,
 
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseDocumentFormEvent(value: value) : InitialiseNewDocumentFormEvent())),
@@ -144,7 +145,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
 
   @override
   Widget build(BuildContext context) {
-    var app = AccessBloc.app(context);
+    var app = AccessBloc.currentApp(context);
     if (app == null) return Text('No app available');
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<DocumentFormBloc, DocumentFormState>(builder: (context, state) {
@@ -225,11 +226,11 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().radioListTile(context, 0, _documentRendererSelectedRadioTile, 'flutter_markdown', 'flutter_markdown', !accessState.memberIsOwner() ? null : (dynamic val) => setSelectionDocumentRenderer(val))
+                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().radioListTile(context, 0, _documentRendererSelectedRadioTile, 'flutter_markdown', 'flutter_markdown', !accessState.memberIsOwner(AccessBloc.currentAppId(context)) ? null : (dynamic val) => setSelectionDocumentRenderer(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().radioListTile(context, 0, _documentRendererSelectedRadioTile, 'dynamic_widget', 'dynamic_widget', !accessState.memberIsOwner() ? null : (dynamic val) => setSelectionDocumentRenderer(val))
+                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().radioListTile(context, 0, _documentRendererSelectedRadioTile, 'dynamic_widget', 'dynamic_widget', !accessState.memberIsOwner(AccessBloc.currentAppId(context)) ? null : (dynamic val) => setSelectionDocumentRenderer(val))
           );
 
 
@@ -416,7 +417,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
   }
 
   bool _readOnly(AccessState accessState, DocumentFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner());
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(AccessBloc.currentAppId(context)));
   }
   
 

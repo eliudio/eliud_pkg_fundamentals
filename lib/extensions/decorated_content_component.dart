@@ -1,7 +1,8 @@
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
-import 'package:eliud_core/core/access/bloc/access_state.dart';
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
+import 'package:eliud_core/core/blocs/access/state/access_determined.dart';
+import 'package:eliud_core/core/blocs/access/state/access_state.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
-import 'package:eliud_core/style/frontend/has_text.dart';
+import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
 import 'package:eliud_core/tools/component/component_constructor.dart';
 import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_core/tools/screen_size.dart';
@@ -10,6 +11,7 @@ import 'package:eliud_pkg_fundamentals/model/decorated_content_component.dart';
 import 'package:eliud_pkg_fundamentals/model/decorated_content_model.dart';
 import 'package:eliud_pkg_fundamentals/model/decorated_content_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DecoratedContentComponentConstructorDefault
     implements ComponentConstructor {
@@ -29,81 +31,82 @@ class DecoratedContentComponent extends AbstractDecoratedContentComponent {
 
   @override
   Widget yourWidget(BuildContext context, DecoratedContentModel? value) {
-    var appLoaded = AccessBloc.getState(context);
-    if (appLoaded is AppLoaded) {
-      var contents = Registry.registry()!
-          .component(appLoaded, value!.contentComponentName!, value.contentComponentId!);
-      var image = Registry.registry()!.component(appLoaded,
-          value.decoratingComponentName!, value.decoratingComponentId!);
-      var percentageImageVisible = value.percentageDecorationVisible == null
-          ? .5
-          : value.percentageDecorationVisible;
+    return BlocBuilder<AccessBloc, AccessState>(
+        builder: (context, accessState) {
+          if (accessState is AccessDetermined) {
+            var contents = Registry.registry()!
+                .component(accessState, value!.contentComponentName!, value.contentComponentId!);
+            var image = Registry.registry()!.component(accessState,
+                value.decoratingComponentName!, value.decoratingComponentId!);
+            var percentageImageVisible = value.percentageDecorationVisible ?? .5;
 
-      // calculate the size of the image horizontally
-      var app = AccessBloc.app(context);
-      var ratio = screenRatio(context);
+            // calculate the size of the image horizontally
+            var ratio = screenRatio(context);
 
-      // When the ration of the screen is such that the decoration can not fit niceless on the side, then we might drop it, or we might put it above or below, depending on config
-      if (ratio < 1) {
-        var isDrop = (value.decorationComponentPosition ==
-            DecorationComponentPosition.LeftIfSpaceAvailableOtherwiseDrop) ||
-            (value.decorationComponentPosition ==
-                DecorationComponentPosition.RightIfSpaceAvailableOtherwiseDrop);
-        if (isDrop) {
-          return contents;
-        } else {
-          var children;
-          var isTop = (value.decorationComponentPosition ==
-              DecorationComponentPosition.LeftIfSpaceAvailableOtherwiseTop) ||
-              (value.decorationComponentPosition ==
-                  DecorationComponentPosition
-                      .RightIfSpaceAvailableOtherwiseTop);
-          if (isTop) {
-            children = [
-              image,
-              contents,
-            ];
+            // When the ration of the screen is such that the decoration can not fit niceless on the side, then we might drop it, or we might put it above or below, depending on config
+            if (ratio < 1) {
+              var isDrop = (value.decorationComponentPosition ==
+                  DecorationComponentPosition.LeftIfSpaceAvailableOtherwiseDrop) ||
+                  (value.decorationComponentPosition ==
+                      DecorationComponentPosition.RightIfSpaceAvailableOtherwiseDrop);
+              if (isDrop) {
+                return contents;
+              } else {
+                var children;
+                var isTop = (value.decorationComponentPosition ==
+                    DecorationComponentPosition.LeftIfSpaceAvailableOtherwiseTop) ||
+                    (value.decorationComponentPosition ==
+                        DecorationComponentPosition
+                            .RightIfSpaceAvailableOtherwiseTop);
+                if (isTop) {
+                  children = [
+                    image,
+                    contents,
+                  ];
+                } else {
+                  children = [
+                    contents,
+                    image,
+                  ];
+                }
+                return ListView(
+                  shrinkWrap: true,
+                  physics: ScrollPhysics(),
+                  children: children,
+                );
+              }
+            } else {
+              var fraction1 = Expanded(
+                flex: (10 * percentageImageVisible).toInt(),
+                child: Container(),
+              );
+              var fraction2 = Expanded(
+                  flex: (10 - (10 * percentageImageVisible)).toInt(),
+                  child: contents);
+              var isLeft = value.decorationComponentPosition ==
+                  DecorationComponentPosition.LeftIfSpaceAvailableOtherwiseTop ||
+                  value.decorationComponentPosition ==
+                      DecorationComponentPosition.LeftIfSpaceAvailableOtherwiseBottom;
+              var row;
+              if (isLeft) {
+                row = Row(children: [fraction1, fraction2]);
+              } else {
+                row = Row(children: [fraction2, fraction1]);
+              }
+              return Stack(children: [
+                Align(
+                  alignment: isLeft ? Alignment.topLeft : Alignment.topRight,
+                  child: image,
+                ),
+                row
+              ]);
+            }
           } else {
-            children = [
-              contents,
-              image,
-            ];
+            return progressIndicator(context);
           }
-          return ListView(
-            shrinkWrap: true,
-            physics: ScrollPhysics(),
-            children: children,
-          );
-        }
-      } else {
-        var fraction1 = Expanded(
-          flex: (10 * percentageImageVisible!).toInt(),
-          child: Container(),
-        );
-        var fraction2 = Expanded(
-            flex: (10 - (10 * percentageImageVisible)).toInt(),
-            child: contents);
-        var isLeft = value.decorationComponentPosition ==
-            DecorationComponentPosition.LeftIfSpaceAvailableOtherwiseTop ||
-            value.decorationComponentPosition ==
-                DecorationComponentPosition.LeftIfSpaceAvailableOtherwiseBottom;
-        var row;
-        if (isLeft) {
-          row = Row(children: [fraction1, fraction2]);
-        } else {
-          row = Row(children: [fraction2, fraction1]);
-        }
-        return Stack(children: [
-          Align(
-            alignment: isLeft ? Alignment.topLeft : Alignment.topRight,
-            child: image,
-          ),
-          row
-        ]);
-      }
-    } else {
-      return text(context, 'App not loaded');
-    }
+        });
+
+
   }
 
   @override
@@ -115,6 +118,6 @@ class DecoratedContentComponent extends AbstractDecoratedContentComponent {
   DecoratedContentRepository getDecoratedContentRepository(
       BuildContext context) {
     return AbstractRepositorySingleton.singleton
-        .decoratedContentRepository(AccessBloc.appId(context))!;
+        .decoratedContentRepository(AccessBloc.currentAppId(context))!;
   }
 }

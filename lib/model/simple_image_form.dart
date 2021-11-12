@@ -13,8 +13,9 @@
 
 */
 
-import 'package:eliud_core/core/access/bloc/access_state.dart';
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/blocs/access/state/access_state.dart';
+import 'package:eliud_core/core/blocs/access/state/logged_in.dart';
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import '../tools/bespoke_models.dart';
 import 'package:eliud_core/core/navigate/router.dart' as eliudrouter;
 import 'package:eliud_core/tools/screen_size.dart';
@@ -71,11 +72,11 @@ class SimpleImageForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var app = AccessBloc.app(context);
+    var app = AccessBloc.currentApp(context);
     if (app == null) return Text("No app available");
     if (formAction == FormAction.ShowData) {
       return BlocProvider<SimpleImageFormBloc >(
-            create: (context) => SimpleImageFormBloc(AccessBloc.appId(context),
+            create: (context) => SimpleImageFormBloc(AccessBloc.currentAppId(context),
                                        formAction: formAction,
 
                                                 )..add(InitialiseSimpleImageFormEvent(value: value)),
@@ -84,7 +85,7 @@ class SimpleImageForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<SimpleImageFormBloc >(
-            create: (context) => SimpleImageFormBloc(AccessBloc.appId(context),
+            create: (context) => SimpleImageFormBloc(AccessBloc.currentAppId(context),
                                        formAction: formAction,
 
                                                 )..add(InitialiseSimpleImageFormNoLoadEvent(value: value)),
@@ -95,7 +96,7 @@ class SimpleImageForm extends StatelessWidget {
       return Scaffold(
         appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update SimpleImage' : 'Add SimpleImage'),
         body: BlocProvider<SimpleImageFormBloc >(
-            create: (context) => SimpleImageFormBloc(AccessBloc.appId(context),
+            create: (context) => SimpleImageFormBloc(AccessBloc.currentAppId(context),
                                        formAction: formAction,
 
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseSimpleImageFormEvent(value: value) : InitialiseNewSimpleImageFormEvent())),
@@ -140,7 +141,7 @@ class _MySimpleImageFormState extends State<MySimpleImageForm> {
 
   @override
   Widget build(BuildContext context) {
-    var app = AccessBloc.app(context);
+    var app = AccessBloc.currentApp(context);
     if (app == null) return Text('No app available');
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<SimpleImageFormBloc, SimpleImageFormState>(builder: (context, state) {
@@ -310,7 +311,7 @@ class _MySimpleImageFormState extends State<MySimpleImageForm> {
   }
 
   bool _readOnly(AccessState accessState, SimpleImageFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner());
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(AccessBloc.currentAppId(context)));
   }
   
 

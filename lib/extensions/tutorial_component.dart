@@ -1,4 +1,4 @@
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/core/tools/document_processor.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
@@ -37,9 +37,8 @@ class TutorialComponent extends AbstractTutorialComponent {
 
   @override
   Widget yourWidget(BuildContext context, TutorialModel? value) {
-    var accessState = AccessBloc.getState(context);
     DocumentParameterProcessor documentParameterProcessor =
-        ExtendedDocumentParameterProcessor(context, accessState);
+        ExtendedDocumentParameterProcessor(context,);
     var widgets = <Widget>[];
     widgets.add(Text(
       documentParameterProcessor.process(value!.title!),
@@ -109,7 +108,7 @@ class TutorialComponent extends AbstractTutorialComponent {
   @override
   TutorialRepository getTutorialRepository(BuildContext context) {
     return AbstractRepositorySingleton.singleton
-        .tutorialRepository(AccessBloc.appId(context))!;
+        .tutorialRepository(AccessBloc.currentAppId(context))!;
   }
 }
 

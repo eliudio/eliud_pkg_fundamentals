@@ -13,8 +13,9 @@
 
 */
 
-import 'package:eliud_core/core/access/bloc/access_state.dart';
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/blocs/access/state/access_state.dart';
+import 'package:eliud_core/core/blocs/access/state/logged_in.dart';
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import '../tools/bespoke_models.dart';
 import 'package:eliud_core/core/navigate/router.dart' as eliudrouter;
 import 'package:eliud_core/tools/screen_size.dart';
@@ -71,11 +72,11 @@ class GridForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var app = AccessBloc.app(context);
+    var app = AccessBloc.currentApp(context);
     if (app == null) return Text("No app available");
     if (formAction == FormAction.ShowData) {
       return BlocProvider<GridFormBloc >(
-            create: (context) => GridFormBloc(AccessBloc.appId(context),
+            create: (context) => GridFormBloc(AccessBloc.currentAppId(context),
                                        formAction: formAction,
 
                                                 )..add(InitialiseGridFormEvent(value: value)),
@@ -84,7 +85,7 @@ class GridForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<GridFormBloc >(
-            create: (context) => GridFormBloc(AccessBloc.appId(context),
+            create: (context) => GridFormBloc(AccessBloc.currentAppId(context),
                                        formAction: formAction,
 
                                                 )..add(InitialiseGridFormNoLoadEvent(value: value)),
@@ -95,7 +96,7 @@ class GridForm extends StatelessWidget {
       return Scaffold(
         appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update Grid' : 'Add Grid'),
         body: BlocProvider<GridFormBloc >(
-            create: (context) => GridFormBloc(AccessBloc.appId(context),
+            create: (context) => GridFormBloc(AccessBloc.currentAppId(context),
                                        formAction: formAction,
 
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseGridFormEvent(value: value) : InitialiseNewGridFormEvent())),
@@ -140,7 +141,7 @@ class _MyGridFormState extends State<MyGridForm> {
 
   @override
   Widget build(BuildContext context) {
-    var app = AccessBloc.app(context);
+    var app = AccessBloc.currentApp(context);
     if (app == null) return Text('No app available');
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<GridFormBloc, GridFormState>(builder: (context, state) {
@@ -337,7 +338,7 @@ class _MyGridFormState extends State<MyGridForm> {
   }
 
   bool _readOnly(AccessState accessState, GridFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner());
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(AccessBloc.currentAppId(context)));
   }
   
 

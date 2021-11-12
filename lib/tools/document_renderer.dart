@@ -1,5 +1,6 @@
 //import 'package:dynamic_widget/dynamic_widget.dart';
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
+import 'package:eliud_core/core/blocs/access/state/access_state.dart';
 import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
 import 'package:eliud_core/core/tools/document_processor.dart';
 import 'package:eliud_core/model/background_model.dart';
@@ -23,7 +24,7 @@ class ActionListener /*implements ClickListener*/ {
   ActionListener(this.context);
 
   void onClicked(String event) {
-    var appID = AccessBloc.appId(context);
+    var appID = AccessBloc.currentAppId(context);
     if (appID != null) {
       // todo: work with substring, as url.parse seems to discard case sensitivity
       var uri = Uri.parse(event);
@@ -151,11 +152,10 @@ class DocumentRendererTool {
     return theWidget;
   }
 
-  Widget render(BuildContext context, DocumentRenderer? documentRenderer,
+  Widget render(BuildContext context, AccessState accessState, DocumentRenderer? documentRenderer,
       String document, List<DocumentItemModel>? images, BackgroundModel? bdm) {
-    var accessState = AccessBloc.getState(context);
     DocumentParameterProcessor documentParameterProcessor =
-        ExtendedDocumentParameterProcessor(context, accessState,
+        ExtendedDocumentParameterProcessor(context,
             images: images);
     return Container(
         child: _rendered(context, documentRenderer,

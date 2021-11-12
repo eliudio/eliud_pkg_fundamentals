@@ -1,4 +1,4 @@
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/style/style_registry.dart';
@@ -39,7 +39,6 @@ class SimpleTextComponent extends AbstractSimpleTextComponent {
   @override
   Widget yourWidget(BuildContext context, SimpleTextModel? value) {
     if (value == null) return Text('No simple text');
-    var app = AccessBloc.app(context)!;
     var text = ListView(
         shrinkWrap: true,
         physics: ScrollPhysics(),
@@ -58,6 +57,6 @@ class SimpleTextComponent extends AbstractSimpleTextComponent {
 
   @override
   SimpleTextRepository getSimpleTextRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.simpleTextRepository(AccessBloc.appId(context))!;
+    return AbstractRepositorySingleton.singleton.simpleTextRepository(AccessBloc.currentAppId(context))!;
   }
 }

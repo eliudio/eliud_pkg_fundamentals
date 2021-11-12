@@ -13,8 +13,9 @@
 
 */
 
-import 'package:eliud_core/core/access/bloc/access_state.dart';
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/blocs/access/state/access_state.dart';
+import 'package:eliud_core/core/blocs/access/state/logged_in.dart';
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import '../tools/bespoke_models.dart';
 import 'package:eliud_core/core/navigate/router.dart' as eliudrouter;
 import 'package:eliud_core/tools/screen_size.dart';
@@ -71,11 +72,11 @@ class TutorialEntryForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var app = AccessBloc.app(context);
+    var app = AccessBloc.currentApp(context);
     if (app == null) return Text("No app available");
     if (formAction == FormAction.ShowData) {
       return BlocProvider<TutorialEntryFormBloc >(
-            create: (context) => TutorialEntryFormBloc(AccessBloc.appId(context),
+            create: (context) => TutorialEntryFormBloc(AccessBloc.currentAppId(context),
                                        
                                                 )..add(InitialiseTutorialEntryFormEvent(value: value)),
   
@@ -83,7 +84,7 @@ class TutorialEntryForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<TutorialEntryFormBloc >(
-            create: (context) => TutorialEntryFormBloc(AccessBloc.appId(context),
+            create: (context) => TutorialEntryFormBloc(AccessBloc.currentAppId(context),
                                        
                                                 )..add(InitialiseTutorialEntryFormNoLoadEvent(value: value)),
   
@@ -93,7 +94,7 @@ class TutorialEntryForm extends StatelessWidget {
       return Scaffold(
         appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update TutorialEntry' : 'Add TutorialEntry'),
         body: BlocProvider<TutorialEntryFormBloc >(
-            create: (context) => TutorialEntryFormBloc(AccessBloc.appId(context),
+            create: (context) => TutorialEntryFormBloc(AccessBloc.currentAppId(context),
                                        
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseTutorialEntryFormEvent(value: value) : InitialiseNewTutorialEntryFormEvent())),
   
@@ -137,7 +138,7 @@ class _MyTutorialEntryFormState extends State<MyTutorialEntryForm> {
 
   @override
   Widget build(BuildContext context) {
-    var app = AccessBloc.app(context);
+    var app = AccessBloc.currentApp(context);
     if (app == null) return Text('No app available');
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<TutorialEntryFormBloc, TutorialEntryFormState>(builder: (context, state) {
@@ -293,7 +294,7 @@ class _MyTutorialEntryFormState extends State<MyTutorialEntryForm> {
   }
 
   bool _readOnly(AccessState accessState, TutorialEntryFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner());
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(AccessBloc.currentAppId(context)));
   }
   
 

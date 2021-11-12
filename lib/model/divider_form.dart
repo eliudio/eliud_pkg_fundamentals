@@ -13,8 +13,9 @@
 
 */
 
-import 'package:eliud_core/core/access/bloc/access_state.dart';
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/blocs/access/state/access_state.dart';
+import 'package:eliud_core/core/blocs/access/state/logged_in.dart';
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import '../tools/bespoke_models.dart';
 import 'package:eliud_core/core/navigate/router.dart' as eliudrouter;
 import 'package:eliud_core/tools/screen_size.dart';
@@ -71,11 +72,11 @@ class DividerForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var app = AccessBloc.app(context);
+    var app = AccessBloc.currentApp(context);
     if (app == null) return Text("No app available");
     if (formAction == FormAction.ShowData) {
       return BlocProvider<DividerFormBloc >(
-            create: (context) => DividerFormBloc(AccessBloc.appId(context),
+            create: (context) => DividerFormBloc(AccessBloc.currentAppId(context),
                                        formAction: formAction,
 
                                                 )..add(InitialiseDividerFormEvent(value: value)),
@@ -84,7 +85,7 @@ class DividerForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<DividerFormBloc >(
-            create: (context) => DividerFormBloc(AccessBloc.appId(context),
+            create: (context) => DividerFormBloc(AccessBloc.currentAppId(context),
                                        formAction: formAction,
 
                                                 )..add(InitialiseDividerFormNoLoadEvent(value: value)),
@@ -95,7 +96,7 @@ class DividerForm extends StatelessWidget {
       return Scaffold(
         appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update Divider' : 'Add Divider'),
         body: BlocProvider<DividerFormBloc >(
-            create: (context) => DividerFormBloc(AccessBloc.appId(context),
+            create: (context) => DividerFormBloc(AccessBloc.currentAppId(context),
                                        formAction: formAction,
 
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseDividerFormEvent(value: value) : InitialiseNewDividerFormEvent())),
@@ -147,7 +148,7 @@ class _MyDividerFormState extends State<MyDividerForm> {
 
   @override
   Widget build(BuildContext context) {
-    var app = AccessBloc.app(context);
+    var app = AccessBloc.currentApp(context);
     if (app == null) return Text('No app available');
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<DividerFormBloc, DividerFormState>(builder: (context, state) {
@@ -368,7 +369,7 @@ class _MyDividerFormState extends State<MyDividerForm> {
   }
 
   bool _readOnly(AccessState accessState, DividerFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner());
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(AccessBloc.currentAppId(context)));
   }
   
 

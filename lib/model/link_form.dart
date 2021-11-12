@@ -13,8 +13,9 @@
 
 */
 
-import 'package:eliud_core/core/access/bloc/access_state.dart';
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/blocs/access/state/access_state.dart';
+import 'package:eliud_core/core/blocs/access/state/logged_in.dart';
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import '../tools/bespoke_models.dart';
 import 'package:eliud_core/core/navigate/router.dart' as eliudrouter;
 import 'package:eliud_core/tools/screen_size.dart';
@@ -66,11 +67,11 @@ class LinkForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var app = AccessBloc.app(context);
+    var app = AccessBloc.currentApp(context);
     if (app == null) return Text("No app available");
     if (formAction == FormAction.ShowData) {
       return BlocProvider<LinkFormBloc >(
-            create: (context) => LinkFormBloc(AccessBloc.appId(context),
+            create: (context) => LinkFormBloc(AccessBloc.currentAppId(context),
                                        
                                                 )..add(InitialiseLinkFormEvent(value: value)),
   
@@ -78,7 +79,7 @@ class LinkForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<LinkFormBloc >(
-            create: (context) => LinkFormBloc(AccessBloc.appId(context),
+            create: (context) => LinkFormBloc(AccessBloc.currentAppId(context),
                                        
                                                 )..add(InitialiseLinkFormNoLoadEvent(value: value)),
   
@@ -88,7 +89,7 @@ class LinkForm extends StatelessWidget {
       return Scaffold(
         appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update Link' : 'Add Link'),
         body: BlocProvider<LinkFormBloc >(
-            create: (context) => LinkFormBloc(AccessBloc.appId(context),
+            create: (context) => LinkFormBloc(AccessBloc.currentAppId(context),
                                        
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseLinkFormEvent(value: value) : InitialiseNewLinkFormEvent())),
   
@@ -129,7 +130,7 @@ class _MyLinkFormState extends State<MyLinkForm> {
 
   @override
   Widget build(BuildContext context) {
-    var app = AccessBloc.app(context);
+    var app = AccessBloc.currentApp(context);
     if (app == null) return Text('No app available');
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<LinkFormBloc, LinkFormState>(builder: (context, state) {
@@ -173,7 +174,7 @@ class _MyLinkFormState extends State<MyLinkForm> {
 
         children.add(
 
-                ActionField(AccessBloc.appId(context), state.value!.action, _onActionChanged)
+                ActionField(AccessBloc.currentAppId(context), state.value!.action, _onActionChanged)
           );
 
 
@@ -251,7 +252,7 @@ class _MyLinkFormState extends State<MyLinkForm> {
   }
 
   bool _readOnly(AccessState accessState, LinkFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner());
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(AccessBloc.currentAppId(context)));
   }
   
 

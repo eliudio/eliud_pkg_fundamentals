@@ -1,4 +1,4 @@
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/tools/component/component_constructor.dart';
 import 'package:eliud_core/tools/etc.dart';
@@ -39,6 +39,6 @@ class DividerComponent extends AbstractDividerComponent {
 
   @override
   DividerRepository getDividerRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.dividerRepository(AccessBloc.appId(context))!;
+    return AbstractRepositorySingleton.singleton.dividerRepository(AccessBloc.currentAppId(context))!;
   }
 }

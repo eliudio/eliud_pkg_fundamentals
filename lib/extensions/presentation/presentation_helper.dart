@@ -1,4 +1,3 @@
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/tools/screen_size.dart';
@@ -48,7 +47,6 @@ class PresentationHelper {
       PresentationRelativeImagePosition? relativeImagePosition,
       PresentationImageAlignment? imageAlignment,
       double? imageSize) {
-    var accessState = AccessBloc.getState(context);
     if (image == null) {
       return _makeBox(widgets);
     }

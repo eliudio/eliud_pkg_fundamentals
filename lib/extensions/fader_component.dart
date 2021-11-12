@@ -1,5 +1,4 @@
-
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/tools/component/component_constructor.dart';
 import 'package:eliud_pkg_fundamentals/extensions/fader_widgets/fader_widgets.dart';
@@ -24,7 +23,6 @@ class FaderComponent extends AbstractFaderComponent {
 
   @override
   Widget yourWidget(BuildContext context, FaderModel? value) {
-    var accessState = AccessBloc.getState(context);
     var items = value!.items!;
     var images = items.map((li) => li.image).toList();
     var positionsAndSizes = items.map((element) => element.posSize).toList();
@@ -40,6 +38,6 @@ class FaderComponent extends AbstractFaderComponent {
 
   @override
   FaderRepository getFaderRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.faderRepository(AccessBloc.appId(context))!;
+    return AbstractRepositorySingleton.singleton.faderRepository(AccessBloc.currentAppId(context))!;
   }
 }

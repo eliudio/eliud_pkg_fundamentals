@@ -13,8 +13,9 @@
 
 */
 
-import 'package:eliud_core/core/access/bloc/access_state.dart';
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/blocs/access/state/access_state.dart';
+import 'package:eliud_core/core/blocs/access/state/logged_in.dart';
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import '../tools/bespoke_models.dart';
 import 'package:eliud_core/core/navigate/router.dart' as eliudrouter;
 import 'package:eliud_core/tools/screen_size.dart';
@@ -71,11 +72,11 @@ class BookletForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var app = AccessBloc.app(context);
+    var app = AccessBloc.currentApp(context);
     if (app == null) return Text("No app available");
     if (formAction == FormAction.ShowData) {
       return BlocProvider<BookletFormBloc >(
-            create: (context) => BookletFormBloc(AccessBloc.appId(context),
+            create: (context) => BookletFormBloc(AccessBloc.currentAppId(context),
                                        formAction: formAction,
 
                                                 )..add(InitialiseBookletFormEvent(value: value)),
@@ -84,7 +85,7 @@ class BookletForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<BookletFormBloc >(
-            create: (context) => BookletFormBloc(AccessBloc.appId(context),
+            create: (context) => BookletFormBloc(AccessBloc.currentAppId(context),
                                        formAction: formAction,
 
                                                 )..add(InitialiseBookletFormNoLoadEvent(value: value)),
@@ -95,7 +96,7 @@ class BookletForm extends StatelessWidget {
       return Scaffold(
         appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update Booklet' : 'Add Booklet'),
         body: BlocProvider<BookletFormBloc >(
-            create: (context) => BookletFormBloc(AccessBloc.appId(context),
+            create: (context) => BookletFormBloc(AccessBloc.currentAppId(context),
                                        formAction: formAction,
 
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseBookletFormEvent(value: value) : InitialiseNewBookletFormEvent())),
@@ -139,7 +140,7 @@ class _MyBookletFormState extends State<MyBookletForm> {
 
   @override
   Widget build(BuildContext context) {
-    var app = AccessBloc.app(context);
+    var app = AccessBloc.currentApp(context);
     if (app == null) return Text('No app available');
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<BookletFormBloc, BookletFormState>(builder: (context, state) {
@@ -317,7 +318,7 @@ class _MyBookletFormState extends State<MyBookletForm> {
   }
 
   bool _readOnly(AccessState accessState, BookletFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner());
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(AccessBloc.currentAppId(context)));
   }
   
 

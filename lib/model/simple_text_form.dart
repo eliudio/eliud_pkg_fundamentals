@@ -13,8 +13,9 @@
 
 */
 
-import 'package:eliud_core/core/access/bloc/access_state.dart';
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/blocs/access/state/access_state.dart';
+import 'package:eliud_core/core/blocs/access/state/logged_in.dart';
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import '../tools/bespoke_models.dart';
 import 'package:eliud_core/core/navigate/router.dart' as eliudrouter;
 import 'package:eliud_core/tools/screen_size.dart';
@@ -71,11 +72,11 @@ class SimpleTextForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var app = AccessBloc.app(context);
+    var app = AccessBloc.currentApp(context);
     if (app == null) return Text("No app available");
     if (formAction == FormAction.ShowData) {
       return BlocProvider<SimpleTextFormBloc >(
-            create: (context) => SimpleTextFormBloc(AccessBloc.appId(context),
+            create: (context) => SimpleTextFormBloc(AccessBloc.currentAppId(context),
                                        formAction: formAction,
 
                                                 )..add(InitialiseSimpleTextFormEvent(value: value)),
@@ -84,7 +85,7 @@ class SimpleTextForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<SimpleTextFormBloc >(
-            create: (context) => SimpleTextFormBloc(AccessBloc.appId(context),
+            create: (context) => SimpleTextFormBloc(AccessBloc.currentAppId(context),
                                        formAction: formAction,
 
                                                 )..add(InitialiseSimpleTextFormNoLoadEvent(value: value)),
@@ -95,7 +96,7 @@ class SimpleTextForm extends StatelessWidget {
       return Scaffold(
         appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update SimpleText' : 'Add SimpleText'),
         body: BlocProvider<SimpleTextFormBloc >(
-            create: (context) => SimpleTextFormBloc(AccessBloc.appId(context),
+            create: (context) => SimpleTextFormBloc(AccessBloc.currentAppId(context),
                                        formAction: formAction,
 
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseSimpleTextFormEvent(value: value) : InitialiseNewSimpleTextFormEvent())),
@@ -143,7 +144,7 @@ class _MySimpleTextFormState extends State<MySimpleTextForm> {
 
   @override
   Widget build(BuildContext context) {
-    var app = AccessBloc.app(context);
+    var app = AccessBloc.currentApp(context);
     if (app == null) return Text('No app available');
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<SimpleTextFormBloc, SimpleTextFormState>(builder: (context, state) {
@@ -183,27 +184,27 @@ class _MySimpleTextFormState extends State<MySimpleTextForm> {
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().radioListTile(context, 0, _textAlignSelectedRadioTile, 'Left', 'Left', !accessState.memberIsOwner() ? null : (dynamic val) => setSelectionTextAlign(val))
+                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().radioListTile(context, 0, _textAlignSelectedRadioTile, 'Left', 'Left', !accessState.memberIsOwner(AccessBloc.currentAppId(context)) ? null : (dynamic val) => setSelectionTextAlign(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().radioListTile(context, 0, _textAlignSelectedRadioTile, 'Center', 'Center', !accessState.memberIsOwner() ? null : (dynamic val) => setSelectionTextAlign(val))
+                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().radioListTile(context, 0, _textAlignSelectedRadioTile, 'Center', 'Center', !accessState.memberIsOwner(AccessBloc.currentAppId(context)) ? null : (dynamic val) => setSelectionTextAlign(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().radioListTile(context, 0, _textAlignSelectedRadioTile, 'Right', 'Right', !accessState.memberIsOwner() ? null : (dynamic val) => setSelectionTextAlign(val))
+                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().radioListTile(context, 0, _textAlignSelectedRadioTile, 'Right', 'Right', !accessState.memberIsOwner(AccessBloc.currentAppId(context)) ? null : (dynamic val) => setSelectionTextAlign(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().radioListTile(context, 0, _textAlignSelectedRadioTile, 'End', 'End', !accessState.memberIsOwner() ? null : (dynamic val) => setSelectionTextAlign(val))
+                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().radioListTile(context, 0, _textAlignSelectedRadioTile, 'End', 'End', !accessState.memberIsOwner(AccessBloc.currentAppId(context)) ? null : (dynamic val) => setSelectionTextAlign(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().radioListTile(context, 0, _textAlignSelectedRadioTile, 'Justify', 'Justify', !accessState.memberIsOwner() ? null : (dynamic val) => setSelectionTextAlign(val))
+                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().radioListTile(context, 0, _textAlignSelectedRadioTile, 'Justify', 'Justify', !accessState.memberIsOwner(AccessBloc.currentAppId(context)) ? null : (dynamic val) => setSelectionTextAlign(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().radioListTile(context, 0, _textAlignSelectedRadioTile, 'Start', 'Start', !accessState.memberIsOwner() ? null : (dynamic val) => setSelectionTextAlign(val))
+                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().radioListTile(context, 0, _textAlignSelectedRadioTile, 'Start', 'Start', !accessState.memberIsOwner(AccessBloc.currentAppId(context)) ? null : (dynamic val) => setSelectionTextAlign(val))
           );
 
 
@@ -350,7 +351,7 @@ class _MySimpleTextFormState extends State<MySimpleTextForm> {
   }
 
   bool _readOnly(AccessState accessState, SimpleTextFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner());
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(AccessBloc.currentAppId(context)));
   }
   
 

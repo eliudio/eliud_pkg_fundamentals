@@ -13,7 +13,7 @@
 
 */
 
-import 'package:eliud_core/core/access/bloc/access_bloc.dart';
+import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/style/frontend/has_divider.dart';
 import 'package:eliud_core/style/frontend/has_list_tile.dart';
@@ -38,7 +38,7 @@ class DocumentComponentSelector extends ComponentSelector {
     return BlocProvider<DocumentListBloc>(
           create: (context) => DocumentListBloc(
             documentRepository:
-                documentRepository(appId: AccessBloc.appId(context))!,
+                documentRepository(appId: AccessBloc.currentAppId(context))!,
           )..add(LoadDocumentList()),
       child: SelectDocumentWidget(
           height: height,
