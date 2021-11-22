@@ -29,24 +29,17 @@ class GridComponent extends AbstractGridComponent {
 
   @override
   Widget yourWidget(BuildContext context, GridModel? value) {
-    return BlocBuilder<AccessBloc, AccessState>(
-        builder: (context, accessState) {
-          if (accessState is AccessDetermined) {
-            var components = value!.bodyComponents!
-                .map((model) =>
-                Registry.registry()!.component(accessState,
-                    model.componentName!, model.componentId!))
-                .toList();
-            if (components.isNotEmpty) {
-              return GridViewHelper.container(context, components, value.gridView);
-            } else {
-              return alertWidget(
-                  title: 'Error', content: 'No components for this grid');
-            }
-          } else {
-            return progressIndicator(context);
-          }
-        });
+    var components = value!.bodyComponents!
+        .map((model) =>
+        Registry.registry()!.component(context,
+            model.componentName!, model.componentId!))
+        .toList();
+    if (components.isNotEmpty) {
+      return GridViewHelper.container(context, components, value.gridView);
+    } else {
+      return alertWidget(
+          title: 'Error', content: 'No components for this grid');
+    }
   }
 
   @override

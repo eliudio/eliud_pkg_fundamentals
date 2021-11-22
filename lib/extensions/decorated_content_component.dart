@@ -31,12 +31,9 @@ class DecoratedContentComponent extends AbstractDecoratedContentComponent {
 
   @override
   Widget yourWidget(BuildContext context, DecoratedContentModel? value) {
-    return BlocBuilder<AccessBloc, AccessState>(
-        builder: (context, accessState) {
-          if (accessState is AccessDetermined) {
             var contents = Registry.registry()!
-                .component(accessState, value!.contentComponentName!, value.contentComponentId!);
-            var image = Registry.registry()!.component(accessState,
+                .component(context, value!.contentComponentName!, value.contentComponentId!);
+            var image = Registry.registry()!.component(context,
                 value.decoratingComponentName!, value.decoratingComponentId!);
             var percentageImageVisible = value.percentageDecorationVisible ?? .5;
 
@@ -101,10 +98,6 @@ class DecoratedContentComponent extends AbstractDecoratedContentComponent {
                 row
               ]);
             }
-          } else {
-            return progressIndicator(context);
-          }
-        });
 
 
   }

@@ -30,21 +30,14 @@ class PresentationComponent extends AbstractPresentationComponent {
 
   @override
   Widget yourWidget(BuildContext context, PresentationModel? value) {
-    return BlocBuilder<AccessBloc, AccessState>(
-        builder: (context, accessState) {
-          if (accessState is AccessDetermined) {
             var widgets = value!.bodyComponents!
                 .map((model) =>
-                Registry.registry()!.component(accessState,
+                Registry.registry()!.component(context,
                     model.componentName!, model.componentId!, parameters: parameters))
                 .toList();
             return PresentationHelper.makeContainingTable(
                 context, widgets, value.image, value.imagePositionRelative,
                 value.imageAlignment, value.imageWidth);
-          } else {
-            return progressIndicator(context);
-          }
-        });
   }
 
   @override
