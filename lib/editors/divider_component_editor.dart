@@ -39,7 +39,7 @@ class DividerComponentEditorConstructor extends ComponentEditorConstructor {
     if (divider != null) {
       _openIt(context, false, divider, feedback);
     } else {
-      openErrorDialog(context,
+      openErrorDialog(context, AccessBloc.currentAppId(context) + '/_error', 
           title: 'Error', errorMessage: 'Cannot find divider with id $dividerId');
     }
   }
@@ -48,6 +48,7 @@ class DividerComponentEditorConstructor extends ComponentEditorConstructor {
       EditorFeedback feedback) {
     openComplexDialog(
       context,
+      AccessBloc.currentAppId(context) + '/divider',
       title: create ? 'Create divider' : 'Update divider',
       includeHeading: false,
       widthFraction: .9,
@@ -91,6 +92,7 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
                   await dividerRepository(appId: appId)!.add(widget.model);
                 } else {
                   openErrorDialog(context,
+                      appId + '/error',
                       title: 'Error',
                       errorMessage: 'Divider with this ID already exists');
                   widget.feedback(false);
