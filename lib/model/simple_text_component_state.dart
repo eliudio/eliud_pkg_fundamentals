@@ -35,9 +35,9 @@ class SimpleTextComponentPermissionDenied extends SimpleTextComponentState {
 }
 
 class SimpleTextComponentLoaded extends SimpleTextComponentState {
-  final SimpleTextModel? value;
+  final SimpleTextModel value;
 
-  const SimpleTextComponentLoaded({ this.value });
+  const SimpleTextComponentLoaded({ required this.value });
 
   SimpleTextComponentLoaded copyWith({ SimpleTextModel? copyThis }) {
     return SimpleTextComponentLoaded(value: copyThis ?? this.value);

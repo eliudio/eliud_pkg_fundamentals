@@ -35,9 +35,9 @@ class PresentationComponentPermissionDenied extends PresentationComponentState {
 }
 
 class PresentationComponentLoaded extends PresentationComponentState {
-  final PresentationModel? value;
+  final PresentationModel value;
 
-  const PresentationComponentLoaded({ this.value });
+  const PresentationComponentLoaded({ required this.value });
 
   PresentationComponentLoaded copyWith({ PresentationModel? copyThis }) {
     return PresentationComponentLoaded(value: copyThis ?? this.value);

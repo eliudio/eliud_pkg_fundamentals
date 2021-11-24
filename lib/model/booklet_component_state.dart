@@ -35,9 +35,9 @@ class BookletComponentPermissionDenied extends BookletComponentState {
 }
 
 class BookletComponentLoaded extends BookletComponentState {
-  final BookletModel? value;
+  final BookletModel value;
 
-  const BookletComponentLoaded({ this.value });
+  const BookletComponentLoaded({ required this.value });
 
   BookletComponentLoaded copyWith({ BookletModel? copyThis }) {
     return BookletComponentLoaded(value: copyThis ?? this.value);

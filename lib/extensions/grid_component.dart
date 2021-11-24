@@ -16,8 +16,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GridComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
-    return GridComponent(key: key, gridID: id);
+  Widget createNew({Key? key, required String appId, required String id, Map<String, dynamic>? parameters}) {
+    return GridComponent(key: key, appId: appId, gridId: id);
   }
 
   @override
@@ -25,7 +25,7 @@ class GridComponentConstructorDefault implements ComponentConstructor {
 }
 
 class GridComponent extends AbstractGridComponent {
-  GridComponent({Key? key, required String gridID}) : super(key: key, gridID: gridID);
+  GridComponent({Key? key, required String appId, required String gridId}) : super(key: key, theAppId: appId, gridId: gridId);
 
   @override
   Widget yourWidget(BuildContext context, GridModel? value) {
@@ -37,18 +37,8 @@ class GridComponent extends AbstractGridComponent {
     if (components.isNotEmpty) {
       return GridViewHelper.container(context, components, value.gridView);
     } else {
-      return alertWidget(
+      return AlertWidget(
           title: 'Error', content: 'No components for this grid');
     }
-  }
-
-  @override
-  Widget alertWidget({title = String, content = String}) {
-    return AlertWidget(title: title, content: content);
-  }
-
-  @override
-  GridRepository getGridRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.gridRepository(AccessBloc.currentAppId(context))!;
   }
 }

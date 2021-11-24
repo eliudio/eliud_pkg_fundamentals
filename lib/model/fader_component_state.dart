@@ -35,9 +35,9 @@ class FaderComponentPermissionDenied extends FaderComponentState {
 }
 
 class FaderComponentLoaded extends FaderComponentState {
-  final FaderModel? value;
+  final FaderModel value;
 
-  const FaderComponentLoaded({ this.value });
+  const FaderComponentLoaded({ required this.value });
 
   FaderComponentLoaded copyWith({ FaderModel? copyThis }) {
     return FaderComponentLoaded(value: copyThis ?? this.value);

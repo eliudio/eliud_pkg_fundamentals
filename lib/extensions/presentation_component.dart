@@ -15,8 +15,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PresentationComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
-    return PresentationComponent(key: key, presentationID: id, parameters: parameters,);
+  Widget createNew({Key? key, required String appId, required String id, Map<String, dynamic>? parameters}) {
+    return PresentationComponent(key: key, appId: appId, presentationId: id, parameters: parameters,);
   }
 
   @override
@@ -26,7 +26,7 @@ class PresentationComponentConstructorDefault implements ComponentConstructor {
 class PresentationComponent extends AbstractPresentationComponent {
   Map<String, dynamic>? parameters;
 
-  PresentationComponent({Key? key, required String presentationID, this.parameters}) : super(key: key, presentationID: presentationID);
+  PresentationComponent({Key? key, required String appId, required String presentationId, this.parameters}) : super(key: key, theAppId: appId, presentationId: presentationId);
 
   @override
   Widget yourWidget(BuildContext context, PresentationModel? value) {
@@ -38,15 +38,5 @@ class PresentationComponent extends AbstractPresentationComponent {
             return PresentationHelper.makeContainingTable(
                 context, widgets, value.image, value.imagePositionRelative,
                 value.imageAlignment, value.imageWidth);
-  }
-
-  @override
-  Widget alertWidget({title = String, content = String}) {
-    return AlertWidget(title: title, content: content);
-  }
-
-  @override
-  PresentationRepository getPresentationRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.presentationRepository(AccessBloc.currentAppId(context))!;
   }
 }

@@ -74,6 +74,7 @@ class DividerForm extends StatelessWidget {
     var accessState = AccessBloc.getState(context);
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text("No app available");
+    var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<DividerFormBloc >(
             create: (context) => DividerFormBloc(AccessBloc.currentAppId(context),
@@ -150,6 +151,7 @@ class _MyDividerFormState extends State<MyDividerForm> {
   Widget build(BuildContext context) {
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text('No app available');
+    var appId = app.documentID!;
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<DividerFormBloc, DividerFormState>(builder: (context, state) {
       if (state is DividerFormUninitialized) return Center(

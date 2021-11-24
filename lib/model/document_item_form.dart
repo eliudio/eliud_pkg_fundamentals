@@ -74,6 +74,7 @@ class DocumentItemForm extends StatelessWidget {
     var accessState = AccessBloc.getState(context);
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text("No app available");
+    var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<DocumentItemFormBloc >(
             create: (context) => DocumentItemFormBloc(AccessBloc.currentAppId(context),
@@ -138,6 +139,7 @@ class _MyDocumentItemFormState extends State<MyDocumentItemForm> {
   Widget build(BuildContext context) {
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text('No app available');
+    var appId = app.documentID!;
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<DocumentItemFormBloc, DocumentItemFormState>(builder: (context, state) {
       if (state is DocumentItemFormUninitialized) return Center(
@@ -167,7 +169,7 @@ class _MyDocumentItemFormState extends State<MyDocumentItemForm> {
 
         children.add(
 
-                DropdownButtonComponentFactory().createNew(id: "memberMediums", value: _image, trigger: _onImageSelected, optional: false),
+                DropdownButtonComponentFactory().createNew(appId: appId, id: "memberMediums", value: _image, trigger: _onImageSelected, optional: false),
           );
 
 

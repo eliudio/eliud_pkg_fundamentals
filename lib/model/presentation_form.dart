@@ -74,6 +74,7 @@ class PresentationForm extends StatelessWidget {
     var accessState = AccessBloc.getState(context);
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text("No app available");
+    var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<PresentationFormBloc >(
             create: (context) => PresentationFormBloc(AccessBloc.currentAppId(context),
@@ -149,6 +150,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
   Widget build(BuildContext context) {
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text('No app available');
+    var appId = app.documentID!;
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<PresentationFormBloc, PresentationFormState>(builder: (context, state) {
       if (state is PresentationFormUninitialized) return Center(
@@ -251,7 +253,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
 
         children.add(
 
-                DropdownButtonComponentFactory().createNew(id: "platformMediums", value: _image, trigger: _onImageSelected, optional: true),
+                DropdownButtonComponentFactory().createNew(appId: appId, id: "platformMediums", value: _image, trigger: _onImageSelected, optional: true),
           );
 
 

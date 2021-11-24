@@ -17,8 +17,8 @@ class DecoratedContentComponentConstructorDefault
     implements ComponentConstructor {
   @override
   Widget createNew(
-      {Key? key, required String id, Map<String, dynamic>? parameters}) {
-    return DecoratedContentComponent(key: key, decoratedContentID: id);
+      {Key? key, required String appId, required String id, Map<String, dynamic>? parameters}) {
+    return DecoratedContentComponent(key: key, appId: appId, decoratedContentId: id);
   }
 
   @override
@@ -26,8 +26,8 @@ class DecoratedContentComponentConstructorDefault
 }
 
 class DecoratedContentComponent extends AbstractDecoratedContentComponent {
-  DecoratedContentComponent({Key? key, required String decoratedContentID})
-      : super(key: key, decoratedContentID: decoratedContentID);
+  DecoratedContentComponent({Key? key, required String appId, required String decoratedContentId})
+      : super(key: key, theAppId: appId, decoratedContentId: decoratedContentId);
 
   @override
   Widget yourWidget(BuildContext context, DecoratedContentModel? value) {
@@ -100,17 +100,5 @@ class DecoratedContentComponent extends AbstractDecoratedContentComponent {
             }
 
 
-  }
-
-  @override
-  Widget alertWidget({title = String, content = String}) {
-    return AlertWidget(title: title, content: content);
-  }
-
-  @override
-  DecoratedContentRepository getDecoratedContentRepository(
-      BuildContext context) {
-    return AbstractRepositorySingleton.singleton
-        .decoratedContentRepository(AccessBloc.currentAppId(context))!;
   }
 }

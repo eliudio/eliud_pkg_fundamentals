@@ -35,9 +35,9 @@ class DecoratedContentComponentPermissionDenied extends DecoratedContentComponen
 }
 
 class DecoratedContentComponentLoaded extends DecoratedContentComponentState {
-  final DecoratedContentModel? value;
+  final DecoratedContentModel value;
 
-  const DecoratedContentComponentLoaded({ this.value });
+  const DecoratedContentComponentLoaded({ required this.value });
 
   DecoratedContentComponentLoaded copyWith({ DecoratedContentModel? copyThis }) {
     return DecoratedContentComponentLoaded(value: copyThis ?? this.value);

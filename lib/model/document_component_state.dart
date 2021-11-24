@@ -35,9 +35,9 @@ class DocumentComponentPermissionDenied extends DocumentComponentState {
 }
 
 class DocumentComponentLoaded extends DocumentComponentState {
-  final DocumentModel? value;
+  final DocumentModel value;
 
-  const DocumentComponentLoaded({ this.value });
+  const DocumentComponentLoaded({ required this.value });
 
   DocumentComponentLoaded copyWith({ DocumentModel? copyThis }) {
     return DocumentComponentLoaded(value: copyThis ?? this.value);

@@ -35,9 +35,9 @@ class DividerComponentPermissionDenied extends DividerComponentState {
 }
 
 class DividerComponentLoaded extends DividerComponentState {
-  final DividerModel? value;
+  final DividerModel value;
 
-  const DividerComponentLoaded({ this.value });
+  const DividerComponentLoaded({ required this.value });
 
   DividerComponentLoaded copyWith({ DividerModel? copyThis }) {
     return DividerComponentLoaded(value: copyThis ?? this.value);

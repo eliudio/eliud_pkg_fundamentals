@@ -74,6 +74,7 @@ class SimpleTextForm extends StatelessWidget {
     var accessState = AccessBloc.getState(context);
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text("No app available");
+    var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<SimpleTextFormBloc >(
             create: (context) => SimpleTextFormBloc(AccessBloc.currentAppId(context),
@@ -146,6 +147,7 @@ class _MySimpleTextFormState extends State<MySimpleTextForm> {
   Widget build(BuildContext context) {
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text('No app available');
+    var appId = app.documentID!;
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<SimpleTextFormBloc, SimpleTextFormState>(builder: (context, state) {
       if (state is SimpleTextFormUninitialized) return Center(

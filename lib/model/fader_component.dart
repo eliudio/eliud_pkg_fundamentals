@@ -13,9 +13,6 @@
 
 */
 
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:eliud_core/style/style_registry.dart';
 
 import 'package:eliud_pkg_fundamentals/model/fader_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_component_event.dart';
@@ -23,18 +20,26 @@ import 'package:eliud_pkg_fundamentals/model/fader_model.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_component_state.dart';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:eliud_core/style/style_registry.dart';
+import 'abstract_repository_singleton.dart';
+import 'package:eliud_core/core/widgets/alert_widget.dart';
+import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
+
 abstract class AbstractFaderComponent extends StatelessWidget {
   static String componentName = "faders";
-  final String? faderID;
+  final String theAppId;
+  final String faderId;
 
-  AbstractFaderComponent({Key? key, this.faderID}): super(key: key);
+  AbstractFaderComponent({Key? key, required this.theAppId, required this.faderId}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<FaderComponentBloc> (
           create: (context) => FaderComponentBloc(
-            faderRepository: getFaderRepository(context))
-        ..add(FetchFaderComponent(id: faderID)),
+            faderRepository: faderRepository(appId: theAppId)!)
+        ..add(FetchFaderComponent(id: faderId)),
       child: _faderBlockBuilder(context),
     );
   }
@@ -43,7 +48,7 @@ abstract class AbstractFaderComponent extends StatelessWidget {
     return BlocBuilder<FaderComponentBloc, FaderComponentState>(builder: (context, state) {
       if (state is FaderComponentLoaded) {
         if (state.value == null) {
-          return alertWidget(title: 'Error', content: 'No Fader defined');
+          return AlertWidget(title: "Error", content: 'No Fader defined');
         } else {
           return yourWidget(context, state.value);
         }
@@ -54,7 +59,7 @@ abstract class AbstractFaderComponent extends StatelessWidget {
           size: 30.0,
         );
       } else if (state is FaderComponentError) {
-        return alertWidget(title: 'Error', content: state.message);
+        return AlertWidget(title: 'Error', content: state.message);
       } else {
         return Center(
           child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicatorStyle().progressIndicator(context),
@@ -63,8 +68,6 @@ abstract class AbstractFaderComponent extends StatelessWidget {
     });
   }
 
-  Widget yourWidget(BuildContext context, FaderModel? value);
-  Widget alertWidget({ title: String, content: String});
-  FaderRepository getFaderRepository(BuildContext context);
+  Widget yourWidget(BuildContext context, FaderModel value);
 }
 

@@ -74,6 +74,7 @@ class FaderForm extends StatelessWidget {
     var accessState = AccessBloc.getState(context);
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text("No app available");
+    var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<FaderFormBloc >(
             create: (context) => FaderFormBloc(AccessBloc.currentAppId(context),
@@ -146,6 +147,7 @@ class _MyFaderFormState extends State<MyFaderForm> {
   Widget build(BuildContext context) {
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text('No app available');
+    var appId = app.documentID!;
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<FaderFormBloc, FaderFormState>(builder: (context, state) {
       if (state is FaderFormUninitialized) return Center(

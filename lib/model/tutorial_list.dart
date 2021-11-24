@@ -107,7 +107,7 @@ class TutorialListWidgetState extends State<TutorialListWidget> {
                       context, label: 'Add',
                       onPressed: () {
                         Navigator.of(context).push(
-                                  pageRouteBuilder(accessState.currentApp, page: BlocProvider.value(
+                                  pageRouteBuilder(accessState.currentApp(context), page: BlocProvider.value(
                                       value: BlocProvider.of<TutorialListBloc>(context),
                                       child: TutorialForm(
                                           value: null,

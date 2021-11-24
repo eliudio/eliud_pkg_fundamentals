@@ -14,8 +14,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DocumentComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
-    return DocumentComponent(key: key, documentID: id);
+  Widget createNew({Key? key, required String appId, required String id, Map<String, dynamic>? parameters}) {
+    return DocumentComponent(key: key, appId: appId, documentId: id);
   }
 
   @override
@@ -23,7 +23,7 @@ class DocumentComponentConstructorDefault implements ComponentConstructor {
 }
 
 class DocumentComponent extends AbstractDocumentComponent {
-  DocumentComponent({Key? key, required String documentID}) : super(key: key, documentID: documentID);
+  DocumentComponent({Key? key, required String appId, required String documentId}) : super(key: key, theAppId: appId, documentId: documentId);
 
   @override
   Widget yourWidget(BuildContext context, DocumentModel? value) {
@@ -35,15 +35,5 @@ class DocumentComponent extends AbstractDocumentComponent {
             return progressIndicator(context);
           }
         });
-  }
-
-  @override
-  Widget alertWidget({title = String, content = String}) {
-    return AlertWidget(title: title, content: content);
-  }
-
-  @override
-  DocumentRepository getDocumentRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.documentRepository(AccessBloc.currentAppId(context))!;
   }
 }

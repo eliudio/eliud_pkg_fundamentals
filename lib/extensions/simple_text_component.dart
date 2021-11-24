@@ -12,8 +12,8 @@ import 'package:flutter/material.dart';
 
 class SimpleTextComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
-    return SimpleTextComponent(key: key, simpleTextID: id);
+  Widget createNew({Key? key, required String appId, required String id, Map<String, dynamic>? parameters}) {
+    return SimpleTextComponent(key: key, appId: appId, simpleTextId: id);
   }
 
   @override
@@ -21,7 +21,7 @@ class SimpleTextComponentConstructorDefault implements ComponentConstructor {
 }
 
 class SimpleTextComponent extends AbstractSimpleTextComponent {
-  SimpleTextComponent({Key? key, required String simpleTextID}) : super(key: key, simpleTextID: simpleTextID);
+  SimpleTextComponent({Key? key, required String appId, required String simpleTextId}) : super(key: key, theAppId: appId, simpleTextId: simpleTextId);
 
   TextAlign toTextAlign(SimpleTextAlign? textAlign) {
     switch (textAlign) {
@@ -48,15 +48,5 @@ class SimpleTextComponent extends AbstractSimpleTextComponent {
           h5(context, value.text!, textAlign: toTextAlign(value.textAlign)),
         ]);
     return text;
-  }
-
-  @override
-  Widget alertWidget({title = String, content = String}) {
-    return AlertWidget(title: title, content: content);
-  }
-
-  @override
-  SimpleTextRepository getSimpleTextRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.simpleTextRepository(AccessBloc.currentAppId(context))!;
   }
 }

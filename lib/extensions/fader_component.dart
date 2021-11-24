@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 
 class FaderComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
-    return FaderComponent(key: key, faderID: id);
+  Widget createNew({Key? key, required appId, required String id, Map<String, dynamic>? parameters}) {
+    return FaderComponent(key: key, appId: appId, faderId: id);
   }
 
   @override
@@ -19,7 +19,7 @@ class FaderComponentConstructorDefault implements ComponentConstructor {
 }
 
 class FaderComponent extends AbstractFaderComponent {
-  FaderComponent({Key? key, required String faderID}) : super(key: key, faderID: faderID);
+  FaderComponent({Key? key, required String appId, required String faderId}) : super(key: key, theAppId: appId, faderId: faderId);
 
   @override
   Widget yourWidget(BuildContext context, FaderModel? value) {
@@ -29,15 +29,5 @@ class FaderComponent extends AbstractFaderComponent {
     var actions = items.map((element) => element.action).toList();
     var orientation = MediaQuery.of(context).orientation;
     return TheImageGF(images, positionsAndSizes, actions, orientation, value.imageSeconds, value.animationMilliseconds);
-  }
-
-  @override
-  Widget alertWidget({title = String, content = String}) {
-    return AlertWidget(title: title, content: content);
-  }
-
-  @override
-  FaderRepository getFaderRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.faderRepository(AccessBloc.currentAppId(context))!;
   }
 }

@@ -74,6 +74,7 @@ class DocumentForm extends StatelessWidget {
     var accessState = AccessBloc.getState(context);
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text("No app available");
+    var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<DocumentFormBloc >(
             create: (context) => DocumentFormBloc(AccessBloc.currentAppId(context),
@@ -147,6 +148,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
   Widget build(BuildContext context) {
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text('No app available');
+    var appId = app.documentID!;
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<DocumentFormBloc, DocumentFormState>(builder: (context, state) {
       if (state is DocumentFormUninitialized) return Center(
@@ -281,7 +283,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
 
         children.add(
 
-                DropdownButtonComponentFactory().createNew(id: "backgrounds", value: _background, trigger: _onBackgroundSelected, optional: true),
+                DropdownButtonComponentFactory().createNew(appId: appId, id: "backgrounds", value: _background, trigger: _onBackgroundSelected, optional: true),
           );
 
 

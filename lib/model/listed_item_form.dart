@@ -74,6 +74,7 @@ class ListedItemForm extends StatelessWidget {
     var accessState = AccessBloc.getState(context);
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text("No app available");
+    var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<ListedItemFormBloc >(
             create: (context) => ListedItemFormBloc(AccessBloc.currentAppId(context),
@@ -139,6 +140,7 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
   Widget build(BuildContext context) {
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text('No app available');
+    var appId = app.documentID!;
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<ListedItemFormBloc, ListedItemFormState>(builder: (context, state) {
       if (state is ListedItemFormUninitialized) return Center(
@@ -205,7 +207,7 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
 
         children.add(
 
-                DropdownButtonComponentFactory().createNew(id: "platformMediums", value: _image, trigger: _onImageSelected, optional: false),
+                DropdownButtonComponentFactory().createNew(appId: appId, id: "platformMediums", value: _image, trigger: _onImageSelected, optional: false),
           );
 
 
@@ -221,7 +223,7 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
 
         children.add(
 
-                DropdownButtonComponentFactory().createNew(id: "posSizes", value: _posSize, trigger: _onPosSizeSelected, optional: true),
+                DropdownButtonComponentFactory().createNew(appId: appId, id: "posSizes", value: _posSize, trigger: _onPosSizeSelected, optional: true),
           );
 
 

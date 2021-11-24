@@ -74,6 +74,7 @@ class TutorialEntryForm extends StatelessWidget {
     var accessState = AccessBloc.getState(context);
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text("No app available");
+    var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<TutorialEntryFormBloc >(
             create: (context) => TutorialEntryFormBloc(AccessBloc.currentAppId(context),
@@ -140,6 +141,7 @@ class _MyTutorialEntryFormState extends State<MyTutorialEntryForm> {
   Widget build(BuildContext context) {
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text('No app available');
+    var appId = app.documentID!;
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<TutorialEntryFormBloc, TutorialEntryFormState>(builder: (context, state) {
       if (state is TutorialEntryFormUninitialized) return Center(
@@ -190,7 +192,7 @@ class _MyTutorialEntryFormState extends State<MyTutorialEntryForm> {
 
         children.add(
 
-                DropdownButtonComponentFactory().createNew(id: "platformMediums", value: _image, trigger: _onImageSelected, optional: true),
+                DropdownButtonComponentFactory().createNew(appId: appId, id: "platformMediums", value: _image, trigger: _onImageSelected, optional: true),
           );
 
 

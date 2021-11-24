@@ -74,6 +74,7 @@ class TutorialForm extends StatelessWidget {
     var accessState = AccessBloc.getState(context);
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text("No app available");
+    var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<TutorialFormBloc >(
             create: (context) => TutorialFormBloc(AccessBloc.currentAppId(context),
@@ -146,6 +147,7 @@ class _MyTutorialFormState extends State<MyTutorialForm> {
   Widget build(BuildContext context) {
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text('No app available');
+    var appId = app.documentID!;
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<TutorialFormBloc, TutorialFormState>(builder: (context, state) {
       if (state is TutorialFormUninitialized) return Center(

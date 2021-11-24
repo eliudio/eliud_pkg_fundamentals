@@ -1,6 +1,7 @@
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/core/blocs/access/state/access_determined.dart';
 import 'package:eliud_core/core/blocs/access/state/access_state.dart';
+import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/background_model.dart';
 import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
@@ -51,57 +52,13 @@ class DocumentTextFieldState extends State<DocumentTextField> {
     return button(context,
             label: widget.label,
             icon: Icon(Icons.fullscreen),
-            onPressed: () => _fullScreen(accessState));
+            onPressed: () => _fullScreen(app, accessState));
   }
 
-  // Not used at the moment, but is a candidate
-  Widget _buildIncludeDocument(AccessState accessState, BuildContext context) {
-    var width = fullScreenWidth(context);
-    var height = fullScreenHeight(context);
-    var fullWidth = (width < height ? width : height) - 56;
 
-    return Builder(
-        builder: (context) => Container(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Align(
-                            alignment: Alignment.center,
-                            child: Container(
-                                child: SizedBox(
-                                    width: fullWidth,
-                                    child: button(context,
-                                            label: widget.label,
-                                            icon: Icon(Icons.fullscreen),
-                                            onPressed: () =>
-                                                _fullScreen(accessState)))))
-                      ]),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Align(
-                            alignment: Alignment.center,
-                            child: Container(
-                                child: SizedBox(
-                                    width: fullWidth,
-                                    height: 250,
-                                    child: DocumentRendererTool().render(
-                                        context,
-                                        accessState,
-                                        widget.documentRenderer,
-                                        widget.documentValue!,
-                                        widget.images,
-                                        widget.bdm))))
-                      ])
-                ])));
-  }
-
-  void _fullScreen(AccessState appState) async {
+  void _fullScreen(AppModel app, AccessState appState) async {
     if (appState is AccessDetermined) {
-      await Navigator.of(context).push(pageRouteBuilder(appState.currentApp,
+      await Navigator.of(context).push(pageRouteBuilder(app,
           page: DocumentTextFieldFullScreen(
               widget.label,
               widget.documentRenderer,
@@ -195,7 +152,7 @@ class DocumentTextFieldFullScreenState
             body: TabBarView(
               children: <Widget>[
                 TextFormField(
-                  readOnly: !accessState.memberIsOwner(accessState.currentAppId()),
+                  readOnly: !accessState.memberIsOwner(accessState.currentAppId(context)),
                   style: TextStyle(color: Colors.black),
                   initialValue: value,
                   decoration: InputDecoration(

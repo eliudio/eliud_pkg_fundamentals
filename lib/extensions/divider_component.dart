@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 
 class DividerComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
-    return DividerComponent(key: key, dividerID: id);
+  Widget createNew({Key? key, required String appId, required String id, Map<String, dynamic>? parameters}) {
+    return DividerComponent(key: key, appId: appId, dividerId: id);
   }
 
   @override
@@ -19,7 +19,7 @@ class DividerComponentConstructorDefault implements ComponentConstructor {
 }
 
 class DividerComponent extends AbstractDividerComponent {
-  DividerComponent({Key? key, required String dividerID}) : super(key: key, dividerID: dividerID);
+  DividerComponent({Key? key, required String appId, required String dividerId}) : super(key: key, theAppId: appId, dividerId: dividerId);
 
   @override
   Widget yourWidget(BuildContext context, DividerModel? value) {
@@ -30,15 +30,5 @@ class DividerComponent extends AbstractDividerComponent {
       endIndent: value.endIndent ?? 0,
       color: RgbHelper.color(rgbo: value.color),
     );
-  }
-
-  @override
-  Widget alertWidget({title = String, content = String}) {
-    return AlertWidget(title: title, content: content);
-  }
-
-  @override
-  DividerRepository getDividerRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton.dividerRepository(AccessBloc.currentAppId(context))!;
   }
 }

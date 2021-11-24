@@ -35,9 +35,9 @@ class TutorialComponentPermissionDenied extends TutorialComponentState {
 }
 
 class TutorialComponentLoaded extends TutorialComponentState {
-  final TutorialModel? value;
+  final TutorialModel value;
 
-  const TutorialComponentLoaded({ this.value });
+  const TutorialComponentLoaded({ required this.value });
 
   TutorialComponentLoaded copyWith({ TutorialModel? copyThis }) {
     return TutorialComponentLoaded(value: copyThis ?? this.value);

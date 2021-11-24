@@ -19,8 +19,8 @@ import 'package:flutter/material.dart';
 
 class BookletComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
-    return BookletComponent(key: key, bookletID: id);
+  Widget createNew({Key? key, required String appId, required String id, Map<String, dynamic>? parameters}) {
+    return BookletComponent(key: key, appId: appId, bookletId: id);
   }
 
   @override
@@ -28,7 +28,7 @@ class BookletComponentConstructorDefault implements ComponentConstructor {
 }
 
 class BookletComponent extends AbstractBookletComponent {
-  BookletComponent({Key? key, required String bookletID}) : super(key: key, bookletID: bookletID);
+  BookletComponent({Key? key,  required String appId, required String bookletId}) : super(key: key, theAppId: appId, bookletId: bookletId);
 
   Widget _aBitSpace() => SizedBox(height: 30);
 
@@ -196,16 +196,5 @@ class BookletComponent extends AbstractBookletComponent {
         shrinkWrap: true,
         physics: ScrollPhysics(),
         children: groupedWidgets);
-  }
-
-  @override
-  Widget alertWidget({title = String, content = String}) {
-    return AlertWidget(title: title, content: content);
-  }
-
-  @override
-  BookletRepository getBookletRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton
-        .bookletRepository(AccessBloc.currentAppId(context))!;
   }
 }

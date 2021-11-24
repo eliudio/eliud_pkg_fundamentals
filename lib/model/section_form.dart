@@ -74,6 +74,7 @@ class SectionForm extends StatelessWidget {
     var accessState = AccessBloc.getState(context);
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text("No app available");
+    var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<SectionFormBloc >(
             create: (context) => SectionFormBloc(AccessBloc.currentAppId(context),
@@ -146,6 +147,7 @@ class _MySectionFormState extends State<MySectionForm> {
   Widget build(BuildContext context) {
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text('No app available');
+    var appId = app.documentID!;
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<SectionFormBloc, SectionFormState>(builder: (context, state) {
       if (state is SectionFormUninitialized) return Center(
@@ -218,7 +220,7 @@ class _MySectionFormState extends State<MySectionForm> {
 
         children.add(
 
-                DropdownButtonComponentFactory().createNew(id: "platformMediums", value: _image, trigger: _onImageSelected, optional: true),
+                DropdownButtonComponentFactory().createNew(appId: appId, id: "platformMediums", value: _image, trigger: _onImageSelected, optional: true),
           );
 
 

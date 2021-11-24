@@ -19,8 +19,8 @@ import 'package:transparent_image/transparent_image.dart';
 
 class TutorialComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({Key? key, required String id, Map<String, dynamic>? parameters}) {
-    return TutorialComponent(tutorialID: id);
+  Widget createNew({Key? key, required String appId, required String id, Map<String, dynamic>? parameters}) {
+    return TutorialComponent(appId: appId, tutorialId: id);
   }
 
   @override
@@ -28,7 +28,7 @@ class TutorialComponentConstructorDefault implements ComponentConstructor {
 }
 
 class TutorialComponent extends AbstractTutorialComponent {
-  TutorialComponent({Key? key, required String tutorialID}) : super(key: key, tutorialID: tutorialID);
+  TutorialComponent({Key? key, required String appId, required String tutorialId}) : super(key: key, theAppId: appId, tutorialId: tutorialId);
 
   Widget _aBitSpace() => SizedBox(
         height: 20,
@@ -98,17 +98,6 @@ class TutorialComponent extends AbstractTutorialComponent {
         children: widgets,
       )
     ]);
-  }
-
-  @override
-  Widget alertWidget({title = String, content = String}) {
-    return AlertWidget(title: title, content: content);
-  }
-
-  @override
-  TutorialRepository getTutorialRepository(BuildContext context) {
-    return AbstractRepositorySingleton.singleton
-        .tutorialRepository(AccessBloc.currentAppId(context))!;
   }
 }
 

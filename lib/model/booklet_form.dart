@@ -74,6 +74,7 @@ class BookletForm extends StatelessWidget {
     var accessState = AccessBloc.getState(context);
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text("No app available");
+    var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<BookletFormBloc >(
             create: (context) => BookletFormBloc(AccessBloc.currentAppId(context),
@@ -142,6 +143,7 @@ class _MyBookletFormState extends State<MyBookletForm> {
   Widget build(BuildContext context) {
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text('No app available');
+    var appId = app.documentID!;
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<BookletFormBloc, BookletFormState>(builder: (context, state) {
       if (state is BookletFormUninitialized) return Center(

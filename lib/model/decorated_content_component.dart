@@ -13,9 +13,6 @@
 
 */
 
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:eliud_core/style/style_registry.dart';
 
 import 'package:eliud_pkg_fundamentals/model/decorated_content_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/decorated_content_component_event.dart';
@@ -23,18 +20,26 @@ import 'package:eliud_pkg_fundamentals/model/decorated_content_model.dart';
 import 'package:eliud_pkg_fundamentals/model/decorated_content_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/decorated_content_component_state.dart';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:eliud_core/style/style_registry.dart';
+import 'abstract_repository_singleton.dart';
+import 'package:eliud_core/core/widgets/alert_widget.dart';
+import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
+
 abstract class AbstractDecoratedContentComponent extends StatelessWidget {
   static String componentName = "decoratedContents";
-  final String? decoratedContentID;
+  final String theAppId;
+  final String decoratedContentId;
 
-  AbstractDecoratedContentComponent({Key? key, this.decoratedContentID}): super(key: key);
+  AbstractDecoratedContentComponent({Key? key, required this.theAppId, required this.decoratedContentId}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<DecoratedContentComponentBloc> (
           create: (context) => DecoratedContentComponentBloc(
-            decoratedContentRepository: getDecoratedContentRepository(context))
-        ..add(FetchDecoratedContentComponent(id: decoratedContentID)),
+            decoratedContentRepository: decoratedContentRepository(appId: theAppId)!)
+        ..add(FetchDecoratedContentComponent(id: decoratedContentId)),
       child: _decoratedContentBlockBuilder(context),
     );
   }
@@ -43,7 +48,7 @@ abstract class AbstractDecoratedContentComponent extends StatelessWidget {
     return BlocBuilder<DecoratedContentComponentBloc, DecoratedContentComponentState>(builder: (context, state) {
       if (state is DecoratedContentComponentLoaded) {
         if (state.value == null) {
-          return alertWidget(title: 'Error', content: 'No DecoratedContent defined');
+          return AlertWidget(title: "Error", content: 'No DecoratedContent defined');
         } else {
           return yourWidget(context, state.value);
         }
@@ -54,7 +59,7 @@ abstract class AbstractDecoratedContentComponent extends StatelessWidget {
           size: 30.0,
         );
       } else if (state is DecoratedContentComponentError) {
-        return alertWidget(title: 'Error', content: state.message);
+        return AlertWidget(title: 'Error', content: state.message);
       } else {
         return Center(
           child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicatorStyle().progressIndicator(context),
@@ -63,8 +68,6 @@ abstract class AbstractDecoratedContentComponent extends StatelessWidget {
     });
   }
 
-  Widget yourWidget(BuildContext context, DecoratedContentModel? value);
-  Widget alertWidget({ title: String, content: String});
-  DecoratedContentRepository getDecoratedContentRepository(BuildContext context);
+  Widget yourWidget(BuildContext context, DecoratedContentModel value);
 }
 

@@ -35,9 +35,9 @@ class SimpleImageComponentPermissionDenied extends SimpleImageComponentState {
 }
 
 class SimpleImageComponentLoaded extends SimpleImageComponentState {
-  final SimpleImageModel? value;
+  final SimpleImageModel value;
 
-  const SimpleImageComponentLoaded({ this.value });
+  const SimpleImageComponentLoaded({ required this.value });
 
   SimpleImageComponentLoaded copyWith({ SimpleImageModel? copyThis }) {
     return SimpleImageComponentLoaded(value: copyThis ?? this.value);

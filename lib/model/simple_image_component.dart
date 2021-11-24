@@ -13,9 +13,6 @@
 
 */
 
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:eliud_core/style/style_registry.dart';
 
 import 'package:eliud_pkg_fundamentals/model/simple_image_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_component_event.dart';
@@ -23,18 +20,26 @@ import 'package:eliud_pkg_fundamentals/model/simple_image_model.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_component_state.dart';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:eliud_core/style/style_registry.dart';
+import 'abstract_repository_singleton.dart';
+import 'package:eliud_core/core/widgets/alert_widget.dart';
+import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
+
 abstract class AbstractSimpleImageComponent extends StatelessWidget {
   static String componentName = "simpleImages";
-  final String? simpleImageID;
+  final String theAppId;
+  final String simpleImageId;
 
-  AbstractSimpleImageComponent({Key? key, this.simpleImageID}): super(key: key);
+  AbstractSimpleImageComponent({Key? key, required this.theAppId, required this.simpleImageId}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<SimpleImageComponentBloc> (
           create: (context) => SimpleImageComponentBloc(
-            simpleImageRepository: getSimpleImageRepository(context))
-        ..add(FetchSimpleImageComponent(id: simpleImageID)),
+            simpleImageRepository: simpleImageRepository(appId: theAppId)!)
+        ..add(FetchSimpleImageComponent(id: simpleImageId)),
       child: _simpleImageBlockBuilder(context),
     );
   }
@@ -43,7 +48,7 @@ abstract class AbstractSimpleImageComponent extends StatelessWidget {
     return BlocBuilder<SimpleImageComponentBloc, SimpleImageComponentState>(builder: (context, state) {
       if (state is SimpleImageComponentLoaded) {
         if (state.value == null) {
-          return alertWidget(title: 'Error', content: 'No SimpleImage defined');
+          return AlertWidget(title: "Error", content: 'No SimpleImage defined');
         } else {
           return yourWidget(context, state.value);
         }
@@ -54,7 +59,7 @@ abstract class AbstractSimpleImageComponent extends StatelessWidget {
           size: 30.0,
         );
       } else if (state is SimpleImageComponentError) {
-        return alertWidget(title: 'Error', content: state.message);
+        return AlertWidget(title: 'Error', content: state.message);
       } else {
         return Center(
           child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicatorStyle().progressIndicator(context),
@@ -63,8 +68,6 @@ abstract class AbstractSimpleImageComponent extends StatelessWidget {
     });
   }
 
-  Widget yourWidget(BuildContext context, SimpleImageModel? value);
-  Widget alertWidget({ title: String, content: String});
-  SimpleImageRepository getSimpleImageRepository(BuildContext context);
+  Widget yourWidget(BuildContext context, SimpleImageModel value);
 }
 

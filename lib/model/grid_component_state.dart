@@ -35,9 +35,9 @@ class GridComponentPermissionDenied extends GridComponentState {
 }
 
 class GridComponentLoaded extends GridComponentState {
-  final GridModel? value;
+  final GridModel value;
 
-  const GridComponentLoaded({ this.value });
+  const GridComponentLoaded({ required this.value });
 
   GridComponentLoaded copyWith({ GridModel? copyThis }) {
     return GridComponentLoaded(value: copyThis ?? this.value);

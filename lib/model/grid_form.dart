@@ -74,6 +74,7 @@ class GridForm extends StatelessWidget {
     var accessState = AccessBloc.getState(context);
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text("No app available");
+    var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<GridFormBloc >(
             create: (context) => GridFormBloc(AccessBloc.currentAppId(context),
@@ -143,6 +144,7 @@ class _MyGridFormState extends State<MyGridForm> {
   Widget build(BuildContext context) {
     var app = AccessBloc.currentApp(context);
     if (app == null) return Text('No app available');
+    var appId = app.documentID!;
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<GridFormBloc, GridFormState>(builder: (context, state) {
       if (state is GridFormUninitialized) return Center(
@@ -228,7 +230,7 @@ class _MyGridFormState extends State<MyGridForm> {
 
         children.add(
 
-                DropdownButtonComponentFactory().createNew(id: "gridViews", value: _gridView, trigger: _onGridViewSelected, optional: false),
+                DropdownButtonComponentFactory().createNew(appId: appId, id: "gridViews", value: _gridView, trigger: _onGridViewSelected, optional: false),
           );
 
 
