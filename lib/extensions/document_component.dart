@@ -30,7 +30,7 @@ class DocumentComponent extends AbstractDocumentComponent {
     return BlocBuilder<AccessBloc, AccessState>(
         builder: (context, accessState) {
           if (accessState is AccessDetermined) {
-            return DocumentRendererTool().render(context, accessState, value!.documentRenderer, value.content!, value.images, value.background);
+            return DocumentRendererTool().render(context, accessState.getMember(), value!.documentRenderer, value.content!, value.images, value.background);
           } else {
             return progressIndicator(context);
           }

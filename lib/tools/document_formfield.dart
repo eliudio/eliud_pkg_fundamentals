@@ -3,6 +3,7 @@ import 'package:eliud_core/core/blocs/access/state/access_determined.dart';
 import 'package:eliud_core/core/blocs/access/state/access_state.dart';
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/background_model.dart';
+import 'package:eliud_core/model/member_model.dart';
 import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
 import 'package:eliud_core/style/style_registry.dart';
@@ -116,9 +117,9 @@ class DocumentTextFieldFullScreenState
         });
   }
 
-  Widget _document(AccessState accessState) {
+  Widget _document(MemberModel? member) {
     var w = DocumentRendererTool().render(
-        context, accessState, widget.documentRenderer, value!, widget.images, widget.bdm);
+        context, member, widget.documentRenderer, value!, widget.images, widget.bdm);
     return ListView(children: <Widget>[w]);
   }
 
@@ -165,7 +166,7 @@ class DocumentTextFieldFullScreenState
                   maxLines: null,
                   autovalidate: true,
                 ),
-                _document(accessState)
+                _document(accessState.getMember())
               ],
             ),
           ),

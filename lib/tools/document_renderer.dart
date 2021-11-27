@@ -4,6 +4,7 @@ import 'package:eliud_core/core/blocs/access/state/access_state.dart';
 import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
 import 'package:eliud_core/core/tools/document_processor.dart';
 import 'package:eliud_core/model/background_model.dart';
+import 'package:eliud_core/model/member_model.dart';
 import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/action/action_model.dart';
@@ -41,83 +42,20 @@ class ActionListener /*implements ClickListener*/ {
 }
 
 class DocumentRendererTool {
-/*
-  Widget _webViewRendererNotWeb(
-      BuildContext context, String processedDocument) {
-    debugPrint('DocumentRendererTool::_webViewRendererNotWeb()');
-    return LimitedBox(
-        // maxHeight: 2000,
-        child: wv.WebView(
-      gestureRecognizers: Set()
-        ..add(
-          Factory<VerticalDragGestureRecognizer>(
-            () => VerticalDragGestureRecognizer(),
-          ),
-        ),
-      gestureNavigationEnabled: true,
-      initialUrl:
-          Uri.dataFromString(processedDocument, mimeType: 'text/document')
-              .toString(),
-    ));
-  }
-
-  Widget _flutterDocument(BuildContext context, String processedDocument) {
-    debugPrint('DocumentRendererTool::_flutterDocument()');
-    try {
-      return Html(
-        data: processedDocument,
-        onLinkTap: (url) {
-          // open url in a webview
-        },
-        onImageTap: (src) {
-          // Display the image in large form.
-        },
-      );
-    } catch (_) {
-      return null;
-    }
-  }
-*/
-
-/*
-  Widget _flutterWidgetFromDocumentNotWeb(
-      BuildContext context, String processedDocument) {
-    debugPrint('DocumentRendererTool::_flutterWidgetFromDocumentNotWeb()');
-    try {
-      return HtmlWidget(
-        processedDocument,
-        webView: true,
-      );
-    } catch (_) {
-      return null;
-    }
-  }
-*/
-
   Widget _flutterMarkdownDocument(
       BuildContext context, String processedDocument) {
     debugPrint('DocumentRendererTool::_flutterMarkdownDocument()');
     return MarkdownBody(
       selectable: true,
       data: processedDocument,
-//        imageDirectory: value.imageDirectory,
     );
   }
 
   Future<Widget> _buildWidget(BuildContext context, String jsonString) async {
     return Text("This DynamicWidgetBuilder thing is not maintained");
-/*
-    return DynamicWidgetBuilder
-        .build(jsonString, context, new ActionListener(context));
-*/
+
   }
 
-/*
-  Future<Widget> _buildWidget(BuildContext context, String jsonString) async {
-    return Text('dynamic_widget not supported. ' + jsonString);
-  }
-
-*/
   Widget _dynamicWidget(BuildContext context, String processedDocument) {
     return FutureBuilder<Widget>(
       future: _buildWidget(context, processedDocument),
@@ -152,7 +90,7 @@ class DocumentRendererTool {
     return theWidget;
   }
 
-  Widget render(BuildContext context, AccessState accessState, DocumentRenderer? documentRenderer,
+  Widget render(BuildContext context, MemberModel? memberModel, DocumentRenderer? documentRenderer,
       String document, List<DocumentItemModel>? images, BackgroundModel? bdm) {
     DocumentParameterProcessor documentParameterProcessor =
         ExtendedDocumentParameterProcessor(context,
@@ -160,6 +98,6 @@ class DocumentRendererTool {
     return Container(
         child: _rendered(context, documentRenderer,
             documentParameterProcessor.process(document)),
-        decoration: BoxDecorationHelper.boxDecoration(accessState, bdm));
+        decoration: BoxDecorationHelper.boxDecoration(memberModel, bdm));
   }
 }
