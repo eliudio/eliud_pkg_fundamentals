@@ -20,7 +20,6 @@ import 'package:flutter/material.dart';
 class BookletComponentConstructorDefault implements ComponentConstructor {
   @override
   Widget createNew({Key? key, required String appId, required String id, Map<String, dynamic>? parameters}) {
-    return Text("A");
     return BookletComponent(key: key, appId: appId, bookletId: id);
   }
 
