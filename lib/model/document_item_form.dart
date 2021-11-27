@@ -77,7 +77,7 @@ class DocumentItemForm extends StatelessWidget {
     var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<DocumentItemFormBloc >(
-            create: (context) => DocumentItemFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => DocumentItemFormBloc(appId,
                                        
                                                 )..add(InitialiseDocumentItemFormEvent(value: value)),
   
@@ -85,7 +85,7 @@ class DocumentItemForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<DocumentItemFormBloc >(
-            create: (context) => DocumentItemFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => DocumentItemFormBloc(appId,
                                        
                                                 )..add(InitialiseDocumentItemFormNoLoadEvent(value: value)),
   
@@ -95,7 +95,7 @@ class DocumentItemForm extends StatelessWidget {
       return Scaffold(
         appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update DocumentItem' : 'Add DocumentItem'),
         body: BlocProvider<DocumentItemFormBloc >(
-            create: (context) => DocumentItemFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => DocumentItemFormBloc(appId,
                                        
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseDocumentItemFormEvent(value: value) : InitialiseNewDocumentItemFormEvent())),
   

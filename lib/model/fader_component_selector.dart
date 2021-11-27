@@ -35,10 +35,11 @@ class FaderComponentSelector extends ComponentSelector {
   @override
   Widget createSelectWidget(BuildContext context, double height,
       SelectComponent selected, editorConstructor) {
+    var appId = AccessBloc.currentAppId(context);
     return BlocProvider<FaderListBloc>(
           create: (context) => FaderListBloc(
             faderRepository:
-                faderRepository(appId: AccessBloc.currentAppId(context))!,
+                faderRepository(appId: appId)!,
           )..add(LoadFaderList()),
       child: SelectFaderWidget(
           height: height,

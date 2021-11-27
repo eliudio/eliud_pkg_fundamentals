@@ -35,10 +35,11 @@ class TutorialComponentSelector extends ComponentSelector {
   @override
   Widget createSelectWidget(BuildContext context, double height,
       SelectComponent selected, editorConstructor) {
+    var appId = AccessBloc.currentAppId(context);
     return BlocProvider<TutorialListBloc>(
           create: (context) => TutorialListBloc(
             tutorialRepository:
-                tutorialRepository(appId: AccessBloc.currentAppId(context))!,
+                tutorialRepository(appId: appId)!,
           )..add(LoadTutorialList()),
       child: SelectTutorialWidget(
           height: height,

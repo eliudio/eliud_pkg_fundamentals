@@ -35,10 +35,11 @@ class SimpleTextComponentSelector extends ComponentSelector {
   @override
   Widget createSelectWidget(BuildContext context, double height,
       SelectComponent selected, editorConstructor) {
+    var appId = AccessBloc.currentAppId(context);
     return BlocProvider<SimpleTextListBloc>(
           create: (context) => SimpleTextListBloc(
             simpleTextRepository:
-                simpleTextRepository(appId: AccessBloc.currentAppId(context))!,
+                simpleTextRepository(appId: appId)!,
           )..add(LoadSimpleTextList()),
       child: SelectSimpleTextWidget(
           height: height,

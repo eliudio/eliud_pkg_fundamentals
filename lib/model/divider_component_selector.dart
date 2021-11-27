@@ -35,10 +35,11 @@ class DividerComponentSelector extends ComponentSelector {
   @override
   Widget createSelectWidget(BuildContext context, double height,
       SelectComponent selected, editorConstructor) {
+    var appId = AccessBloc.currentAppId(context);
     return BlocProvider<DividerListBloc>(
           create: (context) => DividerListBloc(
             dividerRepository:
-                dividerRepository(appId: AccessBloc.currentAppId(context))!,
+                dividerRepository(appId: appId)!,
           )..add(LoadDividerList()),
       child: SelectDividerWidget(
           height: height,

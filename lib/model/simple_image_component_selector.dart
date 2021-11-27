@@ -35,10 +35,11 @@ class SimpleImageComponentSelector extends ComponentSelector {
   @override
   Widget createSelectWidget(BuildContext context, double height,
       SelectComponent selected, editorConstructor) {
+    var appId = AccessBloc.currentAppId(context);
     return BlocProvider<SimpleImageListBloc>(
           create: (context) => SimpleImageListBloc(
             simpleImageRepository:
-                simpleImageRepository(appId: AccessBloc.currentAppId(context))!,
+                simpleImageRepository(appId: appId)!,
           )..add(LoadSimpleImageList()),
       child: SelectSimpleImageWidget(
           height: height,

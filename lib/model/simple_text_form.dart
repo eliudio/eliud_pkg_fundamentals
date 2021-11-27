@@ -77,7 +77,7 @@ class SimpleTextForm extends StatelessWidget {
     var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<SimpleTextFormBloc >(
-            create: (context) => SimpleTextFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => SimpleTextFormBloc(appId,
                                        formAction: formAction,
 
                                                 )..add(InitialiseSimpleTextFormEvent(value: value)),
@@ -86,7 +86,7 @@ class SimpleTextForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<SimpleTextFormBloc >(
-            create: (context) => SimpleTextFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => SimpleTextFormBloc(appId,
                                        formAction: formAction,
 
                                                 )..add(InitialiseSimpleTextFormNoLoadEvent(value: value)),
@@ -97,7 +97,7 @@ class SimpleTextForm extends StatelessWidget {
       return Scaffold(
         appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update SimpleText' : 'Add SimpleText'),
         body: BlocProvider<SimpleTextFormBloc >(
-            create: (context) => SimpleTextFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => SimpleTextFormBloc(appId,
                                        formAction: formAction,
 
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseSimpleTextFormEvent(value: value) : InitialiseNewSimpleTextFormEvent())),

@@ -77,7 +77,7 @@ class BookletForm extends StatelessWidget {
     var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<BookletFormBloc >(
-            create: (context) => BookletFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => BookletFormBloc(appId,
                                        formAction: formAction,
 
                                                 )..add(InitialiseBookletFormEvent(value: value)),
@@ -86,7 +86,7 @@ class BookletForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<BookletFormBloc >(
-            create: (context) => BookletFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => BookletFormBloc(appId,
                                        formAction: formAction,
 
                                                 )..add(InitialiseBookletFormNoLoadEvent(value: value)),
@@ -97,7 +97,7 @@ class BookletForm extends StatelessWidget {
       return Scaffold(
         appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update Booklet' : 'Add Booklet'),
         body: BlocProvider<BookletFormBloc >(
-            create: (context) => BookletFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => BookletFormBloc(appId,
                                        formAction: formAction,
 
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseBookletFormEvent(value: value) : InitialiseNewBookletFormEvent())),

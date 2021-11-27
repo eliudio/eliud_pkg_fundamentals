@@ -77,7 +77,7 @@ class PresentationForm extends StatelessWidget {
     var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<PresentationFormBloc >(
-            create: (context) => PresentationFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => PresentationFormBloc(appId,
                                        formAction: formAction,
 
                                                 )..add(InitialisePresentationFormEvent(value: value)),
@@ -86,7 +86,7 @@ class PresentationForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<PresentationFormBloc >(
-            create: (context) => PresentationFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => PresentationFormBloc(appId,
                                        formAction: formAction,
 
                                                 )..add(InitialisePresentationFormNoLoadEvent(value: value)),
@@ -97,7 +97,7 @@ class PresentationForm extends StatelessWidget {
       return Scaffold(
         appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update Presentation' : 'Add Presentation'),
         body: BlocProvider<PresentationFormBloc >(
-            create: (context) => PresentationFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => PresentationFormBloc(appId,
                                        formAction: formAction,
 
                                                 )..add((formAction == FormAction.UpdateAction ? InitialisePresentationFormEvent(value: value) : InitialiseNewPresentationFormEvent())),

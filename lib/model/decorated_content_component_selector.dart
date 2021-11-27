@@ -35,10 +35,11 @@ class DecoratedContentComponentSelector extends ComponentSelector {
   @override
   Widget createSelectWidget(BuildContext context, double height,
       SelectComponent selected, editorConstructor) {
+    var appId = AccessBloc.currentAppId(context);
     return BlocProvider<DecoratedContentListBloc>(
           create: (context) => DecoratedContentListBloc(
             decoratedContentRepository:
-                decoratedContentRepository(appId: AccessBloc.currentAppId(context))!,
+                decoratedContentRepository(appId: appId)!,
           )..add(LoadDecoratedContentList()),
       child: SelectDecoratedContentWidget(
           height: height,

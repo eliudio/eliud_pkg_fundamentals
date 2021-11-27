@@ -35,10 +35,11 @@ class DocumentComponentSelector extends ComponentSelector {
   @override
   Widget createSelectWidget(BuildContext context, double height,
       SelectComponent selected, editorConstructor) {
+    var appId = AccessBloc.currentAppId(context);
     return BlocProvider<DocumentListBloc>(
           create: (context) => DocumentListBloc(
             documentRepository:
-                documentRepository(appId: AccessBloc.currentAppId(context))!,
+                documentRepository(appId: appId)!,
           )..add(LoadDocumentList()),
       child: SelectDocumentWidget(
           height: height,

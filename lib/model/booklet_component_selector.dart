@@ -35,10 +35,11 @@ class BookletComponentSelector extends ComponentSelector {
   @override
   Widget createSelectWidget(BuildContext context, double height,
       SelectComponent selected, editorConstructor) {
+    var appId = AccessBloc.currentAppId(context);
     return BlocProvider<BookletListBloc>(
           create: (context) => BookletListBloc(
             bookletRepository:
-                bookletRepository(appId: AccessBloc.currentAppId(context))!,
+                bookletRepository(appId: appId)!,
           )..add(LoadBookletList()),
       child: SelectBookletWidget(
           height: height,

@@ -77,7 +77,7 @@ class FaderForm extends StatelessWidget {
     var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<FaderFormBloc >(
-            create: (context) => FaderFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => FaderFormBloc(appId,
                                        formAction: formAction,
 
                                                 )..add(InitialiseFaderFormEvent(value: value)),
@@ -86,7 +86,7 @@ class FaderForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<FaderFormBloc >(
-            create: (context) => FaderFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => FaderFormBloc(appId,
                                        formAction: formAction,
 
                                                 )..add(InitialiseFaderFormNoLoadEvent(value: value)),
@@ -97,7 +97,7 @@ class FaderForm extends StatelessWidget {
       return Scaffold(
         appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update Fader' : 'Add Fader'),
         body: BlocProvider<FaderFormBloc >(
-            create: (context) => FaderFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => FaderFormBloc(appId,
                                        formAction: formAction,
 
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseFaderFormEvent(value: value) : InitialiseNewFaderFormEvent())),

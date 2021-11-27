@@ -77,7 +77,7 @@ class DecoratedContentForm extends StatelessWidget {
     var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<DecoratedContentFormBloc >(
-            create: (context) => DecoratedContentFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => DecoratedContentFormBloc(appId,
                                        formAction: formAction,
 
                                                 )..add(InitialiseDecoratedContentFormEvent(value: value)),
@@ -86,7 +86,7 @@ class DecoratedContentForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<DecoratedContentFormBloc >(
-            create: (context) => DecoratedContentFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => DecoratedContentFormBloc(appId,
                                        formAction: formAction,
 
                                                 )..add(InitialiseDecoratedContentFormNoLoadEvent(value: value)),
@@ -97,7 +97,7 @@ class DecoratedContentForm extends StatelessWidget {
       return Scaffold(
         appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update DecoratedContent' : 'Add DecoratedContent'),
         body: BlocProvider<DecoratedContentFormBloc >(
-            create: (context) => DecoratedContentFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => DecoratedContentFormBloc(appId,
                                        formAction: formAction,
 
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseDecoratedContentFormEvent(value: value) : InitialiseNewDecoratedContentFormEvent())),

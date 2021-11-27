@@ -77,7 +77,7 @@ class TutorialEntryForm extends StatelessWidget {
     var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<TutorialEntryFormBloc >(
-            create: (context) => TutorialEntryFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => TutorialEntryFormBloc(appId,
                                        
                                                 )..add(InitialiseTutorialEntryFormEvent(value: value)),
   
@@ -85,7 +85,7 @@ class TutorialEntryForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<TutorialEntryFormBloc >(
-            create: (context) => TutorialEntryFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => TutorialEntryFormBloc(appId,
                                        
                                                 )..add(InitialiseTutorialEntryFormNoLoadEvent(value: value)),
   
@@ -95,7 +95,7 @@ class TutorialEntryForm extends StatelessWidget {
       return Scaffold(
         appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update TutorialEntry' : 'Add TutorialEntry'),
         body: BlocProvider<TutorialEntryFormBloc >(
-            create: (context) => TutorialEntryFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => TutorialEntryFormBloc(appId,
                                        
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseTutorialEntryFormEvent(value: value) : InitialiseNewTutorialEntryFormEvent())),
   

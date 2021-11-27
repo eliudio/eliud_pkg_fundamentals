@@ -35,10 +35,11 @@ class PresentationComponentSelector extends ComponentSelector {
   @override
   Widget createSelectWidget(BuildContext context, double height,
       SelectComponent selected, editorConstructor) {
+    var appId = AccessBloc.currentAppId(context);
     return BlocProvider<PresentationListBloc>(
           create: (context) => PresentationListBloc(
             presentationRepository:
-                presentationRepository(appId: AccessBloc.currentAppId(context))!,
+                presentationRepository(appId: appId)!,
           )..add(LoadPresentationList()),
       child: SelectPresentationWidget(
           height: height,

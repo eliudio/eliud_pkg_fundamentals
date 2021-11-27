@@ -77,7 +77,7 @@ class SimpleImageForm extends StatelessWidget {
     var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<SimpleImageFormBloc >(
-            create: (context) => SimpleImageFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => SimpleImageFormBloc(appId,
                                        formAction: formAction,
 
                                                 )..add(InitialiseSimpleImageFormEvent(value: value)),
@@ -86,7 +86,7 @@ class SimpleImageForm extends StatelessWidget {
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<SimpleImageFormBloc >(
-            create: (context) => SimpleImageFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => SimpleImageFormBloc(appId,
                                        formAction: formAction,
 
                                                 )..add(InitialiseSimpleImageFormNoLoadEvent(value: value)),
@@ -97,7 +97,7 @@ class SimpleImageForm extends StatelessWidget {
       return Scaffold(
         appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update SimpleImage' : 'Add SimpleImage'),
         body: BlocProvider<SimpleImageFormBloc >(
-            create: (context) => SimpleImageFormBloc(AccessBloc.currentAppId(context),
+            create: (context) => SimpleImageFormBloc(appId,
                                        formAction: formAction,
 
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseSimpleImageFormEvent(value: value) : InitialiseNewSimpleImageFormEvent())),
