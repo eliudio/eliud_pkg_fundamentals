@@ -6,6 +6,7 @@ import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/component/component_constructor.dart';
+import 'package:eliud_core/tools/router_builders.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_component.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_model.dart';
@@ -57,17 +58,14 @@ class TutorialComponent extends AbstractTutorialComponent {
             image: element.image!.url!,
           ),
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (_) {
-              return FulLScreen(element.image);
-            }));
+            Navigator.push(context, pageRouteBuilder(AccessBloc.currentApp(context), page: FulLScreen(element.image)
+            ));
           },
         ));
 
         widgets.add(Center(
             child: button(context, label: 'Fullscreen', onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (_) {
-            return FulLScreen(element.image);
-          }));
+          Navigator.push(context, pageRouteBuilder(AccessBloc.currentApp(context), page: FulLScreen(element.image)));
         })));
 
         widgets.add(_aBitSpace());
