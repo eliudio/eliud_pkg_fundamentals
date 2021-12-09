@@ -27,7 +27,7 @@ class GridEntity {
   final String? title;
   final List<BodyComponentEntity>? bodyComponents;
   final String? gridViewId;
-  final ConditionsSimpleEntity? conditions;
+  final StorageConditionsEntity? conditions;
 
   GridEntity({this.appId, this.title, this.bodyComponents, this.gridViewId, this.conditions, });
 
@@ -56,7 +56,7 @@ class GridEntity {
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
     if (conditionsFromMap != null)
-      conditionsFromMap = ConditionsSimpleEntity.fromMap(conditionsFromMap);
+      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap);
 
     return GridEntity(
       appId: map['appId'], 

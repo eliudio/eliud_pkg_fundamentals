@@ -26,7 +26,7 @@ class SimpleImageEntity {
   final String? appId;
   final String? title;
   final String? imageId;
-  final ConditionsSimpleEntity? conditions;
+  final StorageConditionsEntity? conditions;
 
   SimpleImageEntity({this.appId, this.title, this.imageId, this.conditions, });
 
@@ -45,7 +45,7 @@ class SimpleImageEntity {
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
     if (conditionsFromMap != null)
-      conditionsFromMap = ConditionsSimpleEntity.fromMap(conditionsFromMap);
+      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap);
 
     return SimpleImageEntity(
       appId: map['appId'], 

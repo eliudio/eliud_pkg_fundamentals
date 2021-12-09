@@ -108,7 +108,7 @@ class ChangedSimpleTextText extends SimpleTextFormEvent {
 }
 
 class ChangedSimpleTextConditions extends SimpleTextFormEvent {
-  final ConditionsSimpleModel? value;
+  final StorageConditionsModel? value;
 
   ChangedSimpleTextConditions({this.value});
 

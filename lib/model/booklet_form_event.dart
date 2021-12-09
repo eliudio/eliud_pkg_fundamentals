@@ -108,7 +108,7 @@ class ChangedBookletSections extends BookletFormEvent {
 }
 
 class ChangedBookletConditions extends BookletFormEvent {
-  final ConditionsSimpleModel? value;
+  final StorageConditionsModel? value;
 
   ChangedBookletConditions({this.value});
 

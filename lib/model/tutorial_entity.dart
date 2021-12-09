@@ -28,7 +28,7 @@ class TutorialEntity {
   final String? title;
   final String? description;
   final List<TutorialEntryEntity>? tutorialEntries;
-  final ConditionsSimpleEntity? conditions;
+  final StorageConditionsEntity? conditions;
 
   TutorialEntity({this.appId, this.name, this.title, this.description, this.tutorialEntries, this.conditions, });
 
@@ -57,7 +57,7 @@ class TutorialEntity {
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
     if (conditionsFromMap != null)
-      conditionsFromMap = ConditionsSimpleEntity.fromMap(conditionsFromMap);
+      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap);
 
     return TutorialEntity(
       appId: map['appId'], 

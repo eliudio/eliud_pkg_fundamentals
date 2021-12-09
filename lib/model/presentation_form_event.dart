@@ -156,7 +156,7 @@ class ChangedPresentationImageWidth extends PresentationFormEvent {
 }
 
 class ChangedPresentationConditions extends PresentationFormEvent {
-  final ConditionsSimpleModel? value;
+  final StorageConditionsModel? value;
 
   ChangedPresentationConditions({this.value});
 

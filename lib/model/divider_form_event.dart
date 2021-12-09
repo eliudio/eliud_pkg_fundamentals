@@ -156,7 +156,7 @@ class ChangedDividerEndIndent extends DividerFormEvent {
 }
 
 class ChangedDividerConditions extends DividerFormEvent {
-  final ConditionsSimpleModel? value;
+  final StorageConditionsModel? value;
 
   ChangedDividerConditions({this.value});
 

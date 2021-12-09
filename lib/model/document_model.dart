@@ -63,13 +63,13 @@ class DocumentModel {
   double? padding;
   List<DocumentItemModel>? images;
   BackgroundModel? background;
-  ConditionsSimpleModel? conditions;
+  StorageConditionsModel? conditions;
 
   DocumentModel({this.documentID, this.appId, this.name, this.documentRenderer, this.content, this.padding, this.images, this.background, this.conditions, })  {
     assert(documentID != null);
   }
 
-  DocumentModel copyWith({String? documentID, String? appId, String? name, DocumentRenderer? documentRenderer, String? content, double? padding, List<DocumentItemModel>? images, BackgroundModel? background, ConditionsSimpleModel? conditions, }) {
+  DocumentModel copyWith({String? documentID, String? appId, String? name, DocumentRenderer? documentRenderer, String? content, double? padding, List<DocumentItemModel>? images, BackgroundModel? background, StorageConditionsModel? conditions, }) {
     return DocumentModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, name: name ?? this.name, documentRenderer: documentRenderer ?? this.documentRenderer, content: content ?? this.content, padding: padding ?? this.padding, images: images ?? this.images, background: background ?? this.background, conditions: conditions ?? this.conditions, );
   }
 
@@ -132,7 +132,7 @@ class DocumentModel {
             })
             .toList(), 
           conditions: 
-            ConditionsSimpleModel.fromEntity(entity.conditions), 
+            StorageConditionsModel.fromEntity(entity.conditions), 
     );
   }
 
@@ -166,7 +166,7 @@ class DocumentModel {
             .toList())), 
           background: backgroundHolder, 
           conditions: 
-            await ConditionsSimpleModel.fromEntityPlus(entity.conditions, appId: appId), 
+            await StorageConditionsModel.fromEntityPlus(entity.conditions, appId: appId), 
     );
   }
 

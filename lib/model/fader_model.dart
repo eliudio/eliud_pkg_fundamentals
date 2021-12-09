@@ -47,13 +47,13 @@ class FaderModel {
   // The time to display 1 image
   int? imageSeconds;
   List<ListedItemModel>? items;
-  ConditionsSimpleModel? conditions;
+  StorageConditionsModel? conditions;
 
   FaderModel({this.documentID, this.appId, this.name, this.animationMilliseconds, this.imageSeconds, this.items, this.conditions, })  {
     assert(documentID != null);
   }
 
-  FaderModel copyWith({String? documentID, String? appId, String? name, int? animationMilliseconds, int? imageSeconds, List<ListedItemModel>? items, ConditionsSimpleModel? conditions, }) {
+  FaderModel copyWith({String? documentID, String? appId, String? name, int? animationMilliseconds, int? imageSeconds, List<ListedItemModel>? items, StorageConditionsModel? conditions, }) {
     return FaderModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, name: name ?? this.name, animationMilliseconds: animationMilliseconds ?? this.animationMilliseconds, imageSeconds: imageSeconds ?? this.imageSeconds, items: items ?? this.items, conditions: conditions ?? this.conditions, );
   }
 
@@ -111,7 +111,7 @@ class FaderModel {
             })
             .toList(), 
           conditions: 
-            ConditionsSimpleModel.fromEntity(entity.conditions), 
+            StorageConditionsModel.fromEntity(entity.conditions), 
     );
   }
 
@@ -132,7 +132,7 @@ class FaderModel {
             return ListedItemModel.fromEntityPlus(counter.toString(), item, appId: appId);})
             .toList())), 
           conditions: 
-            await ConditionsSimpleModel.fromEntityPlus(entity.conditions, appId: appId), 
+            await StorageConditionsModel.fromEntityPlus(entity.conditions, appId: appId), 
     );
   }
 

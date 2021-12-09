@@ -26,7 +26,7 @@ class SimpleTextEntity {
   final String? appId;
   final String? title;
   final String? text;
-  final ConditionsSimpleEntity? conditions;
+  final StorageConditionsEntity? conditions;
   final int? textAlign;
 
   SimpleTextEntity({this.appId, this.title, this.text, this.conditions, this.textAlign, });
@@ -46,7 +46,7 @@ class SimpleTextEntity {
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
     if (conditionsFromMap != null)
-      conditionsFromMap = ConditionsSimpleEntity.fromMap(conditionsFromMap);
+      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap);
 
     return SimpleTextEntity(
       appId: map['appId'], 

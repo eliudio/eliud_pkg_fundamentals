@@ -43,13 +43,13 @@ class TutorialModel {
   String? title;
   String? description;
   List<TutorialEntryModel>? tutorialEntries;
-  ConditionsSimpleModel? conditions;
+  StorageConditionsModel? conditions;
 
   TutorialModel({this.documentID, this.appId, this.name, this.title, this.description, this.tutorialEntries, this.conditions, })  {
     assert(documentID != null);
   }
 
-  TutorialModel copyWith({String? documentID, String? appId, String? name, String? title, String? description, List<TutorialEntryModel>? tutorialEntries, ConditionsSimpleModel? conditions, }) {
+  TutorialModel copyWith({String? documentID, String? appId, String? name, String? title, String? description, List<TutorialEntryModel>? tutorialEntries, StorageConditionsModel? conditions, }) {
     return TutorialModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, name: name ?? this.name, title: title ?? this.title, description: description ?? this.description, tutorialEntries: tutorialEntries ?? this.tutorialEntries, conditions: conditions ?? this.conditions, );
   }
 
@@ -107,7 +107,7 @@ class TutorialModel {
             })
             .toList(), 
           conditions: 
-            ConditionsSimpleModel.fromEntity(entity.conditions), 
+            StorageConditionsModel.fromEntity(entity.conditions), 
     );
   }
 
@@ -128,7 +128,7 @@ class TutorialModel {
             return TutorialEntryModel.fromEntityPlus(counter.toString(), item, appId: appId);})
             .toList())), 
           conditions: 
-            await ConditionsSimpleModel.fromEntityPlus(entity.conditions, appId: appId), 
+            await StorageConditionsModel.fromEntityPlus(entity.conditions, appId: appId), 
     );
   }
 

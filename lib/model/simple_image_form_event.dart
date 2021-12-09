@@ -108,7 +108,7 @@ class ChangedSimpleImageImage extends SimpleImageFormEvent {
 }
 
 class ChangedSimpleImageConditions extends SimpleImageFormEvent {
-  final ConditionsSimpleModel? value;
+  final StorageConditionsModel? value;
 
   ChangedSimpleImageConditions({this.value});
 

@@ -41,13 +41,13 @@ class BookletModel {
   String? appId;
   String? name;
   List<SectionModel>? sections;
-  ConditionsSimpleModel? conditions;
+  StorageConditionsModel? conditions;
 
   BookletModel({this.documentID, this.appId, this.name, this.sections, this.conditions, })  {
     assert(documentID != null);
   }
 
-  BookletModel copyWith({String? documentID, String? appId, String? name, List<SectionModel>? sections, ConditionsSimpleModel? conditions, }) {
+  BookletModel copyWith({String? documentID, String? appId, String? name, List<SectionModel>? sections, StorageConditionsModel? conditions, }) {
     return BookletModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, name: name ?? this.name, sections: sections ?? this.sections, conditions: conditions ?? this.conditions, );
   }
 
@@ -99,7 +99,7 @@ class BookletModel {
             })
             .toList(), 
           conditions: 
-            ConditionsSimpleModel.fromEntity(entity.conditions), 
+            StorageConditionsModel.fromEntity(entity.conditions), 
     );
   }
 
@@ -118,7 +118,7 @@ class BookletModel {
             return SectionModel.fromEntityPlus(counter.toString(), item, appId: appId);})
             .toList())), 
           conditions: 
-            await ConditionsSimpleModel.fromEntityPlus(entity.conditions, appId: appId), 
+            await StorageConditionsModel.fromEntityPlus(entity.conditions, appId: appId), 
     );
   }
 

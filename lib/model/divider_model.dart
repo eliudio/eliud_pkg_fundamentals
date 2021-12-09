@@ -52,13 +52,13 @@ class DividerModel {
 
   // The amount of empty space to the trailing edge of the divider.
   double? endIndent;
-  ConditionsSimpleModel? conditions;
+  StorageConditionsModel? conditions;
 
   DividerModel({this.documentID, this.appId, this.name, this.color, this.height, this.thickness, this.indent, this.endIndent, this.conditions, })  {
     assert(documentID != null);
   }
 
-  DividerModel copyWith({String? documentID, String? appId, String? name, RgbModel? color, double? height, double? thickness, double? indent, double? endIndent, ConditionsSimpleModel? conditions, }) {
+  DividerModel copyWith({String? documentID, String? appId, String? name, RgbModel? color, double? height, double? thickness, double? indent, double? endIndent, StorageConditionsModel? conditions, }) {
     return DividerModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, name: name ?? this.name, color: color ?? this.color, height: height ?? this.height, thickness: thickness ?? this.thickness, indent: indent ?? this.indent, endIndent: endIndent ?? this.endIndent, conditions: conditions ?? this.conditions, );
   }
 
@@ -112,7 +112,7 @@ class DividerModel {
           indent: entity.indent, 
           endIndent: entity.endIndent, 
           conditions: 
-            ConditionsSimpleModel.fromEntity(entity.conditions), 
+            StorageConditionsModel.fromEntity(entity.conditions), 
     );
   }
 
@@ -131,7 +131,7 @@ class DividerModel {
           indent: entity.indent, 
           endIndent: entity.endIndent, 
           conditions: 
-            await ConditionsSimpleModel.fromEntityPlus(entity.conditions, appId: appId), 
+            await StorageConditionsModel.fromEntityPlus(entity.conditions, appId: appId), 
     );
   }
 

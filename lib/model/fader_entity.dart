@@ -28,7 +28,7 @@ class FaderEntity {
   final int? animationMilliseconds;
   final int? imageSeconds;
   final List<ListedItemEntity>? items;
-  final ConditionsSimpleEntity? conditions;
+  final StorageConditionsEntity? conditions;
 
   FaderEntity({this.appId, this.name, this.animationMilliseconds, this.imageSeconds, this.items, this.conditions, });
 
@@ -57,7 +57,7 @@ class FaderEntity {
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
     if (conditionsFromMap != null)
-      conditionsFromMap = ConditionsSimpleEntity.fromMap(conditionsFromMap);
+      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap);
 
     return FaderEntity(
       appId: map['appId'], 

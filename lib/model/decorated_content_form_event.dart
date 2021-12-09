@@ -168,7 +168,7 @@ class ChangedDecoratedContentPercentageDecorationVisible extends DecoratedConten
 }
 
 class ChangedDecoratedContentConditions extends DecoratedContentFormEvent {
-  final ConditionsSimpleModel? value;
+  final StorageConditionsModel? value;
 
   ChangedDecoratedContentConditions({this.value});
 

@@ -56,14 +56,14 @@ class SimpleTextModel {
   String? appId;
   String? title;
   String? text;
-  ConditionsSimpleModel? conditions;
+  StorageConditionsModel? conditions;
   SimpleTextAlign? textAlign;
 
   SimpleTextModel({this.documentID, this.appId, this.title, this.text, this.conditions, this.textAlign, })  {
     assert(documentID != null);
   }
 
-  SimpleTextModel copyWith({String? documentID, String? appId, String? title, String? text, ConditionsSimpleModel? conditions, SimpleTextAlign? textAlign, }) {
+  SimpleTextModel copyWith({String? documentID, String? appId, String? title, String? text, StorageConditionsModel? conditions, SimpleTextAlign? textAlign, }) {
     return SimpleTextModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, title: title ?? this.title, text: text ?? this.text, conditions: conditions ?? this.conditions, textAlign: textAlign ?? this.textAlign, );
   }
 
@@ -106,7 +106,7 @@ class SimpleTextModel {
           title: entity.title, 
           text: entity.text, 
           conditions: 
-            ConditionsSimpleModel.fromEntity(entity.conditions), 
+            StorageConditionsModel.fromEntity(entity.conditions), 
           textAlign: toSimpleTextAlign(entity.textAlign), 
     );
   }
@@ -121,7 +121,7 @@ class SimpleTextModel {
           title: entity.title, 
           text: entity.text, 
           conditions: 
-            await ConditionsSimpleModel.fromEntityPlus(entity.conditions, appId: appId), 
+            await StorageConditionsModel.fromEntityPlus(entity.conditions, appId: appId), 
           textAlign: toSimpleTextAlign(entity.textAlign), 
     );
   }

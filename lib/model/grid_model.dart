@@ -44,13 +44,13 @@ class GridModel {
 
   // Specific gridview
   GridViewModel? gridView;
-  ConditionsSimpleModel? conditions;
+  StorageConditionsModel? conditions;
 
   GridModel({this.documentID, this.appId, this.title, this.bodyComponents, this.gridView, this.conditions, })  {
     assert(documentID != null);
   }
 
-  GridModel copyWith({String? documentID, String? appId, String? title, List<BodyComponentModel>? bodyComponents, GridViewModel? gridView, ConditionsSimpleModel? conditions, }) {
+  GridModel copyWith({String? documentID, String? appId, String? title, List<BodyComponentModel>? bodyComponents, GridViewModel? gridView, StorageConditionsModel? conditions, }) {
     return GridModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, title: title ?? this.title, bodyComponents: bodyComponents ?? this.bodyComponents, gridView: gridView ?? this.gridView, conditions: conditions ?? this.conditions, );
   }
 
@@ -104,7 +104,7 @@ class GridModel {
             })
             .toList(), 
           conditions: 
-            ConditionsSimpleModel.fromEntity(entity.conditions), 
+            StorageConditionsModel.fromEntity(entity.conditions), 
     );
   }
 
@@ -135,7 +135,7 @@ class GridModel {
             .toList())), 
           gridView: gridViewHolder, 
           conditions: 
-            await ConditionsSimpleModel.fromEntityPlus(entity.conditions, appId: appId), 
+            await StorageConditionsModel.fromEntityPlus(entity.conditions, appId: appId), 
     );
   }
 

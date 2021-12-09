@@ -26,7 +26,7 @@ class BookletEntity {
   final String? appId;
   final String? name;
   final List<SectionEntity>? sections;
-  final ConditionsSimpleEntity? conditions;
+  final StorageConditionsEntity? conditions;
 
   BookletEntity({this.appId, this.name, this.sections, this.conditions, });
 
@@ -55,7 +55,7 @@ class BookletEntity {
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
     if (conditionsFromMap != null)
-      conditionsFromMap = ConditionsSimpleEntity.fromMap(conditionsFromMap);
+      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap);
 
     return BookletEntity(
       appId: map['appId'], 

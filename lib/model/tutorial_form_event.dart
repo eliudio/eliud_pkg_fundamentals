@@ -132,7 +132,7 @@ class ChangedTutorialTutorialEntries extends TutorialFormEvent {
 }
 
 class ChangedTutorialConditions extends TutorialFormEvent {
-  final ConditionsSimpleModel? value;
+  final StorageConditionsModel? value;
 
   ChangedTutorialConditions({this.value});
 

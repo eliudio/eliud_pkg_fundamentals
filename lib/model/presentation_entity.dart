@@ -30,7 +30,7 @@ class PresentationEntity {
   final int? imagePositionRelative;
   final int? imageAlignment;
   final double? imageWidth;
-  final ConditionsSimpleEntity? conditions;
+  final StorageConditionsEntity? conditions;
 
   PresentationEntity({this.appId, this.title, this.bodyComponents, this.imageId, this.imagePositionRelative, this.imageAlignment, this.imageWidth, this.conditions, });
 
@@ -59,7 +59,7 @@ class PresentationEntity {
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
     if (conditionsFromMap != null)
-      conditionsFromMap = ConditionsSimpleEntity.fromMap(conditionsFromMap);
+      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap);
 
     return PresentationEntity(
       appId: map['appId'], 

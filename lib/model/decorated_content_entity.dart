@@ -31,7 +31,7 @@ class DecoratedContentEntity {
   final String? contentComponentId;
   final int? decorationComponentPosition;
   final double? percentageDecorationVisible;
-  final ConditionsSimpleEntity? conditions;
+  final StorageConditionsEntity? conditions;
 
   DecoratedContentEntity({this.appId, this.name, this.decoratingComponentName, this.decoratingComponentId, this.contentComponentName, this.contentComponentId, this.decorationComponentPosition, this.percentageDecorationVisible, this.conditions, });
 
@@ -50,7 +50,7 @@ class DecoratedContentEntity {
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
     if (conditionsFromMap != null)
-      conditionsFromMap = ConditionsSimpleEntity.fromMap(conditionsFromMap);
+      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap);
 
     return DecoratedContentEntity(
       appId: map['appId'], 

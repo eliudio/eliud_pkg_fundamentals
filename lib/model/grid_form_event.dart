@@ -120,7 +120,7 @@ class ChangedGridGridView extends GridFormEvent {
 }
 
 class ChangedGridConditions extends GridFormEvent {
-  final ConditionsSimpleModel? value;
+  final StorageConditionsModel? value;
 
   ChangedGridConditions({this.value});
 

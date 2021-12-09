@@ -30,7 +30,7 @@ class DividerEntity {
   final double? thickness;
   final double? indent;
   final double? endIndent;
-  final ConditionsSimpleEntity? conditions;
+  final StorageConditionsEntity? conditions;
 
   DividerEntity({this.appId, this.name, this.color, this.height, this.thickness, this.indent, this.endIndent, this.conditions, });
 
@@ -53,7 +53,7 @@ class DividerEntity {
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
     if (conditionsFromMap != null)
-      conditionsFromMap = ConditionsSimpleEntity.fromMap(conditionsFromMap);
+      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap);
 
     return DividerEntity(
       appId: map['appId'], 

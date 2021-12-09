@@ -30,7 +30,7 @@ class DocumentEntity {
   final double? padding;
   final List<DocumentItemEntity>? images;
   final String? backgroundId;
-  final ConditionsSimpleEntity? conditions;
+  final StorageConditionsEntity? conditions;
 
   DocumentEntity({this.appId, this.name, this.documentRenderer, this.content, this.padding, this.images, this.backgroundId, this.conditions, });
 
@@ -59,7 +59,7 @@ class DocumentEntity {
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
     if (conditionsFromMap != null)
-      conditionsFromMap = ConditionsSimpleEntity.fromMap(conditionsFromMap);
+      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap);
 
     return DocumentEntity(
       appId: map['appId'], 

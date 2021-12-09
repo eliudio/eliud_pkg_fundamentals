@@ -40,13 +40,13 @@ class SimpleImageModel {
   String? appId;
   String? title;
   PlatformMediumModel? image;
-  ConditionsSimpleModel? conditions;
+  StorageConditionsModel? conditions;
 
   SimpleImageModel({this.documentID, this.appId, this.title, this.image, this.conditions, })  {
     assert(documentID != null);
   }
 
-  SimpleImageModel copyWith({String? documentID, String? appId, String? title, PlatformMediumModel? image, ConditionsSimpleModel? conditions, }) {
+  SimpleImageModel copyWith({String? documentID, String? appId, String? title, PlatformMediumModel? image, StorageConditionsModel? conditions, }) {
     return SimpleImageModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, title: title ?? this.title, image: image ?? this.image, conditions: conditions ?? this.conditions, );
   }
 
@@ -86,7 +86,7 @@ class SimpleImageModel {
           appId: entity.appId, 
           title: entity.title, 
           conditions: 
-            ConditionsSimpleModel.fromEntity(entity.conditions), 
+            StorageConditionsModel.fromEntity(entity.conditions), 
     );
   }
 
@@ -111,7 +111,7 @@ class SimpleImageModel {
           title: entity.title, 
           image: imageHolder, 
           conditions: 
-            await ConditionsSimpleModel.fromEntityPlus(entity.conditions, appId: appId), 
+            await StorageConditionsModel.fromEntityPlus(entity.conditions, appId: appId), 
     );
   }
 

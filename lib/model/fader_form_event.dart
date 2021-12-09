@@ -132,7 +132,7 @@ class ChangedFaderItems extends FaderFormEvent {
 }
 
 class ChangedFaderConditions extends FaderFormEvent {
-  final ConditionsSimpleModel? value;
+  final StorageConditionsModel? value;
 
   ChangedFaderConditions({this.value});
 

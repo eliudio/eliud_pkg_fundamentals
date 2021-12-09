@@ -156,7 +156,7 @@ class ChangedDocumentBackground extends DocumentFormEvent {
 }
 
 class ChangedDocumentConditions extends DocumentFormEvent {
-  final ConditionsSimpleModel? value;
+  final StorageConditionsModel? value;
 
   ChangedDocumentConditions({this.value});
 

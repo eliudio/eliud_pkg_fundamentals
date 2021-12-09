@@ -69,13 +69,13 @@ class DecoratedContentModel {
   String? contentComponentId;
   DecorationComponentPosition? decorationComponentPosition;
   double? percentageDecorationVisible;
-  ConditionsSimpleModel? conditions;
+  StorageConditionsModel? conditions;
 
   DecoratedContentModel({this.documentID, this.appId, this.name, this.decoratingComponentName, this.decoratingComponentId, this.contentComponentName, this.contentComponentId, this.decorationComponentPosition, this.percentageDecorationVisible, this.conditions, })  {
     assert(documentID != null);
   }
 
-  DecoratedContentModel copyWith({String? documentID, String? appId, String? name, String? decoratingComponentName, String? decoratingComponentId, String? contentComponentName, String? contentComponentId, DecorationComponentPosition? decorationComponentPosition, double? percentageDecorationVisible, ConditionsSimpleModel? conditions, }) {
+  DecoratedContentModel copyWith({String? documentID, String? appId, String? name, String? decoratingComponentName, String? decoratingComponentId, String? contentComponentName, String? contentComponentId, DecorationComponentPosition? decorationComponentPosition, double? percentageDecorationVisible, StorageConditionsModel? conditions, }) {
     return DecoratedContentModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, name: name ?? this.name, decoratingComponentName: decoratingComponentName ?? this.decoratingComponentName, decoratingComponentId: decoratingComponentId ?? this.decoratingComponentId, contentComponentName: contentComponentName ?? this.contentComponentName, contentComponentId: contentComponentId ?? this.contentComponentId, decorationComponentPosition: decorationComponentPosition ?? this.decorationComponentPosition, percentageDecorationVisible: percentageDecorationVisible ?? this.percentageDecorationVisible, conditions: conditions ?? this.conditions, );
   }
 
@@ -131,7 +131,7 @@ class DecoratedContentModel {
           decorationComponentPosition: toDecorationComponentPosition(entity.decorationComponentPosition), 
           percentageDecorationVisible: entity.percentageDecorationVisible, 
           conditions: 
-            ConditionsSimpleModel.fromEntity(entity.conditions), 
+            StorageConditionsModel.fromEntity(entity.conditions), 
     );
   }
 
@@ -150,7 +150,7 @@ class DecoratedContentModel {
           decorationComponentPosition: toDecorationComponentPosition(entity.decorationComponentPosition), 
           percentageDecorationVisible: entity.percentageDecorationVisible, 
           conditions: 
-            await ConditionsSimpleModel.fromEntityPlus(entity.conditions, appId: appId), 
+            await StorageConditionsModel.fromEntityPlus(entity.conditions, appId: appId), 
     );
   }
 

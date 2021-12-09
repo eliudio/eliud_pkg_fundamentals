@@ -75,13 +75,13 @@ class PresentationModel {
 
   // Width of the image
   double? imageWidth;
-  ConditionsSimpleModel? conditions;
+  StorageConditionsModel? conditions;
 
   PresentationModel({this.documentID, this.appId, this.title, this.bodyComponents, this.image, this.imagePositionRelative, this.imageAlignment, this.imageWidth, this.conditions, })  {
     assert(documentID != null);
   }
 
-  PresentationModel copyWith({String? documentID, String? appId, String? title, List<BodyComponentModel>? bodyComponents, PlatformMediumModel? image, PresentationRelativeImagePosition? imagePositionRelative, PresentationImageAlignment? imageAlignment, double? imageWidth, ConditionsSimpleModel? conditions, }) {
+  PresentationModel copyWith({String? documentID, String? appId, String? title, List<BodyComponentModel>? bodyComponents, PlatformMediumModel? image, PresentationRelativeImagePosition? imagePositionRelative, PresentationImageAlignment? imageAlignment, double? imageWidth, StorageConditionsModel? conditions, }) {
     return PresentationModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, title: title ?? this.title, bodyComponents: bodyComponents ?? this.bodyComponents, image: image ?? this.image, imagePositionRelative: imagePositionRelative ?? this.imagePositionRelative, imageAlignment: imageAlignment ?? this.imageAlignment, imageWidth: imageWidth ?? this.imageWidth, conditions: conditions ?? this.conditions, );
   }
 
@@ -144,7 +144,7 @@ class PresentationModel {
           imageAlignment: toPresentationImageAlignment(entity.imageAlignment), 
           imageWidth: entity.imageWidth, 
           conditions: 
-            ConditionsSimpleModel.fromEntity(entity.conditions), 
+            StorageConditionsModel.fromEntity(entity.conditions), 
     );
   }
 
@@ -178,7 +178,7 @@ class PresentationModel {
           imageAlignment: toPresentationImageAlignment(entity.imageAlignment), 
           imageWidth: entity.imageWidth, 
           conditions: 
-            await ConditionsSimpleModel.fromEntityPlus(entity.conditions, appId: appId), 
+            await StorageConditionsModel.fromEntityPlus(entity.conditions, appId: appId), 
     );
   }
 
