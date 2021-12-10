@@ -153,7 +153,7 @@ class DocumentTextFieldFullScreenState
             body: TabBarView(
               children: <Widget>[
                 TextFormField(
-                  readOnly: !accessState.memberIsOwner(accessState.currentAppId(context)),
+                  readOnly: !accessState.memberIsOwner(accessState.currentApp.documentID!),
                   style: TextStyle(color: Colors.black),
                   initialValue: value,
                   decoration: InputDecoration(

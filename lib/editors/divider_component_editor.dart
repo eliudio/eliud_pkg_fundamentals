@@ -84,7 +84,7 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
           HeaderWidget(
             title: 'Divider',
             okAction: () async {
-              var appId = accessState.currentAppId(context);
+              var appId = accessState.currentApp.documentID!;
               if (widget.create) {
                 var existingModel = await dividerRepository(appId: appId)!
                     .get(widget.model.documentID);
