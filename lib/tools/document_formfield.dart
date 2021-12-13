@@ -164,7 +164,6 @@ class DocumentTextFieldFullScreenState
                   onChanged: _onChanged,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
-                  autovalidate: true,
                 ),
                 _document(accessState.getMember())
               ],
