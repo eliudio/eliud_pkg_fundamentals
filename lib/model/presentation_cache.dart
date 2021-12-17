@@ -123,7 +123,12 @@ class PresentationCache implements PresentationRepository {
 
   @override
   StreamSubscription<PresentationModel?> listenTo(String documentId, PresentationChanged changed) {
-    return reference.listenTo(documentId, changed);
+    return reference.listenTo(documentId, ((value) {
+      if (value != null) {
+        fullCache[value.documentID] = value;
+      }
+      changed(value);
+    }));
   }
 
   static Future<PresentationModel> refreshRelations(PresentationModel model) async {

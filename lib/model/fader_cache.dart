@@ -123,7 +123,12 @@ class FaderCache implements FaderRepository {
 
   @override
   StreamSubscription<FaderModel?> listenTo(String documentId, FaderChanged changed) {
-    return reference.listenTo(documentId, changed);
+    return reference.listenTo(documentId, ((value) {
+      if (value != null) {
+        fullCache[value.documentID] = value;
+      }
+      changed(value);
+    }));
   }
 
   static Future<FaderModel> refreshRelations(FaderModel model) async {

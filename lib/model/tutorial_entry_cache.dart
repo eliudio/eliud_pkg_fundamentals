@@ -123,7 +123,12 @@ class TutorialEntryCache implements TutorialEntryRepository {
 
   @override
   StreamSubscription<TutorialEntryModel?> listenTo(String documentId, TutorialEntryChanged changed) {
-    return reference.listenTo(documentId, changed);
+    return reference.listenTo(documentId, ((value) {
+      if (value != null) {
+        fullCache[value.documentID] = value;
+      }
+      changed(value);
+    }));
   }
 
   static Future<TutorialEntryModel> refreshRelations(TutorialEntryModel model) async {

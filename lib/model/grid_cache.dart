@@ -123,7 +123,12 @@ class GridCache implements GridRepository {
 
   @override
   StreamSubscription<GridModel?> listenTo(String documentId, GridChanged changed) {
-    return reference.listenTo(documentId, changed);
+    return reference.listenTo(documentId, ((value) {
+      if (value != null) {
+        fullCache[value.documentID] = value;
+      }
+      changed(value);
+    }));
   }
 
   static Future<GridModel> refreshRelations(GridModel model) async {

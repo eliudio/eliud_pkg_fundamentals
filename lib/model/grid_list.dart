@@ -155,7 +155,7 @@ class GridListWidgetState extends State<GridListWidget> {
               BlocProvider.of<GridListBloc>(context)
                   .add(DeleteGridList(value: value));
               Scaffold.of(context).showSnackBar(DeleteSnackBar(
-                message: "Grid " + value.documentID,
+                message: "Grid " + value.,
                 onUndo: () => BlocProvider.of<GridListBloc>(context)
                     .add(AddGridList(value: value)),
               ));
@@ -168,7 +168,7 @@ class GridListWidgetState extends State<GridListWidget> {
                       if (removedItem != null) {
                         Scaffold.of(context).showSnackBar(
                           DeleteSnackBar(
-                        message: "Grid " + value.documentID,
+                        message: "Grid " + value.,
                             onUndo: () => BlocProvider.of<GridListBloc>(context)
                                 .add(AddGridList(value: value)),
                           ),

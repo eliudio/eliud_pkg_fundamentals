@@ -123,7 +123,12 @@ class DocumentCache implements DocumentRepository {
 
   @override
   StreamSubscription<DocumentModel?> listenTo(String documentId, DocumentChanged changed) {
-    return reference.listenTo(documentId, changed);
+    return reference.listenTo(documentId, ((value) {
+      if (value != null) {
+        fullCache[value.documentID] = value;
+      }
+      changed(value);
+    }));
   }
 
   static Future<DocumentModel> refreshRelations(DocumentModel model) async {

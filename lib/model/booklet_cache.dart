@@ -123,7 +123,12 @@ class BookletCache implements BookletRepository {
 
   @override
   StreamSubscription<BookletModel?> listenTo(String documentId, BookletChanged changed) {
-    return reference.listenTo(documentId, changed);
+    return reference.listenTo(documentId, ((value) {
+      if (value != null) {
+        fullCache[value.documentID] = value;
+      }
+      changed(value);
+    }));
   }
 
   static Future<BookletModel> refreshRelations(BookletModel model) async {

@@ -155,7 +155,7 @@ class BookletListWidgetState extends State<BookletListWidget> {
               BlocProvider.of<BookletListBloc>(context)
                   .add(DeleteBookletList(value: value));
               Scaffold.of(context).showSnackBar(DeleteSnackBar(
-                message: "Booklet " + value.documentID,
+                message: "Booklet " + value.,
                 onUndo: () => BlocProvider.of<BookletListBloc>(context)
                     .add(AddBookletList(value: value)),
               ));
@@ -168,7 +168,7 @@ class BookletListWidgetState extends State<BookletListWidget> {
                       if (removedItem != null) {
                         Scaffold.of(context).showSnackBar(
                           DeleteSnackBar(
-                        message: "Booklet " + value.documentID,
+                        message: "Booklet " + value.,
                             onUndo: () => BlocProvider.of<BookletListBloc>(context)
                                 .add(AddBookletList(value: value)),
                           ),

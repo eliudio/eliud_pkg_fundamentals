@@ -155,7 +155,7 @@ class DocumentListWidgetState extends State<DocumentListWidget> {
               BlocProvider.of<DocumentListBloc>(context)
                   .add(DeleteDocumentList(value: value));
               Scaffold.of(context).showSnackBar(DeleteSnackBar(
-                message: "Document " + value.documentID,
+                message: "Document " + value.,
                 onUndo: () => BlocProvider.of<DocumentListBloc>(context)
                     .add(AddDocumentList(value: value)),
               ));
@@ -168,7 +168,7 @@ class DocumentListWidgetState extends State<DocumentListWidget> {
                       if (removedItem != null) {
                         Scaffold.of(context).showSnackBar(
                           DeleteSnackBar(
-                        message: "Document " + value.documentID,
+                        message: "Document " + value.,
                             onUndo: () => BlocProvider.of<DocumentListBloc>(context)
                                 .add(AddDocumentList(value: value)),
                           ),
