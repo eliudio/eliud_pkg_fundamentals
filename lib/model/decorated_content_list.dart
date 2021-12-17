@@ -155,7 +155,7 @@ class DecoratedContentListWidgetState extends State<DecoratedContentListWidget> 
               BlocProvider.of<DecoratedContentListBloc>(context)
                   .add(DeleteDecoratedContentList(value: value));
               Scaffold.of(context).showSnackBar(DeleteSnackBar(
-                message: "DecoratedContent " + value.,
+                message: "DecoratedContent " + value.documentID,
                 onUndo: () => BlocProvider.of<DecoratedContentListBloc>(context)
                     .add(AddDecoratedContentList(value: value)),
               ));
@@ -168,7 +168,7 @@ class DecoratedContentListWidgetState extends State<DecoratedContentListWidget> 
                       if (removedItem != null) {
                         Scaffold.of(context).showSnackBar(
                           DeleteSnackBar(
-                        message: "DecoratedContent " + value.,
+                        message: "DecoratedContent " + value.documentID,
                             onUndo: () => BlocProvider.of<DecoratedContentListBloc>(context)
                                 .add(AddDecoratedContentList(value: value)),
                           ),

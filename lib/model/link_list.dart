@@ -155,7 +155,7 @@ class LinkListWidgetState extends State<LinkListWidget> {
               BlocProvider.of<LinkListBloc>(context)
                   .add(DeleteLinkList(value: value));
               Scaffold.of(context).showSnackBar(DeleteSnackBar(
-                message: "Link " + value.,
+                message: "Link " + value.documentID,
                 onUndo: () => BlocProvider.of<LinkListBloc>(context)
                     .add(AddLinkList(value: value)),
               ));
@@ -168,7 +168,7 @@ class LinkListWidgetState extends State<LinkListWidget> {
                       if (removedItem != null) {
                         Scaffold.of(context).showSnackBar(
                           DeleteSnackBar(
-                        message: "Link " + value.,
+                        message: "Link " + value.documentID,
                             onUndo: () => BlocProvider.of<LinkListBloc>(context)
                                 .add(AddLinkList(value: value)),
                           ),
@@ -214,7 +214,6 @@ class LinkListItem extends StatelessWidget {
       child: ListTile(
         onTap: onTap,
         title: value.linkText != null ? Center(child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().textStyle().text(context, value.linkText!)) : Container(),
-        subtitle: ,
       ),
     );
   }

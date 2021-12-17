@@ -155,7 +155,7 @@ class ListedItemListWidgetState extends State<ListedItemListWidget> {
               BlocProvider.of<ListedItemListBloc>(context)
                   .add(DeleteListedItemList(value: value));
               Scaffold.of(context).showSnackBar(DeleteSnackBar(
-                message: "ListedItem " + value.,
+                message: "ListedItem " + value.documentID,
                 onUndo: () => BlocProvider.of<ListedItemListBloc>(context)
                     .add(AddListedItemList(value: value)),
               ));
@@ -168,7 +168,7 @@ class ListedItemListWidgetState extends State<ListedItemListWidget> {
                       if (removedItem != null) {
                         Scaffold.of(context).showSnackBar(
                           DeleteSnackBar(
-                        message: "ListedItem " + value.,
+                        message: "ListedItem " + value.documentID,
                             onUndo: () => BlocProvider.of<ListedItemListBloc>(context)
                                 .add(AddListedItemList(value: value)),
                           ),
@@ -214,7 +214,6 @@ class ListedItemListItem extends StatelessWidget {
       child: ListTile(
         onTap: onTap,
         title: value.description != null ? Center(child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().textStyle().text(context, value.description!)) : Container(),
-        subtitle: ,
       ),
     );
   }

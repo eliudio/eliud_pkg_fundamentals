@@ -155,7 +155,7 @@ class DividerListWidgetState extends State<DividerListWidget> {
               BlocProvider.of<DividerListBloc>(context)
                   .add(DeleteDividerList(value: value));
               Scaffold.of(context).showSnackBar(DeleteSnackBar(
-                message: "Divider " + value.,
+                message: "Divider " + value.documentID,
                 onUndo: () => BlocProvider.of<DividerListBloc>(context)
                     .add(AddDividerList(value: value)),
               ));
@@ -168,7 +168,7 @@ class DividerListWidgetState extends State<DividerListWidget> {
                       if (removedItem != null) {
                         Scaffold.of(context).showSnackBar(
                           DeleteSnackBar(
-                        message: "Divider " + value.,
+                        message: "Divider " + value.documentID,
                             onUndo: () => BlocProvider.of<DividerListBloc>(context)
                                 .add(AddDividerList(value: value)),
                           ),

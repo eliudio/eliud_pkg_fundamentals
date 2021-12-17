@@ -155,7 +155,7 @@ class TutorialEntryListWidgetState extends State<TutorialEntryListWidget> {
               BlocProvider.of<TutorialEntryListBloc>(context)
                   .add(DeleteTutorialEntryList(value: value));
               Scaffold.of(context).showSnackBar(DeleteSnackBar(
-                message: "TutorialEntry " + value.,
+                message: "TutorialEntry " + value.documentID,
                 onUndo: () => BlocProvider.of<TutorialEntryListBloc>(context)
                     .add(AddTutorialEntryList(value: value)),
               ));
@@ -168,7 +168,7 @@ class TutorialEntryListWidgetState extends State<TutorialEntryListWidget> {
                       if (removedItem != null) {
                         Scaffold.of(context).showSnackBar(
                           DeleteSnackBar(
-                        message: "TutorialEntry " + value.,
+                        message: "TutorialEntry " + value.documentID,
                             onUndo: () => BlocProvider.of<TutorialEntryListBloc>(context)
                                 .add(AddTutorialEntryList(value: value)),
                           ),
@@ -214,7 +214,6 @@ class TutorialEntryListItem extends StatelessWidget {
       child: ListTile(
         onTap: onTap,
         title: value.description != null ? Center(child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().textStyle().text(context, value.description!)) : Container(),
-        subtitle: ,
       ),
     );
   }

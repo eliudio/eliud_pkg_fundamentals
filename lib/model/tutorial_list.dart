@@ -155,7 +155,7 @@ class TutorialListWidgetState extends State<TutorialListWidget> {
               BlocProvider.of<TutorialListBloc>(context)
                   .add(DeleteTutorialList(value: value));
               Scaffold.of(context).showSnackBar(DeleteSnackBar(
-                message: "Tutorial " + value.,
+                message: "Tutorial " + value.documentID,
                 onUndo: () => BlocProvider.of<TutorialListBloc>(context)
                     .add(AddTutorialList(value: value)),
               ));
@@ -168,7 +168,7 @@ class TutorialListWidgetState extends State<TutorialListWidget> {
                       if (removedItem != null) {
                         Scaffold.of(context).showSnackBar(
                           DeleteSnackBar(
-                        message: "Tutorial " + value.,
+                        message: "Tutorial " + value.documentID,
                             onUndo: () => BlocProvider.of<TutorialListBloc>(context)
                                 .add(AddTutorialList(value: value)),
                           ),

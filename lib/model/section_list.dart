@@ -155,7 +155,7 @@ class SectionListWidgetState extends State<SectionListWidget> {
               BlocProvider.of<SectionListBloc>(context)
                   .add(DeleteSectionList(value: value));
               Scaffold.of(context).showSnackBar(DeleteSnackBar(
-                message: "Section " + value.,
+                message: "Section " + value.documentID,
                 onUndo: () => BlocProvider.of<SectionListBloc>(context)
                     .add(AddSectionList(value: value)),
               ));
@@ -168,7 +168,7 @@ class SectionListWidgetState extends State<SectionListWidget> {
                       if (removedItem != null) {
                         Scaffold.of(context).showSnackBar(
                           DeleteSnackBar(
-                        message: "Section " + value.,
+                        message: "Section " + value.documentID,
                             onUndo: () => BlocProvider.of<SectionListBloc>(context)
                                 .add(AddSectionList(value: value)),
                           ),
