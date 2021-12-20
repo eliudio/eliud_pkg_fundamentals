@@ -72,7 +72,7 @@ class DocumentFirestore implements DocumentRepository {
 
   StreamSubscription<List<DocumentModel?>> listen(DocumentModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery}) {
     Stream<List<DocumentModel?>> stream;
-      stream = getQuery(appRepository()!.getSubCollection(appId, 'document'), orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots().map((data) {
+      stream = getQuery(getCollection(), orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots().map((data) {
 //    The above line should eventually become the below line
 //    See https://github.com/felangel/bloc/issues/2073.
 //    stream = getQuery(DocumentCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots().map((data) {
@@ -89,7 +89,7 @@ class DocumentFirestore implements DocumentRepository {
 
   StreamSubscription<List<DocumentModel?>> listenWithDetails(DocumentModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery}) {
     Stream<List<DocumentModel?>> stream;
-    stream = getQuery(appRepository()!.getSubCollection(appId, 'document'), orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots()
+    stream = getQuery(getCollection(), orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots()
 //  see comment listen(...) above
 //  stream = getQuery(DocumentCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots()
         .asyncMap((data) async {
@@ -187,8 +187,9 @@ class DocumentFirestore implements DocumentRepository {
 
 
   final String appId;
-  DocumentFirestore(this.DocumentCollection, this.appId);
+  DocumentFirestore(this.getCollection, this.appId): DocumentCollection = getCollection();
 
   final CollectionReference DocumentCollection;
+  final GetCollection getCollection;
 }
 

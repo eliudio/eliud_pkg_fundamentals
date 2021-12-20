@@ -72,7 +72,7 @@ class DividerFirestore implements DividerRepository {
 
   StreamSubscription<List<DividerModel?>> listen(DividerModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery}) {
     Stream<List<DividerModel?>> stream;
-      stream = getQuery(appRepository()!.getSubCollection(appId, 'divider'), orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots().map((data) {
+      stream = getQuery(getCollection(), orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots().map((data) {
 //    The above line should eventually become the below line
 //    See https://github.com/felangel/bloc/issues/2073.
 //    stream = getQuery(DividerCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots().map((data) {
@@ -89,7 +89,7 @@ class DividerFirestore implements DividerRepository {
 
   StreamSubscription<List<DividerModel?>> listenWithDetails(DividerModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery}) {
     Stream<List<DividerModel?>> stream;
-    stream = getQuery(appRepository()!.getSubCollection(appId, 'divider'), orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots()
+    stream = getQuery(getCollection(), orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots()
 //  see comment listen(...) above
 //  stream = getQuery(DividerCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots()
         .asyncMap((data) async {
@@ -187,8 +187,9 @@ class DividerFirestore implements DividerRepository {
 
 
   final String appId;
-  DividerFirestore(this.DividerCollection, this.appId);
+  DividerFirestore(this.getCollection, this.appId): DividerCollection = getCollection();
 
   final CollectionReference DividerCollection;
+  final GetCollection getCollection;
 }
 

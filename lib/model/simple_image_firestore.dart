@@ -72,7 +72,7 @@ class SimpleImageFirestore implements SimpleImageRepository {
 
   StreamSubscription<List<SimpleImageModel?>> listen(SimpleImageModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery}) {
     Stream<List<SimpleImageModel?>> stream;
-      stream = getQuery(appRepository()!.getSubCollection(appId, 'simpleimage'), orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots().map((data) {
+      stream = getQuery(getCollection(), orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots().map((data) {
 //    The above line should eventually become the below line
 //    See https://github.com/felangel/bloc/issues/2073.
 //    stream = getQuery(SimpleImageCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots().map((data) {
@@ -89,7 +89,7 @@ class SimpleImageFirestore implements SimpleImageRepository {
 
   StreamSubscription<List<SimpleImageModel?>> listenWithDetails(SimpleImageModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery}) {
     Stream<List<SimpleImageModel?>> stream;
-    stream = getQuery(appRepository()!.getSubCollection(appId, 'simpleimage'), orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots()
+    stream = getQuery(getCollection(), orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots()
 //  see comment listen(...) above
 //  stream = getQuery(SimpleImageCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots()
         .asyncMap((data) async {
@@ -187,8 +187,9 @@ class SimpleImageFirestore implements SimpleImageRepository {
 
 
   final String appId;
-  SimpleImageFirestore(this.SimpleImageCollection, this.appId);
+  SimpleImageFirestore(this.getCollection, this.appId): SimpleImageCollection = getCollection();
 
   final CollectionReference SimpleImageCollection;
+  final GetCollection getCollection;
 }
 
