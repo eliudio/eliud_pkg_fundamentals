@@ -125,7 +125,7 @@ class PresentationModel {
     );
   }
 
-  static PresentationModel? fromEntity(String documentID, PresentationEntity? entity) {
+  static Future<PresentationModel?> fromEntity(String documentID, PresentationEntity? entity) async {
     if (entity == null) return null;
     var counter = 0;
     return PresentationModel(
@@ -133,18 +133,17 @@ class PresentationModel {
           appId: entity.appId, 
           title: entity.title, 
           bodyComponents: 
-            entity.bodyComponents == null ? null :
-            entity.bodyComponents
+            entity.bodyComponents == null ? null : List<BodyComponentModel>.from(await Future.wait(entity. bodyComponents
             !.map((item) {
-              counter++; 
-              return BodyComponentModel.fromEntity(counter.toString(), item)!;
+            counter++;
+              return BodyComponentModel.fromEntity(counter.toString(), item);
             })
-            .toList(), 
+            .toList())), 
           imagePositionRelative: toPresentationRelativeImagePosition(entity.imagePositionRelative), 
           imageAlignment: toPresentationImageAlignment(entity.imageAlignment), 
           imageWidth: entity.imageWidth, 
           conditions: 
-            StorageConditionsModel.fromEntity(entity.conditions), 
+            await StorageConditionsModel.fromEntity(entity.conditions), 
     );
   }
 

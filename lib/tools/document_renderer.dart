@@ -3,6 +3,7 @@ import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/core/blocs/access/state/access_state.dart';
 import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
 import 'package:eliud_core/core/tools/document_processor.dart';
+import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/background_model.dart';
 import 'package:eliud_core/model/member_model.dart';
 import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
@@ -21,24 +22,21 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 
 class ActionListener /*implements ClickListener*/ {
   final BuildContext context;
+  final AppModel app;
 
-  ActionListener(this.context);
+  ActionListener(this.context, this.app);
 
   void onClicked(String event) {
-    var appID = AccessBloc.currentAppId(context);
-    if (appID != null) {
       // todo: work with substring, as url.parse seems to discard case sensitivity
       var uri = Uri.parse(event);
       var authority = uri.authority;
       var scheme = uri.scheme;
       if (scheme == "page") {
         // todo, check if access rights to this page, if not... show "???!!!"
-        ActionModel action =
-        GotoPage(appID, pageID: authority); // construct from event
+        ActionModel action = GotoPage(app, pageID: authority); // construct from event
         EliudRouter.Router.navigateTo(context, action);
       }
     }
-  }
 }
 
 class DocumentRendererTool {
@@ -56,7 +54,7 @@ class DocumentRendererTool {
 
   }
 
-  Widget _dynamicWidget(BuildContext context, String processedDocument) {
+  Widget _dynamicWidget(AppModel app, BuildContext context, String processedDocument) {
     return FutureBuilder<Widget>(
       future: _buildWidget(context, processedDocument),
       builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
@@ -65,12 +63,12 @@ class DocumentRendererTool {
         }
         return snapshot.hasData
             ? snapshot.data!
-            : progressIndicator(context);
+            : progressIndicator(app, context);
       },
     );
   }
 
-  Widget _rendered(BuildContext context, DocumentRenderer? documentRenderer,
+  Widget _rendered(AppModel app, BuildContext context, DocumentRenderer? documentRenderer,
       String renderThis) {
     Widget? theWidget;
     switch (documentRenderer) {
@@ -78,7 +76,7 @@ class DocumentRendererTool {
         theWidget = _flutterMarkdownDocument(context, renderThis);
         break;
       case DocumentRenderer.dynamic_widget:
-        theWidget = _dynamicWidget(context, renderThis);
+        theWidget = _dynamicWidget(app, context, renderThis);
         break;
       case DocumentRenderer.Unknown:
         break;
@@ -90,13 +88,13 @@ class DocumentRendererTool {
     return theWidget;
   }
 
-  Widget render(BuildContext context, MemberModel? memberModel, DocumentRenderer? documentRenderer,
+  Widget render(AppModel app, BuildContext context, MemberModel? memberModel, DocumentRenderer? documentRenderer,
       String document, List<DocumentItemModel>? images, BackgroundModel? bdm) {
     DocumentParameterProcessor documentParameterProcessor =
-        ExtendedDocumentParameterProcessor(context,
+        ExtendedDocumentParameterProcessor(context,app,
             images: images);
     return Container(
-        child: _rendered(context, documentRenderer,
+        child: _rendered(app, context, documentRenderer,
             documentParameterProcessor.process(document)),
         decoration: BoxDecorationHelper.boxDecoration(memberModel, bdm));
   }

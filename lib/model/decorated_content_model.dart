@@ -117,7 +117,7 @@ class DecoratedContentModel {
     );
   }
 
-  static DecoratedContentModel? fromEntity(String documentID, DecoratedContentEntity? entity) {
+  static Future<DecoratedContentModel?> fromEntity(String documentID, DecoratedContentEntity? entity) async {
     if (entity == null) return null;
     var counter = 0;
     return DecoratedContentModel(
@@ -131,7 +131,7 @@ class DecoratedContentModel {
           decorationComponentPosition: toDecorationComponentPosition(entity.decorationComponentPosition), 
           percentageDecorationVisible: entity.percentageDecorationVisible, 
           conditions: 
-            StorageConditionsModel.fromEntity(entity.conditions), 
+            await StorageConditionsModel.fromEntity(entity.conditions), 
     );
   }
 

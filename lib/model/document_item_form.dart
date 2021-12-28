@@ -13,6 +13,7 @@
 
 */
 
+import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/core/blocs/access/state/access_state.dart';
 import 'package:eliud_core/core/blocs/access/state/logged_in.dart';
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
@@ -63,17 +64,16 @@ import 'package:eliud_pkg_fundamentals/model/document_item_form_state.dart';
 
 
 class DocumentItemForm extends StatelessWidget {
+  final AppModel app;
   FormAction formAction;
   DocumentItemModel? value;
   ActionModel? submitAction;
 
-  DocumentItemForm({Key? key, required this.formAction, required this.value, this.submitAction}) : super(key: key);
+  DocumentItemForm({Key? key, required this.app, required this.formAction, required this.value, this.submitAction}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var app = AccessBloc.currentApp(context);
-    if (app == null) return Text("No app available");
     var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<DocumentItemFormBloc >(
@@ -81,7 +81,7 @@ class DocumentItemForm extends StatelessWidget {
                                        
                                                 )..add(InitialiseDocumentItemFormEvent(value: value)),
   
-        child: MyDocumentItemForm(submitAction: submitAction, formAction: formAction),
+        child: MyDocumentItemForm(app:app, submitAction: submitAction, formAction: formAction),
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<DocumentItemFormBloc >(
@@ -89,17 +89,17 @@ class DocumentItemForm extends StatelessWidget {
                                        
                                                 )..add(InitialiseDocumentItemFormNoLoadEvent(value: value)),
   
-        child: MyDocumentItemForm(submitAction: submitAction, formAction: formAction),
+        child: MyDocumentItemForm(app:app, submitAction: submitAction, formAction: formAction),
           );
     } else {
       return Scaffold(
-        appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update DocumentItem' : 'Add DocumentItem'),
+        appBar: StyleRegistry.registry().styleWithApp(app).adminFormStyle().appBarWithString(app, context, title: formAction == FormAction.UpdateAction ? 'Update DocumentItem' : 'Add DocumentItem'),
         body: BlocProvider<DocumentItemFormBloc >(
             create: (context) => DocumentItemFormBloc(appId,
                                        
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseDocumentItemFormEvent(value: value) : InitialiseNewDocumentItemFormEvent())),
   
-        child: MyDocumentItemForm(submitAction: submitAction, formAction: formAction),
+        child: MyDocumentItemForm(app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
@@ -107,10 +107,11 @@ class DocumentItemForm extends StatelessWidget {
 
 
 class MyDocumentItemForm extends StatefulWidget {
+  final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MyDocumentItemForm({this.formAction, this.submitAction});
+  MyDocumentItemForm({required this.app, this.formAction, this.submitAction});
 
   _MyDocumentItemFormState createState() => _MyDocumentItemFormState(this.formAction);
 }
@@ -137,13 +138,10 @@ class _MyDocumentItemFormState extends State<MyDocumentItemForm> {
 
   @override
   Widget build(BuildContext context) {
-    var app = AccessBloc.currentApp(context);
-    if (app == null) return Text('No app available');
-    var appId = app.documentID!;
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<DocumentItemFormBloc, DocumentItemFormState>(builder: (context, state) {
       if (state is DocumentItemFormUninitialized) return Center(
-        child: StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context),
+        child: StyleRegistry.registry().styleWithApp(widget.app).adminListStyle().progressIndicator(widget.app, context),
       );
 
       if (state is DocumentItemFormLoaded) {
@@ -164,17 +162,17 @@ class _MyDocumentItemFormState extends State<MyDocumentItemForm> {
         List<Widget> children = [];
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, labelText: 'Document Reference', icon: Icons.vpn_key, readOnly: _readOnly(accessState, state), textEditingController: _referenceController, keyboardType: TextInputType.text, validator: (_) => state is ReferenceDocumentItemFormError ? state.message : null, hintText: 'field.remark')
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Document Reference', icon: Icons.vpn_key, readOnly: _readOnly(accessState, state), textEditingController: _referenceController, keyboardType: TextInputType.text, validator: (_) => state is ReferenceDocumentItemFormError ? state.message : null, hintText: 'field.remark')
           );
 
         children.add(
 
-                DropdownButtonComponentFactory().createNew(appId: appId, id: "memberMediums", value: _image, trigger: _onImageSelected, optional: false),
+                DropdownButtonComponentFactory().createNew(app: widget.app, id: "memberMediums", value: _image, trigger: _onImageSelected, optional: false),
           );
 
 
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
-          children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().button(context, label: 'Submit',
+          children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().button(widget.app, context, label: 'Submit',
                   onPressed: _readOnly(accessState, state) ? null : () {
                     if (state is DocumentItemFormError) {
                       return null;
@@ -203,7 +201,7 @@ class _MyDocumentItemFormState extends State<MyDocumentItemForm> {
                   },
                 ));
 
-        return StyleRegistry.registry().styleWithContext(context).adminFormStyle().container(context, Form(
+        return StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().container(widget.app, context, Form(
             child: ListView(
               padding: const EdgeInsets.all(8),
               physics: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? NeverScrollableScrollPhysics() : null,
@@ -213,7 +211,7 @@ class _MyDocumentItemFormState extends State<MyDocumentItemForm> {
           ), formAction!
         );
       } else {
-        return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
+        return StyleRegistry.registry().styleWithApp(widget.app).adminListStyle().progressIndicator(widget.app, context);
       }
     });
   }
@@ -245,7 +243,7 @@ class _MyDocumentItemFormState extends State<MyDocumentItemForm> {
   }
 
   bool _readOnly(AccessState accessState, DocumentItemFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(AccessBloc.currentAppId(context)));
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID!));
   }
   
 

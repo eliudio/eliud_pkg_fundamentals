@@ -97,7 +97,7 @@ class SimpleTextModel {
     );
   }
 
-  static SimpleTextModel? fromEntity(String documentID, SimpleTextEntity? entity) {
+  static Future<SimpleTextModel?> fromEntity(String documentID, SimpleTextEntity? entity) async {
     if (entity == null) return null;
     var counter = 0;
     return SimpleTextModel(
@@ -106,7 +106,7 @@ class SimpleTextModel {
           title: entity.title, 
           text: entity.text, 
           conditions: 
-            StorageConditionsModel.fromEntity(entity.conditions), 
+            await StorageConditionsModel.fromEntity(entity.conditions), 
           textAlign: toSimpleTextAlign(entity.textAlign), 
     );
   }

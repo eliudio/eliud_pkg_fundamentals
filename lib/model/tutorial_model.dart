@@ -89,7 +89,7 @@ class TutorialModel {
     );
   }
 
-  static TutorialModel? fromEntity(String documentID, TutorialEntity? entity) {
+  static Future<TutorialModel?> fromEntity(String documentID, TutorialEntity? entity) async {
     if (entity == null) return null;
     var counter = 0;
     return TutorialModel(
@@ -99,15 +99,14 @@ class TutorialModel {
           title: entity.title, 
           description: entity.description, 
           tutorialEntries: 
-            entity.tutorialEntries == null ? null :
-            entity.tutorialEntries
+            entity.tutorialEntries == null ? null : List<TutorialEntryModel>.from(await Future.wait(entity. tutorialEntries
             !.map((item) {
-              counter++; 
-              return TutorialEntryModel.fromEntity(counter.toString(), item)!;
+            counter++;
+              return TutorialEntryModel.fromEntity(counter.toString(), item);
             })
-            .toList(), 
+            .toList())), 
           conditions: 
-            StorageConditionsModel.fromEntity(entity.conditions), 
+            await StorageConditionsModel.fromEntity(entity.conditions), 
     );
   }
 

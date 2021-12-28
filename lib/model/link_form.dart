@@ -13,6 +13,7 @@
 
 */
 
+import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/core/blocs/access/state/access_state.dart';
 import 'package:eliud_core/core/blocs/access/state/logged_in.dart';
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
@@ -58,17 +59,16 @@ import 'package:eliud_pkg_fundamentals/model/link_form_state.dart';
 
 
 class LinkForm extends StatelessWidget {
+  final AppModel app;
   FormAction formAction;
   LinkModel? value;
   ActionModel? submitAction;
 
-  LinkForm({Key? key, required this.formAction, required this.value, this.submitAction}) : super(key: key);
+  LinkForm({Key? key, required this.app, required this.formAction, required this.value, this.submitAction}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var app = AccessBloc.currentApp(context);
-    if (app == null) return Text("No app available");
     var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<LinkFormBloc >(
@@ -76,7 +76,7 @@ class LinkForm extends StatelessWidget {
                                        
                                                 )..add(InitialiseLinkFormEvent(value: value)),
   
-        child: MyLinkForm(submitAction: submitAction, formAction: formAction),
+        child: MyLinkForm(app:app, submitAction: submitAction, formAction: formAction),
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<LinkFormBloc >(
@@ -84,17 +84,17 @@ class LinkForm extends StatelessWidget {
                                        
                                                 )..add(InitialiseLinkFormNoLoadEvent(value: value)),
   
-        child: MyLinkForm(submitAction: submitAction, formAction: formAction),
+        child: MyLinkForm(app:app, submitAction: submitAction, formAction: formAction),
           );
     } else {
       return Scaffold(
-        appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update Link' : 'Add Link'),
+        appBar: StyleRegistry.registry().styleWithApp(app).adminFormStyle().appBarWithString(app, context, title: formAction == FormAction.UpdateAction ? 'Update Link' : 'Add Link'),
         body: BlocProvider<LinkFormBloc >(
             create: (context) => LinkFormBloc(appId,
                                        
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseLinkFormEvent(value: value) : InitialiseNewLinkFormEvent())),
   
-        child: MyLinkForm(submitAction: submitAction, formAction: formAction),
+        child: MyLinkForm(app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
@@ -102,10 +102,11 @@ class LinkForm extends StatelessWidget {
 
 
 class MyLinkForm extends StatefulWidget {
+  final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MyLinkForm({this.formAction, this.submitAction});
+  MyLinkForm({required this.app, this.formAction, this.submitAction});
 
   _MyLinkFormState createState() => _MyLinkFormState(this.formAction);
 }
@@ -131,13 +132,10 @@ class _MyLinkFormState extends State<MyLinkForm> {
 
   @override
   Widget build(BuildContext context) {
-    var app = AccessBloc.currentApp(context);
-    if (app == null) return Text('No app available');
-    var appId = app.documentID!;
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<LinkFormBloc, LinkFormState>(builder: (context, state) {
       if (state is LinkFormUninitialized) return Center(
-        child: StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context),
+        child: StyleRegistry.registry().styleWithApp(widget.app).adminListStyle().progressIndicator(widget.app, context),
       );
 
       if (state is LinkFormLoaded) {
@@ -155,37 +153,37 @@ class _MyLinkFormState extends State<MyLinkForm> {
          children.add(Container(
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  child: StyleRegistry.registry().styleWithContext(context).adminFormStyle().groupTitle(context, 'General')
+                  child: StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().groupTitle(widget.app, context, 'General')
                 ));
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, labelText: 'Link text', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _linkTextController, keyboardType: TextInputType.text, validator: (_) => state is LinkTextLinkFormError ? state.message : null, hintText: null)
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Link text', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _linkTextController, keyboardType: TextInputType.text, validator: (_) => state is LinkTextLinkFormError ? state.message : null, hintText: null)
           );
 
 
         children.add(Container(height: 20.0));
-        children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().divider(context));
+        children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().divider(widget.app, context));
 
 
          children.add(Container(
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  child: StyleRegistry.registry().styleWithContext(context).adminFormStyle().groupTitle(context, 'Action')
+                  child: StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().groupTitle(widget.app, context, 'Action')
                 ));
 
         children.add(
 
-                ActionField(AccessBloc.currentAppId(context), state.value!.action, _onActionChanged)
+                ActionField(widget.app, state.value!.action, _onActionChanged)
           );
 
 
         children.add(Container(height: 20.0));
-        children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().divider(context));
+        children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().divider(widget.app, context));
 
 
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
-          children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().button(context, label: 'Submit',
+          children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().button(widget.app, context, label: 'Submit',
                   onPressed: _readOnly(accessState, state) ? null : () {
                     if (state is LinkFormError) {
                       return null;
@@ -214,7 +212,7 @@ class _MyLinkFormState extends State<MyLinkForm> {
                   },
                 ));
 
-        return StyleRegistry.registry().styleWithContext(context).adminFormStyle().container(context, Form(
+        return StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().container(widget.app, context, Form(
             child: ListView(
               padding: const EdgeInsets.all(8),
               physics: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? NeverScrollableScrollPhysics() : null,
@@ -224,7 +222,7 @@ class _MyLinkFormState extends State<MyLinkForm> {
           ), formAction!
         );
       } else {
-        return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
+        return StyleRegistry.registry().styleWithApp(widget.app).adminListStyle().progressIndicator(widget.app, context);
       }
     });
   }
@@ -254,7 +252,7 @@ class _MyLinkFormState extends State<MyLinkForm> {
   }
 
   bool _readOnly(AccessState accessState, LinkFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(AccessBloc.currentAppId(context)));
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID!));
   }
   
 

@@ -122,7 +122,7 @@ class SectionModel {
     );
   }
 
-  static SectionModel? fromEntity(String documentID, SectionEntity? entity) {
+  static Future<SectionModel?> fromEntity(String documentID, SectionEntity? entity) async {
     if (entity == null) return null;
     var counter = 0;
     return SectionModel(
@@ -133,13 +133,12 @@ class SectionModel {
           imageAlignment: toSectionImageAlignment(entity.imageAlignment), 
           imageWidth: entity.imageWidth, 
           links: 
-            entity.links == null ? null :
-            entity.links
+            entity.links == null ? null : List<LinkModel>.from(await Future.wait(entity. links
             !.map((item) {
-              counter++; 
-              return LinkModel.fromEntity(counter.toString(), item)!;
+            counter++;
+              return LinkModel.fromEntity(counter.toString(), item);
             })
-            .toList(), 
+            .toList())), 
     );
   }
 

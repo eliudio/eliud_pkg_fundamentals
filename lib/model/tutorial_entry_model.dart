@@ -75,7 +75,7 @@ class TutorialEntryModel {
     );
   }
 
-  static TutorialEntryModel? fromEntity(String documentID, TutorialEntryEntity? entity) {
+  static Future<TutorialEntryModel?> fromEntity(String documentID, TutorialEntryEntity? entity) async {
     if (entity == null) return null;
     var counter = 0;
     return TutorialEntryModel(

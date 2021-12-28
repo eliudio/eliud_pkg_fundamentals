@@ -98,7 +98,7 @@ class DividerModel {
     );
   }
 
-  static DividerModel? fromEntity(String documentID, DividerEntity? entity) {
+  static Future<DividerModel?> fromEntity(String documentID, DividerEntity? entity) async {
     if (entity == null) return null;
     var counter = 0;
     return DividerModel(
@@ -106,13 +106,13 @@ class DividerModel {
           appId: entity.appId, 
           name: entity.name, 
           color: 
-            RgbModel.fromEntity(entity.color), 
+            await RgbModel.fromEntity(entity.color), 
           height: entity.height, 
           thickness: entity.thickness, 
           indent: entity.indent, 
           endIndent: entity.endIndent, 
           conditions: 
-            StorageConditionsModel.fromEntity(entity.conditions), 
+            await StorageConditionsModel.fromEntity(entity.conditions), 
     );
   }
 

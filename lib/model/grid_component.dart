@@ -26,19 +26,20 @@ import 'package:eliud_core/style/style_registry.dart';
 import 'abstract_repository_singleton.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
+import 'package:eliud_core/model/app_model.dart';
 
 abstract class AbstractGridComponent extends StatelessWidget {
   static String componentName = "grids";
-  final String theAppId;
+  final AppModel app;
   final String gridId;
 
-  AbstractGridComponent({Key? key, required this.theAppId, required this.gridId}): super(key: key);
+  AbstractGridComponent({Key? key, required this.app, required this.gridId}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<GridComponentBloc> (
           create: (context) => GridComponentBloc(
-            gridRepository: gridRepository(appId: theAppId)!)
+            gridRepository: gridRepository(appId: app.documentID!)!)
         ..add(FetchGridComponent(id: gridId)),
       child: _gridBlockBuilder(context),
     );
@@ -48,7 +49,7 @@ abstract class AbstractGridComponent extends StatelessWidget {
     return BlocBuilder<GridComponentBloc, GridComponentState>(builder: (context, state) {
       if (state is GridComponentLoaded) {
         if (state.value == null) {
-          return AlertWidget(title: "Error", content: 'No Grid defined');
+          return AlertWidget(app: app, title: "Error", content: 'No Grid defined');
         } else {
           return yourWidget(context, state.value);
         }
@@ -59,10 +60,10 @@ abstract class AbstractGridComponent extends StatelessWidget {
           size: 30.0,
         );
       } else if (state is GridComponentError) {
-        return AlertWidget(title: 'Error', content: state.message);
+        return AlertWidget(app: app, title: 'Error', content: state.message);
       } else {
         return Center(
-          child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicatorStyle().progressIndicator(context),
+          child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().progressIndicatorStyle().progressIndicator(app, context),
         );
       }
     });

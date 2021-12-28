@@ -13,6 +13,7 @@
 
 */
 
+import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/core/blocs/access/state/access_state.dart';
 import 'package:eliud_core/core/blocs/access/state/logged_in.dart';
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
@@ -63,17 +64,16 @@ import 'package:eliud_pkg_fundamentals/model/decorated_content_form_state.dart';
 
 
 class DecoratedContentForm extends StatelessWidget {
+  final AppModel app;
   FormAction formAction;
   DecoratedContentModel? value;
   ActionModel? submitAction;
 
-  DecoratedContentForm({Key? key, required this.formAction, required this.value, this.submitAction}) : super(key: key);
+  DecoratedContentForm({Key? key, required this.app, required this.formAction, required this.value, this.submitAction}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var app = AccessBloc.currentApp(context);
-    if (app == null) return Text("No app available");
     var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<DecoratedContentFormBloc >(
@@ -82,7 +82,7 @@ class DecoratedContentForm extends StatelessWidget {
 
                                                 )..add(InitialiseDecoratedContentFormEvent(value: value)),
   
-        child: MyDecoratedContentForm(submitAction: submitAction, formAction: formAction),
+        child: MyDecoratedContentForm(app:app, submitAction: submitAction, formAction: formAction),
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<DecoratedContentFormBloc >(
@@ -91,18 +91,18 @@ class DecoratedContentForm extends StatelessWidget {
 
                                                 )..add(InitialiseDecoratedContentFormNoLoadEvent(value: value)),
   
-        child: MyDecoratedContentForm(submitAction: submitAction, formAction: formAction),
+        child: MyDecoratedContentForm(app:app, submitAction: submitAction, formAction: formAction),
           );
     } else {
       return Scaffold(
-        appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update DecoratedContent' : 'Add DecoratedContent'),
+        appBar: StyleRegistry.registry().styleWithApp(app).adminFormStyle().appBarWithString(app, context, title: formAction == FormAction.UpdateAction ? 'Update DecoratedContent' : 'Add DecoratedContent'),
         body: BlocProvider<DecoratedContentFormBloc >(
             create: (context) => DecoratedContentFormBloc(appId,
                                        formAction: formAction,
 
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseDecoratedContentFormEvent(value: value) : InitialiseNewDecoratedContentFormEvent())),
   
-        child: MyDecoratedContentForm(submitAction: submitAction, formAction: formAction),
+        child: MyDecoratedContentForm(app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
@@ -110,10 +110,11 @@ class DecoratedContentForm extends StatelessWidget {
 
 
 class MyDecoratedContentForm extends StatefulWidget {
+  final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MyDecoratedContentForm({this.formAction, this.submitAction});
+  MyDecoratedContentForm({required this.app, this.formAction, this.submitAction});
 
   _MyDecoratedContentFormState createState() => _MyDecoratedContentFormState(this.formAction);
 }
@@ -145,13 +146,10 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
 
   @override
   Widget build(BuildContext context) {
-    var app = AccessBloc.currentApp(context);
-    if (app == null) return Text('No app available');
-    var appId = app.documentID!;
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<DecoratedContentFormBloc, DecoratedContentFormState>(builder: (context, state) {
       if (state is DecoratedContentFormUninitialized) return Center(
-        child: StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context),
+        child: StyleRegistry.registry().styleWithApp(widget.app).adminListStyle().progressIndicator(widget.app, context),
       );
 
       if (state is DecoratedContentFormLoaded) {
@@ -181,110 +179,110 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
          children.add(Container(
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  child: StyleRegistry.registry().styleWithContext(context).adminFormStyle().groupTitle(context, 'General')
+                  child: StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().groupTitle(widget.app, context, 'General')
                 ));
 
         children.add(
 
-                ExtensionTypeField(state.value!.decoratingComponentName, _onDecoratingComponentNameChanged)
+                ExtensionTypeField(widget.app, state.value!.decoratingComponentName, _onDecoratingComponentNameChanged)
           );
 
         children.add(
 
-                ComponentIdField(componentName: state.value!.decoratingComponentName, value: state.value!.decoratingComponentId, trigger: _onDecoratingComponentIdChanged)
+                ComponentIdField(widget.app, componentName: state.value!.decoratingComponentName, value: state.value!.decoratingComponentId, trigger: _onDecoratingComponentIdChanged)
           );
 
         children.add(
 
-                ExtensionTypeField(state.value!.contentComponentName, _onContentComponentNameChanged)
+                ExtensionTypeField(widget.app, state.value!.contentComponentName, _onContentComponentNameChanged)
           );
 
         children.add(
 
-                ComponentIdField(componentName: state.value!.contentComponentName, value: state.value!.contentComponentId, trigger: _onContentComponentIdChanged)
+                ComponentIdField(widget.app, componentName: state.value!.contentComponentName, value: state.value!.contentComponentId, trigger: _onContentComponentIdChanged)
           );
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, labelText: 'Percentage Decoration Visible', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _percentageDecorationVisibleController, keyboardType: TextInputType.number, validator: (_) => state is PercentageDecorationVisibleDecoratedContentFormError ? state.message : null, hintText: null)
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Percentage Decoration Visible', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _percentageDecorationVisibleController, keyboardType: TextInputType.number, validator: (_) => state is PercentageDecorationVisibleDecoratedContentFormError ? state.message : null, hintText: null)
           );
 
 
         children.add(Container(height: 20.0));
-        children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().divider(context));
+        children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().divider(widget.app, context));
 
 
          children.add(Container(
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  child: StyleRegistry.registry().styleWithContext(context).adminFormStyle().groupTitle(context, 'General')
+                  child: StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().groupTitle(widget.app, context, 'General')
                 ));
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, labelText: 'Document ID', icon: Icons.vpn_key, readOnly: (formAction == FormAction.UpdateAction), textEditingController: _documentIDController, keyboardType: TextInputType.text, validator: (_) => state is DocumentIDDecoratedContentFormError ? state.message : null, hintText: null)
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Document ID', icon: Icons.vpn_key, readOnly: (formAction == FormAction.UpdateAction), textEditingController: _documentIDController, keyboardType: TextInputType.text, validator: (_) => state is DocumentIDDecoratedContentFormError ? state.message : null, hintText: null)
           );
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, labelText: 'Name', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _nameController, keyboardType: TextInputType.text, validator: (_) => state is NameDecoratedContentFormError ? state.message : null, hintText: null)
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Name', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _nameController, keyboardType: TextInputType.text, validator: (_) => state is NameDecoratedContentFormError ? state.message : null, hintText: null)
           );
 
 
         children.add(Container(height: 20.0));
-        children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().divider(context));
+        children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().divider(widget.app, context));
 
 
          children.add(Container(
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  child: StyleRegistry.registry().styleWithContext(context).adminFormStyle().groupTitle(context, 'Conditions')
+                  child: StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().groupTitle(widget.app, context, 'Conditions')
                 ));
 
 
 
         children.add(Container(height: 20.0));
-        children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().divider(context));
+        children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().divider(widget.app, context));
 
 
          children.add(Container(
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  child: StyleRegistry.registry().styleWithContext(context).adminFormStyle().groupTitle(context, 'Conditions')
+                  child: StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().groupTitle(widget.app, context, 'Conditions')
                 ));
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().radioListTile(context, 0, _decorationComponentPositionSelectedRadioTile, 'LeftIfSpaceAvailableOtherwiseTop', 'LeftIfSpaceAvailableOtherwiseTop', !accessState.memberIsOwner(AccessBloc.currentAppId(context)) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _decorationComponentPositionSelectedRadioTile, 'LeftIfSpaceAvailableOtherwiseTop', 'LeftIfSpaceAvailableOtherwiseTop', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().radioListTile(context, 0, _decorationComponentPositionSelectedRadioTile, 'LeftIfSpaceAvailableOtherwiseDrop', 'LeftIfSpaceAvailableOtherwiseDrop', !accessState.memberIsOwner(AccessBloc.currentAppId(context)) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _decorationComponentPositionSelectedRadioTile, 'LeftIfSpaceAvailableOtherwiseDrop', 'LeftIfSpaceAvailableOtherwiseDrop', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().radioListTile(context, 0, _decorationComponentPositionSelectedRadioTile, 'LeftIfSpaceAvailableOtherwiseBottom', 'LeftIfSpaceAvailableOtherwiseBottom', !accessState.memberIsOwner(AccessBloc.currentAppId(context)) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _decorationComponentPositionSelectedRadioTile, 'LeftIfSpaceAvailableOtherwiseBottom', 'LeftIfSpaceAvailableOtherwiseBottom', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().radioListTile(context, 0, _decorationComponentPositionSelectedRadioTile, 'RightIfSpaceAvailableOtherwiseTop', 'RightIfSpaceAvailableOtherwiseTop', !accessState.memberIsOwner(AccessBloc.currentAppId(context)) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _decorationComponentPositionSelectedRadioTile, 'RightIfSpaceAvailableOtherwiseTop', 'RightIfSpaceAvailableOtherwiseTop', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().radioListTile(context, 0, _decorationComponentPositionSelectedRadioTile, 'RightIfSpaceAvailableOtherwiseDrop', 'RightIfSpaceAvailableOtherwiseDrop', !accessState.memberIsOwner(AccessBloc.currentAppId(context)) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _decorationComponentPositionSelectedRadioTile, 'RightIfSpaceAvailableOtherwiseDrop', 'RightIfSpaceAvailableOtherwiseDrop', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().radioListTile(context, 0, _decorationComponentPositionSelectedRadioTile, 'RightIfSpaceAvailableOtherwiseBottom', 'RightIfSpaceAvailableOtherwiseBottom', !accessState.memberIsOwner(AccessBloc.currentAppId(context)) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _decorationComponentPositionSelectedRadioTile, 'RightIfSpaceAvailableOtherwiseBottom', 'RightIfSpaceAvailableOtherwiseBottom', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
           );
 
 
         children.add(Container(height: 20.0));
-        children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().divider(context));
+        children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().divider(widget.app, context));
 
 
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
-          children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().button(context, label: 'Submit',
+          children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().button(widget.app, context, label: 'Submit',
                   onPressed: _readOnly(accessState, state) ? null : () {
                     if (state is DecoratedContentFormError) {
                       return null;
@@ -327,7 +325,7 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
                   },
                 ));
 
-        return StyleRegistry.registry().styleWithContext(context).adminFormStyle().container(context, Form(
+        return StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().container(widget.app, context, Form(
             child: ListView(
               padding: const EdgeInsets.all(8),
               physics: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? NeverScrollableScrollPhysics() : null,
@@ -337,7 +335,7 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
           ), formAction!
         );
       } else {
-        return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
+        return StyleRegistry.registry().styleWithApp(widget.app).adminListStyle().progressIndicator(widget.app, context);
       }
     });
   }
@@ -405,7 +403,7 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
   }
 
   bool _readOnly(AccessState accessState, DecoratedContentFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(AccessBloc.currentAppId(context)));
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID!));
   }
   
 

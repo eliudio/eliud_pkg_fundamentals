@@ -70,23 +70,21 @@ class PresentationHelper {
       Widget column1;
       Widget column2;
       if (size != null) {
-        column1 =  Container(
+        column1 = Container(
           alignment: Alignment.topCenter,
           width: size, // set this
-                    child: widgetImage,
-          );
+          child: widgetImage,
+        );
         column2 = Container(
-            alignment: Alignment.topCenter,
-                width: fullScreenWidth(context) - size, // set this
-                child: _makeBox(widgets),
-              );
+          alignment: Alignment.topCenter,
+          width: fullScreenWidth(context) - size, // set this
+          child: _makeBox(widgets),
+        );
       } else {
         column1 = Column(children: [
           widgetImage,
         ]);
-        column2 = Column(children: [
-          _makeBox(widgets)
-        ]);
+        column2 = Column(children: [_makeBox(widgets)]);
       }
       if (imageAlignment == PresentationImageAlignment.Left) {
         return Row(

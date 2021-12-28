@@ -1,6 +1,7 @@
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
 import 'package:eliud_core/core/widgets/alert_widget.dart';
+import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/style/frontend/has_button.dart';
@@ -19,16 +20,22 @@ import 'package:flutter/material.dart';
 
 class BookletComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({Key? key, required String appId, required String id, Map<String, dynamic>? parameters}) {
-    return BookletComponent(key: key, appId: appId, bookletId: id);
+  Widget createNew(
+      {Key? key,
+      required AppModel app,
+      required String id,
+      Map<String, dynamic>? parameters}) {
+    return BookletComponent(key: key, app: app, bookletId: id);
   }
 
   @override
-  Future<dynamic> getModel({required String appId, required String id}) async => await bookletRepository(appId: appId)!.get(id);
+  Future<dynamic> getModel({required AppModel app, required String id}) async =>
+      await bookletRepository(appId: app.documentID!)!.get(id);
 }
 
 class BookletComponent extends AbstractBookletComponent {
-  BookletComponent({Key? key,  required String appId, required String bookletId}) : super(key: key, theAppId: appId, bookletId: bookletId);
+  BookletComponent({Key? key, required AppModel app, required String bookletId})
+      : super(key: key, app: app, bookletId: bookletId);
 
   Widget _aBitSpace() => SizedBox(height: 30);
 
@@ -148,22 +155,25 @@ class BookletComponent extends AbstractBookletComponent {
   @override
   Widget yourWidget(BuildContext context, BookletModel? value) {
     var accessState = AccessBloc.getState(context);
-    var documentParameterProcessor =
-        ExtendedDocumentParameterProcessor(context, );
+    var documentParameterProcessor = ExtendedDocumentParameterProcessor(
+      context,app,
+    );
 
     var groupedWidgets = <Widget>[];
 
     value!.sections!.forEach((element) {
       var widgets = <Widget>[];
-      widgets.add(h3(context, documentParameterProcessor.process(element.title!)));
+      widgets.add(
+          h3(app, context, documentParameterProcessor.process(element.title!)));
       widgets.add(_aBitSpace());
-      widgets.add(text(
-          context, documentParameterProcessor.process(element.description!)));
+      widgets.add(text(app, context,
+          documentParameterProcessor.process(element.description!)));
       widgets.add(_aBitSpace());
       if (element.links != null && element.links!.isNotEmpty) {
         var children = <Widget>[];
         element.links!.forEach((link) {
           children.add(button(
+            app,
             context,
             label: link.linkText!,
             onPressed: () {

@@ -88,7 +88,7 @@ class GridModel {
     );
   }
 
-  static GridModel? fromEntity(String documentID, GridEntity? entity) {
+  static Future<GridModel?> fromEntity(String documentID, GridEntity? entity) async {
     if (entity == null) return null;
     var counter = 0;
     return GridModel(
@@ -96,15 +96,14 @@ class GridModel {
           appId: entity.appId, 
           title: entity.title, 
           bodyComponents: 
-            entity.bodyComponents == null ? null :
-            entity.bodyComponents
+            entity.bodyComponents == null ? null : List<BodyComponentModel>.from(await Future.wait(entity. bodyComponents
             !.map((item) {
-              counter++; 
-              return BodyComponentModel.fromEntity(counter.toString(), item)!;
+            counter++;
+              return BodyComponentModel.fromEntity(counter.toString(), item);
             })
-            .toList(), 
+            .toList())), 
           conditions: 
-            StorageConditionsModel.fromEntity(entity.conditions), 
+            await StorageConditionsModel.fromEntity(entity.conditions), 
     );
   }
 

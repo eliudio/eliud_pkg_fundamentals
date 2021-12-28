@@ -1,5 +1,6 @@
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
+import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/component/component_constructor.dart';
@@ -12,26 +13,40 @@ import 'package:flutter/material.dart';
 
 class SimpleTextComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({Key? key, required String appId, required String id, Map<String, dynamic>? parameters}) {
-    return SimpleTextComponent(key: key, appId: appId, simpleTextId: id);
+  Widget createNew(
+      {Key? key,
+      required AppModel app,
+      required String id,
+      Map<String, dynamic>? parameters}) {
+    return SimpleTextComponent(key: key, app: app, simpleTextId: id);
   }
 
   @override
-  Future<dynamic> getModel({required String appId, required String id}) async => await simpleTextRepository(appId: appId)!.get(id);
+  Future<dynamic> getModel({required AppModel app, required String id}) async =>
+      await simpleTextRepository(appId: app.documentID!)!.get(id);
 }
 
 class SimpleTextComponent extends AbstractSimpleTextComponent {
-  SimpleTextComponent({Key? key, required String appId, required String simpleTextId}) : super(key: key, theAppId: appId, simpleTextId: simpleTextId);
+  SimpleTextComponent(
+      {Key? key, required AppModel app, required String simpleTextId})
+      : super(key: key, app: app, simpleTextId: simpleTextId);
 
   TextAlign toTextAlign(SimpleTextAlign? textAlign) {
     switch (textAlign) {
-      case SimpleTextAlign.Left: return TextAlign.left;
-      case SimpleTextAlign.Center: return TextAlign.center;
-      case SimpleTextAlign.Right: return TextAlign.right;
-      case SimpleTextAlign.End: return TextAlign.end;
-      case SimpleTextAlign.Justify: return TextAlign.justify;
-      case SimpleTextAlign.Start: return TextAlign.start;
-      case SimpleTextAlign.Unknown: return TextAlign.left;
+      case SimpleTextAlign.Left:
+        return TextAlign.left;
+      case SimpleTextAlign.Center:
+        return TextAlign.center;
+      case SimpleTextAlign.Right:
+        return TextAlign.right;
+      case SimpleTextAlign.End:
+        return TextAlign.end;
+      case SimpleTextAlign.Justify:
+        return TextAlign.justify;
+      case SimpleTextAlign.Start:
+        return TextAlign.start;
+      case SimpleTextAlign.Unknown:
+        return TextAlign.left;
     }
     return TextAlign.left;
   }
@@ -39,14 +54,11 @@ class SimpleTextComponent extends AbstractSimpleTextComponent {
   @override
   Widget yourWidget(BuildContext context, SimpleTextModel? value) {
     if (value == null) return Text('No simple text');
-    var text = ListView(
-        shrinkWrap: true,
-        physics: ScrollPhysics(),
-        children: [
-          h1(context, value.title!),
-          Container(height: 20),
-          h5(context, value.text!, textAlign: toTextAlign(value.textAlign)),
-        ]);
+    var text = ListView(shrinkWrap: true, physics: ScrollPhysics(), children: [
+      h1(app, context, value.title!),
+      Container(height: 20),
+      h5(app, context, value.text!, textAlign: toTextAlign(value.textAlign)),
+    ]);
     return text;
   }
 }

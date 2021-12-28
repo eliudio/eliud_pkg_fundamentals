@@ -49,7 +49,7 @@
       "group": "shape",
       "fieldType": "Rgb",
       "iconName": "color_lens",
-      "bespokeFormField": "RgbField(\"Color\", state.value!.color, _onColorChanged)"
+      "bespokeFormField": "RgbField(widget.app, \"Color\", state.value!.color, _onColorChanged)"
     },
     {
       "fieldName": "height",
@@ -105,8 +105,8 @@
     }
   ],
   "listFields": {
-    "title": "value.documentID != null ? Center(child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().textStyle().text(context, value.documentID!)) : Container()",
-    "subTitle": "value.name != null ? Center(child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().textStyle().text(context, value.name!)) : Container()"
+    "title": "value.documentID != null ? Center(child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().textStyle().text(app, context, value.documentID!)) : Container()",
+    "subTitle": "value.name != null ? Center(child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().textStyle().text(app, context, value.name!)) : Container()"
   },
   "depends": ["eliud_core"]
 }

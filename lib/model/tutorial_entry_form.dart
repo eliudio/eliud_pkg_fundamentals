@@ -13,6 +13,7 @@
 
 */
 
+import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/core/blocs/access/state/access_state.dart';
 import 'package:eliud_core/core/blocs/access/state/logged_in.dart';
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
@@ -63,17 +64,16 @@ import 'package:eliud_pkg_fundamentals/model/tutorial_entry_form_state.dart';
 
 
 class TutorialEntryForm extends StatelessWidget {
+  final AppModel app;
   FormAction formAction;
   TutorialEntryModel? value;
   ActionModel? submitAction;
 
-  TutorialEntryForm({Key? key, required this.formAction, required this.value, this.submitAction}) : super(key: key);
+  TutorialEntryForm({Key? key, required this.app, required this.formAction, required this.value, this.submitAction}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var app = AccessBloc.currentApp(context);
-    if (app == null) return Text("No app available");
     var appId = app.documentID!;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<TutorialEntryFormBloc >(
@@ -81,7 +81,7 @@ class TutorialEntryForm extends StatelessWidget {
                                        
                                                 )..add(InitialiseTutorialEntryFormEvent(value: value)),
   
-        child: MyTutorialEntryForm(submitAction: submitAction, formAction: formAction),
+        child: MyTutorialEntryForm(app:app, submitAction: submitAction, formAction: formAction),
           );
     } if (formAction == FormAction.ShowPreloadedData) {
       return BlocProvider<TutorialEntryFormBloc >(
@@ -89,17 +89,17 @@ class TutorialEntryForm extends StatelessWidget {
                                        
                                                 )..add(InitialiseTutorialEntryFormNoLoadEvent(value: value)),
   
-        child: MyTutorialEntryForm(submitAction: submitAction, formAction: formAction),
+        child: MyTutorialEntryForm(app:app, submitAction: submitAction, formAction: formAction),
           );
     } else {
       return Scaffold(
-        appBar: StyleRegistry.registry().styleWithContext(context).adminFormStyle().appBarWithString(context, title: formAction == FormAction.UpdateAction ? 'Update TutorialEntry' : 'Add TutorialEntry'),
+        appBar: StyleRegistry.registry().styleWithApp(app).adminFormStyle().appBarWithString(app, context, title: formAction == FormAction.UpdateAction ? 'Update TutorialEntry' : 'Add TutorialEntry'),
         body: BlocProvider<TutorialEntryFormBloc >(
             create: (context) => TutorialEntryFormBloc(appId,
                                        
                                                 )..add((formAction == FormAction.UpdateAction ? InitialiseTutorialEntryFormEvent(value: value) : InitialiseNewTutorialEntryFormEvent())),
   
-        child: MyTutorialEntryForm(submitAction: submitAction, formAction: formAction),
+        child: MyTutorialEntryForm(app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
@@ -107,10 +107,11 @@ class TutorialEntryForm extends StatelessWidget {
 
 
 class MyTutorialEntryForm extends StatefulWidget {
+  final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MyTutorialEntryForm({this.formAction, this.submitAction});
+  MyTutorialEntryForm({required this.app, this.formAction, this.submitAction});
 
   _MyTutorialEntryFormState createState() => _MyTutorialEntryFormState(this.formAction);
 }
@@ -139,13 +140,10 @@ class _MyTutorialEntryFormState extends State<MyTutorialEntryForm> {
 
   @override
   Widget build(BuildContext context) {
-    var app = AccessBloc.currentApp(context);
-    if (app == null) return Text('No app available');
-    var appId = app.documentID!;
     var accessState = AccessBloc.getState(context);
     return BlocBuilder<TutorialEntryFormBloc, TutorialEntryFormState>(builder: (context, state) {
       if (state is TutorialEntryFormUninitialized) return Center(
-        child: StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context),
+        child: StyleRegistry.registry().styleWithApp(widget.app).adminListStyle().progressIndicator(widget.app, context),
       );
 
       if (state is TutorialEntryFormLoaded) {
@@ -171,53 +169,53 @@ class _MyTutorialEntryFormState extends State<MyTutorialEntryForm> {
          children.add(Container(
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  child: StyleRegistry.registry().styleWithContext(context).adminFormStyle().groupTitle(context, 'General')
+                  child: StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().groupTitle(widget.app, context, 'General')
                 ));
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, labelText: 'Description', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _descriptionController, keyboardType: TextInputType.text, validator: (_) => state is DescriptionTutorialEntryFormError ? state.message : null, hintText: null)
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Description', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _descriptionController, keyboardType: TextInputType.text, validator: (_) => state is DescriptionTutorialEntryFormError ? state.message : null, hintText: null)
           );
 
 
         children.add(Container(height: 20.0));
-        children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().divider(context));
+        children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().divider(widget.app, context));
 
 
          children.add(Container(
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  child: StyleRegistry.registry().styleWithContext(context).adminFormStyle().groupTitle(context, 'Optional Image')
+                  child: StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().groupTitle(widget.app, context, 'Optional Image')
                 ));
 
         children.add(
 
-                DropdownButtonComponentFactory().createNew(appId: appId, id: "platformMediums", value: _image, trigger: _onImageSelected, optional: true),
+                DropdownButtonComponentFactory().createNew(app: widget.app, id: "platformMediums", value: _image, trigger: _onImageSelected, optional: true),
           );
 
 
         children.add(Container(height: 20.0));
-        children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().divider(context));
+        children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().divider(widget.app, context));
 
 
          children.add(Container(
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  child: StyleRegistry.registry().styleWithContext(context).adminFormStyle().groupTitle(context, 'Optional Code')
+                  child: StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().groupTitle(widget.app, context, 'Optional Code')
                 ));
 
         children.add(
 
-                  StyleRegistry.registry().styleWithContext(context).adminFormStyle().textFormField(context, labelText: 'Code', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _codeController, keyboardType: TextInputType.text, validator: (_) => state is CodeTutorialEntryFormError ? state.message : null, hintText: null)
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Code', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _codeController, keyboardType: TextInputType.text, validator: (_) => state is CodeTutorialEntryFormError ? state.message : null, hintText: null)
           );
 
 
         children.add(Container(height: 20.0));
-        children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().divider(context));
+        children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().divider(widget.app, context));
 
 
         if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
-          children.add(StyleRegistry.registry().styleWithContext(context).adminFormStyle().button(context, label: 'Submit',
+          children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().button(widget.app, context, label: 'Submit',
                   onPressed: _readOnly(accessState, state) ? null : () {
                     if (state is TutorialEntryFormError) {
                       return null;
@@ -248,7 +246,7 @@ class _MyTutorialEntryFormState extends State<MyTutorialEntryForm> {
                   },
                 ));
 
-        return StyleRegistry.registry().styleWithContext(context).adminFormStyle().container(context, Form(
+        return StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().container(widget.app, context, Form(
             child: ListView(
               padding: const EdgeInsets.all(8),
               physics: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? NeverScrollableScrollPhysics() : null,
@@ -258,7 +256,7 @@ class _MyTutorialEntryFormState extends State<MyTutorialEntryForm> {
           ), formAction!
         );
       } else {
-        return StyleRegistry.registry().styleWithContext(context).adminListStyle().progressIndicator(context);
+        return StyleRegistry.registry().styleWithApp(widget.app).adminListStyle().progressIndicator(widget.app, context);
       }
     });
   }
@@ -296,7 +294,7 @@ class _MyTutorialEntryFormState extends State<MyTutorialEntryForm> {
   }
 
   bool _readOnly(AccessState accessState, TutorialEntryFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(AccessBloc.currentAppId(context)));
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID!));
   }
   
 

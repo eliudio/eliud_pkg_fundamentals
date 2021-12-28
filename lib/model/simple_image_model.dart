@@ -78,7 +78,7 @@ class SimpleImageModel {
     );
   }
 
-  static SimpleImageModel? fromEntity(String documentID, SimpleImageEntity? entity) {
+  static Future<SimpleImageModel?> fromEntity(String documentID, SimpleImageEntity? entity) async {
     if (entity == null) return null;
     var counter = 0;
     return SimpleImageModel(
@@ -86,7 +86,7 @@ class SimpleImageModel {
           appId: entity.appId, 
           title: entity.title, 
           conditions: 
-            StorageConditionsModel.fromEntity(entity.conditions), 
+            await StorageConditionsModel.fromEntity(entity.conditions), 
     );
   }
 

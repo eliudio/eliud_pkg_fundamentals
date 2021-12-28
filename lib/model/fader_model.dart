@@ -93,7 +93,7 @@ class FaderModel {
     );
   }
 
-  static FaderModel? fromEntity(String documentID, FaderEntity? entity) {
+  static Future<FaderModel?> fromEntity(String documentID, FaderEntity? entity) async {
     if (entity == null) return null;
     var counter = 0;
     return FaderModel(
@@ -103,15 +103,14 @@ class FaderModel {
           animationMilliseconds: entity.animationMilliseconds, 
           imageSeconds: entity.imageSeconds, 
           items: 
-            entity.items == null ? null :
-            entity.items
+            entity.items == null ? null : List<ListedItemModel>.from(await Future.wait(entity. items
             !.map((item) {
-              counter++; 
-              return ListedItemModel.fromEntity(counter.toString(), item)!;
+            counter++;
+              return ListedItemModel.fromEntity(counter.toString(), item);
             })
-            .toList(), 
+            .toList())), 
           conditions: 
-            StorageConditionsModel.fromEntity(entity.conditions), 
+            await StorageConditionsModel.fromEntity(entity.conditions), 
     );
   }
 

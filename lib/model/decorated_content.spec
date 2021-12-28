@@ -54,7 +54,7 @@
       "group": "decoratingComponentId",
       "remark": "For that specific component, e.g. 'carousel', which Component ID, i.e. which carousel to include in the page",
       "fieldType": "String",
-      "bespokeFormField": "ComponentIdField(componentName: state.value!.decoratingComponentName, value: state.value!.decoratingComponentId, trigger: _onDecoratingComponentIdChanged)"
+      "bespokeFormField": "ComponentIdField(widget.app, componentName: state.value!.decoratingComponentName, value: state.value!.decoratingComponentId, trigger: _onDecoratingComponentIdChanged)"
     },
     {
       "fieldName": "contentComponentName",
@@ -68,7 +68,7 @@
       "group": "contentComponentId",
       "remark": "For that specific component, e.g. 'carousel', which Component ID, i.e. which carousel to include in the page",
       "fieldType": "String",
-      "bespokeFormField": "ComponentIdField(componentName: state.value!.contentComponentName, value: state.value!.contentComponentId, trigger: _onContentComponentIdChanged)"
+      "bespokeFormField": "ComponentIdField(widget.app, componentName: state.value!.contentComponentName, value: state.value!.contentComponentId, trigger: _onContentComponentIdChanged)"
     },
     {
       "fieldName": "decorationComponentPosition",
@@ -105,8 +105,8 @@
     }
   ],
   "listFields": {
-    "title": "value.documentID != null ? Center(child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().textStyle().text(context, value.documentID!)) : Container()",
-    "subTitle": "value.name != null ? Center(child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().textStyle().text(context, value.name!)) : Container()"
+    "title": "value.documentID != null ? Center(child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().textStyle().text(app, context, value.documentID!)) : Container()",
+    "subTitle": "value.name != null ? Center(child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().textStyle().text(app, context, value.name!)) : Container()"
   },
   "depends": ["eliud_core"]
 }

@@ -1,6 +1,7 @@
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/core/tools/document_processor.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
+import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/style/frontend/has_button.dart';
@@ -20,16 +21,23 @@ import 'package:transparent_image/transparent_image.dart';
 
 class TutorialComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({Key? key, required String appId, required String id, Map<String, dynamic>? parameters}) {
-    return TutorialComponent(appId: appId, tutorialId: id);
+  Widget createNew(
+      {Key? key,
+      required AppModel app,
+      required String id,
+      Map<String, dynamic>? parameters}) {
+    return TutorialComponent(app: app, tutorialId: id);
   }
 
   @override
-  Future<dynamic> getModel({required String appId, required String id}) async => await tutorialRepository(appId: appId)!.get(id);
+  Future<dynamic> getModel({required AppModel app, required String id}) async =>
+      await tutorialRepository(appId: app.documentID!)!.get(id);
 }
 
 class TutorialComponent extends AbstractTutorialComponent {
-  TutorialComponent({Key? key, required String appId, required String tutorialId}) : super(key: key, theAppId: appId, tutorialId: tutorialId);
+  TutorialComponent(
+      {Key? key, required AppModel app, required String tutorialId})
+      : super(key: key, app: app, tutorialId: tutorialId);
 
   Widget _aBitSpace() => SizedBox(
         height: 20,
@@ -39,7 +47,9 @@ class TutorialComponent extends AbstractTutorialComponent {
   @override
   Widget yourWidget(BuildContext context, TutorialModel? value) {
     DocumentParameterProcessor documentParameterProcessor =
-        ExtendedDocumentParameterProcessor(context,);
+        ExtendedDocumentParameterProcessor(
+      context,app,
+    );
     var widgets = <Widget>[];
     widgets.add(Text(
       documentParameterProcessor.process(value!.title!),
@@ -58,14 +68,19 @@ class TutorialComponent extends AbstractTutorialComponent {
             image: element.image!.url!,
           ),
           onTap: () {
-            Navigator.push(context, pageRouteBuilder(AccessBloc.currentApp(context), page: FulLScreen(element.image)
-            ));
+            Navigator.push(
+                context,
+                pageRouteBuilder(app,
+                    page: FulLScreen(element.image)));
           },
         ));
 
         widgets.add(Center(
-            child: button(context, label: 'Fullscreen', onPressed: () {
-          Navigator.push(context, pageRouteBuilder(AccessBloc.currentApp(context), page: FulLScreen(element.image)));
+            child: button(app, context, label: 'Fullscreen', onPressed: () {
+          Navigator.push(
+              context,
+              pageRouteBuilder(app,
+                  page: FulLScreen(element.image)));
         })));
 
         widgets.add(_aBitSpace());

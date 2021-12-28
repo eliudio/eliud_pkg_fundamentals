@@ -1,5 +1,6 @@
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
+import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/component/component_constructor.dart';
@@ -13,16 +14,22 @@ import 'package:flutter/material.dart';
 
 class BookletComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({Key? key, required String appId, required String id, Map<String, dynamic>? parameters}) {
-    return BookletComponent(key: key, appId: appId, bookletId: id);
+  Widget createNew(
+      {Key? key,
+      required AppModel app,
+      required String id,
+      Map<String, dynamic>? parameters}) {
+    return BookletComponent(key: key, app: app, bookletId: id);
   }
 
   @override
-  Future<dynamic> getModel({required String appId, required String id}) async => await bookletRepository(appId: appId)!.get(id);
+  Future<dynamic> getModel({required AppModel app, required String id}) async =>
+      await bookletRepository(appId: app.documentID!)!.get(id);
 }
 
 class BookletComponent extends AbstractBookletComponent {
-  BookletComponent({Key? key, required String appId, required String bookletId}) : super(key: key, theAppId: appId, bookletId: bookletId);
+  BookletComponent({Key? key, required AppModel app, required String bookletId})
+      : super(key: key, app: app, bookletId: bookletId);
 
   @override
   Widget yourWidget(BuildContext context, BookletModel? value) {
@@ -35,13 +42,13 @@ class BookletComponent extends AbstractBookletComponent {
 
     var ratio = screenRatio(context);
     var text = ListView(shrinkWrap: true, physics: ScrollPhysics(), children: [
-      h1(
+      h1(app,
         context,
         title,
         textAlign: textAlign,
       ),
       Container(height: 20),
-      h5(
+      h5(app,
         context,
         contents,
         textAlign: textAlign,

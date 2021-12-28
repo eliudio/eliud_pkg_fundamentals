@@ -113,7 +113,7 @@ class DocumentModel {
     );
   }
 
-  static DocumentModel? fromEntity(String documentID, DocumentEntity? entity) {
+  static Future<DocumentModel?> fromEntity(String documentID, DocumentEntity? entity) async {
     if (entity == null) return null;
     var counter = 0;
     return DocumentModel(
@@ -124,15 +124,14 @@ class DocumentModel {
           content: entity.content, 
           padding: entity.padding, 
           images: 
-            entity.images == null ? null :
-            entity.images
+            entity.images == null ? null : List<DocumentItemModel>.from(await Future.wait(entity. images
             !.map((item) {
-              counter++; 
-              return DocumentItemModel.fromEntity(counter.toString(), item)!;
+            counter++;
+              return DocumentItemModel.fromEntity(counter.toString(), item);
             })
-            .toList(), 
+            .toList())), 
           conditions: 
-            StorageConditionsModel.fromEntity(entity.conditions), 
+            await StorageConditionsModel.fromEntity(entity.conditions), 
     );
   }
 

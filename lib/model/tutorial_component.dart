@@ -26,19 +26,20 @@ import 'package:eliud_core/style/style_registry.dart';
 import 'abstract_repository_singleton.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
+import 'package:eliud_core/model/app_model.dart';
 
 abstract class AbstractTutorialComponent extends StatelessWidget {
   static String componentName = "tutorials";
-  final String theAppId;
+  final AppModel app;
   final String tutorialId;
 
-  AbstractTutorialComponent({Key? key, required this.theAppId, required this.tutorialId}): super(key: key);
+  AbstractTutorialComponent({Key? key, required this.app, required this.tutorialId}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<TutorialComponentBloc> (
           create: (context) => TutorialComponentBloc(
-            tutorialRepository: tutorialRepository(appId: theAppId)!)
+            tutorialRepository: tutorialRepository(appId: app.documentID!)!)
         ..add(FetchTutorialComponent(id: tutorialId)),
       child: _tutorialBlockBuilder(context),
     );
@@ -48,7 +49,7 @@ abstract class AbstractTutorialComponent extends StatelessWidget {
     return BlocBuilder<TutorialComponentBloc, TutorialComponentState>(builder: (context, state) {
       if (state is TutorialComponentLoaded) {
         if (state.value == null) {
-          return AlertWidget(title: "Error", content: 'No Tutorial defined');
+          return AlertWidget(app: app, title: "Error", content: 'No Tutorial defined');
         } else {
           return yourWidget(context, state.value);
         }
@@ -59,10 +60,10 @@ abstract class AbstractTutorialComponent extends StatelessWidget {
           size: 30.0,
         );
       } else if (state is TutorialComponentError) {
-        return AlertWidget(title: 'Error', content: state.message);
+        return AlertWidget(app: app, title: 'Error', content: state.message);
       } else {
         return Center(
-          child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicatorStyle().progressIndicator(context),
+          child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().progressIndicatorStyle().progressIndicator(app, context),
         );
       }
     });

@@ -26,19 +26,20 @@ import 'package:eliud_core/style/style_registry.dart';
 import 'abstract_repository_singleton.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
+import 'package:eliud_core/model/app_model.dart';
 
 abstract class AbstractDividerComponent extends StatelessWidget {
   static String componentName = "dividers";
-  final String theAppId;
+  final AppModel app;
   final String dividerId;
 
-  AbstractDividerComponent({Key? key, required this.theAppId, required this.dividerId}): super(key: key);
+  AbstractDividerComponent({Key? key, required this.app, required this.dividerId}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<DividerComponentBloc> (
           create: (context) => DividerComponentBloc(
-            dividerRepository: dividerRepository(appId: theAppId)!)
+            dividerRepository: dividerRepository(appId: app.documentID!)!)
         ..add(FetchDividerComponent(id: dividerId)),
       child: _dividerBlockBuilder(context),
     );
@@ -48,7 +49,7 @@ abstract class AbstractDividerComponent extends StatelessWidget {
     return BlocBuilder<DividerComponentBloc, DividerComponentState>(builder: (context, state) {
       if (state is DividerComponentLoaded) {
         if (state.value == null) {
-          return AlertWidget(title: "Error", content: 'No Divider defined');
+          return AlertWidget(app: app, title: "Error", content: 'No Divider defined');
         } else {
           return yourWidget(context, state.value);
         }
@@ -59,10 +60,10 @@ abstract class AbstractDividerComponent extends StatelessWidget {
           size: 30.0,
         );
       } else if (state is DividerComponentError) {
-        return AlertWidget(title: 'Error', content: state.message);
+        return AlertWidget(app: app, title: 'Error', content: state.message);
       } else {
         return Center(
-          child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().progressIndicatorStyle().progressIndicator(context),
+          child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().progressIndicatorStyle().progressIndicator(app, context),
         );
       }
     });

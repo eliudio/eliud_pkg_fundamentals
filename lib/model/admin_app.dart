@@ -307,7 +307,7 @@ class AdminApp extends AdminAppInstallerBase {
 
 class AdminMenu extends AdminAppMenuInstallerBase {
 
-  Future<MenuDefModel> menu(String appId) async {
+  Future<MenuDefModel> menu(AppModel app) async {
     var menuItems = <MenuItemModel>[];
 
     menuItems.add(
@@ -316,7 +316,7 @@ class AdminMenu extends AdminAppMenuInstallerBase {
         text: "Booklets",
         description: "Booklets",
         icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
-        action: GotoPage(appId, pageID: "eliud_pkg_fundamentals_booklets_page"))
+        action: GotoPage(app, pageID: "eliud_pkg_fundamentals_booklets_page"))
     );
 
 
@@ -326,7 +326,7 @@ class AdminMenu extends AdminAppMenuInstallerBase {
         text: "DecoratedContents",
         description: "DecoratedContents",
         icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
-        action: GotoPage(appId, pageID: "eliud_pkg_fundamentals_decoratedcontents_page"))
+        action: GotoPage(app, pageID: "eliud_pkg_fundamentals_decoratedcontents_page"))
     );
 
 
@@ -336,7 +336,7 @@ class AdminMenu extends AdminAppMenuInstallerBase {
         text: "Dividers",
         description: "Dividers",
         icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
-        action: GotoPage(appId, pageID: "eliud_pkg_fundamentals_dividers_page"))
+        action: GotoPage(app, pageID: "eliud_pkg_fundamentals_dividers_page"))
     );
 
 
@@ -346,7 +346,7 @@ class AdminMenu extends AdminAppMenuInstallerBase {
         text: "Documents",
         description: "Documents",
         icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
-        action: GotoPage(appId, pageID: "eliud_pkg_fundamentals_documents_page"))
+        action: GotoPage(app, pageID: "eliud_pkg_fundamentals_documents_page"))
     );
 
 
@@ -356,7 +356,7 @@ class AdminMenu extends AdminAppMenuInstallerBase {
         text: "Faders",
         description: "Faders",
         icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
-        action: GotoPage(appId, pageID: "eliud_pkg_fundamentals_faders_page"))
+        action: GotoPage(app, pageID: "eliud_pkg_fundamentals_faders_page"))
     );
 
 
@@ -366,7 +366,7 @@ class AdminMenu extends AdminAppMenuInstallerBase {
         text: "Grids",
         description: "Grids",
         icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
-        action: GotoPage(appId, pageID: "eliud_pkg_fundamentals_grids_page"))
+        action: GotoPage(app, pageID: "eliud_pkg_fundamentals_grids_page"))
     );
 
 
@@ -376,7 +376,7 @@ class AdminMenu extends AdminAppMenuInstallerBase {
         text: "Presentations",
         description: "Presentations",
         icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
-        action: GotoPage(appId, pageID: "eliud_pkg_fundamentals_presentations_page"))
+        action: GotoPage(app, pageID: "eliud_pkg_fundamentals_presentations_page"))
     );
 
 
@@ -386,7 +386,7 @@ class AdminMenu extends AdminAppMenuInstallerBase {
         text: "SimpleImages",
         description: "SimpleImages",
         icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
-        action: GotoPage(appId, pageID: "eliud_pkg_fundamentals_simpleimages_page"))
+        action: GotoPage(app, pageID: "eliud_pkg_fundamentals_simpleimages_page"))
     );
 
 
@@ -396,7 +396,7 @@ class AdminMenu extends AdminAppMenuInstallerBase {
         text: "SimpleTexts",
         description: "SimpleTexts",
         icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
-        action: GotoPage(appId, pageID: "eliud_pkg_fundamentals_simpletexts_page"))
+        action: GotoPage(app, pageID: "eliud_pkg_fundamentals_simpletexts_page"))
     );
 
 
@@ -406,18 +406,18 @@ class AdminMenu extends AdminAppMenuInstallerBase {
         text: "Tutorials",
         description: "Tutorials",
         icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
-        action: GotoPage(appId, pageID: "eliud_pkg_fundamentals_tutorials_page"))
+        action: GotoPage(app, pageID: "eliud_pkg_fundamentals_tutorials_page"))
     );
 
 
     MenuDefModel menu = MenuDefModel(
       admin: true,
       documentID: "eliud_pkg_fundamentals_admin_menu",
-      appId: appId,
+      appId: app.documentID,
       name: "eliud_pkg_fundamentals",
       menuItems: menuItems
     );
-    await menuDefRepository(appId: appId)!.add(menu);
+    await menuDefRepository(appId: app.documentID!)!.add(menu);
     return menu;
   }
 }

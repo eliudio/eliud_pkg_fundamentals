@@ -83,7 +83,7 @@ class BookletModel {
     );
   }
 
-  static BookletModel? fromEntity(String documentID, BookletEntity? entity) {
+  static Future<BookletModel?> fromEntity(String documentID, BookletEntity? entity) async {
     if (entity == null) return null;
     var counter = 0;
     return BookletModel(
@@ -91,15 +91,14 @@ class BookletModel {
           appId: entity.appId, 
           name: entity.name, 
           sections: 
-            entity.sections == null ? null :
-            entity.sections
+            entity.sections == null ? null : List<SectionModel>.from(await Future.wait(entity. sections
             !.map((item) {
-              counter++; 
-              return SectionModel.fromEntity(counter.toString(), item)!;
+            counter++;
+              return SectionModel.fromEntity(counter.toString(), item);
             })
-            .toList(), 
+            .toList())), 
           conditions: 
-            StorageConditionsModel.fromEntity(entity.conditions), 
+            await StorageConditionsModel.fromEntity(entity.conditions), 
     );
   }
 

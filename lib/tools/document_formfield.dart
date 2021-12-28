@@ -19,6 +19,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 typedef DocumentTextFieldTrigger(String value);
 
 class DocumentTextField extends StatefulWidget {
+  final AppModel app;
   final String label;
   final DocumentRenderer? documentRenderer;
   String? documentValue;
@@ -26,7 +27,7 @@ class DocumentTextField extends StatefulWidget {
   final DocumentTextFieldTrigger trigger;
   final BackgroundModel? bdm;
 
-  DocumentTextField(this.label, this.documentRenderer, this.documentValue,
+  DocumentTextField(this.app, this.label, this.documentRenderer, this.documentValue,
       this.images, this.bdm, this.trigger);
 
   @override
@@ -43,24 +44,23 @@ class DocumentTextFieldState extends State<DocumentTextField> {
           if (accessState is AccessDetermined) {
             return _buildExcludeDocument(accessState, context);
           } else {
-            return progressIndicator(context);
+            return progressIndicator(widget.app, context);
           }
         });
   }
 
   Widget _buildExcludeDocument(AccessState accessState, BuildContext context) {
-    var app = AccessBloc.currentApp(context);
-    return button(context,
+    return button(widget.app, context,
             label: widget.label,
             icon: Icon(Icons.fullscreen),
-            onPressed: () => _fullScreen(app, accessState));
+            onPressed: () => _fullScreen(widget.app, accessState));
   }
 
 
   void _fullScreen(AppModel app, AccessState appState) async {
     if (appState is AccessDetermined) {
       await Navigator.of(context).push(pageRouteBuilder(app,
-          page: DocumentTextFieldFullScreen(
+          page: DocumentTextFieldFullScreen(app,
               widget.label,
               widget.documentRenderer,
               widget.documentValue,
@@ -79,6 +79,7 @@ class DocumentTextFieldState extends State<DocumentTextField> {
 }
 
 class DocumentTextFieldFullScreen extends StatefulWidget {
+  final AppModel app;
   final String label;
   final DocumentRenderer? documentRenderer;
   final String? documentValue;
@@ -86,7 +87,7 @@ class DocumentTextFieldFullScreen extends StatefulWidget {
   final BackgroundModel? bdm;
   final DocumentTextFieldTrigger trigger;
 
-  DocumentTextFieldFullScreen(this.label, this.documentRenderer,
+  DocumentTextFieldFullScreen(this.app, this.label, this.documentRenderer,
       this.documentValue, this.images, this.bdm, this.trigger);
 
   @override
@@ -112,13 +113,13 @@ class DocumentTextFieldFullScreenState
           if (accessState is AccessDetermined) {
             return tabs(accessState);
           } else {
-            return progressIndicator(context);
+            return progressIndicator(widget.app, context);
           }
         });
   }
 
-  Widget _document(MemberModel? member) {
-    var w = DocumentRendererTool().render(
+  Widget _document(AppModel app, MemberModel? member) {
+    var w = DocumentRendererTool().render(app,
         context, member, widget.documentRenderer, value!, widget.images, widget.bdm);
     return ListView(children: <Widget>[w]);
   }
@@ -153,7 +154,7 @@ class DocumentTextFieldFullScreenState
             body: TabBarView(
               children: <Widget>[
                 TextFormField(
-                  readOnly: !accessState.memberIsOwner(accessState.currentApp.documentID!),
+                  readOnly: !accessState.memberIsOwner(widget.app.documentID!),
                   style: TextStyle(color: Colors.black),
                   initialValue: value,
                   decoration: InputDecoration(
@@ -165,7 +166,7 @@ class DocumentTextFieldFullScreenState
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                 ),
-                _document(accessState.getMember())
+                _document(widget.app, accessState.getMember())
               ],
             ),
           ),

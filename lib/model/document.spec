@@ -57,7 +57,7 @@
       "remark": "Document content",
       "fieldType": "String",
       "iconName": "text_format",
-      "bespokeFormField": "DocumentTextField('Document', state.value!.documentRenderer, state.value!.content, state.value!.images, state.value!.background, _onContentChanged)",
+      "bespokeFormField": "DocumentTextField(widget.app, 'Document', state.value!.documentRenderer, state.value!.content, state.value!.images, state.value!.background, _onContentChanged)",
       "group": "contents"
     },
     {
@@ -121,8 +121,8 @@
     }
  ],
   "listFields": {
-    "title": "value.documentID != null ? Center(child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().textStyle().text(context, value.documentID!)) : Container()",
-    "subTitle": "value.name != null ? Center(child: StyleRegistry.registry().styleWithContext(context).frontEndStyle().textStyle().text(context, value.name!)) : Container()"
+    "title": "value.documentID != null ? Center(child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().textStyle().text(app, context, value.documentID!)) : Container()",
+    "subTitle": "value.name != null ? Center(child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().textStyle().text(app, context, value.name!)) : Container()"
   },
   "depends": ["eliud_core"]
 }

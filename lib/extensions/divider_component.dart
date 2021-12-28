@@ -1,5 +1,6 @@
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
+import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/tools/component/component_constructor.dart';
 import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
@@ -10,16 +11,22 @@ import 'package:flutter/material.dart';
 
 class DividerComponentConstructorDefault implements ComponentConstructor {
   @override
-  Widget createNew({Key? key, required String appId, required String id, Map<String, dynamic>? parameters}) {
-    return DividerComponent(key: key, appId: appId, dividerId: id);
+  Widget createNew(
+      {Key? key,
+      required AppModel app,
+      required String id,
+      Map<String, dynamic>? parameters}) {
+    return DividerComponent(key: key, app: app, dividerId: id);
   }
 
   @override
-  Future<dynamic> getModel({required String appId, required String id}) async => await dividerRepository(appId: appId)!.get(id);
+  Future<dynamic> getModel({required AppModel app, required String id}) async =>
+      await dividerRepository(appId: app.documentID!)!.get(id);
 }
 
 class DividerComponent extends AbstractDividerComponent {
-  DividerComponent({Key? key, required String appId, required String dividerId}) : super(key: key, theAppId: appId, dividerId: dividerId);
+  DividerComponent({Key? key, required AppModel app, required String dividerId})
+      : super(key: key, app: app, dividerId: dividerId);
 
   @override
   Widget yourWidget(BuildContext context, DividerModel? value) {

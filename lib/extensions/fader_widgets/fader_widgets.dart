@@ -22,7 +22,8 @@ class TheImageGF extends StatefulWidget {
   // The duration of the transition between the images
   final int? animationMilliseconds;
 
-  TheImageGF(this.images, this.positionsAndSizes, this.actions, this.orientation, this.imageSeconds, this.animationMilliseconds);
+  TheImageGF(this.images, this.positionsAndSizes, this.actions,
+      this.orientation, this.imageSeconds, this.animationMilliseconds);
 
   @override
   State<StatefulWidget> createState() => TheImageGFState();
@@ -49,18 +50,17 @@ class TheImageGFState extends State<TheImageGF> {
             context, widget.positionsAndSizes[i]!, widget.orientation)!;
         maxHeight = max(height, maxHeight);
         maxWidth = max(width, maxWidth);
-        if (w != null)
-          list.add(w);
+        if (w != null) list.add(w);
       }
     }
 
-    var viewPortFraction = maxWidth  / fullScreenWidth(context);
+    var viewPortFraction = maxWidth / fullScreenWidth(context);
     return GFCarousel(
-        height: maxHeight,
-        items: list,
-        autoPlay: true,
-        viewportFraction: viewPortFraction,
-      );
+      height: maxHeight,
+      items: list,
+      autoPlay: true,
+      viewportFraction: viewPortFraction,
+    );
   }
 }
 
@@ -191,7 +191,7 @@ class TheImageState extends State<TheImage> {
 class FaderHelper {
   static double? getHeight(BuildContext context, PosSizeModel posSizeModel,
       Orientation orientation) {
-    return  BoxFitHelper.toHeight(posSizeModel, context, orientation);
+    return BoxFitHelper.toHeight(posSizeModel, context, orientation);
   }
 
   static double? getWidth(BuildContext context, PosSizeModel posSizeModel,
@@ -199,8 +199,13 @@ class FaderHelper {
     return BoxFitHelper.toWidth(posSizeModel, context, orientation);
   }
 
-  static Widget? getIt(BuildContext context, PosSizeModel? posSizeModel,
-      PlatformMediumModel? imageModel, Orientation orientation, ActionModel? action, int index) {
+  static Widget? getIt(
+      BuildContext context,
+      PosSizeModel? posSizeModel,
+      PlatformMediumModel? imageModel,
+      Orientation orientation,
+      ActionModel? action,
+      int index) {
     if (imageModel == null) {
       return null;
     }
@@ -210,13 +215,13 @@ class FaderHelper {
     var alignment = BoxFitHelper.toAlignment(posSizeModel, orientation);
 
     var realImage = Center(
-          child: Image.network(
-            imageModel.url!,
-            fit: BoxFit.scaleDown,
-            height: height,
-            width: width,
-            alignment: Alignment.center,
-          ));
+        child: Image.network(
+      imageModel.url!,
+      fit: BoxFit.scaleDown,
+      height: height,
+      width: width,
+      alignment: Alignment.center,
+    ));
 
     var clip;
     if (posSizeModel.clip != null) {
@@ -263,8 +268,8 @@ class FaderHelper {
     if (alignment == null) {
       aligned = clip;
     } else {
-      aligned = Align(
-        alignment: alignment, child: clip, key: ValueKey<int>(index));
+      aligned =
+          Align(alignment: alignment, child: clip, key: ValueKey<int>(index));
     }
 
     if (action != null) {
@@ -273,11 +278,9 @@ class FaderHelper {
             EliudRouter.Router.navigateTo(context, action);
           },
           child: aligned,
-          key: ValueKey<int>(index)
-      );
+          key: ValueKey<int>(index));
     } else {
       return aligned;
     }
   }
-
 }

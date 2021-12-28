@@ -17,6 +17,7 @@
 import 'package:eliud_core/tools/random.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
+import 'package:eliud_core/model/app_model.dart';
 
 import 'dart:async';
 
@@ -60,15 +61,15 @@ typedef ListedItemListChanged(List<ListedItemModel> values);
 typedef SectionListChanged(List<SectionModel> values);
 typedef TutorialEntryListChanged(List<TutorialEntryModel> values);
 
-documentItemsList(context, value, trigger) => EmbeddedComponentFactory.documentItemsList(context, value, trigger);
-linksList(context, value, trigger) => EmbeddedComponentFactory.linksList(context, value, trigger);
-listedItemsList(context, value, trigger) => EmbeddedComponentFactory.listedItemsList(context, value, trigger);
-sectionsList(context, value, trigger) => EmbeddedComponentFactory.sectionsList(context, value, trigger);
-tutorialEntrysList(context, value, trigger) => EmbeddedComponentFactory.tutorialEntrysList(context, value, trigger);
+documentItemsList(app, context, value, trigger) => EmbeddedComponentFactory.documentItemsList(app, context, value, trigger);
+linksList(app, context, value, trigger) => EmbeddedComponentFactory.linksList(app, context, value, trigger);
+listedItemsList(app, context, value, trigger) => EmbeddedComponentFactory.listedItemsList(app, context, value, trigger);
+sectionsList(app, context, value, trigger) => EmbeddedComponentFactory.sectionsList(app, context, value, trigger);
+tutorialEntrysList(app, context, value, trigger) => EmbeddedComponentFactory.tutorialEntrysList(app, context, value, trigger);
 
 class EmbeddedComponentFactory {
 
-static Widget documentItemsList(BuildContext context, List<DocumentItemModel> values, DocumentItemListChanged trigger) {
+static Widget documentItemsList(BuildContext context, AppModel app, List<DocumentItemModel> values, DocumentItemListChanged trigger) {
   DocumentItemInMemoryRepository inMemoryRepository = DocumentItemInMemoryRepository(trigger, values,);
   return MultiBlocProvider(
     providers: [
@@ -78,11 +79,11 @@ static Widget documentItemsList(BuildContext context, List<DocumentItemModel> va
           )..add(LoadDocumentItemList()),
         )
         ],
-    child: DocumentItemListWidget(isEmbedded: true),
+    child: DocumentItemListWidget(app: app, isEmbedded: true),
   );
 }
 
-static Widget linksList(BuildContext context, List<LinkModel> values, LinkListChanged trigger) {
+static Widget linksList(BuildContext context, AppModel app, List<LinkModel> values, LinkListChanged trigger) {
   LinkInMemoryRepository inMemoryRepository = LinkInMemoryRepository(trigger, values,);
   return MultiBlocProvider(
     providers: [
@@ -92,11 +93,11 @@ static Widget linksList(BuildContext context, List<LinkModel> values, LinkListCh
           )..add(LoadLinkList()),
         )
         ],
-    child: LinkListWidget(isEmbedded: true),
+    child: LinkListWidget(app: app, isEmbedded: true),
   );
 }
 
-static Widget listedItemsList(BuildContext context, List<ListedItemModel> values, ListedItemListChanged trigger) {
+static Widget listedItemsList(BuildContext context, AppModel app, List<ListedItemModel> values, ListedItemListChanged trigger) {
   ListedItemInMemoryRepository inMemoryRepository = ListedItemInMemoryRepository(trigger, values,);
   return MultiBlocProvider(
     providers: [
@@ -106,11 +107,11 @@ static Widget listedItemsList(BuildContext context, List<ListedItemModel> values
           )..add(LoadListedItemList()),
         )
         ],
-    child: ListedItemListWidget(isEmbedded: true),
+    child: ListedItemListWidget(app: app, isEmbedded: true),
   );
 }
 
-static Widget sectionsList(BuildContext context, List<SectionModel> values, SectionListChanged trigger) {
+static Widget sectionsList(BuildContext context, AppModel app, List<SectionModel> values, SectionListChanged trigger) {
   SectionInMemoryRepository inMemoryRepository = SectionInMemoryRepository(trigger, values,);
   return MultiBlocProvider(
     providers: [
@@ -120,11 +121,11 @@ static Widget sectionsList(BuildContext context, List<SectionModel> values, Sect
           )..add(LoadSectionList()),
         )
         ],
-    child: SectionListWidget(isEmbedded: true),
+    child: SectionListWidget(app: app, isEmbedded: true),
   );
 }
 
-static Widget tutorialEntrysList(BuildContext context, List<TutorialEntryModel> values, TutorialEntryListChanged trigger) {
+static Widget tutorialEntrysList(BuildContext context, AppModel app, List<TutorialEntryModel> values, TutorialEntryListChanged trigger) {
   TutorialEntryInMemoryRepository inMemoryRepository = TutorialEntryInMemoryRepository(trigger, values,);
   return MultiBlocProvider(
     providers: [
@@ -134,7 +135,7 @@ static Widget tutorialEntrysList(BuildContext context, List<TutorialEntryModel> 
           )..add(LoadTutorialEntryList()),
         )
         ],
-    child: TutorialEntryListWidget(isEmbedded: true),
+    child: TutorialEntryListWidget(app: app, isEmbedded: true),
   );
 }
 

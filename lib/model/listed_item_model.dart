@@ -78,14 +78,14 @@ class ListedItemModel {
     );
   }
 
-  static ListedItemModel? fromEntity(String documentID, ListedItemEntity? entity) {
+  static Future<ListedItemModel?> fromEntity(String documentID, ListedItemEntity? entity) async {
     if (entity == null) return null;
     var counter = 0;
     return ListedItemModel(
           documentID: documentID, 
           description: entity.description, 
           action: 
-            ActionModel.fromEntity(entity.action), 
+            await ActionModel.fromEntity(entity.action), 
     );
   }
 
