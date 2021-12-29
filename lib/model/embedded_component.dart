@@ -69,7 +69,7 @@ tutorialEntrysList(app, context, value, trigger) => EmbeddedComponentFactory.tut
 
 class EmbeddedComponentFactory {
 
-static Widget documentItemsList(BuildContext context, AppModel app, List<DocumentItemModel> values, DocumentItemListChanged trigger) {
+static Widget documentItemsList(AppModel app, BuildContext context, List<DocumentItemModel> values, DocumentItemListChanged trigger) {
   DocumentItemInMemoryRepository inMemoryRepository = DocumentItemInMemoryRepository(trigger, values,);
   return MultiBlocProvider(
     providers: [
@@ -83,7 +83,7 @@ static Widget documentItemsList(BuildContext context, AppModel app, List<Documen
   );
 }
 
-static Widget linksList(BuildContext context, AppModel app, List<LinkModel> values, LinkListChanged trigger) {
+static Widget linksList(AppModel app, BuildContext context, List<LinkModel> values, LinkListChanged trigger) {
   LinkInMemoryRepository inMemoryRepository = LinkInMemoryRepository(trigger, values,);
   return MultiBlocProvider(
     providers: [
@@ -97,7 +97,7 @@ static Widget linksList(BuildContext context, AppModel app, List<LinkModel> valu
   );
 }
 
-static Widget listedItemsList(BuildContext context, AppModel app, List<ListedItemModel> values, ListedItemListChanged trigger) {
+static Widget listedItemsList(AppModel app, BuildContext context, List<ListedItemModel> values, ListedItemListChanged trigger) {
   ListedItemInMemoryRepository inMemoryRepository = ListedItemInMemoryRepository(trigger, values,);
   return MultiBlocProvider(
     providers: [
@@ -111,7 +111,7 @@ static Widget listedItemsList(BuildContext context, AppModel app, List<ListedIte
   );
 }
 
-static Widget sectionsList(BuildContext context, AppModel app, List<SectionModel> values, SectionListChanged trigger) {
+static Widget sectionsList(AppModel app, BuildContext context, List<SectionModel> values, SectionListChanged trigger) {
   SectionInMemoryRepository inMemoryRepository = SectionInMemoryRepository(trigger, values,);
   return MultiBlocProvider(
     providers: [
@@ -125,7 +125,7 @@ static Widget sectionsList(BuildContext context, AppModel app, List<SectionModel
   );
 }
 
-static Widget tutorialEntrysList(BuildContext context, AppModel app, List<TutorialEntryModel> values, TutorialEntryListChanged trigger) {
+static Widget tutorialEntrysList(AppModel app, BuildContext context, List<TutorialEntryModel> values, TutorialEntryListChanged trigger) {
   TutorialEntryInMemoryRepository inMemoryRepository = TutorialEntryInMemoryRepository(trigger, values,);
   return MultiBlocProvider(
     providers: [
