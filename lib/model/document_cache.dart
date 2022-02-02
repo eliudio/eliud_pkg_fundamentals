@@ -133,15 +133,6 @@ class DocumentCache implements DocumentRepository {
 
   static Future<DocumentModel> refreshRelations(DocumentModel model) async {
 
-    BackgroundModel? backgroundHolder;
-    if (model.background != null) {
-      try {
-        await backgroundRepository(appId: model.appId)!.get(model.background!.documentID).then((val) {
-          backgroundHolder = val;
-        }).catchError((error) {});
-      } catch (_) {}
-    }
-
     List<DocumentItemModel>? imagesHolder;
     if (model.images != null) {
       imagesHolder = List<DocumentItemModel>.from(await Future.wait(await model.images!.map((element) async {
@@ -150,8 +141,6 @@ class DocumentCache implements DocumentRepository {
     }
 
     return model.copyWith(
-        background: backgroundHolder,
-
         images: imagesHolder,
 
 

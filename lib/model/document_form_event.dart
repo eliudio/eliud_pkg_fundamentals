@@ -144,7 +144,7 @@ class ChangedDocumentImages extends DocumentFormEvent {
 }
 
 class ChangedDocumentBackground extends DocumentFormEvent {
-  final String? value;
+  final BackgroundModel? value;
 
   ChangedDocumentBackground({this.value});
 

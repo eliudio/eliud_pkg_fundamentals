@@ -108,7 +108,7 @@ class DocumentModel {
           images: (images != null) ? images
             !.map((item) => item.toEntity(appId: appId))
             .toList() : null, 
-          backgroundId: (background != null) ? background!.documentID : null, 
+          background: (background != null) ? background!.toEntity(appId: appId) : null, 
           conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
     );
   }
@@ -130,6 +130,8 @@ class DocumentModel {
               return DocumentItemModel.fromEntity(counter.toString(), item);
             })
             .toList())), 
+          background: 
+            await BackgroundModel.fromEntity(entity.background), 
           conditions: 
             await StorageConditionsModel.fromEntity(entity.conditions), 
     );
@@ -137,17 +139,6 @@ class DocumentModel {
 
   static Future<DocumentModel?> fromEntityPlus(String documentID, DocumentEntity? entity, { String? appId}) async {
     if (entity == null) return null;
-
-    BackgroundModel? backgroundHolder;
-    if (entity.backgroundId != null) {
-      try {
-          backgroundHolder = await backgroundRepository(appId: appId)!.get(entity.backgroundId);
-      } on Exception catch(e) {
-        print('Error whilst trying to initialise background');
-        print('Error whilst retrieving background with id ${entity.backgroundId}');
-        print('Exception: $e');
-      }
-    }
 
     var counter = 0;
     return DocumentModel(
@@ -163,7 +154,8 @@ class DocumentModel {
             counter++;
             return DocumentItemModel.fromEntityPlus(counter.toString(), item, appId: appId);})
             .toList())), 
-          background: backgroundHolder, 
+          background: 
+            await BackgroundModel.fromEntityPlus(entity.background, appId: appId), 
           conditions: 
             await StorageConditionsModel.fromEntityPlus(entity.conditions, appId: appId), 
     );

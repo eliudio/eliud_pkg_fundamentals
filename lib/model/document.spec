@@ -79,7 +79,6 @@
       "fieldName": "background",
       "displayName": "Background",
       "fieldType": "Background",
-      "association": true,
       "optional": true,
       "group": "background"
     },

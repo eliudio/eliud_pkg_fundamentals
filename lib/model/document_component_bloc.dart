@@ -22,7 +22,6 @@ import 'package:eliud_pkg_fundamentals/model/document_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/document_repository.dart';
 import 'package:flutter/services.dart';
 
-
 class DocumentComponentBloc extends Bloc<DocumentComponentEvent, DocumentComponentState> {
   final DocumentRepository? documentRepository;
   StreamSubscription? _documentSubscription;

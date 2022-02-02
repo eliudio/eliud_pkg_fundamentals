@@ -125,20 +125,7 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
         return;
       }
       if (event is ChangedDocumentBackground) {
-        if (event.value != null)
-          newValue = currentState.value!.copyWith(background: await backgroundRepository(appId: appId)!.get(event.value));
-        else
-          newValue = new DocumentModel(
-                                 documentID: currentState.value!.documentID,
-                                 appId: currentState.value!.appId,
-                                 name: currentState.value!.name,
-                                 documentRenderer: currentState.value!.documentRenderer,
-                                 content: currentState.value!.content,
-                                 padding: currentState.value!.padding,
-                                 images: currentState.value!.images,
-                                 background: null,
-                                 conditions: currentState.value!.conditions,
-          );
+        newValue = currentState.value!.copyWith(background: event.value);
         yield SubmittableDocumentForm(value: newValue);
 
         return;

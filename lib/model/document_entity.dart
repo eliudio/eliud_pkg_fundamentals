@@ -29,19 +29,19 @@ class DocumentEntity {
   final String? content;
   final double? padding;
   final List<DocumentItemEntity>? images;
-  final String? backgroundId;
+  final BackgroundEntity? background;
   final StorageConditionsEntity? conditions;
 
-  DocumentEntity({this.appId, this.name, this.documentRenderer, this.content, this.padding, this.images, this.backgroundId, this.conditions, });
+  DocumentEntity({this.appId, this.name, this.documentRenderer, this.content, this.padding, this.images, this.background, this.conditions, });
 
 
-  List<Object?> get props => [appId, name, documentRenderer, content, padding, images, backgroundId, conditions, ];
+  List<Object?> get props => [appId, name, documentRenderer, content, padding, images, background, conditions, ];
 
   @override
   String toString() {
     String imagesCsv = (images == null) ? '' : images!.join(', ');
 
-    return 'DocumentEntity{appId: $appId, name: $name, documentRenderer: $documentRenderer, content: $content, padding: $padding, images: DocumentItem[] { $imagesCsv }, backgroundId: $backgroundId, conditions: $conditions}';
+    return 'DocumentEntity{appId: $appId, name: $name, documentRenderer: $documentRenderer, content: $content, padding: $padding, images: DocumentItem[] { $imagesCsv }, background: $background, conditions: $conditions}';
   }
 
   static DocumentEntity? fromMap(Object? o) {
@@ -56,6 +56,10 @@ class DocumentEntity {
         .map((dynamic item) =>
         DocumentItemEntity.fromMap(item as Map)!)
         .toList();
+    var backgroundFromMap;
+    backgroundFromMap = map['background'];
+    if (backgroundFromMap != null)
+      backgroundFromMap = BackgroundEntity.fromMap(backgroundFromMap);
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
     if (conditionsFromMap != null)
@@ -68,7 +72,7 @@ class DocumentEntity {
       content: map['content'], 
       padding: double.tryParse(map['padding'].toString()), 
       images: imagesList, 
-      backgroundId: map['backgroundId'], 
+      background: backgroundFromMap, 
       conditions: conditionsFromMap, 
     );
   }
@@ -76,6 +80,9 @@ class DocumentEntity {
   Map<String, Object?> toDocument() {
     final List<Map<String?, dynamic>>? imagesListMap = images != null 
         ? images!.map((item) => item.toDocument()).toList()
+        : null;
+    final Map<String, dynamic>? backgroundMap = background != null 
+        ? background!.toDocument()
         : null;
     final Map<String, dynamic>? conditionsMap = conditions != null 
         ? conditions!.toDocument()
@@ -94,8 +101,8 @@ class DocumentEntity {
       else theDocument["padding"] = null;
     if (images != null) theDocument["images"] = imagesListMap;
       else theDocument["images"] = null;
-    if (backgroundId != null) theDocument["backgroundId"] = backgroundId;
-      else theDocument["backgroundId"] = null;
+    if (background != null) theDocument["background"] = backgroundMap;
+      else theDocument["background"] = null;
     if (conditions != null) theDocument["conditions"] = conditionsMap;
       else theDocument["conditions"] = null;
     return theDocument;

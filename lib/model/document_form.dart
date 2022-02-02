@@ -129,7 +129,6 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
   final TextEditingController _nameController = TextEditingController();
   int? _documentRendererSelectedRadioTile;
   final TextEditingController _paddingController = TextEditingController();
-  String? _background;
 
 
   _MyDocumentFormState(this.formAction);
@@ -174,10 +173,6 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
           _paddingController.text = state.value!.padding.toString();
         else
           _paddingController.text = "";
-        if (state.value!.background != null)
-          _background= state.value!.background!.documentID;
-        else
-          _background= "";
       }
       if (state is DocumentFormInitialized) {
         List<Widget> children = [];
@@ -279,10 +274,6 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
                   child: StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().groupTitle(widget.app, context, 'Background')
                 ));
 
-        children.add(
-
-                DropdownButtonComponentFactory().createNew(app: widget.app, id: "backgrounds", value: _background, trigger: _onBackgroundSelected, optional: true),
-          );
 
 
         children.add(Container(height: 20.0));
@@ -395,14 +386,6 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
   void _onImagesChanged(value) {
     _myFormBloc.add(ChangedDocumentImages(value: value));
     setState(() {});
-  }
-
-
-  void _onBackgroundSelected(String? val) {
-    setState(() {
-      _background = val;
-    });
-    _myFormBloc.add(ChangedDocumentBackground(value: val));
   }
 
 
