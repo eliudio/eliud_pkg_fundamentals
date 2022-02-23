@@ -54,13 +54,17 @@ class TheImageGFState extends State<TheImageGF> {
       }
     }
 
-    var viewPortFraction = maxWidth / fullScreenWidth(context);
-    return GFCarousel(
-      height: maxHeight,
-      items: list,
-      autoPlay: true,
-      viewportFraction: viewPortFraction,
-    );
+    if (list.isEmpty) {
+      return Container();
+    } else {
+      var viewPortFraction = maxWidth / fullScreenWidth(context);
+      return GFCarousel(
+        height: maxHeight,
+        items: list,
+        autoPlay: true,
+        viewportFraction: viewPortFraction,
+      );
+    }
   }
 }
 
