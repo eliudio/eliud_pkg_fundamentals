@@ -124,7 +124,6 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
   final TextEditingController _documentIDController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   String? _image;
-  String? _posSize;
 
 
   _MyListedItemFormState(this.formAction);
@@ -158,10 +157,6 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
           _image= state.value!.image!.documentID;
         else
           _image= "";
-        if (state.value!.posSize != null)
-          _posSize= state.value!.posSize!.documentID;
-        else
-          _posSize= "";
       }
       if (state is ListedItemFormInitialized) {
         List<Widget> children = [];
@@ -219,10 +214,6 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
                   child: StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().groupTitle(widget.app, context, 'Position and Size')
                 ));
 
-        children.add(
-
-                DropdownButtonComponentFactory().createNew(app: widget.app, id: "posSizes", value: _posSize, trigger: _onPosSizeSelected, optional: true),
-          );
 
 
         children.add(Container(height: 20.0));
@@ -299,14 +290,6 @@ class _MyListedItemFormState extends State<MyListedItemForm> {
       _image = val;
     });
     _myFormBloc.add(ChangedListedItemImage(value: val));
-  }
-
-
-  void _onPosSizeSelected(String? val) {
-    setState(() {
-      _posSize = val;
-    });
-    _myFormBloc.add(ChangedListedItemPosSize(value: val));
   }
 
 

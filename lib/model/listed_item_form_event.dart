@@ -108,7 +108,7 @@ class ChangedListedItemImage extends ListedItemFormEvent {
 }
 
 class ChangedListedItemPosSize extends ListedItemFormEvent {
-  final String? value;
+  final PosSizeModel? value;
 
   ChangedListedItemPosSize({this.value});
 

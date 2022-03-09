@@ -101,16 +101,7 @@ class ListedItemFormBloc extends Bloc<ListedItemFormEvent, ListedItemFormState> 
         return;
       }
       if (event is ChangedListedItemPosSize) {
-        if (event.value != null)
-          newValue = currentState.value!.copyWith(posSize: await posSizeRepository(appId: appId)!.get(event.value));
-        else
-          newValue = new ListedItemModel(
-                                 documentID: currentState.value!.documentID,
-                                 description: currentState.value!.description,
-                                 action: currentState.value!.action,
-                                 image: currentState.value!.image,
-                                 posSize: null,
-          );
+        newValue = currentState.value!.copyWith(posSize: event.value);
         yield SubmittableListedItemForm(value: newValue);
 
         return;

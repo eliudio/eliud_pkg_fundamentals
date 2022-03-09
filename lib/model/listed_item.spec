@@ -48,8 +48,7 @@
       "fieldName": "posSize",
       "fieldType": "PosSize",
       "group": "posSize",
-      "optional": true,
-      "association": true
+      "optional": true
     }
   ],
   "groups": [

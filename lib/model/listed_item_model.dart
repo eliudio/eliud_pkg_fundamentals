@@ -74,7 +74,7 @@ class ListedItemModel {
           description: (description != null) ? description : null, 
           action: (action != null) ? action!.toEntity(appId: appId) : null, 
           imageId: (image != null) ? image!.documentID : null, 
-          posSizeId: (posSize != null) ? posSize!.documentID : null, 
+          posSize: (posSize != null) ? posSize!.toEntity(appId: appId) : null, 
     );
   }
 
@@ -86,6 +86,8 @@ class ListedItemModel {
           description: entity.description, 
           action: 
             await ActionModel.fromEntity(entity.action), 
+          posSize: 
+            await PosSizeModel.fromEntity(entity.posSize), 
     );
   }
 
@@ -103,17 +105,6 @@ class ListedItemModel {
       }
     }
 
-    PosSizeModel? posSizeHolder;
-    if (entity.posSizeId != null) {
-      try {
-          posSizeHolder = await posSizeRepository(appId: appId)!.get(entity.posSizeId);
-      } on Exception catch(e) {
-        print('Error whilst trying to initialise posSize');
-        print('Error whilst retrieving posSize with id ${entity.posSizeId}');
-        print('Exception: $e');
-      }
-    }
-
     var counter = 0;
     return ListedItemModel(
           documentID: documentID, 
@@ -121,7 +112,8 @@ class ListedItemModel {
           action: 
             await ActionModel.fromEntityPlus(entity.action, appId: appId), 
           image: imageHolder, 
-          posSize: posSizeHolder, 
+          posSize: 
+            await PosSizeModel.fromEntityPlus(entity.posSize, appId: appId), 
     );
   }
 

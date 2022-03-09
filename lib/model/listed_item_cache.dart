@@ -142,19 +142,8 @@ class ListedItemCache implements ListedItemRepository {
       } catch (_) {}
     }
 
-    PosSizeModel? posSizeHolder;
-    if (model.posSize != null) {
-      try {
-        await posSizeRepository()!.get(model.posSize!.documentID).then((val) {
-          posSizeHolder = val;
-        }).catchError((error) {});
-      } catch (_) {}
-    }
-
     return model.copyWith(
         image: imageHolder,
-
-        posSize: posSizeHolder,
 
 
     );
