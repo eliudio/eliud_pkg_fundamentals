@@ -45,11 +45,11 @@ class TheImageGFState extends State<TheImageGF> {
               widget.actions != null ? widget.actions![i] : null,
               i);
           var height = FaderHelper.getHeight(
-              context, widget.positionsAndSizes[i]!, widget.orientation)!;
+              context, widget.positionsAndSizes[i], widget.orientation);
           var width = FaderHelper.getWidth(
-              context, widget.positionsAndSizes[i]!, widget.orientation)!;
-          maxHeight = max(height, maxHeight);
-          maxWidth = max(width, maxWidth);
+              context, widget.positionsAndSizes[i], widget.orientation);
+          maxHeight = height == null ? maxHeight : max(height, maxHeight);
+          maxWidth = width == null ? maxWidth : max(width, maxWidth);
           if (w != null) list.add(w);
       }
     }
@@ -57,7 +57,7 @@ class TheImageGFState extends State<TheImageGF> {
     if (list.isEmpty) {
       return Container();
     } else {
-      var viewPortFraction = maxWidth / fullScreenWidth(context);
+      var viewPortFraction = max(maxWidth / fullScreenWidth(context), .8);
       return GFCarousel(
         height: maxHeight,
         items: list,
@@ -193,12 +193,12 @@ class TheImageState extends State<TheImage> {
 */
 
 class FaderHelper {
-  static double? getHeight(BuildContext context, PosSizeModel posSizeModel,
+  static double? getHeight(BuildContext context, PosSizeModel? posSizeModel,
       Orientation orientation) {
     return BoxFitHelper.toHeight(posSizeModel, context, orientation);
   }
 
-  static double? getWidth(BuildContext context, PosSizeModel posSizeModel,
+  static double? getWidth(BuildContext context, PosSizeModel? posSizeModel,
       Orientation orientation) {
     return BoxFitHelper.toWidth(posSizeModel, context, orientation);
   }
