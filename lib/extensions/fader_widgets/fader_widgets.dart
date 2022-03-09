@@ -37,20 +37,20 @@ class TheImageGFState extends State<TheImageGF> {
     var maxWidth = 0.0;
     for (var i = 0; i < widget.images.length; i++) {
       if (widget.images[i] != null) {
-        var w = FaderHelper.getIt(
-            context,
-            widget.positionsAndSizes[i],
-            widget.images[i],
-            widget.orientation,
-            widget.actions != null ? widget.actions![i] : null,
-            i);
-        var height = FaderHelper.getHeight(
-            context, widget.positionsAndSizes[i]!, widget.orientation)!;
-        var width = FaderHelper.getWidth(
-            context, widget.positionsAndSizes[i]!, widget.orientation)!;
-        maxHeight = max(height, maxHeight);
-        maxWidth = max(width, maxWidth);
-        if (w != null) list.add(w);
+          var w = FaderHelper.getIt(
+              context,
+              widget.positionsAndSizes[i],
+              widget.images[i],
+              widget.orientation,
+              widget.actions != null ? widget.actions![i] : null,
+              i);
+          var height = FaderHelper.getHeight(
+              context, widget.positionsAndSizes[i]!, widget.orientation)!;
+          var width = FaderHelper.getWidth(
+              context, widget.positionsAndSizes[i]!, widget.orientation)!;
+          maxHeight = max(height, maxHeight);
+          maxWidth = max(width, maxWidth);
+          if (w != null) list.add(w);
       }
     }
 
@@ -213,22 +213,31 @@ class FaderHelper {
     if (imageModel == null) {
       return null;
     }
-    var fit = BoxFitHelper.toBoxFit(posSizeModel!, orientation);
-    var width = BoxFitHelper.toWidth(posSizeModel, context, orientation);
-    var height = BoxFitHelper.toHeight(posSizeModel, context, orientation);
-    var alignment = BoxFitHelper.toAlignment(posSizeModel, orientation);
+    var realImage;
+    var alignment ;
+    if (posSizeModel == null) {
+      realImage = Center(
+          child: Image.network(
+            imageModel.url!,
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.center,
+          ));
+    } else {
+      var width = BoxFitHelper.toWidth(posSizeModel, context, orientation);
+      var height = BoxFitHelper.toHeight(posSizeModel, context, orientation);
+      alignment = BoxFitHelper.toAlignment(posSizeModel, orientation);
 
-    var realImage = Center(
-        child: Image.network(
-      imageModel.url!,
-      fit: BoxFit.scaleDown,
-      height: height,
-      width: width,
-      alignment: Alignment.center,
-    ));
-
+      realImage = Center(
+          child: Image.network(
+            imageModel.url!,
+            fit: BoxFit.scaleDown,
+            height: height,
+            width: width,
+            alignment: Alignment.center,
+          ));
+    }
     var clip;
-    if (posSizeModel.clip != null) {
+    if ((posSizeModel != null) && (posSizeModel.clip != null)) {
       switch (posSizeModel.clip) {
         case ClipType.NoClip:
           clip = realImage;
