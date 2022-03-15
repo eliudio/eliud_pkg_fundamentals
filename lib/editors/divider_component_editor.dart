@@ -9,6 +9,7 @@ import 'package:eliud_core/style/frontend/has_list_tile.dart';
 import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/tools/component/component_spec.dart';
+import 'package:eliud_core/tools/random.dart';
 import 'package:eliud_core/tools/widgets/condition_simple_widget.dart';
 import 'package:eliud_core/tools/widgets/header_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
@@ -27,7 +28,7 @@ class DividerComponentEditorConstructor extends ComponentEditorConstructor {
     _openIt(app,
         context,
         true,
-        DividerModel(documentID: 'new identifier', name: 'New divider'),
+        DividerModel(appId: app.documentID, documentID: 'new identifier', name: newRandomKey()),
         feedback);
   }
 

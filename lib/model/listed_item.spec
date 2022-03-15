@@ -50,7 +50,7 @@
       "group": "posSize",
       "optional": true
     }
-0-|  ],
+  ],
   "groups": [
     {
         "group": "general",
