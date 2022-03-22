@@ -13,6 +13,9 @@ dependencies:
   eliud_core:
     path: ../eliud_core
 
+  eliud_pkg_medium:
+    path: ../eliud_pkg_medium
+
   getwidget: ^2.0.4
   photo_view: ^0.13.0
   #dynamic_widget: 3.0.5
@@ -26,3 +29,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - packages/eliud_pkg_fundamentals/assets/wizards/fader/android.jpg
+    - packages/eliud_pkg_fundamentals/assets/wizards/fader/iphone.jpg
+    - packages/eliud_pkg_fundamentals/assets/wizards/fader/macbook.jpg
+    - packages/eliud_pkg_fundamentals/assets/wizards/fader/tablet.jpg

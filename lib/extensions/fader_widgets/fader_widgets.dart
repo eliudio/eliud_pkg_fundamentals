@@ -62,135 +62,13 @@ class TheImageGFState extends State<TheImageGF> {
         height: maxHeight,
         items: list,
         autoPlay: true,
+        autoPlayAnimationDuration: Duration(milliseconds: widget.animationMilliseconds ?? 800),
+        autoPlayInterval: Duration(seconds: widget.imageSeconds ?? 4),
         viewportFraction: viewPortFraction,
       );
     }
   }
 }
-
-/*
-class TheImage extends StatefulWidget {
-  final Orientation orientation;
-  final List<ImageProvider> cachedImages;
-  final List<PosSizeModel> positionsAndSizes;
-  final List<ActionModel> actions;
-  // The time to display 1 image
-  final int imageSeconds;
-  // The animation to switch images.
-  final FaderAnimation animation;
-
-  // The duration of the transition between the images
-  final int animationMilliseconds;
-
-  TheImage(this.cachedImages, this.positionsAndSizes, this.actions, this.orientation, this.imageSeconds, this.animation, this.animationMilliseconds);
-
-  @override
-  State<StatefulWidget> createState() => new TheImageState();
-}
-
-class TheImageState extends State<TheImage> {
-  int _counter = 0;
-  Timer _timer;
-
-  @override
-  void initState() {
-    if (_timer == null) {
-      _timer = Timer.periodic(
-          new Duration(seconds: widget.imageSeconds), (timer) {
-        setState(() {
-          int amount = widget.cachedImages.length;
-          _counter = (_counter + 1) % amount;
-        });
-      });
-    }
-    super.initState();
-  }
-
-  Widget _fade(Widget realImage, int milliseconds) {
-    return Container(
-        child:AnimatedSwitcher(
-      child: realImage,
-      transitionBuilder: (Widget child, Animation<double> animation) {
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      },
-      duration: Duration(milliseconds: milliseconds),
-    )) ;
-  }
-
-  Widget _scale(Widget realImage, int milliseconds) {
-    return AnimatedSwitcher(
-      child: realImage,
-      transitionBuilder: (Widget child, Animation<double> animation) {
-        return ScaleTransition(
-          scale: animation,
-          child: child,
-        );
-      },
-      duration: Duration(milliseconds: milliseconds),
-    );
-  }
-
-  AnimatedSwitcher _slide(Widget realImage, int milliseconds) {
-    return AnimatedSwitcher(
-      child: realImage,
-      transitionBuilder: (Widget child, Animation<double> animation) {
-        final _offsetAnimation = Tween<Offset>(
-          begin: Offset.zero,
-          end: const Offset(1.5, 0.0),
-        ).animate(animation);
-        return SlideTransition(
-          position: _offsetAnimation,
-          child: child,
-        );
-      },
-      duration: Duration(milliseconds: milliseconds),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    List<ImageProvider> cachedImages = widget.cachedImages;
-    if (widget.positionsAndSizes[_counter] != null) {
-      Widget w = FaderHelper.getIt(
-          context,
-          widget.positionsAndSizes[_counter],
-          cachedImages[_counter],
-          widget.orientation,
-          widget.actions != null ? widget.actions[_counter] : null,
-          _counter);
-      if (w == null)
-        return Text("No images available");
-
-      int milliseconds = widget.animationMilliseconds;
-      switch (widget.animation) {
-        case FaderAnimation.None:
-          return w;
-        case FaderAnimation.Fade:
-          return _fade(w, milliseconds);
-        case FaderAnimation.Scale:
-          return _scale(w, milliseconds);
-        case FaderAnimation.Slide:
-          return _slide(w, milliseconds);
-        case FaderAnimation.Unknown:
-          return w;
-      }
-      return w;
-    } else {
-      return null;
-    }
-  }
-
-  @override
-  void dispose() {
-    _timer.cancel();
-    _timer = null;
-    super.dispose();
-  }
-}
-*/
 
 class FaderHelper {
   static double? getHeight(BuildContext context, PosSizeModel? posSizeModel,
