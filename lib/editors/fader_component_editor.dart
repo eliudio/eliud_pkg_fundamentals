@@ -101,10 +101,7 @@ class FaderComponentEditor extends StatefulWidget {
 }
 
 class _FaderComponentEditorState extends State<FaderComponentEditor> {
-  static double height = 200;
   double? _progress;
-  final TextEditingController _documentIDController = TextEditingController();
-  int? _decorationComponentPositionSelectedRadioTile;
 
   @override
   Widget build(BuildContext context) {
