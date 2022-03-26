@@ -32,11 +32,12 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 import 'dart:async';
 import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
+import 'package:eliud_core/tools/repository_base.dart';
 
 typedef GridModelTrigger(List<GridModel?> list);
 typedef GridChanged(GridModel? value);
 
-abstract class GridRepository {
+abstract class GridRepository extends RepositoryBase<GridModel> {
   Future<GridModel> add(GridModel value);
   Future<void> delete(GridModel value);
   Future<GridModel?> get(String? id, { Function(Exception)? onError });

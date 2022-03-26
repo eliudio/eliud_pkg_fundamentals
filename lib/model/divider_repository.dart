@@ -32,11 +32,12 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 import 'dart:async';
 import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
+import 'package:eliud_core/tools/repository_base.dart';
 
 typedef DividerModelTrigger(List<DividerModel?> list);
 typedef DividerChanged(DividerModel? value);
 
-abstract class DividerRepository {
+abstract class DividerRepository extends RepositoryBase<DividerModel> {
   Future<DividerModel> add(DividerModel value);
   Future<void> delete(DividerModel value);
   Future<DividerModel?> get(String? id, { Function(Exception)? onError });

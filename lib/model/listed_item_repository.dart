@@ -32,11 +32,12 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 import 'dart:async';
 import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
+import 'package:eliud_core/tools/repository_base.dart';
 
 typedef ListedItemModelTrigger(List<ListedItemModel?> list);
 typedef ListedItemChanged(ListedItemModel? value);
 
-abstract class ListedItemRepository {
+abstract class ListedItemRepository extends RepositoryBase<ListedItemModel> {
   Future<ListedItemModel> add(ListedItemModel value);
   Future<void> delete(ListedItemModel value);
   Future<ListedItemModel?> get(String? id, { Function(Exception)? onError });

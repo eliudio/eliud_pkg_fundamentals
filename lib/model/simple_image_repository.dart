@@ -32,11 +32,12 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 import 'dart:async';
 import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
+import 'package:eliud_core/tools/repository_base.dart';
 
 typedef SimpleImageModelTrigger(List<SimpleImageModel?> list);
 typedef SimpleImageChanged(SimpleImageModel? value);
 
-abstract class SimpleImageRepository {
+abstract class SimpleImageRepository extends RepositoryBase<SimpleImageModel> {
   Future<SimpleImageModel> add(SimpleImageModel value);
   Future<void> delete(SimpleImageModel value);
   Future<SimpleImageModel?> get(String? id, { Function(Exception)? onError });

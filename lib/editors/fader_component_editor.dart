@@ -1,5 +1,6 @@
 import 'package:eliud_core/core/blocs/access/state/access_determined.dart';
 import 'package:eliud_core/core/blocs/access/state/access_state.dart';
+import 'package:eliud_core/core/editor/ext_editor_base_bloc/ext_editor_base_bloc.dart';
 import 'package:eliud_core/tools/screen_size.dart';
 import 'package:eliud_pkg_fundamentals/editors/widgets/item_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/listed_item_model.dart';
@@ -27,10 +28,10 @@ import 'package:eliud_pkg_medium/platform/medium_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:eliud_core/core/editor/ext_editor_base_bloc/ext_editor_base_event.dart';
+import 'package:eliud_core/core/editor/ext_editor_base_bloc/ext_editor_base_state.dart';
 
 import 'fader_bloc/fader_bloc.dart';
-import 'fader_bloc/fader_event.dart';
-import 'fader_bloc/fader_state.dart';
 
 class FaderComponentEditorConstructor extends ComponentEditorConstructor {
   @override
@@ -77,10 +78,8 @@ class FaderComponentEditorConstructor extends ComponentEditorConstructor {
         child: BlocProvider<FaderBloc>(
           create: (context) => FaderBloc(
             app.documentID!,
-            /*create,
-            */
             feedback,
-          )..add(FaderInitialise(model)),
+          )..add(ExtEditorBaseInitialise<FaderModel>(model)),
           child: FaderComponentEditor(
             app: app,
           ),
@@ -108,9 +107,9 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
     return BlocBuilder<AccessBloc, AccessState>(
         builder: (aContext, accessState) {
       if (accessState is AccessDetermined) {
-        return BlocBuilder<FaderBloc, FaderState>(
+        return BlocBuilder<FaderBloc, ExtEditorBaseState<FaderModel>>(
             builder: (ppContext, faderState) {
-          if (faderState is FaderInitialised) {
+          if (faderState is ExtEditorBaseInitialised<FaderModel, dynamic>) {
             return ListView(
                 shrinkWrap: true,
                 physics: ScrollPhysics(),
@@ -120,7 +119,7 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
                     title: 'Fader',
                     okAction: () async {
                       await BlocProvider.of<FaderBloc>(context)
-                          .save(FaderApplyChanges(model: faderState.model));
+                          .save(ExtEditorBaseApplyChanges<FaderModel>(model: faderState.model));
                       return true;
                     },
                     cancelAction: () async {
@@ -185,7 +184,7 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
                       collapsible: true,
                       collapsed: true,
                       children: [
-                        _images(faderState),
+                        _images(context, faderState),
                       ]),
                 ]);
           } else {
@@ -198,7 +197,7 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
     });
   }
 
-  Widget _images(FaderInitialised state) {
+  Widget _images(BuildContext context, ExtEditorBaseInitialised<FaderModel, dynamic> state) {
     var widgets = <Widget>[];
     var items = state.model.items != null ? state.model.items! : [];
     var photos = <PlatformMediumModel>[];
@@ -216,7 +215,7 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
         widgets.add(GestureDetector(
             onTap: () {
               BlocProvider.of<FaderBloc>(context)
-                  .add(SelectForEditEvent(listedItemModel: item));
+                  .add(SelectForEditEvent<FaderModel, ListedItemModel>(item: item));
             },
             child: Padding(
                 padding: const EdgeInsets.all(5), child: item == state.currentEdit ? Container(
@@ -258,7 +257,7 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
               label: 'Move up',
               onPressed: () async {
                 BlocProvider.of<FaderBloc>(context)
-                    .add(MoveEvent(isUp: true, listedItemModel: currentEdit));
+                    .add(MoveEvent<FaderModel, ListedItemModel>(isUp: true, item: currentEdit));
 
               }),
           Spacer(),
@@ -293,7 +292,7 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
               label: 'Delete',
               onPressed: () async {
                 BlocProvider.of<FaderBloc>(context)
-                    .add(DeleteListedItemEvent(listedItemModel: currentEdit));
+                    .add(DeleteItemEvent<FaderModel, ListedItemModel>(itemModel: currentEdit));
               }),
           Spacer(),
           button(widget.app, context,
@@ -303,7 +302,7 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
               label: 'Move down',
               onPressed: () async {
                 BlocProvider.of<FaderBloc>(context)
-                    .add(MoveEvent(isUp: false, listedItemModel: currentEdit));
+                    .add(MoveEvent<FaderModel, ListedItemModel>(isUp: false, item: currentEdit));
 
               }),
         ]),      ]);
@@ -314,10 +313,10 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
 
   void _listedItemModelCallback(ListedItemModel oldItem, ListedItemModel newItem, ) {
     BlocProvider.of<FaderBloc>(context)
-        .add(UpdatedItemEvent(oldItem: oldItem, newItem: newItem));
+        .add(UpdateItemEvent<FaderModel, ListedItemModel>(oldItem: oldItem, newItem: newItem));
   }
 
-  Widget _addButton(FaderInitialised faderState) {
+  Widget _addButton(ExtEditorBaseInitialised<FaderModel, dynamic> faderState) {
     if (_progress != null) {
       return progressIndicatorWithValue(widget.app, context, value: _progress!);
     } else {
@@ -366,7 +365,26 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
       _progress = null;
       if (platformMediumModel != null) {
         BlocProvider.of<FaderBloc>(context)
-            .add(NewImageEvent(medium: platformMediumModel));
+            .add(AddItemEvent<FaderModel, ListedItemModel>(itemModel: ListedItemModel(
+          documentID: newRandomKey(),
+          description: '',
+          action: null,
+          image: platformMediumModel,
+          posSize: PosSizeModel(
+              widthPortrait: 1,
+              widthTypePortrait: WidthTypePortrait.PercentageWidth,
+              heightPortrait: .5,
+              heightTypePortrait: HeightTypePortrait.PercentageHeight,
+              fitPortrait: PortraitFitType.PortraitFitWidth,
+              alignTypePortrait: PortraitAlignType.PortraitAlignCenter,
+              widthLandscape: 1,
+              widthTypeLandscape: WidthTypeLandscape.PercentageWidth,
+              heightLandscape: .5,
+              heightTypeLandscape: HeightTypeLandscape.PercentageHeight,
+              fitLandscape: LandscapeFitType.LandscapeFitHeight,
+              alignTypeLandscape: LandscapeAlignType.LandscapeAlignCenter,
+              clip: ClipType.NoClip),
+        )));
       }
     });
   }

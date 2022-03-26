@@ -32,11 +32,12 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 import 'dart:async';
 import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
+import 'package:eliud_core/tools/repository_base.dart';
 
 typedef FaderModelTrigger(List<FaderModel?> list);
 typedef FaderChanged(FaderModel? value);
 
-abstract class FaderRepository {
+abstract class FaderRepository extends RepositoryBase<FaderModel> {
   Future<FaderModel> add(FaderModel value);
   Future<void> delete(FaderModel value);
   Future<FaderModel?> get(String? id, { Function(Exception)? onError });

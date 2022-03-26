@@ -32,11 +32,12 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 import 'dart:async';
 import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
+import 'package:eliud_core/tools/repository_base.dart';
 
 typedef DecoratedContentModelTrigger(List<DecoratedContentModel?> list);
 typedef DecoratedContentChanged(DecoratedContentModel? value);
 
-abstract class DecoratedContentRepository {
+abstract class DecoratedContentRepository extends RepositoryBase<DecoratedContentModel> {
   Future<DecoratedContentModel> add(DecoratedContentModel value);
   Future<void> delete(DecoratedContentModel value);
   Future<DecoratedContentModel?> get(String? id, { Function(Exception)? onError });

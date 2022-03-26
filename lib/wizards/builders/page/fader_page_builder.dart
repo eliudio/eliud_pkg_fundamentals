@@ -87,7 +87,6 @@ class FaderPageBuilder extends PageBuilder {
 
   PosSizeModel screen75() {
     return PosSizeModel(
-        name: '75 % both orientations',
         widthPortrait: .75,
         widthTypePortrait: WidthTypePortrait.PercentageWidth,
         heightPortrait: .75,

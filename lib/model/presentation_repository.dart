@@ -32,11 +32,12 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 import 'dart:async';
 import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
+import 'package:eliud_core/tools/repository_base.dart';
 
 typedef PresentationModelTrigger(List<PresentationModel?> list);
 typedef PresentationChanged(PresentationModel? value);
 
-abstract class PresentationRepository {
+abstract class PresentationRepository extends RepositoryBase<PresentationModel> {
   Future<PresentationModel> add(PresentationModel value);
   Future<void> delete(PresentationModel value);
   Future<PresentationModel?> get(String? id, { Function(Exception)? onError });
