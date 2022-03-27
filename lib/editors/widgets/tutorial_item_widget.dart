@@ -17,36 +17,38 @@ import 'package:eliud_core/tools/screen_size.dart';
 import 'package:eliud_core/tools/storage/public_medium_helper.dart';
 import 'package:eliud_core/tools/widgets/editor/select_action_widget.dart';
 import 'package:eliud_core/tools/widgets/header_widget.dart';
+import 'package:eliud_core/tools/widgets/platform_medium_widget.dart';
 import 'package:eliud_core/tools/widgets/pos_size_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/listed_item_model.dart';
+import 'package:eliud_pkg_fundamentals/model/tutorial_entry_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:file_picker/file_picker.dart';
 
-typedef void ListedItemModelCallback(ListedItemModel listedItemModel);
+typedef void TutorialEntryModelCallback(TutorialEntryModel tutorialEntryModel);
 
-class ListedItemModelWidget extends StatefulWidget {
+class TutorialEntryModelWidget extends StatefulWidget {
   final bool create;
   final double widgetWidth;
   final double widgetHeight;
   final AppModel app;
-  final ListedItemModel listedItemModel;
-  final ListedItemModelCallback listedItemModelCallback;
+  final TutorialEntryModel tutorialEntryModel;
+  final TutorialEntryModelCallback tutorialEntryModelCallback;
 
-  ListedItemModelWidget._({
+  TutorialEntryModelWidget._({
     Key? key,
     required this.app,
     required this.create,
     required this.widgetWidth,
     required this.widgetHeight,
-    required this.listedItemModel,
-    required this.listedItemModelCallback,
+    required this.tutorialEntryModel,
+    required this.tutorialEntryModelCallback,
   }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _ListedItemModelWidgetState();
+    return _TutorialEntryModelWidgetState();
   }
 
   static Widget getIt(
@@ -55,21 +57,21 @@ class ListedItemModelWidget extends StatefulWidget {
       bool create,
       double widgetWidth,
       double widgetHeight,
-      ListedItemModel listedItemModel,
-      ListedItemModelCallback listedItemModelCallback) {
-    var copyOf = listedItemModel.copyWith();
-    return ListedItemModelWidget._(
+      TutorialEntryModel tutorialEntryModel,
+      TutorialEntryModelCallback tutorialEntryModelCallback) {
+    var copyOf = tutorialEntryModel.copyWith();
+    return TutorialEntryModelWidget._(
       app: app,
       create: create,
       widgetWidth: widgetWidth,
       widgetHeight: widgetHeight,
-      listedItemModel: copyOf,
-      listedItemModelCallback: listedItemModelCallback,
+      tutorialEntryModel: copyOf,
+      tutorialEntryModelCallback: tutorialEntryModelCallback,
     );
   }
 }
 
-class _ListedItemModelWidgetState extends State<ListedItemModelWidget> {
+class _TutorialEntryModelWidgetState extends State<TutorialEntryModelWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView(shrinkWrap: true, physics: ScrollPhysics(), children: [
@@ -79,7 +81,7 @@ class _ListedItemModelWidgetState extends State<ListedItemModelWidget> {
           return true;
         },
         okAction: () async {
-          widget.listedItemModelCallback(widget.listedItemModel);
+          widget.tutorialEntryModelCallback(widget.tutorialEntryModel);
           return true;
         },
         title: 'Fader image settings',
@@ -93,15 +95,30 @@ class _ListedItemModelWidgetState extends State<ListedItemModelWidget> {
             getListTile(context, widget.app,
                 leading: Icon(Icons.vpn_key),
                 title: text(
-                    widget.app, context, widget.listedItemModel.documentID!)),
+                    widget.app, context, widget.tutorialEntryModel.documentID!)),
             getListTile(context, widget.app,
                 leading: Icon(Icons.description),
                 title: dialogField(
                   widget.app,
                   context,
-                  initialValue: widget.listedItemModel.description,
+                  initialValue: widget.tutorialEntryModel.description,
                   valueChanged: (value) {
-                    widget.listedItemModel.description = value;
+                    widget.tutorialEntryModel.description = value;
+                  },
+                  maxLines: 1,
+                  decoration: const InputDecoration(
+                    hintText: 'Description',
+                    labelText: 'Description',
+                  ),
+                )),
+            getListTile(context, widget.app,
+                leading: Icon(Icons.description),
+                title: dialogField(
+                  widget.app,
+                  context,
+                  initialValue: widget.tutorialEntryModel.description,
+                  valueChanged: (value) {
+                    widget.tutorialEntryModel.description = value;
                   },
                   maxLines: 1,
                   decoration: const InputDecoration(
@@ -110,15 +127,28 @@ class _ListedItemModelWidgetState extends State<ListedItemModelWidget> {
                   ),
                 )),
           ]),
-      PosSizeWidget(
-        app: widget.app,
-        posSizeModel: widget.listedItemModel.posSize!,
-      ),
-      SelectActionWidget(app: widget.app, action: widget.listedItemModel.action, actionSelected: (action) {
-        setState(() {
-          widget.listedItemModel.action = action;
-        });
-      }),
+      topicContainer(widget.app, context,
+          title: 'Code',
+          collapsible: true,
+          collapsed: true,
+          children: [
+            getListTile(context, widget.app,
+                leading: Icon(Icons.description),
+                title: dialogField(
+                  widget.app,
+                  context,
+                  initialValue: widget.tutorialEntryModel.code,
+                  valueChanged: (value) {
+                    widget.tutorialEntryModel.code = value;
+                  },
+                  maxLines: 5,
+                  decoration: const InputDecoration(
+                    hintText: 'Code',
+                    labelText: 'Code',
+                  ),
+                )),
+          ]),
+      if (widget.tutorialEntryModel.image != null) PlatformMediumWidget(app: widget.app, platformMediumModel: widget.tutorialEntryModel.image!)
     ]);
   }
 }
