@@ -13,6 +13,7 @@
 
 */
 
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_model.dart';
 
@@ -73,5 +74,17 @@ class PresentationListUpdated extends PresentationListEvent {
 
   @override
   String toString() => 'PresentationListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+}
+
+class PresentationChangeQuery extends PresentationListEvent {
+  final EliudQuery newQuery;
+
+  const PresentationChangeQuery({ required this.newQuery });
+
+  @override
+  List<Object?> get props => [ newQuery ];
+
+  @override
+  String toString() => 'PresentationChangeQuery{ value: $newQuery }';
 }
 

@@ -27,7 +27,7 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 class TutorialEntryListBloc extends Bloc<TutorialEntryListEvent, TutorialEntryListState> {
   final TutorialEntryRepository _tutorialEntryRepository;
   StreamSubscription? _tutorialEntrysListSubscription;
-  final EliudQuery? eliudQuery;
+  EliudQuery? eliudQuery;
   int pages = 1;
   final bool? paged;
   final String? orderBy;
@@ -99,6 +99,13 @@ class TutorialEntryListBloc extends Bloc<TutorialEntryListEvent, TutorialEntryLi
     if (event is NewPage) {
       pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
       yield* _mapLoadTutorialEntryListWithDetailsToState();
+    } else if (event is TutorialEntryChangeQuery) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        yield* _mapLoadTutorialEntryListToState();
+      } else {
+        yield* _mapLoadTutorialEntryListWithDetailsToState();
+      }
     } else if (event is AddTutorialEntryList) {
       yield* _mapAddTutorialEntryListToState(event);
     } else if (event is UpdateTutorialEntryList) {

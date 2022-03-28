@@ -27,7 +27,7 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
   final LinkRepository _linkRepository;
   StreamSubscription? _linksListSubscription;
-  final EliudQuery? eliudQuery;
+  EliudQuery? eliudQuery;
   int pages = 1;
   final bool? paged;
   final String? orderBy;
@@ -99,6 +99,13 @@ class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
     if (event is NewPage) {
       pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
       yield* _mapLoadLinkListWithDetailsToState();
+    } else if (event is LinkChangeQuery) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        yield* _mapLoadLinkListToState();
+      } else {
+        yield* _mapLoadLinkListWithDetailsToState();
+      }
     } else if (event is AddLinkList) {
       yield* _mapAddLinkListToState(event);
     } else if (event is UpdateLinkList) {

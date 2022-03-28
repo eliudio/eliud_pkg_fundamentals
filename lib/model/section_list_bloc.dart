@@ -27,7 +27,7 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
   final SectionRepository _sectionRepository;
   StreamSubscription? _sectionsListSubscription;
-  final EliudQuery? eliudQuery;
+  EliudQuery? eliudQuery;
   int pages = 1;
   final bool? paged;
   final String? orderBy;
@@ -99,6 +99,13 @@ class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
     if (event is NewPage) {
       pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
       yield* _mapLoadSectionListWithDetailsToState();
+    } else if (event is SectionChangeQuery) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        yield* _mapLoadSectionListToState();
+      } else {
+        yield* _mapLoadSectionListWithDetailsToState();
+      }
     } else if (event is AddSectionList) {
       yield* _mapAddSectionListToState(event);
     } else if (event is UpdateSectionList) {

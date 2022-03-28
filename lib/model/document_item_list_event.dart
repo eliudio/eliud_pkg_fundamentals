@@ -13,6 +13,7 @@
 
 */
 
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/document_item_model.dart';
 
@@ -73,5 +74,17 @@ class DocumentItemListUpdated extends DocumentItemListEvent {
 
   @override
   String toString() => 'DocumentItemListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+}
+
+class DocumentItemChangeQuery extends DocumentItemListEvent {
+  final EliudQuery newQuery;
+
+  const DocumentItemChangeQuery({ required this.newQuery });
+
+  @override
+  List<Object?> get props => [ newQuery ];
+
+  @override
+  String toString() => 'DocumentItemChangeQuery{ value: $newQuery }';
 }
 

@@ -13,6 +13,7 @@
 
 */
 
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_model.dart';
 
@@ -73,5 +74,17 @@ class SimpleImageListUpdated extends SimpleImageListEvent {
 
   @override
   String toString() => 'SimpleImageListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+}
+
+class SimpleImageChangeQuery extends SimpleImageListEvent {
+  final EliudQuery newQuery;
+
+  const SimpleImageChangeQuery({ required this.newQuery });
+
+  @override
+  List<Object?> get props => [ newQuery ];
+
+  @override
+  String toString() => 'SimpleImageChangeQuery{ value: $newQuery }';
 }
 

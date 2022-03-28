@@ -13,6 +13,7 @@
 
 */
 
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_model.dart';
 
@@ -73,5 +74,17 @@ class TutorialListUpdated extends TutorialListEvent {
 
   @override
   String toString() => 'TutorialListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+}
+
+class TutorialChangeQuery extends TutorialListEvent {
+  final EliudQuery newQuery;
+
+  const TutorialChangeQuery({ required this.newQuery });
+
+  @override
+  List<Object?> get props => [ newQuery ];
+
+  @override
+  String toString() => 'TutorialChangeQuery{ value: $newQuery }';
 }
 

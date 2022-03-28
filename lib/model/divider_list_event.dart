@@ -13,6 +13,7 @@
 
 */
 
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_model.dart';
 
@@ -73,5 +74,17 @@ class DividerListUpdated extends DividerListEvent {
 
   @override
   String toString() => 'DividerListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+}
+
+class DividerChangeQuery extends DividerListEvent {
+  final EliudQuery newQuery;
+
+  const DividerChangeQuery({ required this.newQuery });
+
+  @override
+  List<Object?> get props => [ newQuery ];
+
+  @override
+  String toString() => 'DividerChangeQuery{ value: $newQuery }';
 }
 

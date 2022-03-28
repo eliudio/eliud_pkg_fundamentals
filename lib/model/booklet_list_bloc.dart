@@ -27,7 +27,7 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
   final BookletRepository _bookletRepository;
   StreamSubscription? _bookletsListSubscription;
-  final EliudQuery? eliudQuery;
+  EliudQuery? eliudQuery;
   int pages = 1;
   final bool? paged;
   final String? orderBy;
@@ -99,6 +99,13 @@ class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
     if (event is NewPage) {
       pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
       yield* _mapLoadBookletListWithDetailsToState();
+    } else if (event is BookletChangeQuery) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        yield* _mapLoadBookletListToState();
+      } else {
+        yield* _mapLoadBookletListWithDetailsToState();
+      }
     } else if (event is AddBookletList) {
       yield* _mapAddBookletListToState(event);
     } else if (event is UpdateBookletList) {

@@ -27,7 +27,7 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 class SimpleTextListBloc extends Bloc<SimpleTextListEvent, SimpleTextListState> {
   final SimpleTextRepository _simpleTextRepository;
   StreamSubscription? _simpleTextsListSubscription;
-  final EliudQuery? eliudQuery;
+  EliudQuery? eliudQuery;
   int pages = 1;
   final bool? paged;
   final String? orderBy;
@@ -99,6 +99,13 @@ class SimpleTextListBloc extends Bloc<SimpleTextListEvent, SimpleTextListState> 
     if (event is NewPage) {
       pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
       yield* _mapLoadSimpleTextListWithDetailsToState();
+    } else if (event is SimpleTextChangeQuery) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        yield* _mapLoadSimpleTextListToState();
+      } else {
+        yield* _mapLoadSimpleTextListWithDetailsToState();
+      }
     } else if (event is AddSimpleTextList) {
       yield* _mapAddSimpleTextListToState(event);
     } else if (event is UpdateSimpleTextList) {

@@ -13,6 +13,7 @@
 
 */
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_model.dart';
 
@@ -36,6 +37,13 @@ class FaderListLoaded extends FaderListState {
 
   @override
   String toString() => 'FaderListLoaded { values: $values }';
+
+  @override
+  bool operator ==(Object other) => 
+          other is FaderListLoaded &&
+              runtimeType == other.runtimeType &&
+              ListEquality().equals(values, other.values) &&
+              mightHaveMore == other.mightHaveMore;
 }
 
 class FaderNotLoaded extends FaderListState {}

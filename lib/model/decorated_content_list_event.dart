@@ -13,6 +13,7 @@
 
 */
 
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/decorated_content_model.dart';
 
@@ -73,5 +74,17 @@ class DecoratedContentListUpdated extends DecoratedContentListEvent {
 
   @override
   String toString() => 'DecoratedContentListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+}
+
+class DecoratedContentChangeQuery extends DecoratedContentListEvent {
+  final EliudQuery newQuery;
+
+  const DecoratedContentChangeQuery({ required this.newQuery });
+
+  @override
+  List<Object?> get props => [ newQuery ];
+
+  @override
+  String toString() => 'DecoratedContentChangeQuery{ value: $newQuery }';
 }
 

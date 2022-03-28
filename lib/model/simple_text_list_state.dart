@@ -13,6 +13,7 @@
 
 */
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_text_model.dart';
 
@@ -36,6 +37,13 @@ class SimpleTextListLoaded extends SimpleTextListState {
 
   @override
   String toString() => 'SimpleTextListLoaded { values: $values }';
+
+  @override
+  bool operator ==(Object other) => 
+          other is SimpleTextListLoaded &&
+              runtimeType == other.runtimeType &&
+              ListEquality().equals(values, other.values) &&
+              mightHaveMore == other.mightHaveMore;
 }
 
 class SimpleTextNotLoaded extends SimpleTextListState {}

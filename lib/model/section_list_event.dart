@@ -13,6 +13,7 @@
 
 */
 
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/section_model.dart';
 
@@ -73,5 +74,17 @@ class SectionListUpdated extends SectionListEvent {
 
   @override
   String toString() => 'SectionListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+}
+
+class SectionChangeQuery extends SectionListEvent {
+  final EliudQuery newQuery;
+
+  const SectionChangeQuery({ required this.newQuery });
+
+  @override
+  List<Object?> get props => [ newQuery ];
+
+  @override
+  String toString() => 'SectionChangeQuery{ value: $newQuery }';
 }
 

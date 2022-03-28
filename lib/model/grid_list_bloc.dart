@@ -27,7 +27,7 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 class GridListBloc extends Bloc<GridListEvent, GridListState> {
   final GridRepository _gridRepository;
   StreamSubscription? _gridsListSubscription;
-  final EliudQuery? eliudQuery;
+  EliudQuery? eliudQuery;
   int pages = 1;
   final bool? paged;
   final String? orderBy;
@@ -99,6 +99,13 @@ class GridListBloc extends Bloc<GridListEvent, GridListState> {
     if (event is NewPage) {
       pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
       yield* _mapLoadGridListWithDetailsToState();
+    } else if (event is GridChangeQuery) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        yield* _mapLoadGridListToState();
+      } else {
+        yield* _mapLoadGridListWithDetailsToState();
+      }
     } else if (event is AddGridList) {
       yield* _mapAddGridListToState(event);
     } else if (event is UpdateGridList) {

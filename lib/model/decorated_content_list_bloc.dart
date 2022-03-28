@@ -27,7 +27,7 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 class DecoratedContentListBloc extends Bloc<DecoratedContentListEvent, DecoratedContentListState> {
   final DecoratedContentRepository _decoratedContentRepository;
   StreamSubscription? _decoratedContentsListSubscription;
-  final EliudQuery? eliudQuery;
+  EliudQuery? eliudQuery;
   int pages = 1;
   final bool? paged;
   final String? orderBy;
@@ -99,6 +99,13 @@ class DecoratedContentListBloc extends Bloc<DecoratedContentListEvent, Decorated
     if (event is NewPage) {
       pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
       yield* _mapLoadDecoratedContentListWithDetailsToState();
+    } else if (event is DecoratedContentChangeQuery) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        yield* _mapLoadDecoratedContentListToState();
+      } else {
+        yield* _mapLoadDecoratedContentListWithDetailsToState();
+      }
     } else if (event is AddDecoratedContentList) {
       yield* _mapAddDecoratedContentListToState(event);
     } else if (event is UpdateDecoratedContentList) {

@@ -27,7 +27,7 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 class DocumentItemListBloc extends Bloc<DocumentItemListEvent, DocumentItemListState> {
   final DocumentItemRepository _documentItemRepository;
   StreamSubscription? _documentItemsListSubscription;
-  final EliudQuery? eliudQuery;
+  EliudQuery? eliudQuery;
   int pages = 1;
   final bool? paged;
   final String? orderBy;
@@ -99,6 +99,13 @@ class DocumentItemListBloc extends Bloc<DocumentItemListEvent, DocumentItemListS
     if (event is NewPage) {
       pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
       yield* _mapLoadDocumentItemListWithDetailsToState();
+    } else if (event is DocumentItemChangeQuery) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        yield* _mapLoadDocumentItemListToState();
+      } else {
+        yield* _mapLoadDocumentItemListWithDetailsToState();
+      }
     } else if (event is AddDocumentItemList) {
       yield* _mapAddDocumentItemListToState(event);
     } else if (event is UpdateDocumentItemList) {

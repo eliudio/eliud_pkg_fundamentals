@@ -27,7 +27,7 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
   final DividerRepository _dividerRepository;
   StreamSubscription? _dividersListSubscription;
-  final EliudQuery? eliudQuery;
+  EliudQuery? eliudQuery;
   int pages = 1;
   final bool? paged;
   final String? orderBy;
@@ -99,6 +99,13 @@ class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
     if (event is NewPage) {
       pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
       yield* _mapLoadDividerListWithDetailsToState();
+    } else if (event is DividerChangeQuery) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        yield* _mapLoadDividerListToState();
+      } else {
+        yield* _mapLoadDividerListWithDetailsToState();
+      }
     } else if (event is AddDividerList) {
       yield* _mapAddDividerListToState(event);
     } else if (event is UpdateDividerList) {

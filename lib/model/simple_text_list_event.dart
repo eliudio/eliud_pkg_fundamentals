@@ -13,6 +13,7 @@
 
 */
 
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_text_model.dart';
 
@@ -73,5 +74,17 @@ class SimpleTextListUpdated extends SimpleTextListEvent {
 
   @override
   String toString() => 'SimpleTextListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+}
+
+class SimpleTextChangeQuery extends SimpleTextListEvent {
+  final EliudQuery newQuery;
+
+  const SimpleTextChangeQuery({ required this.newQuery });
+
+  @override
+  List<Object?> get props => [ newQuery ];
+
+  @override
+  String toString() => 'SimpleTextChangeQuery{ value: $newQuery }';
 }
 

@@ -13,6 +13,7 @@
 
 */
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/document_item_model.dart';
 
@@ -36,6 +37,13 @@ class DocumentItemListLoaded extends DocumentItemListState {
 
   @override
   String toString() => 'DocumentItemListLoaded { values: $values }';
+
+  @override
+  bool operator ==(Object other) => 
+          other is DocumentItemListLoaded &&
+              runtimeType == other.runtimeType &&
+              ListEquality().equals(values, other.values) &&
+              mightHaveMore == other.mightHaveMore;
 }
 
 class DocumentItemNotLoaded extends DocumentItemListState {}

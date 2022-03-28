@@ -13,6 +13,7 @@
 
 */
 
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_model.dart';
 
@@ -73,5 +74,17 @@ class FaderListUpdated extends FaderListEvent {
 
   @override
   String toString() => 'FaderListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+}
+
+class FaderChangeQuery extends FaderListEvent {
+  final EliudQuery newQuery;
+
+  const FaderChangeQuery({ required this.newQuery });
+
+  @override
+  List<Object?> get props => [ newQuery ];
+
+  @override
+  String toString() => 'FaderChangeQuery{ value: $newQuery }';
 }
 

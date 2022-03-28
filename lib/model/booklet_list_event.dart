@@ -13,6 +13,7 @@
 
 */
 
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
 
@@ -73,5 +74,17 @@ class BookletListUpdated extends BookletListEvent {
 
   @override
   String toString() => 'BookletListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+}
+
+class BookletChangeQuery extends BookletListEvent {
+  final EliudQuery newQuery;
+
+  const BookletChangeQuery({ required this.newQuery });
+
+  @override
+  List<Object?> get props => [ newQuery ];
+
+  @override
+  String toString() => 'BookletChangeQuery{ value: $newQuery }';
 }
 

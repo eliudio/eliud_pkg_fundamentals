@@ -27,7 +27,7 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 class FaderListBloc extends Bloc<FaderListEvent, FaderListState> {
   final FaderRepository _faderRepository;
   StreamSubscription? _fadersListSubscription;
-  final EliudQuery? eliudQuery;
+  EliudQuery? eliudQuery;
   int pages = 1;
   final bool? paged;
   final String? orderBy;
@@ -99,6 +99,13 @@ class FaderListBloc extends Bloc<FaderListEvent, FaderListState> {
     if (event is NewPage) {
       pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
       yield* _mapLoadFaderListWithDetailsToState();
+    } else if (event is FaderChangeQuery) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        yield* _mapLoadFaderListToState();
+      } else {
+        yield* _mapLoadFaderListWithDetailsToState();
+      }
     } else if (event is AddFaderList) {
       yield* _mapAddFaderListToState(event);
     } else if (event is UpdateFaderList) {

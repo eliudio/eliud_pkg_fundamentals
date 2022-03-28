@@ -27,7 +27,7 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListState> {
   final PresentationRepository _presentationRepository;
   StreamSubscription? _presentationsListSubscription;
-  final EliudQuery? eliudQuery;
+  EliudQuery? eliudQuery;
   int pages = 1;
   final bool? paged;
   final String? orderBy;
@@ -99,6 +99,13 @@ class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListS
     if (event is NewPage) {
       pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
       yield* _mapLoadPresentationListWithDetailsToState();
+    } else if (event is PresentationChangeQuery) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        yield* _mapLoadPresentationListToState();
+      } else {
+        yield* _mapLoadPresentationListWithDetailsToState();
+      }
     } else if (event is AddPresentationList) {
       yield* _mapAddPresentationListToState(event);
     } else if (event is UpdatePresentationList) {

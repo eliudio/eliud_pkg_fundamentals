@@ -13,6 +13,7 @@
 
 */
 
+import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/link_model.dart';
 
@@ -73,5 +74,17 @@ class LinkListUpdated extends LinkListEvent {
 
   @override
   String toString() => 'LinkListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+}
+
+class LinkChangeQuery extends LinkListEvent {
+  final EliudQuery newQuery;
+
+  const LinkChangeQuery({ required this.newQuery });
+
+  @override
+  List<Object?> get props => [ newQuery ];
+
+  @override
+  String toString() => 'LinkChangeQuery{ value: $newQuery }';
 }
 

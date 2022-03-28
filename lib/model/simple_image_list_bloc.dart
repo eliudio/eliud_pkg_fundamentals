@@ -27,7 +27,7 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 class SimpleImageListBloc extends Bloc<SimpleImageListEvent, SimpleImageListState> {
   final SimpleImageRepository _simpleImageRepository;
   StreamSubscription? _simpleImagesListSubscription;
-  final EliudQuery? eliudQuery;
+  EliudQuery? eliudQuery;
   int pages = 1;
   final bool? paged;
   final String? orderBy;
@@ -99,6 +99,13 @@ class SimpleImageListBloc extends Bloc<SimpleImageListEvent, SimpleImageListStat
     if (event is NewPage) {
       pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
       yield* _mapLoadSimpleImageListWithDetailsToState();
+    } else if (event is SimpleImageChangeQuery) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        yield* _mapLoadSimpleImageListToState();
+      } else {
+        yield* _mapLoadSimpleImageListWithDetailsToState();
+      }
     } else if (event is AddSimpleImageList) {
       yield* _mapAddSimpleImageListToState(event);
     } else if (event is UpdateSimpleImageList) {
