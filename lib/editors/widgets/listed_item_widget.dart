@@ -35,6 +35,7 @@ class ListedItemModelWidget extends StatefulWidget {
   final AppModel app;
   final ListedItemModel listedItemModel;
   final ListedItemModelCallback listedItemModelCallback;
+  final int containerPrivilege;
 
   ListedItemModelWidget._({
     Key? key,
@@ -44,6 +45,7 @@ class ListedItemModelWidget extends StatefulWidget {
     required this.widgetHeight,
     required this.listedItemModel,
     required this.listedItemModelCallback,
+    required this.containerPrivilege,
   }) : super(key: key);
 
   @override
@@ -58,7 +60,8 @@ class ListedItemModelWidget extends StatefulWidget {
       double widgetWidth,
       double widgetHeight,
       ListedItemModel listedItemModel,
-      ListedItemModelCallback listedItemModelCallback) {
+      ListedItemModelCallback listedItemModelCallback,
+      int containerPrivilege) {
     var copyOf = listedItemModel.copyWith();
     return ListedItemModelWidget._(
       app: app,
@@ -67,6 +70,7 @@ class ListedItemModelWidget extends StatefulWidget {
       widgetHeight: widgetHeight,
       listedItemModel: copyOf,
       listedItemModelCallback: listedItemModelCallback,
+      containerPrivilege: containerPrivilege,
     );
   }
 }
@@ -119,6 +123,7 @@ class _ListedItemModelWidgetState extends State<ListedItemModelWidget> {
       SelectActionWidget(
           app: widget.app,
           action: widget.listedItemModel.action,
+          containerPrivilege: widget.containerPrivilege,
           actionSelected: (action) {
             setState(() {
               widget.listedItemModel.action = action;

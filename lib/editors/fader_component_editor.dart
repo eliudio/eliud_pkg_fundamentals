@@ -116,8 +116,9 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
                     app: widget.app,
                     title: 'Fader',
                     okAction: () async {
-                      await BlocProvider.of<FaderBloc>(context)
-                          .save(ExtEditorBaseApplyChanges<FaderModel>(model: faderState.model));
+                      await BlocProvider.of<FaderBloc>(context).save(
+                          ExtEditorBaseApplyChanges<FaderModel>(
+                              model: faderState.model));
                       return true;
                     },
                     cancelAction: () async {
@@ -133,12 +134,24 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
                             leading: Icon(Icons.vpn_key),
                             title: text(widget.app, context,
                                 faderState.model.documentID!)),
+                      ]),
+                  topicContainer(widget.app, context,
+                      title: 'Condition',
+                      collapsible: true,
+                      collapsed: true,
+                      children: [
                         getListTile(context, widget.app,
                             leading: Icon(Icons.security),
                             title: ConditionsSimpleWidget(
                               app: widget.app,
                               value: faderState.model.conditions!,
-                              readOnly: faderState.model.items != null && faderState.model.items!.isNotEmpty,
+                              readOnly: faderState.model.items != null &&
+                                  faderState.model.items!.isNotEmpty,
+/*
+                              conditionsSimpleChanged: (_) {
+                                setState(() {});
+                              },
+*/
                             )),
                       ]),
                   topicContainer(widget.app, context,
@@ -151,9 +164,11 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
                             title: dialogField(
                               widget.app,
                               context,
-                              initialValue: faderState.model.imageSeconds.toString(),
+                              initialValue:
+                                  faderState.model.imageSeconds.toString(),
                               valueChanged: (value) {
-                                faderState.model.imageSeconds = int.parse(value);
+                                faderState.model.imageSeconds =
+                                    int.parse(value);
                               },
                               maxLines: 1,
                               decoration: const InputDecoration(
@@ -166,13 +181,17 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
                             title: dialogField(
                               widget.app,
                               context,
-                              initialValue: faderState.model.animationMilliseconds.toString(),
+                              initialValue: faderState
+                                  .model.animationMilliseconds
+                                  .toString(),
                               valueChanged: (value) {
-                                faderState.model.animationMilliseconds = int.parse(value);
+                                faderState.model.animationMilliseconds =
+                                    int.parse(value);
                               },
                               maxLines: 1,
                               decoration: const InputDecoration(
-                                hintText: 'The duration of the transition between the images',
+                                hintText:
+                                    'The duration of the transition between the images',
                                 labelText: 'Animation time (milisec)',
                               ),
                             )),
@@ -195,7 +214,8 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
     });
   }
 
-  Widget _images(BuildContext context, ExtEditorBaseInitialised<FaderModel, dynamic> state) {
+  Widget _images(BuildContext context,
+      ExtEditorBaseInitialised<FaderModel, dynamic> state) {
     var widgets = <Widget>[];
     var items = state.model.items != null ? state.model.items! : [];
     if (state.model.items != null) {
@@ -211,23 +231,24 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
       if (medium != null) {
         widgets.add(GestureDetector(
             onTap: () {
-              BlocProvider.of<FaderBloc>(context)
-                  .add(SelectForEditEvent<FaderModel, ListedItemModel>(item: item));
+              BlocProvider.of<FaderBloc>(context).add(
+                  SelectForEditEvent<FaderModel, ListedItemModel>(item: item));
             },
             child: Padding(
-                padding: const EdgeInsets.all(5), child: item == state.currentEdit ? Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.red, width: 1 ),
-              ),
-              child: Image.network(
-                medium.url!,
-                //            height: height,
-              )
-            ) : Image.network(
-              medium.url!,
-              //            height: height,
-            ))
-            ));
+                padding: const EdgeInsets.all(5),
+                child: item == state.currentEdit
+                    ? Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.red, width: 1),
+                        ),
+                        child: Image.network(
+                          medium.url!,
+                          //            height: height,
+                        ))
+                    : Image.network(
+                        medium.url!,
+                        //            height: height,
+                      ))));
       }
     }
     widgets.add(_addButton(state));
@@ -251,66 +272,71 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
               icon: Icon(
                 Icons.arrow_left,
               ),
-              label: 'Move up',
-              onPressed: () async {
-                BlocProvider.of<FaderBloc>(context)
-                    .add(MoveEvent<FaderModel, ListedItemModel>(isUp: true, item: currentEdit));
-
-              }),
+              label: 'Move up', onPressed: () async {
+            BlocProvider.of<FaderBloc>(context).add(
+                MoveEvent<FaderModel, ListedItemModel>(
+                    isUp: true, item: currentEdit));
+          }),
           Spacer(),
           button(widget.app, context,
               icon: Icon(
                 Icons.edit,
               ),
-              label: 'Edit',
-              onPressed: () async {
-                openFlexibleDialog(
-                  widget.app,
-                  context,
-                  widget.app.documentID! + '/_listeditem',
-                  includeHeading: false,
-                  widthFraction: .8,
-                  child: ListedItemModelWidget.getIt(
-                    context,
-                    widget.app,
-                    false,
-                    fullScreenWidth(context) * .8,
-                    fullScreenHeight(context) - 100,
-                    currentEdit,
-                    (newItem) => _listedItemModelCallback(currentEdit, newItem),
-                  ),
-                );
-              }),
+              label: 'Edit', onPressed: () async {
+            openFlexibleDialog(
+              widget.app,
+              context,
+              widget.app.documentID! + '/_listeditem',
+              includeHeading: false,
+              widthFraction: .8,
+              child: ListedItemModelWidget.getIt(
+                context,
+                widget.app,
+                false,
+                fullScreenWidth(context) * .8,
+                fullScreenHeight(context) - 100,
+                currentEdit,
+                (newItem) => _listedItemModelCallback(currentEdit, newItem),
+                state.model.conditions!.privilegeLevelRequired == null
+                    ? 0
+                    : state.model.conditions!.privilegeLevelRequired!.index,
+              ),
+            );
+          }),
           Spacer(),
           button(widget.app, context,
               icon: Icon(
                 Icons.delete,
               ),
-              label: 'Delete',
-              onPressed: () async {
-                BlocProvider.of<FaderBloc>(context)
-                    .add(DeleteItemEvent<FaderModel, ListedItemModel>(itemModel: currentEdit));
-              }),
+              label: 'Delete', onPressed: () async {
+            BlocProvider.of<FaderBloc>(context).add(
+                DeleteItemEvent<FaderModel, ListedItemModel>(
+                    itemModel: currentEdit));
+          }),
           Spacer(),
           button(widget.app, context,
               icon: Icon(
                 Icons.arrow_right,
               ),
-              label: 'Move down',
-              onPressed: () async {
-                BlocProvider.of<FaderBloc>(context)
-                    .add(MoveEvent<FaderModel, ListedItemModel>(isUp: false, item: currentEdit));
-
-              }),
-        ]),      ]);
+              label: 'Move down', onPressed: () async {
+            BlocProvider.of<FaderBloc>(context).add(
+                MoveEvent<FaderModel, ListedItemModel>(
+                    isUp: false, item: currentEdit));
+          }),
+        ]),
+      ]);
     } else {
       return theWidget;
     }
   }
 
-  void _listedItemModelCallback(ListedItemModel oldItem, ListedItemModel newItem, ) {
-    BlocProvider.of<FaderBloc>(context)
-        .add(UpdateItemEvent<FaderModel, ListedItemModel>(oldItem: oldItem, newItem: newItem));
+  void _listedItemModelCallback(
+    ListedItemModel oldItem,
+    ListedItemModel newItem,
+  ) {
+    BlocProvider.of<FaderBloc>(context).add(
+        UpdateItemEvent<FaderModel, ListedItemModel>(
+            oldItem: oldItem, newItem: newItem));
   }
 
   Widget _addButton(ExtEditorBaseInitialised<FaderModel, dynamic> faderState) {
@@ -362,7 +388,8 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
       _progress = null;
       if (platformMediumModel != null) {
         BlocProvider.of<FaderBloc>(context)
-            .add(AddItemEvent<FaderModel, ListedItemModel>(itemModel: ListedItemModel(
+            .add(AddItemEvent<FaderModel, ListedItemModel>(
+                itemModel: ListedItemModel(
           documentID: newRandomKey(),
           description: '',
           action: null,
