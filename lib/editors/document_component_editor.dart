@@ -20,3 +20,11 @@ class DocumentComponentEditorConstructor extends ComponentEditorConstructor {
     openErrorDialog(app, context, app.documentID! + '/_error', title: 'Problem', errorMessage: 'No editor for this component available yet');
   }
 }
+/*
+BackgroundWidget(
+app: widget.app,
+memberId: memberId,
+value: playStoreState.model.itemBackground!,
+label: 'Background'),
+
+*/
