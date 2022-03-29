@@ -147,11 +147,6 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
                               value: faderState.model.conditions!,
                               readOnly: faderState.model.items != null &&
                                   faderState.model.items!.isNotEmpty,
-/*
-                              conditionsSimpleChanged: (_) {
-                                setState(() {});
-                              },
-*/
                             )),
                       ]),
                   topicContainer(widget.app, context,

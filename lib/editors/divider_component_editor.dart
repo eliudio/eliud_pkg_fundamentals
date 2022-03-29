@@ -23,6 +23,8 @@ import 'package:eliud_core/core/editor/editor_base_bloc/editor_base_bloc.dart';
 import 'package:eliud_core/core/editor/editor_base_bloc/editor_base_event.dart';
 import 'package:eliud_core/core/editor/editor_base_bloc/editor_base_state.dart';
 
+import 'bloc/divider_bloc.dart';
+
 class DividerComponentEditorConstructor extends ComponentEditorConstructor {
   @override
   void updateComponent(
@@ -82,30 +84,6 @@ class DividerComponentEditorConstructor extends ComponentEditorConstructor {
             app: app,
           )),
     );
-  }
-}
-
-class DividerBloc extends EditorBaseBloc<DividerModel> {
-  DividerBloc(String appId, EditorFeedback feedback)
-      : super(appId, dividerRepository(appId: appId)!, feedback);
-
-  @override
-  DividerModel newInstance(StorageConditionsModel conditions) {
-    return DividerModel(
-        documentID: newRandomKey(),
-        conditions: conditions,
-        height: 1,
-        name: 'new divider');
-  }
-
-  @override
-  DividerModel setDefaultConditions(
-      DividerModel t, StorageConditionsModel conditions) {
-    return t.copyWith(
-        conditions: t.conditions ??
-            StorageConditionsModel(
-                privilegeLevelRequired:
-                    PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple));
   }
 }
 
