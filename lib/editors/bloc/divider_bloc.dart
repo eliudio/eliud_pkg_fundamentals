@@ -12,6 +12,7 @@ class DividerBloc extends EditorBaseBloc<DividerModel> {
   @override
   DividerModel newInstance(StorageConditionsModel conditions) {
     return DividerModel(
+        appId: appId,
         documentID: newRandomKey(),
         conditions: conditions,
         height: 1,

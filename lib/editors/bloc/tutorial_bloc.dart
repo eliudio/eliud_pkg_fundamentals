@@ -39,6 +39,7 @@ class TutorialBloc extends ExtEditorBaseBloc<TutorialModel, TutorialEntryModel> 
   @override
   TutorialModel newInstance(StorageConditionsModel conditions) {
     return TutorialModel(
+      appId: appId,
       documentID: newRandomKey(),
       name: 'new tutorial',
       title: 'new totorial',
