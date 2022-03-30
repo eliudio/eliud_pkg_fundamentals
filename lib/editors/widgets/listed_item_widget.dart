@@ -123,6 +123,7 @@ class _ListedItemModelWidgetState extends State<ListedItemModelWidget> {
       SelectActionWidget(
           app: widget.app,
           action: widget.listedItemModel.action,
+          label: 'action',
           containerPrivilege: widget.containerPrivilege,
           actionSelected: (action) {
             setState(() {
