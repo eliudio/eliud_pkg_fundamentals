@@ -163,7 +163,28 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
                               widget.app,
                               context,
                               initialValue:
-                                  dividerState.model.height.toString(),
+                              dividerState.model.thickness.toString(),
+                              valueChanged: (value) {
+                                setState(() {
+                                  dividerState.model.thickness =
+                                      double.parse(value);
+                                });
+                              },
+                              keyboardType: TextInputType.numberWithOptions(
+                                signed: false,
+                              ),
+                              decoration: const InputDecoration(
+                                hintText: 'Thickness',
+                                labelText: 'Thickness',
+                              ),
+                            )),
+                        getListTile(context, widget.app,
+                            leading: Icon(Icons.height),
+                            title: dialogField(
+                              widget.app,
+                              context,
+                              initialValue:
+                              dividerState.model.height.toString(),
                               valueChanged: (value) {
                                 setState(() {
                                   dividerState.model.height =
@@ -177,7 +198,49 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
                                 hintText: 'Height',
                                 labelText: 'Height',
                               ),
-                            ))
+                            )),
+                        getListTile(context, widget.app,
+                            leading: Icon(Icons.height),
+                            title: dialogField(
+                              widget.app,
+                              context,
+                              initialValue:
+                              dividerState.model.indent.toString(),
+                              valueChanged: (value) {
+                                setState(() {
+                                  dividerState.model.indent =
+                                      double.parse(value);
+                                });
+                              },
+                              keyboardType: TextInputType.numberWithOptions(
+                                signed: false,
+                              ),
+                              decoration: const InputDecoration(
+                                hintText: 'Indent',
+                                labelText: 'Indent',
+                              ),
+                            )),
+                        getListTile(context, widget.app,
+                            leading: Icon(Icons.height),
+                            title: dialogField(
+                              widget.app,
+                              context,
+                              initialValue:
+                              dividerState.model.endIndent.toString(),
+                              valueChanged: (value) {
+                                setState(() {
+                                  dividerState.model.endIndent =
+                                      double.parse(value);
+                                });
+                              },
+                              keyboardType: TextInputType.numberWithOptions(
+                                signed: false,
+                              ),
+                              decoration: const InputDecoration(
+                                hintText: 'End Indent',
+                                labelText: 'End Indent',
+                              ),
+                            )),
                       ]),
                   topicContainer(widget.app, context,
                       title: 'Condition',
