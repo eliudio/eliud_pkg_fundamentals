@@ -49,7 +49,7 @@ class TutorialBloc extends ExtEditorBaseBloc<TutorialModel, TutorialEntryModel> 
   }
 
   @override
-  TutorialModel setDefaultConditions(TutorialModel t, StorageConditionsModel conditions) {
+  TutorialModel setDefaultValues(TutorialModel t, StorageConditionsModel conditions) {
     return t.copyWith(
         conditions: t.conditions ??
             StorageConditionsModel(

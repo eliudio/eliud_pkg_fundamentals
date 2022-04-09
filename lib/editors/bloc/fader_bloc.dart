@@ -48,7 +48,7 @@ class FaderBloc extends ExtEditorBaseBloc<FaderModel, ListedItemModel> {
   }
 
   @override
-  FaderModel setDefaultConditions(FaderModel t, StorageConditionsModel conditions) {
+  FaderModel setDefaultValues(FaderModel t, StorageConditionsModel conditions) {
     return t.copyWith(
         conditions: t.conditions ??
             StorageConditionsModel(
