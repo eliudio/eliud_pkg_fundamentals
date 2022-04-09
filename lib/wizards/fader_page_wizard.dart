@@ -54,7 +54,6 @@ class FaderPageWizard extends NewAppWizardInfoWithActionSpecification {
     AppBarProvider appBarProvider,
     DrawerProvider leftDrawerProvider,
     DrawerProvider rightDrawerProvider,
-    PageProvider pageProvider,
   ) {
     if (parameters is ActionSpecificationParametersBase) {
       var faderPageSpecifications = parameters.actionSpecifications;
@@ -73,7 +72,6 @@ class FaderPageWizard extends NewAppWizardInfoWithActionSpecification {
                   appBarProvider(),
                   leftDrawerProvider(),
                   rightDrawerProvider(),
-                  pageProvider,
                   )
               .create();
         });
