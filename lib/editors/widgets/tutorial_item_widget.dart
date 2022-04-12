@@ -111,21 +111,6 @@ class _TutorialEntryModelWidgetState extends State<TutorialEntryModelWidget> {
                     labelText: 'Description',
                   ),
                 )),
-            getListTile(context, widget.app,
-                leading: Icon(Icons.description),
-                title: dialogField(
-                  widget.app,
-                  context,
-                  initialValue: widget.tutorialEntryModel.description,
-                  valueChanged: (value) {
-                    widget.tutorialEntryModel.description = value;
-                  },
-                  maxLines: 1,
-                  decoration: const InputDecoration(
-                    hintText: 'Description',
-                    labelText: 'Description',
-                  ),
-                )),
           ]),
       topicContainer(widget.app, context,
           title: 'Code',
