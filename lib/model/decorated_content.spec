@@ -54,7 +54,7 @@
       "group": "decoratingComponentId",
       "remark": "For that specific component, e.g. 'carousel', which Component ID, i.e. which carousel to include in the page",
       "fieldType": "String",
-      "bespokeFormField": "ComponentIdField(widget.app, componentName: state.value!.decoratingComponentName, value: state.value!.decoratingComponentId, trigger: _onDecoratingComponentIdChanged)"
+      "bespokeFormField": "ComponentIdField(widget.app, componentName: state.value!.decoratingComponentName, value: state.value!.decoratingComponentId, trigger: (value, _) => _onDecoratingComponentIdChanged(value))"
     },
     {
       "fieldName": "contentComponentName",
@@ -68,7 +68,7 @@
       "group": "contentComponentId",
       "remark": "For that specific component, e.g. 'carousel', which Component ID, i.e. which carousel to include in the page",
       "fieldType": "String",
-      "bespokeFormField": "ComponentIdField(widget.app, componentName: state.value!.contentComponentName, value: state.value!.contentComponentId, trigger: _onContentComponentIdChanged)"
+      "bespokeFormField": "ComponentIdField(widget.app, componentName: state.value!.contentComponentName, value: state.value!.contentComponentId, trigger: (value, _) => _onContentComponentIdChanged(value))"
     },
     {
       "fieldName": "decorationComponentPosition",

@@ -189,7 +189,7 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
 
         children.add(
 
-                ComponentIdField(widget.app, componentName: state.value!.decoratingComponentName, value: state.value!.decoratingComponentId, trigger: _onDecoratingComponentIdChanged)
+                ComponentIdField(widget.app, componentName: state.value!.decoratingComponentName, value: state.value!.decoratingComponentId, trigger: (value, _) => _onDecoratingComponentIdChanged(value))
           );
 
         children.add(
@@ -199,7 +199,7 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
 
         children.add(
 
-                ComponentIdField(widget.app, componentName: state.value!.contentComponentName, value: state.value!.contentComponentId, trigger: _onContentComponentIdChanged)
+                ComponentIdField(widget.app, componentName: state.value!.contentComponentName, value: state.value!.contentComponentId, trigger: (value, _) => _onContentComponentIdChanged(value))
           );
 
         children.add(
