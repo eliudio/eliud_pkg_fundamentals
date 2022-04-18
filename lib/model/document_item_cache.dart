@@ -133,10 +133,10 @@ class DocumentItemCache implements DocumentItemRepository {
 
   static Future<DocumentItemModel> refreshRelations(DocumentItemModel model) async {
 
-    MemberMediumModel? imageHolder;
+    PlatformMediumModel? imageHolder;
     if (model.image != null) {
       try {
-        await memberMediumRepository()!.get(model.image!.documentID).then((val) {
+        await platformMediumRepository()!.get(model.image!.documentID).then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}

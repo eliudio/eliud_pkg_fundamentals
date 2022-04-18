@@ -37,13 +37,13 @@
     },
     {
       "fieldName": "image",
-      "fieldType": "MemberMedium",
+      "fieldType": "PlatformMedium",
       "association": true,
       "optional": false
     }
   ],
   "listFields": {
-    "title": "ImageHelper.getImageFromMediumModel(memberMediumModel: value.image!, width: fullScreenWidth(context))",
+    "title": "ImageHelper.getImageFromPlatformModel(platformMediumModel: value.image!, width: fullScreenWidth(context))",
     "subTitle": "value.reference != null ? Center(child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().textStyle().text(app, context, value.reference!)) : Container()"
   },
   "depends": ["eliud_core"]

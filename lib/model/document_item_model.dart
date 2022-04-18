@@ -40,13 +40,13 @@ class DocumentItemModel {
 
   // This is the reference which you can use inside your document to use to this image, e.g. <img src = \"\${REFERENCE}\"
   String? reference;
-  MemberMediumModel? image;
+  PlatformMediumModel? image;
 
   DocumentItemModel({this.documentID, this.reference, this.image, })  {
     assert(documentID != null);
   }
 
-  DocumentItemModel copyWith({String? documentID, String? reference, MemberMediumModel? image, }) {
+  DocumentItemModel copyWith({String? documentID, String? reference, PlatformMediumModel? image, }) {
     return DocumentItemModel(documentID: documentID ?? this.documentID, reference: reference ?? this.reference, image: image ?? this.image, );
   }
 
@@ -86,13 +86,13 @@ class DocumentItemModel {
   static Future<DocumentItemModel?> fromEntityPlus(String documentID, DocumentItemEntity? entity, { String? appId}) async {
     if (entity == null) return null;
 
-    MemberMediumModel? imageHolder;
+    PlatformMediumModel? imageHolder;
     if (entity.imageId != null) {
       try {
-          imageHolder = await memberMediumRepository(appId: appId)!.get(entity.imageId);
+          imageHolder = await platformMediumRepository(appId: appId)!.get(entity.imageId);
       } on Exception catch(e) {
         print('Error whilst trying to initialise image');
-        print('Error whilst retrieving memberMedium with id ${entity.imageId}');
+        print('Error whilst retrieving platformMedium with id ${entity.imageId}');
         print('Exception: $e');
       }
     }

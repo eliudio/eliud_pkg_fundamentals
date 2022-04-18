@@ -81,7 +81,7 @@ class DocumentItemFormBloc extends Bloc<DocumentItemFormEvent, DocumentItemFormS
       }
       if (event is ChangedDocumentItemImage) {
         if (event.value != null)
-          newValue = currentState.value!.copyWith(image: await memberMediumRepository(appId: appId)!.get(event.value));
+          newValue = currentState.value!.copyWith(image: await platformMediumRepository(appId: appId)!.get(event.value));
         else
           newValue = new DocumentItemModel(
                                  documentID: currentState.value!.documentID,

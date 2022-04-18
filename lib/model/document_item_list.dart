@@ -216,7 +216,7 @@ class DocumentItemListItem extends StatelessWidget {
       onDismissed: onDismissed,
       child: ListTile(
         onTap: onTap,
-        title: ImageHelper.getImageFromMediumModel(memberMediumModel: value.image!, width: fullScreenWidth(context)),
+        title: ImageHelper.getImageFromPlatformModel(platformMediumModel: value.image!, width: fullScreenWidth(context)),
         subtitle: value.reference != null ? Center(child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().textStyle().text(app, context, value.reference!)) : Container(),
       ),
     );

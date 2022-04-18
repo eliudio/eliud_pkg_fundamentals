@@ -16,18 +16,12 @@
 import 'abstract_repository_singleton.dart';
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
 import 'dart:collection';
-import '../model/booklet_firestore.dart';
-import '../model/booklet_repository.dart';
-import '../model/booklet_cache.dart';
 import '../model/decorated_content_firestore.dart';
 import '../model/decorated_content_repository.dart';
 import '../model/decorated_content_cache.dart';
 import '../model/divider_firestore.dart';
 import '../model/divider_repository.dart';
 import '../model/divider_cache.dart';
-import '../model/document_firestore.dart';
-import '../model/document_repository.dart';
-import '../model/document_cache.dart';
 import '../model/document_item_repository.dart';
 import '../model/document_item_cache.dart';
 import '../model/fader_firestore.dart';
@@ -43,8 +37,6 @@ import '../model/listed_item_cache.dart';
 import '../model/presentation_firestore.dart';
 import '../model/presentation_repository.dart';
 import '../model/presentation_cache.dart';
-import '../model/section_repository.dart';
-import '../model/section_cache.dart';
 import '../model/simple_image_firestore.dart';
 import '../model/simple_image_repository.dart';
 import '../model/simple_image_cache.dart';
@@ -56,31 +48,35 @@ import '../model/tutorial_repository.dart';
 import '../model/tutorial_cache.dart';
 import '../model/tutorial_entry_repository.dart';
 import '../model/tutorial_entry_cache.dart';
+import '../model/booklet_firestore.dart';
+import '../model/booklet_repository.dart';
+import '../model/booklet_cache.dart';
+import '../model/document_firestore.dart';
+import '../model/document_repository.dart';
+import '../model/document_cache.dart';
+import '../model/section_repository.dart';
+import '../model/section_cache.dart';
 
 import '../model/document_item_model.dart';
 import '../model/grid_model.dart';
 import '../model/listed_item_model.dart';
 import '../model/presentation_model.dart';
-import '../model/section_model.dart';
 import '../model/simple_image_model.dart';
 import '../model/tutorial_entry_model.dart';
+import '../model/section_model.dart';
 
 class RepositorySingleton extends AbstractRepositorySingleton {
-    var _bookletRepository = HashMap<String, BookletRepository>();
     var _decoratedContentRepository = HashMap<String, DecoratedContentRepository>();
     var _dividerRepository = HashMap<String, DividerRepository>();
-    var _documentRepository = HashMap<String, DocumentRepository>();
     var _faderRepository = HashMap<String, FaderRepository>();
     var _gridRepository = HashMap<String, GridRepository>();
     var _presentationRepository = HashMap<String, PresentationRepository>();
     var _simpleImageRepository = HashMap<String, SimpleImageRepository>();
     var _simpleTextRepository = HashMap<String, SimpleTextRepository>();
     var _tutorialRepository = HashMap<String, TutorialRepository>();
+    var _bookletRepository = HashMap<String, BookletRepository>();
+    var _documentRepository = HashMap<String, DocumentRepository>();
 
-    BookletRepository? bookletRepository(String? appId) {
-      if ((appId != null) && (_bookletRepository[appId] == null)) _bookletRepository[appId] = BookletCache(BookletFirestore(() => appRepository()!.getSubCollection(appId, 'booklet'), appId));
-      return _bookletRepository[appId];
-    }
     DecoratedContentRepository? decoratedContentRepository(String? appId) {
       if ((appId != null) && (_decoratedContentRepository[appId] == null)) _decoratedContentRepository[appId] = DecoratedContentCache(DecoratedContentFirestore(() => appRepository()!.getSubCollection(appId, 'decoratedcontent'), appId));
       return _decoratedContentRepository[appId];
@@ -88,10 +84,6 @@ class RepositorySingleton extends AbstractRepositorySingleton {
     DividerRepository? dividerRepository(String? appId) {
       if ((appId != null) && (_dividerRepository[appId] == null)) _dividerRepository[appId] = DividerCache(DividerFirestore(() => appRepository()!.getSubCollection(appId, 'divider'), appId));
       return _dividerRepository[appId];
-    }
-    DocumentRepository? documentRepository(String? appId) {
-      if ((appId != null) && (_documentRepository[appId] == null)) _documentRepository[appId] = DocumentCache(DocumentFirestore(() => appRepository()!.getSubCollection(appId, 'document'), appId));
-      return _documentRepository[appId];
     }
     FaderRepository? faderRepository(String? appId) {
       if ((appId != null) && (_faderRepository[appId] == null)) _faderRepository[appId] = FaderCache(FaderFirestore(() => appRepository()!.getSubCollection(appId, 'fader'), appId));
@@ -116,6 +108,14 @@ class RepositorySingleton extends AbstractRepositorySingleton {
     TutorialRepository? tutorialRepository(String? appId) {
       if ((appId != null) && (_tutorialRepository[appId] == null)) _tutorialRepository[appId] = TutorialCache(TutorialFirestore(() => appRepository()!.getSubCollection(appId, 'tutorial'), appId));
       return _tutorialRepository[appId];
+    }
+    BookletRepository? bookletRepository(String? appId) {
+      if ((appId != null) && (_bookletRepository[appId] == null)) _bookletRepository[appId] = BookletCache(BookletFirestore(() => appRepository()!.getSubCollection(appId, 'booklet'), appId));
+      return _bookletRepository[appId];
+    }
+    DocumentRepository? documentRepository(String? appId) {
+      if ((appId != null) && (_documentRepository[appId] == null)) _documentRepository[appId] = DocumentCache(DocumentFirestore(() => appRepository()!.getSubCollection(appId, 'document'), appId));
+      return _documentRepository[appId];
     }
 
 }
