@@ -8,15 +8,15 @@ import 'package:eliud_core/model/storage_conditions_model.dart';
 import 'package:eliud_core/tools/component/component_spec.dart';
 import 'package:eliud_core/tools/random.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
-import 'package:eliud_pkg_fundamentals/model/presentation_model.dart';
+import 'package:eliud_pkg_fundamentals/model/grid_model.dart';
 
-class PresentationBloc extends ExtEditorBaseBloc<PresentationModel, BodyComponentModel> {
+class GridBloc extends ExtEditorBaseBloc<GridModel, BodyComponentModel> {
 
-  PresentationBloc(String appId, EditorFeedback feedback)
-      : super(appId, presentationRepository(appId: appId)!, feedback);
+  GridBloc(String appId, EditorFeedback feedback)
+      : super(appId, gridRepository(appId: appId)!, feedback);
 
   @override
-  PresentationModel addItem(PresentationModel model, BodyComponentModel newItem) {
+  GridModel addItem(GridModel model, BodyComponentModel newItem) {
     List<BodyComponentModel> newItems = model.bodyComponents == null
         ? []
         : model.bodyComponents!.map((e) => e).toList();
@@ -26,7 +26,7 @@ class PresentationBloc extends ExtEditorBaseBloc<PresentationModel, BodyComponen
   }
 
   @override
-  PresentationModel deleteItem(PresentationModel model, BodyComponentModel deleteItem) {
+  GridModel deleteItem(GridModel model, BodyComponentModel deleteItem) {
     var newItems = <BodyComponentModel>[];
     for (var item in model.bodyComponents!) {
       if (item != deleteItem) {
@@ -38,22 +38,23 @@ class PresentationBloc extends ExtEditorBaseBloc<PresentationModel, BodyComponen
   }
 
   @override
-  PresentationModel newInstance(StorageConditionsModel conditions) {
-    return PresentationModel(
+  GridModel newInstance(StorageConditionsModel conditions) {
+    return GridModel(
       appId: appId,
+      title: 'New grid',
       documentID: newRandomKey(),
       conditions: conditions,
     );
   }
 
   @override
-  PresentationModel setDefaultValues(PresentationModel t, StorageConditionsModel conditions) {
+  GridModel setDefaultValues(GridModel t, StorageConditionsModel conditions) {
     return t.copyWith(
         conditions: t.conditions ?? conditions);
   }
 
   @override
-  PresentationModel updateItem(PresentationModel model, BodyComponentModel oldItem, BodyComponentModel newItem) {
+  GridModel updateItem(GridModel model, BodyComponentModel oldItem, BodyComponentModel newItem) {
     List<BodyComponentModel> currentItems = model.bodyComponents == null
         ? []
         : model.bodyComponents!;

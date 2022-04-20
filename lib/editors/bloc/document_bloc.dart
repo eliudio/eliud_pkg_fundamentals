@@ -51,10 +51,7 @@ class DocumentBloc extends ExtEditorBaseBloc<DocumentModel, DocumentItemModel> {
       DocumentModel t, StorageConditionsModel conditions) {
     return t.copyWith(
         background: t.background ?? BackgroundModel(),
-        conditions: t.conditions ??
-            StorageConditionsModel(
-                privilegeLevelRequired:
-                    PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple));
+        conditions: t.conditions ?? conditions);
   }
 
   @override

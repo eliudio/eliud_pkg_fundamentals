@@ -105,11 +105,7 @@ class SimpleTextBloc
   @override
   SimpleTextModel setDefaultValues(
       SimpleTextModel t, StorageConditionsModel conditions) {
-    return t.copyWith(
-        conditions: t.conditions ??
-            StorageConditionsModel(
-                privilegeLevelRequired:
-                PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple));
+    return t.copyWith(conditions: t.conditions ?? conditions);
   }
 }
 

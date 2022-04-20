@@ -104,11 +104,7 @@ class SimpleImageBloc
   @override
   SimpleImageModel setDefaultValues(
       SimpleImageModel t, StorageConditionsModel conditions) {
-    return t.copyWith(
-        conditions: t.conditions ??
-            StorageConditionsModel(
-                privilegeLevelRequired:
-                PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple));
+    return t.copyWith(conditions: t.conditions ?? conditions);
   }
 }
 

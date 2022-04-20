@@ -23,9 +23,6 @@ class DividerBloc extends EditorBaseBloc<DividerModel> {
   DividerModel setDefaultValues(
       DividerModel t, StorageConditionsModel conditions) {
     return t.copyWith(
-        conditions: t.conditions ??
-            StorageConditionsModel(
-                privilegeLevelRequired:
-                PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple));
+        conditions: t.conditions ?? conditions);
   }
 }
