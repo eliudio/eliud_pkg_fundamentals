@@ -164,10 +164,10 @@ class BookletComponent extends AbstractBookletComponent {
     value!.sections!.forEach((element) {
       var widgets = <Widget>[];
       widgets.add(
-          h3(app, context, documentParameterProcessor.process(element.title!)));
+          h3(app, context, documentParameterProcessor.process(element.title ?? '')));
       widgets.add(_aBitSpace());
       widgets.add(text(app, context,
-          documentParameterProcessor.process(element.description!)));
+          documentParameterProcessor.process(element.description ?? '')));
       widgets.add(_aBitSpace());
       if (element.links != null && element.links!.isNotEmpty) {
         var children = <Widget>[];

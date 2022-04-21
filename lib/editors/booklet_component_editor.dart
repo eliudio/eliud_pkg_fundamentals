@@ -30,6 +30,7 @@ import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'bloc/booklet_bloc.dart';
+import 'bloc/section_bloc.dart';
 
 class BookletComponentEditorConstructor
     extends ComponentEditorConstructor {
@@ -177,6 +178,7 @@ class _BookletComponentEditorState
                             leading: Icon(Icons.security),
                             title: ConditionsSimpleWidget(
                               app: widget.app,
+                              readOnly: (bookletState.model.sections != null) && (bookletState.model.sections!.isNotEmpty),
                               value: bookletState.model.conditions!,
                             )),
                       ]),
@@ -287,7 +289,7 @@ class _BookletComponentEditorState
 
   void open(
       SectionModel value,
-      SectionModelCallback memberActionModelCallback,
+      SectionModelCallback sectionCallback,
       int privilegeContainer) {
     openFlexibleDialog(
       widget.app,
@@ -295,15 +297,19 @@ class _BookletComponentEditorState
       widget.app.documentID! + '/_memberaction',
       includeHeading: false,
       widthFraction: .8,
-      child: SectionModelWidget.getIt(
+      child: BlocProvider<SectionBloc>(
+          create: (context) => SectionBloc(
+            widget.app.documentID!,
+          )..add(ExtEditorBaseInitialise<SectionModel>(value)),
+          child: SectionModelWidget.getIt(
           context,
           widget.app,
-          false,
-          fullScreenWidth(context) * .8,
-          fullScreenHeight(context) - 100,
-          value,
-          memberActionModelCallback,
-          privilegeContainer),
-    );
+    false,
+    fullScreenWidth(context) * .8,
+    fullScreenHeight(context) - 100,
+    value,
+    sectionCallback,
+    privilegeContainer)
+    ));
   }
 }
