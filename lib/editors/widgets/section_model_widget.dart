@@ -3,6 +3,7 @@ import 'package:eliud_core/core/blocs/access/state/access_determined.dart';
 import 'package:eliud_core/core/blocs/access/state/access_state.dart';
 import 'package:eliud_core/core/editor/ext_editor_base_bloc/ext_editor_base_event.dart';
 import 'package:eliud_core/core/editor/ext_editor_base_bloc/ext_editor_base_state.dart';
+import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/style/frontend/has_container.dart';
@@ -20,7 +21,6 @@ import 'package:eliud_pkg_fundamentals/editors/widgets/relative_image_position.d
 import 'package:eliud_pkg_fundamentals/editors/widgets/section_image_alignment.dart';
 import 'package:eliud_pkg_fundamentals/model/link_model.dart';
 import 'package:eliud_pkg_fundamentals/model/section_model.dart';
-import 'package:eliud_pkg_medium/wizards/widgets/photo_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -155,7 +155,8 @@ class _SectionModelWidgetState extends State<SectionModelWidget> {
                       collapsible: true,
                       collapsed: true,
                       children: [
-                        PlatformPhotoWidget(
+                        Registry.registry()!.getMediumApi().getPlatformPhotoWidget(
+                          context: context,
                           title: 'Select Image',
                           feedbackFunction: (mediumModel) {
                             setState(() {

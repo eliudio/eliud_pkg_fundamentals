@@ -1,5 +1,6 @@
 import 'package:eliud_core/core/blocs/access/state/access_determined.dart';
 import 'package:eliud_core/core/blocs/access/state/access_state.dart';
+import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/storage_conditions_model.dart';
 import 'package:eliud_core/style/frontend/has_container.dart';
@@ -14,7 +15,6 @@ import 'package:eliud_core/tools/widgets/condition_simple_widget.dart';
 import 'package:eliud_core/tools/widgets/header_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_model.dart';
-import 'package:eliud_pkg_medium/wizards/widgets/photo_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,8 +23,7 @@ import 'package:eliud_core/core/editor/editor_base_bloc/editor_base_bloc.dart';
 import 'package:eliud_core/core/editor/editor_base_bloc/editor_base_event.dart';
 import 'package:eliud_core/core/editor/editor_base_bloc/editor_base_state.dart';
 
-class SimpleImageComponentEditorConstructor
-    extends ComponentEditorConstructor {
+class SimpleImageComponentEditorConstructor extends ComponentEditorConstructor {
   @override
   void updateComponent(
       AppModel app, BuildContext context, model, EditorFeedback feedback) {
@@ -68,9 +67,7 @@ class SimpleImageComponentEditorConstructor
       app,
       context,
       app.documentID! + '/chatdashboard',
-      title: create
-          ? 'Create Chat Dashboard'
-          : 'Update Chat Dashboard',
+      title: create ? 'Create Chat Dashboard' : 'Update Chat Dashboard',
       includeHeading: false,
       widthFraction: .9,
       child: BlocProvider<SimpleImageBloc>(
@@ -87,18 +84,14 @@ class SimpleImageComponentEditorConstructor
   }
 }
 
-class SimpleImageBloc
-    extends EditorBaseBloc<SimpleImageModel> {
-
+class SimpleImageBloc extends EditorBaseBloc<SimpleImageModel> {
   SimpleImageBloc(String appId, EditorFeedback feedback)
       : super(appId, simpleImageRepository(appId: appId)!, feedback);
 
   @override
   SimpleImageModel newInstance(StorageConditionsModel conditions) {
     return SimpleImageModel(
-        appId: appId,
-        documentID: newRandomKey(),
-        conditions: conditions);
+        appId: appId, documentID: newRandomKey(), conditions: conditions);
   }
 
   @override
@@ -117,8 +110,7 @@ class SimpleImageComponentEditor extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() =>
-      _SimpleImageComponentEditorState();
+  State<StatefulWidget> createState() => _SimpleImageComponentEditorState();
 }
 
 class _SimpleImageComponentEditorState
@@ -139,8 +131,8 @@ class _SimpleImageComponentEditorState
                     app: widget.app,
                     title: 'SimpleImage',
                     okAction: () async {
-                      await BlocProvider.of<SimpleImageBloc>(context)
-                          .save(EditorBaseApplyChanges<SimpleImageModel>(
+                      await BlocProvider.of<SimpleImageBloc>(context).save(
+                          EditorBaseApplyChanges<SimpleImageModel>(
                               model: simpleImageState.model));
                       return true;
                     },
@@ -178,16 +170,19 @@ class _SimpleImageComponentEditorState
                       collapsible: true,
                       collapsed: true,
                       children: [
-                        PlatformPhotoWidget(
-                          title: 'Select Image',
-                          feedbackFunction: (mediumModel) {
-                            setState(() {
-                              simpleImageState.model.image = mediumModel;
-                            });
-                          },
-                          app: widget.app,
-                          initialImage: simpleImageState.model.image,
-                        ),
+                        Registry.registry()!
+                            .getMediumApi()
+                            .getPlatformPhotoWidget(
+                              context: context,
+                              title: 'Select Image',
+                              feedbackFunction: (mediumModel) {
+                                setState(() {
+                                  simpleImageState.model.image = mediumModel;
+                                });
+                              },
+                              app: widget.app,
+                              initialImage: simpleImageState.model.image,
+                            ),
                       ]),
                   topicContainer(widget.app, context,
                       title: 'Condition',
@@ -211,5 +206,4 @@ class _SimpleImageComponentEditorState
       }
     });
   }
-
 }

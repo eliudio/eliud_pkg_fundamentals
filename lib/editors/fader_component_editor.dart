@@ -22,7 +22,7 @@ import 'package:eliud_core/tools/widgets/condition_simple_widget.dart';
 import 'package:eliud_core/tools/widgets/header_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_model.dart';
-import 'package:eliud_pkg_medium/platform/access_rights.dart';
+import 'package:eliud_core/package/access_rights.dart';
 import 'package:eliud_pkg_medium/platform/medium_platform.dart';
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

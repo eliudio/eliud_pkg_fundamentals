@@ -13,9 +13,6 @@ dependencies:
   eliud_core:
     path: ../eliud_core
 
-  eliud_pkg_medium:
-    path: ../eliud_pkg_medium
-
   getwidget: ^2.0.4
   photo_view: ^0.13.0
   #dynamic_widget: 3.0.5

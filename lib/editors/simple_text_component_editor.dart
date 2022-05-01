@@ -15,7 +15,6 @@ import 'package:eliud_core/tools/widgets/header_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_model.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_text_model.dart';
-import 'package:eliud_pkg_medium/wizards/widgets/photo_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
