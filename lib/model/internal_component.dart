@@ -23,6 +23,23 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/tools/has_fab.dart';
 
 
+import 'package:eliud_pkg_fundamentals/model/booklet_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_list.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_dropdown_button.dart';
+import 'package:eliud_pkg_fundamentals/model/booklet_list_event.dart';
+
+import 'package:eliud_core/model/repository_export.dart';
+import 'package:eliud_core/model/abstract_repository_singleton.dart';
+import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
+import 'package:eliud_core/model/model_export.dart';
+import '../tools/bespoke_models.dart';
+import 'package:eliud_pkg_fundamentals/model/model_export.dart';
+import 'package:eliud_core/model/entity_export.dart';
+import '../tools/bespoke_entities.dart';
+import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
+
 import 'package:eliud_pkg_fundamentals/model/decorated_content_list_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/decorated_content_list.dart';
 import 'package:eliud_pkg_fundamentals/model/decorated_content_dropdown_button.dart';
@@ -44,6 +61,23 @@ import 'package:eliud_pkg_fundamentals/model/divider_list_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_list.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_dropdown_button.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_list_event.dart';
+
+import 'package:eliud_core/model/repository_export.dart';
+import 'package:eliud_core/model/abstract_repository_singleton.dart';
+import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
+import 'package:eliud_core/model/model_export.dart';
+import '../tools/bespoke_models.dart';
+import 'package:eliud_pkg_fundamentals/model/model_export.dart';
+import 'package:eliud_core/model/entity_export.dart';
+import '../tools/bespoke_entities.dart';
+import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
+
+import 'package:eliud_pkg_fundamentals/model/document_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/document_list.dart';
+import 'package:eliud_pkg_fundamentals/model/document_dropdown_button.dart';
+import 'package:eliud_pkg_fundamentals/model/document_list_event.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
@@ -159,40 +193,6 @@ import 'package:eliud_core/model/entity_export.dart';
 import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-import 'package:eliud_pkg_fundamentals/model/booklet_list_bloc.dart';
-import 'package:eliud_pkg_fundamentals/model/booklet_list.dart';
-import 'package:eliud_pkg_fundamentals/model/booklet_dropdown_button.dart';
-import 'package:eliud_pkg_fundamentals/model/booklet_list_event.dart';
-
-import 'package:eliud_core/model/repository_export.dart';
-import 'package:eliud_core/model/abstract_repository_singleton.dart';
-import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
-import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
-import 'package:eliud_core/model/model_export.dart';
-import '../tools/bespoke_models.dart';
-import 'package:eliud_pkg_fundamentals/model/model_export.dart';
-import 'package:eliud_core/model/entity_export.dart';
-import '../tools/bespoke_entities.dart';
-import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
-
-import 'package:eliud_pkg_fundamentals/model/document_list_bloc.dart';
-import 'package:eliud_pkg_fundamentals/model/document_list.dart';
-import 'package:eliud_pkg_fundamentals/model/document_dropdown_button.dart';
-import 'package:eliud_pkg_fundamentals/model/document_list_event.dart';
-
-import 'package:eliud_core/model/repository_export.dart';
-import 'package:eliud_core/model/abstract_repository_singleton.dart';
-import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
-import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
-import 'package:eliud_core/model/model_export.dart';
-import '../tools/bespoke_models.dart';
-import 'package:eliud_pkg_fundamentals/model/model_export.dart';
-import 'package:eliud_core/model/entity_export.dart';
-import '../tools/bespoke_entities.dart';
-import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
-
 class ListComponentFactory implements ComponentConstructor {
   Widget? createNew({Key? key, required AppModel app,  required String id, int? privilegeLevel, Map<String, dynamic>? parameters}) {
     return ListComponent(app: app, componentId: id);
@@ -216,25 +216,31 @@ class DropdownButtonComponentFactory implements ComponentDropDown {
 
   bool supports(String id) {
 
+    if (id == "booklets") return true;
     if (id == "decoratedContents") return true;
     if (id == "dividers") return true;
+    if (id == "documents") return true;
     if (id == "faders") return true;
     if (id == "grids") return true;
     if (id == "presentations") return true;
     if (id == "simpleImages") return true;
     if (id == "simpleTexts") return true;
     if (id == "tutorials") return true;
-    if (id == "booklets") return true;
-    if (id == "documents") return true;
     return false;
   }
 
   Widget createNew({Key? key, required AppModel app, required String id, int? privilegeLevel, Map<String, dynamic>? parameters, String? value, DropdownButtonChanged? trigger, bool? optional}) {
 
+    if (id == "booklets")
+      return DropdownButtonComponent(app: app, componentId: id, value: value, privilegeLevel: privilegeLevel, trigger: trigger, optional: optional);
+
     if (id == "decoratedContents")
       return DropdownButtonComponent(app: app, componentId: id, value: value, privilegeLevel: privilegeLevel, trigger: trigger, optional: optional);
 
     if (id == "dividers")
+      return DropdownButtonComponent(app: app, componentId: id, value: value, privilegeLevel: privilegeLevel, trigger: trigger, optional: optional);
+
+    if (id == "documents")
       return DropdownButtonComponent(app: app, componentId: id, value: value, privilegeLevel: privilegeLevel, trigger: trigger, optional: optional);
 
     if (id == "faders")
@@ -253,12 +259,6 @@ class DropdownButtonComponentFactory implements ComponentDropDown {
       return DropdownButtonComponent(app: app, componentId: id, value: value, privilegeLevel: privilegeLevel, trigger: trigger, optional: optional);
 
     if (id == "tutorials")
-      return DropdownButtonComponent(app: app, componentId: id, value: value, privilegeLevel: privilegeLevel, trigger: trigger, optional: optional);
-
-    if (id == "booklets")
-      return DropdownButtonComponent(app: app, componentId: id, value: value, privilegeLevel: privilegeLevel, trigger: trigger, optional: optional);
-
-    if (id == "documents")
       return DropdownButtonComponent(app: app, componentId: id, value: value, privilegeLevel: privilegeLevel, trigger: trigger, optional: optional);
 
     return Text("Id $id not found");
@@ -288,30 +288,47 @@ class ListComponent extends StatelessWidget with HasFab {
   @override
   Widget build(BuildContext context) {
 
+    if (componentId == 'booklets') return _bookletBuild(context);
     if (componentId == 'decoratedContents') return _decoratedContentBuild(context);
     if (componentId == 'dividers') return _dividerBuild(context);
+    if (componentId == 'documents') return _documentBuild(context);
     if (componentId == 'faders') return _faderBuild(context);
     if (componentId == 'grids') return _gridBuild(context);
     if (componentId == 'presentations') return _presentationBuild(context);
     if (componentId == 'simpleImages') return _simpleImageBuild(context);
     if (componentId == 'simpleTexts') return _simpleTextBuild(context);
     if (componentId == 'tutorials') return _tutorialBuild(context);
-    if (componentId == 'booklets') return _bookletBuild(context);
-    if (componentId == 'documents') return _documentBuild(context);
     return Text('Component with componentId == $componentId not found');
   }
 
   void initWidget() {
+    if (componentId == 'booklets') widget = BookletListWidget(app: app);
     if (componentId == 'decoratedContents') widget = DecoratedContentListWidget(app: app);
     if (componentId == 'dividers') widget = DividerListWidget(app: app);
+    if (componentId == 'documents') widget = DocumentListWidget(app: app);
     if (componentId == 'faders') widget = FaderListWidget(app: app);
     if (componentId == 'grids') widget = GridListWidget(app: app);
     if (componentId == 'presentations') widget = PresentationListWidget(app: app);
     if (componentId == 'simpleImages') widget = SimpleImageListWidget(app: app);
     if (componentId == 'simpleTexts') widget = SimpleTextListWidget(app: app);
     if (componentId == 'tutorials') widget = TutorialListWidget(app: app);
-    if (componentId == 'booklets') widget = BookletListWidget(app: app);
-    if (componentId == 'documents') widget = DocumentListWidget(app: app);
+  }
+
+  Widget _bookletBuild(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<BookletListBloc>(
+          create: (context) => BookletListBloc(
+            eliudQuery: EliudQuery(theConditions: [
+              EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
+              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+            ),
+            bookletRepository: bookletRepository(appId: app.documentID!)!,
+          )..add(LoadBookletList()),
+        )
+      ],
+      child: widget!,
+    );
   }
 
   Widget _decoratedContentBuild(BuildContext context) {
@@ -342,6 +359,23 @@ class ListComponent extends StatelessWidget with HasFab {
             ),
             dividerRepository: dividerRepository(appId: app.documentID!)!,
           )..add(LoadDividerList()),
+        )
+      ],
+      child: widget!,
+    );
+  }
+
+  Widget _documentBuild(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<DocumentListBloc>(
+          create: (context) => DocumentListBloc(
+            eliudQuery: EliudQuery(theConditions: [
+              EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
+              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+            ),
+            documentRepository: documentRepository(appId: app.documentID!)!,
+          )..add(LoadDocumentList()),
         )
       ],
       child: widget!,
@@ -450,40 +484,6 @@ class ListComponent extends StatelessWidget with HasFab {
     );
   }
 
-  Widget _bookletBuild(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<BookletListBloc>(
-          create: (context) => BookletListBloc(
-            eliudQuery: EliudQuery(theConditions: [
-              EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
-            ),
-            bookletRepository: bookletRepository(appId: app.documentID!)!,
-          )..add(LoadBookletList()),
-        )
-      ],
-      child: widget!,
-    );
-  }
-
-  Widget _documentBuild(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<DocumentListBloc>(
-          create: (context) => DocumentListBloc(
-            eliudQuery: EliudQuery(theConditions: [
-              EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
-            ),
-            documentRepository: documentRepository(appId: app.documentID!)!,
-          )..add(LoadDocumentList()),
-        )
-      ],
-      child: widget!,
-    );
-  }
-
 }
 
 
@@ -502,19 +502,36 @@ class DropdownButtonComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    if (componentId == 'booklets') return _bookletBuild(context);
     if (componentId == 'decoratedContents') return _decoratedContentBuild(context);
     if (componentId == 'dividers') return _dividerBuild(context);
+    if (componentId == 'documents') return _documentBuild(context);
     if (componentId == 'faders') return _faderBuild(context);
     if (componentId == 'grids') return _gridBuild(context);
     if (componentId == 'presentations') return _presentationBuild(context);
     if (componentId == 'simpleImages') return _simpleImageBuild(context);
     if (componentId == 'simpleTexts') return _simpleTextBuild(context);
     if (componentId == 'tutorials') return _tutorialBuild(context);
-    if (componentId == 'booklets') return _bookletBuild(context);
-    if (componentId == 'documents') return _documentBuild(context);
     return Text('Component with componentId == $componentId not found');
   }
 
+
+  Widget _bookletBuild(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<BookletListBloc>(
+          create: (context) => BookletListBloc(
+            eliudQuery: EliudQuery(theConditions: [
+              EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
+              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+            ),
+            bookletRepository: bookletRepository(appId: app.documentID!)!,
+          )..add(LoadBookletList()),
+        )
+      ],
+      child: BookletDropdownButtonWidget(app: app, value: value, privilegeLevel: privilegeLevel, trigger: trigger, optional: optional),
+    );
+  }
 
   Widget _decoratedContentBuild(BuildContext context) {
     return MultiBlocProvider(
@@ -547,6 +564,23 @@ class DropdownButtonComponent extends StatelessWidget {
         )
       ],
       child: DividerDropdownButtonWidget(app: app, value: value, privilegeLevel: privilegeLevel, trigger: trigger, optional: optional),
+    );
+  }
+
+  Widget _documentBuild(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<DocumentListBloc>(
+          create: (context) => DocumentListBloc(
+            eliudQuery: EliudQuery(theConditions: [
+              EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
+              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+            ),
+            documentRepository: documentRepository(appId: app.documentID!)!,
+          )..add(LoadDocumentList()),
+        )
+      ],
+      child: DocumentDropdownButtonWidget(app: app, value: value, privilegeLevel: privilegeLevel, trigger: trigger, optional: optional),
     );
   }
 
@@ -649,40 +683,6 @@ class DropdownButtonComponent extends StatelessWidget {
         )
       ],
       child: TutorialDropdownButtonWidget(app: app, value: value, privilegeLevel: privilegeLevel, trigger: trigger, optional: optional),
-    );
-  }
-
-  Widget _bookletBuild(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<BookletListBloc>(
-          create: (context) => BookletListBloc(
-            eliudQuery: EliudQuery(theConditions: [
-              EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
-            ),
-            bookletRepository: bookletRepository(appId: app.documentID!)!,
-          )..add(LoadBookletList()),
-        )
-      ],
-      child: BookletDropdownButtonWidget(app: app, value: value, privilegeLevel: privilegeLevel, trigger: trigger, optional: optional),
-    );
-  }
-
-  Widget _documentBuild(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<DocumentListBloc>(
-          create: (context) => DocumentListBloc(
-            eliudQuery: EliudQuery(theConditions: [
-              EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
-            ),
-            documentRepository: documentRepository(appId: app.documentID!)!,
-          )..add(LoadDocumentList()),
-        )
-      ],
-      child: DocumentDropdownButtonWidget(app: app, value: value, privilegeLevel: privilegeLevel, trigger: trigger, optional: optional),
     );
   }
 

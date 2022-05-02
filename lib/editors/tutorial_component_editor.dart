@@ -1,5 +1,6 @@
 import 'package:eliud_core/core/blocs/access/state/access_determined.dart';
 import 'package:eliud_core/core/blocs/access/state/access_state.dart';
+import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_core/style/frontend/has_dialog_field.dart';
 import 'package:eliud_core/tools/screen_size.dart';
 import 'package:eliud_pkg_fundamentals/editors/widgets/tutorial_item_widget.dart';
@@ -328,7 +329,7 @@ class _TutorialComponentEditorState extends State<TutorialComponentEditor> {
           child: Icon(Icons.add),
           elevation: 10,
           itemBuilder: (context) => [
-            if (AbstractMediumPlatform.platform!.hasCamera())
+            if (Registry.registry()!.getMediumApi().hasCamera())
               PopupMenuItem(
                 value: 0,
                 child: text(widget.app, context, 'Take photo'),
@@ -340,7 +341,7 @@ class _TutorialComponentEditorState extends State<TutorialComponentEditor> {
           ],
           onSelected: (value) async {
             if (value == 0) {
-              AbstractMediumPlatform.platform!.takePhoto(
+              Registry.registry()!.getMediumApi().takePhoto(
                   context,
                   widget.app,
                   widget.app.ownerID!,
@@ -350,7 +351,7 @@ class _TutorialComponentEditorState extends State<TutorialComponentEditor> {
                   _photoUploading,
                   allowCrop: false);
             } else if (value == 1) {
-              AbstractMediumPlatform.platform!.uploadPhoto(
+              Registry.registry()!.getMediumApi().uploadPhoto(
                   context,
                   widget.app,
                   widget.app.ownerID!,

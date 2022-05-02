@@ -1,17 +1,18 @@
 import 'package:eliud_core/core/blocs/access/state/access_determined.dart';
 import 'package:eliud_core/core/blocs/access/state/access_state.dart';
+import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/model/pos_size_model.dart';
 import 'package:eliud_core/model/storage_conditions_model.dart';
 import 'package:eliud_core/tools/screen_size.dart';
+import 'package:eliud_core/tools/widgets/background_widget.dart';
 import 'package:eliud_pkg_fundamentals/editors/widgets/document_item_widget.dart';
 import 'package:eliud_pkg_fundamentals/editors/widgets/document_renderer_widget.dart';
 import 'package:eliud_pkg_fundamentals/editors/widgets/listed_item_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/document_item_model.dart';
 import 'package:eliud_pkg_fundamentals/model/document_model.dart';
 import 'package:eliud_pkg_fundamentals/model/listed_item_model.dart';
-import 'package:eliud_pkg_medium/editors/widgets/background_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/style/frontend/has_button.dart';
@@ -394,7 +395,7 @@ class _DocumentComponentEditorState extends State<DocumentComponentEditor> {
           child: Icon(Icons.add),
           elevation: 10,
           itemBuilder: (context) => [
-                if (AbstractMediumPlatform.platform!.hasCamera())
+                if (Registry.registry()!.getMediumApi().hasCamera())
                   PopupMenuItem(
                     value: 0,
                     child: text(widget.app, context, 'Take photo'),
@@ -406,7 +407,7 @@ class _DocumentComponentEditorState extends State<DocumentComponentEditor> {
               ],
           onSelected: (value) async {
             if (value == 0) {
-              AbstractMediumPlatform.platform!.takePhoto(
+              Registry.registry()!.getMediumApi().takePhoto(
                   context,
                   widget.app,
                   widget.app.ownerID!,
@@ -416,7 +417,7 @@ class _DocumentComponentEditorState extends State<DocumentComponentEditor> {
                   _photoUploading,
                   allowCrop: false);
             } else if (value == 1) {
-              AbstractMediumPlatform.platform!.uploadPhoto(
+              Registry.registry()!.getMediumApi().uploadPhoto(
                   context,
                   widget.app,
                   widget.app.ownerID!,

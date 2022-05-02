@@ -155,39 +155,59 @@ class _SectionModelWidgetState extends State<SectionModelWidget> {
                       collapsible: true,
                       collapsed: true,
                       children: [
-                        Registry.registry()!.getMediumApi().getPlatformPhotoWidget(
-                          context: context,
-                          title: 'Select Image',
-                          feedbackFunction: (mediumModel) {
-                            setState(() {
-                              sectionState.model.image = mediumModel;
-                            });
-                          },
-                          app: widget.app,
-                          initialImage: sectionState.model.image,
-                        ),
+                        topicContainer(widget.app, context,
+                            title: 'Image',
+                            collapsible: true,
+                            collapsed: true,
+                            children: [
+                              Registry.registry()!
+                                  .getMediumApi()
+                                  .getPlatformPhotoWidget(
+                                    context: context,
+                                    feedbackFunction: (mediumModel) {
+                                      setState(() {
+                                        sectionState.model.image = mediumModel;
+                                      });
+                                    },
+                                    app: widget.app,
+                                    initialImage: sectionState.model.image,
+                                  ),
+                            ]),
                         topicContainer(widget.app, context,
                             title: 'Relative position',
                             collapsible: true,
                             collapsed: true,
                             children: [
-                              RelativeImagePositionWidget(relativeImagePosition: sectionState.model.imagePositionRelative ?? RelativeImagePosition.Behind,
-                                relativeImagePositionCallback: (RelativeImagePosition relativeImagePosition) {
-                                  sectionState.model.imagePositionRelative = relativeImagePosition;
-                                }, app: widget.app,),
+                              RelativeImagePositionWidget(
+                                relativeImagePosition:
+                                    sectionState.model.imagePositionRelative ??
+                                        RelativeImagePosition.Behind,
+                                relativeImagePositionCallback:
+                                    (RelativeImagePosition
+                                        relativeImagePosition) {
+                                  sectionState.model.imagePositionRelative =
+                                      relativeImagePosition;
+                                },
+                                app: widget.app,
+                              ),
                             ]),
                         topicContainer(widget.app, context,
                             title: 'Alignment',
                             collapsible: true,
                             collapsed: true,
                             children: [
-                              SectionImageAlignmentWidget(sectionImageAlignment: sectionState.model.imageAlignment ?? SectionImageAlignment.Center,
-                                sectionImageAlignmentCallback: (SectionImageAlignment value) {
+                              SectionImageAlignmentWidget(
+                                sectionImageAlignment:
+                                    sectionState.model.imageAlignment ??
+                                        SectionImageAlignment.Center,
+                                sectionImageAlignmentCallback:
+                                    (SectionImageAlignment value) {
                                   sectionState.model.imageAlignment = value;
-                                }, app: widget.app,),
+                                },
+                                app: widget.app,
+                              ),
                             ]),
                       ]),
-
                 ]);
           } else {
             return progressIndicator(widget.app, context);
@@ -226,29 +246,29 @@ class _SectionModelWidgetState extends State<SectionModelWidget> {
                         child: Icon(Icons.more_vert),
                         elevation: 10,
                         itemBuilder: (context) => [
-                          PopupMenuItem(
-                            value: 1,
-                            child: text(widget.app, context, 'Update'),
-                          ),
-                          PopupMenuItem(
-                            value: 2,
-                            child: text(widget.app, context, 'Delete'),
-                          ),
-                        ],
+                              PopupMenuItem(
+                                value: 1,
+                                child: text(widget.app, context, 'Update'),
+                              ),
+                              PopupMenuItem(
+                                value: 2,
+                                child: text(widget.app, context, 'Delete'),
+                              ),
+                            ],
                         onSelected: (selectedValue) {
                           if (selectedValue == 1) {
                             open(
                                 value,
-                                    (newItem) =>
-                                    BlocProvider.of<SectionBloc>(context)
-                                        .add(UpdateItemEvent<SectionModel,
-                                        LinkModel>(
-                                        oldItem: value, newItem: newItem)),
+                                (newItem) =>
+                                    BlocProvider.of<SectionBloc>(context).add(
+                                        UpdateItemEvent<SectionModel,
+                                                LinkModel>(
+                                            oldItem: value, newItem: newItem)),
                                 widget.containerPrivilege);
                           } else if (selectedValue == 2) {
                             BlocProvider.of<SectionBloc>(context).add(
-                                DeleteItemEvent<SectionModel,
-                                    LinkModel>(itemModel: value));
+                                DeleteItemEvent<SectionModel, LinkModel>(
+                                    itemModel: value));
                           }
                         }),
                   );
@@ -271,8 +291,9 @@ class _SectionModelWidgetState extends State<SectionModelWidget> {
                   LinkModel(
                     documentID: newRandomKey(),
                   ),
-                      (newItem) => BlocProvider.of<SectionBloc>(context)
-                      .add(AddItemEvent(itemModel: newItem)),widget.containerPrivilege);
+                  (newItem) => BlocProvider.of<SectionBloc>(context)
+                      .add(AddItemEvent(itemModel: newItem)),
+                  widget.containerPrivilege);
             },
           ),
           Spacer(),
@@ -281,9 +302,7 @@ class _SectionModelWidgetState extends State<SectionModelWidget> {
     );
   }
 
-  void open(
-      LinkModel value,
-      LinkModelCallback memberActionModelCallback,
+  void open(LinkModel value, LinkModelCallback memberActionModelCallback,
       int privilegeContainer) {
     openFlexibleDialog(
       widget.app,
@@ -302,7 +321,4 @@ class _SectionModelWidgetState extends State<SectionModelWidget> {
           privilegeContainer),
     );
   }
-
 }
-
-

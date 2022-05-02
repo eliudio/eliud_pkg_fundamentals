@@ -166,7 +166,7 @@ class _SimpleImageComponentEditorState
                             )),
                       ]),
                   topicContainer(widget.app, context,
-                      title: 'Image',
+                      title: 'Select Image',
                       collapsible: true,
                       collapsed: true,
                       children: [
@@ -174,7 +174,6 @@ class _SimpleImageComponentEditorState
                             .getMediumApi()
                             .getPlatformPhotoWidget(
                               context: context,
-                              title: 'Select Image',
                               feedbackFunction: (mediumModel) {
                                 setState(() {
                                   simpleImageState.model.image = mediumModel;

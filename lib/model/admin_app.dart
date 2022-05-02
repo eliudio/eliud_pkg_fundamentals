@@ -52,6 +52,28 @@ class AdminApp extends AdminAppInstallerBase {
   AdminApp(this.appId, this._drawer, this._endDrawer, this._appBar, this._homeMenu, this.menuItemColor, this.selectedMenuItemColor, this.backgroundColor);
 
 
+  PageModel _bookletsPages() {
+    List<BodyComponentModel> components = [];
+    components.add(BodyComponentModel(
+      documentID: "internalWidget-booklets", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "booklets"));
+    PageModel page = PageModel(
+        conditions: StorageConditionsModel(
+          privilegeLevelRequired: PrivilegeLevelRequiredSimple.OwnerPrivilegeRequiredSimple,
+        ),
+        appId: appId,
+        documentID: "eliud_pkg_fundamentals_booklets_page",
+        title: "Booklets",
+        drawer: _drawer,
+        endDrawer: _endDrawer,
+        appBar: _appBar,
+        homeMenu: _homeMenu,
+        bodyComponents: components,
+        layout: PageLayout.OnlyTheFirstComponent
+    );
+    return page;
+  }
+
+
   PageModel _decoratedContentsPages() {
     List<BodyComponentModel> components = [];
     components.add(BodyComponentModel(
@@ -85,6 +107,28 @@ class AdminApp extends AdminAppInstallerBase {
         appId: appId,
         documentID: "eliud_pkg_fundamentals_dividers_page",
         title: "Dividers",
+        drawer: _drawer,
+        endDrawer: _endDrawer,
+        appBar: _appBar,
+        homeMenu: _homeMenu,
+        bodyComponents: components,
+        layout: PageLayout.OnlyTheFirstComponent
+    );
+    return page;
+  }
+
+
+  PageModel _documentsPages() {
+    List<BodyComponentModel> components = [];
+    components.add(BodyComponentModel(
+      documentID: "internalWidget-documents", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "documents"));
+    PageModel page = PageModel(
+        conditions: StorageConditionsModel(
+          privilegeLevelRequired: PrivilegeLevelRequiredSimple.OwnerPrivilegeRequiredSimple,
+        ),
+        appId: appId,
+        documentID: "eliud_pkg_fundamentals_documents_page",
+        title: "Documents",
         drawer: _drawer,
         endDrawer: _endDrawer,
         appBar: _appBar,
@@ -228,55 +272,15 @@ class AdminApp extends AdminAppInstallerBase {
   }
 
 
-  PageModel _bookletsPages() {
-    List<BodyComponentModel> components = [];
-    components.add(BodyComponentModel(
-      documentID: "internalWidget-booklets", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "booklets"));
-    PageModel page = PageModel(
-        conditions: StorageConditionsModel(
-          privilegeLevelRequired: PrivilegeLevelRequiredSimple.OwnerPrivilegeRequiredSimple,
-        ),
-        appId: appId,
-        documentID: "eliud_pkg_fundamentals_booklets_page",
-        title: "Booklets",
-        drawer: _drawer,
-        endDrawer: _endDrawer,
-        appBar: _appBar,
-        homeMenu: _homeMenu,
-        bodyComponents: components,
-        layout: PageLayout.OnlyTheFirstComponent
-    );
-    return page;
-  }
-
-
-  PageModel _documentsPages() {
-    List<BodyComponentModel> components = [];
-    components.add(BodyComponentModel(
-      documentID: "internalWidget-documents", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "documents"));
-    PageModel page = PageModel(
-        conditions: StorageConditionsModel(
-          privilegeLevelRequired: PrivilegeLevelRequiredSimple.OwnerPrivilegeRequiredSimple,
-        ),
-        appId: appId,
-        documentID: "eliud_pkg_fundamentals_documents_page",
-        title: "Documents",
-        drawer: _drawer,
-        endDrawer: _endDrawer,
-        appBar: _appBar,
-        homeMenu: _homeMenu,
-        bodyComponents: components,
-        layout: PageLayout.OnlyTheFirstComponent
-    );
-    return page;
-  }
-
-
   Future<void> _setupAdminPages() {
 
-    return pageRepository(appId: appId)!.add(_decoratedContentsPages())
+    return pageRepository(appId: appId)!.add(_bookletsPages())
+
+        .then((_) => pageRepository(appId: appId)!.add(_decoratedContentsPages()))
 
         .then((_) => pageRepository(appId: appId)!.add(_dividersPages()))
+
+        .then((_) => pageRepository(appId: appId)!.add(_documentsPages()))
 
         .then((_) => pageRepository(appId: appId)!.add(_fadersPages()))
 
@@ -289,10 +293,6 @@ class AdminApp extends AdminAppInstallerBase {
         .then((_) => pageRepository(appId: appId)!.add(_simpleTextsPages()))
 
         .then((_) => pageRepository(appId: appId)!.add(_tutorialsPages()))
-
-        .then((_) => pageRepository(appId: appId)!.add(_bookletsPages()))
-
-        .then((_) => pageRepository(appId: appId)!.add(_documentsPages()))
 
     ;
   }
@@ -312,6 +312,16 @@ class AdminMenu extends AdminAppMenuInstallerBase {
 
     menuItems.add(
       MenuItemModel(
+        documentID: "Booklets",
+        text: "Booklets",
+        description: "Booklets",
+        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
+        action: GotoPage(app, pageID: "eliud_pkg_fundamentals_booklets_page"))
+    );
+
+
+    menuItems.add(
+      MenuItemModel(
         documentID: "DecoratedContents",
         text: "DecoratedContents",
         description: "DecoratedContents",
@@ -327,6 +337,16 @@ class AdminMenu extends AdminAppMenuInstallerBase {
         description: "Dividers",
         icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
         action: GotoPage(app, pageID: "eliud_pkg_fundamentals_dividers_page"))
+    );
+
+
+    menuItems.add(
+      MenuItemModel(
+        documentID: "Documents",
+        text: "Documents",
+        description: "Documents",
+        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
+        action: GotoPage(app, pageID: "eliud_pkg_fundamentals_documents_page"))
     );
 
 
@@ -387,26 +407,6 @@ class AdminMenu extends AdminAppMenuInstallerBase {
         description: "Tutorials",
         icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
         action: GotoPage(app, pageID: "eliud_pkg_fundamentals_tutorials_page"))
-    );
-
-
-    menuItems.add(
-      MenuItemModel(
-        documentID: "Booklets",
-        text: "Booklets",
-        description: "Booklets",
-        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
-        action: GotoPage(app, pageID: "eliud_pkg_fundamentals_booklets_page"))
-    );
-
-
-    menuItems.add(
-      MenuItemModel(
-        documentID: "Documents",
-        text: "Documents",
-        description: "Documents",
-        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
-        action: GotoPage(app, pageID: "eliud_pkg_fundamentals_documents_page"))
     );
 
 
