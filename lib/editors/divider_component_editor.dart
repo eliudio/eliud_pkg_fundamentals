@@ -9,6 +9,7 @@ import 'package:eliud_core/style/frontend/has_list_tile.dart';
 import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/tools/component/component_spec.dart';
+import 'package:eliud_core/tools/helpers/parse_helper.dart';
 import 'package:eliud_core/tools/random.dart';
 import 'package:eliud_core/tools/rgb_formfield.dart';
 import 'package:eliud_core/tools/widgets/condition_simple_widget.dart';
@@ -167,7 +168,7 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
                               valueChanged: (value) {
                                 setState(() {
                                   dividerState.model.thickness =
-                                      double.parse(value);
+                                      double_parse(value);
                                 });
                               },
                               keyboardType: TextInputType.numberWithOptions(
@@ -188,7 +189,7 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
                               valueChanged: (value) {
                                 setState(() {
                                   dividerState.model.height =
-                                      double.parse(value);
+                                      double_parse(value);
                                 });
                               },
                               keyboardType: TextInputType.numberWithOptions(
@@ -209,7 +210,7 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
                               valueChanged: (value) {
                                 setState(() {
                                   dividerState.model.indent =
-                                      double.parse(value);
+                                      double_parse(value);
                                 });
                               },
                               keyboardType: TextInputType.numberWithOptions(
@@ -230,7 +231,7 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
                               valueChanged: (value) {
                                 setState(() {
                                   dividerState.model.endIndent =
-                                      double.parse(value);
+                                      double_parse(value);
                                 });
                               },
                               keyboardType: TextInputType.numberWithOptions(

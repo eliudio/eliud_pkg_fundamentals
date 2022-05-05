@@ -5,6 +5,7 @@ import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/model/pos_size_model.dart';
 import 'package:eliud_core/model/storage_conditions_model.dart';
+import 'package:eliud_core/tools/helpers/parse_helper.dart';
 import 'package:eliud_core/tools/screen_size.dart';
 import 'package:eliud_core/tools/widgets/background_widget.dart';
 import 'package:eliud_pkg_fundamentals/editors/widgets/document_item_widget.dart';
@@ -30,7 +31,6 @@ import 'package:eliud_core/tools/widgets/header_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/document_model.dart';
 import 'package:eliud_core/package/access_rights.dart';
-import 'package:eliud_pkg_medium/platform/medium_platform.dart';
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eliud_core/core/editor/ext_editor_base_bloc/ext_editor_base_event.dart';
@@ -211,7 +211,7 @@ class _DocumentComponentEditorState extends State<DocumentComponentEditor> {
                               valueChanged: (value) {
                                 setState(() {
                                   documentState.model.padding =
-                                      double.parse(value);
+                                      double_parse(value);
                                 });
                               },
                               keyboardType: TextInputType.numberWithOptions(

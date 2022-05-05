@@ -26,7 +26,6 @@ import 'package:eliud_pkg_fundamentals/model/listed_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:file_picker/file_picker.dart';
 
 typedef void DocumentItemModelCallback(DocumentItemModel documentItemModel);
 

@@ -4,6 +4,7 @@ import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/model/pos_size_model.dart';
 import 'package:eliud_core/model/storage_conditions_model.dart';
+import 'package:eliud_core/tools/helpers/parse_helper.dart';
 import 'package:eliud_core/tools/screen_size.dart';
 import 'package:eliud_pkg_fundamentals/editors/widgets/listed_item_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/listed_item_model.dart';
@@ -24,7 +25,6 @@ import 'package:eliud_core/tools/widgets/header_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_model.dart';
 import 'package:eliud_core/package/access_rights.dart';
-import 'package:eliud_pkg_medium/platform/medium_platform.dart';
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eliud_core/core/editor/ext_editor_base_bloc/ext_editor_base_event.dart';
@@ -164,7 +164,7 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
                                   faderState.model.imageSeconds.toString(),
                               valueChanged: (value) {
                                 faderState.model.imageSeconds =
-                                    int.parse(value);
+                                    int_parse(value);
                               },
                               maxLines: 1,
                               decoration: const InputDecoration(
@@ -182,7 +182,7 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
                                   .toString(),
                               valueChanged: (value) {
                                 faderState.model.animationMilliseconds =
-                                    int.parse(value);
+                                    int_parse(value);
                               },
                               maxLines: 1,
                               decoration: const InputDecoration(
