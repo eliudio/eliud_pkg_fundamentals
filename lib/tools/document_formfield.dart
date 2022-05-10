@@ -132,13 +132,7 @@ class DocumentTextFieldFullScreenState
           child: Scaffold(
             appBar: AppBar(
                 automaticallyImplyLeading: true,
-                flexibleSpace:
-                    /*accessState is AppLoaded
-                    ? Container(
-                        decoration: BoxDecorationHelper.boxDecoration(
-                            accessState, accessState.app.formAppBarBackground))
-                    : */
-                    null,
+                flexibleSpace: null,
                 title: Text(widget.label),
                 leading: IconButton(
                   icon: Icon(Icons.arrow_back),

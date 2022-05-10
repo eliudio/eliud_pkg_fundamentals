@@ -94,8 +94,9 @@ class DocumentRendererTool {
         ExtendedDocumentParameterProcessor(context,app,
             images: images);
     return Container(
+        clipBehavior: (bdm == null) ? Clip.none : Clip.hardEdge,
         child: _rendered(app, context, documentRenderer,
             documentParameterProcessor.process(document)),
-        decoration: BoxDecorationHelper.boxDecoration(memberModel, bdm));
+        decoration: BoxDecorationHelper.boxDecoration(app, memberModel, bdm));
   }
 }
