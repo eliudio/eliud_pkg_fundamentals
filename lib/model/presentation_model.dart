@@ -67,7 +67,7 @@ PresentationImageAlignment toPresentationImageAlignment(int? index) {
 class PresentationModel {
   String? documentID;
   String? appId;
-  String? title;
+  String? description;
   List<BodyComponentModel>? bodyComponents;
   PlatformMediumModel? image;
   PresentationRelativeImagePosition? imagePositionRelative;
@@ -77,16 +77,16 @@ class PresentationModel {
   double? imageWidth;
   StorageConditionsModel? conditions;
 
-  PresentationModel({this.documentID, this.appId, this.title, this.bodyComponents, this.image, this.imagePositionRelative, this.imageAlignment, this.imageWidth, this.conditions, })  {
+  PresentationModel({this.documentID, this.appId, this.description, this.bodyComponents, this.image, this.imagePositionRelative, this.imageAlignment, this.imageWidth, this.conditions, })  {
     assert(documentID != null);
   }
 
-  PresentationModel copyWith({String? documentID, String? appId, String? title, List<BodyComponentModel>? bodyComponents, PlatformMediumModel? image, PresentationRelativeImagePosition? imagePositionRelative, PresentationImageAlignment? imageAlignment, double? imageWidth, StorageConditionsModel? conditions, }) {
-    return PresentationModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, title: title ?? this.title, bodyComponents: bodyComponents ?? this.bodyComponents, image: image ?? this.image, imagePositionRelative: imagePositionRelative ?? this.imagePositionRelative, imageAlignment: imageAlignment ?? this.imageAlignment, imageWidth: imageWidth ?? this.imageWidth, conditions: conditions ?? this.conditions, );
+  PresentationModel copyWith({String? documentID, String? appId, String? description, List<BodyComponentModel>? bodyComponents, PlatformMediumModel? image, PresentationRelativeImagePosition? imagePositionRelative, PresentationImageAlignment? imageAlignment, double? imageWidth, StorageConditionsModel? conditions, }) {
+    return PresentationModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, description: description ?? this.description, bodyComponents: bodyComponents ?? this.bodyComponents, image: image ?? this.image, imagePositionRelative: imagePositionRelative ?? this.imagePositionRelative, imageAlignment: imageAlignment ?? this.imageAlignment, imageWidth: imageWidth ?? this.imageWidth, conditions: conditions ?? this.conditions, );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ appId.hashCode ^ title.hashCode ^ bodyComponents.hashCode ^ image.hashCode ^ imagePositionRelative.hashCode ^ imageAlignment.hashCode ^ imageWidth.hashCode ^ conditions.hashCode;
+  int get hashCode => documentID.hashCode ^ appId.hashCode ^ description.hashCode ^ bodyComponents.hashCode ^ image.hashCode ^ imagePositionRelative.hashCode ^ imageAlignment.hashCode ^ imageWidth.hashCode ^ conditions.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -95,7 +95,7 @@ class PresentationModel {
           runtimeType == other.runtimeType && 
           documentID == other.documentID &&
           appId == other.appId &&
-          title == other.title &&
+          description == other.description &&
           ListEquality().equals(bodyComponents, other.bodyComponents) &&
           image == other.image &&
           imagePositionRelative == other.imagePositionRelative &&
@@ -107,13 +107,13 @@ class PresentationModel {
   String toString() {
     String bodyComponentsCsv = (bodyComponents == null) ? '' : bodyComponents!.join(', ');
 
-    return 'PresentationModel{documentID: $documentID, appId: $appId, title: $title, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, image: $image, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth, conditions: $conditions}';
+    return 'PresentationModel{documentID: $documentID, appId: $appId, description: $description, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, image: $image, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth, conditions: $conditions}';
   }
 
   PresentationEntity toEntity({String? appId}) {
     return PresentationEntity(
           appId: (appId != null) ? appId : null, 
-          title: (title != null) ? title : null, 
+          description: (description != null) ? description : null, 
           bodyComponents: (bodyComponents != null) ? bodyComponents
             !.map((item) => item.toEntity(appId: appId))
             .toList() : null, 
@@ -131,7 +131,7 @@ class PresentationModel {
     return PresentationModel(
           documentID: documentID, 
           appId: entity.appId, 
-          title: entity.title, 
+          description: entity.description, 
           bodyComponents: 
             entity.bodyComponents == null ? null : List<BodyComponentModel>.from(await Future.wait(entity. bodyComponents
             !.map((item) {
@@ -165,7 +165,7 @@ class PresentationModel {
     return PresentationModel(
           documentID: documentID, 
           appId: entity.appId, 
-          title: entity.title, 
+          description: entity.description, 
           bodyComponents: 
             entity. bodyComponents == null ? null : List<BodyComponentModel>.from(await Future.wait(entity. bodyComponents
             !.map((item) {

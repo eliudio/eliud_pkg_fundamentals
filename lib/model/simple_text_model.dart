@@ -54,21 +54,22 @@ SimpleTextAlign toSimpleTextAlign(int? index) {
 class SimpleTextModel {
   String? documentID;
   String? appId;
+  String? description;
   String? title;
   String? text;
   StorageConditionsModel? conditions;
   SimpleTextAlign? textAlign;
 
-  SimpleTextModel({this.documentID, this.appId, this.title, this.text, this.conditions, this.textAlign, })  {
+  SimpleTextModel({this.documentID, this.appId, this.description, this.title, this.text, this.conditions, this.textAlign, })  {
     assert(documentID != null);
   }
 
-  SimpleTextModel copyWith({String? documentID, String? appId, String? title, String? text, StorageConditionsModel? conditions, SimpleTextAlign? textAlign, }) {
-    return SimpleTextModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, title: title ?? this.title, text: text ?? this.text, conditions: conditions ?? this.conditions, textAlign: textAlign ?? this.textAlign, );
+  SimpleTextModel copyWith({String? documentID, String? appId, String? description, String? title, String? text, StorageConditionsModel? conditions, SimpleTextAlign? textAlign, }) {
+    return SimpleTextModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, description: description ?? this.description, title: title ?? this.title, text: text ?? this.text, conditions: conditions ?? this.conditions, textAlign: textAlign ?? this.textAlign, );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ appId.hashCode ^ title.hashCode ^ text.hashCode ^ conditions.hashCode ^ textAlign.hashCode;
+  int get hashCode => documentID.hashCode ^ appId.hashCode ^ description.hashCode ^ title.hashCode ^ text.hashCode ^ conditions.hashCode ^ textAlign.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -77,6 +78,7 @@ class SimpleTextModel {
           runtimeType == other.runtimeType && 
           documentID == other.documentID &&
           appId == other.appId &&
+          description == other.description &&
           title == other.title &&
           text == other.text &&
           conditions == other.conditions &&
@@ -84,12 +86,13 @@ class SimpleTextModel {
 
   @override
   String toString() {
-    return 'SimpleTextModel{documentID: $documentID, appId: $appId, title: $title, text: $text, conditions: $conditions, textAlign: $textAlign}';
+    return 'SimpleTextModel{documentID: $documentID, appId: $appId, description: $description, title: $title, text: $text, conditions: $conditions, textAlign: $textAlign}';
   }
 
   SimpleTextEntity toEntity({String? appId}) {
     return SimpleTextEntity(
           appId: (appId != null) ? appId : null, 
+          description: (description != null) ? description : null, 
           title: (title != null) ? title : null, 
           text: (text != null) ? text : null, 
           conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
@@ -103,6 +106,7 @@ class SimpleTextModel {
     return SimpleTextModel(
           documentID: documentID, 
           appId: entity.appId, 
+          description: entity.description, 
           title: entity.title, 
           text: entity.text, 
           conditions: 
@@ -118,6 +122,7 @@ class SimpleTextModel {
     return SimpleTextModel(
           documentID: documentID, 
           appId: entity.appId, 
+          description: entity.description, 
           title: entity.title, 
           text: entity.text, 
           conditions: 

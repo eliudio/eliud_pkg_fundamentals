@@ -95,15 +95,15 @@ class AppIdSimpleImageFormError extends SimpleImageFormError {
 }
 
 
-class TitleSimpleImageFormError extends SimpleImageFormError { 
-  const TitleSimpleImageFormError({ String? message, SimpleImageModel? value }): super(message: message, value: value);
+class DescriptionSimpleImageFormError extends SimpleImageFormError { 
+  const DescriptionSimpleImageFormError({ String? message, SimpleImageModel? value }): super(message: message, value: value);
 
   @override
   List<Object?> get props => [ message, value ];
 
   @override
   String toString() {
-    return '''TitleSimpleImageFormError {
+    return '''DescriptionSimpleImageFormError {
       value: $value,
       message: $message,
     }''';

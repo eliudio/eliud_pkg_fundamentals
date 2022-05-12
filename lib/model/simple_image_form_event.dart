@@ -83,16 +83,16 @@ class ChangedSimpleImageAppId extends SimpleImageFormEvent {
   String toString() => 'ChangedSimpleImageAppId{ value: $value }';
 }
 
-class ChangedSimpleImageTitle extends SimpleImageFormEvent {
+class ChangedSimpleImageDescription extends SimpleImageFormEvent {
   final String? value;
 
-  ChangedSimpleImageTitle({this.value});
+  ChangedSimpleImageDescription({this.value});
 
   @override
   List<Object?> get props => [ value ];
 
   @override
-  String toString() => 'ChangedSimpleImageTitle{ value: $value }';
+  String toString() => 'ChangedSimpleImageDescription{ value: $value }';
 }
 
 class ChangedSimpleImageImage extends SimpleImageFormEvent {

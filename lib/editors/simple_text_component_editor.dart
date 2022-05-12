@@ -41,6 +41,7 @@ class SimpleTextComponentEditorConstructor
         SimpleTextModel(
           appId: app.documentID,
           documentID: newRandomKey(),
+          description: 'New text',
           conditions: StorageConditionsModel(
               privilegeLevelRequired:
                   PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
@@ -98,6 +99,7 @@ class SimpleTextBloc
     return SimpleTextModel(
         appId: appId,
         documentID: newRandomKey(),
+        description: 'New text',
         conditions: conditions);
   }
 

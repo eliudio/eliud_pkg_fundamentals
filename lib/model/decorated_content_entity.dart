@@ -24,7 +24,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 class DecoratedContentEntity {
   final String? appId;
-  final String? name;
+  final String? description;
   final String? decoratingComponentName;
   final String? decoratingComponentId;
   final String? contentComponentName;
@@ -33,14 +33,14 @@ class DecoratedContentEntity {
   final double? percentageDecorationVisible;
   final StorageConditionsEntity? conditions;
 
-  DecoratedContentEntity({this.appId, this.name, this.decoratingComponentName, this.decoratingComponentId, this.contentComponentName, this.contentComponentId, this.decorationComponentPosition, this.percentageDecorationVisible, this.conditions, });
+  DecoratedContentEntity({this.appId, this.description, this.decoratingComponentName, this.decoratingComponentId, this.contentComponentName, this.contentComponentId, this.decorationComponentPosition, this.percentageDecorationVisible, this.conditions, });
 
 
-  List<Object?> get props => [appId, name, decoratingComponentName, decoratingComponentId, contentComponentName, contentComponentId, decorationComponentPosition, percentageDecorationVisible, conditions, ];
+  List<Object?> get props => [appId, description, decoratingComponentName, decoratingComponentId, contentComponentName, contentComponentId, decorationComponentPosition, percentageDecorationVisible, conditions, ];
 
   @override
   String toString() {
-    return 'DecoratedContentEntity{appId: $appId, name: $name, decoratingComponentName: $decoratingComponentName, decoratingComponentId: $decoratingComponentId, contentComponentName: $contentComponentName, contentComponentId: $contentComponentId, decorationComponentPosition: $decorationComponentPosition, percentageDecorationVisible: $percentageDecorationVisible, conditions: $conditions}';
+    return 'DecoratedContentEntity{appId: $appId, description: $description, decoratingComponentName: $decoratingComponentName, decoratingComponentId: $decoratingComponentId, contentComponentName: $contentComponentName, contentComponentId: $contentComponentId, decorationComponentPosition: $decorationComponentPosition, percentageDecorationVisible: $percentageDecorationVisible, conditions: $conditions}';
   }
 
   static DecoratedContentEntity? fromMap(Object? o) {
@@ -54,7 +54,7 @@ class DecoratedContentEntity {
 
     return DecoratedContentEntity(
       appId: map['appId'], 
-      name: map['name'], 
+      description: map['description'], 
       decoratingComponentName: map['decoratingComponentName'], 
       decoratingComponentId: map['decoratingComponentId'], 
       contentComponentName: map['contentComponentName'], 
@@ -73,8 +73,8 @@ class DecoratedContentEntity {
     Map<String, Object?> theDocument = HashMap();
     if (appId != null) theDocument["appId"] = appId;
       else theDocument["appId"] = null;
-    if (name != null) theDocument["name"] = name;
-      else theDocument["name"] = null;
+    if (description != null) theDocument["description"] = description;
+      else theDocument["description"] = null;
     if (decoratingComponentName != null) theDocument["decoratingComponentName"] = decoratingComponentName;
       else theDocument["decoratingComponentName"] = null;
     if (decoratingComponentId != null) theDocument["decoratingComponentId"] = decoratingComponentId;

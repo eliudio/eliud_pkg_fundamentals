@@ -46,6 +46,7 @@ class TutorialComponentEditorConstructor extends ComponentEditorConstructor {
         TutorialModel(
           appId: app.documentID,
           documentID: newRandomKey(),
+          description: 'New tutorial',
           conditions: StorageConditionsModel(
               privilegeLevelRequired:
               PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
@@ -176,13 +177,6 @@ class _TutorialComponentEditorState extends State<TutorialComponentEditor> {
                                         labelText: 'Description',
                                       ),
                                     )),
-                                getListTile(context, widget.app,
-                                    leading: Icon(Icons.security),
-                                    title: ConditionsSimpleWidget(
-                                      app: widget.app,
-                                      value: tutorialState.model.conditions!,
-                                      readOnly: tutorialState.model.tutorialEntries != null && tutorialState.model.tutorialEntries!.isNotEmpty,
-                                    )),
                               ]),
                           topicContainer(widget.app, context,
                               title: 'Images',
@@ -190,6 +184,19 @@ class _TutorialComponentEditorState extends State<TutorialComponentEditor> {
                               collapsed: true,
                               children: [
                                 _images(context, tutorialState),
+                              ]),
+                          topicContainer(widget.app, context,
+                              title: 'Condition',
+                              collapsible: true,
+                              collapsed: true,
+                              children: [
+                                getListTile(context, widget.app,
+                                    leading: Icon(Icons.security),
+                                    title: ConditionsSimpleWidget(
+                                      app: widget.app,
+                                      value: tutorialState.model.conditions!,
+                                      readOnly: tutorialState.model.tutorialEntries != null && tutorialState.model.tutorialEntries!.isNotEmpty,
+                                    )),
                               ]),
                         ]);
                   } else {

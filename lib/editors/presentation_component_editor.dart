@@ -49,6 +49,7 @@ class PresentationComponentEditorConstructor
         PresentationModel(
           appId: app.documentID,
           documentID: newRandomKey(),
+          description: 'New presentation',
           conditions: StorageConditionsModel(
               privilegeLevelRequired:
                   PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
@@ -150,14 +151,14 @@ class _PresentationComponentEditorState
                             title: dialogField(
                               widget.app,
                               context,
-                              initialValue: presentationState.model.title,
+                              initialValue: presentationState.model.description,
                               valueChanged: (value) {
-                                presentationState.model.title = value;
+                                presentationState.model.description = value;
                               },
                               maxLines: 1,
                               decoration: const InputDecoration(
-                                hintText: 'Title',
-                                labelText: 'Title',
+                                hintText: 'Description',
+                                labelText: 'Description',
                               ),
                             )),
                       ]),

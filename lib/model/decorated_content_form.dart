@@ -126,7 +126,7 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
 
   final TextEditingController _documentIDController = TextEditingController();
   final TextEditingController _appIdController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
   int? _decorationComponentPositionSelectedRadioTile;
   final TextEditingController _percentageDecorationVisibleController = TextEditingController();
 
@@ -139,7 +139,7 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
     _myFormBloc = BlocProvider.of<DecoratedContentFormBloc>(context);
     _documentIDController.addListener(_onDocumentIDChanged);
     _appIdController.addListener(_onAppIdChanged);
-    _nameController.addListener(_onNameChanged);
+    _descriptionController.addListener(_onDescriptionChanged);
     _decorationComponentPositionSelectedRadioTile = 0;
     _percentageDecorationVisibleController.addListener(_onPercentageDecorationVisibleChanged);
   }
@@ -161,10 +161,10 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
           _appIdController.text = state.value!.appId.toString();
         else
           _appIdController.text = "";
-        if (state.value!.name != null)
-          _nameController.text = state.value!.name.toString();
+        if (state.value!.description != null)
+          _descriptionController.text = state.value!.description.toString();
         else
-          _nameController.text = "";
+          _descriptionController.text = "";
         if (state.value!.decorationComponentPosition != null)
           _decorationComponentPositionSelectedRadioTile = state.value!.decorationComponentPosition!.index;
         else
@@ -225,7 +225,7 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
 
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Name', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _nameController, keyboardType: TextInputType.text, validator: (_) => state is NameDecoratedContentFormError ? state.message : null, hintText: null)
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Description', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _descriptionController, keyboardType: TextInputType.text, validator: (_) => state is DescriptionDecoratedContentFormError ? state.message : null, hintText: null)
           );
 
 
@@ -292,7 +292,7 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
                           UpdateDecoratedContentList(value: state.value!.copyWith(
                               documentID: state.value!.documentID, 
                               appId: state.value!.appId, 
-                              name: state.value!.name, 
+                              description: state.value!.description, 
                               decoratingComponentName: state.value!.decoratingComponentName, 
                               decoratingComponentId: state.value!.decoratingComponentId, 
                               contentComponentName: state.value!.contentComponentName, 
@@ -306,7 +306,7 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
                           AddDecoratedContentList(value: DecoratedContentModel(
                               documentID: state.value!.documentID, 
                               appId: state.value!.appId, 
-                              name: state.value!.name, 
+                              description: state.value!.description, 
                               decoratingComponentName: state.value!.decoratingComponentName, 
                               decoratingComponentId: state.value!.decoratingComponentId, 
                               contentComponentName: state.value!.contentComponentName, 
@@ -350,8 +350,8 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
   }
 
 
-  void _onNameChanged() {
-    _myFormBloc.add(ChangedDecoratedContentName(value: _nameController.text));
+  void _onDescriptionChanged() {
+    _myFormBloc.add(ChangedDecoratedContentDescription(value: _descriptionController.text));
   }
 
 
@@ -397,7 +397,7 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
   void dispose() {
     _documentIDController.dispose();
     _appIdController.dispose();
-    _nameController.dispose();
+    _descriptionController.dispose();
     _percentageDecorationVisibleController.dispose();
     super.dispose();
   }

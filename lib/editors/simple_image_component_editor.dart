@@ -40,6 +40,7 @@ class SimpleImageComponentEditorConstructor extends ComponentEditorConstructor {
         SimpleImageModel(
           appId: app.documentID,
           documentID: newRandomKey(),
+          description: 'New Image',
           conditions: StorageConditionsModel(
               privilegeLevelRequired:
                   PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
@@ -91,7 +92,7 @@ class SimpleImageBloc extends EditorBaseBloc<SimpleImageModel> {
   @override
   SimpleImageModel newInstance(StorageConditionsModel conditions) {
     return SimpleImageModel(
-        appId: appId, documentID: newRandomKey(), conditions: conditions);
+        appId: appId, documentID: newRandomKey(), description: 'New image', conditions: conditions);
   }
 
   @override
@@ -154,14 +155,14 @@ class _SimpleImageComponentEditorState
                             title: dialogField(
                               widget.app,
                               context,
-                              initialValue: simpleImageState.model.title,
+                              initialValue: simpleImageState.model.description,
                               valueChanged: (value) {
-                                simpleImageState.model.title = value;
+                                simpleImageState.model.description = value;
                               },
                               maxLines: 1,
                               decoration: const InputDecoration(
-                                hintText: 'Title',
-                                labelText: 'Title',
+                                hintText: 'Description',
+                                labelText: 'Description',
                               ),
                             )),
                       ]),

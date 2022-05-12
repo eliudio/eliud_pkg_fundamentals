@@ -55,7 +55,7 @@ class SimpleImageFormBloc extends Bloc<SimpleImageFormEvent, SimpleImageFormStat
         SimpleImageFormLoaded loaded = SimpleImageFormLoaded(value: SimpleImageModel(
                                                documentID: "",
                                  appId: "",
-                                 title: "",
+                                 description: "",
 
         ));
         yield loaded;
@@ -86,8 +86,8 @@ class SimpleImageFormBloc extends Bloc<SimpleImageFormEvent, SimpleImageFormStat
 
         return;
       }
-      if (event is ChangedSimpleImageTitle) {
-        newValue = currentState.value!.copyWith(title: event.value);
+      if (event is ChangedSimpleImageDescription) {
+        newValue = currentState.value!.copyWith(description: event.value);
         yield SubmittableSimpleImageForm(value: newValue);
 
         return;
@@ -99,7 +99,7 @@ class SimpleImageFormBloc extends Bloc<SimpleImageFormEvent, SimpleImageFormStat
           newValue = new SimpleImageModel(
                                  documentID: currentState.value!.documentID,
                                  appId: currentState.value!.appId,
-                                 title: currentState.value!.title,
+                                 description: currentState.value!.description,
                                  image: null,
                                  conditions: currentState.value!.conditions,
           );

@@ -55,7 +55,7 @@ class DecoratedContentFormBloc extends Bloc<DecoratedContentFormEvent, Decorated
         DecoratedContentFormLoaded loaded = DecoratedContentFormLoaded(value: DecoratedContentModel(
                                                documentID: "",
                                  appId: "",
-                                 name: "",
+                                 description: "",
                                  decoratingComponentName: "",
                                  decoratingComponentId: "",
                                  contentComponentName: "",
@@ -91,8 +91,8 @@ class DecoratedContentFormBloc extends Bloc<DecoratedContentFormEvent, Decorated
 
         return;
       }
-      if (event is ChangedDecoratedContentName) {
-        newValue = currentState.value!.copyWith(name: event.value);
+      if (event is ChangedDecoratedContentDescription) {
+        newValue = currentState.value!.copyWith(description: event.value);
         yield SubmittableDecoratedContentForm(value: newValue);
 
         return;

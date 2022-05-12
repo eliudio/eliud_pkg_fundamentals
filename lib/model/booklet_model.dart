@@ -39,20 +39,20 @@ import 'package:eliud_core/tools/random.dart';
 class BookletModel {
   String? documentID;
   String? appId;
-  String? name;
+  String? description;
   List<SectionModel>? sections;
   StorageConditionsModel? conditions;
 
-  BookletModel({this.documentID, this.appId, this.name, this.sections, this.conditions, })  {
+  BookletModel({this.documentID, this.appId, this.description, this.sections, this.conditions, })  {
     assert(documentID != null);
   }
 
-  BookletModel copyWith({String? documentID, String? appId, String? name, List<SectionModel>? sections, StorageConditionsModel? conditions, }) {
-    return BookletModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, name: name ?? this.name, sections: sections ?? this.sections, conditions: conditions ?? this.conditions, );
+  BookletModel copyWith({String? documentID, String? appId, String? description, List<SectionModel>? sections, StorageConditionsModel? conditions, }) {
+    return BookletModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, description: description ?? this.description, sections: sections ?? this.sections, conditions: conditions ?? this.conditions, );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ appId.hashCode ^ name.hashCode ^ sections.hashCode ^ conditions.hashCode;
+  int get hashCode => documentID.hashCode ^ appId.hashCode ^ description.hashCode ^ sections.hashCode ^ conditions.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -61,7 +61,7 @@ class BookletModel {
           runtimeType == other.runtimeType && 
           documentID == other.documentID &&
           appId == other.appId &&
-          name == other.name &&
+          description == other.description &&
           ListEquality().equals(sections, other.sections) &&
           conditions == other.conditions;
 
@@ -69,13 +69,13 @@ class BookletModel {
   String toString() {
     String sectionsCsv = (sections == null) ? '' : sections!.join(', ');
 
-    return 'BookletModel{documentID: $documentID, appId: $appId, name: $name, sections: Section[] { $sectionsCsv }, conditions: $conditions}';
+    return 'BookletModel{documentID: $documentID, appId: $appId, description: $description, sections: Section[] { $sectionsCsv }, conditions: $conditions}';
   }
 
   BookletEntity toEntity({String? appId}) {
     return BookletEntity(
           appId: (appId != null) ? appId : null, 
-          name: (name != null) ? name : null, 
+          description: (description != null) ? description : null, 
           sections: (sections != null) ? sections
             !.map((item) => item.toEntity(appId: appId))
             .toList() : null, 
@@ -89,7 +89,7 @@ class BookletModel {
     return BookletModel(
           documentID: documentID, 
           appId: entity.appId, 
-          name: entity.name, 
+          description: entity.description, 
           sections: 
             entity.sections == null ? null : List<SectionModel>.from(await Future.wait(entity. sections
             !.map((item) {
@@ -109,7 +109,7 @@ class BookletModel {
     return BookletModel(
           documentID: documentID, 
           appId: entity.appId, 
-          name: entity.name, 
+          description: entity.description, 
           sections: 
             entity. sections == null ? null : List<SectionModel>.from(await Future.wait(entity. sections
             !.map((item) {

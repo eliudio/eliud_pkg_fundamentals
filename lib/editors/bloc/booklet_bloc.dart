@@ -43,6 +43,7 @@ class BookletBloc extends ExtEditorBaseBloc<BookletModel, SectionModel> {
     return BookletModel(
       appId: appId,
       documentID: newRandomKey(),
+      description: 'New booklet',
       conditions: conditions,
     );
   }

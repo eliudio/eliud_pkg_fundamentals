@@ -55,7 +55,7 @@ class DividerFormBloc extends Bloc<DividerFormEvent, DividerFormState> {
         DividerFormLoaded loaded = DividerFormLoaded(value: DividerModel(
                                                documentID: "",
                                  appId: "",
-                                 name: "",
+                                 description: "",
                                  color: RgbModel(r: 255, g: 0, b: 0, opacity: 1.00), 
                                  height: 0.0,
                                  thickness: 0.0,
@@ -91,8 +91,8 @@ class DividerFormBloc extends Bloc<DividerFormEvent, DividerFormState> {
 
         return;
       }
-      if (event is ChangedDividerName) {
-        newValue = currentState.value!.copyWith(name: event.value);
+      if (event is ChangedDividerDescription) {
+        newValue = currentState.value!.copyWith(description: event.value);
         yield SubmittableDividerForm(value: newValue);
 
         return;

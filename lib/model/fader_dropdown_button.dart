@@ -76,8 +76,7 @@ class FaderDropdownButtonWidgetState extends State<FaderDropdownButtonWidget> {
 List<Widget> widgets(FaderModel value) {
 var app = widget.app;
 var widgets = <Widget>[];
-widgets.add(value.documentID != null ? Center(child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().textStyle().text(app, context, value.documentID!)) : Container());
-widgets.add(value.name != null ? Center(child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().textStyle().text(app, context, value.name!)) : Container());
+widgets.add(value.description != null ? Center(child: text(app, context, value.description!)) : value.documentID != null ? Center(child: text(app, context, value.documentID!)) : Container());
 return widgets;
 }
 

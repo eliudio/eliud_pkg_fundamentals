@@ -126,7 +126,7 @@ class _MyFaderFormState extends State<MyFaderForm> {
 
   final TextEditingController _documentIDController = TextEditingController();
   final TextEditingController _appIdController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _animationMillisecondsController = TextEditingController();
   final TextEditingController _imageSecondsController = TextEditingController();
 
@@ -139,7 +139,7 @@ class _MyFaderFormState extends State<MyFaderForm> {
     _myFormBloc = BlocProvider.of<FaderFormBloc>(context);
     _documentIDController.addListener(_onDocumentIDChanged);
     _appIdController.addListener(_onAppIdChanged);
-    _nameController.addListener(_onNameChanged);
+    _descriptionController.addListener(_onDescriptionChanged);
     _animationMillisecondsController.addListener(_onAnimationMillisecondsChanged);
     _imageSecondsController.addListener(_onImageSecondsChanged);
   }
@@ -161,10 +161,10 @@ class _MyFaderFormState extends State<MyFaderForm> {
           _appIdController.text = state.value!.appId.toString();
         else
           _appIdController.text = "";
-        if (state.value!.name != null)
-          _nameController.text = state.value!.name.toString();
+        if (state.value!.description != null)
+          _descriptionController.text = state.value!.description.toString();
         else
-          _nameController.text = "";
+          _descriptionController.text = "";
         if (state.value!.animationMilliseconds != null)
           _animationMillisecondsController.text = state.value!.animationMilliseconds.toString();
         else
@@ -189,7 +189,7 @@ class _MyFaderFormState extends State<MyFaderForm> {
 
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Name', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _nameController, keyboardType: TextInputType.text, validator: (_) => state is NameFaderFormError ? state.message : null, hintText: null)
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Description', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _descriptionController, keyboardType: TextInputType.text, validator: (_) => state is DescriptionFaderFormError ? state.message : null, hintText: null)
           );
 
 
@@ -271,7 +271,7 @@ class _MyFaderFormState extends State<MyFaderForm> {
                           UpdateFaderList(value: state.value!.copyWith(
                               documentID: state.value!.documentID, 
                               appId: state.value!.appId, 
-                              name: state.value!.name, 
+                              description: state.value!.description, 
                               animationMilliseconds: state.value!.animationMilliseconds, 
                               imageSeconds: state.value!.imageSeconds, 
                               items: state.value!.items, 
@@ -282,7 +282,7 @@ class _MyFaderFormState extends State<MyFaderForm> {
                           AddFaderList(value: FaderModel(
                               documentID: state.value!.documentID, 
                               appId: state.value!.appId, 
-                              name: state.value!.name, 
+                              description: state.value!.description, 
                               animationMilliseconds: state.value!.animationMilliseconds, 
                               imageSeconds: state.value!.imageSeconds, 
                               items: state.value!.items, 
@@ -323,8 +323,8 @@ class _MyFaderFormState extends State<MyFaderForm> {
   }
 
 
-  void _onNameChanged() {
-    _myFormBloc.add(ChangedFaderName(value: _nameController.text));
+  void _onDescriptionChanged() {
+    _myFormBloc.add(ChangedFaderDescription(value: _descriptionController.text));
   }
 
 
@@ -349,7 +349,7 @@ class _MyFaderFormState extends State<MyFaderForm> {
   void dispose() {
     _documentIDController.dispose();
     _appIdController.dispose();
-    _nameController.dispose();
+    _descriptionController.dispose();
     _animationMillisecondsController.dispose();
     _imageSecondsController.dispose();
     super.dispose();

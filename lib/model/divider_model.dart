@@ -38,7 +38,7 @@ import 'package:eliud_core/tools/random.dart';
 class DividerModel {
   String? documentID;
   String? appId;
-  String? name;
+  String? description;
   RgbModel? color;
 
   // The divider's height extent. The divider itself is always drawn as a horizontal line that is centered within the height specified by this value.
@@ -54,16 +54,16 @@ class DividerModel {
   double? endIndent;
   StorageConditionsModel? conditions;
 
-  DividerModel({this.documentID, this.appId, this.name, this.color, this.height, this.thickness, this.indent, this.endIndent, this.conditions, })  {
+  DividerModel({this.documentID, this.appId, this.description, this.color, this.height, this.thickness, this.indent, this.endIndent, this.conditions, })  {
     assert(documentID != null);
   }
 
-  DividerModel copyWith({String? documentID, String? appId, String? name, RgbModel? color, double? height, double? thickness, double? indent, double? endIndent, StorageConditionsModel? conditions, }) {
-    return DividerModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, name: name ?? this.name, color: color ?? this.color, height: height ?? this.height, thickness: thickness ?? this.thickness, indent: indent ?? this.indent, endIndent: endIndent ?? this.endIndent, conditions: conditions ?? this.conditions, );
+  DividerModel copyWith({String? documentID, String? appId, String? description, RgbModel? color, double? height, double? thickness, double? indent, double? endIndent, StorageConditionsModel? conditions, }) {
+    return DividerModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, description: description ?? this.description, color: color ?? this.color, height: height ?? this.height, thickness: thickness ?? this.thickness, indent: indent ?? this.indent, endIndent: endIndent ?? this.endIndent, conditions: conditions ?? this.conditions, );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ appId.hashCode ^ name.hashCode ^ color.hashCode ^ height.hashCode ^ thickness.hashCode ^ indent.hashCode ^ endIndent.hashCode ^ conditions.hashCode;
+  int get hashCode => documentID.hashCode ^ appId.hashCode ^ description.hashCode ^ color.hashCode ^ height.hashCode ^ thickness.hashCode ^ indent.hashCode ^ endIndent.hashCode ^ conditions.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -72,7 +72,7 @@ class DividerModel {
           runtimeType == other.runtimeType && 
           documentID == other.documentID &&
           appId == other.appId &&
-          name == other.name &&
+          description == other.description &&
           color == other.color &&
           height == other.height &&
           thickness == other.thickness &&
@@ -82,13 +82,13 @@ class DividerModel {
 
   @override
   String toString() {
-    return 'DividerModel{documentID: $documentID, appId: $appId, name: $name, color: $color, height: $height, thickness: $thickness, indent: $indent, endIndent: $endIndent, conditions: $conditions}';
+    return 'DividerModel{documentID: $documentID, appId: $appId, description: $description, color: $color, height: $height, thickness: $thickness, indent: $indent, endIndent: $endIndent, conditions: $conditions}';
   }
 
   DividerEntity toEntity({String? appId}) {
     return DividerEntity(
           appId: (appId != null) ? appId : null, 
-          name: (name != null) ? name : null, 
+          description: (description != null) ? description : null, 
           color: (color != null) ? color!.toEntity(appId: appId) : null, 
           height: (height != null) ? height : null, 
           thickness: (thickness != null) ? thickness : null, 
@@ -104,7 +104,7 @@ class DividerModel {
     return DividerModel(
           documentID: documentID, 
           appId: entity.appId, 
-          name: entity.name, 
+          description: entity.description, 
           color: 
             await RgbModel.fromEntity(entity.color), 
           height: entity.height, 
@@ -123,7 +123,7 @@ class DividerModel {
     return DividerModel(
           documentID: documentID, 
           appId: entity.appId, 
-          name: entity.name, 
+          description: entity.description, 
           color: 
             await RgbModel.fromEntityPlus(entity.color, appId: appId), 
           height: entity.height, 

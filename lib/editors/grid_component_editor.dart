@@ -46,6 +46,7 @@ class GridComponentEditorConstructor extends ComponentEditorConstructor {
         GridModel(
           appId: app.documentID,
           documentID: newRandomKey(),
+          description: 'New grid',
           conditions: StorageConditionsModel(
               privilegeLevelRequired:
                   PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
@@ -143,14 +144,14 @@ class _GridComponentEditorState extends State<GridComponentEditor> {
                             title: dialogField(
                               widget.app,
                               context,
-                              initialValue: gridState.model.title,
+                              initialValue: gridState.model.description,
                               valueChanged: (value) {
-                                gridState.model.title = value;
+                                gridState.model.description = value;
                               },
                               maxLines: 1,
                               decoration: const InputDecoration(
-                                hintText: 'Title',
-                                labelText: 'Title',
+                                hintText: 'Description',
+                                labelText: 'Description',
                               ),
                             )),
                       ]),

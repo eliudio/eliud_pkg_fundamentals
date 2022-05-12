@@ -83,16 +83,16 @@ class ChangedDocumentAppId extends DocumentFormEvent {
   String toString() => 'ChangedDocumentAppId{ value: $value }';
 }
 
-class ChangedDocumentName extends DocumentFormEvent {
+class ChangedDocumentDescription extends DocumentFormEvent {
   final String? value;
 
-  ChangedDocumentName({this.value});
+  ChangedDocumentDescription({this.value});
 
   @override
   List<Object?> get props => [ value ];
 
   @override
-  String toString() => 'ChangedDocumentName{ value: $value }';
+  String toString() => 'ChangedDocumentDescription{ value: $value }';
 }
 
 class ChangedDocumentDocumentRenderer extends DocumentFormEvent {

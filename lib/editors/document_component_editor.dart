@@ -55,6 +55,7 @@ class DocumentComponentEditorConstructor extends ComponentEditorConstructor {
         DocumentModel(
           appId: app.documentID,
           documentID: newRandomKey(),
+          description: 'New document',
           conditions: StorageConditionsModel(
               privilegeLevelRequired:
                   PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
@@ -151,14 +152,14 @@ class _DocumentComponentEditorState extends State<DocumentComponentEditor> {
                             title: dialogField(
                               widget.app,
                               context,
-                              initialValue: documentState.model.name,
+                              initialValue: documentState.model.description,
                               valueChanged: (value) {
-                                documentState.model.name = value;
+                                documentState.model.description = value;
                               },
                               maxLines: 1,
                               decoration: const InputDecoration(
-                                hintText: 'Name',
-                                labelText: 'Name',
+                                hintText: 'Description',
+                                labelText: 'Description',
                               ),
                             )),
                         DocumentRendererWidget(

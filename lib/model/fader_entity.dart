@@ -24,22 +24,22 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 class FaderEntity {
   final String? appId;
-  final String? name;
+  final String? description;
   final int? animationMilliseconds;
   final int? imageSeconds;
   final List<ListedItemEntity>? items;
   final StorageConditionsEntity? conditions;
 
-  FaderEntity({this.appId, this.name, this.animationMilliseconds, this.imageSeconds, this.items, this.conditions, });
+  FaderEntity({this.appId, this.description, this.animationMilliseconds, this.imageSeconds, this.items, this.conditions, });
 
 
-  List<Object?> get props => [appId, name, animationMilliseconds, imageSeconds, items, conditions, ];
+  List<Object?> get props => [appId, description, animationMilliseconds, imageSeconds, items, conditions, ];
 
   @override
   String toString() {
     String itemsCsv = (items == null) ? '' : items!.join(', ');
 
-    return 'FaderEntity{appId: $appId, name: $name, animationMilliseconds: $animationMilliseconds, imageSeconds: $imageSeconds, items: ListedItem[] { $itemsCsv }, conditions: $conditions}';
+    return 'FaderEntity{appId: $appId, description: $description, animationMilliseconds: $animationMilliseconds, imageSeconds: $imageSeconds, items: ListedItem[] { $itemsCsv }, conditions: $conditions}';
   }
 
   static FaderEntity? fromMap(Object? o) {
@@ -61,7 +61,7 @@ class FaderEntity {
 
     return FaderEntity(
       appId: map['appId'], 
-      name: map['name'], 
+      description: map['description'], 
       animationMilliseconds: int.tryParse(map['animationMilliseconds'].toString()), 
       imageSeconds: int.tryParse(map['imageSeconds'].toString()), 
       items: itemsList, 
@@ -80,8 +80,8 @@ class FaderEntity {
     Map<String, Object?> theDocument = HashMap();
     if (appId != null) theDocument["appId"] = appId;
       else theDocument["appId"] = null;
-    if (name != null) theDocument["name"] = name;
-      else theDocument["name"] = null;
+    if (description != null) theDocument["description"] = description;
+      else theDocument["description"] = null;
     if (animationMilliseconds != null) theDocument["animationMilliseconds"] = animationMilliseconds;
       else theDocument["animationMilliseconds"] = null;
     if (imageSeconds != null) theDocument["imageSeconds"] = imageSeconds;

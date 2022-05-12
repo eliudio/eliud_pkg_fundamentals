@@ -95,15 +95,15 @@ class AppIdGridFormError extends GridFormError {
 }
 
 
-class TitleGridFormError extends GridFormError { 
-  const TitleGridFormError({ String? message, GridModel? value }): super(message: message, value: value);
+class DescriptionGridFormError extends GridFormError { 
+  const DescriptionGridFormError({ String? message, GridModel? value }): super(message: message, value: value);
 
   @override
   List<Object?> get props => [ message, value ];
 
   @override
   String toString() {
-    return '''TitleGridFormError {
+    return '''DescriptionGridFormError {
       value: $value,
       message: $message,
     }''';

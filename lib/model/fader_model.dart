@@ -39,7 +39,7 @@ import 'package:eliud_core/tools/random.dart';
 class FaderModel {
   String? documentID;
   String? appId;
-  String? name;
+  String? description;
 
   // The duration of the transition between the images
   int? animationMilliseconds;
@@ -49,16 +49,16 @@ class FaderModel {
   List<ListedItemModel>? items;
   StorageConditionsModel? conditions;
 
-  FaderModel({this.documentID, this.appId, this.name, this.animationMilliseconds, this.imageSeconds, this.items, this.conditions, })  {
+  FaderModel({this.documentID, this.appId, this.description, this.animationMilliseconds, this.imageSeconds, this.items, this.conditions, })  {
     assert(documentID != null);
   }
 
-  FaderModel copyWith({String? documentID, String? appId, String? name, int? animationMilliseconds, int? imageSeconds, List<ListedItemModel>? items, StorageConditionsModel? conditions, }) {
-    return FaderModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, name: name ?? this.name, animationMilliseconds: animationMilliseconds ?? this.animationMilliseconds, imageSeconds: imageSeconds ?? this.imageSeconds, items: items ?? this.items, conditions: conditions ?? this.conditions, );
+  FaderModel copyWith({String? documentID, String? appId, String? description, int? animationMilliseconds, int? imageSeconds, List<ListedItemModel>? items, StorageConditionsModel? conditions, }) {
+    return FaderModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, description: description ?? this.description, animationMilliseconds: animationMilliseconds ?? this.animationMilliseconds, imageSeconds: imageSeconds ?? this.imageSeconds, items: items ?? this.items, conditions: conditions ?? this.conditions, );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ appId.hashCode ^ name.hashCode ^ animationMilliseconds.hashCode ^ imageSeconds.hashCode ^ items.hashCode ^ conditions.hashCode;
+  int get hashCode => documentID.hashCode ^ appId.hashCode ^ description.hashCode ^ animationMilliseconds.hashCode ^ imageSeconds.hashCode ^ items.hashCode ^ conditions.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -67,7 +67,7 @@ class FaderModel {
           runtimeType == other.runtimeType && 
           documentID == other.documentID &&
           appId == other.appId &&
-          name == other.name &&
+          description == other.description &&
           animationMilliseconds == other.animationMilliseconds &&
           imageSeconds == other.imageSeconds &&
           ListEquality().equals(items, other.items) &&
@@ -77,13 +77,13 @@ class FaderModel {
   String toString() {
     String itemsCsv = (items == null) ? '' : items!.join(', ');
 
-    return 'FaderModel{documentID: $documentID, appId: $appId, name: $name, animationMilliseconds: $animationMilliseconds, imageSeconds: $imageSeconds, items: ListedItem[] { $itemsCsv }, conditions: $conditions}';
+    return 'FaderModel{documentID: $documentID, appId: $appId, description: $description, animationMilliseconds: $animationMilliseconds, imageSeconds: $imageSeconds, items: ListedItem[] { $itemsCsv }, conditions: $conditions}';
   }
 
   FaderEntity toEntity({String? appId}) {
     return FaderEntity(
           appId: (appId != null) ? appId : null, 
-          name: (name != null) ? name : null, 
+          description: (description != null) ? description : null, 
           animationMilliseconds: (animationMilliseconds != null) ? animationMilliseconds : null, 
           imageSeconds: (imageSeconds != null) ? imageSeconds : null, 
           items: (items != null) ? items
@@ -99,7 +99,7 @@ class FaderModel {
     return FaderModel(
           documentID: documentID, 
           appId: entity.appId, 
-          name: entity.name, 
+          description: entity.description, 
           animationMilliseconds: entity.animationMilliseconds, 
           imageSeconds: entity.imageSeconds, 
           items: 
@@ -121,7 +121,7 @@ class FaderModel {
     return FaderModel(
           documentID: documentID, 
           appId: entity.appId, 
-          name: entity.name, 
+          description: entity.description, 
           animationMilliseconds: entity.animationMilliseconds, 
           imageSeconds: entity.imageSeconds, 
           items: 

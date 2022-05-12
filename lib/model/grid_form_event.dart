@@ -83,16 +83,16 @@ class ChangedGridAppId extends GridFormEvent {
   String toString() => 'ChangedGridAppId{ value: $value }';
 }
 
-class ChangedGridTitle extends GridFormEvent {
+class ChangedGridDescription extends GridFormEvent {
   final String? value;
 
-  ChangedGridTitle({this.value});
+  ChangedGridDescription({this.value});
 
   @override
   List<Object?> get props => [ value ];
 
   @override
-  String toString() => 'ChangedGridTitle{ value: $value }';
+  String toString() => 'ChangedGridDescription{ value: $value }';
 }
 
 class ChangedGridBodyComponents extends GridFormEvent {

@@ -55,7 +55,7 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
         DocumentFormLoaded loaded = DocumentFormLoaded(value: DocumentModel(
                                                documentID: "",
                                  appId: "",
-                                 name: "",
+                                 description: "",
                                  content: "",
                                  padding: 0.0,
                                  images: [],
@@ -89,8 +89,8 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
 
         return;
       }
-      if (event is ChangedDocumentName) {
-        newValue = currentState.value!.copyWith(name: event.value);
+      if (event is ChangedDocumentDescription) {
+        newValue = currentState.value!.copyWith(description: event.value);
         yield SubmittableDocumentForm(value: newValue);
 
         return;

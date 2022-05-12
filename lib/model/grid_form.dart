@@ -126,7 +126,7 @@ class _MyGridFormState extends State<MyGridForm> {
 
   final TextEditingController _documentIDController = TextEditingController();
   final TextEditingController _appIdController = TextEditingController();
-  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
   String? _gridView;
 
 
@@ -138,7 +138,7 @@ class _MyGridFormState extends State<MyGridForm> {
     _myFormBloc = BlocProvider.of<GridFormBloc>(context);
     _documentIDController.addListener(_onDocumentIDChanged);
     _appIdController.addListener(_onAppIdChanged);
-    _titleController.addListener(_onTitleChanged);
+    _descriptionController.addListener(_onDescriptionChanged);
   }
 
   @override
@@ -158,10 +158,10 @@ class _MyGridFormState extends State<MyGridForm> {
           _appIdController.text = state.value!.appId.toString();
         else
           _appIdController.text = "";
-        if (state.value!.title != null)
-          _titleController.text = state.value!.title.toString();
+        if (state.value!.description != null)
+          _descriptionController.text = state.value!.description.toString();
         else
-          _titleController.text = "";
+          _descriptionController.text = "";
         if (state.value!.gridView != null)
           _gridView= state.value!.gridView!.documentID;
         else
@@ -193,7 +193,7 @@ class _MyGridFormState extends State<MyGridForm> {
 
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Title', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _titleController, keyboardType: TextInputType.text, validator: (_) => state is TitleGridFormError ? state.message : null, hintText: null)
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Description', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _descriptionController, keyboardType: TextInputType.text, validator: (_) => state is DescriptionGridFormError ? state.message : null, hintText: null)
           );
 
 
@@ -259,7 +259,7 @@ class _MyGridFormState extends State<MyGridForm> {
                           UpdateGridList(value: state.value!.copyWith(
                               documentID: state.value!.documentID, 
                               appId: state.value!.appId, 
-                              title: state.value!.title, 
+                              description: state.value!.description, 
                               bodyComponents: state.value!.bodyComponents, 
                               gridView: state.value!.gridView, 
                               conditions: state.value!.conditions, 
@@ -269,7 +269,7 @@ class _MyGridFormState extends State<MyGridForm> {
                           AddGridList(value: GridModel(
                               documentID: state.value!.documentID, 
                               appId: state.value!.appId, 
-                              title: state.value!.title, 
+                              description: state.value!.description, 
                               bodyComponents: state.value!.bodyComponents, 
                               gridView: state.value!.gridView, 
                               conditions: state.value!.conditions, 
@@ -309,8 +309,8 @@ class _MyGridFormState extends State<MyGridForm> {
   }
 
 
-  void _onTitleChanged() {
-    _myFormBloc.add(ChangedGridTitle(value: _titleController.text));
+  void _onDescriptionChanged() {
+    _myFormBloc.add(ChangedGridDescription(value: _descriptionController.text));
   }
 
 
@@ -333,7 +333,7 @@ class _MyGridFormState extends State<MyGridForm> {
   void dispose() {
     _documentIDController.dispose();
     _appIdController.dispose();
-    _titleController.dispose();
+    _descriptionController.dispose();
     super.dispose();
   }
 

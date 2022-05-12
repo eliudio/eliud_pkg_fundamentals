@@ -83,16 +83,16 @@ class ChangedPresentationAppId extends PresentationFormEvent {
   String toString() => 'ChangedPresentationAppId{ value: $value }';
 }
 
-class ChangedPresentationTitle extends PresentationFormEvent {
+class ChangedPresentationDescription extends PresentationFormEvent {
   final String? value;
 
-  ChangedPresentationTitle({this.value});
+  ChangedPresentationDescription({this.value});
 
   @override
   List<Object?> get props => [ value ];
 
   @override
-  String toString() => 'ChangedPresentationTitle{ value: $value }';
+  String toString() => 'ChangedPresentationDescription{ value: $value }';
 }
 
 class ChangedPresentationBodyComponents extends PresentationFormEvent {

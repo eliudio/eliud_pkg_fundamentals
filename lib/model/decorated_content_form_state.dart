@@ -95,15 +95,15 @@ class AppIdDecoratedContentFormError extends DecoratedContentFormError {
 }
 
 
-class NameDecoratedContentFormError extends DecoratedContentFormError { 
-  const NameDecoratedContentFormError({ String? message, DecoratedContentModel? value }): super(message: message, value: value);
+class DescriptionDecoratedContentFormError extends DecoratedContentFormError { 
+  const DescriptionDecoratedContentFormError({ String? message, DecoratedContentModel? value }): super(message: message, value: value);
 
   @override
   List<Object?> get props => [ message, value ];
 
   @override
   String toString() {
-    return '''NameDecoratedContentFormError {
+    return '''DescriptionDecoratedContentFormError {
       value: $value,
       message: $message,
     }''';

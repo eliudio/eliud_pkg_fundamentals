@@ -95,15 +95,15 @@ class AppIdBookletFormError extends BookletFormError {
 }
 
 
-class NameBookletFormError extends BookletFormError { 
-  const NameBookletFormError({ String? message, BookletModel? value }): super(message: message, value: value);
+class DescriptionBookletFormError extends BookletFormError { 
+  const DescriptionBookletFormError({ String? message, BookletModel? value }): super(message: message, value: value);
 
   @override
   List<Object?> get props => [ message, value ];
 
   @override
   String toString() {
-    return '''NameBookletFormError {
+    return '''DescriptionBookletFormError {
       value: $value,
       message: $message,
     }''';

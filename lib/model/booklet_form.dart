@@ -126,7 +126,7 @@ class _MyBookletFormState extends State<MyBookletForm> {
 
   final TextEditingController _documentIDController = TextEditingController();
   final TextEditingController _appIdController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
 
 
   _MyBookletFormState(this.formAction);
@@ -137,7 +137,7 @@ class _MyBookletFormState extends State<MyBookletForm> {
     _myFormBloc = BlocProvider.of<BookletFormBloc>(context);
     _documentIDController.addListener(_onDocumentIDChanged);
     _appIdController.addListener(_onAppIdChanged);
-    _nameController.addListener(_onNameChanged);
+    _descriptionController.addListener(_onDescriptionChanged);
   }
 
   @override
@@ -157,10 +157,10 @@ class _MyBookletFormState extends State<MyBookletForm> {
           _appIdController.text = state.value!.appId.toString();
         else
           _appIdController.text = "";
-        if (state.value!.name != null)
-          _nameController.text = state.value!.name.toString();
+        if (state.value!.description != null)
+          _descriptionController.text = state.value!.description.toString();
         else
-          _nameController.text = "";
+          _descriptionController.text = "";
       }
       if (state is BookletFormInitialized) {
         List<Widget> children = [];
@@ -177,7 +177,7 @@ class _MyBookletFormState extends State<MyBookletForm> {
 
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Name', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _nameController, keyboardType: TextInputType.text, validator: (_) => state is NameBookletFormError ? state.message : null, hintText: null)
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Description', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _descriptionController, keyboardType: TextInputType.text, validator: (_) => state is DescriptionBookletFormError ? state.message : null, hintText: null)
           );
 
 
@@ -249,7 +249,7 @@ class _MyBookletFormState extends State<MyBookletForm> {
                           UpdateBookletList(value: state.value!.copyWith(
                               documentID: state.value!.documentID, 
                               appId: state.value!.appId, 
-                              name: state.value!.name, 
+                              description: state.value!.description, 
                               sections: state.value!.sections, 
                               conditions: state.value!.conditions, 
                         )));
@@ -258,7 +258,7 @@ class _MyBookletFormState extends State<MyBookletForm> {
                           AddBookletList(value: BookletModel(
                               documentID: state.value!.documentID, 
                               appId: state.value!.appId, 
-                              name: state.value!.name, 
+                              description: state.value!.description, 
                               sections: state.value!.sections, 
                               conditions: state.value!.conditions, 
                           )));
@@ -297,8 +297,8 @@ class _MyBookletFormState extends State<MyBookletForm> {
   }
 
 
-  void _onNameChanged() {
-    _myFormBloc.add(ChangedBookletName(value: _nameController.text));
+  void _onDescriptionChanged() {
+    _myFormBloc.add(ChangedBookletDescription(value: _descriptionController.text));
   }
 
 
@@ -313,7 +313,7 @@ class _MyBookletFormState extends State<MyBookletForm> {
   void dispose() {
     _documentIDController.dispose();
     _appIdController.dispose();
-    _nameController.dispose();
+    _descriptionController.dispose();
     super.dispose();
   }
 

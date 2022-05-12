@@ -83,16 +83,16 @@ class ChangedDividerAppId extends DividerFormEvent {
   String toString() => 'ChangedDividerAppId{ value: $value }';
 }
 
-class ChangedDividerName extends DividerFormEvent {
+class ChangedDividerDescription extends DividerFormEvent {
   final String? value;
 
-  ChangedDividerName({this.value});
+  ChangedDividerDescription({this.value});
 
   @override
   List<Object?> get props => [ value ];
 
   @override
-  String toString() => 'ChangedDividerName{ value: $value }';
+  String toString() => 'ChangedDividerDescription{ value: $value }';
 }
 
 class ChangedDividerColor extends DividerFormEvent {

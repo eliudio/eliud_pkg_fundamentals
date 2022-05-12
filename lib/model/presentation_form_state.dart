@@ -95,15 +95,15 @@ class AppIdPresentationFormError extends PresentationFormError {
 }
 
 
-class TitlePresentationFormError extends PresentationFormError { 
-  const TitlePresentationFormError({ String? message, PresentationModel? value }): super(message: message, value: value);
+class DescriptionPresentationFormError extends PresentationFormError { 
+  const DescriptionPresentationFormError({ String? message, PresentationModel? value }): super(message: message, value: value);
 
   @override
   List<Object?> get props => [ message, value ];
 
   @override
   String toString() {
-    return '''TitlePresentationFormError {
+    return '''DescriptionPresentationFormError {
       value: $value,
       message: $message,
     }''';

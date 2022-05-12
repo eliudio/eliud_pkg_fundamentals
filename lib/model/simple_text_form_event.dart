@@ -83,6 +83,18 @@ class ChangedSimpleTextAppId extends SimpleTextFormEvent {
   String toString() => 'ChangedSimpleTextAppId{ value: $value }';
 }
 
+class ChangedSimpleTextDescription extends SimpleTextFormEvent {
+  final String? value;
+
+  ChangedSimpleTextDescription({this.value});
+
+  @override
+  List<Object?> get props => [ value ];
+
+  @override
+  String toString() => 'ChangedSimpleTextDescription{ value: $value }';
+}
+
 class ChangedSimpleTextTitle extends SimpleTextFormEvent {
   final String? value;
 

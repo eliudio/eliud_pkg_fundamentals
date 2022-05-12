@@ -24,7 +24,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 class DocumentEntity {
   final String? appId;
-  final String? name;
+  final String? description;
   final int? documentRenderer;
   final String? content;
   final double? padding;
@@ -32,16 +32,16 @@ class DocumentEntity {
   final BackgroundEntity? background;
   final StorageConditionsEntity? conditions;
 
-  DocumentEntity({this.appId, this.name, this.documentRenderer, this.content, this.padding, this.images, this.background, this.conditions, });
+  DocumentEntity({this.appId, this.description, this.documentRenderer, this.content, this.padding, this.images, this.background, this.conditions, });
 
 
-  List<Object?> get props => [appId, name, documentRenderer, content, padding, images, background, conditions, ];
+  List<Object?> get props => [appId, description, documentRenderer, content, padding, images, background, conditions, ];
 
   @override
   String toString() {
     String imagesCsv = (images == null) ? '' : images!.join(', ');
 
-    return 'DocumentEntity{appId: $appId, name: $name, documentRenderer: $documentRenderer, content: $content, padding: $padding, images: DocumentItem[] { $imagesCsv }, background: $background, conditions: $conditions}';
+    return 'DocumentEntity{appId: $appId, description: $description, documentRenderer: $documentRenderer, content: $content, padding: $padding, images: DocumentItem[] { $imagesCsv }, background: $background, conditions: $conditions}';
   }
 
   static DocumentEntity? fromMap(Object? o) {
@@ -67,7 +67,7 @@ class DocumentEntity {
 
     return DocumentEntity(
       appId: map['appId'], 
-      name: map['name'], 
+      description: map['description'], 
       documentRenderer: map['documentRenderer'], 
       content: map['content'], 
       padding: double.tryParse(map['padding'].toString()), 
@@ -91,8 +91,8 @@ class DocumentEntity {
     Map<String, Object?> theDocument = HashMap();
     if (appId != null) theDocument["appId"] = appId;
       else theDocument["appId"] = null;
-    if (name != null) theDocument["name"] = name;
-      else theDocument["name"] = null;
+    if (description != null) theDocument["description"] = description;
+      else theDocument["description"] = null;
     if (documentRenderer != null) theDocument["documentRenderer"] = documentRenderer;
       else theDocument["documentRenderer"] = null;
     if (content != null) theDocument["content"] = content;

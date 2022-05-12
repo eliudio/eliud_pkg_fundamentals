@@ -95,15 +95,15 @@ class AppIdDocumentFormError extends DocumentFormError {
 }
 
 
-class NameDocumentFormError extends DocumentFormError { 
-  const NameDocumentFormError({ String? message, DocumentModel? value }): super(message: message, value: value);
+class DescriptionDocumentFormError extends DocumentFormError { 
+  const DescriptionDocumentFormError({ String? message, DocumentModel? value }): super(message: message, value: value);
 
   @override
   List<Object?> get props => [ message, value ];
 
   @override
   String toString() {
-    return '''NameDocumentFormError {
+    return '''DescriptionDocumentFormError {
       value: $value,
       message: $message,
     }''';

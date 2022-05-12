@@ -55,7 +55,7 @@ class BookletFormBloc extends Bloc<BookletFormEvent, BookletFormState> {
         BookletFormLoaded loaded = BookletFormLoaded(value: BookletModel(
                                                documentID: "",
                                  appId: "",
-                                 name: "",
+                                 description: "",
                                  sections: [],
 
         ));
@@ -87,8 +87,8 @@ class BookletFormBloc extends Bloc<BookletFormEvent, BookletFormState> {
 
         return;
       }
-      if (event is ChangedBookletName) {
-        newValue = currentState.value!.copyWith(name: event.value);
+      if (event is ChangedBookletDescription) {
+        newValue = currentState.value!.copyWith(description: event.value);
         yield SubmittableBookletForm(value: newValue);
 
         return;

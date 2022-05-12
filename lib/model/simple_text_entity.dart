@@ -24,19 +24,20 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 class SimpleTextEntity {
   final String? appId;
+  final String? description;
   final String? title;
   final String? text;
   final StorageConditionsEntity? conditions;
   final int? textAlign;
 
-  SimpleTextEntity({this.appId, this.title, this.text, this.conditions, this.textAlign, });
+  SimpleTextEntity({this.appId, this.description, this.title, this.text, this.conditions, this.textAlign, });
 
 
-  List<Object?> get props => [appId, title, text, conditions, textAlign, ];
+  List<Object?> get props => [appId, description, title, text, conditions, textAlign, ];
 
   @override
   String toString() {
-    return 'SimpleTextEntity{appId: $appId, title: $title, text: $text, conditions: $conditions, textAlign: $textAlign}';
+    return 'SimpleTextEntity{appId: $appId, description: $description, title: $title, text: $text, conditions: $conditions, textAlign: $textAlign}';
   }
 
   static SimpleTextEntity? fromMap(Object? o) {
@@ -50,6 +51,7 @@ class SimpleTextEntity {
 
     return SimpleTextEntity(
       appId: map['appId'], 
+      description: map['description'], 
       title: map['title'], 
       text: map['text'], 
       conditions: conditionsFromMap, 
@@ -65,6 +67,8 @@ class SimpleTextEntity {
     Map<String, Object?> theDocument = HashMap();
     if (appId != null) theDocument["appId"] = appId;
       else theDocument["appId"] = null;
+    if (description != null) theDocument["description"] = description;
+      else theDocument["description"] = null;
     if (title != null) theDocument["title"] = title;
       else theDocument["title"] = null;
     if (text != null) theDocument["text"] = text;

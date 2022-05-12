@@ -24,21 +24,21 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 class GridEntity {
   final String? appId;
-  final String? title;
+  final String? description;
   final List<BodyComponentEntity>? bodyComponents;
   final String? gridViewId;
   final StorageConditionsEntity? conditions;
 
-  GridEntity({this.appId, this.title, this.bodyComponents, this.gridViewId, this.conditions, });
+  GridEntity({this.appId, this.description, this.bodyComponents, this.gridViewId, this.conditions, });
 
 
-  List<Object?> get props => [appId, title, bodyComponents, gridViewId, conditions, ];
+  List<Object?> get props => [appId, description, bodyComponents, gridViewId, conditions, ];
 
   @override
   String toString() {
     String bodyComponentsCsv = (bodyComponents == null) ? '' : bodyComponents!.join(', ');
 
-    return 'GridEntity{appId: $appId, title: $title, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, gridViewId: $gridViewId, conditions: $conditions}';
+    return 'GridEntity{appId: $appId, description: $description, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, gridViewId: $gridViewId, conditions: $conditions}';
   }
 
   static GridEntity? fromMap(Object? o) {
@@ -60,7 +60,7 @@ class GridEntity {
 
     return GridEntity(
       appId: map['appId'], 
-      title: map['title'], 
+      description: map['description'], 
       bodyComponents: bodyComponentsList, 
       gridViewId: map['gridViewId'], 
       conditions: conditionsFromMap, 
@@ -78,8 +78,8 @@ class GridEntity {
     Map<String, Object?> theDocument = HashMap();
     if (appId != null) theDocument["appId"] = appId;
       else theDocument["appId"] = null;
-    if (title != null) theDocument["title"] = title;
-      else theDocument["title"] = null;
+    if (description != null) theDocument["description"] = description;
+      else theDocument["description"] = null;
     if (bodyComponents != null) theDocument["bodyComponents"] = bodyComponentsListMap;
       else theDocument["bodyComponents"] = null;
     if (gridViewId != null) theDocument["gridViewId"] = gridViewId;

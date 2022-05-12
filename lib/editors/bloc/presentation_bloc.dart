@@ -41,6 +41,7 @@ class PresentationBloc extends ExtEditorBaseBloc<PresentationModel, BodyComponen
   PresentationModel newInstance(StorageConditionsModel conditions) {
     return PresentationModel(
       appId: appId,
+      description: 'New presentation',
       documentID: newRandomKey(),
       conditions: conditions,
     );

@@ -95,15 +95,15 @@ class AppIdDividerFormError extends DividerFormError {
 }
 
 
-class NameDividerFormError extends DividerFormError { 
-  const NameDividerFormError({ String? message, DividerModel? value }): super(message: message, value: value);
+class DescriptionDividerFormError extends DividerFormError { 
+  const DescriptionDividerFormError({ String? message, DividerModel? value }): super(message: message, value: value);
 
   @override
   List<Object?> get props => [ message, value ];
 
   @override
   String toString() {
-    return '''NameDividerFormError {
+    return '''DescriptionDividerFormError {
       value: $value,
       message: $message,
     }''';

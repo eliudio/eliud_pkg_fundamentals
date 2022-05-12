@@ -41,6 +41,7 @@ class DocumentBloc extends ExtEditorBaseBloc<DocumentModel, DocumentItemModel> {
     return DocumentModel(
       appId: appId,
       documentID: newRandomKey(),
+      description: 'New document',
       images: [],
       conditions: conditions,
     );

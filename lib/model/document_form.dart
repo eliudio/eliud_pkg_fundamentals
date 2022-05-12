@@ -126,7 +126,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
 
   final TextEditingController _documentIDController = TextEditingController();
   final TextEditingController _appIdController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
   int? _documentRendererSelectedRadioTile;
   final TextEditingController _paddingController = TextEditingController();
 
@@ -139,7 +139,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
     _myFormBloc = BlocProvider.of<DocumentFormBloc>(context);
     _documentIDController.addListener(_onDocumentIDChanged);
     _appIdController.addListener(_onAppIdChanged);
-    _nameController.addListener(_onNameChanged);
+    _descriptionController.addListener(_onDescriptionChanged);
     _documentRendererSelectedRadioTile = 0;
     _paddingController.addListener(_onPaddingChanged);
   }
@@ -161,10 +161,10 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
           _appIdController.text = state.value!.appId.toString();
         else
           _appIdController.text = "";
-        if (state.value!.name != null)
-          _nameController.text = state.value!.name.toString();
+        if (state.value!.description != null)
+          _descriptionController.text = state.value!.description.toString();
         else
-          _nameController.text = "";
+          _descriptionController.text = "";
         if (state.value!.documentRenderer != null)
           _documentRendererSelectedRadioTile = state.value!.documentRenderer!.index;
         else
@@ -189,7 +189,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
 
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Name', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _nameController, keyboardType: TextInputType.text, validator: (_) => state is NameDocumentFormError ? state.message : null, hintText: null)
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Description', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _descriptionController, keyboardType: TextInputType.text, validator: (_) => state is DescriptionDocumentFormError ? state.message : null, hintText: null)
           );
 
 
@@ -303,7 +303,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
                           UpdateDocumentList(value: state.value!.copyWith(
                               documentID: state.value!.documentID, 
                               appId: state.value!.appId, 
-                              name: state.value!.name, 
+                              description: state.value!.description, 
                               documentRenderer: state.value!.documentRenderer, 
                               content: state.value!.content, 
                               padding: state.value!.padding, 
@@ -316,7 +316,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
                           AddDocumentList(value: DocumentModel(
                               documentID: state.value!.documentID, 
                               appId: state.value!.appId, 
-                              name: state.value!.name, 
+                              description: state.value!.description, 
                               documentRenderer: state.value!.documentRenderer, 
                               content: state.value!.content, 
                               padding: state.value!.padding, 
@@ -359,8 +359,8 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
   }
 
 
-  void _onNameChanged() {
-    _myFormBloc.add(ChangedDocumentName(value: _nameController.text));
+  void _onDescriptionChanged() {
+    _myFormBloc.add(ChangedDocumentDescription(value: _descriptionController.text));
   }
 
 
@@ -394,7 +394,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
   void dispose() {
     _documentIDController.dispose();
     _appIdController.dispose();
-    _nameController.dispose();
+    _descriptionController.dispose();
     _paddingController.dispose();
     super.dispose();
   }

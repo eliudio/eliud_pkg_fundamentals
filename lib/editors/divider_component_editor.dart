@@ -43,6 +43,7 @@ class DividerComponentEditorConstructor extends ComponentEditorConstructor {
         DividerModel(
           appId: app.documentID,
           documentID: newRandomKey(),
+          description: 'New divider',
           conditions: StorageConditionsModel(
               privilegeLevelRequired:
                   PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
@@ -140,14 +141,14 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
                             title: dialogField(
                               widget.app,
                               context,
-                              initialValue: dividerState.model.name,
+                              initialValue: dividerState.model.description,
                               valueChanged: (value) {
-                                dividerState.model.name = value;
+                                dividerState.model.description = value;
                               },
                               maxLines: 1,
                               decoration: const InputDecoration(
-                                hintText: 'Name',
-                                labelText: 'Name',
+                                hintText: 'Description',
+                                labelText: 'Description',
                               ),
                             )),
                       ]),

@@ -55,7 +55,7 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
         PresentationFormLoaded loaded = PresentationFormLoaded(value: PresentationModel(
                                                documentID: "",
                                  appId: "",
-                                 title: "",
+                                 description: "",
                                  bodyComponents: [],
                                  imageWidth: 0.0,
 
@@ -88,8 +88,8 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
 
         return;
       }
-      if (event is ChangedPresentationTitle) {
-        newValue = currentState.value!.copyWith(title: event.value);
+      if (event is ChangedPresentationDescription) {
+        newValue = currentState.value!.copyWith(description: event.value);
         yield SubmittablePresentationForm(value: newValue);
 
         return;
@@ -107,7 +107,7 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
           newValue = new PresentationModel(
                                  documentID: currentState.value!.documentID,
                                  appId: currentState.value!.appId,
-                                 title: currentState.value!.title,
+                                 description: currentState.value!.description,
                                  bodyComponents: currentState.value!.bodyComponents,
                                  image: null,
                                  imagePositionRelative: currentState.value!.imagePositionRelative,

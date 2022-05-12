@@ -79,7 +79,7 @@ class ComponentRegistry {
     Registry.registry()!.register(componentName: "simpleTexts", componentConstructor: SimpleTextComponentConstructorDefault());
     Registry.registry()!.addDropDownSupporter("tutorials", DropdownButtonComponentFactory());
     Registry.registry()!.register(componentName: "tutorials", componentConstructor: TutorialComponentConstructorDefault());
-    Registry.registry()!.addComponentSpec('eliud_pkg_fundamentals', [
+    Registry.registry()!.addComponentSpec('eliud_pkg_fundamentals', 'fundamentals', [
       ComponentSpec('booklets', BookletComponentConstructorDefault(), BookletComponentSelector(), BookletComponentEditorConstructor(), ), 
       ComponentSpec('decoratedContents', DecoratedContentComponentConstructorDefault(), DecoratedContentComponentSelector(), DecoratedContentComponentEditorConstructor(), ), 
       ComponentSpec('dividers', DividerComponentConstructorDefault(), DividerComponentSelector(), DividerComponentEditorConstructor(), ), 

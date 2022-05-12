@@ -95,15 +95,15 @@ class AppIdFaderFormError extends FaderFormError {
 }
 
 
-class NameFaderFormError extends FaderFormError { 
-  const NameFaderFormError({ String? message, FaderModel? value }): super(message: message, value: value);
+class DescriptionFaderFormError extends FaderFormError { 
+  const DescriptionFaderFormError({ String? message, FaderModel? value }): super(message: message, value: value);
 
   @override
   List<Object?> get props => [ message, value ];
 
   @override
   String toString() {
-    return '''NameFaderFormError {
+    return '''DescriptionFaderFormError {
       value: $value,
       message: $message,
     }''';

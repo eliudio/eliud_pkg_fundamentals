@@ -55,7 +55,7 @@ class FaderFormBloc extends Bloc<FaderFormEvent, FaderFormState> {
         FaderFormLoaded loaded = FaderFormLoaded(value: FaderModel(
                                                documentID: "",
                                  appId: "",
-                                 name: "",
+                                 description: "",
                                  animationMilliseconds: 0,
                                  imageSeconds: 0,
                                  items: [],
@@ -89,8 +89,8 @@ class FaderFormBloc extends Bloc<FaderFormEvent, FaderFormState> {
 
         return;
       }
-      if (event is ChangedFaderName) {
-        newValue = currentState.value!.copyWith(name: event.value);
+      if (event is ChangedFaderDescription) {
+        newValue = currentState.value!.copyWith(description: event.value);
         yield SubmittableFaderForm(value: newValue);
 
         return;

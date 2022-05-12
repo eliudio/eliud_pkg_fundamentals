@@ -126,7 +126,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
 
   final TextEditingController _documentIDController = TextEditingController();
   final TextEditingController _appIdController = TextEditingController();
-  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
   String? _image;
   int? _imagePositionRelativeSelectedRadioTile;
   int? _imageAlignmentSelectedRadioTile;
@@ -141,7 +141,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
     _myFormBloc = BlocProvider.of<PresentationFormBloc>(context);
     _documentIDController.addListener(_onDocumentIDChanged);
     _appIdController.addListener(_onAppIdChanged);
-    _titleController.addListener(_onTitleChanged);
+    _descriptionController.addListener(_onDescriptionChanged);
     _imagePositionRelativeSelectedRadioTile = 0;
     _imageAlignmentSelectedRadioTile = 0;
     _imageWidthController.addListener(_onImageWidthChanged);
@@ -164,10 +164,10 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
           _appIdController.text = state.value!.appId.toString();
         else
           _appIdController.text = "";
-        if (state.value!.title != null)
-          _titleController.text = state.value!.title.toString();
+        if (state.value!.description != null)
+          _descriptionController.text = state.value!.description.toString();
         else
-          _titleController.text = "";
+          _descriptionController.text = "";
         if (state.value!.image != null)
           _image= state.value!.image!.documentID;
         else
@@ -211,7 +211,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
 
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Title', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _titleController, keyboardType: TextInputType.text, validator: (_) => state is TitlePresentationFormError ? state.message : null, hintText: null)
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Description', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _descriptionController, keyboardType: TextInputType.text, validator: (_) => state is DescriptionPresentationFormError ? state.message : null, hintText: null)
           );
 
         children.add(
@@ -338,7 +338,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
                           UpdatePresentationList(value: state.value!.copyWith(
                               documentID: state.value!.documentID, 
                               appId: state.value!.appId, 
-                              title: state.value!.title, 
+                              description: state.value!.description, 
                               bodyComponents: state.value!.bodyComponents, 
                               image: state.value!.image, 
                               imagePositionRelative: state.value!.imagePositionRelative, 
@@ -351,7 +351,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
                           AddPresentationList(value: PresentationModel(
                               documentID: state.value!.documentID, 
                               appId: state.value!.appId, 
-                              title: state.value!.title, 
+                              description: state.value!.description, 
                               bodyComponents: state.value!.bodyComponents, 
                               image: state.value!.image, 
                               imagePositionRelative: state.value!.imagePositionRelative, 
@@ -394,8 +394,8 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
   }
 
 
-  void _onTitleChanged() {
-    _myFormBloc.add(ChangedPresentationTitle(value: _titleController.text));
+  void _onDescriptionChanged() {
+    _myFormBloc.add(ChangedPresentationDescription(value: _descriptionController.text));
   }
 
 
@@ -439,7 +439,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
   void dispose() {
     _documentIDController.dispose();
     _appIdController.dispose();
-    _titleController.dispose();
+    _descriptionController.dispose();
     _imageWidthController.dispose();
     super.dispose();
   }

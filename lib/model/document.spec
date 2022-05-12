@@ -1,12 +1,13 @@
 {
   "id": "Document",
   "packageName": "eliud_pkg_fundamentals",
+  "packageFriendlyName": "fundamentals",
   "isAppModel": true,
   "generate": {
     "generateComponent": true,
     "generateRepository": true,
     "generateCache": true,
-	"hasPersistentRepository": true,
+    "hasPersistentRepository": true,
     "generateFirestoreRepository": true,
     "generateRepositorySingleton": true,
     "generateModel": true,
@@ -36,10 +37,9 @@
       "group": "general"
     },
     {
-      "fieldName": "name",
-      "displayName": "Name",
+      "fieldName": "description",
+      "displayName": "Description",
       "fieldType": "String",
-      "iconName": "text_format",
       "group": "general"
     },
     {
@@ -120,8 +120,7 @@
     }
  ],
   "listFields": {
-    "title": "value.documentID != null ? Center(child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().textStyle().text(app, context, value.documentID!)) : Container()",
-    "subTitle": "value.name != null ? Center(child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().textStyle().text(app, context, value.name!)) : Container()"
+    "title": "value.description != null ? Center(child: text(app, context, value.description!)) : value.documentID != null ? Center(child: text(app, context, value.documentID!)) : Container()"
   },
   "depends": ["eliud_core"]
 }

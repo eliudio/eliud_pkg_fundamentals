@@ -49,6 +49,7 @@ class FaderComponentEditorConstructor extends ComponentEditorConstructor {
         FaderModel(
           appId: app.documentID,
           documentID: newRandomKey(),
+          description: 'New fader',
           conditions: StorageConditionsModel(
               privilegeLevelRequired:
                   PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
@@ -135,19 +136,20 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
                             leading: Icon(Icons.vpn_key),
                             title: text(widget.app, context,
                                 faderState.model.documentID!)),
-                      ]),
-                  topicContainer(widget.app, context,
-                      title: 'Condition',
-                      collapsible: true,
-                      collapsed: true,
-                      children: [
                         getListTile(context, widget.app,
-                            leading: Icon(Icons.security),
-                            title: ConditionsSimpleWidget(
-                              app: widget.app,
-                              value: faderState.model.conditions!,
-                              readOnly: faderState.model.items != null &&
-                                  faderState.model.items!.isNotEmpty,
+                            leading: Icon(Icons.description),
+                            title: dialogField(
+                              widget.app,
+                              context,
+                              initialValue: faderState.model.description,
+                              valueChanged: (value) {
+                                faderState.model.description = value;
+                              },
+                              maxLines: 1,
+                              decoration: const InputDecoration(
+                                hintText: 'Description',
+                                labelText: 'Description',
+                              ),
                             )),
                       ]),
                   topicContainer(widget.app, context,
@@ -198,6 +200,20 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
                       collapsed: true,
                       children: [
                         _images(context, faderState),
+                      ]),
+                  topicContainer(widget.app, context,
+                      title: 'Condition',
+                      collapsible: true,
+                      collapsed: true,
+                      children: [
+                        getListTile(context, widget.app,
+                            leading: Icon(Icons.security),
+                            title: ConditionsSimpleWidget(
+                              app: widget.app,
+                              value: faderState.model.conditions!,
+                              readOnly: faderState.model.items != null &&
+                                  faderState.model.items!.isNotEmpty,
+                            )),
                       ]),
                 ]);
           } else {

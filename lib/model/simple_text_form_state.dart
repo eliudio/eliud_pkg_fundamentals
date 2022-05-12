@@ -95,6 +95,22 @@ class AppIdSimpleTextFormError extends SimpleTextFormError {
 }
 
 
+class DescriptionSimpleTextFormError extends SimpleTextFormError { 
+  const DescriptionSimpleTextFormError({ String? message, SimpleTextModel? value }): super(message: message, value: value);
+
+  @override
+  List<Object?> get props => [ message, value ];
+
+  @override
+  String toString() {
+    return '''DescriptionSimpleTextFormError {
+      value: $value,
+      message: $message,
+    }''';
+  }
+}
+
+
 class TitleSimpleTextFormError extends SimpleTextFormError { 
   const TitleSimpleTextFormError({ String? message, SimpleTextModel? value }): super(message: message, value: value);
 

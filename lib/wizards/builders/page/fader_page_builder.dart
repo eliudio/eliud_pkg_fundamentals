@@ -125,7 +125,7 @@ class FaderPageBuilder extends PageBuilder {
         image: tablet));
     var model = FaderModel(
       documentID: constructDocumentId(uniqueId: uniqueId, documentId: componentId),
-      name: "Welcome fader",
+      description: "Welcome fader",
       animationMilliseconds: 1000,
       imageSeconds: 5,
       items: items,

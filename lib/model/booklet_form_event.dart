@@ -83,16 +83,16 @@ class ChangedBookletAppId extends BookletFormEvent {
   String toString() => 'ChangedBookletAppId{ value: $value }';
 }
 
-class ChangedBookletName extends BookletFormEvent {
+class ChangedBookletDescription extends BookletFormEvent {
   final String? value;
 
-  ChangedBookletName({this.value});
+  ChangedBookletDescription({this.value});
 
   @override
   List<Object?> get props => [ value ];
 
   @override
-  String toString() => 'ChangedBookletName{ value: $value }';
+  String toString() => 'ChangedBookletDescription{ value: $value }';
 }
 
 class ChangedBookletSections extends BookletFormEvent {

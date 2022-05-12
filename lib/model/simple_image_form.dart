@@ -126,7 +126,7 @@ class _MySimpleImageFormState extends State<MySimpleImageForm> {
 
   final TextEditingController _documentIDController = TextEditingController();
   final TextEditingController _appIdController = TextEditingController();
-  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
   String? _image;
 
 
@@ -138,7 +138,7 @@ class _MySimpleImageFormState extends State<MySimpleImageForm> {
     _myFormBloc = BlocProvider.of<SimpleImageFormBloc>(context);
     _documentIDController.addListener(_onDocumentIDChanged);
     _appIdController.addListener(_onAppIdChanged);
-    _titleController.addListener(_onTitleChanged);
+    _descriptionController.addListener(_onDescriptionChanged);
   }
 
   @override
@@ -158,10 +158,10 @@ class _MySimpleImageFormState extends State<MySimpleImageForm> {
           _appIdController.text = state.value!.appId.toString();
         else
           _appIdController.text = "";
-        if (state.value!.title != null)
-          _titleController.text = state.value!.title.toString();
+        if (state.value!.description != null)
+          _descriptionController.text = state.value!.description.toString();
         else
-          _titleController.text = "";
+          _descriptionController.text = "";
         if (state.value!.image != null)
           _image= state.value!.image!.documentID;
         else
@@ -193,7 +193,7 @@ class _MySimpleImageFormState extends State<MySimpleImageForm> {
 
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Title', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _titleController, keyboardType: TextInputType.text, validator: (_) => state is TitleSimpleImageFormError ? state.message : null, hintText: null)
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Description', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _descriptionController, keyboardType: TextInputType.text, validator: (_) => state is DescriptionSimpleImageFormError ? state.message : null, hintText: null)
           );
 
 
@@ -240,7 +240,7 @@ class _MySimpleImageFormState extends State<MySimpleImageForm> {
                           UpdateSimpleImageList(value: state.value!.copyWith(
                               documentID: state.value!.documentID, 
                               appId: state.value!.appId, 
-                              title: state.value!.title, 
+                              description: state.value!.description, 
                               image: state.value!.image, 
                               conditions: state.value!.conditions, 
                         )));
@@ -249,7 +249,7 @@ class _MySimpleImageFormState extends State<MySimpleImageForm> {
                           AddSimpleImageList(value: SimpleImageModel(
                               documentID: state.value!.documentID, 
                               appId: state.value!.appId, 
-                              title: state.value!.title, 
+                              description: state.value!.description, 
                               image: state.value!.image, 
                               conditions: state.value!.conditions, 
                           )));
@@ -288,8 +288,8 @@ class _MySimpleImageFormState extends State<MySimpleImageForm> {
   }
 
 
-  void _onTitleChanged() {
-    _myFormBloc.add(ChangedSimpleImageTitle(value: _titleController.text));
+  void _onDescriptionChanged() {
+    _myFormBloc.add(ChangedSimpleImageDescription(value: _descriptionController.text));
   }
 
 
@@ -306,7 +306,7 @@ class _MySimpleImageFormState extends State<MySimpleImageForm> {
   void dispose() {
     _documentIDController.dispose();
     _appIdController.dispose();
-    _titleController.dispose();
+    _descriptionController.dispose();
     super.dispose();
   }
 

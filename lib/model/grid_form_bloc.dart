@@ -55,7 +55,7 @@ class GridFormBloc extends Bloc<GridFormEvent, GridFormState> {
         GridFormLoaded loaded = GridFormLoaded(value: GridModel(
                                                documentID: "",
                                  appId: "",
-                                 title: "",
+                                 description: "",
                                  bodyComponents: [],
 
         ));
@@ -87,8 +87,8 @@ class GridFormBloc extends Bloc<GridFormEvent, GridFormState> {
 
         return;
       }
-      if (event is ChangedGridTitle) {
-        newValue = currentState.value!.copyWith(title: event.value);
+      if (event is ChangedGridDescription) {
+        newValue = currentState.value!.copyWith(description: event.value);
         yield SubmittableGridForm(value: newValue);
 
         return;
@@ -106,7 +106,7 @@ class GridFormBloc extends Bloc<GridFormEvent, GridFormState> {
           newValue = new GridModel(
                                  documentID: currentState.value!.documentID,
                                  appId: currentState.value!.appId,
-                                 title: currentState.value!.title,
+                                 description: currentState.value!.description,
                                  bodyComponents: currentState.value!.bodyComponents,
                                  gridView: null,
                                  conditions: currentState.value!.conditions,

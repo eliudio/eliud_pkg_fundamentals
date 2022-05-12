@@ -41,7 +41,7 @@ class GridBloc extends ExtEditorBaseBloc<GridModel, BodyComponentModel> {
   GridModel newInstance(StorageConditionsModel conditions) {
     return GridModel(
       appId: appId,
-      title: 'New grid',
+      description: 'New grid',
       documentID: newRandomKey(),
       conditions: conditions,
     );

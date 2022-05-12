@@ -38,20 +38,20 @@ import 'package:eliud_core/tools/random.dart';
 class SimpleImageModel {
   String? documentID;
   String? appId;
-  String? title;
+  String? description;
   PlatformMediumModel? image;
   StorageConditionsModel? conditions;
 
-  SimpleImageModel({this.documentID, this.appId, this.title, this.image, this.conditions, })  {
+  SimpleImageModel({this.documentID, this.appId, this.description, this.image, this.conditions, })  {
     assert(documentID != null);
   }
 
-  SimpleImageModel copyWith({String? documentID, String? appId, String? title, PlatformMediumModel? image, StorageConditionsModel? conditions, }) {
-    return SimpleImageModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, title: title ?? this.title, image: image ?? this.image, conditions: conditions ?? this.conditions, );
+  SimpleImageModel copyWith({String? documentID, String? appId, String? description, PlatformMediumModel? image, StorageConditionsModel? conditions, }) {
+    return SimpleImageModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, description: description ?? this.description, image: image ?? this.image, conditions: conditions ?? this.conditions, );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ appId.hashCode ^ title.hashCode ^ image.hashCode ^ conditions.hashCode;
+  int get hashCode => documentID.hashCode ^ appId.hashCode ^ description.hashCode ^ image.hashCode ^ conditions.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -60,19 +60,19 @@ class SimpleImageModel {
           runtimeType == other.runtimeType && 
           documentID == other.documentID &&
           appId == other.appId &&
-          title == other.title &&
+          description == other.description &&
           image == other.image &&
           conditions == other.conditions;
 
   @override
   String toString() {
-    return 'SimpleImageModel{documentID: $documentID, appId: $appId, title: $title, image: $image, conditions: $conditions}';
+    return 'SimpleImageModel{documentID: $documentID, appId: $appId, description: $description, image: $image, conditions: $conditions}';
   }
 
   SimpleImageEntity toEntity({String? appId}) {
     return SimpleImageEntity(
           appId: (appId != null) ? appId : null, 
-          title: (title != null) ? title : null, 
+          description: (description != null) ? description : null, 
           imageId: (image != null) ? image!.documentID : null, 
           conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
     );
@@ -84,7 +84,7 @@ class SimpleImageModel {
     return SimpleImageModel(
           documentID: documentID, 
           appId: entity.appId, 
-          title: entity.title, 
+          description: entity.description, 
           conditions: 
             await StorageConditionsModel.fromEntity(entity.conditions), 
     );
@@ -108,7 +108,7 @@ class SimpleImageModel {
     return SimpleImageModel(
           documentID: documentID, 
           appId: entity.appId, 
-          title: entity.title, 
+          description: entity.description, 
           image: imageHolder, 
           conditions: 
             await StorageConditionsModel.fromEntityPlus(entity.conditions, appId: appId), 

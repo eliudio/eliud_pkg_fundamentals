@@ -126,6 +126,7 @@ class _MySimpleTextFormState extends State<MySimpleTextForm> {
 
   final TextEditingController _documentIDController = TextEditingController();
   final TextEditingController _appIdController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _textController = TextEditingController();
   int? _textAlignSelectedRadioTile;
@@ -139,6 +140,7 @@ class _MySimpleTextFormState extends State<MySimpleTextForm> {
     _myFormBloc = BlocProvider.of<SimpleTextFormBloc>(context);
     _documentIDController.addListener(_onDocumentIDChanged);
     _appIdController.addListener(_onAppIdChanged);
+    _descriptionController.addListener(_onDescriptionChanged);
     _titleController.addListener(_onTitleChanged);
     _textController.addListener(_onTextChanged);
     _textAlignSelectedRadioTile = 0;
@@ -161,6 +163,10 @@ class _MySimpleTextFormState extends State<MySimpleTextForm> {
           _appIdController.text = state.value!.appId.toString();
         else
           _appIdController.text = "";
+        if (state.value!.description != null)
+          _descriptionController.text = state.value!.description.toString();
+        else
+          _descriptionController.text = "";
         if (state.value!.title != null)
           _titleController.text = state.value!.title.toString();
         else
@@ -225,6 +231,11 @@ class _MySimpleTextFormState extends State<MySimpleTextForm> {
 
         children.add(
 
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Description', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _descriptionController, keyboardType: TextInputType.text, validator: (_) => state is DescriptionSimpleTextFormError ? state.message : null, hintText: null)
+          );
+
+        children.add(
+
                   StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Title', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _titleController, keyboardType: TextInputType.text, validator: (_) => state is TitleSimpleTextFormError ? state.message : null, hintText: null)
           );
 
@@ -272,6 +283,7 @@ class _MySimpleTextFormState extends State<MySimpleTextForm> {
                           UpdateSimpleTextList(value: state.value!.copyWith(
                               documentID: state.value!.documentID, 
                               appId: state.value!.appId, 
+                              description: state.value!.description, 
                               title: state.value!.title, 
                               text: state.value!.text, 
                               conditions: state.value!.conditions, 
@@ -282,6 +294,7 @@ class _MySimpleTextFormState extends State<MySimpleTextForm> {
                           AddSimpleTextList(value: SimpleTextModel(
                               documentID: state.value!.documentID, 
                               appId: state.value!.appId, 
+                              description: state.value!.description, 
                               title: state.value!.title, 
                               text: state.value!.text, 
                               conditions: state.value!.conditions, 
@@ -322,6 +335,11 @@ class _MySimpleTextFormState extends State<MySimpleTextForm> {
   }
 
 
+  void _onDescriptionChanged() {
+    _myFormBloc.add(ChangedSimpleTextDescription(value: _descriptionController.text));
+  }
+
+
   void _onTitleChanged() {
     _myFormBloc.add(ChangedSimpleTextTitle(value: _titleController.text));
   }
@@ -345,6 +363,7 @@ class _MySimpleTextFormState extends State<MySimpleTextForm> {
   void dispose() {
     _documentIDController.dispose();
     _appIdController.dispose();
+    _descriptionController.dispose();
     _titleController.dispose();
     _textController.dispose();
     super.dispose();

@@ -83,16 +83,16 @@ class ChangedDecoratedContentAppId extends DecoratedContentFormEvent {
   String toString() => 'ChangedDecoratedContentAppId{ value: $value }';
 }
 
-class ChangedDecoratedContentName extends DecoratedContentFormEvent {
+class ChangedDecoratedContentDescription extends DecoratedContentFormEvent {
   final String? value;
 
-  ChangedDecoratedContentName({this.value});
+  ChangedDecoratedContentDescription({this.value});
 
   @override
   List<Object?> get props => [ value ];
 
   @override
-  String toString() => 'ChangedDecoratedContentName{ value: $value }';
+  String toString() => 'ChangedDecoratedContentDescription{ value: $value }';
 }
 
 class ChangedDecoratedContentDecoratingComponentName extends DecoratedContentFormEvent {

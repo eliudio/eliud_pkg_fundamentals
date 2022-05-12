@@ -55,6 +55,7 @@ class SimpleTextFormBloc extends Bloc<SimpleTextFormEvent, SimpleTextFormState> 
         SimpleTextFormLoaded loaded = SimpleTextFormLoaded(value: SimpleTextModel(
                                                documentID: "",
                                  appId: "",
+                                 description: "",
                                  title: "",
                                  text: "",
 
@@ -84,6 +85,12 @@ class SimpleTextFormBloc extends Bloc<SimpleTextFormEvent, SimpleTextFormState> 
         } else {
           yield SubmittableSimpleTextForm(value: newValue);
         }
+
+        return;
+      }
+      if (event is ChangedSimpleTextDescription) {
+        newValue = currentState.value!.copyWith(description: event.value);
+        yield SubmittableSimpleTextForm(value: newValue);
 
         return;
       }

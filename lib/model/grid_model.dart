@@ -39,23 +39,23 @@ import 'package:eliud_core/tools/random.dart';
 class GridModel {
   String? documentID;
   String? appId;
-  String? title;
+  String? description;
   List<BodyComponentModel>? bodyComponents;
 
   // Specific gridview
   GridViewModel? gridView;
   StorageConditionsModel? conditions;
 
-  GridModel({this.documentID, this.appId, this.title, this.bodyComponents, this.gridView, this.conditions, })  {
+  GridModel({this.documentID, this.appId, this.description, this.bodyComponents, this.gridView, this.conditions, })  {
     assert(documentID != null);
   }
 
-  GridModel copyWith({String? documentID, String? appId, String? title, List<BodyComponentModel>? bodyComponents, GridViewModel? gridView, StorageConditionsModel? conditions, }) {
-    return GridModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, title: title ?? this.title, bodyComponents: bodyComponents ?? this.bodyComponents, gridView: gridView ?? this.gridView, conditions: conditions ?? this.conditions, );
+  GridModel copyWith({String? documentID, String? appId, String? description, List<BodyComponentModel>? bodyComponents, GridViewModel? gridView, StorageConditionsModel? conditions, }) {
+    return GridModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, description: description ?? this.description, bodyComponents: bodyComponents ?? this.bodyComponents, gridView: gridView ?? this.gridView, conditions: conditions ?? this.conditions, );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ appId.hashCode ^ title.hashCode ^ bodyComponents.hashCode ^ gridView.hashCode ^ conditions.hashCode;
+  int get hashCode => documentID.hashCode ^ appId.hashCode ^ description.hashCode ^ bodyComponents.hashCode ^ gridView.hashCode ^ conditions.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -64,7 +64,7 @@ class GridModel {
           runtimeType == other.runtimeType && 
           documentID == other.documentID &&
           appId == other.appId &&
-          title == other.title &&
+          description == other.description &&
           ListEquality().equals(bodyComponents, other.bodyComponents) &&
           gridView == other.gridView &&
           conditions == other.conditions;
@@ -73,13 +73,13 @@ class GridModel {
   String toString() {
     String bodyComponentsCsv = (bodyComponents == null) ? '' : bodyComponents!.join(', ');
 
-    return 'GridModel{documentID: $documentID, appId: $appId, title: $title, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, gridView: $gridView, conditions: $conditions}';
+    return 'GridModel{documentID: $documentID, appId: $appId, description: $description, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, gridView: $gridView, conditions: $conditions}';
   }
 
   GridEntity toEntity({String? appId}) {
     return GridEntity(
           appId: (appId != null) ? appId : null, 
-          title: (title != null) ? title : null, 
+          description: (description != null) ? description : null, 
           bodyComponents: (bodyComponents != null) ? bodyComponents
             !.map((item) => item.toEntity(appId: appId))
             .toList() : null, 
@@ -94,7 +94,7 @@ class GridModel {
     return GridModel(
           documentID: documentID, 
           appId: entity.appId, 
-          title: entity.title, 
+          description: entity.description, 
           bodyComponents: 
             entity.bodyComponents == null ? null : List<BodyComponentModel>.from(await Future.wait(entity. bodyComponents
             !.map((item) {
@@ -125,7 +125,7 @@ class GridModel {
     return GridModel(
           documentID: documentID, 
           appId: entity.appId, 
-          title: entity.title, 
+          description: entity.description, 
           bodyComponents: 
             entity. bodyComponents == null ? null : List<BodyComponentModel>.from(await Future.wait(entity. bodyComponents
             !.map((item) {

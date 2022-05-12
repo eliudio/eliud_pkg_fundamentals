@@ -24,20 +24,20 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 class BookletEntity {
   final String? appId;
-  final String? name;
+  final String? description;
   final List<SectionEntity>? sections;
   final StorageConditionsEntity? conditions;
 
-  BookletEntity({this.appId, this.name, this.sections, this.conditions, });
+  BookletEntity({this.appId, this.description, this.sections, this.conditions, });
 
 
-  List<Object?> get props => [appId, name, sections, conditions, ];
+  List<Object?> get props => [appId, description, sections, conditions, ];
 
   @override
   String toString() {
     String sectionsCsv = (sections == null) ? '' : sections!.join(', ');
 
-    return 'BookletEntity{appId: $appId, name: $name, sections: Section[] { $sectionsCsv }, conditions: $conditions}';
+    return 'BookletEntity{appId: $appId, description: $description, sections: Section[] { $sectionsCsv }, conditions: $conditions}';
   }
 
   static BookletEntity? fromMap(Object? o) {
@@ -59,7 +59,7 @@ class BookletEntity {
 
     return BookletEntity(
       appId: map['appId'], 
-      name: map['name'], 
+      description: map['description'], 
       sections: sectionsList, 
       conditions: conditionsFromMap, 
     );
@@ -76,8 +76,8 @@ class BookletEntity {
     Map<String, Object?> theDocument = HashMap();
     if (appId != null) theDocument["appId"] = appId;
       else theDocument["appId"] = null;
-    if (name != null) theDocument["name"] = name;
-      else theDocument["name"] = null;
+    if (description != null) theDocument["description"] = description;
+      else theDocument["description"] = null;
     if (sections != null) theDocument["sections"] = sectionsListMap;
       else theDocument["sections"] = null;
     if (conditions != null) theDocument["conditions"] = conditionsMap;

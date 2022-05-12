@@ -24,7 +24,7 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 class PresentationEntity {
   final String? appId;
-  final String? title;
+  final String? description;
   final List<BodyComponentEntity>? bodyComponents;
   final String? imageId;
   final int? imagePositionRelative;
@@ -32,16 +32,16 @@ class PresentationEntity {
   final double? imageWidth;
   final StorageConditionsEntity? conditions;
 
-  PresentationEntity({this.appId, this.title, this.bodyComponents, this.imageId, this.imagePositionRelative, this.imageAlignment, this.imageWidth, this.conditions, });
+  PresentationEntity({this.appId, this.description, this.bodyComponents, this.imageId, this.imagePositionRelative, this.imageAlignment, this.imageWidth, this.conditions, });
 
 
-  List<Object?> get props => [appId, title, bodyComponents, imageId, imagePositionRelative, imageAlignment, imageWidth, conditions, ];
+  List<Object?> get props => [appId, description, bodyComponents, imageId, imagePositionRelative, imageAlignment, imageWidth, conditions, ];
 
   @override
   String toString() {
     String bodyComponentsCsv = (bodyComponents == null) ? '' : bodyComponents!.join(', ');
 
-    return 'PresentationEntity{appId: $appId, title: $title, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, imageId: $imageId, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth, conditions: $conditions}';
+    return 'PresentationEntity{appId: $appId, description: $description, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, imageId: $imageId, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth, conditions: $conditions}';
   }
 
   static PresentationEntity? fromMap(Object? o) {
@@ -63,7 +63,7 @@ class PresentationEntity {
 
     return PresentationEntity(
       appId: map['appId'], 
-      title: map['title'], 
+      description: map['description'], 
       bodyComponents: bodyComponentsList, 
       imageId: map['imageId'], 
       imagePositionRelative: map['imagePositionRelative'], 
@@ -84,8 +84,8 @@ class PresentationEntity {
     Map<String, Object?> theDocument = HashMap();
     if (appId != null) theDocument["appId"] = appId;
       else theDocument["appId"] = null;
-    if (title != null) theDocument["title"] = title;
-      else theDocument["title"] = null;
+    if (description != null) theDocument["description"] = description;
+      else theDocument["description"] = null;
     if (bodyComponents != null) theDocument["bodyComponents"] = bodyComponentsListMap;
       else theDocument["bodyComponents"] = null;
     if (imageId != null) theDocument["imageId"] = imageId;

@@ -39,6 +39,7 @@ class FaderBloc extends ExtEditorBaseBloc<FaderModel, ListedItemModel> {
   FaderModel newInstance(StorageConditionsModel conditions) {
     return FaderModel(
       appId: appId,
+      description: 'New fader',
       documentID: newRandomKey(),
       animationMilliseconds: 1000,
       imageSeconds: 1,

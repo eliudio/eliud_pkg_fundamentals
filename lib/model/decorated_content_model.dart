@@ -54,7 +54,7 @@ DecorationComponentPosition toDecorationComponentPosition(int? index) {
 class DecoratedContentModel {
   String? documentID;
   String? appId;
-  String? name;
+  String? description;
 
   // The component name of the decoration
   String? decoratingComponentName;
@@ -71,16 +71,16 @@ class DecoratedContentModel {
   double? percentageDecorationVisible;
   StorageConditionsModel? conditions;
 
-  DecoratedContentModel({this.documentID, this.appId, this.name, this.decoratingComponentName, this.decoratingComponentId, this.contentComponentName, this.contentComponentId, this.decorationComponentPosition, this.percentageDecorationVisible, this.conditions, })  {
+  DecoratedContentModel({this.documentID, this.appId, this.description, this.decoratingComponentName, this.decoratingComponentId, this.contentComponentName, this.contentComponentId, this.decorationComponentPosition, this.percentageDecorationVisible, this.conditions, })  {
     assert(documentID != null);
   }
 
-  DecoratedContentModel copyWith({String? documentID, String? appId, String? name, String? decoratingComponentName, String? decoratingComponentId, String? contentComponentName, String? contentComponentId, DecorationComponentPosition? decorationComponentPosition, double? percentageDecorationVisible, StorageConditionsModel? conditions, }) {
-    return DecoratedContentModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, name: name ?? this.name, decoratingComponentName: decoratingComponentName ?? this.decoratingComponentName, decoratingComponentId: decoratingComponentId ?? this.decoratingComponentId, contentComponentName: contentComponentName ?? this.contentComponentName, contentComponentId: contentComponentId ?? this.contentComponentId, decorationComponentPosition: decorationComponentPosition ?? this.decorationComponentPosition, percentageDecorationVisible: percentageDecorationVisible ?? this.percentageDecorationVisible, conditions: conditions ?? this.conditions, );
+  DecoratedContentModel copyWith({String? documentID, String? appId, String? description, String? decoratingComponentName, String? decoratingComponentId, String? contentComponentName, String? contentComponentId, DecorationComponentPosition? decorationComponentPosition, double? percentageDecorationVisible, StorageConditionsModel? conditions, }) {
+    return DecoratedContentModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, description: description ?? this.description, decoratingComponentName: decoratingComponentName ?? this.decoratingComponentName, decoratingComponentId: decoratingComponentId ?? this.decoratingComponentId, contentComponentName: contentComponentName ?? this.contentComponentName, contentComponentId: contentComponentId ?? this.contentComponentId, decorationComponentPosition: decorationComponentPosition ?? this.decorationComponentPosition, percentageDecorationVisible: percentageDecorationVisible ?? this.percentageDecorationVisible, conditions: conditions ?? this.conditions, );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ appId.hashCode ^ name.hashCode ^ decoratingComponentName.hashCode ^ decoratingComponentId.hashCode ^ contentComponentName.hashCode ^ contentComponentId.hashCode ^ decorationComponentPosition.hashCode ^ percentageDecorationVisible.hashCode ^ conditions.hashCode;
+  int get hashCode => documentID.hashCode ^ appId.hashCode ^ description.hashCode ^ decoratingComponentName.hashCode ^ decoratingComponentId.hashCode ^ contentComponentName.hashCode ^ contentComponentId.hashCode ^ decorationComponentPosition.hashCode ^ percentageDecorationVisible.hashCode ^ conditions.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -89,7 +89,7 @@ class DecoratedContentModel {
           runtimeType == other.runtimeType && 
           documentID == other.documentID &&
           appId == other.appId &&
-          name == other.name &&
+          description == other.description &&
           decoratingComponentName == other.decoratingComponentName &&
           decoratingComponentId == other.decoratingComponentId &&
           contentComponentName == other.contentComponentName &&
@@ -100,13 +100,13 @@ class DecoratedContentModel {
 
   @override
   String toString() {
-    return 'DecoratedContentModel{documentID: $documentID, appId: $appId, name: $name, decoratingComponentName: $decoratingComponentName, decoratingComponentId: $decoratingComponentId, contentComponentName: $contentComponentName, contentComponentId: $contentComponentId, decorationComponentPosition: $decorationComponentPosition, percentageDecorationVisible: $percentageDecorationVisible, conditions: $conditions}';
+    return 'DecoratedContentModel{documentID: $documentID, appId: $appId, description: $description, decoratingComponentName: $decoratingComponentName, decoratingComponentId: $decoratingComponentId, contentComponentName: $contentComponentName, contentComponentId: $contentComponentId, decorationComponentPosition: $decorationComponentPosition, percentageDecorationVisible: $percentageDecorationVisible, conditions: $conditions}';
   }
 
   DecoratedContentEntity toEntity({String? appId}) {
     return DecoratedContentEntity(
           appId: (appId != null) ? appId : null, 
-          name: (name != null) ? name : null, 
+          description: (description != null) ? description : null, 
           decoratingComponentName: (decoratingComponentName != null) ? decoratingComponentName : null, 
           decoratingComponentId: (decoratingComponentId != null) ? decoratingComponentId : null, 
           contentComponentName: (contentComponentName != null) ? contentComponentName : null, 
@@ -123,7 +123,7 @@ class DecoratedContentModel {
     return DecoratedContentModel(
           documentID: documentID, 
           appId: entity.appId, 
-          name: entity.name, 
+          description: entity.description, 
           decoratingComponentName: entity.decoratingComponentName, 
           decoratingComponentId: entity.decoratingComponentId, 
           contentComponentName: entity.contentComponentName, 
@@ -142,7 +142,7 @@ class DecoratedContentModel {
     return DecoratedContentModel(
           documentID: documentID, 
           appId: entity.appId, 
-          name: entity.name, 
+          description: entity.description, 
           decoratingComponentName: entity.decoratingComponentName, 
           decoratingComponentId: entity.decoratingComponentId, 
           contentComponentName: entity.contentComponentName, 

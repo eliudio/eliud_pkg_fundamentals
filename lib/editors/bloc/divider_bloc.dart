@@ -16,7 +16,7 @@ class DividerBloc extends EditorBaseBloc<DividerModel> {
         documentID: newRandomKey(),
         conditions: conditions,
         height: 1,
-        name: 'new divider');
+        description: 'new divider');
   }
 
   @override

@@ -51,7 +51,7 @@ DocumentRenderer toDocumentRenderer(int? index) {
 class DocumentModel {
   String? documentID;
   String? appId;
-  String? name;
+  String? description;
 
   // Document renderer. Different renderers offer different functionality
   DocumentRenderer? documentRenderer;
@@ -65,16 +65,16 @@ class DocumentModel {
   BackgroundModel? background;
   StorageConditionsModel? conditions;
 
-  DocumentModel({this.documentID, this.appId, this.name, this.documentRenderer, this.content, this.padding, this.images, this.background, this.conditions, })  {
+  DocumentModel({this.documentID, this.appId, this.description, this.documentRenderer, this.content, this.padding, this.images, this.background, this.conditions, })  {
     assert(documentID != null);
   }
 
-  DocumentModel copyWith({String? documentID, String? appId, String? name, DocumentRenderer? documentRenderer, String? content, double? padding, List<DocumentItemModel>? images, BackgroundModel? background, StorageConditionsModel? conditions, }) {
-    return DocumentModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, name: name ?? this.name, documentRenderer: documentRenderer ?? this.documentRenderer, content: content ?? this.content, padding: padding ?? this.padding, images: images ?? this.images, background: background ?? this.background, conditions: conditions ?? this.conditions, );
+  DocumentModel copyWith({String? documentID, String? appId, String? description, DocumentRenderer? documentRenderer, String? content, double? padding, List<DocumentItemModel>? images, BackgroundModel? background, StorageConditionsModel? conditions, }) {
+    return DocumentModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, description: description ?? this.description, documentRenderer: documentRenderer ?? this.documentRenderer, content: content ?? this.content, padding: padding ?? this.padding, images: images ?? this.images, background: background ?? this.background, conditions: conditions ?? this.conditions, );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ appId.hashCode ^ name.hashCode ^ documentRenderer.hashCode ^ content.hashCode ^ padding.hashCode ^ images.hashCode ^ background.hashCode ^ conditions.hashCode;
+  int get hashCode => documentID.hashCode ^ appId.hashCode ^ description.hashCode ^ documentRenderer.hashCode ^ content.hashCode ^ padding.hashCode ^ images.hashCode ^ background.hashCode ^ conditions.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -83,7 +83,7 @@ class DocumentModel {
           runtimeType == other.runtimeType && 
           documentID == other.documentID &&
           appId == other.appId &&
-          name == other.name &&
+          description == other.description &&
           documentRenderer == other.documentRenderer &&
           content == other.content &&
           padding == other.padding &&
@@ -95,13 +95,13 @@ class DocumentModel {
   String toString() {
     String imagesCsv = (images == null) ? '' : images!.join(', ');
 
-    return 'DocumentModel{documentID: $documentID, appId: $appId, name: $name, documentRenderer: $documentRenderer, content: $content, padding: $padding, images: DocumentItem[] { $imagesCsv }, background: $background, conditions: $conditions}';
+    return 'DocumentModel{documentID: $documentID, appId: $appId, description: $description, documentRenderer: $documentRenderer, content: $content, padding: $padding, images: DocumentItem[] { $imagesCsv }, background: $background, conditions: $conditions}';
   }
 
   DocumentEntity toEntity({String? appId}) {
     return DocumentEntity(
           appId: (appId != null) ? appId : null, 
-          name: (name != null) ? name : null, 
+          description: (description != null) ? description : null, 
           documentRenderer: (documentRenderer != null) ? documentRenderer!.index : null, 
           content: (content != null) ? content : null, 
           padding: (padding != null) ? padding : null, 
@@ -119,7 +119,7 @@ class DocumentModel {
     return DocumentModel(
           documentID: documentID, 
           appId: entity.appId, 
-          name: entity.name, 
+          description: entity.description, 
           documentRenderer: toDocumentRenderer(entity.documentRenderer), 
           content: entity.content, 
           padding: entity.padding, 
@@ -144,7 +144,7 @@ class DocumentModel {
     return DocumentModel(
           documentID: documentID, 
           appId: entity.appId, 
-          name: entity.name, 
+          description: entity.description, 
           documentRenderer: toDocumentRenderer(entity.documentRenderer), 
           content: entity.content, 
           padding: entity.padding, 

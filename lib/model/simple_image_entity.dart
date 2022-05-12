@@ -24,18 +24,18 @@ import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 class SimpleImageEntity {
   final String? appId;
-  final String? title;
+  final String? description;
   final String? imageId;
   final StorageConditionsEntity? conditions;
 
-  SimpleImageEntity({this.appId, this.title, this.imageId, this.conditions, });
+  SimpleImageEntity({this.appId, this.description, this.imageId, this.conditions, });
 
 
-  List<Object?> get props => [appId, title, imageId, conditions, ];
+  List<Object?> get props => [appId, description, imageId, conditions, ];
 
   @override
   String toString() {
-    return 'SimpleImageEntity{appId: $appId, title: $title, imageId: $imageId, conditions: $conditions}';
+    return 'SimpleImageEntity{appId: $appId, description: $description, imageId: $imageId, conditions: $conditions}';
   }
 
   static SimpleImageEntity? fromMap(Object? o) {
@@ -49,7 +49,7 @@ class SimpleImageEntity {
 
     return SimpleImageEntity(
       appId: map['appId'], 
-      title: map['title'], 
+      description: map['description'], 
       imageId: map['imageId'], 
       conditions: conditionsFromMap, 
     );
@@ -63,8 +63,8 @@ class SimpleImageEntity {
     Map<String, Object?> theDocument = HashMap();
     if (appId != null) theDocument["appId"] = appId;
       else theDocument["appId"] = null;
-    if (title != null) theDocument["title"] = title;
-      else theDocument["title"] = null;
+    if (description != null) theDocument["description"] = description;
+      else theDocument["description"] = null;
     if (imageId != null) theDocument["imageId"] = imageId;
       else theDocument["imageId"] = null;
     if (conditions != null) theDocument["conditions"] = conditionsMap;

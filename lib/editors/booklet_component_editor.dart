@@ -50,6 +50,7 @@ class BookletComponentEditorConstructor
         BookletModel(
           appId: app.documentID,
           documentID: newRandomKey(),
+          description: 'New booklet',
           conditions: StorageConditionsModel(
               privilegeLevelRequired:
                   PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
@@ -151,14 +152,14 @@ class _BookletComponentEditorState
                             title: dialogField(
                               widget.app,
                               context,
-                              initialValue: bookletState.model.name,
+                              initialValue: bookletState.model.description,
                               valueChanged: (value) {
-                                bookletState.model.name = value;
+                                bookletState.model.description = value;
                               },
                               maxLines: 1,
                               decoration: const InputDecoration(
-                                hintText: 'Name',
-                                labelText: 'Name',
+                                hintText: 'Description',
+                                labelText: 'Description',
                               ),
                             )),
                       ]),

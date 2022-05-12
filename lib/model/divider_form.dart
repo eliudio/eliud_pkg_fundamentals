@@ -126,7 +126,7 @@ class _MyDividerFormState extends State<MyDividerForm> {
 
   final TextEditingController _documentIDController = TextEditingController();
   final TextEditingController _appIdController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _heightController = TextEditingController();
   final TextEditingController _thicknessController = TextEditingController();
   final TextEditingController _indentController = TextEditingController();
@@ -141,7 +141,7 @@ class _MyDividerFormState extends State<MyDividerForm> {
     _myFormBloc = BlocProvider.of<DividerFormBloc>(context);
     _documentIDController.addListener(_onDocumentIDChanged);
     _appIdController.addListener(_onAppIdChanged);
-    _nameController.addListener(_onNameChanged);
+    _descriptionController.addListener(_onDescriptionChanged);
     _heightController.addListener(_onHeightChanged);
     _thicknessController.addListener(_onThicknessChanged);
     _indentController.addListener(_onIndentChanged);
@@ -165,10 +165,10 @@ class _MyDividerFormState extends State<MyDividerForm> {
           _appIdController.text = state.value!.appId.toString();
         else
           _appIdController.text = "";
-        if (state.value!.name != null)
-          _nameController.text = state.value!.name.toString();
+        if (state.value!.description != null)
+          _descriptionController.text = state.value!.description.toString();
         else
-          _nameController.text = "";
+          _descriptionController.text = "";
         if (state.value!.height != null)
           _heightController.text = state.value!.height.toString();
         else
@@ -201,7 +201,7 @@ class _MyDividerFormState extends State<MyDividerForm> {
 
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Name', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _nameController, keyboardType: TextInputType.text, validator: (_) => state is NameDividerFormError ? state.message : null, hintText: null)
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Description', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _descriptionController, keyboardType: TextInputType.text, validator: (_) => state is DescriptionDividerFormError ? state.message : null, hintText: null)
           );
 
 
@@ -268,7 +268,7 @@ class _MyDividerFormState extends State<MyDividerForm> {
                           UpdateDividerList(value: state.value!.copyWith(
                               documentID: state.value!.documentID, 
                               appId: state.value!.appId, 
-                              name: state.value!.name, 
+                              description: state.value!.description, 
                               color: state.value!.color, 
                               height: state.value!.height, 
                               thickness: state.value!.thickness, 
@@ -281,7 +281,7 @@ class _MyDividerFormState extends State<MyDividerForm> {
                           AddDividerList(value: DividerModel(
                               documentID: state.value!.documentID, 
                               appId: state.value!.appId, 
-                              name: state.value!.name, 
+                              description: state.value!.description, 
                               color: state.value!.color, 
                               height: state.value!.height, 
                               thickness: state.value!.thickness, 
@@ -324,8 +324,8 @@ class _MyDividerFormState extends State<MyDividerForm> {
   }
 
 
-  void _onNameChanged() {
-    _myFormBloc.add(ChangedDividerName(value: _nameController.text));
+  void _onDescriptionChanged() {
+    _myFormBloc.add(ChangedDividerDescription(value: _descriptionController.text));
   }
 
 
@@ -360,7 +360,7 @@ class _MyDividerFormState extends State<MyDividerForm> {
   void dispose() {
     _documentIDController.dispose();
     _appIdController.dispose();
-    _nameController.dispose();
+    _descriptionController.dispose();
     _heightController.dispose();
     _thicknessController.dispose();
     _indentController.dispose();
