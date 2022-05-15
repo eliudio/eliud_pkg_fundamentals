@@ -94,9 +94,11 @@ class DocumentRendererTool {
         ExtendedDocumentParameterProcessor(context,app,
             images: images);
     return Container(
-        clipBehavior: (bdm == null) ? Clip.none : Clip.hardEdge,
+        clipBehavior: BoxDecorationHelper.determineClipBehaviour(app, memberModel, bdm),
         child: _rendered(app, context, documentRenderer,
             documentParameterProcessor.process(document)),
+        margin: BoxDecorationHelper.determineMargin(app, memberModel, bdm),
+        padding: BoxDecorationHelper.determinePadding(app, memberModel, bdm),
         decoration: BoxDecorationHelper.boxDecoration(app, memberModel, bdm));
   }
 }
