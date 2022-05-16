@@ -392,19 +392,21 @@ class _DocumentComponentEditorState extends State<DocumentComponentEditor> {
     if (_progress != null) {
       return progressIndicatorWithValue(widget.app, context, value: _progress!);
     } else {
-      return PopupMenuButton<int>(
+      return popupMenuButton<int>(
+          widget.app, context,
           child: Icon(Icons.add),
-          elevation: 10,
           itemBuilder: (context) => [
                 if (Registry.registry()!.getMediumApi().hasCamera())
-                  PopupMenuItem(
+                  popupMenuItem(
+                    widget.app, context,
                     value: 0,
-                    child: text(widget.app, context, 'Take photo'),
+                    label: 'Take photo',
                   ),
-                PopupMenuItem(
-                  value: 1,
-                  child: text(widget.app, context, 'Upload image'),
-                ),
+                  popupMenuItem(
+                    widget.app, context,
+                        value: 1,
+                        label: 'Upload image',
+                  ),
               ],
           onSelected: (value) async {
             if (value == 0) {
