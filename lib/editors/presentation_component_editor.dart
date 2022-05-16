@@ -2,6 +2,7 @@ import 'package:eliud_core/core/blocs/access/state/access_determined.dart';
 import 'package:eliud_core/core/blocs/access/state/access_state.dart';
 import 'package:eliud_core/core/editor/ext_editor_base_bloc/ext_editor_base_event.dart';
 import 'package:eliud_core/core/editor/ext_editor_base_bloc/ext_editor_base_state.dart';
+import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/body_component_model.dart';
 import 'package:eliud_core/model/storage_conditions_model.dart';
@@ -14,6 +15,7 @@ import 'package:eliud_core/style/frontend/has_list_tile.dart';
 import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/tools/component/component_spec.dart';
+import 'package:eliud_core/tools/component_title_helper.dart';
 import 'package:eliud_core/tools/helpers/parse_helper.dart';
 import 'package:eliud_core/tools/random.dart';
 import 'package:eliud_core/tools/rgb_formfield.dart';
@@ -247,7 +249,7 @@ class _PresentationComponentEditorState
     List<BodyComponentModel> items =
         state.model.bodyComponents != null ? state.model.bodyComponents! : [];
     return Container(
-      height: 150,
+      height: 170,
       child: ListView(shrinkWrap: true, physics: ScrollPhysics(), children: [
         Container(
             height: 100,
@@ -261,14 +263,7 @@ class _PresentationComponentEditorState
                   return getListTile(
                     context,
                     widget.app,
-                    title: text(
-                        widget.app,
-                        context,
-                        (value.componentId ?? 'no label') +
-                            ' - ' +
-                            (value.componentName ?? ' no component name') +
-                            ' - ' +
-                            (value.componentId ?? ' no component id')),
+                    title: ComponentTitleHelper.title(context, widget.app, value.componentName ?? '?', value.componentId ?? '?'),
                     trailing: popupMenuButton<int>(
                         widget.app, context,
                         child: Icon(Icons.more_vert),
