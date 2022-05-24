@@ -51,68 +51,52 @@ class SimpleImageFormBloc extends Bloc<SimpleImageFormEvent, SimpleImageFormStat
   Stream<SimpleImageFormState> mapEventToState(SimpleImageFormEvent event) async* {
     final currentState = state;
     if (currentState is SimpleImageFormUninitialized) {
-      if (event is InitialiseNewSimpleImageFormEvent) {
+      on <InitialiseNewSimpleImageFormEvent> ((event, emit) {
         SimpleImageFormLoaded loaded = SimpleImageFormLoaded(value: SimpleImageModel(
                                                documentID: "",
                                  appId: "",
                                  description: "",
 
         ));
-        yield loaded;
-        return;
-
-      }
+        emit(loaded);
+      });
 
 
       if (event is InitialiseSimpleImageFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
         SimpleImageFormLoaded loaded = SimpleImageFormLoaded(value: await simpleImageRepository(appId: appId)!.get(event.value!.documentID));
-        yield loaded;
-        return;
+        emit(loaded);
       } else if (event is InitialiseSimpleImageFormNoLoadEvent) {
         SimpleImageFormLoaded loaded = SimpleImageFormLoaded(value: event.value);
-        yield loaded;
-        return;
+        emit(loaded);
       }
     } else if (currentState is SimpleImageFormInitialized) {
       SimpleImageModel? newValue = null;
-      if (event is ChangedSimpleImageDocumentID) {
+      on <ChangedSimpleImageDocumentID> ((event, emit) async {
         newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event.value, newValue).asStream();
+          emit(await _isDocumentIDValid(event.value, newValue!));
         } else {
-          yield SubmittableSimpleImageForm(value: newValue);
+          emit(SubmittableSimpleImageForm(value: newValue));
         }
 
-        return;
-      }
-      if (event is ChangedSimpleImageDescription) {
+      });
+      on <ChangedSimpleImageDescription> ((event, emit) async {
         newValue = currentState.value!.copyWith(description: event.value);
-        yield SubmittableSimpleImageForm(value: newValue);
+        emit(SubmittableSimpleImageForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedSimpleImageImage) {
+      });
+      on <ChangedSimpleImageImage> ((event, emit) async {
         if (event.value != null)
           newValue = currentState.value!.copyWith(image: await platformMediumRepository(appId: appId)!.get(event.value));
-        else
-          newValue = new SimpleImageModel(
-                                 documentID: currentState.value!.documentID,
-                                 appId: currentState.value!.appId,
-                                 description: currentState.value!.description,
-                                 image: null,
-                                 conditions: currentState.value!.conditions,
-          );
-        yield SubmittableSimpleImageForm(value: newValue);
+        emit(SubmittableSimpleImageForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedSimpleImageConditions) {
+      });
+      on <ChangedSimpleImageConditions> ((event, emit) async {
         newValue = currentState.value!.copyWith(conditions: event.value);
-        yield SubmittableSimpleImageForm(value: newValue);
+        emit(SubmittableSimpleImageForm(value: newValue));
 
-        return;
-      }
+      });
     }
   }
 

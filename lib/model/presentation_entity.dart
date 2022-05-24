@@ -32,7 +32,7 @@ class PresentationEntity {
   final double? imageWidth;
   final StorageConditionsEntity? conditions;
 
-  PresentationEntity({this.appId, this.description, this.bodyComponents, this.imageId, this.imagePositionRelative, this.imageAlignment, this.imageWidth, this.conditions, });
+  PresentationEntity({required this.appId, this.description, this.bodyComponents, this.imageId, this.imagePositionRelative, this.imageAlignment, this.imageWidth, this.conditions, });
 
 
   List<Object?> get props => [appId, description, bodyComponents, imageId, imagePositionRelative, imageAlignment, imageWidth, conditions, ];

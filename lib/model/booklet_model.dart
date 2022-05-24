@@ -16,6 +16,7 @@
 import 'package:collection/collection.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eliud_core/core/base/model_base.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
@@ -36,14 +37,14 @@ import 'package:eliud_core/tools/random.dart';
 
 
 
-class BookletModel {
-  String? documentID;
-  String? appId;
+class BookletModel implements ModelBase, WithAppId {
+  String documentID;
+  String appId;
   String? description;
   List<SectionModel>? sections;
   StorageConditionsModel? conditions;
 
-  BookletModel({this.documentID, this.appId, this.description, this.sections, this.conditions, })  {
+  BookletModel({required this.documentID, required this.appId, this.description, this.sections, this.conditions, })  {
     assert(documentID != null);
   }
 
@@ -88,7 +89,7 @@ class BookletModel {
     var counter = 0;
     return BookletModel(
           documentID: documentID, 
-          appId: entity.appId, 
+          appId: entity.appId ?? '', 
           description: entity.description, 
           sections: 
             entity.sections == null ? null : List<SectionModel>.from(await Future.wait(entity. sections
@@ -108,7 +109,7 @@ class BookletModel {
     var counter = 0;
     return BookletModel(
           documentID: documentID, 
-          appId: entity.appId, 
+          appId: entity.appId ?? '', 
           description: entity.description, 
           sections: 
             entity. sections == null ? null : List<SectionModel>.from(await Future.wait(entity. sections

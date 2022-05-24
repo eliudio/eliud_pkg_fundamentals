@@ -30,7 +30,7 @@ class TutorialEntity {
   final List<TutorialEntryEntity>? tutorialEntries;
   final StorageConditionsEntity? conditions;
 
-  TutorialEntity({this.appId, this.name, this.title, this.description, this.tutorialEntries, this.conditions, });
+  TutorialEntity({required this.appId, this.name, this.title, this.description, this.tutorialEntries, this.conditions, });
 
 
   List<Object?> get props => [appId, name, title, description, tutorialEntries, conditions, ];

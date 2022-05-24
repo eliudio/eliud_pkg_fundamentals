@@ -15,6 +15,7 @@
 
 import 'package:eliud_core/tools/common_tools.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eliud_core/core/base/model_base.dart';
 
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
@@ -31,12 +32,12 @@ import 'package:eliud_core/tools/random.dart';
 
 
 
-class LinkModel {
-  String? documentID;
+class LinkModel implements ModelBase {
+  String documentID;
   String? linkText;
   ActionModel? action;
 
-  LinkModel({this.documentID, this.linkText, this.action, })  {
+  LinkModel({required this.documentID, this.linkText, this.action, })  {
     assert(documentID != null);
   }
 

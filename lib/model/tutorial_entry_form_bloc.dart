@@ -50,56 +50,42 @@ class TutorialEntryFormBloc extends Bloc<TutorialEntryFormEvent, TutorialEntryFo
   Stream<TutorialEntryFormState> mapEventToState(TutorialEntryFormEvent event) async* {
     final currentState = state;
     if (currentState is TutorialEntryFormUninitialized) {
-      if (event is InitialiseNewTutorialEntryFormEvent) {
+      on <InitialiseNewTutorialEntryFormEvent> ((event, emit) {
         TutorialEntryFormLoaded loaded = TutorialEntryFormLoaded(value: TutorialEntryModel(
                                                documentID: "IDENTIFIED", 
                                  description: "",
                                  code: "",
 
         ));
-        yield loaded;
-        return;
-
-      }
+        emit(loaded);
+      });
 
 
       if (event is InitialiseTutorialEntryFormEvent) {
         TutorialEntryFormLoaded loaded = TutorialEntryFormLoaded(value: event.value);
-        yield loaded;
-        return;
+        emit(loaded);
       } else if (event is InitialiseTutorialEntryFormNoLoadEvent) {
         TutorialEntryFormLoaded loaded = TutorialEntryFormLoaded(value: event.value);
-        yield loaded;
-        return;
+        emit(loaded);
       }
     } else if (currentState is TutorialEntryFormInitialized) {
       TutorialEntryModel? newValue = null;
-      if (event is ChangedTutorialEntryDescription) {
+      on <ChangedTutorialEntryDescription> ((event, emit) async {
         newValue = currentState.value!.copyWith(description: event.value);
-        yield SubmittableTutorialEntryForm(value: newValue);
+        emit(SubmittableTutorialEntryForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedTutorialEntryImage) {
+      });
+      on <ChangedTutorialEntryImage> ((event, emit) async {
         if (event.value != null)
           newValue = currentState.value!.copyWith(image: await platformMediumRepository(appId: appId)!.get(event.value));
-        else
-          newValue = new TutorialEntryModel(
-                                 documentID: currentState.value!.documentID,
-                                 description: currentState.value!.description,
-                                 image: null,
-                                 code: currentState.value!.code,
-          );
-        yield SubmittableTutorialEntryForm(value: newValue);
+        emit(SubmittableTutorialEntryForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedTutorialEntryCode) {
+      });
+      on <ChangedTutorialEntryCode> ((event, emit) async {
         newValue = currentState.value!.copyWith(code: event.value);
-        yield SubmittableTutorialEntryForm(value: newValue);
+        emit(SubmittableTutorialEntryForm(value: newValue));
 
-        return;
-      }
+      });
     }
   }
 

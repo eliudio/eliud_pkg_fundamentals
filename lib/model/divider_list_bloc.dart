@@ -38,9 +38,47 @@ class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
   DividerListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required DividerRepository dividerRepository, this.dividerLimit = 5})
       : assert(dividerRepository != null),
         _dividerRepository = dividerRepository,
-        super(DividerListLoading());
+        super(DividerListLoading()) {
+    on <LoadDividerList> ((event, emit) {
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadDividerListToState();
+      } else {
+        _mapLoadDividerListWithDetailsToState();
+      }
+    });
+    
+    on <NewPage> ((event, emit) {
+      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+      _mapLoadDividerListWithDetailsToState();
+    });
+    
+    on <DividerChangeQuery> ((event, emit) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadDividerListToState();
+      } else {
+        _mapLoadDividerListWithDetailsToState();
+      }
+    });
+      
+    on <AddDividerList> ((event, emit) async {
+      await _mapAddDividerListToState(event);
+    });
+    
+    on <UpdateDividerList> ((event, emit) async {
+      await _mapUpdateDividerListToState(event);
+    });
+    
+    on <DeleteDividerList> ((event, emit) async {
+      await _mapDeleteDividerListToState(event);
+    });
+    
+    on <DividerListUpdated> ((event, emit) {
+      emit(_mapDividerListUpdatedToState(event));
+    });
+  }
 
-  Stream<DividerListState> _mapLoadDividerListToState() async* {
+  Future<void> _mapLoadDividerListToState() async {
     int amountNow =  (state is DividerListLoaded) ? (state as DividerListLoaded).values!.length : 0;
     _dividersListSubscription?.cancel();
     _dividersListSubscription = _dividerRepository.listen(
@@ -52,7 +90,7 @@ class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
     );
   }
 
-  Stream<DividerListState> _mapLoadDividerListWithDetailsToState() async* {
+  Future<void> _mapLoadDividerListWithDetailsToState() async {
     int amountNow =  (state is DividerListLoaded) ? (state as DividerListLoaded).values!.length : 0;
     _dividersListSubscription?.cancel();
     _dividersListSubscription = _dividerRepository.listenWithDetails(
@@ -64,58 +102,29 @@ class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
     );
   }
 
-  Stream<DividerListState> _mapAddDividerListToState(AddDividerList event) async* {
+  Future<void> _mapAddDividerListToState(AddDividerList event) async {
     var value = event.value;
-    if (value != null) 
-      _dividerRepository.add(value);
-  }
-
-  Stream<DividerListState> _mapUpdateDividerListToState(UpdateDividerList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _dividerRepository.update(value);
-  }
-
-  Stream<DividerListState> _mapDeleteDividerListToState(DeleteDividerList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _dividerRepository.delete(value);
-  }
-
-  Stream<DividerListState> _mapDividerListUpdatedToState(
-      DividerListUpdated event) async* {
-    yield DividerListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
-  }
-
-  @override
-  Stream<DividerListState> mapEventToState(DividerListEvent event) async* {
-    if (event is LoadDividerList) {
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadDividerListToState();
-      } else {
-        yield* _mapLoadDividerListWithDetailsToState();
-      }
-    }
-    if (event is NewPage) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
-      yield* _mapLoadDividerListWithDetailsToState();
-    } else if (event is DividerChangeQuery) {
-      eliudQuery = event.newQuery;
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadDividerListToState();
-      } else {
-        yield* _mapLoadDividerListWithDetailsToState();
-      }
-    } else if (event is AddDividerList) {
-      yield* _mapAddDividerListToState(event);
-    } else if (event is UpdateDividerList) {
-      yield* _mapUpdateDividerListToState(event);
-    } else if (event is DeleteDividerList) {
-      yield* _mapDeleteDividerListToState(event);
-    } else if (event is DividerListUpdated) {
-      yield* _mapDividerListUpdatedToState(event);
+    if (value != null) {
+      await _dividerRepository.add(value);
     }
   }
+
+  Future<void> _mapUpdateDividerListToState(UpdateDividerList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _dividerRepository.update(value);
+    }
+  }
+
+  Future<void> _mapDeleteDividerListToState(DeleteDividerList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _dividerRepository.delete(value);
+    }
+  }
+
+  DividerListLoaded _mapDividerListUpdatedToState(
+      DividerListUpdated event) => DividerListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {

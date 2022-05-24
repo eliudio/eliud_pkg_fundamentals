@@ -27,23 +27,22 @@ class GridComponentBloc extends Bloc<GridComponentEvent, GridComponentState> {
   final GridRepository? gridRepository;
   StreamSubscription? _gridSubscription;
 
-  Stream<GridComponentState> _mapLoadGridComponentUpdateToState(String documentId) async* {
+  void _mapLoadGridComponentUpdateToState(String documentId) {
     _gridSubscription?.cancel();
     _gridSubscription = gridRepository!.listenTo(documentId, (value) {
-      if (value != null) add(GridComponentUpdated(value: value));
+      if (value != null) {
+        add(GridComponentUpdated(value: value));
+      }
     });
   }
 
-  GridComponentBloc({ this.gridRepository }): super(GridComponentUninitialized());
-
-  @override
-  Stream<GridComponentState> mapEventToState(GridComponentEvent event) async* {
-    final currentState = state;
-    if (event is FetchGridComponent) {
-      yield* _mapLoadGridComponentUpdateToState(event.id!);
-    } else if (event is GridComponentUpdated) {
-      yield GridComponentLoaded(value: event.value);
-    }
+  GridComponentBloc({ this.gridRepository }): super(GridComponentUninitialized()) {
+    on <FetchGridComponent> ((event, emit) {
+      _mapLoadGridComponentUpdateToState(event.id!);
+    });
+    on <GridComponentUpdated> ((event, emit) {
+      emit(GridComponentLoaded(value: event.value));
+    });
   }
 
   @override

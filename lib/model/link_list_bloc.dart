@@ -38,9 +38,47 @@ class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
   LinkListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required LinkRepository linkRepository, this.linkLimit = 5})
       : assert(linkRepository != null),
         _linkRepository = linkRepository,
-        super(LinkListLoading());
+        super(LinkListLoading()) {
+    on <LoadLinkList> ((event, emit) {
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadLinkListToState();
+      } else {
+        _mapLoadLinkListWithDetailsToState();
+      }
+    });
+    
+    on <NewPage> ((event, emit) {
+      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+      _mapLoadLinkListWithDetailsToState();
+    });
+    
+    on <LinkChangeQuery> ((event, emit) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadLinkListToState();
+      } else {
+        _mapLoadLinkListWithDetailsToState();
+      }
+    });
+      
+    on <AddLinkList> ((event, emit) async {
+      await _mapAddLinkListToState(event);
+    });
+    
+    on <UpdateLinkList> ((event, emit) async {
+      await _mapUpdateLinkListToState(event);
+    });
+    
+    on <DeleteLinkList> ((event, emit) async {
+      await _mapDeleteLinkListToState(event);
+    });
+    
+    on <LinkListUpdated> ((event, emit) {
+      emit(_mapLinkListUpdatedToState(event));
+    });
+  }
 
-  Stream<LinkListState> _mapLoadLinkListToState() async* {
+  Future<void> _mapLoadLinkListToState() async {
     int amountNow =  (state is LinkListLoaded) ? (state as LinkListLoaded).values!.length : 0;
     _linksListSubscription?.cancel();
     _linksListSubscription = _linkRepository.listen(
@@ -52,7 +90,7 @@ class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
     );
   }
 
-  Stream<LinkListState> _mapLoadLinkListWithDetailsToState() async* {
+  Future<void> _mapLoadLinkListWithDetailsToState() async {
     int amountNow =  (state is LinkListLoaded) ? (state as LinkListLoaded).values!.length : 0;
     _linksListSubscription?.cancel();
     _linksListSubscription = _linkRepository.listenWithDetails(
@@ -64,58 +102,29 @@ class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
     );
   }
 
-  Stream<LinkListState> _mapAddLinkListToState(AddLinkList event) async* {
+  Future<void> _mapAddLinkListToState(AddLinkList event) async {
     var value = event.value;
-    if (value != null) 
-      _linkRepository.add(value);
-  }
-
-  Stream<LinkListState> _mapUpdateLinkListToState(UpdateLinkList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _linkRepository.update(value);
-  }
-
-  Stream<LinkListState> _mapDeleteLinkListToState(DeleteLinkList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _linkRepository.delete(value);
-  }
-
-  Stream<LinkListState> _mapLinkListUpdatedToState(
-      LinkListUpdated event) async* {
-    yield LinkListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
-  }
-
-  @override
-  Stream<LinkListState> mapEventToState(LinkListEvent event) async* {
-    if (event is LoadLinkList) {
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadLinkListToState();
-      } else {
-        yield* _mapLoadLinkListWithDetailsToState();
-      }
-    }
-    if (event is NewPage) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
-      yield* _mapLoadLinkListWithDetailsToState();
-    } else if (event is LinkChangeQuery) {
-      eliudQuery = event.newQuery;
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadLinkListToState();
-      } else {
-        yield* _mapLoadLinkListWithDetailsToState();
-      }
-    } else if (event is AddLinkList) {
-      yield* _mapAddLinkListToState(event);
-    } else if (event is UpdateLinkList) {
-      yield* _mapUpdateLinkListToState(event);
-    } else if (event is DeleteLinkList) {
-      yield* _mapDeleteLinkListToState(event);
-    } else if (event is LinkListUpdated) {
-      yield* _mapLinkListUpdatedToState(event);
+    if (value != null) {
+      await _linkRepository.add(value);
     }
   }
+
+  Future<void> _mapUpdateLinkListToState(UpdateLinkList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _linkRepository.update(value);
+    }
+  }
+
+  Future<void> _mapDeleteLinkListToState(DeleteLinkList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _linkRepository.delete(value);
+    }
+  }
+
+  LinkListLoaded _mapLinkListUpdatedToState(
+      LinkListUpdated event) => LinkListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {

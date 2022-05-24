@@ -77,7 +77,7 @@ class TutorialEntryListUpdated extends TutorialEntryListEvent {
 }
 
 class TutorialEntryChangeQuery extends TutorialEntryListEvent {
-  final EliudQuery newQuery;
+  final EliudQuery? newQuery;
 
   const TutorialEntryChangeQuery({ required this.newQuery });
 

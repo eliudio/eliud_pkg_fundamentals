@@ -32,7 +32,7 @@ class DocumentEntity {
   final BackgroundEntity? background;
   final StorageConditionsEntity? conditions;
 
-  DocumentEntity({this.appId, this.description, this.documentRenderer, this.content, this.padding, this.images, this.background, this.conditions, });
+  DocumentEntity({required this.appId, this.description, this.documentRenderer, this.content, this.padding, this.images, this.background, this.conditions, });
 
 
   List<Object?> get props => [appId, description, documentRenderer, content, padding, images, background, conditions, ];

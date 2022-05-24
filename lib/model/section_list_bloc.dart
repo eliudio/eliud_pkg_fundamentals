@@ -38,9 +38,47 @@ class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
   SectionListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required SectionRepository sectionRepository, this.sectionLimit = 5})
       : assert(sectionRepository != null),
         _sectionRepository = sectionRepository,
-        super(SectionListLoading());
+        super(SectionListLoading()) {
+    on <LoadSectionList> ((event, emit) {
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadSectionListToState();
+      } else {
+        _mapLoadSectionListWithDetailsToState();
+      }
+    });
+    
+    on <NewPage> ((event, emit) {
+      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+      _mapLoadSectionListWithDetailsToState();
+    });
+    
+    on <SectionChangeQuery> ((event, emit) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadSectionListToState();
+      } else {
+        _mapLoadSectionListWithDetailsToState();
+      }
+    });
+      
+    on <AddSectionList> ((event, emit) async {
+      await _mapAddSectionListToState(event);
+    });
+    
+    on <UpdateSectionList> ((event, emit) async {
+      await _mapUpdateSectionListToState(event);
+    });
+    
+    on <DeleteSectionList> ((event, emit) async {
+      await _mapDeleteSectionListToState(event);
+    });
+    
+    on <SectionListUpdated> ((event, emit) {
+      emit(_mapSectionListUpdatedToState(event));
+    });
+  }
 
-  Stream<SectionListState> _mapLoadSectionListToState() async* {
+  Future<void> _mapLoadSectionListToState() async {
     int amountNow =  (state is SectionListLoaded) ? (state as SectionListLoaded).values!.length : 0;
     _sectionsListSubscription?.cancel();
     _sectionsListSubscription = _sectionRepository.listen(
@@ -52,7 +90,7 @@ class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
     );
   }
 
-  Stream<SectionListState> _mapLoadSectionListWithDetailsToState() async* {
+  Future<void> _mapLoadSectionListWithDetailsToState() async {
     int amountNow =  (state is SectionListLoaded) ? (state as SectionListLoaded).values!.length : 0;
     _sectionsListSubscription?.cancel();
     _sectionsListSubscription = _sectionRepository.listenWithDetails(
@@ -64,58 +102,29 @@ class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
     );
   }
 
-  Stream<SectionListState> _mapAddSectionListToState(AddSectionList event) async* {
+  Future<void> _mapAddSectionListToState(AddSectionList event) async {
     var value = event.value;
-    if (value != null) 
-      _sectionRepository.add(value);
-  }
-
-  Stream<SectionListState> _mapUpdateSectionListToState(UpdateSectionList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _sectionRepository.update(value);
-  }
-
-  Stream<SectionListState> _mapDeleteSectionListToState(DeleteSectionList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _sectionRepository.delete(value);
-  }
-
-  Stream<SectionListState> _mapSectionListUpdatedToState(
-      SectionListUpdated event) async* {
-    yield SectionListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
-  }
-
-  @override
-  Stream<SectionListState> mapEventToState(SectionListEvent event) async* {
-    if (event is LoadSectionList) {
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadSectionListToState();
-      } else {
-        yield* _mapLoadSectionListWithDetailsToState();
-      }
-    }
-    if (event is NewPage) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
-      yield* _mapLoadSectionListWithDetailsToState();
-    } else if (event is SectionChangeQuery) {
-      eliudQuery = event.newQuery;
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadSectionListToState();
-      } else {
-        yield* _mapLoadSectionListWithDetailsToState();
-      }
-    } else if (event is AddSectionList) {
-      yield* _mapAddSectionListToState(event);
-    } else if (event is UpdateSectionList) {
-      yield* _mapUpdateSectionListToState(event);
-    } else if (event is DeleteSectionList) {
-      yield* _mapDeleteSectionListToState(event);
-    } else if (event is SectionListUpdated) {
-      yield* _mapSectionListUpdatedToState(event);
+    if (value != null) {
+      await _sectionRepository.add(value);
     }
   }
+
+  Future<void> _mapUpdateSectionListToState(UpdateSectionList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _sectionRepository.update(value);
+    }
+  }
+
+  Future<void> _mapDeleteSectionListToState(DeleteSectionList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _sectionRepository.delete(value);
+    }
+  }
+
+  SectionListLoaded _mapSectionListUpdatedToState(
+      SectionListUpdated event) => SectionListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {

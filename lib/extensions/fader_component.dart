@@ -21,7 +21,7 @@ class FaderComponentConstructorDefault implements ComponentConstructor {
 
   @override
   Future<dynamic> getModel({required AppModel app, required String id}) async =>
-      await faderRepository(appId: app.documentID!)!.get(id);
+      await faderRepository(appId: app.documentID)!.get(id);
 }
 
 class FaderComponent extends AbstractFaderComponent {

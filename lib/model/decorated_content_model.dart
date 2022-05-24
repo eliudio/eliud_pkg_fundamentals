@@ -15,6 +15,7 @@
 
 import 'package:eliud_core/tools/common_tools.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eliud_core/core/base/model_base.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
@@ -51,9 +52,9 @@ DecorationComponentPosition toDecorationComponentPosition(int? index) {
 }
 
 
-class DecoratedContentModel {
-  String? documentID;
-  String? appId;
+class DecoratedContentModel implements ModelBase, WithAppId {
+  String documentID;
+  String appId;
   String? description;
 
   // The component name of the decoration
@@ -71,7 +72,7 @@ class DecoratedContentModel {
   double? percentageDecorationVisible;
   StorageConditionsModel? conditions;
 
-  DecoratedContentModel({this.documentID, this.appId, this.description, this.decoratingComponentName, this.decoratingComponentId, this.contentComponentName, this.contentComponentId, this.decorationComponentPosition, this.percentageDecorationVisible, this.conditions, })  {
+  DecoratedContentModel({required this.documentID, required this.appId, this.description, this.decoratingComponentName, this.decoratingComponentId, this.contentComponentName, this.contentComponentId, this.decorationComponentPosition, this.percentageDecorationVisible, this.conditions, })  {
     assert(documentID != null);
   }
 
@@ -122,7 +123,7 @@ class DecoratedContentModel {
     var counter = 0;
     return DecoratedContentModel(
           documentID: documentID, 
-          appId: entity.appId, 
+          appId: entity.appId ?? '', 
           description: entity.description, 
           decoratingComponentName: entity.decoratingComponentName, 
           decoratingComponentId: entity.decoratingComponentId, 
@@ -141,7 +142,7 @@ class DecoratedContentModel {
     var counter = 0;
     return DecoratedContentModel(
           documentID: documentID, 
-          appId: entity.appId, 
+          appId: entity.appId ?? '', 
           description: entity.description, 
           decoratingComponentName: entity.decoratingComponentName, 
           decoratingComponentId: entity.decoratingComponentId, 

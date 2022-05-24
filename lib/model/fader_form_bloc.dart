@@ -51,7 +51,7 @@ class FaderFormBloc extends Bloc<FaderFormEvent, FaderFormState> {
   Stream<FaderFormState> mapEventToState(FaderFormEvent event) async* {
     final currentState = state;
     if (currentState is FaderFormUninitialized) {
-      if (event is InitialiseNewFaderFormEvent) {
+      on <InitialiseNewFaderFormEvent> ((event, emit) {
         FaderFormLoaded loaded = FaderFormLoaded(value: FaderModel(
                                                documentID: "",
                                  appId: "",
@@ -61,74 +61,64 @@ class FaderFormBloc extends Bloc<FaderFormEvent, FaderFormState> {
                                  items: [],
 
         ));
-        yield loaded;
-        return;
-
-      }
+        emit(loaded);
+      });
 
 
       if (event is InitialiseFaderFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
         FaderFormLoaded loaded = FaderFormLoaded(value: await faderRepository(appId: appId)!.get(event.value!.documentID));
-        yield loaded;
-        return;
+        emit(loaded);
       } else if (event is InitialiseFaderFormNoLoadEvent) {
         FaderFormLoaded loaded = FaderFormLoaded(value: event.value);
-        yield loaded;
-        return;
+        emit(loaded);
       }
     } else if (currentState is FaderFormInitialized) {
       FaderModel? newValue = null;
-      if (event is ChangedFaderDocumentID) {
+      on <ChangedFaderDocumentID> ((event, emit) async {
         newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event.value, newValue).asStream();
+          emit(await _isDocumentIDValid(event.value, newValue!));
         } else {
-          yield SubmittableFaderForm(value: newValue);
+          emit(SubmittableFaderForm(value: newValue));
         }
 
-        return;
-      }
-      if (event is ChangedFaderDescription) {
+      });
+      on <ChangedFaderDescription> ((event, emit) async {
         newValue = currentState.value!.copyWith(description: event.value);
-        yield SubmittableFaderForm(value: newValue);
+        emit(SubmittableFaderForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedFaderAnimationMilliseconds) {
+      });
+      on <ChangedFaderAnimationMilliseconds> ((event, emit) async {
         if (isInt(event.value)) {
           newValue = currentState.value!.copyWith(animationMilliseconds: int.parse(event.value!));
-          yield SubmittableFaderForm(value: newValue);
+          emit(SubmittableFaderForm(value: newValue));
 
         } else {
           newValue = currentState.value!.copyWith(animationMilliseconds: 0);
-          yield AnimationMillisecondsFaderFormError(message: "Value should be a number", value: newValue);
+          emit(AnimationMillisecondsFaderFormError(message: "Value should be a number", value: newValue));
         }
-        return;
-      }
-      if (event is ChangedFaderImageSeconds) {
+      });
+      on <ChangedFaderImageSeconds> ((event, emit) async {
         if (isInt(event.value)) {
           newValue = currentState.value!.copyWith(imageSeconds: int.parse(event.value!));
-          yield SubmittableFaderForm(value: newValue);
+          emit(SubmittableFaderForm(value: newValue));
 
         } else {
           newValue = currentState.value!.copyWith(imageSeconds: 0);
-          yield ImageSecondsFaderFormError(message: "Value should be a number", value: newValue);
+          emit(ImageSecondsFaderFormError(message: "Value should be a number", value: newValue));
         }
-        return;
-      }
-      if (event is ChangedFaderItems) {
+      });
+      on <ChangedFaderItems> ((event, emit) async {
         newValue = currentState.value!.copyWith(items: event.value);
-        yield SubmittableFaderForm(value: newValue);
+        emit(SubmittableFaderForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedFaderConditions) {
+      });
+      on <ChangedFaderConditions> ((event, emit) async {
         newValue = currentState.value!.copyWith(conditions: event.value);
-        yield SubmittableFaderForm(value: newValue);
+        emit(SubmittableFaderForm(value: newValue));
 
-        return;
-      }
+      });
     }
   }
 

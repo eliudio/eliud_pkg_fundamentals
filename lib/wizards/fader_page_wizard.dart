@@ -58,7 +58,7 @@ class FaderPageWizard extends NewAppWizardInfoWithActionSpecification {
     if (parameters is ActionSpecificationParametersBase) {
       var faderPageSpecifications = parameters.actionSpecifications;
       if (faderPageSpecifications.shouldCreatePageDialogOrWorkflow()) {
-        var memberId = member.documentID!;
+        var memberId = member.documentID;
         List<NewAppTask> tasks = [];
         tasks.add(() async {
           print("Fader Page");

@@ -28,7 +28,7 @@ class SimpleImageEntity {
   final String? imageId;
   final StorageConditionsEntity? conditions;
 
-  SimpleImageEntity({this.appId, this.description, this.imageId, this.conditions, });
+  SimpleImageEntity({required this.appId, this.description, this.imageId, this.conditions, });
 
 
   List<Object?> get props => [appId, description, imageId, conditions, ];

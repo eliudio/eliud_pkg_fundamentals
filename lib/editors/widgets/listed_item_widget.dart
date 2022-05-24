@@ -85,7 +85,7 @@ class _ListedItemModelWidgetState extends State<ListedItemModelWidget> {
             getListTile(context, widget.app,
                 leading: Icon(Icons.vpn_key),
                 title: text(
-                    widget.app, context, widget.listedItemModel.documentID!)),
+                    widget.app, context, widget.listedItemModel.documentID)),
             getListTile(context, widget.app,
                 leading: Icon(Icons.description),
                 title: dialogField(

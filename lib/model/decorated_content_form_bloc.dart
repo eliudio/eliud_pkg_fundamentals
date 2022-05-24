@@ -51,7 +51,7 @@ class DecoratedContentFormBloc extends Bloc<DecoratedContentFormEvent, Decorated
   Stream<DecoratedContentFormState> mapEventToState(DecoratedContentFormEvent event) async* {
     final currentState = state;
     if (currentState is DecoratedContentFormUninitialized) {
-      if (event is InitialiseNewDecoratedContentFormEvent) {
+      on <InitialiseNewDecoratedContentFormEvent> ((event, emit) {
         DecoratedContentFormLoaded loaded = DecoratedContentFormLoaded(value: DecoratedContentModel(
                                                documentID: "",
                                  appId: "",
@@ -63,87 +63,74 @@ class DecoratedContentFormBloc extends Bloc<DecoratedContentFormEvent, Decorated
                                  percentageDecorationVisible: 0.0,
 
         ));
-        yield loaded;
-        return;
-
-      }
+        emit(loaded);
+      });
 
 
       if (event is InitialiseDecoratedContentFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
         DecoratedContentFormLoaded loaded = DecoratedContentFormLoaded(value: await decoratedContentRepository(appId: appId)!.get(event.value!.documentID));
-        yield loaded;
-        return;
+        emit(loaded);
       } else if (event is InitialiseDecoratedContentFormNoLoadEvent) {
         DecoratedContentFormLoaded loaded = DecoratedContentFormLoaded(value: event.value);
-        yield loaded;
-        return;
+        emit(loaded);
       }
     } else if (currentState is DecoratedContentFormInitialized) {
       DecoratedContentModel? newValue = null;
-      if (event is ChangedDecoratedContentDocumentID) {
+      on <ChangedDecoratedContentDocumentID> ((event, emit) async {
         newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event.value, newValue).asStream();
+          emit(await _isDocumentIDValid(event.value, newValue!));
         } else {
-          yield SubmittableDecoratedContentForm(value: newValue);
+          emit(SubmittableDecoratedContentForm(value: newValue));
         }
 
-        return;
-      }
-      if (event is ChangedDecoratedContentDescription) {
+      });
+      on <ChangedDecoratedContentDescription> ((event, emit) async {
         newValue = currentState.value!.copyWith(description: event.value);
-        yield SubmittableDecoratedContentForm(value: newValue);
+        emit(SubmittableDecoratedContentForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedDecoratedContentDecoratingComponentName) {
+      });
+      on <ChangedDecoratedContentDecoratingComponentName> ((event, emit) async {
         newValue = currentState.value!.copyWith(decoratingComponentName: event.value);
-        yield SubmittableDecoratedContentForm(value: newValue);
+        emit(SubmittableDecoratedContentForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedDecoratedContentDecoratingComponentId) {
+      });
+      on <ChangedDecoratedContentDecoratingComponentId> ((event, emit) async {
         newValue = currentState.value!.copyWith(decoratingComponentId: event.value);
-        yield SubmittableDecoratedContentForm(value: newValue);
+        emit(SubmittableDecoratedContentForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedDecoratedContentContentComponentName) {
+      });
+      on <ChangedDecoratedContentContentComponentName> ((event, emit) async {
         newValue = currentState.value!.copyWith(contentComponentName: event.value);
-        yield SubmittableDecoratedContentForm(value: newValue);
+        emit(SubmittableDecoratedContentForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedDecoratedContentContentComponentId) {
+      });
+      on <ChangedDecoratedContentContentComponentId> ((event, emit) async {
         newValue = currentState.value!.copyWith(contentComponentId: event.value);
-        yield SubmittableDecoratedContentForm(value: newValue);
+        emit(SubmittableDecoratedContentForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedDecoratedContentDecorationComponentPosition) {
+      });
+      on <ChangedDecoratedContentDecorationComponentPosition> ((event, emit) async {
         newValue = currentState.value!.copyWith(decorationComponentPosition: event.value);
-        yield SubmittableDecoratedContentForm(value: newValue);
+        emit(SubmittableDecoratedContentForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedDecoratedContentPercentageDecorationVisible) {
+      });
+      on <ChangedDecoratedContentPercentageDecorationVisible> ((event, emit) async {
         if (isDouble(event.value!)) {
           newValue = currentState.value!.copyWith(percentageDecorationVisible: double.parse(event.value!));
-          yield SubmittableDecoratedContentForm(value: newValue);
+          emit(SubmittableDecoratedContentForm(value: newValue));
 
         } else {
           newValue = currentState.value!.copyWith(percentageDecorationVisible: 0.0);
-          yield PercentageDecorationVisibleDecoratedContentFormError(message: "Value should be a number or decimal number", value: newValue);
+          emit(PercentageDecorationVisibleDecoratedContentFormError(message: "Value should be a number or decimal number", value: newValue));
         }
-        return;
-      }
-      if (event is ChangedDecoratedContentConditions) {
+      });
+      on <ChangedDecoratedContentConditions> ((event, emit) async {
         newValue = currentState.value!.copyWith(conditions: event.value);
-        yield SubmittableDecoratedContentForm(value: newValue);
+        emit(SubmittableDecoratedContentForm(value: newValue));
 
-        return;
-      }
+      });
     }
   }
 

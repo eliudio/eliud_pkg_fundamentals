@@ -31,7 +31,7 @@ class PresentationComponentConstructorDefault implements ComponentConstructor {
 
   @override
   Future<dynamic> getModel({required AppModel app, required String id}) async =>
-      await presentationRepository(appId: app.documentID!)!.get(id);
+      await presentationRepository(appId: app.documentID)!.get(id);
 }
 
 class PresentationComponent extends AbstractPresentationComponent {

@@ -39,7 +39,7 @@ abstract class AbstractDecoratedContentComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<DecoratedContentComponentBloc> (
           create: (context) => DecoratedContentComponentBloc(
-            decoratedContentRepository: decoratedContentRepository(appId: app.documentID!)!)
+            decoratedContentRepository: decoratedContentRepository(appId: app.documentID)!)
         ..add(FetchDecoratedContentComponent(id: decoratedContentId)),
       child: _decoratedContentBlockBuilder(context),
     );

@@ -69,7 +69,7 @@ class LinkForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var appId = app.documentID!;
+    var appId = app.documentID;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<LinkFormBloc >(
             create: (context) => LinkFormBloc(appId,
@@ -252,7 +252,7 @@ class _MyLinkFormState extends State<MyLinkForm> {
   }
 
   bool _readOnly(AccessState accessState, LinkFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID!));
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID));
   }
   
 

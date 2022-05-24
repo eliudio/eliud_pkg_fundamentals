@@ -16,6 +16,7 @@
 import 'package:collection/collection.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eliud_core/core/base/model_base.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
@@ -36,16 +37,16 @@ import 'package:eliud_core/tools/random.dart';
 
 
 
-class TutorialModel {
-  String? documentID;
-  String? appId;
+class TutorialModel implements ModelBase, WithAppId {
+  String documentID;
+  String appId;
   String? name;
   String? title;
   String? description;
   List<TutorialEntryModel>? tutorialEntries;
   StorageConditionsModel? conditions;
 
-  TutorialModel({this.documentID, this.appId, this.name, this.title, this.description, this.tutorialEntries, this.conditions, })  {
+  TutorialModel({required this.documentID, required this.appId, this.name, this.title, this.description, this.tutorialEntries, this.conditions, })  {
     assert(documentID != null);
   }
 
@@ -94,7 +95,7 @@ class TutorialModel {
     var counter = 0;
     return TutorialModel(
           documentID: documentID, 
-          appId: entity.appId, 
+          appId: entity.appId ?? '', 
           name: entity.name, 
           title: entity.title, 
           description: entity.description, 
@@ -116,7 +117,7 @@ class TutorialModel {
     var counter = 0;
     return TutorialModel(
           documentID: documentID, 
-          appId: entity.appId, 
+          appId: entity.appId ?? '', 
           name: entity.name, 
           title: entity.title, 
           description: entity.description, 

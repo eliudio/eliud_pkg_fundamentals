@@ -39,7 +39,7 @@ abstract class AbstractFaderComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<FaderComponentBloc> (
           create: (context) => FaderComponentBloc(
-            faderRepository: faderRepository(appId: app.documentID!)!)
+            faderRepository: faderRepository(appId: app.documentID)!)
         ..add(FetchFaderComponent(id: faderId)),
       child: _faderBlockBuilder(context),
     );

@@ -51,7 +51,7 @@ class SimpleTextFormBloc extends Bloc<SimpleTextFormEvent, SimpleTextFormState> 
   Stream<SimpleTextFormState> mapEventToState(SimpleTextFormEvent event) async* {
     final currentState = state;
     if (currentState is SimpleTextFormUninitialized) {
-      if (event is InitialiseNewSimpleTextFormEvent) {
+      on <InitialiseNewSimpleTextFormEvent> ((event, emit) {
         SimpleTextFormLoaded loaded = SimpleTextFormLoaded(value: SimpleTextModel(
                                                documentID: "",
                                  appId: "",
@@ -60,64 +60,54 @@ class SimpleTextFormBloc extends Bloc<SimpleTextFormEvent, SimpleTextFormState> 
                                  text: "",
 
         ));
-        yield loaded;
-        return;
-
-      }
+        emit(loaded);
+      });
 
 
       if (event is InitialiseSimpleTextFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
         SimpleTextFormLoaded loaded = SimpleTextFormLoaded(value: await simpleTextRepository(appId: appId)!.get(event.value!.documentID));
-        yield loaded;
-        return;
+        emit(loaded);
       } else if (event is InitialiseSimpleTextFormNoLoadEvent) {
         SimpleTextFormLoaded loaded = SimpleTextFormLoaded(value: event.value);
-        yield loaded;
-        return;
+        emit(loaded);
       }
     } else if (currentState is SimpleTextFormInitialized) {
       SimpleTextModel? newValue = null;
-      if (event is ChangedSimpleTextDocumentID) {
+      on <ChangedSimpleTextDocumentID> ((event, emit) async {
         newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event.value, newValue).asStream();
+          emit(await _isDocumentIDValid(event.value, newValue!));
         } else {
-          yield SubmittableSimpleTextForm(value: newValue);
+          emit(SubmittableSimpleTextForm(value: newValue));
         }
 
-        return;
-      }
-      if (event is ChangedSimpleTextDescription) {
+      });
+      on <ChangedSimpleTextDescription> ((event, emit) async {
         newValue = currentState.value!.copyWith(description: event.value);
-        yield SubmittableSimpleTextForm(value: newValue);
+        emit(SubmittableSimpleTextForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedSimpleTextTitle) {
+      });
+      on <ChangedSimpleTextTitle> ((event, emit) async {
         newValue = currentState.value!.copyWith(title: event.value);
-        yield SubmittableSimpleTextForm(value: newValue);
+        emit(SubmittableSimpleTextForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedSimpleTextText) {
+      });
+      on <ChangedSimpleTextText> ((event, emit) async {
         newValue = currentState.value!.copyWith(text: event.value);
-        yield SubmittableSimpleTextForm(value: newValue);
+        emit(SubmittableSimpleTextForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedSimpleTextConditions) {
+      });
+      on <ChangedSimpleTextConditions> ((event, emit) async {
         newValue = currentState.value!.copyWith(conditions: event.value);
-        yield SubmittableSimpleTextForm(value: newValue);
+        emit(SubmittableSimpleTextForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedSimpleTextTextAlign) {
+      });
+      on <ChangedSimpleTextTextAlign> ((event, emit) async {
         newValue = currentState.value!.copyWith(textAlign: event.value);
-        yield SubmittableSimpleTextForm(value: newValue);
+        emit(SubmittableSimpleTextForm(value: newValue));
 
-        return;
-      }
+      });
     }
   }
 

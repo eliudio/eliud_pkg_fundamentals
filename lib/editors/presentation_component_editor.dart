@@ -63,11 +63,11 @@ class PresentationComponentEditorConstructor
   void updateComponentWithID(AppModel app, BuildContext context, String id,
       EditorFeedback feedback) async {
     var presentation =
-        await presentationRepository(appId: app.documentID!)!.get(id);
+        await presentationRepository(appId: app.documentID)!.get(id);
     if (presentation != null) {
       _openIt(app, context, false, presentation, feedback);
     } else {
-      openErrorDialog(app, context, app.documentID! + '/_error',
+      openErrorDialog(app, context, app.documentID + '/_error',
           title: 'Error',
           errorMessage: 'Cannot find membership dashboard with id $id');
     }
@@ -78,7 +78,7 @@ class PresentationComponentEditorConstructor
     openComplexDialog(
       app,
       context,
-      app.documentID! + '/membershipdashboard',
+      app.documentID + '/membershipdashboard',
       title: create
           ? 'Create Membership Dashboard'
           : 'Update Membership Dashboard',
@@ -86,7 +86,7 @@ class PresentationComponentEditorConstructor
       widthFraction: .9,
       child: BlocProvider<PresentationBloc>(
           create: (context) => PresentationBloc(
-                app.documentID!,
+                app.documentID,
                 /*create,
             */
                 feedback,
@@ -147,7 +147,7 @@ class _PresentationComponentEditorState
                         getListTile(context, widget.app,
                             leading: Icon(Icons.vpn_key),
                             title: text(widget.app, context,
-                                presentationState.model.documentID!)),
+                                presentationState.model.documentID)),
                         getListTile(context, widget.app,
                             leading: Icon(Icons.description),
                             title: dialogField(
@@ -343,7 +343,7 @@ class _PresentationComponentEditorState
     openFlexibleDialog(
       widget.app,
       context,
-      widget.app.documentID! + '/_memberaction',
+      widget.app.documentID + '/_memberaction',
       includeHeading: false,
       widthFraction: .8,
       child: BodyComponentModelWidget.getIt(

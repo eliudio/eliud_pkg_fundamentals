@@ -27,7 +27,7 @@ class GridComponentConstructorDefault implements ComponentConstructor {
 
   @override
   Future<dynamic> getModel({required AppModel app, required String id}) async =>
-      await gridRepository(appId: app.documentID!)!.get(id);
+      await gridRepository(appId: app.documentID)!.get(id);
 }
 
 class GridComponent extends AbstractGridComponent {

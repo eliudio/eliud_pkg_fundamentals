@@ -26,23 +26,22 @@ class DividerComponentBloc extends Bloc<DividerComponentEvent, DividerComponentS
   final DividerRepository? dividerRepository;
   StreamSubscription? _dividerSubscription;
 
-  Stream<DividerComponentState> _mapLoadDividerComponentUpdateToState(String documentId) async* {
+  void _mapLoadDividerComponentUpdateToState(String documentId) {
     _dividerSubscription?.cancel();
     _dividerSubscription = dividerRepository!.listenTo(documentId, (value) {
-      if (value != null) add(DividerComponentUpdated(value: value));
+      if (value != null) {
+        add(DividerComponentUpdated(value: value));
+      }
     });
   }
 
-  DividerComponentBloc({ this.dividerRepository }): super(DividerComponentUninitialized());
-
-  @override
-  Stream<DividerComponentState> mapEventToState(DividerComponentEvent event) async* {
-    final currentState = state;
-    if (event is FetchDividerComponent) {
-      yield* _mapLoadDividerComponentUpdateToState(event.id!);
-    } else if (event is DividerComponentUpdated) {
-      yield DividerComponentLoaded(value: event.value);
-    }
+  DividerComponentBloc({ this.dividerRepository }): super(DividerComponentUninitialized()) {
+    on <FetchDividerComponent> ((event, emit) {
+      _mapLoadDividerComponentUpdateToState(event.id!);
+    });
+    on <DividerComponentUpdated> ((event, emit) {
+      emit(DividerComponentLoaded(value: event.value));
+    });
   }
 
   @override

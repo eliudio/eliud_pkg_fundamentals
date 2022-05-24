@@ -25,7 +25,7 @@ class DocumentComponentConstructorDefault implements ComponentConstructor {
 
   @override
   Future<dynamic> getModel({required AppModel app, required String id}) async =>
-      await documentRepository(appId: app.documentID!)!.get(id);
+      await documentRepository(appId: app.documentID)!.get(id);
 }
 
 class DocumentComponent extends AbstractDocumentComponent {

@@ -74,7 +74,7 @@ class SimpleImageForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var appId = app.documentID!;
+    var appId = app.documentID;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<SimpleImageFormBloc >(
             create: (context) => SimpleImageFormBloc(appId,
@@ -311,7 +311,7 @@ class _MySimpleImageFormState extends State<MySimpleImageForm> {
   }
 
   bool _readOnly(AccessState accessState, SimpleImageFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID!));
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID));
   }
   
 

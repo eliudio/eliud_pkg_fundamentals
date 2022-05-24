@@ -31,7 +31,7 @@ class TutorialComponentConstructorDefault implements ComponentConstructor {
 
   @override
   Future<dynamic> getModel({required AppModel app, required String id}) async =>
-      await tutorialRepository(appId: app.documentID!)!.get(id);
+      await tutorialRepository(appId: app.documentID)!.get(id);
 }
 
 class TutorialComponent extends AbstractTutorialComponent {
@@ -48,7 +48,8 @@ class TutorialComponent extends AbstractTutorialComponent {
   Widget yourWidget(BuildContext context, TutorialModel? value) {
     DocumentParameterProcessor documentParameterProcessor =
         ExtendedDocumentParameterProcessor(
-      context,app,
+      context,
+      app,
     );
     var widgets = <Widget>[];
     widgets.add(Text(
@@ -68,19 +69,15 @@ class TutorialComponent extends AbstractTutorialComponent {
             image: element.image!.url!,
           ),
           onTap: () {
-            Navigator.push(
-                context,
-                pageRouteBuilder(app,
-                    page: FulLScreen(element.image)));
+            Navigator.push(context,
+                pageRouteBuilder(app, page: FulLScreen(element.image)));
           },
         ));
 
         widgets.add(Center(
             child: button(app, context, label: 'Fullscreen', onPressed: () {
           Navigator.push(
-              context,
-              pageRouteBuilder(app,
-                  page: FulLScreen(element.image)));
+              context, pageRouteBuilder(app, page: FulLScreen(element.image)));
         })));
 
         widgets.add(_aBitSpace());
@@ -89,13 +86,14 @@ class TutorialComponent extends AbstractTutorialComponent {
         widgets.add(MarkdownBody(
             selectable: true, data: '```\n' + element.code! + '```'));
         widgets.add(Center(
-            child: OutlineButton(
-                child: Text('Copy to clipboard'),
-                onPressed: () {
-                  Clipboard.setData(ClipboardData(text: element.code));
-                },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0)))));
+            child: button(
+          app,
+          context,
+          label: 'Copy to clipboard',
+          onPressed: () {
+            Clipboard.setData(ClipboardData(text: element.code));
+          },
+        )));
         widgets.add(_aBitSpace());
       }
     });

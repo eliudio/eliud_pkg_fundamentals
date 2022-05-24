@@ -26,23 +26,22 @@ class BookletComponentBloc extends Bloc<BookletComponentEvent, BookletComponentS
   final BookletRepository? bookletRepository;
   StreamSubscription? _bookletSubscription;
 
-  Stream<BookletComponentState> _mapLoadBookletComponentUpdateToState(String documentId) async* {
+  void _mapLoadBookletComponentUpdateToState(String documentId) {
     _bookletSubscription?.cancel();
     _bookletSubscription = bookletRepository!.listenTo(documentId, (value) {
-      if (value != null) add(BookletComponentUpdated(value: value));
+      if (value != null) {
+        add(BookletComponentUpdated(value: value));
+      }
     });
   }
 
-  BookletComponentBloc({ this.bookletRepository }): super(BookletComponentUninitialized());
-
-  @override
-  Stream<BookletComponentState> mapEventToState(BookletComponentEvent event) async* {
-    final currentState = state;
-    if (event is FetchBookletComponent) {
-      yield* _mapLoadBookletComponentUpdateToState(event.id!);
-    } else if (event is BookletComponentUpdated) {
-      yield BookletComponentLoaded(value: event.value);
-    }
+  BookletComponentBloc({ this.bookletRepository }): super(BookletComponentUninitialized()) {
+    on <FetchBookletComponent> ((event, emit) {
+      _mapLoadBookletComponentUpdateToState(event.id!);
+    });
+    on <BookletComponentUpdated> ((event, emit) {
+      emit(BookletComponentLoaded(value: event.value));
+    });
   }
 
   @override

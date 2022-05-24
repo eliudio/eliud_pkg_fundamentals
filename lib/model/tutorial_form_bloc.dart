@@ -51,7 +51,7 @@ class TutorialFormBloc extends Bloc<TutorialFormEvent, TutorialFormState> {
   Stream<TutorialFormState> mapEventToState(TutorialFormEvent event) async* {
     final currentState = state;
     if (currentState is TutorialFormUninitialized) {
-      if (event is InitialiseNewTutorialFormEvent) {
+      on <InitialiseNewTutorialFormEvent> ((event, emit) {
         TutorialFormLoaded loaded = TutorialFormLoaded(value: TutorialModel(
                                                documentID: "",
                                  appId: "",
@@ -61,64 +61,54 @@ class TutorialFormBloc extends Bloc<TutorialFormEvent, TutorialFormState> {
                                  tutorialEntries: [],
 
         ));
-        yield loaded;
-        return;
-
-      }
+        emit(loaded);
+      });
 
 
       if (event is InitialiseTutorialFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
         TutorialFormLoaded loaded = TutorialFormLoaded(value: await tutorialRepository(appId: appId)!.get(event.value!.documentID));
-        yield loaded;
-        return;
+        emit(loaded);
       } else if (event is InitialiseTutorialFormNoLoadEvent) {
         TutorialFormLoaded loaded = TutorialFormLoaded(value: event.value);
-        yield loaded;
-        return;
+        emit(loaded);
       }
     } else if (currentState is TutorialFormInitialized) {
       TutorialModel? newValue = null;
-      if (event is ChangedTutorialDocumentID) {
+      on <ChangedTutorialDocumentID> ((event, emit) async {
         newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event.value, newValue).asStream();
+          emit(await _isDocumentIDValid(event.value, newValue!));
         } else {
-          yield SubmittableTutorialForm(value: newValue);
+          emit(SubmittableTutorialForm(value: newValue));
         }
 
-        return;
-      }
-      if (event is ChangedTutorialName) {
+      });
+      on <ChangedTutorialName> ((event, emit) async {
         newValue = currentState.value!.copyWith(name: event.value);
-        yield SubmittableTutorialForm(value: newValue);
+        emit(SubmittableTutorialForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedTutorialTitle) {
+      });
+      on <ChangedTutorialTitle> ((event, emit) async {
         newValue = currentState.value!.copyWith(title: event.value);
-        yield SubmittableTutorialForm(value: newValue);
+        emit(SubmittableTutorialForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedTutorialDescription) {
+      });
+      on <ChangedTutorialDescription> ((event, emit) async {
         newValue = currentState.value!.copyWith(description: event.value);
-        yield SubmittableTutorialForm(value: newValue);
+        emit(SubmittableTutorialForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedTutorialTutorialEntries) {
+      });
+      on <ChangedTutorialTutorialEntries> ((event, emit) async {
         newValue = currentState.value!.copyWith(tutorialEntries: event.value);
-        yield SubmittableTutorialForm(value: newValue);
+        emit(SubmittableTutorialForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedTutorialConditions) {
+      });
+      on <ChangedTutorialConditions> ((event, emit) async {
         newValue = currentState.value!.copyWith(conditions: event.value);
-        yield SubmittableTutorialForm(value: newValue);
+        emit(SubmittableTutorialForm(value: newValue));
 
-        return;
-      }
+      });
     }
   }
 

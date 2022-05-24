@@ -77,7 +77,7 @@ class DividerListUpdated extends DividerListEvent {
 }
 
 class DividerChangeQuery extends DividerListEvent {
-  final EliudQuery newQuery;
+  final EliudQuery? newQuery;
 
   const DividerChangeQuery({ required this.newQuery });
 

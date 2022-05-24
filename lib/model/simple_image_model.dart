@@ -15,6 +15,7 @@
 
 import 'package:eliud_core/tools/common_tools.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eliud_core/core/base/model_base.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
@@ -35,14 +36,14 @@ import 'package:eliud_core/tools/random.dart';
 
 
 
-class SimpleImageModel {
-  String? documentID;
-  String? appId;
+class SimpleImageModel implements ModelBase, WithAppId {
+  String documentID;
+  String appId;
   String? description;
   PlatformMediumModel? image;
   StorageConditionsModel? conditions;
 
-  SimpleImageModel({this.documentID, this.appId, this.description, this.image, this.conditions, })  {
+  SimpleImageModel({required this.documentID, required this.appId, this.description, this.image, this.conditions, })  {
     assert(documentID != null);
   }
 
@@ -83,7 +84,7 @@ class SimpleImageModel {
     var counter = 0;
     return SimpleImageModel(
           documentID: documentID, 
-          appId: entity.appId, 
+          appId: entity.appId ?? '', 
           description: entity.description, 
           conditions: 
             await StorageConditionsModel.fromEntity(entity.conditions), 
@@ -107,7 +108,7 @@ class SimpleImageModel {
     var counter = 0;
     return SimpleImageModel(
           documentID: documentID, 
-          appId: entity.appId, 
+          appId: entity.appId ?? '', 
           description: entity.description, 
           image: imageHolder, 
           conditions: 

@@ -77,7 +77,7 @@ class DecoratedContentListUpdated extends DecoratedContentListEvent {
 }
 
 class DecoratedContentChangeQuery extends DecoratedContentListEvent {
-  final EliudQuery newQuery;
+  final EliudQuery? newQuery;
 
   const DecoratedContentChangeQuery({ required this.newQuery });
 

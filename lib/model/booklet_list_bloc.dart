@@ -38,9 +38,47 @@ class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
   BookletListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required BookletRepository bookletRepository, this.bookletLimit = 5})
       : assert(bookletRepository != null),
         _bookletRepository = bookletRepository,
-        super(BookletListLoading());
+        super(BookletListLoading()) {
+    on <LoadBookletList> ((event, emit) {
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadBookletListToState();
+      } else {
+        _mapLoadBookletListWithDetailsToState();
+      }
+    });
+    
+    on <NewPage> ((event, emit) {
+      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+      _mapLoadBookletListWithDetailsToState();
+    });
+    
+    on <BookletChangeQuery> ((event, emit) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadBookletListToState();
+      } else {
+        _mapLoadBookletListWithDetailsToState();
+      }
+    });
+      
+    on <AddBookletList> ((event, emit) async {
+      await _mapAddBookletListToState(event);
+    });
+    
+    on <UpdateBookletList> ((event, emit) async {
+      await _mapUpdateBookletListToState(event);
+    });
+    
+    on <DeleteBookletList> ((event, emit) async {
+      await _mapDeleteBookletListToState(event);
+    });
+    
+    on <BookletListUpdated> ((event, emit) {
+      emit(_mapBookletListUpdatedToState(event));
+    });
+  }
 
-  Stream<BookletListState> _mapLoadBookletListToState() async* {
+  Future<void> _mapLoadBookletListToState() async {
     int amountNow =  (state is BookletListLoaded) ? (state as BookletListLoaded).values!.length : 0;
     _bookletsListSubscription?.cancel();
     _bookletsListSubscription = _bookletRepository.listen(
@@ -52,7 +90,7 @@ class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
     );
   }
 
-  Stream<BookletListState> _mapLoadBookletListWithDetailsToState() async* {
+  Future<void> _mapLoadBookletListWithDetailsToState() async {
     int amountNow =  (state is BookletListLoaded) ? (state as BookletListLoaded).values!.length : 0;
     _bookletsListSubscription?.cancel();
     _bookletsListSubscription = _bookletRepository.listenWithDetails(
@@ -64,58 +102,29 @@ class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
     );
   }
 
-  Stream<BookletListState> _mapAddBookletListToState(AddBookletList event) async* {
+  Future<void> _mapAddBookletListToState(AddBookletList event) async {
     var value = event.value;
-    if (value != null) 
-      _bookletRepository.add(value);
-  }
-
-  Stream<BookletListState> _mapUpdateBookletListToState(UpdateBookletList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _bookletRepository.update(value);
-  }
-
-  Stream<BookletListState> _mapDeleteBookletListToState(DeleteBookletList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _bookletRepository.delete(value);
-  }
-
-  Stream<BookletListState> _mapBookletListUpdatedToState(
-      BookletListUpdated event) async* {
-    yield BookletListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
-  }
-
-  @override
-  Stream<BookletListState> mapEventToState(BookletListEvent event) async* {
-    if (event is LoadBookletList) {
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadBookletListToState();
-      } else {
-        yield* _mapLoadBookletListWithDetailsToState();
-      }
-    }
-    if (event is NewPage) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
-      yield* _mapLoadBookletListWithDetailsToState();
-    } else if (event is BookletChangeQuery) {
-      eliudQuery = event.newQuery;
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadBookletListToState();
-      } else {
-        yield* _mapLoadBookletListWithDetailsToState();
-      }
-    } else if (event is AddBookletList) {
-      yield* _mapAddBookletListToState(event);
-    } else if (event is UpdateBookletList) {
-      yield* _mapUpdateBookletListToState(event);
-    } else if (event is DeleteBookletList) {
-      yield* _mapDeleteBookletListToState(event);
-    } else if (event is BookletListUpdated) {
-      yield* _mapBookletListUpdatedToState(event);
+    if (value != null) {
+      await _bookletRepository.add(value);
     }
   }
+
+  Future<void> _mapUpdateBookletListToState(UpdateBookletList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _bookletRepository.update(value);
+    }
+  }
+
+  Future<void> _mapDeleteBookletListToState(DeleteBookletList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _bookletRepository.delete(value);
+    }
+  }
+
+  BookletListLoaded _mapBookletListUpdatedToState(
+      BookletListUpdated event) => BookletListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {

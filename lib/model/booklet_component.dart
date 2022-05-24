@@ -39,7 +39,7 @@ abstract class AbstractBookletComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<BookletComponentBloc> (
           create: (context) => BookletComponentBloc(
-            bookletRepository: bookletRepository(appId: app.documentID!)!)
+            bookletRepository: bookletRepository(appId: app.documentID)!)
         ..add(FetchBookletComponent(id: bookletId)),
       child: _bookletBlockBuilder(context),
     );

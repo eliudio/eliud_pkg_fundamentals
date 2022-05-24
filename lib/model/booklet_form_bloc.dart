@@ -51,7 +51,7 @@ class BookletFormBloc extends Bloc<BookletFormEvent, BookletFormState> {
   Stream<BookletFormState> mapEventToState(BookletFormEvent event) async* {
     final currentState = state;
     if (currentState is BookletFormUninitialized) {
-      if (event is InitialiseNewBookletFormEvent) {
+      on <InitialiseNewBookletFormEvent> ((event, emit) {
         BookletFormLoaded loaded = BookletFormLoaded(value: BookletModel(
                                                documentID: "",
                                  appId: "",
@@ -59,52 +59,44 @@ class BookletFormBloc extends Bloc<BookletFormEvent, BookletFormState> {
                                  sections: [],
 
         ));
-        yield loaded;
-        return;
-
-      }
+        emit(loaded);
+      });
 
 
       if (event is InitialiseBookletFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
         BookletFormLoaded loaded = BookletFormLoaded(value: await bookletRepository(appId: appId)!.get(event.value!.documentID));
-        yield loaded;
-        return;
+        emit(loaded);
       } else if (event is InitialiseBookletFormNoLoadEvent) {
         BookletFormLoaded loaded = BookletFormLoaded(value: event.value);
-        yield loaded;
-        return;
+        emit(loaded);
       }
     } else if (currentState is BookletFormInitialized) {
       BookletModel? newValue = null;
-      if (event is ChangedBookletDocumentID) {
+      on <ChangedBookletDocumentID> ((event, emit) async {
         newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event.value, newValue).asStream();
+          emit(await _isDocumentIDValid(event.value, newValue!));
         } else {
-          yield SubmittableBookletForm(value: newValue);
+          emit(SubmittableBookletForm(value: newValue));
         }
 
-        return;
-      }
-      if (event is ChangedBookletDescription) {
+      });
+      on <ChangedBookletDescription> ((event, emit) async {
         newValue = currentState.value!.copyWith(description: event.value);
-        yield SubmittableBookletForm(value: newValue);
+        emit(SubmittableBookletForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedBookletSections) {
+      });
+      on <ChangedBookletSections> ((event, emit) async {
         newValue = currentState.value!.copyWith(sections: event.value);
-        yield SubmittableBookletForm(value: newValue);
+        emit(SubmittableBookletForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedBookletConditions) {
+      });
+      on <ChangedBookletConditions> ((event, emit) async {
         newValue = currentState.value!.copyWith(conditions: event.value);
-        yield SubmittableBookletForm(value: newValue);
+        emit(SubmittableBookletForm(value: newValue));
 
-        return;
-      }
+      });
     }
   }
 

@@ -21,7 +21,7 @@ class DividerComponentConstructorDefault implements ComponentConstructor {
 
   @override
   Future<dynamic> getModel({required AppModel app, required String id}) async =>
-      await dividerRepository(appId: app.documentID!)!.get(id);
+      await dividerRepository(appId: app.documentID)!.get(id);
 }
 
 class DividerComponent extends AbstractDividerComponent {

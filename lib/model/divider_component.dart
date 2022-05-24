@@ -39,7 +39,7 @@ abstract class AbstractDividerComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<DividerComponentBloc> (
           create: (context) => DividerComponentBloc(
-            dividerRepository: dividerRepository(appId: app.documentID!)!)
+            dividerRepository: dividerRepository(appId: app.documentID)!)
         ..add(FetchDividerComponent(id: dividerId)),
       child: _dividerBlockBuilder(context),
     );

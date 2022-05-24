@@ -77,7 +77,7 @@ class BookletListUpdated extends BookletListEvent {
 }
 
 class BookletChangeQuery extends BookletListEvent {
-  final EliudQuery newQuery;
+  final EliudQuery? newQuery;
 
   const BookletChangeQuery({ required this.newQuery });
 

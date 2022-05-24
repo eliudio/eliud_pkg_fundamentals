@@ -51,7 +51,7 @@ class DividerFormBloc extends Bloc<DividerFormEvent, DividerFormState> {
   Stream<DividerFormState> mapEventToState(DividerFormEvent event) async* {
     final currentState = state;
     if (currentState is DividerFormUninitialized) {
-      if (event is InitialiseNewDividerFormEvent) {
+      on <InitialiseNewDividerFormEvent> ((event, emit) {
         DividerFormLoaded loaded = DividerFormLoaded(value: DividerModel(
                                                documentID: "",
                                  appId: "",
@@ -63,96 +63,84 @@ class DividerFormBloc extends Bloc<DividerFormEvent, DividerFormState> {
                                  endIndent: 0.0,
 
         ));
-        yield loaded;
-        return;
-
-      }
+        emit(loaded);
+      });
 
 
       if (event is InitialiseDividerFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
         DividerFormLoaded loaded = DividerFormLoaded(value: await dividerRepository(appId: appId)!.get(event.value!.documentID));
-        yield loaded;
-        return;
+        emit(loaded);
       } else if (event is InitialiseDividerFormNoLoadEvent) {
         DividerFormLoaded loaded = DividerFormLoaded(value: event.value);
-        yield loaded;
-        return;
+        emit(loaded);
       }
     } else if (currentState is DividerFormInitialized) {
       DividerModel? newValue = null;
-      if (event is ChangedDividerDocumentID) {
+      on <ChangedDividerDocumentID> ((event, emit) async {
         newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event.value, newValue).asStream();
+          emit(await _isDocumentIDValid(event.value, newValue!));
         } else {
-          yield SubmittableDividerForm(value: newValue);
+          emit(SubmittableDividerForm(value: newValue));
         }
 
-        return;
-      }
-      if (event is ChangedDividerDescription) {
+      });
+      on <ChangedDividerDescription> ((event, emit) async {
         newValue = currentState.value!.copyWith(description: event.value);
-        yield SubmittableDividerForm(value: newValue);
+        emit(SubmittableDividerForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedDividerColor) {
+      });
+      on <ChangedDividerColor> ((event, emit) async {
         newValue = currentState.value!.copyWith(color: event.value);
-        yield SubmittableDividerForm(value: newValue);
+        emit(SubmittableDividerForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedDividerHeight) {
+      });
+      on <ChangedDividerHeight> ((event, emit) async {
         if (isDouble(event.value!)) {
           newValue = currentState.value!.copyWith(height: double.parse(event.value!));
-          yield SubmittableDividerForm(value: newValue);
+          emit(SubmittableDividerForm(value: newValue));
 
         } else {
           newValue = currentState.value!.copyWith(height: 0.0);
-          yield HeightDividerFormError(message: "Value should be a number or decimal number", value: newValue);
+          emit(HeightDividerFormError(message: "Value should be a number or decimal number", value: newValue));
         }
-        return;
-      }
-      if (event is ChangedDividerThickness) {
+      });
+      on <ChangedDividerThickness> ((event, emit) async {
         if (isDouble(event.value!)) {
           newValue = currentState.value!.copyWith(thickness: double.parse(event.value!));
-          yield SubmittableDividerForm(value: newValue);
+          emit(SubmittableDividerForm(value: newValue));
 
         } else {
           newValue = currentState.value!.copyWith(thickness: 0.0);
-          yield ThicknessDividerFormError(message: "Value should be a number or decimal number", value: newValue);
+          emit(ThicknessDividerFormError(message: "Value should be a number or decimal number", value: newValue));
         }
-        return;
-      }
-      if (event is ChangedDividerIndent) {
+      });
+      on <ChangedDividerIndent> ((event, emit) async {
         if (isDouble(event.value!)) {
           newValue = currentState.value!.copyWith(indent: double.parse(event.value!));
-          yield SubmittableDividerForm(value: newValue);
+          emit(SubmittableDividerForm(value: newValue));
 
         } else {
           newValue = currentState.value!.copyWith(indent: 0.0);
-          yield IndentDividerFormError(message: "Value should be a number or decimal number", value: newValue);
+          emit(IndentDividerFormError(message: "Value should be a number or decimal number", value: newValue));
         }
-        return;
-      }
-      if (event is ChangedDividerEndIndent) {
+      });
+      on <ChangedDividerEndIndent> ((event, emit) async {
         if (isDouble(event.value!)) {
           newValue = currentState.value!.copyWith(endIndent: double.parse(event.value!));
-          yield SubmittableDividerForm(value: newValue);
+          emit(SubmittableDividerForm(value: newValue));
 
         } else {
           newValue = currentState.value!.copyWith(endIndent: 0.0);
-          yield EndIndentDividerFormError(message: "Value should be a number or decimal number", value: newValue);
+          emit(EndIndentDividerFormError(message: "Value should be a number or decimal number", value: newValue));
         }
-        return;
-      }
-      if (event is ChangedDividerConditions) {
+      });
+      on <ChangedDividerConditions> ((event, emit) async {
         newValue = currentState.value!.copyWith(conditions: event.value);
-        yield SubmittableDividerForm(value: newValue);
+        emit(SubmittableDividerForm(value: newValue));
 
-        return;
-      }
+      });
     }
   }
 

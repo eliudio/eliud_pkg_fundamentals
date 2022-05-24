@@ -321,9 +321,9 @@ class ListComponent extends StatelessWidget with HasFab {
           create: (context) => BookletListBloc(
             eliudQuery: EliudQuery(theConditions: [
               EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
             ),
-            bookletRepository: bookletRepository(appId: app.documentID!)!,
+            bookletRepository: bookletRepository(appId: app.documentID)!,
           )..add(LoadBookletList()),
         )
       ],
@@ -338,9 +338,9 @@ class ListComponent extends StatelessWidget with HasFab {
           create: (context) => DecoratedContentListBloc(
             eliudQuery: EliudQuery(theConditions: [
               EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
             ),
-            decoratedContentRepository: decoratedContentRepository(appId: app.documentID!)!,
+            decoratedContentRepository: decoratedContentRepository(appId: app.documentID)!,
           )..add(LoadDecoratedContentList()),
         )
       ],
@@ -355,9 +355,9 @@ class ListComponent extends StatelessWidget with HasFab {
           create: (context) => DividerListBloc(
             eliudQuery: EliudQuery(theConditions: [
               EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
             ),
-            dividerRepository: dividerRepository(appId: app.documentID!)!,
+            dividerRepository: dividerRepository(appId: app.documentID)!,
           )..add(LoadDividerList()),
         )
       ],
@@ -372,9 +372,9 @@ class ListComponent extends StatelessWidget with HasFab {
           create: (context) => DocumentListBloc(
             eliudQuery: EliudQuery(theConditions: [
               EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
             ),
-            documentRepository: documentRepository(appId: app.documentID!)!,
+            documentRepository: documentRepository(appId: app.documentID)!,
           )..add(LoadDocumentList()),
         )
       ],
@@ -389,9 +389,9 @@ class ListComponent extends StatelessWidget with HasFab {
           create: (context) => FaderListBloc(
             eliudQuery: EliudQuery(theConditions: [
               EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
             ),
-            faderRepository: faderRepository(appId: app.documentID!)!,
+            faderRepository: faderRepository(appId: app.documentID)!,
           )..add(LoadFaderList()),
         )
       ],
@@ -406,9 +406,9 @@ class ListComponent extends StatelessWidget with HasFab {
           create: (context) => GridListBloc(
             eliudQuery: EliudQuery(theConditions: [
               EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
             ),
-            gridRepository: gridRepository(appId: app.documentID!)!,
+            gridRepository: gridRepository(appId: app.documentID)!,
           )..add(LoadGridList()),
         )
       ],
@@ -423,9 +423,9 @@ class ListComponent extends StatelessWidget with HasFab {
           create: (context) => PresentationListBloc(
             eliudQuery: EliudQuery(theConditions: [
               EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
             ),
-            presentationRepository: presentationRepository(appId: app.documentID!)!,
+            presentationRepository: presentationRepository(appId: app.documentID)!,
           )..add(LoadPresentationList()),
         )
       ],
@@ -440,9 +440,9 @@ class ListComponent extends StatelessWidget with HasFab {
           create: (context) => SimpleImageListBloc(
             eliudQuery: EliudQuery(theConditions: [
               EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
             ),
-            simpleImageRepository: simpleImageRepository(appId: app.documentID!)!,
+            simpleImageRepository: simpleImageRepository(appId: app.documentID)!,
           )..add(LoadSimpleImageList()),
         )
       ],
@@ -457,9 +457,9 @@ class ListComponent extends StatelessWidget with HasFab {
           create: (context) => SimpleTextListBloc(
             eliudQuery: EliudQuery(theConditions: [
               EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
             ),
-            simpleTextRepository: simpleTextRepository(appId: app.documentID!)!,
+            simpleTextRepository: simpleTextRepository(appId: app.documentID)!,
           )..add(LoadSimpleTextList()),
         )
       ],
@@ -474,9 +474,9 @@ class ListComponent extends StatelessWidget with HasFab {
           create: (context) => TutorialListBloc(
             eliudQuery: EliudQuery(theConditions: [
               EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
             ),
-            tutorialRepository: tutorialRepository(appId: app.documentID!)!,
+            tutorialRepository: tutorialRepository(appId: app.documentID)!,
           )..add(LoadTutorialList()),
         )
       ],
@@ -523,9 +523,9 @@ class DropdownButtonComponent extends StatelessWidget {
           create: (context) => BookletListBloc(
             eliudQuery: EliudQuery(theConditions: [
               EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
             ),
-            bookletRepository: bookletRepository(appId: app.documentID!)!,
+            bookletRepository: bookletRepository(appId: app.documentID)!,
           )..add(LoadBookletList()),
         )
       ],
@@ -540,9 +540,9 @@ class DropdownButtonComponent extends StatelessWidget {
           create: (context) => DecoratedContentListBloc(
             eliudQuery: EliudQuery(theConditions: [
               EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
             ),
-            decoratedContentRepository: decoratedContentRepository(appId: app.documentID!)!,
+            decoratedContentRepository: decoratedContentRepository(appId: app.documentID)!,
           )..add(LoadDecoratedContentList()),
         )
       ],
@@ -557,9 +557,9 @@ class DropdownButtonComponent extends StatelessWidget {
           create: (context) => DividerListBloc(
             eliudQuery: EliudQuery(theConditions: [
               EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
             ),
-            dividerRepository: dividerRepository(appId: app.documentID!)!,
+            dividerRepository: dividerRepository(appId: app.documentID)!,
           )..add(LoadDividerList()),
         )
       ],
@@ -574,9 +574,9 @@ class DropdownButtonComponent extends StatelessWidget {
           create: (context) => DocumentListBloc(
             eliudQuery: EliudQuery(theConditions: [
               EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
             ),
-            documentRepository: documentRepository(appId: app.documentID!)!,
+            documentRepository: documentRepository(appId: app.documentID)!,
           )..add(LoadDocumentList()),
         )
       ],
@@ -591,9 +591,9 @@ class DropdownButtonComponent extends StatelessWidget {
           create: (context) => FaderListBloc(
             eliudQuery: EliudQuery(theConditions: [
               EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
             ),
-            faderRepository: faderRepository(appId: app.documentID!)!,
+            faderRepository: faderRepository(appId: app.documentID)!,
           )..add(LoadFaderList()),
         )
       ],
@@ -608,9 +608,9 @@ class DropdownButtonComponent extends StatelessWidget {
           create: (context) => GridListBloc(
             eliudQuery: EliudQuery(theConditions: [
               EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
             ),
-            gridRepository: gridRepository(appId: app.documentID!)!,
+            gridRepository: gridRepository(appId: app.documentID)!,
           )..add(LoadGridList()),
         )
       ],
@@ -625,9 +625,9 @@ class DropdownButtonComponent extends StatelessWidget {
           create: (context) => PresentationListBloc(
             eliudQuery: EliudQuery(theConditions: [
               EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
             ),
-            presentationRepository: presentationRepository(appId: app.documentID!)!,
+            presentationRepository: presentationRepository(appId: app.documentID)!,
           )..add(LoadPresentationList()),
         )
       ],
@@ -642,9 +642,9 @@ class DropdownButtonComponent extends StatelessWidget {
           create: (context) => SimpleImageListBloc(
             eliudQuery: EliudQuery(theConditions: [
               EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
             ),
-            simpleImageRepository: simpleImageRepository(appId: app.documentID!)!,
+            simpleImageRepository: simpleImageRepository(appId: app.documentID)!,
           )..add(LoadSimpleImageList()),
         )
       ],
@@ -659,9 +659,9 @@ class DropdownButtonComponent extends StatelessWidget {
           create: (context) => SimpleTextListBloc(
             eliudQuery: EliudQuery(theConditions: [
               EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
             ),
-            simpleTextRepository: simpleTextRepository(appId: app.documentID!)!,
+            simpleTextRepository: simpleTextRepository(appId: app.documentID)!,
           )..add(LoadSimpleTextList()),
         )
       ],
@@ -676,9 +676,9 @@ class DropdownButtonComponent extends StatelessWidget {
           create: (context) => TutorialListBloc(
             eliudQuery: EliudQuery(theConditions: [
               EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
-              EliudQueryCondition('appId', isEqualTo: app.documentID!),]
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
             ),
-            tutorialRepository: tutorialRepository(appId: app.documentID!)!,
+            tutorialRepository: tutorialRepository(appId: app.documentID)!,
           )..add(LoadTutorialList()),
         )
       ],

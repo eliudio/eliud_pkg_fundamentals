@@ -15,6 +15,7 @@
 
 import 'package:eliud_core/tools/common_tools.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eliud_core/core/base/model_base.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
@@ -35,9 +36,9 @@ import 'package:eliud_core/tools/random.dart';
 
 
 
-class DividerModel {
-  String? documentID;
-  String? appId;
+class DividerModel implements ModelBase, WithAppId {
+  String documentID;
+  String appId;
   String? description;
   RgbModel? color;
 
@@ -54,7 +55,7 @@ class DividerModel {
   double? endIndent;
   StorageConditionsModel? conditions;
 
-  DividerModel({this.documentID, this.appId, this.description, this.color, this.height, this.thickness, this.indent, this.endIndent, this.conditions, })  {
+  DividerModel({required this.documentID, required this.appId, this.description, this.color, this.height, this.thickness, this.indent, this.endIndent, this.conditions, })  {
     assert(documentID != null);
   }
 
@@ -103,7 +104,7 @@ class DividerModel {
     var counter = 0;
     return DividerModel(
           documentID: documentID, 
-          appId: entity.appId, 
+          appId: entity.appId ?? '', 
           description: entity.description, 
           color: 
             await RgbModel.fromEntity(entity.color), 
@@ -122,7 +123,7 @@ class DividerModel {
     var counter = 0;
     return DividerModel(
           documentID: documentID, 
-          appId: entity.appId, 
+          appId: entity.appId ?? '', 
           description: entity.description, 
           color: 
             await RgbModel.fromEntityPlus(entity.color, appId: appId), 

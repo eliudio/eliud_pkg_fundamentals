@@ -46,41 +46,35 @@ class LinkFormBloc extends Bloc<LinkFormEvent, LinkFormState> {
   Stream<LinkFormState> mapEventToState(LinkFormEvent event) async* {
     final currentState = state;
     if (currentState is LinkFormUninitialized) {
-      if (event is InitialiseNewLinkFormEvent) {
+      on <InitialiseNewLinkFormEvent> ((event, emit) {
         LinkFormLoaded loaded = LinkFormLoaded(value: LinkModel(
                                                documentID: "IDENTIFIED", 
                                  linkText: "",
 
         ));
-        yield loaded;
-        return;
-
-      }
+        emit(loaded);
+      });
 
 
       if (event is InitialiseLinkFormEvent) {
         LinkFormLoaded loaded = LinkFormLoaded(value: event.value);
-        yield loaded;
-        return;
+        emit(loaded);
       } else if (event is InitialiseLinkFormNoLoadEvent) {
         LinkFormLoaded loaded = LinkFormLoaded(value: event.value);
-        yield loaded;
-        return;
+        emit(loaded);
       }
     } else if (currentState is LinkFormInitialized) {
       LinkModel? newValue = null;
-      if (event is ChangedLinkLinkText) {
+      on <ChangedLinkLinkText> ((event, emit) async {
         newValue = currentState.value!.copyWith(linkText: event.value);
-        yield SubmittableLinkForm(value: newValue);
+        emit(SubmittableLinkForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedLinkAction) {
+      });
+      on <ChangedLinkAction> ((event, emit) async {
         newValue = currentState.value!.copyWith(action: event.value);
-        yield SubmittableLinkForm(value: newValue);
+        emit(SubmittableLinkForm(value: newValue));
 
-        return;
-      }
+      });
     }
   }
 

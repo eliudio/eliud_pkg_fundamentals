@@ -15,6 +15,7 @@
 
 import 'package:eliud_core/tools/common_tools.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eliud_core/core/base/model_base.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
@@ -51,16 +52,16 @@ SimpleTextAlign toSimpleTextAlign(int? index) {
 }
 
 
-class SimpleTextModel {
-  String? documentID;
-  String? appId;
+class SimpleTextModel implements ModelBase, WithAppId {
+  String documentID;
+  String appId;
   String? description;
   String? title;
   String? text;
   StorageConditionsModel? conditions;
   SimpleTextAlign? textAlign;
 
-  SimpleTextModel({this.documentID, this.appId, this.description, this.title, this.text, this.conditions, this.textAlign, })  {
+  SimpleTextModel({required this.documentID, required this.appId, this.description, this.title, this.text, this.conditions, this.textAlign, })  {
     assert(documentID != null);
   }
 
@@ -105,7 +106,7 @@ class SimpleTextModel {
     var counter = 0;
     return SimpleTextModel(
           documentID: documentID, 
-          appId: entity.appId, 
+          appId: entity.appId ?? '', 
           description: entity.description, 
           title: entity.title, 
           text: entity.text, 
@@ -121,7 +122,7 @@ class SimpleTextModel {
     var counter = 0;
     return SimpleTextModel(
           documentID: documentID, 
-          appId: entity.appId, 
+          appId: entity.appId ?? '', 
           description: entity.description, 
           title: entity.title, 
           text: entity.text, 

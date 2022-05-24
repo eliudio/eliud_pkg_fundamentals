@@ -33,7 +33,7 @@ class DecoratedContentEntity {
   final double? percentageDecorationVisible;
   final StorageConditionsEntity? conditions;
 
-  DecoratedContentEntity({this.appId, this.description, this.decoratingComponentName, this.decoratingComponentId, this.contentComponentName, this.contentComponentId, this.decorationComponentPosition, this.percentageDecorationVisible, this.conditions, });
+  DecoratedContentEntity({required this.appId, this.description, this.decoratingComponentName, this.decoratingComponentId, this.contentComponentName, this.contentComponentId, this.decorationComponentPosition, this.percentageDecorationVisible, this.conditions, });
 
 
   List<Object?> get props => [appId, description, decoratingComponentName, decoratingComponentId, contentComponentName, contentComponentId, decorationComponentPosition, percentageDecorationVisible, conditions, ];

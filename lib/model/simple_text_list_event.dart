@@ -77,7 +77,7 @@ class SimpleTextListUpdated extends SimpleTextListEvent {
 }
 
 class SimpleTextChangeQuery extends SimpleTextListEvent {
-  final EliudQuery newQuery;
+  final EliudQuery? newQuery;
 
   const SimpleTextChangeQuery({ required this.newQuery });
 

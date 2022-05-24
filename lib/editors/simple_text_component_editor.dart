@@ -53,11 +53,11 @@ class SimpleTextComponentEditorConstructor
   void updateComponentWithID(AppModel app, BuildContext context, String id,
       EditorFeedback feedback) async {
     var simpleText =
-        await simpleTextRepository(appId: app.documentID!)!.get(id);
+        await simpleTextRepository(appId: app.documentID)!.get(id);
     if (simpleText != null) {
       _openIt(app, context, false, simpleText, feedback);
     } else {
-      openErrorDialog(app, context, app.documentID! + '/_error',
+      openErrorDialog(app, context, app.documentID + '/_error',
           title: 'Error',
           errorMessage: 'Cannot find chat dashboard with id $id');
     }
@@ -68,7 +68,7 @@ class SimpleTextComponentEditorConstructor
     openComplexDialog(
       app,
       context,
-      app.documentID! + '/chatdashboard',
+      app.documentID + '/chatdashboard',
       title: create
           ? 'Create Chat Dashboard'
           : 'Update Chat Dashboard',
@@ -76,7 +76,7 @@ class SimpleTextComponentEditorConstructor
       widthFraction: .9,
       child: BlocProvider<SimpleTextBloc>(
           create: (context) => SimpleTextBloc(
-                app.documentID!,
+                app.documentID,
                 /*create,
             */
                 feedback,
@@ -158,7 +158,7 @@ class _SimpleTextComponentEditorState
                         getListTile(context, widget.app,
                             leading: Icon(Icons.vpn_key),
                             title: text(widget.app, context,
-                                simpleTextState.model.documentID!)),
+                                simpleTextState.model.documentID)),
                         getListTile(context, widget.app,
                             leading: Icon(Icons.description),
                             title: dialogField(

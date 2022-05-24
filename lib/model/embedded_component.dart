@@ -171,14 +171,14 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
     }
 
     Future<void> delete(DocumentItemModel value) {
-      int index = _index(value.documentID!);
+      int index = _index(value.documentID);
       if (index >= 0) items.removeAt(index);
       trigger(items);
       return Future.value(value);
     }
 
     Future<DocumentItemModel> update(DocumentItemModel value) {
-      int index = _index(value.documentID!);
+      int index = _index(value.documentID);
       if (index >= 0) {
         items.replaceRange(index, index+1, [value]);
         trigger(items);
@@ -274,14 +274,14 @@ class LinkInMemoryRepository implements LinkRepository {
     }
 
     Future<void> delete(LinkModel value) {
-      int index = _index(value.documentID!);
+      int index = _index(value.documentID);
       if (index >= 0) items.removeAt(index);
       trigger(items);
       return Future.value(value);
     }
 
     Future<LinkModel> update(LinkModel value) {
-      int index = _index(value.documentID!);
+      int index = _index(value.documentID);
       if (index >= 0) {
         items.replaceRange(index, index+1, [value]);
         trigger(items);
@@ -377,14 +377,14 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
     }
 
     Future<void> delete(ListedItemModel value) {
-      int index = _index(value.documentID!);
+      int index = _index(value.documentID);
       if (index >= 0) items.removeAt(index);
       trigger(items);
       return Future.value(value);
     }
 
     Future<ListedItemModel> update(ListedItemModel value) {
-      int index = _index(value.documentID!);
+      int index = _index(value.documentID);
       if (index >= 0) {
         items.replaceRange(index, index+1, [value]);
         trigger(items);
@@ -480,14 +480,14 @@ class SectionInMemoryRepository implements SectionRepository {
     }
 
     Future<void> delete(SectionModel value) {
-      int index = _index(value.documentID!);
+      int index = _index(value.documentID);
       if (index >= 0) items.removeAt(index);
       trigger(items);
       return Future.value(value);
     }
 
     Future<SectionModel> update(SectionModel value) {
-      int index = _index(value.documentID!);
+      int index = _index(value.documentID);
       if (index >= 0) {
         items.replaceRange(index, index+1, [value]);
         trigger(items);
@@ -583,14 +583,14 @@ class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
     }
 
     Future<void> delete(TutorialEntryModel value) {
-      int index = _index(value.documentID!);
+      int index = _index(value.documentID);
       if (index >= 0) items.removeAt(index);
       trigger(items);
       return Future.value(value);
     }
 
     Future<TutorialEntryModel> update(TutorialEntryModel value) {
-      int index = _index(value.documentID!);
+      int index = _index(value.documentID);
       if (index >= 0) {
         items.replaceRange(index, index+1, [value]);
         trigger(items);

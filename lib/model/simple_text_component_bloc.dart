@@ -26,23 +26,22 @@ class SimpleTextComponentBloc extends Bloc<SimpleTextComponentEvent, SimpleTextC
   final SimpleTextRepository? simpleTextRepository;
   StreamSubscription? _simpleTextSubscription;
 
-  Stream<SimpleTextComponentState> _mapLoadSimpleTextComponentUpdateToState(String documentId) async* {
+  void _mapLoadSimpleTextComponentUpdateToState(String documentId) {
     _simpleTextSubscription?.cancel();
     _simpleTextSubscription = simpleTextRepository!.listenTo(documentId, (value) {
-      if (value != null) add(SimpleTextComponentUpdated(value: value));
+      if (value != null) {
+        add(SimpleTextComponentUpdated(value: value));
+      }
     });
   }
 
-  SimpleTextComponentBloc({ this.simpleTextRepository }): super(SimpleTextComponentUninitialized());
-
-  @override
-  Stream<SimpleTextComponentState> mapEventToState(SimpleTextComponentEvent event) async* {
-    final currentState = state;
-    if (event is FetchSimpleTextComponent) {
-      yield* _mapLoadSimpleTextComponentUpdateToState(event.id!);
-    } else if (event is SimpleTextComponentUpdated) {
-      yield SimpleTextComponentLoaded(value: event.value);
-    }
+  SimpleTextComponentBloc({ this.simpleTextRepository }): super(SimpleTextComponentUninitialized()) {
+    on <FetchSimpleTextComponent> ((event, emit) {
+      _mapLoadSimpleTextComponentUpdateToState(event.id!);
+    });
+    on <SimpleTextComponentUpdated> ((event, emit) {
+      emit(SimpleTextComponentLoaded(value: event.value));
+    });
   }
 
   @override

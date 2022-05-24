@@ -30,7 +30,7 @@ class SimpleTextEntity {
   final StorageConditionsEntity? conditions;
   final int? textAlign;
 
-  SimpleTextEntity({this.appId, this.description, this.title, this.text, this.conditions, this.textAlign, });
+  SimpleTextEntity({required this.appId, this.description, this.title, this.text, this.conditions, this.textAlign, });
 
 
   List<Object?> get props => [appId, description, title, text, conditions, textAlign, ];

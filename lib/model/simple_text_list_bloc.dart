@@ -38,9 +38,47 @@ class SimpleTextListBloc extends Bloc<SimpleTextListEvent, SimpleTextListState> 
   SimpleTextListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required SimpleTextRepository simpleTextRepository, this.simpleTextLimit = 5})
       : assert(simpleTextRepository != null),
         _simpleTextRepository = simpleTextRepository,
-        super(SimpleTextListLoading());
+        super(SimpleTextListLoading()) {
+    on <LoadSimpleTextList> ((event, emit) {
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadSimpleTextListToState();
+      } else {
+        _mapLoadSimpleTextListWithDetailsToState();
+      }
+    });
+    
+    on <NewPage> ((event, emit) {
+      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+      _mapLoadSimpleTextListWithDetailsToState();
+    });
+    
+    on <SimpleTextChangeQuery> ((event, emit) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadSimpleTextListToState();
+      } else {
+        _mapLoadSimpleTextListWithDetailsToState();
+      }
+    });
+      
+    on <AddSimpleTextList> ((event, emit) async {
+      await _mapAddSimpleTextListToState(event);
+    });
+    
+    on <UpdateSimpleTextList> ((event, emit) async {
+      await _mapUpdateSimpleTextListToState(event);
+    });
+    
+    on <DeleteSimpleTextList> ((event, emit) async {
+      await _mapDeleteSimpleTextListToState(event);
+    });
+    
+    on <SimpleTextListUpdated> ((event, emit) {
+      emit(_mapSimpleTextListUpdatedToState(event));
+    });
+  }
 
-  Stream<SimpleTextListState> _mapLoadSimpleTextListToState() async* {
+  Future<void> _mapLoadSimpleTextListToState() async {
     int amountNow =  (state is SimpleTextListLoaded) ? (state as SimpleTextListLoaded).values!.length : 0;
     _simpleTextsListSubscription?.cancel();
     _simpleTextsListSubscription = _simpleTextRepository.listen(
@@ -52,7 +90,7 @@ class SimpleTextListBloc extends Bloc<SimpleTextListEvent, SimpleTextListState> 
     );
   }
 
-  Stream<SimpleTextListState> _mapLoadSimpleTextListWithDetailsToState() async* {
+  Future<void> _mapLoadSimpleTextListWithDetailsToState() async {
     int amountNow =  (state is SimpleTextListLoaded) ? (state as SimpleTextListLoaded).values!.length : 0;
     _simpleTextsListSubscription?.cancel();
     _simpleTextsListSubscription = _simpleTextRepository.listenWithDetails(
@@ -64,58 +102,29 @@ class SimpleTextListBloc extends Bloc<SimpleTextListEvent, SimpleTextListState> 
     );
   }
 
-  Stream<SimpleTextListState> _mapAddSimpleTextListToState(AddSimpleTextList event) async* {
+  Future<void> _mapAddSimpleTextListToState(AddSimpleTextList event) async {
     var value = event.value;
-    if (value != null) 
-      _simpleTextRepository.add(value);
-  }
-
-  Stream<SimpleTextListState> _mapUpdateSimpleTextListToState(UpdateSimpleTextList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _simpleTextRepository.update(value);
-  }
-
-  Stream<SimpleTextListState> _mapDeleteSimpleTextListToState(DeleteSimpleTextList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _simpleTextRepository.delete(value);
-  }
-
-  Stream<SimpleTextListState> _mapSimpleTextListUpdatedToState(
-      SimpleTextListUpdated event) async* {
-    yield SimpleTextListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
-  }
-
-  @override
-  Stream<SimpleTextListState> mapEventToState(SimpleTextListEvent event) async* {
-    if (event is LoadSimpleTextList) {
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadSimpleTextListToState();
-      } else {
-        yield* _mapLoadSimpleTextListWithDetailsToState();
-      }
-    }
-    if (event is NewPage) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
-      yield* _mapLoadSimpleTextListWithDetailsToState();
-    } else if (event is SimpleTextChangeQuery) {
-      eliudQuery = event.newQuery;
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadSimpleTextListToState();
-      } else {
-        yield* _mapLoadSimpleTextListWithDetailsToState();
-      }
-    } else if (event is AddSimpleTextList) {
-      yield* _mapAddSimpleTextListToState(event);
-    } else if (event is UpdateSimpleTextList) {
-      yield* _mapUpdateSimpleTextListToState(event);
-    } else if (event is DeleteSimpleTextList) {
-      yield* _mapDeleteSimpleTextListToState(event);
-    } else if (event is SimpleTextListUpdated) {
-      yield* _mapSimpleTextListUpdatedToState(event);
+    if (value != null) {
+      await _simpleTextRepository.add(value);
     }
   }
+
+  Future<void> _mapUpdateSimpleTextListToState(UpdateSimpleTextList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _simpleTextRepository.update(value);
+    }
+  }
+
+  Future<void> _mapDeleteSimpleTextListToState(DeleteSimpleTextList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _simpleTextRepository.delete(value);
+    }
+  }
+
+  SimpleTextListLoaded _mapSimpleTextListUpdatedToState(
+      SimpleTextListUpdated event) => SimpleTextListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {

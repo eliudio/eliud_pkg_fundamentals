@@ -30,7 +30,7 @@ class FaderEntity {
   final List<ListedItemEntity>? items;
   final StorageConditionsEntity? conditions;
 
-  FaderEntity({this.appId, this.description, this.animationMilliseconds, this.imageSeconds, this.items, this.conditions, });
+  FaderEntity({required this.appId, this.description, this.animationMilliseconds, this.imageSeconds, this.items, this.conditions, });
 
 
   List<Object?> get props => [appId, description, animationMilliseconds, imageSeconds, items, conditions, ];

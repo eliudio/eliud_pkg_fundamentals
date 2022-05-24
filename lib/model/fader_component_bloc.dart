@@ -26,23 +26,22 @@ class FaderComponentBloc extends Bloc<FaderComponentEvent, FaderComponentState> 
   final FaderRepository? faderRepository;
   StreamSubscription? _faderSubscription;
 
-  Stream<FaderComponentState> _mapLoadFaderComponentUpdateToState(String documentId) async* {
+  void _mapLoadFaderComponentUpdateToState(String documentId) {
     _faderSubscription?.cancel();
     _faderSubscription = faderRepository!.listenTo(documentId, (value) {
-      if (value != null) add(FaderComponentUpdated(value: value));
+      if (value != null) {
+        add(FaderComponentUpdated(value: value));
+      }
     });
   }
 
-  FaderComponentBloc({ this.faderRepository }): super(FaderComponentUninitialized());
-
-  @override
-  Stream<FaderComponentState> mapEventToState(FaderComponentEvent event) async* {
-    final currentState = state;
-    if (event is FetchFaderComponent) {
-      yield* _mapLoadFaderComponentUpdateToState(event.id!);
-    } else if (event is FaderComponentUpdated) {
-      yield FaderComponentLoaded(value: event.value);
-    }
+  FaderComponentBloc({ this.faderRepository }): super(FaderComponentUninitialized()) {
+    on <FetchFaderComponent> ((event, emit) {
+      _mapLoadFaderComponentUpdateToState(event.id!);
+    });
+    on <FaderComponentUpdated> ((event, emit) {
+      emit(FaderComponentLoaded(value: event.value));
+    });
   }
 
   @override

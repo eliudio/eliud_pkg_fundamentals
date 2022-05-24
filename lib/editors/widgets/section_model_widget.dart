@@ -111,7 +111,7 @@ class _SectionModelWidgetState extends State<SectionModelWidget> {
                         getListTile(context, widget.app,
                             leading: Icon(Icons.vpn_key),
                             title: text(widget.app, context,
-                                sectionState.model.documentID!)),
+                                sectionState.model.documentID)),
                         getListTile(context, widget.app,
                             leading: Icon(Icons.description),
                             title: dialogField(
@@ -239,7 +239,7 @@ class _SectionModelWidgetState extends State<SectionModelWidget> {
                     title: text(
                         widget.app,
                         context,
-                        (value.documentID ?? 'no documentID') +
+                        (value.documentID) +
                             ' - ' +
                             (value.linkText ?? ' no text')),
                     trailing: popupMenuButton<int>(
@@ -309,7 +309,7 @@ class _SectionModelWidgetState extends State<SectionModelWidget> {
     openFlexibleDialog(
       widget.app,
       context,
-      widget.app.documentID! + '/_linkmodel',
+      widget.app.documentID + '/_linkmodel',
       includeHeading: false,
       widthFraction: .8,
       child: LinkModelWidget.getIt(

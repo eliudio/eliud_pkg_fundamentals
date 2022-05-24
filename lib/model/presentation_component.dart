@@ -39,7 +39,7 @@ abstract class AbstractPresentationComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<PresentationComponentBloc> (
           create: (context) => PresentationComponentBloc(
-            presentationRepository: presentationRepository(appId: app.documentID!)!)
+            presentationRepository: presentationRepository(appId: app.documentID)!)
         ..add(FetchPresentationComponent(id: presentationId)),
       child: _presentationBlockBuilder(context),
     );

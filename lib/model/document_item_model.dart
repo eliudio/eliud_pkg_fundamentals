@@ -15,6 +15,7 @@
 
 import 'package:eliud_core/tools/common_tools.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eliud_core/core/base/model_base.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
@@ -35,14 +36,14 @@ import 'package:eliud_core/tools/random.dart';
 
 
 
-class DocumentItemModel {
-  String? documentID;
+class DocumentItemModel implements ModelBase {
+  String documentID;
 
   // This is the reference which you can use inside your document to use to this image, e.g. <img src = \"\${REFERENCE}\"
   String? reference;
   PlatformMediumModel? image;
 
-  DocumentItemModel({this.documentID, this.reference, this.image, })  {
+  DocumentItemModel({required this.documentID, this.reference, this.image, })  {
     assert(documentID != null);
   }
 

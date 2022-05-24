@@ -40,10 +40,10 @@ class PresentationComponentSelector extends ComponentSelector {
   @override
   Widget createSelectWidget(BuildContext context, AppModel app, int privilegeLevel, double height,
       SelectComponent selected, editorConstructor) {
-    var appId = app.documentID!;
+    var appId = app.documentID;
     return BlocProvider<PresentationListBloc>(
           create: (context) => PresentationListBloc(
-          eliudQuery: getComponentSelectorQuery(0, app.documentID!),
+          eliudQuery: getComponentSelectorQuery(0, app.documentID),
           presentationRepository:
               presentationRepository(appId: appId)!,
           )..add(LoadPresentationList()),
@@ -108,7 +108,7 @@ class _SelectPresentationWidgetState extends State<SelectPresentationWidget> wit
         (_privilegeTabController!.indexIsChanging)) {
         _currentPrivilege = _privilegeTabController!.index;
         BlocProvider.of<PresentationListBloc>(context).add(
-            PresentationChangeQuery(newQuery: getComponentSelectorQuery(_currentPrivilege, widget.app.documentID!)));
+            PresentationChangeQuery(newQuery: getComponentSelectorQuery(_currentPrivilege, widget.app.documentID)));
     }
   }
 
@@ -139,12 +139,12 @@ class _SelectPresentationWidgetState extends State<SelectPresentationWidget> wit
                       ],
                   onSelected: (selectedValue) {
                     if (selectedValue == 1) {
-                      widget.selected(value.documentID!);
+                      widget.selected(value.documentID);
                     } else if (selectedValue == 2) {
                       widget.editorConstructor.updateComponent(widget.app, context, value, (_) {});
                     }
                   }),
-              title: value.description != null ? Center(child: text(app, context, value.description!)) : value.documentID != null ? Center(child: text(app, context, value.documentID!)) : Container(),
+              title: value.description != null ? Center(child: text(app, context, value.description!)) : value.documentID != null ? Center(child: text(app, context, value.documentID)) : Container(),
               subtitle: null,
             );
           } else {

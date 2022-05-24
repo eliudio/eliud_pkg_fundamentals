@@ -74,7 +74,7 @@ class PresentationForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var appId = app.documentID!;
+    var appId = app.documentID;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<PresentationFormBloc >(
             create: (context) => PresentationFormBloc(appId,
@@ -267,23 +267,23 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
 
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _imagePositionRelativeSelectedRadioTile, 'Behind', 'Behind', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionImagePositionRelative(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _imagePositionRelativeSelectedRadioTile, 'Behind', 'Behind', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionImagePositionRelative(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _imagePositionRelativeSelectedRadioTile, 'InFront', 'InFront', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionImagePositionRelative(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _imagePositionRelativeSelectedRadioTile, 'InFront', 'InFront', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionImagePositionRelative(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _imagePositionRelativeSelectedRadioTile, 'Below', 'Below', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionImagePositionRelative(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _imagePositionRelativeSelectedRadioTile, 'Below', 'Below', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionImagePositionRelative(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _imagePositionRelativeSelectedRadioTile, 'Above', 'Above', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionImagePositionRelative(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _imagePositionRelativeSelectedRadioTile, 'Above', 'Above', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionImagePositionRelative(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _imagePositionRelativeSelectedRadioTile, 'Aside', 'Aside', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionImagePositionRelative(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _imagePositionRelativeSelectedRadioTile, 'Aside', 'Aside', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionImagePositionRelative(val))
           );
 
 
@@ -299,15 +299,15 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
 
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _imageAlignmentSelectedRadioTile, 'Left', 'Left', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionImageAlignment(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _imageAlignmentSelectedRadioTile, 'Left', 'Left', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionImageAlignment(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _imageAlignmentSelectedRadioTile, 'Center', 'Center', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionImageAlignment(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _imageAlignmentSelectedRadioTile, 'Center', 'Center', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionImageAlignment(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _imageAlignmentSelectedRadioTile, 'Right', 'Right', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionImageAlignment(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _imageAlignmentSelectedRadioTile, 'Right', 'Right', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionImageAlignment(val))
           );
 
 
@@ -445,7 +445,7 @@ class _MyPresentationFormState extends State<MyPresentationForm> {
   }
 
   bool _readOnly(AccessState accessState, PresentationFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID!));
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID));
   }
   
 

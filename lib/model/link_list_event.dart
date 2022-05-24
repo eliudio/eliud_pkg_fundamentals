@@ -77,7 +77,7 @@ class LinkListUpdated extends LinkListEvent {
 }
 
 class LinkChangeQuery extends LinkListEvent {
-  final EliudQuery newQuery;
+  final EliudQuery? newQuery;
 
   const LinkChangeQuery({ required this.newQuery });
 

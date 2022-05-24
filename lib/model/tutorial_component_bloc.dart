@@ -26,23 +26,22 @@ class TutorialComponentBloc extends Bloc<TutorialComponentEvent, TutorialCompone
   final TutorialRepository? tutorialRepository;
   StreamSubscription? _tutorialSubscription;
 
-  Stream<TutorialComponentState> _mapLoadTutorialComponentUpdateToState(String documentId) async* {
+  void _mapLoadTutorialComponentUpdateToState(String documentId) {
     _tutorialSubscription?.cancel();
     _tutorialSubscription = tutorialRepository!.listenTo(documentId, (value) {
-      if (value != null) add(TutorialComponentUpdated(value: value));
+      if (value != null) {
+        add(TutorialComponentUpdated(value: value));
+      }
     });
   }
 
-  TutorialComponentBloc({ this.tutorialRepository }): super(TutorialComponentUninitialized());
-
-  @override
-  Stream<TutorialComponentState> mapEventToState(TutorialComponentEvent event) async* {
-    final currentState = state;
-    if (event is FetchTutorialComponent) {
-      yield* _mapLoadTutorialComponentUpdateToState(event.id!);
-    } else if (event is TutorialComponentUpdated) {
-      yield TutorialComponentLoaded(value: event.value);
-    }
+  TutorialComponentBloc({ this.tutorialRepository }): super(TutorialComponentUninitialized()) {
+    on <FetchTutorialComponent> ((event, emit) {
+      _mapLoadTutorialComponentUpdateToState(event.id!);
+    });
+    on <TutorialComponentUpdated> ((event, emit) {
+      emit(TutorialComponentLoaded(value: event.value));
+    });
   }
 
   @override

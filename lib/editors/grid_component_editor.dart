@@ -58,11 +58,11 @@ class GridComponentEditorConstructor extends ComponentEditorConstructor {
   @override
   void updateComponentWithID(AppModel app, BuildContext context, String id,
       EditorFeedback feedback) async {
-    var grid = await gridRepository(appId: app.documentID!)!.get(id);
+    var grid = await gridRepository(appId: app.documentID)!.get(id);
     if (grid != null) {
       _openIt(app, context, false, grid, feedback);
     } else {
-      openErrorDialog(app, context, app.documentID! + '/_error',
+      openErrorDialog(app, context, app.documentID + '/_error',
           title: 'Error',
           errorMessage: 'Cannot find membership dashboard with id $id');
     }
@@ -73,7 +73,7 @@ class GridComponentEditorConstructor extends ComponentEditorConstructor {
     openComplexDialog(
       app,
       context,
-      app.documentID! + '/membershipdashboard',
+      app.documentID + '/membershipdashboard',
       title: create
           ? 'Create Membership Dashboard'
           : 'Update Membership Dashboard',
@@ -81,7 +81,7 @@ class GridComponentEditorConstructor extends ComponentEditorConstructor {
       widthFraction: .9,
       child: BlocProvider<GridBloc>(
           create: (context) => GridBloc(
-                app.documentID!,
+                app.documentID,
                 /*create,
             */
                 feedback,
@@ -139,7 +139,7 @@ class _GridComponentEditorState extends State<GridComponentEditor> {
                         getListTile(context, widget.app,
                             leading: Icon(Icons.vpn_key),
                             title: text(widget.app, context,
-                                gridState.model.documentID!)),
+                                gridState.model.documentID)),
                         getListTile(context, widget.app,
                             leading: Icon(Icons.description),
                             title: dialogField(
@@ -292,7 +292,7 @@ class _GridComponentEditorState extends State<GridComponentEditor> {
     openFlexibleDialog(
       widget.app,
       context,
-      widget.app.documentID! + '/_memberaction',
+      widget.app.documentID + '/_memberaction',
       includeHeading: false,
       widthFraction: .8,
       child: BodyComponentModelWidget.getIt(

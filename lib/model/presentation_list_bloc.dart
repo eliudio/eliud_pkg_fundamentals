@@ -38,9 +38,47 @@ class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListS
   PresentationListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required PresentationRepository presentationRepository, this.presentationLimit = 5})
       : assert(presentationRepository != null),
         _presentationRepository = presentationRepository,
-        super(PresentationListLoading());
+        super(PresentationListLoading()) {
+    on <LoadPresentationList> ((event, emit) {
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadPresentationListToState();
+      } else {
+        _mapLoadPresentationListWithDetailsToState();
+      }
+    });
+    
+    on <NewPage> ((event, emit) {
+      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+      _mapLoadPresentationListWithDetailsToState();
+    });
+    
+    on <PresentationChangeQuery> ((event, emit) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadPresentationListToState();
+      } else {
+        _mapLoadPresentationListWithDetailsToState();
+      }
+    });
+      
+    on <AddPresentationList> ((event, emit) async {
+      await _mapAddPresentationListToState(event);
+    });
+    
+    on <UpdatePresentationList> ((event, emit) async {
+      await _mapUpdatePresentationListToState(event);
+    });
+    
+    on <DeletePresentationList> ((event, emit) async {
+      await _mapDeletePresentationListToState(event);
+    });
+    
+    on <PresentationListUpdated> ((event, emit) {
+      emit(_mapPresentationListUpdatedToState(event));
+    });
+  }
 
-  Stream<PresentationListState> _mapLoadPresentationListToState() async* {
+  Future<void> _mapLoadPresentationListToState() async {
     int amountNow =  (state is PresentationListLoaded) ? (state as PresentationListLoaded).values!.length : 0;
     _presentationsListSubscription?.cancel();
     _presentationsListSubscription = _presentationRepository.listen(
@@ -52,7 +90,7 @@ class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListS
     );
   }
 
-  Stream<PresentationListState> _mapLoadPresentationListWithDetailsToState() async* {
+  Future<void> _mapLoadPresentationListWithDetailsToState() async {
     int amountNow =  (state is PresentationListLoaded) ? (state as PresentationListLoaded).values!.length : 0;
     _presentationsListSubscription?.cancel();
     _presentationsListSubscription = _presentationRepository.listenWithDetails(
@@ -64,58 +102,29 @@ class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListS
     );
   }
 
-  Stream<PresentationListState> _mapAddPresentationListToState(AddPresentationList event) async* {
+  Future<void> _mapAddPresentationListToState(AddPresentationList event) async {
     var value = event.value;
-    if (value != null) 
-      _presentationRepository.add(value);
-  }
-
-  Stream<PresentationListState> _mapUpdatePresentationListToState(UpdatePresentationList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _presentationRepository.update(value);
-  }
-
-  Stream<PresentationListState> _mapDeletePresentationListToState(DeletePresentationList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _presentationRepository.delete(value);
-  }
-
-  Stream<PresentationListState> _mapPresentationListUpdatedToState(
-      PresentationListUpdated event) async* {
-    yield PresentationListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
-  }
-
-  @override
-  Stream<PresentationListState> mapEventToState(PresentationListEvent event) async* {
-    if (event is LoadPresentationList) {
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadPresentationListToState();
-      } else {
-        yield* _mapLoadPresentationListWithDetailsToState();
-      }
-    }
-    if (event is NewPage) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
-      yield* _mapLoadPresentationListWithDetailsToState();
-    } else if (event is PresentationChangeQuery) {
-      eliudQuery = event.newQuery;
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadPresentationListToState();
-      } else {
-        yield* _mapLoadPresentationListWithDetailsToState();
-      }
-    } else if (event is AddPresentationList) {
-      yield* _mapAddPresentationListToState(event);
-    } else if (event is UpdatePresentationList) {
-      yield* _mapUpdatePresentationListToState(event);
-    } else if (event is DeletePresentationList) {
-      yield* _mapDeletePresentationListToState(event);
-    } else if (event is PresentationListUpdated) {
-      yield* _mapPresentationListUpdatedToState(event);
+    if (value != null) {
+      await _presentationRepository.add(value);
     }
   }
+
+  Future<void> _mapUpdatePresentationListToState(UpdatePresentationList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _presentationRepository.update(value);
+    }
+  }
+
+  Future<void> _mapDeletePresentationListToState(DeletePresentationList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _presentationRepository.delete(value);
+    }
+  }
+
+  PresentationListLoaded _mapPresentationListUpdatedToState(
+      PresentationListUpdated event) => PresentationListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {

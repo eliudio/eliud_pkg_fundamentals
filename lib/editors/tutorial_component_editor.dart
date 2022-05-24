@@ -57,24 +57,24 @@ class TutorialComponentEditorConstructor extends ComponentEditorConstructor {
   @override
   void updateComponentWithID(AppModel app, BuildContext context, String id,
       EditorFeedback feedback) async {
-    var tutorial = await tutorialRepository(appId: app.documentID!)!.get(id);
+    var tutorial = await tutorialRepository(appId: app.documentID)!.get(id);
     if (tutorial != null) {
       _openIt(app, context, false, tutorial, feedback);
     } else {
-      openErrorDialog(app, context, app.documentID! + '/_error',
+      openErrorDialog(app, context, app.documentID + '/_error',
           title: 'Error', errorMessage: 'Cannot find tutorial with id $id');
     }
   }
 
   void _openIt(AppModel app, BuildContext context, bool create,
       TutorialModel model, EditorFeedback feedback) {
-    openComplexDialog(app, context, app.documentID! + '/Tutorial',
+    openComplexDialog(app, context, app.documentID + '/Tutorial',
         title: create ? 'Create tutorial' : 'Update tutorial',
         includeHeading: false,
         widthFraction: .9,
         child: BlocProvider<TutorialBloc>(
           create: (context) => TutorialBloc(
-            app.documentID!,
+            app.documentID,
             feedback,
           )..add(ExtEditorBaseInitialise<TutorialModel>(model)),
           child: TutorialComponentEditor(
@@ -131,7 +131,7 @@ class _TutorialComponentEditorState extends State<TutorialComponentEditor> {
                                 getListTile(context, widget.app,
                                     leading: Icon(Icons.vpn_key),
                                     title: text(widget.app, context,
-                                        tutorialState.model.documentID!)),
+                                        tutorialState.model.documentID)),
                                 getListTile(context, widget.app,
                                     leading: Icon(Icons.description),
                                     title: dialogField(
@@ -281,7 +281,7 @@ class _TutorialComponentEditorState extends State<TutorialComponentEditor> {
                 openFlexibleDialog(
                   widget.app,
                   context,
-                  widget.app.documentID! + '/_listeditem',
+                  widget.app.documentID + '/_listeditem',
                   includeHeading: false,
                   widthFraction: .8,
                   child: TutorialEntryModelWidget.getIt(
@@ -352,7 +352,7 @@ class _TutorialComponentEditorState extends State<TutorialComponentEditor> {
               Registry.registry()!.getMediumApi().takePhoto(
                   context,
                   widget.app,
-                  widget.app.ownerID!,
+                  widget.app.ownerID,
                       () => PlatformMediumAccessRights(
                       tutorialState.model.conditions!.privilegeLevelRequired!),
                       (photo) => _photoFeedbackFunction(photo),
@@ -362,7 +362,7 @@ class _TutorialComponentEditorState extends State<TutorialComponentEditor> {
               Registry.registry()!.getMediumApi().uploadPhoto(
                   context,
                   widget.app,
-                  widget.app.ownerID!,
+                  widget.app.ownerID,
                       () => PlatformMediumAccessRights(
                       tutorialState.model.conditions!.privilegeLevelRequired!),
                       (photo) => _photoFeedbackFunction(photo),

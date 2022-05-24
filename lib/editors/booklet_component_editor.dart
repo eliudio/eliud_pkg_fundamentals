@@ -62,11 +62,11 @@ class BookletComponentEditorConstructor
   void updateComponentWithID(AppModel app, BuildContext context, String id,
       EditorFeedback feedback) async {
     var booklet =
-        await bookletRepository(appId: app.documentID!)!.get(id);
+        await bookletRepository(appId: app.documentID)!.get(id);
     if (booklet != null) {
       _openIt(app, context, false, booklet, feedback);
     } else {
-      openErrorDialog(app, context, app.documentID! + '/_error',
+      openErrorDialog(app, context, app.documentID + '/_error',
           title: 'Error',
           errorMessage: 'Cannot find membership dashboard with id $id');
     }
@@ -77,7 +77,7 @@ class BookletComponentEditorConstructor
     openComplexDialog(
       app,
       context,
-      app.documentID! + '/membershipdashboard',
+      app.documentID + '/membershipdashboard',
       title: create
           ? 'Create Membership Dashboard'
           : 'Update Membership Dashboard',
@@ -85,7 +85,7 @@ class BookletComponentEditorConstructor
       widthFraction: .9,
       child: BlocProvider<BookletBloc>(
           create: (context) => BookletBloc(
-                app.documentID!,
+                app.documentID,
                 /*create,
             */
                 feedback,
@@ -146,7 +146,7 @@ class _BookletComponentEditorState
                         getListTile(context, widget.app,
                             leading: Icon(Icons.vpn_key),
                             title: text(widget.app, context,
-                                bookletState.model.documentID!)),
+                                bookletState.model.documentID)),
                         getListTile(context, widget.app,
                             leading: Icon(Icons.description),
                             title: dialogField(
@@ -215,7 +215,7 @@ class _BookletComponentEditorState
                     title: text(
                         widget.app,
                         context,
-                        (value.documentID ?? 'no documentID') +
+                        value.documentID +
                             ' - ' +
                             (value.title ?? ' no title')),
                     trailing: popupMenuButton<int>(
@@ -297,12 +297,12 @@ class _BookletComponentEditorState
     openFlexibleDialog(
       widget.app,
       context,
-      widget.app.documentID! + '/_memberaction',
+      widget.app.documentID + '/_memberaction',
       includeHeading: false,
       widthFraction: .8,
       child: BlocProvider<SectionBloc>(
           create: (context) => SectionBloc(
-            widget.app.documentID!,
+            widget.app.documentID,
           )..add(ExtEditorBaseInitialise<SectionModel>(value)),
           child: SectionModelWidget.getIt(
           context,

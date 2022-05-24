@@ -52,11 +52,11 @@ class SimpleImageComponentEditorConstructor extends ComponentEditorConstructor {
   void updateComponentWithID(AppModel app, BuildContext context, String id,
       EditorFeedback feedback) async {
     var simpleImage =
-        await simpleImageRepository(appId: app.documentID!)!.get(id);
+        await simpleImageRepository(appId: app.documentID)!.get(id);
     if (simpleImage != null) {
       _openIt(app, context, false, simpleImage, feedback);
     } else {
-      openErrorDialog(app, context, app.documentID! + '/_error',
+      openErrorDialog(app, context, app.documentID + '/_error',
           title: 'Error',
           errorMessage: 'Cannot find chat dashboard with id $id');
     }
@@ -67,13 +67,13 @@ class SimpleImageComponentEditorConstructor extends ComponentEditorConstructor {
     openComplexDialog(
       app,
       context,
-      app.documentID! + '/chatdashboard',
+      app.documentID + '/chatdashboard',
       title: create ? 'Create Chat Dashboard' : 'Update Chat Dashboard',
       includeHeading: false,
       widthFraction: .9,
       child: BlocProvider<SimpleImageBloc>(
           create: (context) => SimpleImageBloc(
-                app.documentID!,
+                app.documentID,
                 /*create,
             */
                 feedback,
@@ -149,7 +149,7 @@ class _SimpleImageComponentEditorState
                         getListTile(context, widget.app,
                             leading: Icon(Icons.vpn_key),
                             title: text(widget.app, context,
-                                simpleImageState.model.documentID!)),
+                                simpleImageState.model.documentID)),
                         getListTile(context, widget.app,
                             leading: Icon(Icons.description),
                             title: dialogField(

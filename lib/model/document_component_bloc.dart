@@ -26,23 +26,22 @@ class DocumentComponentBloc extends Bloc<DocumentComponentEvent, DocumentCompone
   final DocumentRepository? documentRepository;
   StreamSubscription? _documentSubscription;
 
-  Stream<DocumentComponentState> _mapLoadDocumentComponentUpdateToState(String documentId) async* {
+  void _mapLoadDocumentComponentUpdateToState(String documentId) {
     _documentSubscription?.cancel();
     _documentSubscription = documentRepository!.listenTo(documentId, (value) {
-      if (value != null) add(DocumentComponentUpdated(value: value));
+      if (value != null) {
+        add(DocumentComponentUpdated(value: value));
+      }
     });
   }
 
-  DocumentComponentBloc({ this.documentRepository }): super(DocumentComponentUninitialized());
-
-  @override
-  Stream<DocumentComponentState> mapEventToState(DocumentComponentEvent event) async* {
-    final currentState = state;
-    if (event is FetchDocumentComponent) {
-      yield* _mapLoadDocumentComponentUpdateToState(event.id!);
-    } else if (event is DocumentComponentUpdated) {
-      yield DocumentComponentLoaded(value: event.value);
-    }
+  DocumentComponentBloc({ this.documentRepository }): super(DocumentComponentUninitialized()) {
+    on <FetchDocumentComponent> ((event, emit) {
+      _mapLoadDocumentComponentUpdateToState(event.id!);
+    });
+    on <DocumentComponentUpdated> ((event, emit) {
+      emit(DocumentComponentLoaded(value: event.value));
+    });
   }
 
   @override

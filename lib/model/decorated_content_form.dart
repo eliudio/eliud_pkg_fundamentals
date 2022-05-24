@@ -74,7 +74,7 @@ class DecoratedContentForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var appId = app.documentID!;
+    var appId = app.documentID;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<DecoratedContentFormBloc >(
             create: (context) => DecoratedContentFormBloc(appId,
@@ -253,27 +253,27 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
 
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _decorationComponentPositionSelectedRadioTile, 'LeftIfSpaceAvailableOtherwiseTop', 'LeftIfSpaceAvailableOtherwiseTop', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _decorationComponentPositionSelectedRadioTile, 'LeftIfSpaceAvailableOtherwiseTop', 'LeftIfSpaceAvailableOtherwiseTop', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _decorationComponentPositionSelectedRadioTile, 'LeftIfSpaceAvailableOtherwiseDrop', 'LeftIfSpaceAvailableOtherwiseDrop', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _decorationComponentPositionSelectedRadioTile, 'LeftIfSpaceAvailableOtherwiseDrop', 'LeftIfSpaceAvailableOtherwiseDrop', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _decorationComponentPositionSelectedRadioTile, 'LeftIfSpaceAvailableOtherwiseBottom', 'LeftIfSpaceAvailableOtherwiseBottom', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _decorationComponentPositionSelectedRadioTile, 'LeftIfSpaceAvailableOtherwiseBottom', 'LeftIfSpaceAvailableOtherwiseBottom', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _decorationComponentPositionSelectedRadioTile, 'RightIfSpaceAvailableOtherwiseTop', 'RightIfSpaceAvailableOtherwiseTop', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _decorationComponentPositionSelectedRadioTile, 'RightIfSpaceAvailableOtherwiseTop', 'RightIfSpaceAvailableOtherwiseTop', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _decorationComponentPositionSelectedRadioTile, 'RightIfSpaceAvailableOtherwiseDrop', 'RightIfSpaceAvailableOtherwiseDrop', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _decorationComponentPositionSelectedRadioTile, 'RightIfSpaceAvailableOtherwiseDrop', 'RightIfSpaceAvailableOtherwiseDrop', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _decorationComponentPositionSelectedRadioTile, 'RightIfSpaceAvailableOtherwiseBottom', 'RightIfSpaceAvailableOtherwiseBottom', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _decorationComponentPositionSelectedRadioTile, 'RightIfSpaceAvailableOtherwiseBottom', 'RightIfSpaceAvailableOtherwiseBottom', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
           );
 
 
@@ -403,7 +403,7 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
   }
 
   bool _readOnly(AccessState accessState, DecoratedContentFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID!));
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID));
   }
   
 

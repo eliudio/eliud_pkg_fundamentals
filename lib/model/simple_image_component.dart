@@ -39,7 +39,7 @@ abstract class AbstractSimpleImageComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<SimpleImageComponentBloc> (
           create: (context) => SimpleImageComponentBloc(
-            simpleImageRepository: simpleImageRepository(appId: app.documentID!)!)
+            simpleImageRepository: simpleImageRepository(appId: app.documentID)!)
         ..add(FetchSimpleImageComponent(id: simpleImageId)),
       child: _simpleImageBlockBuilder(context),
     );

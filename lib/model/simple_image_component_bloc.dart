@@ -27,23 +27,22 @@ class SimpleImageComponentBloc extends Bloc<SimpleImageComponentEvent, SimpleIma
   final SimpleImageRepository? simpleImageRepository;
   StreamSubscription? _simpleImageSubscription;
 
-  Stream<SimpleImageComponentState> _mapLoadSimpleImageComponentUpdateToState(String documentId) async* {
+  void _mapLoadSimpleImageComponentUpdateToState(String documentId) {
     _simpleImageSubscription?.cancel();
     _simpleImageSubscription = simpleImageRepository!.listenTo(documentId, (value) {
-      if (value != null) add(SimpleImageComponentUpdated(value: value));
+      if (value != null) {
+        add(SimpleImageComponentUpdated(value: value));
+      }
     });
   }
 
-  SimpleImageComponentBloc({ this.simpleImageRepository }): super(SimpleImageComponentUninitialized());
-
-  @override
-  Stream<SimpleImageComponentState> mapEventToState(SimpleImageComponentEvent event) async* {
-    final currentState = state;
-    if (event is FetchSimpleImageComponent) {
-      yield* _mapLoadSimpleImageComponentUpdateToState(event.id!);
-    } else if (event is SimpleImageComponentUpdated) {
-      yield SimpleImageComponentLoaded(value: event.value);
-    }
+  SimpleImageComponentBloc({ this.simpleImageRepository }): super(SimpleImageComponentUninitialized()) {
+    on <FetchSimpleImageComponent> ((event, emit) {
+      _mapLoadSimpleImageComponentUpdateToState(event.id!);
+    });
+    on <SimpleImageComponentUpdated> ((event, emit) {
+      emit(SimpleImageComponentLoaded(value: event.value));
+    });
   }
 
   @override

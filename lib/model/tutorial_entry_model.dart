@@ -15,6 +15,7 @@
 
 import 'package:eliud_core/tools/common_tools.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eliud_core/core/base/model_base.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
@@ -35,13 +36,13 @@ import 'package:eliud_core/tools/random.dart';
 
 
 
-class TutorialEntryModel {
-  String? documentID;
+class TutorialEntryModel implements ModelBase {
+  String documentID;
   String? description;
   PlatformMediumModel? image;
   String? code;
 
-  TutorialEntryModel({this.documentID, this.description, this.image, this.code, })  {
+  TutorialEntryModel({required this.documentID, this.description, this.image, this.code, })  {
     assert(documentID != null);
   }
 

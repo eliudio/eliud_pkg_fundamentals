@@ -27,23 +27,22 @@ class PresentationComponentBloc extends Bloc<PresentationComponentEvent, Present
   final PresentationRepository? presentationRepository;
   StreamSubscription? _presentationSubscription;
 
-  Stream<PresentationComponentState> _mapLoadPresentationComponentUpdateToState(String documentId) async* {
+  void _mapLoadPresentationComponentUpdateToState(String documentId) {
     _presentationSubscription?.cancel();
     _presentationSubscription = presentationRepository!.listenTo(documentId, (value) {
-      if (value != null) add(PresentationComponentUpdated(value: value));
+      if (value != null) {
+        add(PresentationComponentUpdated(value: value));
+      }
     });
   }
 
-  PresentationComponentBloc({ this.presentationRepository }): super(PresentationComponentUninitialized());
-
-  @override
-  Stream<PresentationComponentState> mapEventToState(PresentationComponentEvent event) async* {
-    final currentState = state;
-    if (event is FetchPresentationComponent) {
-      yield* _mapLoadPresentationComponentUpdateToState(event.id!);
-    } else if (event is PresentationComponentUpdated) {
-      yield PresentationComponentLoaded(value: event.value);
-    }
+  PresentationComponentBloc({ this.presentationRepository }): super(PresentationComponentUninitialized()) {
+    on <FetchPresentationComponent> ((event, emit) {
+      _mapLoadPresentationComponentUpdateToState(event.id!);
+    });
+    on <PresentationComponentUpdated> ((event, emit) {
+      emit(PresentationComponentLoaded(value: event.value));
+    });
   }
 
   @override

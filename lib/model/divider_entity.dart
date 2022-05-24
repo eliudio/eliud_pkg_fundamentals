@@ -32,7 +32,7 @@ class DividerEntity {
   final double? endIndent;
   final StorageConditionsEntity? conditions;
 
-  DividerEntity({this.appId, this.description, this.color, this.height, this.thickness, this.indent, this.endIndent, this.conditions, });
+  DividerEntity({required this.appId, this.description, this.color, this.height, this.thickness, this.indent, this.endIndent, this.conditions, });
 
 
   List<Object?> get props => [appId, description, color, height, thickness, indent, endIndent, conditions, ];

@@ -77,7 +77,7 @@ class SimpleImageListUpdated extends SimpleImageListEvent {
 }
 
 class SimpleImageChangeQuery extends SimpleImageListEvent {
-  final EliudQuery newQuery;
+  final EliudQuery? newQuery;
 
   const SimpleImageChangeQuery({ required this.newQuery });
 

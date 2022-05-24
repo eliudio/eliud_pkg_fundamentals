@@ -23,7 +23,7 @@ class SimpleTextComponentConstructorDefault implements ComponentConstructor {
 
   @override
   Future<dynamic> getModel({required AppModel app, required String id}) async =>
-      await simpleTextRepository(appId: app.documentID!)!.get(id);
+      await simpleTextRepository(appId: app.documentID)!.get(id);
 }
 
 class SimpleTextComponent extends AbstractSimpleTextComponent {

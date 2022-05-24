@@ -94,7 +94,7 @@ class _TutorialEntryModelWidgetState extends State<TutorialEntryModelWidget> {
             getListTile(context, widget.app,
                 leading: Icon(Icons.vpn_key),
                 title: text(
-                    widget.app, context, widget.tutorialEntryModel.documentID!)),
+                    widget.app, context, widget.tutorialEntryModel.documentID)),
             getListTile(context, widget.app,
                 leading: Icon(Icons.description),
                 title: dialogField(

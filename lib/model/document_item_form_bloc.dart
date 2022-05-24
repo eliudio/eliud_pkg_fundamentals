@@ -50,48 +50,36 @@ class DocumentItemFormBloc extends Bloc<DocumentItemFormEvent, DocumentItemFormS
   Stream<DocumentItemFormState> mapEventToState(DocumentItemFormEvent event) async* {
     final currentState = state;
     if (currentState is DocumentItemFormUninitialized) {
-      if (event is InitialiseNewDocumentItemFormEvent) {
+      on <InitialiseNewDocumentItemFormEvent> ((event, emit) {
         DocumentItemFormLoaded loaded = DocumentItemFormLoaded(value: DocumentItemModel(
                                                documentID: "IDENTIFIER", 
                                  reference: "REFERENCE", 
 
         ));
-        yield loaded;
-        return;
-
-      }
+        emit(loaded);
+      });
 
 
       if (event is InitialiseDocumentItemFormEvent) {
         DocumentItemFormLoaded loaded = DocumentItemFormLoaded(value: event.value);
-        yield loaded;
-        return;
+        emit(loaded);
       } else if (event is InitialiseDocumentItemFormNoLoadEvent) {
         DocumentItemFormLoaded loaded = DocumentItemFormLoaded(value: event.value);
-        yield loaded;
-        return;
+        emit(loaded);
       }
     } else if (currentState is DocumentItemFormInitialized) {
       DocumentItemModel? newValue = null;
-      if (event is ChangedDocumentItemReference) {
+      on <ChangedDocumentItemReference> ((event, emit) async {
         newValue = currentState.value!.copyWith(reference: event.value);
-        yield SubmittableDocumentItemForm(value: newValue);
+        emit(SubmittableDocumentItemForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedDocumentItemImage) {
+      });
+      on <ChangedDocumentItemImage> ((event, emit) async {
         if (event.value != null)
           newValue = currentState.value!.copyWith(image: await platformMediumRepository(appId: appId)!.get(event.value));
-        else
-          newValue = new DocumentItemModel(
-                                 documentID: currentState.value!.documentID,
-                                 reference: currentState.value!.reference,
-                                 image: null,
-          );
-        yield SubmittableDocumentItemForm(value: newValue);
+        emit(SubmittableDocumentItemForm(value: newValue));
 
-        return;
-      }
+      });
     }
   }
 

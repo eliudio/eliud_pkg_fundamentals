@@ -77,7 +77,7 @@ class PresentationListUpdated extends PresentationListEvent {
 }
 
 class PresentationChangeQuery extends PresentationListEvent {
-  final EliudQuery newQuery;
+  final EliudQuery? newQuery;
 
   const PresentationChangeQuery({ required this.newQuery });
 

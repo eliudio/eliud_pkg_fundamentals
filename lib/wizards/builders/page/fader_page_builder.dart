@@ -48,7 +48,7 @@ class FaderPageBuilder extends PageBuilder {
 
   Future<PageModel> _setupPage() async {
     return await corerepo.AbstractRepositorySingleton.singleton
-        .pageRepository(app.documentID!)!
+        .pageRepository(app.documentID)!
         .add(_page());
   }
 
@@ -62,7 +62,7 @@ class FaderPageBuilder extends PageBuilder {
 
     return PageModel(
         documentID: constructDocumentId(uniqueId: uniqueId, documentId: pageId),
-        appId: app.documentID!,
+        appId: app.documentID,
         title: 'Fader example',
         drawer: leftDrawer,
         endDrawer: rightDrawer,
@@ -129,13 +129,13 @@ class FaderPageBuilder extends PageBuilder {
       animationMilliseconds: 1000,
       imageSeconds: 5,
       items: items,
-      appId: app.documentID!,
+      appId: app.documentID,
       conditions: StorageConditionsModel(
           privilegeLevelRequired: PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple
       ),
     );
     await AbstractRepositorySingleton.singleton
-        .faderRepository(app.documentID!)!
+        .faderRepository(app.documentID)!
         .add(model);
     return model;
   }

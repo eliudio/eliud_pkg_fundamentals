@@ -77,7 +77,7 @@ class DocumentListUpdated extends DocumentListEvent {
 }
 
 class DocumentChangeQuery extends DocumentListEvent {
-  final EliudQuery newQuery;
+  final EliudQuery? newQuery;
 
   const DocumentChangeQuery({ required this.newQuery });
 

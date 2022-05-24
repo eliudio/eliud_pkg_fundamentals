@@ -38,9 +38,47 @@ class ListedItemListBloc extends Bloc<ListedItemListEvent, ListedItemListState> 
   ListedItemListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required ListedItemRepository listedItemRepository, this.listedItemLimit = 5})
       : assert(listedItemRepository != null),
         _listedItemRepository = listedItemRepository,
-        super(ListedItemListLoading());
+        super(ListedItemListLoading()) {
+    on <LoadListedItemList> ((event, emit) {
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadListedItemListToState();
+      } else {
+        _mapLoadListedItemListWithDetailsToState();
+      }
+    });
+    
+    on <NewPage> ((event, emit) {
+      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+      _mapLoadListedItemListWithDetailsToState();
+    });
+    
+    on <ListedItemChangeQuery> ((event, emit) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadListedItemListToState();
+      } else {
+        _mapLoadListedItemListWithDetailsToState();
+      }
+    });
+      
+    on <AddListedItemList> ((event, emit) async {
+      await _mapAddListedItemListToState(event);
+    });
+    
+    on <UpdateListedItemList> ((event, emit) async {
+      await _mapUpdateListedItemListToState(event);
+    });
+    
+    on <DeleteListedItemList> ((event, emit) async {
+      await _mapDeleteListedItemListToState(event);
+    });
+    
+    on <ListedItemListUpdated> ((event, emit) {
+      emit(_mapListedItemListUpdatedToState(event));
+    });
+  }
 
-  Stream<ListedItemListState> _mapLoadListedItemListToState() async* {
+  Future<void> _mapLoadListedItemListToState() async {
     int amountNow =  (state is ListedItemListLoaded) ? (state as ListedItemListLoaded).values!.length : 0;
     _listedItemsListSubscription?.cancel();
     _listedItemsListSubscription = _listedItemRepository.listen(
@@ -52,7 +90,7 @@ class ListedItemListBloc extends Bloc<ListedItemListEvent, ListedItemListState> 
     );
   }
 
-  Stream<ListedItemListState> _mapLoadListedItemListWithDetailsToState() async* {
+  Future<void> _mapLoadListedItemListWithDetailsToState() async {
     int amountNow =  (state is ListedItemListLoaded) ? (state as ListedItemListLoaded).values!.length : 0;
     _listedItemsListSubscription?.cancel();
     _listedItemsListSubscription = _listedItemRepository.listenWithDetails(
@@ -64,58 +102,29 @@ class ListedItemListBloc extends Bloc<ListedItemListEvent, ListedItemListState> 
     );
   }
 
-  Stream<ListedItemListState> _mapAddListedItemListToState(AddListedItemList event) async* {
+  Future<void> _mapAddListedItemListToState(AddListedItemList event) async {
     var value = event.value;
-    if (value != null) 
-      _listedItemRepository.add(value);
-  }
-
-  Stream<ListedItemListState> _mapUpdateListedItemListToState(UpdateListedItemList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _listedItemRepository.update(value);
-  }
-
-  Stream<ListedItemListState> _mapDeleteListedItemListToState(DeleteListedItemList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _listedItemRepository.delete(value);
-  }
-
-  Stream<ListedItemListState> _mapListedItemListUpdatedToState(
-      ListedItemListUpdated event) async* {
-    yield ListedItemListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
-  }
-
-  @override
-  Stream<ListedItemListState> mapEventToState(ListedItemListEvent event) async* {
-    if (event is LoadListedItemList) {
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadListedItemListToState();
-      } else {
-        yield* _mapLoadListedItemListWithDetailsToState();
-      }
-    }
-    if (event is NewPage) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
-      yield* _mapLoadListedItemListWithDetailsToState();
-    } else if (event is ListedItemChangeQuery) {
-      eliudQuery = event.newQuery;
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadListedItemListToState();
-      } else {
-        yield* _mapLoadListedItemListWithDetailsToState();
-      }
-    } else if (event is AddListedItemList) {
-      yield* _mapAddListedItemListToState(event);
-    } else if (event is UpdateListedItemList) {
-      yield* _mapUpdateListedItemListToState(event);
-    } else if (event is DeleteListedItemList) {
-      yield* _mapDeleteListedItemListToState(event);
-    } else if (event is ListedItemListUpdated) {
-      yield* _mapListedItemListUpdatedToState(event);
+    if (value != null) {
+      await _listedItemRepository.add(value);
     }
   }
+
+  Future<void> _mapUpdateListedItemListToState(UpdateListedItemList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _listedItemRepository.update(value);
+    }
+  }
+
+  Future<void> _mapDeleteListedItemListToState(DeleteListedItemList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _listedItemRepository.delete(value);
+    }
+  }
+
+  ListedItemListLoaded _mapListedItemListUpdatedToState(
+      ListedItemListUpdated event) => ListedItemListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {

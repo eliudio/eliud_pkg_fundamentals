@@ -74,7 +74,7 @@ class SimpleTextForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var appId = app.documentID!;
+    var appId = app.documentID;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<SimpleTextFormBloc >(
             create: (context) => SimpleTextFormBloc(appId,
@@ -190,27 +190,27 @@ class _MySimpleTextFormState extends State<MySimpleTextForm> {
 
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _textAlignSelectedRadioTile, 'Left', 'Left', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionTextAlign(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _textAlignSelectedRadioTile, 'Left', 'Left', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionTextAlign(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _textAlignSelectedRadioTile, 'Center', 'Center', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionTextAlign(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _textAlignSelectedRadioTile, 'Center', 'Center', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionTextAlign(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _textAlignSelectedRadioTile, 'Right', 'Right', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionTextAlign(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _textAlignSelectedRadioTile, 'Right', 'Right', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionTextAlign(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _textAlignSelectedRadioTile, 'End', 'End', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionTextAlign(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _textAlignSelectedRadioTile, 'End', 'End', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionTextAlign(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _textAlignSelectedRadioTile, 'Justify', 'Justify', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionTextAlign(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _textAlignSelectedRadioTile, 'Justify', 'Justify', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionTextAlign(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _textAlignSelectedRadioTile, 'Start', 'Start', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionTextAlign(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _textAlignSelectedRadioTile, 'Start', 'Start', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionTextAlign(val))
           );
 
 
@@ -370,7 +370,7 @@ class _MySimpleTextFormState extends State<MySimpleTextForm> {
   }
 
   bool _readOnly(AccessState accessState, SimpleTextFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID!));
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID));
   }
   
 

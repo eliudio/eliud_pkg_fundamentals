@@ -51,7 +51,7 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
   Stream<DocumentFormState> mapEventToState(DocumentFormEvent event) async* {
     final currentState = state;
     if (currentState is DocumentFormUninitialized) {
-      if (event is InitialiseNewDocumentFormEvent) {
+      on <InitialiseNewDocumentFormEvent> ((event, emit) {
         DocumentFormLoaded loaded = DocumentFormLoaded(value: DocumentModel(
                                                documentID: "",
                                  appId: "",
@@ -61,81 +61,69 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
                                  images: [],
 
         ));
-        yield loaded;
-        return;
-
-      }
+        emit(loaded);
+      });
 
 
       if (event is InitialiseDocumentFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
         DocumentFormLoaded loaded = DocumentFormLoaded(value: await documentRepository(appId: appId)!.get(event.value!.documentID));
-        yield loaded;
-        return;
+        emit(loaded);
       } else if (event is InitialiseDocumentFormNoLoadEvent) {
         DocumentFormLoaded loaded = DocumentFormLoaded(value: event.value);
-        yield loaded;
-        return;
+        emit(loaded);
       }
     } else if (currentState is DocumentFormInitialized) {
       DocumentModel? newValue = null;
-      if (event is ChangedDocumentDocumentID) {
+      on <ChangedDocumentDocumentID> ((event, emit) async {
         newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event.value, newValue).asStream();
+          emit(await _isDocumentIDValid(event.value, newValue!));
         } else {
-          yield SubmittableDocumentForm(value: newValue);
+          emit(SubmittableDocumentForm(value: newValue));
         }
 
-        return;
-      }
-      if (event is ChangedDocumentDescription) {
+      });
+      on <ChangedDocumentDescription> ((event, emit) async {
         newValue = currentState.value!.copyWith(description: event.value);
-        yield SubmittableDocumentForm(value: newValue);
+        emit(SubmittableDocumentForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedDocumentDocumentRenderer) {
+      });
+      on <ChangedDocumentDocumentRenderer> ((event, emit) async {
         newValue = currentState.value!.copyWith(documentRenderer: event.value);
-        yield SubmittableDocumentForm(value: newValue);
+        emit(SubmittableDocumentForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedDocumentContent) {
+      });
+      on <ChangedDocumentContent> ((event, emit) async {
         newValue = currentState.value!.copyWith(content: event.value);
-        yield SubmittableDocumentForm(value: newValue);
+        emit(SubmittableDocumentForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedDocumentPadding) {
+      });
+      on <ChangedDocumentPadding> ((event, emit) async {
         if (isDouble(event.value!)) {
           newValue = currentState.value!.copyWith(padding: double.parse(event.value!));
-          yield SubmittableDocumentForm(value: newValue);
+          emit(SubmittableDocumentForm(value: newValue));
 
         } else {
           newValue = currentState.value!.copyWith(padding: 0.0);
-          yield PaddingDocumentFormError(message: "Value should be a number or decimal number", value: newValue);
+          emit(PaddingDocumentFormError(message: "Value should be a number or decimal number", value: newValue));
         }
-        return;
-      }
-      if (event is ChangedDocumentImages) {
+      });
+      on <ChangedDocumentImages> ((event, emit) async {
         newValue = currentState.value!.copyWith(images: event.value);
-        yield SubmittableDocumentForm(value: newValue);
+        emit(SubmittableDocumentForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedDocumentBackground) {
+      });
+      on <ChangedDocumentBackground> ((event, emit) async {
         newValue = currentState.value!.copyWith(background: event.value);
-        yield SubmittableDocumentForm(value: newValue);
+        emit(SubmittableDocumentForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedDocumentConditions) {
+      });
+      on <ChangedDocumentConditions> ((event, emit) async {
         newValue = currentState.value!.copyWith(conditions: event.value);
-        yield SubmittableDocumentForm(value: newValue);
+        emit(SubmittableDocumentForm(value: newValue));
 
-        return;
-      }
+      });
     }
   }
 

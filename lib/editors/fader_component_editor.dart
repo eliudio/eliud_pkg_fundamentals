@@ -60,24 +60,24 @@ class FaderComponentEditorConstructor extends ComponentEditorConstructor {
   @override
   void updateComponentWithID(AppModel app, BuildContext context, String id,
       EditorFeedback feedback) async {
-    var fader = await faderRepository(appId: app.documentID!)!.get(id);
+    var fader = await faderRepository(appId: app.documentID)!.get(id);
     if (fader != null) {
       _openIt(app, context, false, fader, feedback);
     } else {
-      openErrorDialog(app, context, app.documentID! + '/_error',
+      openErrorDialog(app, context, app.documentID + '/_error',
           title: 'Error', errorMessage: 'Cannot find fader with id $id');
     }
   }
 
   void _openIt(AppModel app, BuildContext context, bool create,
       FaderModel model, EditorFeedback feedback) {
-    openComplexDialog(app, context, app.documentID! + '/Fader',
+    openComplexDialog(app, context, app.documentID + '/Fader',
         title: create ? 'Create fader' : 'Update fader',
         includeHeading: false,
         widthFraction: .9,
         child: BlocProvider<FaderBloc>(
           create: (context) => FaderBloc(
-            app.documentID!,
+            app.documentID,
             feedback,
           )..add(ExtEditorBaseInitialise<FaderModel>(model)),
           child: FaderComponentEditor(
@@ -135,7 +135,7 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
                         getListTile(context, widget.app,
                             leading: Icon(Icons.vpn_key),
                             title: text(widget.app, context,
-                                faderState.model.documentID!)),
+                                faderState.model.documentID)),
                         getListTile(context, widget.app,
                             leading: Icon(Icons.description),
                             title: dialogField(
@@ -298,7 +298,7 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
             openFlexibleDialog(
               widget.app,
               context,
-              widget.app.documentID! + '/_listeditem',
+              widget.app.documentID + '/_listeditem',
               includeHeading: false,
               widthFraction: .8,
               child: ListedItemModelWidget.getIt(
@@ -376,7 +376,7 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
               Registry.registry()!.getMediumApi().takePhoto(
                   context,
                   widget.app,
-                  widget.app.ownerID!,
+                  widget.app.ownerID,
                   () => PlatformMediumAccessRights(
                       faderState.model.conditions!.privilegeLevelRequired!),
                   (photo) => _photoFeedbackFunction(photo),
@@ -386,7 +386,7 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
               Registry.registry()!.getMediumApi().uploadPhoto(
                   context,
                   widget.app,
-                  widget.app.ownerID!,
+                  widget.app.ownerID,
                   () => PlatformMediumAccessRights(
                       faderState.model.conditions!.privilegeLevelRequired!),
                   (photo) => _photoFeedbackFunction(photo),

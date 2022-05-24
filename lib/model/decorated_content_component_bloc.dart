@@ -26,23 +26,22 @@ class DecoratedContentComponentBloc extends Bloc<DecoratedContentComponentEvent,
   final DecoratedContentRepository? decoratedContentRepository;
   StreamSubscription? _decoratedContentSubscription;
 
-  Stream<DecoratedContentComponentState> _mapLoadDecoratedContentComponentUpdateToState(String documentId) async* {
+  void _mapLoadDecoratedContentComponentUpdateToState(String documentId) {
     _decoratedContentSubscription?.cancel();
     _decoratedContentSubscription = decoratedContentRepository!.listenTo(documentId, (value) {
-      if (value != null) add(DecoratedContentComponentUpdated(value: value));
+      if (value != null) {
+        add(DecoratedContentComponentUpdated(value: value));
+      }
     });
   }
 
-  DecoratedContentComponentBloc({ this.decoratedContentRepository }): super(DecoratedContentComponentUninitialized());
-
-  @override
-  Stream<DecoratedContentComponentState> mapEventToState(DecoratedContentComponentEvent event) async* {
-    final currentState = state;
-    if (event is FetchDecoratedContentComponent) {
-      yield* _mapLoadDecoratedContentComponentUpdateToState(event.id!);
-    } else if (event is DecoratedContentComponentUpdated) {
-      yield DecoratedContentComponentLoaded(value: event.value);
-    }
+  DecoratedContentComponentBloc({ this.decoratedContentRepository }): super(DecoratedContentComponentUninitialized()) {
+    on <FetchDecoratedContentComponent> ((event, emit) {
+      _mapLoadDecoratedContentComponentUpdateToState(event.id!);
+    });
+    on <DecoratedContentComponentUpdated> ((event, emit) {
+      emit(DecoratedContentComponentLoaded(value: event.value));
+    });
   }
 
   @override

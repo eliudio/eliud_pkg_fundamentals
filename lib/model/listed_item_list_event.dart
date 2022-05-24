@@ -77,7 +77,7 @@ class ListedItemListUpdated extends ListedItemListEvent {
 }
 
 class ListedItemChangeQuery extends ListedItemListEvent {
-  final EliudQuery newQuery;
+  final EliudQuery? newQuery;
 
   const ListedItemChangeQuery({ required this.newQuery });
 

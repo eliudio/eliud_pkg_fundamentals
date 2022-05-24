@@ -38,9 +38,47 @@ class TutorialEntryListBloc extends Bloc<TutorialEntryListEvent, TutorialEntryLi
   TutorialEntryListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required TutorialEntryRepository tutorialEntryRepository, this.tutorialEntryLimit = 5})
       : assert(tutorialEntryRepository != null),
         _tutorialEntryRepository = tutorialEntryRepository,
-        super(TutorialEntryListLoading());
+        super(TutorialEntryListLoading()) {
+    on <LoadTutorialEntryList> ((event, emit) {
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadTutorialEntryListToState();
+      } else {
+        _mapLoadTutorialEntryListWithDetailsToState();
+      }
+    });
+    
+    on <NewPage> ((event, emit) {
+      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+      _mapLoadTutorialEntryListWithDetailsToState();
+    });
+    
+    on <TutorialEntryChangeQuery> ((event, emit) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadTutorialEntryListToState();
+      } else {
+        _mapLoadTutorialEntryListWithDetailsToState();
+      }
+    });
+      
+    on <AddTutorialEntryList> ((event, emit) async {
+      await _mapAddTutorialEntryListToState(event);
+    });
+    
+    on <UpdateTutorialEntryList> ((event, emit) async {
+      await _mapUpdateTutorialEntryListToState(event);
+    });
+    
+    on <DeleteTutorialEntryList> ((event, emit) async {
+      await _mapDeleteTutorialEntryListToState(event);
+    });
+    
+    on <TutorialEntryListUpdated> ((event, emit) {
+      emit(_mapTutorialEntryListUpdatedToState(event));
+    });
+  }
 
-  Stream<TutorialEntryListState> _mapLoadTutorialEntryListToState() async* {
+  Future<void> _mapLoadTutorialEntryListToState() async {
     int amountNow =  (state is TutorialEntryListLoaded) ? (state as TutorialEntryListLoaded).values!.length : 0;
     _tutorialEntrysListSubscription?.cancel();
     _tutorialEntrysListSubscription = _tutorialEntryRepository.listen(
@@ -52,7 +90,7 @@ class TutorialEntryListBloc extends Bloc<TutorialEntryListEvent, TutorialEntryLi
     );
   }
 
-  Stream<TutorialEntryListState> _mapLoadTutorialEntryListWithDetailsToState() async* {
+  Future<void> _mapLoadTutorialEntryListWithDetailsToState() async {
     int amountNow =  (state is TutorialEntryListLoaded) ? (state as TutorialEntryListLoaded).values!.length : 0;
     _tutorialEntrysListSubscription?.cancel();
     _tutorialEntrysListSubscription = _tutorialEntryRepository.listenWithDetails(
@@ -64,58 +102,29 @@ class TutorialEntryListBloc extends Bloc<TutorialEntryListEvent, TutorialEntryLi
     );
   }
 
-  Stream<TutorialEntryListState> _mapAddTutorialEntryListToState(AddTutorialEntryList event) async* {
+  Future<void> _mapAddTutorialEntryListToState(AddTutorialEntryList event) async {
     var value = event.value;
-    if (value != null) 
-      _tutorialEntryRepository.add(value);
-  }
-
-  Stream<TutorialEntryListState> _mapUpdateTutorialEntryListToState(UpdateTutorialEntryList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _tutorialEntryRepository.update(value);
-  }
-
-  Stream<TutorialEntryListState> _mapDeleteTutorialEntryListToState(DeleteTutorialEntryList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _tutorialEntryRepository.delete(value);
-  }
-
-  Stream<TutorialEntryListState> _mapTutorialEntryListUpdatedToState(
-      TutorialEntryListUpdated event) async* {
-    yield TutorialEntryListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
-  }
-
-  @override
-  Stream<TutorialEntryListState> mapEventToState(TutorialEntryListEvent event) async* {
-    if (event is LoadTutorialEntryList) {
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadTutorialEntryListToState();
-      } else {
-        yield* _mapLoadTutorialEntryListWithDetailsToState();
-      }
-    }
-    if (event is NewPage) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
-      yield* _mapLoadTutorialEntryListWithDetailsToState();
-    } else if (event is TutorialEntryChangeQuery) {
-      eliudQuery = event.newQuery;
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadTutorialEntryListToState();
-      } else {
-        yield* _mapLoadTutorialEntryListWithDetailsToState();
-      }
-    } else if (event is AddTutorialEntryList) {
-      yield* _mapAddTutorialEntryListToState(event);
-    } else if (event is UpdateTutorialEntryList) {
-      yield* _mapUpdateTutorialEntryListToState(event);
-    } else if (event is DeleteTutorialEntryList) {
-      yield* _mapDeleteTutorialEntryListToState(event);
-    } else if (event is TutorialEntryListUpdated) {
-      yield* _mapTutorialEntryListUpdatedToState(event);
+    if (value != null) {
+      await _tutorialEntryRepository.add(value);
     }
   }
+
+  Future<void> _mapUpdateTutorialEntryListToState(UpdateTutorialEntryList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _tutorialEntryRepository.update(value);
+    }
+  }
+
+  Future<void> _mapDeleteTutorialEntryListToState(DeleteTutorialEntryList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _tutorialEntryRepository.delete(value);
+    }
+  }
+
+  TutorialEntryListLoaded _mapTutorialEntryListUpdatedToState(
+      TutorialEntryListUpdated event) => TutorialEntryListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {

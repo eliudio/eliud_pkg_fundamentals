@@ -66,24 +66,24 @@ class DocumentComponentEditorConstructor extends ComponentEditorConstructor {
   @override
   void updateComponentWithID(AppModel app, BuildContext context, String id,
       EditorFeedback feedback) async {
-    var document = await documentRepository(appId: app.documentID!)!.get(id);
+    var document = await documentRepository(appId: app.documentID)!.get(id);
     if (document != null) {
       _openIt(app, context, false, document, feedback);
     } else {
-      openErrorDialog(app, context, app.documentID! + '/_error',
+      openErrorDialog(app, context, app.documentID + '/_error',
           title: 'Error', errorMessage: 'Cannot find document with id $id');
     }
   }
 
   void _openIt(AppModel app, BuildContext context, bool create,
       DocumentModel model, EditorFeedback feedback) {
-    openComplexDialog(app, context, app.documentID! + '/Document',
+    openComplexDialog(app, context, app.documentID + '/Document',
         title: create ? 'Create document' : 'Update document',
         includeHeading: false,
         widthFraction: .9,
         child: BlocProvider<DocumentBloc>(
           create: (context) => DocumentBloc(
-            app.documentID!,
+            app.documentID,
             feedback,
           )..add(ExtEditorBaseInitialise<DocumentModel>(model)),
           child: DocumentComponentEditor(
@@ -116,7 +116,7 @@ class _DocumentComponentEditorState extends State<DocumentComponentEditor> {
         if (accessState.getMember() == null) {
           return text(widget.app, context, 'Member not logged in');
         }
-        var memberId = accessState.getMember()!.documentID!;
+        var memberId = accessState.getMember()!.documentID;
         return BlocBuilder<DocumentBloc, ExtEditorBaseState<DocumentModel>>(
             builder: (ppContext, documentState) {
           if (documentState
@@ -146,7 +146,7 @@ class _DocumentComponentEditorState extends State<DocumentComponentEditor> {
                         getListTile(context, widget.app,
                             leading: Icon(Icons.vpn_key),
                             title: text(widget.app, context,
-                                documentState.model.documentID!)),
+                                documentState.model.documentID)),
                         getListTile(context, widget.app,
                             leading: Icon(Icons.description),
                             title: dialogField(
@@ -334,7 +334,7 @@ class _DocumentComponentEditorState extends State<DocumentComponentEditor> {
             openFlexibleDialog(
               widget.app,
               context,
-              widget.app.documentID! + '/_listeditem',
+              widget.app.documentID + '/_listeditem',
               includeHeading: false,
               widthFraction: .8,
               child: DocumentItemModelWidget.getIt(
@@ -413,7 +413,7 @@ class _DocumentComponentEditorState extends State<DocumentComponentEditor> {
               Registry.registry()!.getMediumApi().takePhoto(
                   context,
                   widget.app,
-                  widget.app.ownerID!,
+                  widget.app.ownerID,
                   () => PlatformMediumAccessRights(
                       documentState.model.conditions!.privilegeLevelRequired!),
                   (photo) => _photoFeedbackFunction(photo),
@@ -423,7 +423,7 @@ class _DocumentComponentEditorState extends State<DocumentComponentEditor> {
               Registry.registry()!.getMediumApi().uploadPhoto(
                   context,
                   widget.app,
-                  widget.app.ownerID!,
+                  widget.app.ownerID,
                   () => PlatformMediumAccessRights(
                       documentState.model.conditions!.privilegeLevelRequired!),
                   (photo) => _photoFeedbackFunction(photo),

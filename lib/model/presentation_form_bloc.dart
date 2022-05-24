@@ -51,7 +51,7 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
   Stream<PresentationFormState> mapEventToState(PresentationFormEvent event) async* {
     final currentState = state;
     if (currentState is PresentationFormUninitialized) {
-      if (event is InitialiseNewPresentationFormEvent) {
+      on <InitialiseNewPresentationFormEvent> ((event, emit) {
         PresentationFormLoaded loaded = PresentationFormLoaded(value: PresentationModel(
                                                documentID: "",
                                  appId: "",
@@ -60,94 +60,70 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
                                  imageWidth: 0.0,
 
         ));
-        yield loaded;
-        return;
-
-      }
+        emit(loaded);
+      });
 
 
       if (event is InitialisePresentationFormEvent) {
         // Need to re-retrieve the document from the repository so that I get all associated types
         PresentationFormLoaded loaded = PresentationFormLoaded(value: await presentationRepository(appId: appId)!.get(event.value!.documentID));
-        yield loaded;
-        return;
+        emit(loaded);
       } else if (event is InitialisePresentationFormNoLoadEvent) {
         PresentationFormLoaded loaded = PresentationFormLoaded(value: event.value);
-        yield loaded;
-        return;
+        emit(loaded);
       }
     } else if (currentState is PresentationFormInitialized) {
       PresentationModel? newValue = null;
-      if (event is ChangedPresentationDocumentID) {
+      on <ChangedPresentationDocumentID> ((event, emit) async {
         newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
-          yield* _isDocumentIDValid(event.value, newValue).asStream();
+          emit(await _isDocumentIDValid(event.value, newValue!));
         } else {
-          yield SubmittablePresentationForm(value: newValue);
+          emit(SubmittablePresentationForm(value: newValue));
         }
 
-        return;
-      }
-      if (event is ChangedPresentationDescription) {
+      });
+      on <ChangedPresentationDescription> ((event, emit) async {
         newValue = currentState.value!.copyWith(description: event.value);
-        yield SubmittablePresentationForm(value: newValue);
+        emit(SubmittablePresentationForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedPresentationBodyComponents) {
+      });
+      on <ChangedPresentationBodyComponents> ((event, emit) async {
         newValue = currentState.value!.copyWith(bodyComponents: event.value);
-        yield SubmittablePresentationForm(value: newValue);
+        emit(SubmittablePresentationForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedPresentationImage) {
+      });
+      on <ChangedPresentationImage> ((event, emit) async {
         if (event.value != null)
           newValue = currentState.value!.copyWith(image: await platformMediumRepository(appId: appId)!.get(event.value));
-        else
-          newValue = new PresentationModel(
-                                 documentID: currentState.value!.documentID,
-                                 appId: currentState.value!.appId,
-                                 description: currentState.value!.description,
-                                 bodyComponents: currentState.value!.bodyComponents,
-                                 image: null,
-                                 imagePositionRelative: currentState.value!.imagePositionRelative,
-                                 imageAlignment: currentState.value!.imageAlignment,
-                                 imageWidth: currentState.value!.imageWidth,
-                                 conditions: currentState.value!.conditions,
-          );
-        yield SubmittablePresentationForm(value: newValue);
+        emit(SubmittablePresentationForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedPresentationImagePositionRelative) {
+      });
+      on <ChangedPresentationImagePositionRelative> ((event, emit) async {
         newValue = currentState.value!.copyWith(imagePositionRelative: event.value);
-        yield SubmittablePresentationForm(value: newValue);
+        emit(SubmittablePresentationForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedPresentationImageAlignment) {
+      });
+      on <ChangedPresentationImageAlignment> ((event, emit) async {
         newValue = currentState.value!.copyWith(imageAlignment: event.value);
-        yield SubmittablePresentationForm(value: newValue);
+        emit(SubmittablePresentationForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedPresentationImageWidth) {
+      });
+      on <ChangedPresentationImageWidth> ((event, emit) async {
         if (isDouble(event.value!)) {
           newValue = currentState.value!.copyWith(imageWidth: double.parse(event.value!));
-          yield SubmittablePresentationForm(value: newValue);
+          emit(SubmittablePresentationForm(value: newValue));
 
         } else {
           newValue = currentState.value!.copyWith(imageWidth: 0.0);
-          yield ImageWidthPresentationFormError(message: "Value should be a number or decimal number", value: newValue);
+          emit(ImageWidthPresentationFormError(message: "Value should be a number or decimal number", value: newValue));
         }
-        return;
-      }
-      if (event is ChangedPresentationConditions) {
+      });
+      on <ChangedPresentationConditions> ((event, emit) async {
         newValue = currentState.value!.copyWith(conditions: event.value);
-        yield SubmittablePresentationForm(value: newValue);
+        emit(SubmittablePresentationForm(value: newValue));
 
-        return;
-      }
+      });
     }
   }
 

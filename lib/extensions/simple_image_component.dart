@@ -21,7 +21,7 @@ class SimpleImageComponentConstructorDefault implements ComponentConstructor {
 
   @override
   Future<dynamic> getModel({required AppModel app, required String id}) async =>
-      await simpleImageRepository(appId: app.documentID!)!.get(id);
+      await simpleImageRepository(appId: app.documentID)!.get(id);
 }
 
 class SimpleImageComponent extends AbstractSimpleImageComponent {

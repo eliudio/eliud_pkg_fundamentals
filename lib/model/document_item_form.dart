@@ -74,7 +74,7 @@ class DocumentItemForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var appId = app.documentID!;
+    var appId = app.documentID;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<DocumentItemFormBloc >(
             create: (context) => DocumentItemFormBloc(appId,
@@ -243,7 +243,7 @@ class _MyDocumentItemFormState extends State<MyDocumentItemForm> {
   }
 
   bool _readOnly(AccessState accessState, DocumentItemFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID!));
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID));
   }
   
 

@@ -39,7 +39,7 @@ abstract class AbstractSimpleTextComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<SimpleTextComponentBloc> (
           create: (context) => SimpleTextComponentBloc(
-            simpleTextRepository: simpleTextRepository(appId: app.documentID!)!)
+            simpleTextRepository: simpleTextRepository(appId: app.documentID)!)
         ..add(FetchSimpleTextComponent(id: simpleTextId)),
       child: _simpleTextBlockBuilder(context),
     );

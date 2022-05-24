@@ -28,7 +28,7 @@ class BookletEntity {
   final List<SectionEntity>? sections;
   final StorageConditionsEntity? conditions;
 
-  BookletEntity({this.appId, this.description, this.sections, this.conditions, });
+  BookletEntity({required this.appId, this.description, this.sections, this.conditions, });
 
 
   List<Object?> get props => [appId, description, sections, conditions, ];

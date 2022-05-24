@@ -74,7 +74,7 @@ class DocumentForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var appId = app.documentID!;
+    var appId = app.documentID;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<DocumentFormBloc >(
             create: (context) => DocumentFormBloc(appId,
@@ -221,11 +221,11 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
 
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _documentRendererSelectedRadioTile, 'flutter_markdown', 'flutter_markdown', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionDocumentRenderer(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _documentRendererSelectedRadioTile, 'flutter_markdown', 'flutter_markdown', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionDocumentRenderer(val))
           );
         children.add(
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _documentRendererSelectedRadioTile, 'dynamic_widget', 'dynamic_widget', !accessState.memberIsOwner(widget.app.documentID!) ? null : (dynamic val) => setSelectionDocumentRenderer(val))
+                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _documentRendererSelectedRadioTile, 'dynamic_widget', 'dynamic_widget', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionDocumentRenderer(val))
           );
 
 
@@ -400,7 +400,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
   }
 
   bool _readOnly(AccessState accessState, DocumentFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID!));
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID));
   }
   
 

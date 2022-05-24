@@ -15,6 +15,7 @@
 
 import 'package:eliud_core/tools/common_tools.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eliud_core/core/base/model_base.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
@@ -35,14 +36,14 @@ import 'package:eliud_core/tools/random.dart';
 
 
 
-class ListedItemModel {
-  String? documentID;
+class ListedItemModel implements ModelBase {
+  String documentID;
   String? description;
   ActionModel? action;
   PlatformMediumModel? image;
   PosSizeModel? posSize;
 
-  ListedItemModel({this.documentID, this.description, this.action, this.image, this.posSize, })  {
+  ListedItemModel({required this.documentID, this.description, this.action, this.image, this.posSize, })  {
     assert(documentID != null);
   }
 

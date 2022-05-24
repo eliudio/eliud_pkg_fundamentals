@@ -77,7 +77,7 @@ class FaderListUpdated extends FaderListEvent {
 }
 
 class FaderChangeQuery extends FaderListEvent {
-  final EliudQuery newQuery;
+  final EliudQuery? newQuery;
 
   const FaderChangeQuery({ required this.newQuery });
 

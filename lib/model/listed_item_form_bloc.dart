@@ -50,62 +50,46 @@ class ListedItemFormBloc extends Bloc<ListedItemFormEvent, ListedItemFormState> 
   Stream<ListedItemFormState> mapEventToState(ListedItemFormEvent event) async* {
     final currentState = state;
     if (currentState is ListedItemFormUninitialized) {
-      if (event is InitialiseNewListedItemFormEvent) {
+      on <InitialiseNewListedItemFormEvent> ((event, emit) {
         ListedItemFormLoaded loaded = ListedItemFormLoaded(value: ListedItemModel(
                                                documentID: "IDENTIFIED", 
                                  description: "",
 
         ));
-        yield loaded;
-        return;
-
-      }
+        emit(loaded);
+      });
 
 
       if (event is InitialiseListedItemFormEvent) {
         ListedItemFormLoaded loaded = ListedItemFormLoaded(value: event.value);
-        yield loaded;
-        return;
+        emit(loaded);
       } else if (event is InitialiseListedItemFormNoLoadEvent) {
         ListedItemFormLoaded loaded = ListedItemFormLoaded(value: event.value);
-        yield loaded;
-        return;
+        emit(loaded);
       }
     } else if (currentState is ListedItemFormInitialized) {
       ListedItemModel? newValue = null;
-      if (event is ChangedListedItemDescription) {
+      on <ChangedListedItemDescription> ((event, emit) async {
         newValue = currentState.value!.copyWith(description: event.value);
-        yield SubmittableListedItemForm(value: newValue);
+        emit(SubmittableListedItemForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedListedItemAction) {
+      });
+      on <ChangedListedItemAction> ((event, emit) async {
         newValue = currentState.value!.copyWith(action: event.value);
-        yield SubmittableListedItemForm(value: newValue);
+        emit(SubmittableListedItemForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedListedItemImage) {
+      });
+      on <ChangedListedItemImage> ((event, emit) async {
         if (event.value != null)
           newValue = currentState.value!.copyWith(image: await platformMediumRepository(appId: appId)!.get(event.value));
-        else
-          newValue = new ListedItemModel(
-                                 documentID: currentState.value!.documentID,
-                                 description: currentState.value!.description,
-                                 action: currentState.value!.action,
-                                 image: null,
-                                 posSize: currentState.value!.posSize,
-          );
-        yield SubmittableListedItemForm(value: newValue);
+        emit(SubmittableListedItemForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedListedItemPosSize) {
+      });
+      on <ChangedListedItemPosSize> ((event, emit) async {
         newValue = currentState.value!.copyWith(posSize: event.value);
-        yield SubmittableListedItemForm(value: newValue);
+        emit(SubmittableListedItemForm(value: newValue));
 
-        return;
-      }
+      });
     }
   }
 

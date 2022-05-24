@@ -38,9 +38,47 @@ class GridListBloc extends Bloc<GridListEvent, GridListState> {
   GridListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required GridRepository gridRepository, this.gridLimit = 5})
       : assert(gridRepository != null),
         _gridRepository = gridRepository,
-        super(GridListLoading());
+        super(GridListLoading()) {
+    on <LoadGridList> ((event, emit) {
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadGridListToState();
+      } else {
+        _mapLoadGridListWithDetailsToState();
+      }
+    });
+    
+    on <NewPage> ((event, emit) {
+      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+      _mapLoadGridListWithDetailsToState();
+    });
+    
+    on <GridChangeQuery> ((event, emit) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadGridListToState();
+      } else {
+        _mapLoadGridListWithDetailsToState();
+      }
+    });
+      
+    on <AddGridList> ((event, emit) async {
+      await _mapAddGridListToState(event);
+    });
+    
+    on <UpdateGridList> ((event, emit) async {
+      await _mapUpdateGridListToState(event);
+    });
+    
+    on <DeleteGridList> ((event, emit) async {
+      await _mapDeleteGridListToState(event);
+    });
+    
+    on <GridListUpdated> ((event, emit) {
+      emit(_mapGridListUpdatedToState(event));
+    });
+  }
 
-  Stream<GridListState> _mapLoadGridListToState() async* {
+  Future<void> _mapLoadGridListToState() async {
     int amountNow =  (state is GridListLoaded) ? (state as GridListLoaded).values!.length : 0;
     _gridsListSubscription?.cancel();
     _gridsListSubscription = _gridRepository.listen(
@@ -52,7 +90,7 @@ class GridListBloc extends Bloc<GridListEvent, GridListState> {
     );
   }
 
-  Stream<GridListState> _mapLoadGridListWithDetailsToState() async* {
+  Future<void> _mapLoadGridListWithDetailsToState() async {
     int amountNow =  (state is GridListLoaded) ? (state as GridListLoaded).values!.length : 0;
     _gridsListSubscription?.cancel();
     _gridsListSubscription = _gridRepository.listenWithDetails(
@@ -64,58 +102,29 @@ class GridListBloc extends Bloc<GridListEvent, GridListState> {
     );
   }
 
-  Stream<GridListState> _mapAddGridListToState(AddGridList event) async* {
+  Future<void> _mapAddGridListToState(AddGridList event) async {
     var value = event.value;
-    if (value != null) 
-      _gridRepository.add(value);
-  }
-
-  Stream<GridListState> _mapUpdateGridListToState(UpdateGridList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _gridRepository.update(value);
-  }
-
-  Stream<GridListState> _mapDeleteGridListToState(DeleteGridList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _gridRepository.delete(value);
-  }
-
-  Stream<GridListState> _mapGridListUpdatedToState(
-      GridListUpdated event) async* {
-    yield GridListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
-  }
-
-  @override
-  Stream<GridListState> mapEventToState(GridListEvent event) async* {
-    if (event is LoadGridList) {
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadGridListToState();
-      } else {
-        yield* _mapLoadGridListWithDetailsToState();
-      }
-    }
-    if (event is NewPage) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
-      yield* _mapLoadGridListWithDetailsToState();
-    } else if (event is GridChangeQuery) {
-      eliudQuery = event.newQuery;
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadGridListToState();
-      } else {
-        yield* _mapLoadGridListWithDetailsToState();
-      }
-    } else if (event is AddGridList) {
-      yield* _mapAddGridListToState(event);
-    } else if (event is UpdateGridList) {
-      yield* _mapUpdateGridListToState(event);
-    } else if (event is DeleteGridList) {
-      yield* _mapDeleteGridListToState(event);
-    } else if (event is GridListUpdated) {
-      yield* _mapGridListUpdatedToState(event);
+    if (value != null) {
+      await _gridRepository.add(value);
     }
   }
+
+  Future<void> _mapUpdateGridListToState(UpdateGridList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _gridRepository.update(value);
+    }
+  }
+
+  Future<void> _mapDeleteGridListToState(DeleteGridList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _gridRepository.delete(value);
+    }
+  }
+
+  GridListLoaded _mapGridListUpdatedToState(
+      GridListUpdated event) => GridListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {

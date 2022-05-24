@@ -16,6 +16,7 @@
 import 'package:collection/collection.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eliud_core/core/base/model_base.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
@@ -64,8 +65,8 @@ SectionImageAlignment toSectionImageAlignment(int? index) {
 }
 
 
-class SectionModel {
-  String? documentID;
+class SectionModel implements ModelBase {
+  String documentID;
   String? title;
   String? description;
   PlatformMediumModel? image;
@@ -76,7 +77,7 @@ class SectionModel {
   double? imageWidth;
   List<LinkModel>? links;
 
-  SectionModel({this.documentID, this.title, this.description, this.image, this.imagePositionRelative, this.imageAlignment, this.imageWidth, this.links, })  {
+  SectionModel({required this.documentID, this.title, this.description, this.image, this.imagePositionRelative, this.imageAlignment, this.imageWidth, this.links, })  {
     assert(documentID != null);
   }
 

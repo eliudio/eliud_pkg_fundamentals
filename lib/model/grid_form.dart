@@ -74,7 +74,7 @@ class GridForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var appId = app.documentID!;
+    var appId = app.documentID;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<GridFormBloc >(
             create: (context) => GridFormBloc(appId,
@@ -338,7 +338,7 @@ class _MyGridFormState extends State<MyGridForm> {
   }
 
   bool _readOnly(AccessState accessState, GridFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID!));
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID));
   }
   
 

@@ -39,7 +39,7 @@ abstract class AbstractTutorialComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<TutorialComponentBloc> (
           create: (context) => TutorialComponentBloc(
-            tutorialRepository: tutorialRepository(appId: app.documentID!)!)
+            tutorialRepository: tutorialRepository(appId: app.documentID)!)
         ..add(FetchTutorialComponent(id: tutorialId)),
       child: _tutorialBlockBuilder(context),
     );

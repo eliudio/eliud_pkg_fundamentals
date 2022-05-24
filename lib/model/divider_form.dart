@@ -74,7 +74,7 @@ class DividerForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var appId = app.documentID!;
+    var appId = app.documentID;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<DividerFormBloc >(
             create: (context) => DividerFormBloc(appId,
@@ -369,7 +369,7 @@ class _MyDividerFormState extends State<MyDividerForm> {
   }
 
   bool _readOnly(AccessState accessState, DividerFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID!));
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID));
   }
   
 

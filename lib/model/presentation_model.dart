@@ -16,6 +16,7 @@
 import 'package:collection/collection.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eliud_core/core/base/model_base.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
@@ -64,9 +65,9 @@ PresentationImageAlignment toPresentationImageAlignment(int? index) {
 }
 
 
-class PresentationModel {
-  String? documentID;
-  String? appId;
+class PresentationModel implements ModelBase, WithAppId {
+  String documentID;
+  String appId;
   String? description;
   List<BodyComponentModel>? bodyComponents;
   PlatformMediumModel? image;
@@ -77,7 +78,7 @@ class PresentationModel {
   double? imageWidth;
   StorageConditionsModel? conditions;
 
-  PresentationModel({this.documentID, this.appId, this.description, this.bodyComponents, this.image, this.imagePositionRelative, this.imageAlignment, this.imageWidth, this.conditions, })  {
+  PresentationModel({required this.documentID, required this.appId, this.description, this.bodyComponents, this.image, this.imagePositionRelative, this.imageAlignment, this.imageWidth, this.conditions, })  {
     assert(documentID != null);
   }
 
@@ -130,7 +131,7 @@ class PresentationModel {
     var counter = 0;
     return PresentationModel(
           documentID: documentID, 
-          appId: entity.appId, 
+          appId: entity.appId ?? '', 
           description: entity.description, 
           bodyComponents: 
             entity.bodyComponents == null ? null : List<BodyComponentModel>.from(await Future.wait(entity. bodyComponents
@@ -164,7 +165,7 @@ class PresentationModel {
     var counter = 0;
     return PresentationModel(
           documentID: documentID, 
-          appId: entity.appId, 
+          appId: entity.appId ?? '', 
           description: entity.description, 
           bodyComponents: 
             entity. bodyComponents == null ? null : List<BodyComponentModel>.from(await Future.wait(entity. bodyComponents

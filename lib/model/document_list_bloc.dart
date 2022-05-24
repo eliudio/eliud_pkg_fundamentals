@@ -38,9 +38,47 @@ class DocumentListBloc extends Bloc<DocumentListEvent, DocumentListState> {
   DocumentListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required DocumentRepository documentRepository, this.documentLimit = 5})
       : assert(documentRepository != null),
         _documentRepository = documentRepository,
-        super(DocumentListLoading());
+        super(DocumentListLoading()) {
+    on <LoadDocumentList> ((event, emit) {
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadDocumentListToState();
+      } else {
+        _mapLoadDocumentListWithDetailsToState();
+      }
+    });
+    
+    on <NewPage> ((event, emit) {
+      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+      _mapLoadDocumentListWithDetailsToState();
+    });
+    
+    on <DocumentChangeQuery> ((event, emit) {
+      eliudQuery = event.newQuery;
+      if ((detailed == null) || (!detailed!)) {
+        _mapLoadDocumentListToState();
+      } else {
+        _mapLoadDocumentListWithDetailsToState();
+      }
+    });
+      
+    on <AddDocumentList> ((event, emit) async {
+      await _mapAddDocumentListToState(event);
+    });
+    
+    on <UpdateDocumentList> ((event, emit) async {
+      await _mapUpdateDocumentListToState(event);
+    });
+    
+    on <DeleteDocumentList> ((event, emit) async {
+      await _mapDeleteDocumentListToState(event);
+    });
+    
+    on <DocumentListUpdated> ((event, emit) {
+      emit(_mapDocumentListUpdatedToState(event));
+    });
+  }
 
-  Stream<DocumentListState> _mapLoadDocumentListToState() async* {
+  Future<void> _mapLoadDocumentListToState() async {
     int amountNow =  (state is DocumentListLoaded) ? (state as DocumentListLoaded).values!.length : 0;
     _documentsListSubscription?.cancel();
     _documentsListSubscription = _documentRepository.listen(
@@ -52,7 +90,7 @@ class DocumentListBloc extends Bloc<DocumentListEvent, DocumentListState> {
     );
   }
 
-  Stream<DocumentListState> _mapLoadDocumentListWithDetailsToState() async* {
+  Future<void> _mapLoadDocumentListWithDetailsToState() async {
     int amountNow =  (state is DocumentListLoaded) ? (state as DocumentListLoaded).values!.length : 0;
     _documentsListSubscription?.cancel();
     _documentsListSubscription = _documentRepository.listenWithDetails(
@@ -64,58 +102,29 @@ class DocumentListBloc extends Bloc<DocumentListEvent, DocumentListState> {
     );
   }
 
-  Stream<DocumentListState> _mapAddDocumentListToState(AddDocumentList event) async* {
+  Future<void> _mapAddDocumentListToState(AddDocumentList event) async {
     var value = event.value;
-    if (value != null) 
-      _documentRepository.add(value);
-  }
-
-  Stream<DocumentListState> _mapUpdateDocumentListToState(UpdateDocumentList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _documentRepository.update(value);
-  }
-
-  Stream<DocumentListState> _mapDeleteDocumentListToState(DeleteDocumentList event) async* {
-    var value = event.value;
-    if (value != null) 
-      _documentRepository.delete(value);
-  }
-
-  Stream<DocumentListState> _mapDocumentListUpdatedToState(
-      DocumentListUpdated event) async* {
-    yield DocumentListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
-  }
-
-  @override
-  Stream<DocumentListState> mapEventToState(DocumentListEvent event) async* {
-    if (event is LoadDocumentList) {
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadDocumentListToState();
-      } else {
-        yield* _mapLoadDocumentListWithDetailsToState();
-      }
-    }
-    if (event is NewPage) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
-      yield* _mapLoadDocumentListWithDetailsToState();
-    } else if (event is DocumentChangeQuery) {
-      eliudQuery = event.newQuery;
-      if ((detailed == null) || (!detailed!)) {
-        yield* _mapLoadDocumentListToState();
-      } else {
-        yield* _mapLoadDocumentListWithDetailsToState();
-      }
-    } else if (event is AddDocumentList) {
-      yield* _mapAddDocumentListToState(event);
-    } else if (event is UpdateDocumentList) {
-      yield* _mapUpdateDocumentListToState(event);
-    } else if (event is DeleteDocumentList) {
-      yield* _mapDeleteDocumentListToState(event);
-    } else if (event is DocumentListUpdated) {
-      yield* _mapDocumentListUpdatedToState(event);
+    if (value != null) {
+      await _documentRepository.add(value);
     }
   }
+
+  Future<void> _mapUpdateDocumentListToState(UpdateDocumentList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _documentRepository.update(value);
+    }
+  }
+
+  Future<void> _mapDeleteDocumentListToState(DeleteDocumentList event) async {
+    var value = event.value;
+    if (value != null) {
+      await _documentRepository.delete(value);
+    }
+  }
+
+  DocumentListLoaded _mapDocumentListUpdatedToState(
+      DocumentListUpdated event) => DocumentListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {

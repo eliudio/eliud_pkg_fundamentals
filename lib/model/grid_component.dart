@@ -39,7 +39,7 @@ abstract class AbstractGridComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<GridComponentBloc> (
           create: (context) => GridComponentBloc(
-            gridRepository: gridRepository(appId: app.documentID!)!)
+            gridRepository: gridRepository(appId: app.documentID)!)
         ..add(FetchGridComponent(id: gridId)),
       child: _gridBlockBuilder(context),
     );

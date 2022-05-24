@@ -50,7 +50,7 @@ class SectionFormBloc extends Bloc<SectionFormEvent, SectionFormState> {
   Stream<SectionFormState> mapEventToState(SectionFormEvent event) async* {
     final currentState = state;
     if (currentState is SectionFormUninitialized) {
-      if (event is InitialiseNewSectionFormEvent) {
+      on <InitialiseNewSectionFormEvent> ((event, emit) {
         SectionFormLoaded loaded = SectionFormLoaded(value: SectionModel(
                                                documentID: "IDENTIFIED", 
                                  title: "",
@@ -59,82 +59,60 @@ class SectionFormBloc extends Bloc<SectionFormEvent, SectionFormState> {
                                  links: [],
 
         ));
-        yield loaded;
-        return;
-
-      }
+        emit(loaded);
+      });
 
 
       if (event is InitialiseSectionFormEvent) {
         SectionFormLoaded loaded = SectionFormLoaded(value: event.value);
-        yield loaded;
-        return;
+        emit(loaded);
       } else if (event is InitialiseSectionFormNoLoadEvent) {
         SectionFormLoaded loaded = SectionFormLoaded(value: event.value);
-        yield loaded;
-        return;
+        emit(loaded);
       }
     } else if (currentState is SectionFormInitialized) {
       SectionModel? newValue = null;
-      if (event is ChangedSectionTitle) {
+      on <ChangedSectionTitle> ((event, emit) async {
         newValue = currentState.value!.copyWith(title: event.value);
-        yield SubmittableSectionForm(value: newValue);
+        emit(SubmittableSectionForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedSectionDescription) {
+      });
+      on <ChangedSectionDescription> ((event, emit) async {
         newValue = currentState.value!.copyWith(description: event.value);
-        yield SubmittableSectionForm(value: newValue);
+        emit(SubmittableSectionForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedSectionImage) {
+      });
+      on <ChangedSectionImage> ((event, emit) async {
         if (event.value != null)
           newValue = currentState.value!.copyWith(image: await platformMediumRepository(appId: appId)!.get(event.value));
-        else
-          newValue = new SectionModel(
-                                 documentID: currentState.value!.documentID,
-                                 title: currentState.value!.title,
-                                 description: currentState.value!.description,
-                                 image: null,
-                                 imagePositionRelative: currentState.value!.imagePositionRelative,
-                                 imageAlignment: currentState.value!.imageAlignment,
-                                 imageWidth: currentState.value!.imageWidth,
-                                 links: currentState.value!.links,
-          );
-        yield SubmittableSectionForm(value: newValue);
+        emit(SubmittableSectionForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedSectionImagePositionRelative) {
+      });
+      on <ChangedSectionImagePositionRelative> ((event, emit) async {
         newValue = currentState.value!.copyWith(imagePositionRelative: event.value);
-        yield SubmittableSectionForm(value: newValue);
+        emit(SubmittableSectionForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedSectionImageAlignment) {
+      });
+      on <ChangedSectionImageAlignment> ((event, emit) async {
         newValue = currentState.value!.copyWith(imageAlignment: event.value);
-        yield SubmittableSectionForm(value: newValue);
+        emit(SubmittableSectionForm(value: newValue));
 
-        return;
-      }
-      if (event is ChangedSectionImageWidth) {
+      });
+      on <ChangedSectionImageWidth> ((event, emit) async {
         if (isDouble(event.value!)) {
           newValue = currentState.value!.copyWith(imageWidth: double.parse(event.value!));
-          yield SubmittableSectionForm(value: newValue);
+          emit(SubmittableSectionForm(value: newValue));
 
         } else {
           newValue = currentState.value!.copyWith(imageWidth: 0.0);
-          yield ImageWidthSectionFormError(message: "Value should be a number or decimal number", value: newValue);
+          emit(ImageWidthSectionFormError(message: "Value should be a number or decimal number", value: newValue));
         }
-        return;
-      }
-      if (event is ChangedSectionLinks) {
+      });
+      on <ChangedSectionLinks> ((event, emit) async {
         newValue = currentState.value!.copyWith(links: event.value);
-        yield SubmittableSectionForm(value: newValue);
+        emit(SubmittableSectionForm(value: newValue));
 
-        return;
-      }
+      });
     }
   }
 

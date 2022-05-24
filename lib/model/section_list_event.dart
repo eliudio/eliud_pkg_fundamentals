@@ -77,7 +77,7 @@ class SectionListUpdated extends SectionListEvent {
 }
 
 class SectionChangeQuery extends SectionListEvent {
-  final EliudQuery newQuery;
+  final EliudQuery? newQuery;
 
   const SectionChangeQuery({ required this.newQuery });
 

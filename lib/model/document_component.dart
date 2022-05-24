@@ -39,7 +39,7 @@ abstract class AbstractDocumentComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<DocumentComponentBloc> (
           create: (context) => DocumentComponentBloc(
-            documentRepository: documentRepository(appId: app.documentID!)!)
+            documentRepository: documentRepository(appId: app.documentID)!)
         ..add(FetchDocumentComponent(id: documentId)),
       child: _documentBlockBuilder(context),
     );

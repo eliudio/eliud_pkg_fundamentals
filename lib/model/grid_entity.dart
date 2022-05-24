@@ -29,7 +29,7 @@ class GridEntity {
   final String? gridViewId;
   final StorageConditionsEntity? conditions;
 
-  GridEntity({this.appId, this.description, this.bodyComponents, this.gridViewId, this.conditions, });
+  GridEntity({required this.appId, this.description, this.bodyComponents, this.gridViewId, this.conditions, });
 
 
   List<Object?> get props => [appId, description, bodyComponents, gridViewId, conditions, ];

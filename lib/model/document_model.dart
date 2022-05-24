@@ -16,6 +16,7 @@
 import 'package:collection/collection.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eliud_core/core/base/model_base.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
@@ -48,9 +49,9 @@ DocumentRenderer toDocumentRenderer(int? index) {
 }
 
 
-class DocumentModel {
-  String? documentID;
-  String? appId;
+class DocumentModel implements ModelBase, WithAppId {
+  String documentID;
+  String appId;
   String? description;
 
   // Document renderer. Different renderers offer different functionality
@@ -65,7 +66,7 @@ class DocumentModel {
   BackgroundModel? background;
   StorageConditionsModel? conditions;
 
-  DocumentModel({this.documentID, this.appId, this.description, this.documentRenderer, this.content, this.padding, this.images, this.background, this.conditions, })  {
+  DocumentModel({required this.documentID, required this.appId, this.description, this.documentRenderer, this.content, this.padding, this.images, this.background, this.conditions, })  {
     assert(documentID != null);
   }
 
@@ -118,7 +119,7 @@ class DocumentModel {
     var counter = 0;
     return DocumentModel(
           documentID: documentID, 
-          appId: entity.appId, 
+          appId: entity.appId ?? '', 
           description: entity.description, 
           documentRenderer: toDocumentRenderer(entity.documentRenderer), 
           content: entity.content, 
@@ -143,7 +144,7 @@ class DocumentModel {
     var counter = 0;
     return DocumentModel(
           documentID: documentID, 
-          appId: entity.appId, 
+          appId: entity.appId ?? '', 
           description: entity.description, 
           documentRenderer: toDocumentRenderer(entity.documentRenderer), 
           content: entity.content, 

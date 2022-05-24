@@ -16,6 +16,7 @@
 import 'package:collection/collection.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eliud_core/core/base/model_base.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
@@ -36,9 +37,9 @@ import 'package:eliud_core/tools/random.dart';
 
 
 
-class GridModel {
-  String? documentID;
-  String? appId;
+class GridModel implements ModelBase, WithAppId {
+  String documentID;
+  String appId;
   String? description;
   List<BodyComponentModel>? bodyComponents;
 
@@ -46,7 +47,7 @@ class GridModel {
   GridViewModel? gridView;
   StorageConditionsModel? conditions;
 
-  GridModel({this.documentID, this.appId, this.description, this.bodyComponents, this.gridView, this.conditions, })  {
+  GridModel({required this.documentID, required this.appId, this.description, this.bodyComponents, this.gridView, this.conditions, })  {
     assert(documentID != null);
   }
 
@@ -93,7 +94,7 @@ class GridModel {
     var counter = 0;
     return GridModel(
           documentID: documentID, 
-          appId: entity.appId, 
+          appId: entity.appId ?? '', 
           description: entity.description, 
           bodyComponents: 
             entity.bodyComponents == null ? null : List<BodyComponentModel>.from(await Future.wait(entity. bodyComponents
@@ -124,7 +125,7 @@ class GridModel {
     var counter = 0;
     return GridModel(
           documentID: documentID, 
-          appId: entity.appId, 
+          appId: entity.appId ?? '', 
           description: entity.description, 
           bodyComponents: 
             entity. bodyComponents == null ? null : List<BodyComponentModel>.from(await Future.wait(entity. bodyComponents

@@ -54,11 +54,11 @@ class DividerComponentEditorConstructor extends ComponentEditorConstructor {
   @override
   void updateComponentWithID(AppModel app, BuildContext context, String id,
       EditorFeedback feedback) async {
-    var divider = await dividerRepository(appId: app.documentID!)!.get(id);
+    var divider = await dividerRepository(appId: app.documentID)!.get(id);
     if (divider != null) {
       _openIt(app, context, false, divider, feedback);
     } else {
-      openErrorDialog(app, context, app.documentID! + '/_error',
+      openErrorDialog(app, context, app.documentID + '/_error',
           title: 'Error',
           errorMessage: 'Cannot find notification dashboard with id $id');
     }
@@ -69,7 +69,7 @@ class DividerComponentEditorConstructor extends ComponentEditorConstructor {
     openComplexDialog(
       app,
       context,
-      app.documentID! + '/notificationdashboard',
+      app.documentID + '/notificationdashboard',
       title: create
           ? 'Create Notification Dashboard'
           : 'Update Notification Dashboard',
@@ -77,7 +77,7 @@ class DividerComponentEditorConstructor extends ComponentEditorConstructor {
       widthFraction: .9,
       child: BlocProvider<DividerBloc>(
           create: (context) => DividerBloc(
-                app.documentID!,
+                app.documentID,
                 /*create,
             */
                 feedback,
@@ -135,7 +135,7 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
                         getListTile(context, widget.app,
                             leading: Icon(Icons.vpn_key),
                             title: text(widget.app, context,
-                                dividerState.model.documentID!)),
+                                dividerState.model.documentID)),
                         getListTile(context, widget.app,
                             leading: Icon(Icons.description),
                             title: dialogField(

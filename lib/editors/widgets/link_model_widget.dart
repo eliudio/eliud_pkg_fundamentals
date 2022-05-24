@@ -83,7 +83,7 @@ class _LinkModelWidgetState extends State<LinkModelWidget> {
             getListTile(context, widget.app,
                 leading: Icon(Icons.vpn_key),
                 title: text(
-                    widget.app, context, widget.documentItemModel.documentID!)),
+                    widget.app, context, widget.documentItemModel.documentID)),
           ]),
       SelectActionWidget(
           app: widget.app,

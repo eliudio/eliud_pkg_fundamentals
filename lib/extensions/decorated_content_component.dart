@@ -28,7 +28,7 @@ class DecoratedContentComponentConstructorDefault
 
   @override
   Future<dynamic> getModel({required AppModel app, required String id}) async =>
-      await decoratedContentRepository(appId: app.documentID!)!.get(id);
+      await decoratedContentRepository(appId: app.documentID)!.get(id);
 }
 
 class DecoratedContentComponent extends AbstractDecoratedContentComponent {

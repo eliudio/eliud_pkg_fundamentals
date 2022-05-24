@@ -74,7 +74,7 @@ class TutorialForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    var appId = app.documentID!;
+    var appId = app.documentID;
     if (formAction == FormAction.ShowData) {
       return BlocProvider<TutorialFormBloc >(
             create: (context) => TutorialFormBloc(appId,
@@ -334,7 +334,7 @@ class _MyTutorialFormState extends State<MyTutorialForm> {
   }
 
   bool _readOnly(AccessState accessState, TutorialFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID!));
+    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID));
   }
   
 
