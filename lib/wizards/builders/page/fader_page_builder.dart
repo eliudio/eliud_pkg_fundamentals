@@ -64,6 +64,7 @@ class FaderPageBuilder extends PageBuilder {
         documentID: constructDocumentId(uniqueId: uniqueId, documentId: pageId),
         appId: app.documentID,
         title: 'Fader example',
+        description: 'Fader example',
         drawer: leftDrawer,
         endDrawer: rightDrawer,
         appBar: theAppBar,
