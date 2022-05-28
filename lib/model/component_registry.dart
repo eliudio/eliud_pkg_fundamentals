@@ -30,6 +30,9 @@ import 'divider_component_selector.dart';
 import '../extensions/document_component.dart';
 import '../editors/document_component_editor.dart';
 import 'document_component_selector.dart';
+import '../extensions/dynamic_widget_component.dart';
+import '../editors/dynamic_widget_component_editor.dart';
+import 'dynamic_widget_component_selector.dart';
 import '../extensions/fader_component.dart';
 import '../editors/fader_component_editor.dart';
 import 'fader_component_selector.dart';
@@ -56,7 +59,7 @@ import 'package:eliud_pkg_fundamentals/model/internal_component.dart';
 class ComponentRegistry {
 
   void init() {
-    Registry.registry()!.addInternalComponents('eliud_pkg_fundamentals', ["booklets", "decoratedContents", "dividers", "documents", "faders", "grids", "presentations", "simpleImages", "simpleTexts", "tutorials", ]);
+    Registry.registry()!.addInternalComponents('eliud_pkg_fundamentals', ["booklets", "decoratedContents", "dividers", "documents", "dynamicWidgets", "faders", "grids", "presentations", "simpleImages", "simpleTexts", "tutorials", ]);
 
     Registry.registry()!.register(componentName: "eliud_pkg_fundamentals_internalWidgets", componentConstructor: ListComponentFactory());
     Registry.registry()!.addDropDownSupporter("booklets", DropdownButtonComponentFactory());
@@ -67,6 +70,8 @@ class ComponentRegistry {
     Registry.registry()!.register(componentName: "dividers", componentConstructor: DividerComponentConstructorDefault());
     Registry.registry()!.addDropDownSupporter("documents", DropdownButtonComponentFactory());
     Registry.registry()!.register(componentName: "documents", componentConstructor: DocumentComponentConstructorDefault());
+    Registry.registry()!.addDropDownSupporter("dynamicWidgets", DropdownButtonComponentFactory());
+    Registry.registry()!.register(componentName: "dynamicWidgets", componentConstructor: DynamicWidgetComponentConstructorDefault());
     Registry.registry()!.addDropDownSupporter("faders", DropdownButtonComponentFactory());
     Registry.registry()!.register(componentName: "faders", componentConstructor: FaderComponentConstructorDefault());
     Registry.registry()!.addDropDownSupporter("grids", DropdownButtonComponentFactory());
@@ -84,6 +89,7 @@ class ComponentRegistry {
       ComponentSpec('decoratedContents', DecoratedContentComponentConstructorDefault(), DecoratedContentComponentSelector(), DecoratedContentComponentEditorConstructor(), ), 
       ComponentSpec('dividers', DividerComponentConstructorDefault(), DividerComponentSelector(), DividerComponentEditorConstructor(), ), 
       ComponentSpec('documents', DocumentComponentConstructorDefault(), DocumentComponentSelector(), DocumentComponentEditorConstructor(), ), 
+      ComponentSpec('dynamicWidgets', DynamicWidgetComponentConstructorDefault(), DynamicWidgetComponentSelector(), DynamicWidgetComponentEditorConstructor(), ), 
       ComponentSpec('faders', FaderComponentConstructorDefault(), FaderComponentSelector(), FaderComponentEditorConstructor(), ), 
       ComponentSpec('grids', GridComponentConstructorDefault(), GridComponentSelector(), GridComponentEditorConstructor(), ), 
       ComponentSpec('presentations', PresentationComponentConstructorDefault(), PresentationComponentSelector(), PresentationComponentEditorConstructor(), ), 

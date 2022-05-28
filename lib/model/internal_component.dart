@@ -91,6 +91,23 @@ import 'package:eliud_core/model/entity_export.dart';
 import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
+import 'package:eliud_pkg_fundamentals/model/dynamic_widget_list_bloc.dart';
+import 'package:eliud_pkg_fundamentals/model/dynamic_widget_list.dart';
+import 'package:eliud_pkg_fundamentals/model/dynamic_widget_dropdown_button.dart';
+import 'package:eliud_pkg_fundamentals/model/dynamic_widget_list_event.dart';
+
+import 'package:eliud_core/model/repository_export.dart';
+import 'package:eliud_core/model/abstract_repository_singleton.dart';
+import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
+import 'package:eliud_core/model/model_export.dart';
+import '../tools/bespoke_models.dart';
+import 'package:eliud_pkg_fundamentals/model/model_export.dart';
+import 'package:eliud_core/model/entity_export.dart';
+import '../tools/bespoke_entities.dart';
+import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
+
 import 'package:eliud_pkg_fundamentals/model/fader_list_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_list.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_dropdown_button.dart';
@@ -220,6 +237,7 @@ class DropdownButtonComponentFactory implements ComponentDropDown {
     if (id == "decoratedContents") return true;
     if (id == "dividers") return true;
     if (id == "documents") return true;
+    if (id == "dynamicWidgets") return true;
     if (id == "faders") return true;
     if (id == "grids") return true;
     if (id == "presentations") return true;
@@ -241,6 +259,9 @@ class DropdownButtonComponentFactory implements ComponentDropDown {
       return DropdownButtonComponent(app: app, componentId: id, value: value, privilegeLevel: privilegeLevel, trigger: trigger, optional: optional);
 
     if (id == "documents")
+      return DropdownButtonComponent(app: app, componentId: id, value: value, privilegeLevel: privilegeLevel, trigger: trigger, optional: optional);
+
+    if (id == "dynamicWidgets")
       return DropdownButtonComponent(app: app, componentId: id, value: value, privilegeLevel: privilegeLevel, trigger: trigger, optional: optional);
 
     if (id == "faders")
@@ -292,6 +313,7 @@ class ListComponent extends StatelessWidget with HasFab {
     if (componentId == 'decoratedContents') return _decoratedContentBuild(context);
     if (componentId == 'dividers') return _dividerBuild(context);
     if (componentId == 'documents') return _documentBuild(context);
+    if (componentId == 'dynamicWidgets') return _dynamicWidgetBuild(context);
     if (componentId == 'faders') return _faderBuild(context);
     if (componentId == 'grids') return _gridBuild(context);
     if (componentId == 'presentations') return _presentationBuild(context);
@@ -306,6 +328,7 @@ class ListComponent extends StatelessWidget with HasFab {
     if (componentId == 'decoratedContents') widget = DecoratedContentListWidget(app: app);
     if (componentId == 'dividers') widget = DividerListWidget(app: app);
     if (componentId == 'documents') widget = DocumentListWidget(app: app);
+    if (componentId == 'dynamicWidgets') widget = DynamicWidgetListWidget(app: app);
     if (componentId == 'faders') widget = FaderListWidget(app: app);
     if (componentId == 'grids') widget = GridListWidget(app: app);
     if (componentId == 'presentations') widget = PresentationListWidget(app: app);
@@ -376,6 +399,23 @@ class ListComponent extends StatelessWidget with HasFab {
             ),
             documentRepository: documentRepository(appId: app.documentID)!,
           )..add(LoadDocumentList()),
+        )
+      ],
+      child: widget!,
+    );
+  }
+
+  Widget _dynamicWidgetBuild(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<DynamicWidgetListBloc>(
+          create: (context) => DynamicWidgetListBloc(
+            eliudQuery: EliudQuery(theConditions: [
+              EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
+            ),
+            dynamicWidgetRepository: dynamicWidgetRepository(appId: app.documentID)!,
+          )..add(LoadDynamicWidgetList()),
         )
       ],
       child: widget!,
@@ -506,6 +546,7 @@ class DropdownButtonComponent extends StatelessWidget {
     if (componentId == 'decoratedContents') return _decoratedContentBuild(context);
     if (componentId == 'dividers') return _dividerBuild(context);
     if (componentId == 'documents') return _documentBuild(context);
+    if (componentId == 'dynamicWidgets') return _dynamicWidgetBuild(context);
     if (componentId == 'faders') return _faderBuild(context);
     if (componentId == 'grids') return _gridBuild(context);
     if (componentId == 'presentations') return _presentationBuild(context);
@@ -581,6 +622,23 @@ class DropdownButtonComponent extends StatelessWidget {
         )
       ],
       child: DocumentDropdownButtonWidget(app: app, value: value, privilegeLevel: privilegeLevel, trigger: trigger, optional: optional),
+    );
+  }
+
+  Widget _dynamicWidgetBuild(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<DynamicWidgetListBloc>(
+          create: (context) => DynamicWidgetListBloc(
+            eliudQuery: EliudQuery(theConditions: [
+              EliudQueryCondition('conditions.privilegeLevelRequired', isEqualTo: privilegeLevel ?? 0),
+              EliudQueryCondition('appId', isEqualTo: app.documentID),]
+            ),
+            dynamicWidgetRepository: dynamicWidgetRepository(appId: app.documentID)!,
+          )..add(LoadDynamicWidgetList()),
+        )
+      ],
+      child: DynamicWidgetDropdownButtonWidget(app: app, value: value, privilegeLevel: privilegeLevel, trigger: trigger, optional: optional),
     );
   }
 

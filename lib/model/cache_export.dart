@@ -18,6 +18,7 @@ export '../model/decorated_content_cache.dart';
 export '../model/divider_cache.dart';
 export '../model/document_cache.dart';
 export '../model/document_item_cache.dart';
+export '../model/dynamic_widget_cache.dart';
 export '../model/fader_cache.dart';
 export '../model/grid_cache.dart';
 export '../model/link_cache.dart';

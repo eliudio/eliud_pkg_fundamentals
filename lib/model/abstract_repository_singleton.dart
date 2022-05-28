@@ -18,6 +18,7 @@ import '../model/decorated_content_repository.dart';
 import '../model/divider_repository.dart';
 import '../model/document_repository.dart';
 import '../model/document_item_repository.dart';
+import '../model/dynamic_widget_repository.dart';
 import '../model/fader_repository.dart';
 import '../model/grid_repository.dart';
 import '../model/link_repository.dart';
@@ -37,6 +38,7 @@ BookletRepository? bookletRepository({ String? appId }) => AbstractRepositorySin
 DecoratedContentRepository? decoratedContentRepository({ String? appId }) => AbstractRepositorySingleton.singleton.decoratedContentRepository(appId);
 DividerRepository? dividerRepository({ String? appId }) => AbstractRepositorySingleton.singleton.dividerRepository(appId);
 DocumentRepository? documentRepository({ String? appId }) => AbstractRepositorySingleton.singleton.documentRepository(appId);
+DynamicWidgetRepository? dynamicWidgetRepository({ String? appId }) => AbstractRepositorySingleton.singleton.dynamicWidgetRepository(appId);
 FaderRepository? faderRepository({ String? appId }) => AbstractRepositorySingleton.singleton.faderRepository(appId);
 GridRepository? gridRepository({ String? appId }) => AbstractRepositorySingleton.singleton.gridRepository(appId);
 PresentationRepository? presentationRepository({ String? appId }) => AbstractRepositorySingleton.singleton.presentationRepository(appId);
@@ -53,6 +55,7 @@ abstract class AbstractRepositorySingleton {
   DecoratedContentRepository? decoratedContentRepository(String? appId);
   DividerRepository? dividerRepository(String? appId);
   DocumentRepository? documentRepository(String? appId);
+  DynamicWidgetRepository? dynamicWidgetRepository(String? appId);
   FaderRepository? faderRepository(String? appId);
   GridRepository? gridRepository(String? appId);
   PresentationRepository? presentationRepository(String? appId);
@@ -65,6 +68,7 @@ abstract class AbstractRepositorySingleton {
     decoratedContentRepository(appId)!.flush();
     dividerRepository(appId)!.flush();
     documentRepository(appId)!.flush();
+    dynamicWidgetRepository(appId)!.flush();
     faderRepository(appId)!.flush();
     gridRepository(appId)!.flush();
     presentationRepository(appId)!.flush();

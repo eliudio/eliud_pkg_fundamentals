@@ -18,6 +18,7 @@ export '../model/decorated_content_model.dart';
 export '../model/divider_model.dart';
 export '../model/document_model.dart';
 export '../model/document_item_model.dart';
+export '../model/dynamic_widget_model.dart';
 export '../model/fader_model.dart';
 export '../model/grid_model.dart';
 export '../model/link_model.dart';

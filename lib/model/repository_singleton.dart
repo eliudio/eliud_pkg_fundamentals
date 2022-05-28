@@ -30,6 +30,9 @@ import '../model/document_repository.dart';
 import '../model/document_cache.dart';
 import '../model/document_item_repository.dart';
 import '../model/document_item_cache.dart';
+import '../model/dynamic_widget_firestore.dart';
+import '../model/dynamic_widget_repository.dart';
+import '../model/dynamic_widget_cache.dart';
 import '../model/fader_firestore.dart';
 import '../model/fader_repository.dart';
 import '../model/fader_cache.dart';
@@ -70,6 +73,7 @@ class RepositorySingleton extends AbstractRepositorySingleton {
     var _decoratedContentRepository = HashMap<String, DecoratedContentRepository>();
     var _dividerRepository = HashMap<String, DividerRepository>();
     var _documentRepository = HashMap<String, DocumentRepository>();
+    var _dynamicWidgetRepository = HashMap<String, DynamicWidgetRepository>();
     var _faderRepository = HashMap<String, FaderRepository>();
     var _gridRepository = HashMap<String, GridRepository>();
     var _presentationRepository = HashMap<String, PresentationRepository>();
@@ -92,6 +96,10 @@ class RepositorySingleton extends AbstractRepositorySingleton {
     DocumentRepository? documentRepository(String? appId) {
       if ((appId != null) && (_documentRepository[appId] == null)) _documentRepository[appId] = DocumentCache(DocumentFirestore(() => appRepository()!.getSubCollection(appId, 'document'), appId));
       return _documentRepository[appId];
+    }
+    DynamicWidgetRepository? dynamicWidgetRepository(String? appId) {
+      if ((appId != null) && (_dynamicWidgetRepository[appId] == null)) _dynamicWidgetRepository[appId] = DynamicWidgetCache(DynamicWidgetFirestore(() => appRepository()!.getSubCollection(appId, 'dynamicwidget'), appId));
+      return _dynamicWidgetRepository[appId];
     }
     FaderRepository? faderRepository(String? appId) {
       if ((appId != null) && (_faderRepository[appId] == null)) _faderRepository[appId] = FaderCache(FaderFirestore(() => appRepository()!.getSubCollection(appId, 'fader'), appId));

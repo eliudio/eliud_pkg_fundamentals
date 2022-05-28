@@ -144,6 +144,29 @@ class AdminApp extends AdminAppInstallerBase {
   }
 
 
+  PageModel _dynamicWidgetsPages() {
+    List<BodyComponentModel> components = [];
+    components.add(BodyComponentModel(
+      documentID: "internalWidget-dynamicWidgets", componentName: "eliud_pkg_fundamentals_internalWidgets", componentId: "dynamicWidgets"));
+    PageModel page = PageModel(
+        conditions: StorageConditionsModel(
+          privilegeLevelRequired: PrivilegeLevelRequiredSimple.OwnerPrivilegeRequiredSimple,
+        ),
+        appId: appId,
+        documentID: "eliud_pkg_fundamentals_dynamicwidgets_page",
+        title: "DynamicWidgets",
+        description: "DynamicWidgets",
+        drawer: _drawer,
+        endDrawer: _endDrawer,
+        appBar: _appBar,
+        homeMenu: _homeMenu,
+        bodyComponents: components,
+        layout: PageLayout.OnlyTheFirstComponent
+    );
+    return page;
+  }
+
+
   PageModel _fadersPages() {
     List<BodyComponentModel> components = [];
     components.add(BodyComponentModel(
@@ -292,6 +315,8 @@ class AdminApp extends AdminAppInstallerBase {
 
         .then((_) => pageRepository(appId: appId)!.add(_documentsPages()))
 
+        .then((_) => pageRepository(appId: appId)!.add(_dynamicWidgetsPages()))
+
         .then((_) => pageRepository(appId: appId)!.add(_fadersPages()))
 
         .then((_) => pageRepository(appId: appId)!.add(_gridsPages()))
@@ -357,6 +382,16 @@ class AdminMenu extends AdminAppMenuInstallerBase {
         description: "Documents",
         icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
         action: GotoPage(app, pageID: "eliud_pkg_fundamentals_documents_page"))
+    );
+
+
+    menuItems.add(
+      MenuItemModel(
+        documentID: "DynamicWidgets",
+        text: "DynamicWidgets",
+        description: "DynamicWidgets",
+        icon: IconModel(codePoint: 0xe88a, fontFamily: "MaterialIcons"),
+        action: GotoPage(app, pageID: "eliud_pkg_fundamentals_dynamicwidgets_page"))
     );
 
 
