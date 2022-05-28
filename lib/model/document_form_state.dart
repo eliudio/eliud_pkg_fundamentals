@@ -111,22 +111,6 @@ class DescriptionDocumentFormError extends DocumentFormError {
 }
 
 
-class DocumentRendererDocumentFormError extends DocumentFormError { 
-  const DocumentRendererDocumentFormError({ String? message, DocumentModel? value }): super(message: message, value: value);
-
-  @override
-  List<Object?> get props => [ message, value ];
-
-  @override
-  String toString() {
-    return '''DocumentRendererDocumentFormError {
-      value: $value,
-      message: $message,
-    }''';
-  }
-}
-
-
 class ContentDocumentFormError extends DocumentFormError { 
   const ContentDocumentFormError({ String? message, DocumentModel? value }): super(message: message, value: value);
 

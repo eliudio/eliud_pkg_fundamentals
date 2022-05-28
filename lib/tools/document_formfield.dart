@@ -21,13 +21,12 @@ typedef DocumentTextFieldTrigger(String value);
 class DocumentTextField extends StatefulWidget {
   final AppModel app;
   final String label;
-  final DocumentRenderer? documentRenderer;
   String? documentValue;
   final List<DocumentItemModel>? images;
   final DocumentTextFieldTrigger trigger;
   final BackgroundModel? bdm;
 
-  DocumentTextField(this.app, this.label, this.documentRenderer, this.documentValue,
+  DocumentTextField(this.app, this.label, this.documentValue,
       this.images, this.bdm, this.trigger);
 
   @override
@@ -62,7 +61,6 @@ class DocumentTextFieldState extends State<DocumentTextField> {
       await Navigator.of(context).push(pageRouteBuilder(app,
           page: DocumentTextFieldFullScreen(app,
               widget.label,
-              widget.documentRenderer,
               widget.documentValue,
               widget.images,
               widget.bdm,
@@ -81,13 +79,12 @@ class DocumentTextFieldState extends State<DocumentTextField> {
 class DocumentTextFieldFullScreen extends StatefulWidget {
   final AppModel app;
   final String label;
-  final DocumentRenderer? documentRenderer;
   final String? documentValue;
   final List<DocumentItemModel>? images;
   final BackgroundModel? bdm;
   final DocumentTextFieldTrigger trigger;
 
-  DocumentTextFieldFullScreen(this.app, this.label, this.documentRenderer,
+  DocumentTextFieldFullScreen(this.app, this.label,
       this.documentValue, this.images, this.bdm, this.trigger);
 
   @override
@@ -120,7 +117,7 @@ class DocumentTextFieldFullScreenState
 
   Widget _document(AppModel app, MemberModel? member) {
     var w = DocumentRendererTool().render(app,
-        context, member, widget.documentRenderer, value!, widget.images, widget.bdm);
+        context, member, value!, widget.images, widget.bdm);
     return ListView(children: <Widget>[w]);
   }
 

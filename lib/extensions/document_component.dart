@@ -41,8 +41,7 @@ class DocumentComponent extends AbstractDocumentComponent {
         return DocumentRendererTool().render(app,
             context,
             accessState.getMember(),
-            value!.documentRenderer,
-            value.content!,
+            value!.content!,
             value.images,
             value.background);
       } else {

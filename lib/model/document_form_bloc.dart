@@ -89,11 +89,6 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
         emit(SubmittableDocumentForm(value: newValue));
 
       });
-      on <ChangedDocumentDocumentRenderer> ((event, emit) async {
-        newValue = currentState.value!.copyWith(documentRenderer: event.value);
-        emit(SubmittableDocumentForm(value: newValue));
-
-      });
       on <ChangedDocumentContent> ((event, emit) async {
         newValue = currentState.value!.copyWith(content: event.value);
         emit(SubmittableDocumentForm(value: newValue));

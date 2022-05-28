@@ -9,7 +9,6 @@ import 'package:eliud_core/tools/helpers/parse_helper.dart';
 import 'package:eliud_core/tools/screen_size.dart';
 import 'package:eliud_core/tools/widgets/background_widget.dart';
 import 'package:eliud_pkg_fundamentals/editors/widgets/document_item_widget.dart';
-import 'package:eliud_pkg_fundamentals/editors/widgets/document_renderer_widget.dart';
 import 'package:eliud_pkg_fundamentals/editors/widgets/listed_item_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/document_item_model.dart';
 import 'package:eliud_pkg_fundamentals/model/document_model.dart';
@@ -162,19 +161,6 @@ class _DocumentComponentEditorState extends State<DocumentComponentEditor> {
                                 labelText: 'Description',
                               ),
                             )),
-                        DocumentRendererWidget(
-                          documentRenderer:
-                          documentState.model.documentRenderer ??
-                              DocumentRenderer.flutter_markdown,
-                          app: widget.app,
-                          documentRendererCallback:
-                              (DocumentRenderer documentRenderer) {
-                            setState(() {
-                              documentState.model.documentRenderer =
-                                  documentRenderer;
-                            });
-                          },
-                        ),
                       ]),
                   topicContainer(widget.app, context,
                       title: 'Contents',

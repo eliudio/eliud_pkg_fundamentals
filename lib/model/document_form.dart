@@ -127,7 +127,6 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
   final TextEditingController _documentIDController = TextEditingController();
   final TextEditingController _appIdController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  int? _documentRendererSelectedRadioTile;
   final TextEditingController _paddingController = TextEditingController();
 
 
@@ -140,7 +139,6 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
     _documentIDController.addListener(_onDocumentIDChanged);
     _appIdController.addListener(_onAppIdChanged);
     _descriptionController.addListener(_onDescriptionChanged);
-    _documentRendererSelectedRadioTile = 0;
     _paddingController.addListener(_onPaddingChanged);
   }
 
@@ -165,10 +163,6 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
           _descriptionController.text = state.value!.description.toString();
         else
           _descriptionController.text = "";
-        if (state.value!.documentRenderer != null)
-          _documentRendererSelectedRadioTile = state.value!.documentRenderer!.index;
-        else
-          _documentRendererSelectedRadioTile = 0;
         if (state.value!.padding != null)
           _paddingController.text = state.value!.padding.toString();
         else
@@ -205,7 +199,7 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
 
         children.add(
 
-                DocumentTextField(widget.app, 'Document', state.value!.documentRenderer, state.value!.content, state.value!.images, state.value!.background, _onContentChanged)
+                DocumentTextField(widget.app, 'Document', state.value!.content, state.value!.images, state.value!.background, _onContentChanged)
           );
 
 
@@ -218,15 +212,6 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().groupTitle(widget.app, context, 'Renderer')
                 ));
-
-        children.add(
-
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _documentRendererSelectedRadioTile, 'flutter_markdown', 'flutter_markdown', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionDocumentRenderer(val))
-          );
-        children.add(
-
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _documentRendererSelectedRadioTile, 'dynamic_widget', 'dynamic_widget', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionDocumentRenderer(val))
-          );
 
 
         children.add(Container(height: 20.0));
@@ -304,7 +289,6 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
                               documentID: state.value!.documentID, 
                               appId: state.value!.appId, 
                               description: state.value!.description, 
-                              documentRenderer: state.value!.documentRenderer, 
                               content: state.value!.content, 
                               padding: state.value!.padding, 
                               images: state.value!.images, 
@@ -317,7 +301,6 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
                               documentID: state.value!.documentID, 
                               appId: state.value!.appId, 
                               description: state.value!.description, 
-                              documentRenderer: state.value!.documentRenderer, 
                               content: state.value!.content, 
                               padding: state.value!.padding, 
                               images: state.value!.images, 
@@ -361,14 +344,6 @@ class _MyDocumentFormState extends State<MyDocumentForm> {
 
   void _onDescriptionChanged() {
     _myFormBloc.add(ChangedDocumentDescription(value: _descriptionController.text));
-  }
-
-
-  void setSelectionDocumentRenderer(int? val) {
-    setState(() {
-      _documentRendererSelectedRadioTile = val;
-    });
-    _myFormBloc.add(ChangedDocumentDocumentRenderer(value: toDocumentRenderer(val)));
   }
 
 

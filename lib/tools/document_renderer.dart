@@ -49,53 +49,19 @@ class DocumentRendererTool {
     );
   }
 
-  Future<Widget> _buildWidget(BuildContext context, String jsonString) async {
-    return Text("This DynamicWidgetBuilder thing is not maintained");
-
-  }
-
-  Widget _dynamicWidget(AppModel app, BuildContext context, String processedDocument) {
-    return FutureBuilder<Widget>(
-      future: _buildWidget(context, processedDocument),
-      builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
-        if (snapshot.hasError) {
-          print(snapshot.error);
-        }
-        return snapshot.hasData
-            ? snapshot.data!
-            : progressIndicator(app, context);
-      },
-    );
-  }
-
-  Widget _rendered(AppModel app, BuildContext context, DocumentRenderer? documentRenderer,
+  Widget _rendered(AppModel app, BuildContext context,
       String renderThis) {
-    Widget? theWidget;
-    switch (documentRenderer) {
-      case DocumentRenderer.flutter_markdown:
-        theWidget = _flutterMarkdownDocument(context, renderThis);
-        break;
-      case DocumentRenderer.dynamic_widget:
-        theWidget = _dynamicWidget(app, context, renderThis);
-        break;
-      case DocumentRenderer.Unknown:
-        break;
-    }
-    if (theWidget == null) {
-      debugPrint('DocumentRendererTool widget is null, fallback scenario');
-      theWidget = _flutterMarkdownDocument(context, renderThis);
-    }
-    return theWidget;
+    return _flutterMarkdownDocument(context, renderThis);
   }
 
-  Widget render(AppModel app, BuildContext context, MemberModel? memberModel, DocumentRenderer? documentRenderer,
+  Widget render(AppModel app, BuildContext context, MemberModel? memberModel,
       String document, List<DocumentItemModel>? images, BackgroundModel? bdm) {
     DocumentParameterProcessor documentParameterProcessor =
         ExtendedDocumentParameterProcessor(context,app,
             images: images);
     return Container(
         clipBehavior: BoxDecorationHelper.determineClipBehaviour(app, memberModel, bdm),
-        child: _rendered(app, context, documentRenderer,
+        child: _rendered(app, context,
             documentParameterProcessor.process(document)),
         margin: BoxDecorationHelper.determineMargin(app, memberModel, bdm),
         padding: BoxDecorationHelper.determinePadding(app, memberModel, bdm),

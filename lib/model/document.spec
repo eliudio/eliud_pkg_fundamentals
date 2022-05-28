@@ -45,21 +45,12 @@
       "group": "general"
     },
     {
-      "fieldName": "documentRenderer",
-      "displayName": "Document Renderer",
-      "remark": "Document renderer. Different renderers offer different functionality",
-      "fieldType": "enum",
-      "enumName": "DocumentRenderer",
-      "group": "renderer",
-      "enumValues" : [ "flutter_markdown", "dynamic_widget" ]
-    },
-    {
       "fieldName": "content",
       "displayName": "Contents",
       "remark": "Document content",
       "fieldType": "String",
       "iconName": "text_format",
-      "bespokeFormField": "DocumentTextField(widget.app, 'Document', state.value!.documentRenderer, state.value!.content, state.value!.images, state.value!.background, _onContentChanged)",
+      "bespokeFormField": "DocumentTextField(widget.app, 'Document', state.value!.content, state.value!.images, state.value!.background, _onContentChanged)",
       "group": "contents"
     },
     {
