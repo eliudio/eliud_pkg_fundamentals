@@ -399,7 +399,6 @@ class _DocumentComponentEditorState extends State<DocumentComponentEditor> {
               Registry.registry()!.getMediumApi().takePhoto(
                   context,
                   widget.app,
-                  widget.app.ownerID,
                   () => PlatformMediumAccessRights(
                       documentState.model.conditions!.privilegeLevelRequired!),
                   (photo) => _photoFeedbackFunction(photo),
@@ -409,7 +408,6 @@ class _DocumentComponentEditorState extends State<DocumentComponentEditor> {
               Registry.registry()!.getMediumApi().uploadPhoto(
                   context,
                   widget.app,
-                  widget.app.ownerID,
                   () => PlatformMediumAccessRights(
                       documentState.model.conditions!.privilegeLevelRequired!),
                   (photo) => _photoFeedbackFunction(photo),

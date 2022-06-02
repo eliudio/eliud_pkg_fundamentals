@@ -352,7 +352,6 @@ class _TutorialComponentEditorState extends State<TutorialComponentEditor> {
               Registry.registry()!.getMediumApi().takePhoto(
                   context,
                   widget.app,
-                  widget.app.ownerID,
                       () => PlatformMediumAccessRights(
                       tutorialState.model.conditions!.privilegeLevelRequired!),
                       (photo) => _photoFeedbackFunction(photo),
@@ -362,7 +361,6 @@ class _TutorialComponentEditorState extends State<TutorialComponentEditor> {
               Registry.registry()!.getMediumApi().uploadPhoto(
                   context,
                   widget.app,
-                  widget.app.ownerID,
                       () => PlatformMediumAccessRights(
                       tutorialState.model.conditions!.privilegeLevelRequired!),
                       (photo) => _photoFeedbackFunction(photo),

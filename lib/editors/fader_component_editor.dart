@@ -376,7 +376,6 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
               Registry.registry()!.getMediumApi().takePhoto(
                   context,
                   widget.app,
-                  widget.app.ownerID,
                   () => PlatformMediumAccessRights(
                       faderState.model.conditions!.privilegeLevelRequired!),
                   (photo) => _photoFeedbackFunction(photo),
@@ -386,7 +385,6 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
               Registry.registry()!.getMediumApi().uploadPhoto(
                   context,
                   widget.app,
-                  widget.app.ownerID,
                   () => PlatformMediumAccessRights(
                       faderState.model.conditions!.privilegeLevelRequired!),
                   (photo) => _photoFeedbackFunction(photo),
