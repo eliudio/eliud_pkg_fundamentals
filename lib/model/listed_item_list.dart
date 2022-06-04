@@ -156,7 +156,7 @@ class ListedItemListWidgetState extends State<ListedItemListWidget> {
             onDismissed: (direction) {
               BlocProvider.of<ListedItemListBloc>(context)
                   .add(DeleteListedItemList(value: value));
-              Scaffold.of(context).showSnackBar(DeleteSnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(DeleteSnackBar(
                 message: "ListedItem " + value.documentID,
                 onUndo: () => BlocProvider.of<ListedItemListBloc>(context)
                     .add(AddListedItemList(value: value)),
@@ -168,7 +168,7 @@ class ListedItemListWidgetState extends State<ListedItemListWidget> {
                               value: BlocProvider.of<ListedItemListBloc>(context),
                               child: getForm(value, FormAction.UpdateAction))));
                       if (removedItem != null) {
-                        Scaffold.of(context).showSnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar(
                           DeleteSnackBar(
                         message: "ListedItem " + value.documentID,
                             onUndo: () => BlocProvider.of<ListedItemListBloc>(context)

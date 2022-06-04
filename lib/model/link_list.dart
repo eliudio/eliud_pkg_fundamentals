@@ -156,7 +156,7 @@ class LinkListWidgetState extends State<LinkListWidget> {
             onDismissed: (direction) {
               BlocProvider.of<LinkListBloc>(context)
                   .add(DeleteLinkList(value: value));
-              Scaffold.of(context).showSnackBar(DeleteSnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(DeleteSnackBar(
                 message: "Link " + value.documentID,
                 onUndo: () => BlocProvider.of<LinkListBloc>(context)
                     .add(AddLinkList(value: value)),
@@ -168,7 +168,7 @@ class LinkListWidgetState extends State<LinkListWidget> {
                               value: BlocProvider.of<LinkListBloc>(context),
                               child: getForm(value, FormAction.UpdateAction))));
                       if (removedItem != null) {
-                        Scaffold.of(context).showSnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar(
                           DeleteSnackBar(
                         message: "Link " + value.documentID,
                             onUndo: () => BlocProvider.of<LinkListBloc>(context)

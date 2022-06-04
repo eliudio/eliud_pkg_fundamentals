@@ -156,7 +156,7 @@ class DynamicWidgetListWidgetState extends State<DynamicWidgetListWidget> {
             onDismissed: (direction) {
               BlocProvider.of<DynamicWidgetListBloc>(context)
                   .add(DeleteDynamicWidgetList(value: value));
-              Scaffold.of(context).showSnackBar(DeleteSnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(DeleteSnackBar(
                 message: "DynamicWidget " + value.documentID,
                 onUndo: () => BlocProvider.of<DynamicWidgetListBloc>(context)
                     .add(AddDynamicWidgetList(value: value)),
@@ -168,7 +168,7 @@ class DynamicWidgetListWidgetState extends State<DynamicWidgetListWidget> {
                               value: BlocProvider.of<DynamicWidgetListBloc>(context),
                               child: getForm(value, FormAction.UpdateAction))));
                       if (removedItem != null) {
-                        Scaffold.of(context).showSnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar(
                           DeleteSnackBar(
                         message: "DynamicWidget " + value.documentID,
                             onUndo: () => BlocProvider.of<DynamicWidgetListBloc>(context)

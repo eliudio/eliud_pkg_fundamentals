@@ -156,7 +156,7 @@ class FaderListWidgetState extends State<FaderListWidget> {
             onDismissed: (direction) {
               BlocProvider.of<FaderListBloc>(context)
                   .add(DeleteFaderList(value: value));
-              Scaffold.of(context).showSnackBar(DeleteSnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(DeleteSnackBar(
                 message: "Fader " + value.documentID,
                 onUndo: () => BlocProvider.of<FaderListBloc>(context)
                     .add(AddFaderList(value: value)),
@@ -168,7 +168,7 @@ class FaderListWidgetState extends State<FaderListWidget> {
                               value: BlocProvider.of<FaderListBloc>(context),
                               child: getForm(value, FormAction.UpdateAction))));
                       if (removedItem != null) {
-                        Scaffold.of(context).showSnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar(
                           DeleteSnackBar(
                         message: "Fader " + value.documentID,
                             onUndo: () => BlocProvider.of<FaderListBloc>(context)

@@ -1,4 +1,5 @@
-import 'package:dynamic_widget/dynamic_widget.dart';
+// UPGRADE dynamic_widget
+// import 'package:dynamic_widget/dynamic_widget.dart';
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/core/blocs/access/state/access_determined.dart';
 import 'package:eliud_core/core/blocs/access/state/access_state.dart';
@@ -43,12 +44,16 @@ class DynamicWidgetComponent extends AbstractDynamicWidgetComponent {
     return BlocBuilder<AccessBloc, AccessState>(
         builder: (context, accessState) {
       if (accessState is AccessDetermined) {
+// UPGRADE dynamic_widget
+        return text(app, context, "dynamic_widget needs an upgrade cos it includes reference to RaisedButton which has been removed from flutter sdk");
+/*
         var theWidget = DynamicWidgetBuilder.build(value!.content ?? '', context, DefaultClickListener());
         if (theWidget != null) {
           return theWidget;
         } else {
           return text(app, context, "Couldn't create the contents");
         }
+*/
       } else {
         return progressIndicator(app, context);
       }
@@ -56,6 +61,8 @@ class DynamicWidgetComponent extends AbstractDynamicWidgetComponent {
   }
 }
 
+// UPGRADE dynamic_widget
+/*
 class DefaultClickListener implements ClickListener{
   @override
   void onClicked(String? event) {
@@ -67,3 +74,4 @@ class DefaultClickListener implements ClickListener{
   }
 
 }
+*/

@@ -156,7 +156,7 @@ class DocumentItemListWidgetState extends State<DocumentItemListWidget> {
             onDismissed: (direction) {
               BlocProvider.of<DocumentItemListBloc>(context)
                   .add(DeleteDocumentItemList(value: value));
-              Scaffold.of(context).showSnackBar(DeleteSnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(DeleteSnackBar(
                 message: "DocumentItem " + value.documentID,
                 onUndo: () => BlocProvider.of<DocumentItemListBloc>(context)
                     .add(AddDocumentItemList(value: value)),
@@ -168,7 +168,7 @@ class DocumentItemListWidgetState extends State<DocumentItemListWidget> {
                               value: BlocProvider.of<DocumentItemListBloc>(context),
                               child: getForm(value, FormAction.UpdateAction))));
                       if (removedItem != null) {
-                        Scaffold.of(context).showSnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar(
                           DeleteSnackBar(
                         message: "DocumentItem " + value.documentID,
                             onUndo: () => BlocProvider.of<DocumentItemListBloc>(context)

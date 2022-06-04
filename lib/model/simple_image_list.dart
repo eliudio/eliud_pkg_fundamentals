@@ -156,7 +156,7 @@ class SimpleImageListWidgetState extends State<SimpleImageListWidget> {
             onDismissed: (direction) {
               BlocProvider.of<SimpleImageListBloc>(context)
                   .add(DeleteSimpleImageList(value: value));
-              Scaffold.of(context).showSnackBar(DeleteSnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(DeleteSnackBar(
                 message: "SimpleImage " + value.documentID,
                 onUndo: () => BlocProvider.of<SimpleImageListBloc>(context)
                     .add(AddSimpleImageList(value: value)),
@@ -168,7 +168,7 @@ class SimpleImageListWidgetState extends State<SimpleImageListWidget> {
                               value: BlocProvider.of<SimpleImageListBloc>(context),
                               child: getForm(value, FormAction.UpdateAction))));
                       if (removedItem != null) {
-                        Scaffold.of(context).showSnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar(
                           DeleteSnackBar(
                         message: "SimpleImage " + value.documentID,
                             onUndo: () => BlocProvider.of<SimpleImageListBloc>(context)

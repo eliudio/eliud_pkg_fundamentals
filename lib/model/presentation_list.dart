@@ -156,7 +156,7 @@ class PresentationListWidgetState extends State<PresentationListWidget> {
             onDismissed: (direction) {
               BlocProvider.of<PresentationListBloc>(context)
                   .add(DeletePresentationList(value: value));
-              Scaffold.of(context).showSnackBar(DeleteSnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(DeleteSnackBar(
                 message: "Presentation " + value.documentID,
                 onUndo: () => BlocProvider.of<PresentationListBloc>(context)
                     .add(AddPresentationList(value: value)),
@@ -168,7 +168,7 @@ class PresentationListWidgetState extends State<PresentationListWidget> {
                               value: BlocProvider.of<PresentationListBloc>(context),
                               child: getForm(value, FormAction.UpdateAction))));
                       if (removedItem != null) {
-                        Scaffold.of(context).showSnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar(
                           DeleteSnackBar(
                         message: "Presentation " + value.documentID,
                             onUndo: () => BlocProvider.of<PresentationListBloc>(context)

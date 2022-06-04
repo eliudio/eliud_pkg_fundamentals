@@ -156,7 +156,7 @@ class GridListWidgetState extends State<GridListWidget> {
             onDismissed: (direction) {
               BlocProvider.of<GridListBloc>(context)
                   .add(DeleteGridList(value: value));
-              Scaffold.of(context).showSnackBar(DeleteSnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(DeleteSnackBar(
                 message: "Grid " + value.documentID,
                 onUndo: () => BlocProvider.of<GridListBloc>(context)
                     .add(AddGridList(value: value)),
@@ -168,7 +168,7 @@ class GridListWidgetState extends State<GridListWidget> {
                               value: BlocProvider.of<GridListBloc>(context),
                               child: getForm(value, FormAction.UpdateAction))));
                       if (removedItem != null) {
-                        Scaffold.of(context).showSnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar(
                           DeleteSnackBar(
                         message: "Grid " + value.documentID,
                             onUndo: () => BlocProvider.of<GridListBloc>(context)

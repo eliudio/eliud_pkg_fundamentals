@@ -156,7 +156,7 @@ class BookletListWidgetState extends State<BookletListWidget> {
             onDismissed: (direction) {
               BlocProvider.of<BookletListBloc>(context)
                   .add(DeleteBookletList(value: value));
-              Scaffold.of(context).showSnackBar(DeleteSnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(DeleteSnackBar(
                 message: "Booklet " + value.documentID,
                 onUndo: () => BlocProvider.of<BookletListBloc>(context)
                     .add(AddBookletList(value: value)),
@@ -168,7 +168,7 @@ class BookletListWidgetState extends State<BookletListWidget> {
                               value: BlocProvider.of<BookletListBloc>(context),
                               child: getForm(value, FormAction.UpdateAction))));
                       if (removedItem != null) {
-                        Scaffold.of(context).showSnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar(
                           DeleteSnackBar(
                         message: "Booklet " + value.documentID,
                             onUndo: () => BlocProvider.of<BookletListBloc>(context)

@@ -156,7 +156,7 @@ class SimpleTextListWidgetState extends State<SimpleTextListWidget> {
             onDismissed: (direction) {
               BlocProvider.of<SimpleTextListBloc>(context)
                   .add(DeleteSimpleTextList(value: value));
-              Scaffold.of(context).showSnackBar(DeleteSnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(DeleteSnackBar(
                 message: "SimpleText " + value.documentID,
                 onUndo: () => BlocProvider.of<SimpleTextListBloc>(context)
                     .add(AddSimpleTextList(value: value)),
@@ -168,7 +168,7 @@ class SimpleTextListWidgetState extends State<SimpleTextListWidget> {
                               value: BlocProvider.of<SimpleTextListBloc>(context),
                               child: getForm(value, FormAction.UpdateAction))));
                       if (removedItem != null) {
-                        Scaffold.of(context).showSnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar(
                           DeleteSnackBar(
                         message: "SimpleText " + value.documentID,
                             onUndo: () => BlocProvider.of<SimpleTextListBloc>(context)
