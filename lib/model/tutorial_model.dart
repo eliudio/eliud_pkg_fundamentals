@@ -70,6 +70,10 @@ class TutorialModel implements ModelBase, WithAppId {
           ListEquality().equals(tutorialEntries, other.tutorialEntries) &&
           conditions == other.conditions;
 
+  String toJsonString({String? appId}) {
+    return toEntity(appId: appId).toJsonString();
+  }
+
   @override
   String toString() {
     String tutorialEntriesCsv = (tutorialEntries == null) ? '' : tutorialEntries!.join(', ');

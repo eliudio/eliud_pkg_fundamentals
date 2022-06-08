@@ -69,6 +69,10 @@ class DynamicWidgetModel implements ModelBase, WithAppId {
           background == other.background &&
           conditions == other.conditions;
 
+  String toJsonString({String? appId}) {
+    return toEntity(appId: appId).toJsonString();
+  }
+
   @override
   String toString() {
     return 'DynamicWidgetModel{documentID: $documentID, appId: $appId, description: $description, content: $content, background: $background, conditions: $conditions}';

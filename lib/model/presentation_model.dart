@@ -104,6 +104,10 @@ class PresentationModel implements ModelBase, WithAppId {
           imageWidth == other.imageWidth &&
           conditions == other.conditions;
 
+  String toJsonString({String? appId}) {
+    return toEntity(appId: appId).toJsonString();
+  }
+
   @override
   String toString() {
     String bodyComponentsCsv = (bodyComponents == null) ? '' : bodyComponents!.join(', ');

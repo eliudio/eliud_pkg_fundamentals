@@ -76,6 +76,10 @@ class DocumentModel implements ModelBase, WithAppId {
           background == other.background &&
           conditions == other.conditions;
 
+  String toJsonString({String? appId}) {
+    return toEntity(appId: appId).toJsonString();
+  }
+
   @override
   String toString() {
     String imagesCsv = (images == null) ? '' : images!.join(', ');

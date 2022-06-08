@@ -85,6 +85,10 @@ class SimpleTextModel implements ModelBase, WithAppId {
           conditions == other.conditions &&
           textAlign == other.textAlign;
 
+  String toJsonString({String? appId}) {
+    return toEntity(appId: appId).toJsonString();
+  }
+
   @override
   String toString() {
     return 'SimpleTextModel{documentID: $documentID, appId: $appId, description: $description, title: $title, text: $text, conditions: $conditions, textAlign: $textAlign}';

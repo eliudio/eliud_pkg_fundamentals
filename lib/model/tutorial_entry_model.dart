@@ -63,6 +63,10 @@ class TutorialEntryModel implements ModelBase {
           image == other.image &&
           code == other.code;
 
+  String toJsonString({String? appId}) {
+    return toEntity(appId: appId).toJsonString();
+  }
+
   @override
   String toString() {
     return 'TutorialEntryModel{documentID: $documentID, description: $description, image: $image, code: $code}';

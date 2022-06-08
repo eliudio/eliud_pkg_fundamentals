@@ -57,6 +57,10 @@ class LinkModel implements ModelBase {
           linkText == other.linkText &&
           action == other.action;
 
+  String toJsonString({String? appId}) {
+    return toEntity(appId: appId).toJsonString();
+  }
+
   @override
   String toString() {
     return 'LinkModel{documentID: $documentID, linkText: $linkText, action: $action}';

@@ -102,6 +102,10 @@ class SectionModel implements ModelBase {
           imageWidth == other.imageWidth &&
           ListEquality().equals(links, other.links);
 
+  String toJsonString({String? appId}) {
+    return toEntity(appId: appId).toJsonString();
+  }
+
   @override
   String toString() {
     String linksCsv = (links == null) ? '' : links!.join(', ');

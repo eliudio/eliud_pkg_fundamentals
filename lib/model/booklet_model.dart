@@ -66,6 +66,10 @@ class BookletModel implements ModelBase, WithAppId {
           ListEquality().equals(sections, other.sections) &&
           conditions == other.conditions;
 
+  String toJsonString({String? appId}) {
+    return toEntity(appId: appId).toJsonString();
+  }
+
   @override
   String toString() {
     String sectionsCsv = (sections == null) ? '' : sections!.join(', ');

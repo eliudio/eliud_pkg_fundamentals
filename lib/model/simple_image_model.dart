@@ -65,6 +65,10 @@ class SimpleImageModel implements ModelBase, WithAppId {
           image == other.image &&
           conditions == other.conditions;
 
+  String toJsonString({String? appId}) {
+    return toEntity(appId: appId).toJsonString();
+  }
+
   @override
   String toString() {
     return 'SimpleImageModel{documentID: $documentID, appId: $appId, description: $description, image: $image, conditions: $conditions}';

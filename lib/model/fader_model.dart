@@ -74,6 +74,10 @@ class FaderModel implements ModelBase, WithAppId {
           ListEquality().equals(items, other.items) &&
           conditions == other.conditions;
 
+  String toJsonString({String? appId}) {
+    return toEntity(appId: appId).toJsonString();
+  }
+
   @override
   String toString() {
     String itemsCsv = (items == null) ? '' : items!.join(', ');

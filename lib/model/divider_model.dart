@@ -81,6 +81,10 @@ class DividerModel implements ModelBase, WithAppId {
           endIndent == other.endIndent &&
           conditions == other.conditions;
 
+  String toJsonString({String? appId}) {
+    return toEntity(appId: appId).toJsonString();
+  }
+
   @override
   String toString() {
     return 'DividerModel{documentID: $documentID, appId: $appId, description: $description, color: $color, height: $height, thickness: $thickness, indent: $indent, endIndent: $endIndent, conditions: $conditions}';

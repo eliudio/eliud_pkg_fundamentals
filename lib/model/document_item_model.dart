@@ -63,6 +63,10 @@ class DocumentItemModel implements ModelBase {
           reference == other.reference &&
           image == other.image;
 
+  String toJsonString({String? appId}) {
+    return toEntity(appId: appId).toJsonString();
+  }
+
   @override
   String toString() {
     return 'DocumentItemModel{documentID: $documentID, reference: $reference, image: $image}';

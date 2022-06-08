@@ -65,6 +65,10 @@ class ListedItemModel implements ModelBase {
           image == other.image &&
           posSize == other.posSize;
 
+  String toJsonString({String? appId}) {
+    return toEntity(appId: appId).toJsonString();
+  }
+
   @override
   String toString() {
     return 'ListedItemModel{documentID: $documentID, description: $description, action: $action, image: $image, posSize: $posSize}';

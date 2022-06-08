@@ -99,6 +99,10 @@ class DecoratedContentModel implements ModelBase, WithAppId {
           percentageDecorationVisible == other.percentageDecorationVisible &&
           conditions == other.conditions;
 
+  String toJsonString({String? appId}) {
+    return toEntity(appId: appId).toJsonString();
+  }
+
   @override
   String toString() {
     return 'DecoratedContentModel{documentID: $documentID, appId: $appId, description: $description, decoratingComponentName: $decoratingComponentName, decoratingComponentId: $decoratingComponentId, contentComponentName: $contentComponentName, contentComponentId: $contentComponentId, decorationComponentPosition: $decorationComponentPosition, percentageDecorationVisible: $percentageDecorationVisible, conditions: $conditions}';
