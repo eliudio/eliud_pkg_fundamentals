@@ -46,6 +46,7 @@
     {
       "fieldName": "image",
       "fieldType": "PlatformMedium",
+      "extractImage": "url",
       "association": true,
       "optional": false,
       "iconName": "add_a_photo",

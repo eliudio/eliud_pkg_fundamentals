@@ -17,6 +17,7 @@
 import '../model/internal_component.dart';
 import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_core/tools/component/component_spec.dart';
+import 'abstract_repository_singleton.dart';
 
 import '../extensions/booklet_component.dart';
 import '../editors/booklet_component_editor.dart';
@@ -85,17 +86,17 @@ class ComponentRegistry {
     Registry.registry()!.addDropDownSupporter("tutorials", DropdownButtonComponentFactory());
     Registry.registry()!.register(componentName: "tutorials", componentConstructor: TutorialComponentConstructorDefault());
     Registry.registry()!.addComponentSpec('eliud_pkg_fundamentals', 'fundamentals', [
-      ComponentSpec('booklets', BookletComponentConstructorDefault(), BookletComponentSelector(), BookletComponentEditorConstructor(), ), 
-      ComponentSpec('decoratedContents', DecoratedContentComponentConstructorDefault(), DecoratedContentComponentSelector(), DecoratedContentComponentEditorConstructor(), ), 
-      ComponentSpec('dividers', DividerComponentConstructorDefault(), DividerComponentSelector(), DividerComponentEditorConstructor(), ), 
-      ComponentSpec('documents', DocumentComponentConstructorDefault(), DocumentComponentSelector(), DocumentComponentEditorConstructor(), ), 
-      ComponentSpec('dynamicWidgets', DynamicWidgetComponentConstructorDefault(), DynamicWidgetComponentSelector(), DynamicWidgetComponentEditorConstructor(), ), 
-      ComponentSpec('faders', FaderComponentConstructorDefault(), FaderComponentSelector(), FaderComponentEditorConstructor(), ), 
-      ComponentSpec('grids', GridComponentConstructorDefault(), GridComponentSelector(), GridComponentEditorConstructor(), ), 
-      ComponentSpec('presentations', PresentationComponentConstructorDefault(), PresentationComponentSelector(), PresentationComponentEditorConstructor(), ), 
-      ComponentSpec('simpleImages', SimpleImageComponentConstructorDefault(), SimpleImageComponentSelector(), SimpleImageComponentEditorConstructor(), ), 
-      ComponentSpec('simpleTexts', SimpleTextComponentConstructorDefault(), SimpleTextComponentSelector(), SimpleTextComponentEditorConstructor(), ), 
-      ComponentSpec('tutorials', TutorialComponentConstructorDefault(), TutorialComponentSelector(), TutorialComponentEditorConstructor(), ), 
+      ComponentSpec('booklets', BookletComponentConstructorDefault(), BookletComponentSelector(), BookletComponentEditorConstructor(), ({String? appId}) => bookletRepository(appId: appId)! ), 
+      ComponentSpec('decoratedContents', DecoratedContentComponentConstructorDefault(), DecoratedContentComponentSelector(), DecoratedContentComponentEditorConstructor(), ({String? appId}) => decoratedContentRepository(appId: appId)! ), 
+      ComponentSpec('dividers', DividerComponentConstructorDefault(), DividerComponentSelector(), DividerComponentEditorConstructor(), ({String? appId}) => dividerRepository(appId: appId)! ), 
+      ComponentSpec('documents', DocumentComponentConstructorDefault(), DocumentComponentSelector(), DocumentComponentEditorConstructor(), ({String? appId}) => documentRepository(appId: appId)! ), 
+      ComponentSpec('dynamicWidgets', DynamicWidgetComponentConstructorDefault(), DynamicWidgetComponentSelector(), DynamicWidgetComponentEditorConstructor(), ({String? appId}) => dynamicWidgetRepository(appId: appId)! ), 
+      ComponentSpec('faders', FaderComponentConstructorDefault(), FaderComponentSelector(), FaderComponentEditorConstructor(), ({String? appId}) => faderRepository(appId: appId)! ), 
+      ComponentSpec('grids', GridComponentConstructorDefault(), GridComponentSelector(), GridComponentEditorConstructor(), ({String? appId}) => gridRepository(appId: appId)! ), 
+      ComponentSpec('presentations', PresentationComponentConstructorDefault(), PresentationComponentSelector(), PresentationComponentEditorConstructor(), ({String? appId}) => presentationRepository(appId: appId)! ), 
+      ComponentSpec('simpleImages', SimpleImageComponentConstructorDefault(), SimpleImageComponentSelector(), SimpleImageComponentEditorConstructor(), ({String? appId}) => simpleImageRepository(appId: appId)! ), 
+      ComponentSpec('simpleTexts', SimpleTextComponentConstructorDefault(), SimpleTextComponentSelector(), SimpleTextComponentEditorConstructor(), ({String? appId}) => simpleTextRepository(appId: appId)! ), 
+      ComponentSpec('tutorials', TutorialComponentConstructorDefault(), TutorialComponentSelector(), TutorialComponentEditorConstructor(), ({String? appId}) => tutorialRepository(appId: appId)! ), 
     ]);
 
   }
