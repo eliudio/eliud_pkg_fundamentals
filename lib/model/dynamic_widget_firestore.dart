@@ -36,6 +36,14 @@ import 'package:eliud_core/tools/firestore/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
 class DynamicWidgetFirestore implements DynamicWidgetRepository {
+  Future<DynamicWidgetEntity> addEntity(String documentID, DynamicWidgetEntity value) {
+    return DynamicWidgetCollection.doc(documentID).set(value.toDocument()).then((_) => value);
+  }
+
+  Future<DynamicWidgetEntity> updateEntity(String documentID, DynamicWidgetEntity value) {
+    return DynamicWidgetCollection.doc(documentID).update(value.toDocument()).then((_) => value);
+  }
+
   Future<DynamicWidgetModel> add(DynamicWidgetModel value) {
     return DynamicWidgetCollection.doc(value.documentID).set(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
@@ -54,6 +62,21 @@ class DynamicWidgetFirestore implements DynamicWidgetRepository {
 
   Future<DynamicWidgetModel?> _populateDocPlus(DocumentSnapshot value) async {
     return DynamicWidgetModel.fromEntityPlus(value.id, DynamicWidgetEntity.fromMap(value.data()), appId: appId);  }
+
+  Future<DynamicWidgetEntity?> getEntity(String? id, {Function(Exception)? onError}) async {
+    try {
+      var collection = DynamicWidgetCollection.doc(id);
+      var doc = await collection.get();
+      return DynamicWidgetEntity.fromMap(doc.data());
+    } on Exception catch(e) {
+      if (onError != null) {
+        onError(e);
+      } else {
+        print("Error whilst retrieving DynamicWidget with id $id");
+        print("Exceptoin: $e");
+      }
+    };
+  }
 
   Future<DynamicWidgetModel?> get(String? id, {Function(Exception)? onError}) async {
     try {

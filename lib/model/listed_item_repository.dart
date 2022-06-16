@@ -38,6 +38,8 @@ typedef ListedItemModelTrigger(List<ListedItemModel?> list);
 typedef ListedItemChanged(ListedItemModel? value);
 
 abstract class ListedItemRepository extends RepositoryBase<ListedItemModel> {
+  Future<ListedItemEntity> addEntity(String documentID, ListedItemEntity value);
+  Future<ListedItemEntity> updateEntity(String documentID, ListedItemEntity value);
   Future<ListedItemModel> add(ListedItemModel value);
   Future<void> delete(ListedItemModel value);
   Future<ListedItemModel?> get(String? id, { Function(Exception)? onError });

@@ -36,6 +36,14 @@ import 'package:eliud_core/tools/firestore/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
 class BookletFirestore implements BookletRepository {
+  Future<BookletEntity> addEntity(String documentID, BookletEntity value) {
+    return BookletCollection.doc(documentID).set(value.toDocument()).then((_) => value);
+  }
+
+  Future<BookletEntity> updateEntity(String documentID, BookletEntity value) {
+    return BookletCollection.doc(documentID).update(value.toDocument()).then((_) => value);
+  }
+
   Future<BookletModel> add(BookletModel value) {
     return BookletCollection.doc(value.documentID).set(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
@@ -54,6 +62,21 @@ class BookletFirestore implements BookletRepository {
 
   Future<BookletModel?> _populateDocPlus(DocumentSnapshot value) async {
     return BookletModel.fromEntityPlus(value.id, BookletEntity.fromMap(value.data()), appId: appId);  }
+
+  Future<BookletEntity?> getEntity(String? id, {Function(Exception)? onError}) async {
+    try {
+      var collection = BookletCollection.doc(id);
+      var doc = await collection.get();
+      return BookletEntity.fromMap(doc.data());
+    } on Exception catch(e) {
+      if (onError != null) {
+        onError(e);
+      } else {
+        print("Error whilst retrieving Booklet with id $id");
+        print("Exceptoin: $e");
+      }
+    };
+  }
 
   Future<BookletModel?> get(String? id, {Function(Exception)? onError}) async {
     try {

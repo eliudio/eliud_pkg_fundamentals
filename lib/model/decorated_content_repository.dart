@@ -38,6 +38,8 @@ typedef DecoratedContentModelTrigger(List<DecoratedContentModel?> list);
 typedef DecoratedContentChanged(DecoratedContentModel? value);
 
 abstract class DecoratedContentRepository extends RepositoryBase<DecoratedContentModel> {
+  Future<DecoratedContentEntity> addEntity(String documentID, DecoratedContentEntity value);
+  Future<DecoratedContentEntity> updateEntity(String documentID, DecoratedContentEntity value);
   Future<DecoratedContentModel> add(DecoratedContentModel value);
   Future<void> delete(DecoratedContentModel value);
   Future<DecoratedContentModel?> get(String? id, { Function(Exception)? onError });

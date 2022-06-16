@@ -36,6 +36,14 @@ import 'package:eliud_core/tools/firestore/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
 class SimpleTextFirestore implements SimpleTextRepository {
+  Future<SimpleTextEntity> addEntity(String documentID, SimpleTextEntity value) {
+    return SimpleTextCollection.doc(documentID).set(value.toDocument()).then((_) => value);
+  }
+
+  Future<SimpleTextEntity> updateEntity(String documentID, SimpleTextEntity value) {
+    return SimpleTextCollection.doc(documentID).update(value.toDocument()).then((_) => value);
+  }
+
   Future<SimpleTextModel> add(SimpleTextModel value) {
     return SimpleTextCollection.doc(value.documentID).set(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
@@ -54,6 +62,21 @@ class SimpleTextFirestore implements SimpleTextRepository {
 
   Future<SimpleTextModel?> _populateDocPlus(DocumentSnapshot value) async {
     return SimpleTextModel.fromEntityPlus(value.id, SimpleTextEntity.fromMap(value.data()), appId: appId);  }
+
+  Future<SimpleTextEntity?> getEntity(String? id, {Function(Exception)? onError}) async {
+    try {
+      var collection = SimpleTextCollection.doc(id);
+      var doc = await collection.get();
+      return SimpleTextEntity.fromMap(doc.data());
+    } on Exception catch(e) {
+      if (onError != null) {
+        onError(e);
+      } else {
+        print("Error whilst retrieving SimpleText with id $id");
+        print("Exceptoin: $e");
+      }
+    };
+  }
 
   Future<SimpleTextModel?> get(String? id, {Function(Exception)? onError}) async {
     try {

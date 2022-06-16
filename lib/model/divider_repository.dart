@@ -38,6 +38,8 @@ typedef DividerModelTrigger(List<DividerModel?> list);
 typedef DividerChanged(DividerModel? value);
 
 abstract class DividerRepository extends RepositoryBase<DividerModel> {
+  Future<DividerEntity> addEntity(String documentID, DividerEntity value);
+  Future<DividerEntity> updateEntity(String documentID, DividerEntity value);
   Future<DividerModel> add(DividerModel value);
   Future<void> delete(DividerModel value);
   Future<DividerModel?> get(String? id, { Function(Exception)? onError });

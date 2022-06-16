@@ -38,6 +38,8 @@ typedef FaderModelTrigger(List<FaderModel?> list);
 typedef FaderChanged(FaderModel? value);
 
 abstract class FaderRepository extends RepositoryBase<FaderModel> {
+  Future<FaderEntity> addEntity(String documentID, FaderEntity value);
+  Future<FaderEntity> updateEntity(String documentID, FaderEntity value);
   Future<FaderModel> add(FaderModel value);
   Future<void> delete(FaderModel value);
   Future<FaderModel?> get(String? id, { Function(Exception)? onError });

@@ -47,6 +47,14 @@ class DynamicWidgetCache implements DynamicWidgetRepository {
     });
   }
 
+  Future<DynamicWidgetEntity> addEntity(String documentID, DynamicWidgetEntity value) {
+    return reference.addEntity(documentID, value);
+  }
+
+  Future<DynamicWidgetEntity> updateEntity(String documentID, DynamicWidgetEntity value) {
+    return reference.updateEntity(documentID, value);
+  }
+
   Future<void> delete(DynamicWidgetModel value){
     fullCache.remove(value.documentID);
     reference.delete(value);

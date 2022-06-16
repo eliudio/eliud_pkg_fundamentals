@@ -47,6 +47,14 @@ class TutorialEntryCache implements TutorialEntryRepository {
     });
   }
 
+  Future<TutorialEntryEntity> addEntity(String documentID, TutorialEntryEntity value) {
+    return reference.addEntity(documentID, value);
+  }
+
+  Future<TutorialEntryEntity> updateEntity(String documentID, TutorialEntryEntity value) {
+    return reference.updateEntity(documentID, value);
+  }
+
   Future<void> delete(TutorialEntryModel value){
     fullCache.remove(value.documentID);
     reference.delete(value);

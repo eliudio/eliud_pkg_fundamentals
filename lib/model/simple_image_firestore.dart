@@ -36,6 +36,14 @@ import 'package:eliud_core/tools/firestore/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
 class SimpleImageFirestore implements SimpleImageRepository {
+  Future<SimpleImageEntity> addEntity(String documentID, SimpleImageEntity value) {
+    return SimpleImageCollection.doc(documentID).set(value.toDocument()).then((_) => value);
+  }
+
+  Future<SimpleImageEntity> updateEntity(String documentID, SimpleImageEntity value) {
+    return SimpleImageCollection.doc(documentID).update(value.toDocument()).then((_) => value);
+  }
+
   Future<SimpleImageModel> add(SimpleImageModel value) {
     return SimpleImageCollection.doc(value.documentID).set(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
@@ -54,6 +62,21 @@ class SimpleImageFirestore implements SimpleImageRepository {
 
   Future<SimpleImageModel?> _populateDocPlus(DocumentSnapshot value) async {
     return SimpleImageModel.fromEntityPlus(value.id, SimpleImageEntity.fromMap(value.data()), appId: appId);  }
+
+  Future<SimpleImageEntity?> getEntity(String? id, {Function(Exception)? onError}) async {
+    try {
+      var collection = SimpleImageCollection.doc(id);
+      var doc = await collection.get();
+      return SimpleImageEntity.fromMap(doc.data());
+    } on Exception catch(e) {
+      if (onError != null) {
+        onError(e);
+      } else {
+        print("Error whilst retrieving SimpleImage with id $id");
+        print("Exceptoin: $e");
+      }
+    };
+  }
 
   Future<SimpleImageModel?> get(String? id, {Function(Exception)? onError}) async {
     try {

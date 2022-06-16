@@ -47,6 +47,14 @@ class SectionCache implements SectionRepository {
     });
   }
 
+  Future<SectionEntity> addEntity(String documentID, SectionEntity value) {
+    return reference.addEntity(documentID, value);
+  }
+
+  Future<SectionEntity> updateEntity(String documentID, SectionEntity value) {
+    return reference.updateEntity(documentID, value);
+  }
+
   Future<void> delete(SectionModel value){
     fullCache.remove(value.documentID);
     reference.delete(value);

@@ -38,6 +38,8 @@ typedef DynamicWidgetModelTrigger(List<DynamicWidgetModel?> list);
 typedef DynamicWidgetChanged(DynamicWidgetModel? value);
 
 abstract class DynamicWidgetRepository extends RepositoryBase<DynamicWidgetModel> {
+  Future<DynamicWidgetEntity> addEntity(String documentID, DynamicWidgetEntity value);
+  Future<DynamicWidgetEntity> updateEntity(String documentID, DynamicWidgetEntity value);
   Future<DynamicWidgetModel> add(DynamicWidgetModel value);
   Future<void> delete(DynamicWidgetModel value);
   Future<DynamicWidgetModel?> get(String? id, { Function(Exception)? onError });

@@ -38,6 +38,8 @@ typedef SimpleImageModelTrigger(List<SimpleImageModel?> list);
 typedef SimpleImageChanged(SimpleImageModel? value);
 
 abstract class SimpleImageRepository extends RepositoryBase<SimpleImageModel> {
+  Future<SimpleImageEntity> addEntity(String documentID, SimpleImageEntity value);
+  Future<SimpleImageEntity> updateEntity(String documentID, SimpleImageEntity value);
   Future<SimpleImageModel> add(SimpleImageModel value);
   Future<void> delete(SimpleImageModel value);
   Future<SimpleImageModel?> get(String? id, { Function(Exception)? onError });

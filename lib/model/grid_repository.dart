@@ -38,6 +38,8 @@ typedef GridModelTrigger(List<GridModel?> list);
 typedef GridChanged(GridModel? value);
 
 abstract class GridRepository extends RepositoryBase<GridModel> {
+  Future<GridEntity> addEntity(String documentID, GridEntity value);
+  Future<GridEntity> updateEntity(String documentID, GridEntity value);
   Future<GridModel> add(GridModel value);
   Future<void> delete(GridModel value);
   Future<GridModel?> get(String? id, { Function(Exception)? onError });

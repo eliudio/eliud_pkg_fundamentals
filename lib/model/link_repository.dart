@@ -34,6 +34,8 @@ typedef LinkModelTrigger(List<LinkModel?> list);
 typedef LinkChanged(LinkModel? value);
 
 abstract class LinkRepository extends RepositoryBase<LinkModel> {
+  Future<LinkEntity> addEntity(String documentID, LinkEntity value);
+  Future<LinkEntity> updateEntity(String documentID, LinkEntity value);
   Future<LinkModel> add(LinkModel value);
   Future<void> delete(LinkModel value);
   Future<LinkModel?> get(String? id, { Function(Exception)? onError });

@@ -36,6 +36,14 @@ import 'package:eliud_core/tools/firestore/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
 class GridFirestore implements GridRepository {
+  Future<GridEntity> addEntity(String documentID, GridEntity value) {
+    return GridCollection.doc(documentID).set(value.toDocument()).then((_) => value);
+  }
+
+  Future<GridEntity> updateEntity(String documentID, GridEntity value) {
+    return GridCollection.doc(documentID).update(value.toDocument()).then((_) => value);
+  }
+
   Future<GridModel> add(GridModel value) {
     return GridCollection.doc(value.documentID).set(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
@@ -54,6 +62,21 @@ class GridFirestore implements GridRepository {
 
   Future<GridModel?> _populateDocPlus(DocumentSnapshot value) async {
     return GridModel.fromEntityPlus(value.id, GridEntity.fromMap(value.data()), appId: appId);  }
+
+  Future<GridEntity?> getEntity(String? id, {Function(Exception)? onError}) async {
+    try {
+      var collection = GridCollection.doc(id);
+      var doc = await collection.get();
+      return GridEntity.fromMap(doc.data());
+    } on Exception catch(e) {
+      if (onError != null) {
+        onError(e);
+      } else {
+        print("Error whilst retrieving Grid with id $id");
+        print("Exceptoin: $e");
+      }
+    };
+  }
 
   Future<GridModel?> get(String? id, {Function(Exception)? onError}) async {
     try {

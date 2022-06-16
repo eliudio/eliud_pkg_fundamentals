@@ -36,6 +36,14 @@ import 'package:eliud_core/tools/firestore/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
 class PresentationFirestore implements PresentationRepository {
+  Future<PresentationEntity> addEntity(String documentID, PresentationEntity value) {
+    return PresentationCollection.doc(documentID).set(value.toDocument()).then((_) => value);
+  }
+
+  Future<PresentationEntity> updateEntity(String documentID, PresentationEntity value) {
+    return PresentationCollection.doc(documentID).update(value.toDocument()).then((_) => value);
+  }
+
   Future<PresentationModel> add(PresentationModel value) {
     return PresentationCollection.doc(value.documentID).set(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
@@ -54,6 +62,21 @@ class PresentationFirestore implements PresentationRepository {
 
   Future<PresentationModel?> _populateDocPlus(DocumentSnapshot value) async {
     return PresentationModel.fromEntityPlus(value.id, PresentationEntity.fromMap(value.data()), appId: appId);  }
+
+  Future<PresentationEntity?> getEntity(String? id, {Function(Exception)? onError}) async {
+    try {
+      var collection = PresentationCollection.doc(id);
+      var doc = await collection.get();
+      return PresentationEntity.fromMap(doc.data());
+    } on Exception catch(e) {
+      if (onError != null) {
+        onError(e);
+      } else {
+        print("Error whilst retrieving Presentation with id $id");
+        print("Exceptoin: $e");
+      }
+    };
+  }
 
   Future<PresentationModel?> get(String? id, {Function(Exception)? onError}) async {
     try {

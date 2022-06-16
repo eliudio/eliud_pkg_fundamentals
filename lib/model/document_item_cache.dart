@@ -47,6 +47,14 @@ class DocumentItemCache implements DocumentItemRepository {
     });
   }
 
+  Future<DocumentItemEntity> addEntity(String documentID, DocumentItemEntity value) {
+    return reference.addEntity(documentID, value);
+  }
+
+  Future<DocumentItemEntity> updateEntity(String documentID, DocumentItemEntity value) {
+    return reference.updateEntity(documentID, value);
+  }
+
   Future<void> delete(DocumentItemModel value){
     fullCache.remove(value.documentID);
     reference.delete(value);

@@ -42,6 +42,14 @@ class LinkCache implements LinkRepository {
     });
   }
 
+  Future<LinkEntity> addEntity(String documentID, LinkEntity value) {
+    return reference.addEntity(documentID, value);
+  }
+
+  Future<LinkEntity> updateEntity(String documentID, LinkEntity value) {
+    return reference.updateEntity(documentID, value);
+  }
+
   Future<void> delete(LinkModel value){
     fullCache.remove(value.documentID);
     reference.delete(value);

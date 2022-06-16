@@ -47,6 +47,14 @@ class SimpleImageCache implements SimpleImageRepository {
     });
   }
 
+  Future<SimpleImageEntity> addEntity(String documentID, SimpleImageEntity value) {
+    return reference.addEntity(documentID, value);
+  }
+
+  Future<SimpleImageEntity> updateEntity(String documentID, SimpleImageEntity value) {
+    return reference.updateEntity(documentID, value);
+  }
+
   Future<void> delete(SimpleImageModel value){
     fullCache.remove(value.documentID);
     reference.delete(value);

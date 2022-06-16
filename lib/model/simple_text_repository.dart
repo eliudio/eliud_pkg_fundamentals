@@ -38,6 +38,8 @@ typedef SimpleTextModelTrigger(List<SimpleTextModel?> list);
 typedef SimpleTextChanged(SimpleTextModel? value);
 
 abstract class SimpleTextRepository extends RepositoryBase<SimpleTextModel> {
+  Future<SimpleTextEntity> addEntity(String documentID, SimpleTextEntity value);
+  Future<SimpleTextEntity> updateEntity(String documentID, SimpleTextEntity value);
   Future<SimpleTextModel> add(SimpleTextModel value);
   Future<void> delete(SimpleTextModel value);
   Future<SimpleTextModel?> get(String? id, { Function(Exception)? onError });

@@ -47,6 +47,14 @@ class SimpleTextCache implements SimpleTextRepository {
     });
   }
 
+  Future<SimpleTextEntity> addEntity(String documentID, SimpleTextEntity value) {
+    return reference.addEntity(documentID, value);
+  }
+
+  Future<SimpleTextEntity> updateEntity(String documentID, SimpleTextEntity value) {
+    return reference.updateEntity(documentID, value);
+  }
+
   Future<void> delete(SimpleTextModel value){
     fullCache.remove(value.documentID);
     reference.delete(value);

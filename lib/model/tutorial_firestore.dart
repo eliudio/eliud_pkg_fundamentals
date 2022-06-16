@@ -36,6 +36,14 @@ import 'package:eliud_core/tools/firestore/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
 class TutorialFirestore implements TutorialRepository {
+  Future<TutorialEntity> addEntity(String documentID, TutorialEntity value) {
+    return TutorialCollection.doc(documentID).set(value.toDocument()).then((_) => value);
+  }
+
+  Future<TutorialEntity> updateEntity(String documentID, TutorialEntity value) {
+    return TutorialCollection.doc(documentID).update(value.toDocument()).then((_) => value);
+  }
+
   Future<TutorialModel> add(TutorialModel value) {
     return TutorialCollection.doc(value.documentID).set(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
@@ -54,6 +62,21 @@ class TutorialFirestore implements TutorialRepository {
 
   Future<TutorialModel?> _populateDocPlus(DocumentSnapshot value) async {
     return TutorialModel.fromEntityPlus(value.id, TutorialEntity.fromMap(value.data()), appId: appId);  }
+
+  Future<TutorialEntity?> getEntity(String? id, {Function(Exception)? onError}) async {
+    try {
+      var collection = TutorialCollection.doc(id);
+      var doc = await collection.get();
+      return TutorialEntity.fromMap(doc.data());
+    } on Exception catch(e) {
+      if (onError != null) {
+        onError(e);
+      } else {
+        print("Error whilst retrieving Tutorial with id $id");
+        print("Exceptoin: $e");
+      }
+    };
+  }
 
   Future<TutorialModel?> get(String? id, {Function(Exception)? onError}) async {
     try {

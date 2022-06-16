@@ -29,30 +29,35 @@ import '../model/document_item_list_bloc.dart';
 import '../model/document_item_list.dart';
 import '../model/document_item_list_event.dart';
 import '../model/document_item_model.dart';
+import '../model/document_item_entity.dart';
 import '../model/document_item_repository.dart';
 
 import '../model/link_list_bloc.dart';
 import '../model/link_list.dart';
 import '../model/link_list_event.dart';
 import '../model/link_model.dart';
+import '../model/link_entity.dart';
 import '../model/link_repository.dart';
 
 import '../model/listed_item_list_bloc.dart';
 import '../model/listed_item_list.dart';
 import '../model/listed_item_list_event.dart';
 import '../model/listed_item_model.dart';
+import '../model/listed_item_entity.dart';
 import '../model/listed_item_repository.dart';
 
 import '../model/section_list_bloc.dart';
 import '../model/section_list.dart';
 import '../model/section_list_event.dart';
 import '../model/section_model.dart';
+import '../model/section_entity.dart';
 import '../model/section_repository.dart';
 
 import '../model/tutorial_entry_list_bloc.dart';
 import '../model/tutorial_entry_list.dart';
 import '../model/tutorial_entry_list_event.dart';
 import '../model/tutorial_entry_model.dart';
+import '../model/tutorial_entry_entity.dart';
 import '../model/tutorial_entry_repository.dart';
 
 typedef DocumentItemListChanged(List<DocumentItemModel> values);
@@ -164,6 +169,14 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
       return -1;
     }
 
+    Future<DocumentItemEntity> addEntity(String documentID, DocumentItemEntity value) {
+      throw Exception('Not implemented'); 
+    }
+
+    Future<DocumentItemEntity> updateEntity(String documentID, DocumentItemEntity value) {
+      throw Exception('Not implemented'); 
+    }
+
     Future<DocumentItemModel> add(DocumentItemModel value) {
         items.add(value.copyWith(documentID: newRandomKey()));
         trigger(items);
@@ -265,6 +278,14 @@ class LinkInMemoryRepository implements LinkRepository {
         i++;
       }
       return -1;
+    }
+
+    Future<LinkEntity> addEntity(String documentID, LinkEntity value) {
+      throw Exception('Not implemented'); 
+    }
+
+    Future<LinkEntity> updateEntity(String documentID, LinkEntity value) {
+      throw Exception('Not implemented'); 
     }
 
     Future<LinkModel> add(LinkModel value) {
@@ -370,6 +391,14 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
       return -1;
     }
 
+    Future<ListedItemEntity> addEntity(String documentID, ListedItemEntity value) {
+      throw Exception('Not implemented'); 
+    }
+
+    Future<ListedItemEntity> updateEntity(String documentID, ListedItemEntity value) {
+      throw Exception('Not implemented'); 
+    }
+
     Future<ListedItemModel> add(ListedItemModel value) {
         items.add(value.copyWith(documentID: newRandomKey()));
         trigger(items);
@@ -473,6 +502,14 @@ class SectionInMemoryRepository implements SectionRepository {
       return -1;
     }
 
+    Future<SectionEntity> addEntity(String documentID, SectionEntity value) {
+      throw Exception('Not implemented'); 
+    }
+
+    Future<SectionEntity> updateEntity(String documentID, SectionEntity value) {
+      throw Exception('Not implemented'); 
+    }
+
     Future<SectionModel> add(SectionModel value) {
         items.add(value.copyWith(documentID: newRandomKey()));
         trigger(items);
@@ -574,6 +611,14 @@ class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
         i++;
       }
       return -1;
+    }
+
+    Future<TutorialEntryEntity> addEntity(String documentID, TutorialEntryEntity value) {
+      throw Exception('Not implemented'); 
+    }
+
+    Future<TutorialEntryEntity> updateEntity(String documentID, TutorialEntryEntity value) {
+      throw Exception('Not implemented'); 
     }
 
     Future<TutorialEntryModel> add(TutorialEntryModel value) {

@@ -38,6 +38,8 @@ typedef BookletModelTrigger(List<BookletModel?> list);
 typedef BookletChanged(BookletModel? value);
 
 abstract class BookletRepository extends RepositoryBase<BookletModel> {
+  Future<BookletEntity> addEntity(String documentID, BookletEntity value);
+  Future<BookletEntity> updateEntity(String documentID, BookletEntity value);
   Future<BookletModel> add(BookletModel value);
   Future<void> delete(BookletModel value);
   Future<BookletModel?> get(String? id, { Function(Exception)? onError });

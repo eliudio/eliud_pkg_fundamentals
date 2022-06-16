@@ -47,6 +47,14 @@ class DividerCache implements DividerRepository {
     });
   }
 
+  Future<DividerEntity> addEntity(String documentID, DividerEntity value) {
+    return reference.addEntity(documentID, value);
+  }
+
+  Future<DividerEntity> updateEntity(String documentID, DividerEntity value) {
+    return reference.updateEntity(documentID, value);
+  }
+
   Future<void> delete(DividerModel value){
     fullCache.remove(value.documentID);
     reference.delete(value);

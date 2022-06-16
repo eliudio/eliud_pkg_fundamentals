@@ -38,6 +38,8 @@ typedef PresentationModelTrigger(List<PresentationModel?> list);
 typedef PresentationChanged(PresentationModel? value);
 
 abstract class PresentationRepository extends RepositoryBase<PresentationModel> {
+  Future<PresentationEntity> addEntity(String documentID, PresentationEntity value);
+  Future<PresentationEntity> updateEntity(String documentID, PresentationEntity value);
   Future<PresentationModel> add(PresentationModel value);
   Future<void> delete(PresentationModel value);
   Future<PresentationModel?> get(String? id, { Function(Exception)? onError });

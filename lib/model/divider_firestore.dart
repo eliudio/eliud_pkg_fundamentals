@@ -36,6 +36,14 @@ import 'package:eliud_core/tools/firestore/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
 class DividerFirestore implements DividerRepository {
+  Future<DividerEntity> addEntity(String documentID, DividerEntity value) {
+    return DividerCollection.doc(documentID).set(value.toDocument()).then((_) => value);
+  }
+
+  Future<DividerEntity> updateEntity(String documentID, DividerEntity value) {
+    return DividerCollection.doc(documentID).update(value.toDocument()).then((_) => value);
+  }
+
   Future<DividerModel> add(DividerModel value) {
     return DividerCollection.doc(value.documentID).set(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
@@ -54,6 +62,21 @@ class DividerFirestore implements DividerRepository {
 
   Future<DividerModel?> _populateDocPlus(DocumentSnapshot value) async {
     return DividerModel.fromEntityPlus(value.id, DividerEntity.fromMap(value.data()), appId: appId);  }
+
+  Future<DividerEntity?> getEntity(String? id, {Function(Exception)? onError}) async {
+    try {
+      var collection = DividerCollection.doc(id);
+      var doc = await collection.get();
+      return DividerEntity.fromMap(doc.data());
+    } on Exception catch(e) {
+      if (onError != null) {
+        onError(e);
+      } else {
+        print("Error whilst retrieving Divider with id $id");
+        print("Exceptoin: $e");
+      }
+    };
+  }
 
   Future<DividerModel?> get(String? id, {Function(Exception)? onError}) async {
     try {

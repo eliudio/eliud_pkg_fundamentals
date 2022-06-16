@@ -38,6 +38,8 @@ typedef DocumentModelTrigger(List<DocumentModel?> list);
 typedef DocumentChanged(DocumentModel? value);
 
 abstract class DocumentRepository extends RepositoryBase<DocumentModel> {
+  Future<DocumentEntity> addEntity(String documentID, DocumentEntity value);
+  Future<DocumentEntity> updateEntity(String documentID, DocumentEntity value);
   Future<DocumentModel> add(DocumentModel value);
   Future<void> delete(DocumentModel value);
   Future<DocumentModel?> get(String? id, { Function(Exception)? onError });

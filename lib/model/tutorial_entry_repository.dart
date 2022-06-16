@@ -38,6 +38,8 @@ typedef TutorialEntryModelTrigger(List<TutorialEntryModel?> list);
 typedef TutorialEntryChanged(TutorialEntryModel? value);
 
 abstract class TutorialEntryRepository extends RepositoryBase<TutorialEntryModel> {
+  Future<TutorialEntryEntity> addEntity(String documentID, TutorialEntryEntity value);
+  Future<TutorialEntryEntity> updateEntity(String documentID, TutorialEntryEntity value);
   Future<TutorialEntryModel> add(TutorialEntryModel value);
   Future<void> delete(TutorialEntryModel value);
   Future<TutorialEntryModel?> get(String? id, { Function(Exception)? onError });

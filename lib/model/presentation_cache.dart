@@ -47,6 +47,14 @@ class PresentationCache implements PresentationRepository {
     });
   }
 
+  Future<PresentationEntity> addEntity(String documentID, PresentationEntity value) {
+    return reference.addEntity(documentID, value);
+  }
+
+  Future<PresentationEntity> updateEntity(String documentID, PresentationEntity value) {
+    return reference.updateEntity(documentID, value);
+  }
+
   Future<void> delete(PresentationModel value){
     fullCache.remove(value.documentID);
     reference.delete(value);

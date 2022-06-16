@@ -47,6 +47,14 @@ class GridCache implements GridRepository {
     });
   }
 
+  Future<GridEntity> addEntity(String documentID, GridEntity value) {
+    return reference.addEntity(documentID, value);
+  }
+
+  Future<GridEntity> updateEntity(String documentID, GridEntity value) {
+    return reference.updateEntity(documentID, value);
+  }
+
   Future<void> delete(GridModel value){
     fullCache.remove(value.documentID);
     reference.delete(value);

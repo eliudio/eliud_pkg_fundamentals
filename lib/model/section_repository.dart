@@ -38,6 +38,8 @@ typedef SectionModelTrigger(List<SectionModel?> list);
 typedef SectionChanged(SectionModel? value);
 
 abstract class SectionRepository extends RepositoryBase<SectionModel> {
+  Future<SectionEntity> addEntity(String documentID, SectionEntity value);
+  Future<SectionEntity> updateEntity(String documentID, SectionEntity value);
   Future<SectionModel> add(SectionModel value);
   Future<void> delete(SectionModel value);
   Future<SectionModel?> get(String? id, { Function(Exception)? onError });

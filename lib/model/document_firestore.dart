@@ -36,6 +36,14 @@ import 'package:eliud_core/tools/firestore/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
 class DocumentFirestore implements DocumentRepository {
+  Future<DocumentEntity> addEntity(String documentID, DocumentEntity value) {
+    return DocumentCollection.doc(documentID).set(value.toDocument()).then((_) => value);
+  }
+
+  Future<DocumentEntity> updateEntity(String documentID, DocumentEntity value) {
+    return DocumentCollection.doc(documentID).update(value.toDocument()).then((_) => value);
+  }
+
   Future<DocumentModel> add(DocumentModel value) {
     return DocumentCollection.doc(value.documentID).set(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
@@ -54,6 +62,21 @@ class DocumentFirestore implements DocumentRepository {
 
   Future<DocumentModel?> _populateDocPlus(DocumentSnapshot value) async {
     return DocumentModel.fromEntityPlus(value.id, DocumentEntity.fromMap(value.data()), appId: appId);  }
+
+  Future<DocumentEntity?> getEntity(String? id, {Function(Exception)? onError}) async {
+    try {
+      var collection = DocumentCollection.doc(id);
+      var doc = await collection.get();
+      return DocumentEntity.fromMap(doc.data());
+    } on Exception catch(e) {
+      if (onError != null) {
+        onError(e);
+      } else {
+        print("Error whilst retrieving Document with id $id");
+        print("Exceptoin: $e");
+      }
+    };
+  }
 
   Future<DocumentModel?> get(String? id, {Function(Exception)? onError}) async {
     try {

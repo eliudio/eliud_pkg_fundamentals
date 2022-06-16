@@ -47,6 +47,14 @@ class ListedItemCache implements ListedItemRepository {
     });
   }
 
+  Future<ListedItemEntity> addEntity(String documentID, ListedItemEntity value) {
+    return reference.addEntity(documentID, value);
+  }
+
+  Future<ListedItemEntity> updateEntity(String documentID, ListedItemEntity value) {
+    return reference.updateEntity(documentID, value);
+  }
+
   Future<void> delete(ListedItemModel value){
     fullCache.remove(value.documentID);
     reference.delete(value);

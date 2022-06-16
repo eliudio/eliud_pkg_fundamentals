@@ -36,6 +36,14 @@ import 'package:eliud_core/tools/firestore/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
 class DecoratedContentFirestore implements DecoratedContentRepository {
+  Future<DecoratedContentEntity> addEntity(String documentID, DecoratedContentEntity value) {
+    return DecoratedContentCollection.doc(documentID).set(value.toDocument()).then((_) => value);
+  }
+
+  Future<DecoratedContentEntity> updateEntity(String documentID, DecoratedContentEntity value) {
+    return DecoratedContentCollection.doc(documentID).update(value.toDocument()).then((_) => value);
+  }
+
   Future<DecoratedContentModel> add(DecoratedContentModel value) {
     return DecoratedContentCollection.doc(value.documentID).set(value.toEntity(appId: appId).toDocument()).then((_) => value);
   }
@@ -54,6 +62,21 @@ class DecoratedContentFirestore implements DecoratedContentRepository {
 
   Future<DecoratedContentModel?> _populateDocPlus(DocumentSnapshot value) async {
     return DecoratedContentModel.fromEntityPlus(value.id, DecoratedContentEntity.fromMap(value.data()), appId: appId);  }
+
+  Future<DecoratedContentEntity?> getEntity(String? id, {Function(Exception)? onError}) async {
+    try {
+      var collection = DecoratedContentCollection.doc(id);
+      var doc = await collection.get();
+      return DecoratedContentEntity.fromMap(doc.data());
+    } on Exception catch(e) {
+      if (onError != null) {
+        onError(e);
+      } else {
+        print("Error whilst retrieving DecoratedContent with id $id");
+        print("Exceptoin: $e");
+      }
+    };
+  }
 
   Future<DecoratedContentModel?> get(String? id, {Function(Exception)? onError}) async {
     try {
