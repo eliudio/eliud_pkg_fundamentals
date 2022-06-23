@@ -115,6 +115,16 @@ class DecoratedContentCache implements DecoratedContentRepository {
     });
   }
 
+  @override
+  Future<DecoratedContentEntity?> getEntity(String? id, {Function(Exception p1)? onError}) {
+    return reference.getEntity(id, onError: onError);
+  }
+
+  @override
+  DecoratedContentEntity? fromMap(Object? o) {
+    return reference.fromMap(o);
+  }
+
   Future<void> deleteAll() {
     return reference.deleteAll();
   }

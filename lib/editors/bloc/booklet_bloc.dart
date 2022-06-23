@@ -11,7 +11,9 @@ import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart'
 import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
 import 'package:eliud_pkg_fundamentals/model/section_model.dart';
 
-class BookletBloc extends ExtEditorBaseBloc<BookletModel, SectionModel> {
+import '../../model/booklet_entity.dart';
+
+class BookletBloc extends ExtEditorBaseBloc<BookletModel, SectionModel, BookletEntity> {
 
   BookletBloc(String appId, EditorFeedback feedback)
       : super(appId, bookletRepository(appId: appId)!, feedback);

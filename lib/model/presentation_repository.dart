@@ -37,7 +37,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 typedef PresentationModelTrigger(List<PresentationModel?> list);
 typedef PresentationChanged(PresentationModel? value);
 
-abstract class PresentationRepository extends RepositoryBase<PresentationModel> {
+abstract class PresentationRepository extends RepositoryBase<PresentationModel, PresentationEntity> {
   Future<PresentationEntity> addEntity(String documentID, PresentationEntity value);
   Future<PresentationEntity> updateEntity(String documentID, PresentationEntity value);
   Future<PresentationModel> add(PresentationModel value);

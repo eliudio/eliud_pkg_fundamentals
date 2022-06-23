@@ -37,7 +37,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 typedef FaderModelTrigger(List<FaderModel?> list);
 typedef FaderChanged(FaderModel? value);
 
-abstract class FaderRepository extends RepositoryBase<FaderModel> {
+abstract class FaderRepository extends RepositoryBase<FaderModel, FaderEntity> {
   Future<FaderEntity> addEntity(String documentID, FaderEntity value);
   Future<FaderEntity> updateEntity(String documentID, FaderEntity value);
   Future<FaderModel> add(FaderModel value);

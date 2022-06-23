@@ -19,6 +19,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/model_base.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:eliud_core/model/app_model.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
@@ -105,28 +106,16 @@ class SectionModel implements ModelBase {
           ListEquality().equals(links, other.links);
 
   @override
-  Future<String> toRichJsonString({String? appId}) async {
-    var document = toEntity(appId: appId).toDocument();
-    document['documentID'] = documentID;
-    if ((image != null) && (image!.url != null)) {
-      var url = image!.url!;
-      var uriurl = Uri.parse(url);
-      final response = await http.get(uriurl);
-      var bytes = response.bodyBytes.toList();
-      document['image-extract'] = bytes.toList();
-    }
-
-    return jsonEncode(document);
-  }
-
-  @override
   String toString() {
     String linksCsv = (links == null) ? '' : links!.join(', ');
 
     return 'SectionModel{documentID: $documentID, title: $title, description: $description, image: $image, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth, links: Link[] { $linksCsv }}';
   }
 
-  SectionEntity toEntity({String? appId}) {
+  SectionEntity toEntity({String? appId, List<ModelBase>? referencesCollector}) {
+    if (referencesCollector != null) {
+      if (image != null) referencesCollector.add(image!);
+    }
     return SectionEntity(
           title: (title != null) ? title : null, 
           description: (description != null) ? description : null, 
@@ -135,7 +124,7 @@ class SectionModel implements ModelBase {
           imageAlignment: (imageAlignment != null) ? imageAlignment!.index : null, 
           imageWidth: (imageWidth != null) ? imageWidth : null, 
           links: (links != null) ? links
-            !.map((item) => item.toEntity(appId: appId))
+            !.map((item) => item.toEntity(appId: appId, referencesCollector: referencesCollector))
             .toList() : null, 
     );
   }

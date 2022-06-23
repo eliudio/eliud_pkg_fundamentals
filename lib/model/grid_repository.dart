@@ -37,7 +37,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 typedef GridModelTrigger(List<GridModel?> list);
 typedef GridChanged(GridModel? value);
 
-abstract class GridRepository extends RepositoryBase<GridModel> {
+abstract class GridRepository extends RepositoryBase<GridModel, GridEntity> {
   Future<GridEntity> addEntity(String documentID, GridEntity value);
   Future<GridEntity> updateEntity(String documentID, GridEntity value);
   Future<GridModel> add(GridModel value);

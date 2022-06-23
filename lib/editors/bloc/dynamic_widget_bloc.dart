@@ -4,9 +4,10 @@ import 'package:eliud_core/tools/random.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_core/core/editor/editor_base_bloc/editor_base_bloc.dart';
 
+import '../../model/dynamic_widget_entity.dart';
 import '../../model/dynamic_widget_model.dart';
 
-class DynamicWidgetBloc extends EditorBaseBloc<DynamicWidgetModel> {
+class DynamicWidgetBloc extends EditorBaseBloc<DynamicWidgetModel, DynamicWidgetEntity> {
   DynamicWidgetBloc(String appId, EditorFeedback feedback)
       : super(appId, dynamicWidgetRepository(appId: appId)!, feedback);
 

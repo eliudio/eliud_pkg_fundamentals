@@ -37,7 +37,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 typedef SectionModelTrigger(List<SectionModel?> list);
 typedef SectionChanged(SectionModel? value);
 
-abstract class SectionRepository extends RepositoryBase<SectionModel> {
+abstract class SectionRepository extends RepositoryBase<SectionModel, SectionEntity> {
   Future<SectionEntity> addEntity(String documentID, SectionEntity value);
   Future<SectionEntity> updateEntity(String documentID, SectionEntity value);
   Future<SectionModel> add(SectionModel value);

@@ -19,6 +19,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/model_base.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:eliud_core/model/app_model.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
@@ -73,28 +74,24 @@ class GridModel implements ModelBase, WithAppId {
           conditions == other.conditions;
 
   @override
-  Future<String> toRichJsonString({String? appId}) async {
-    var document = toEntity(appId: appId).toDocument();
-    document['documentID'] = documentID;
-    return jsonEncode(document);
-  }
-
-  @override
   String toString() {
     String bodyComponentsCsv = (bodyComponents == null) ? '' : bodyComponents!.join(', ');
 
     return 'GridModel{documentID: $documentID, appId: $appId, description: $description, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, gridView: $gridView, conditions: $conditions}';
   }
 
-  GridEntity toEntity({String? appId}) {
+  GridEntity toEntity({String? appId, List<ModelBase>? referencesCollector}) {
+    if (referencesCollector != null) {
+      if (gridView != null) referencesCollector.add(gridView!);
+    }
     return GridEntity(
           appId: (appId != null) ? appId : null, 
           description: (description != null) ? description : null, 
           bodyComponents: (bodyComponents != null) ? bodyComponents
-            !.map((item) => item.toEntity(appId: appId))
+            !.map((item) => item.toEntity(appId: appId, referencesCollector: referencesCollector))
             .toList() : null, 
           gridViewId: (gridView != null) ? gridView!.documentID : null, 
-          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
     );
   }
 

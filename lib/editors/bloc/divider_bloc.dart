@@ -5,7 +5,9 @@ import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart'
 import 'package:eliud_pkg_fundamentals/model/divider_model.dart';
 import 'package:eliud_core/core/editor/editor_base_bloc/editor_base_bloc.dart';
 
-class DividerBloc extends EditorBaseBloc<DividerModel> {
+import '../../model/divider_entity.dart';
+
+class DividerBloc extends EditorBaseBloc<DividerModel, DividerEntity> {
   DividerBloc(String appId, EditorFeedback feedback)
       : super(appId, dividerRepository(appId: appId)!, feedback);
 

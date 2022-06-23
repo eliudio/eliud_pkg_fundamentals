@@ -115,6 +115,16 @@ class TutorialCache implements TutorialRepository {
     });
   }
 
+  @override
+  Future<TutorialEntity?> getEntity(String? id, {Function(Exception p1)? onError}) {
+    return reference.getEntity(id, onError: onError);
+  }
+
+  @override
+  TutorialEntity? fromMap(Object? o) {
+    return reference.fromMap(o);
+  }
+
   Future<void> deleteAll() {
     return reference.deleteAll();
   }

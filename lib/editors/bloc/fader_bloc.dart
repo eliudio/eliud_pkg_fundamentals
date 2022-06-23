@@ -6,7 +6,9 @@ import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart'
 import 'package:eliud_pkg_fundamentals/model/fader_model.dart';
 import 'package:eliud_pkg_fundamentals/model/listed_item_model.dart';
 
-class FaderBloc extends ExtEditorBaseBloc<FaderModel, ListedItemModel> {
+import '../../model/fader_entity.dart';
+
+class FaderBloc extends ExtEditorBaseBloc<FaderModel, ListedItemModel, FaderEntity> {
 
   FaderBloc(String appId, EditorFeedback feedback)
       : super(appId, faderRepository(appId: appId)!, feedback);

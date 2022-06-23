@@ -36,6 +36,11 @@ import 'package:eliud_core/tools/firestore/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
 class FaderFirestore implements FaderRepository {
+  @override
+  FaderEntity? fromMap(Object? o) {
+    return FaderEntity.fromMap(o);
+  }
+
   Future<FaderEntity> addEntity(String documentID, FaderEntity value) {
     return FaderCollection.doc(documentID).set(value.toDocument()).then((_) => value);
   }

@@ -23,6 +23,8 @@ import 'package:eliud_core/core/editor/editor_base_bloc/editor_base_bloc.dart';
 import 'package:eliud_core/core/editor/editor_base_bloc/editor_base_event.dart';
 import 'package:eliud_core/core/editor/editor_base_bloc/editor_base_state.dart';
 
+import '../model/simple_text_entity.dart';
+
 class SimpleTextComponentEditorConstructor
     extends ComponentEditorConstructor {
   @override
@@ -89,7 +91,7 @@ class SimpleTextComponentEditorConstructor
 }
 
 class SimpleTextBloc
-    extends EditorBaseBloc<SimpleTextModel> {
+    extends EditorBaseBloc<SimpleTextModel, SimpleTextEntity> {
 
   SimpleTextBloc(String appId, EditorFeedback feedback)
       : super(appId, simpleTextRepository(appId: appId)!, feedback);

@@ -37,7 +37,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 typedef DividerModelTrigger(List<DividerModel?> list);
 typedef DividerChanged(DividerModel? value);
 
-abstract class DividerRepository extends RepositoryBase<DividerModel> {
+abstract class DividerRepository extends RepositoryBase<DividerModel, DividerEntity> {
   Future<DividerEntity> addEntity(String documentID, DividerEntity value);
   Future<DividerEntity> updateEntity(String documentID, DividerEntity value);
   Future<DividerModel> add(DividerModel value);

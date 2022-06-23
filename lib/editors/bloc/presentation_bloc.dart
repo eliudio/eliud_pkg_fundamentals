@@ -10,7 +10,9 @@ import 'package:eliud_core/tools/random.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_model.dart';
 
-class PresentationBloc extends ExtEditorBaseBloc<PresentationModel, BodyComponentModel> {
+import '../../model/presentation_entity.dart';
+
+class PresentationBloc extends ExtEditorBaseBloc<PresentationModel, BodyComponentModel, PresentationEntity> {
 
   PresentationBloc(String appId, EditorFeedback feedback)
       : super(appId, presentationRepository(appId: appId)!, feedback);

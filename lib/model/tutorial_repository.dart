@@ -37,7 +37,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 typedef TutorialModelTrigger(List<TutorialModel?> list);
 typedef TutorialChanged(TutorialModel? value);
 
-abstract class TutorialRepository extends RepositoryBase<TutorialModel> {
+abstract class TutorialRepository extends RepositoryBase<TutorialModel, TutorialEntity> {
   Future<TutorialEntity> addEntity(String documentID, TutorialEntity value);
   Future<TutorialEntity> updateEntity(String documentID, TutorialEntity value);
   Future<TutorialModel> add(TutorialModel value);

@@ -10,7 +10,9 @@ import 'package:eliud_core/tools/random.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/grid_model.dart';
 
-class GridBloc extends ExtEditorBaseBloc<GridModel, BodyComponentModel> {
+import '../../model/grid_entity.dart';
+
+class GridBloc extends ExtEditorBaseBloc<GridModel, BodyComponentModel, GridEntity> {
 
   GridBloc(String appId, EditorFeedback feedback)
       : super(appId, gridRepository(appId: appId)!, feedback);

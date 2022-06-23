@@ -37,7 +37,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 typedef DocumentModelTrigger(List<DocumentModel?> list);
 typedef DocumentChanged(DocumentModel? value);
 
-abstract class DocumentRepository extends RepositoryBase<DocumentModel> {
+abstract class DocumentRepository extends RepositoryBase<DocumentModel, DocumentEntity> {
   Future<DocumentEntity> addEntity(String documentID, DocumentEntity value);
   Future<DocumentEntity> updateEntity(String documentID, DocumentEntity value);
   Future<DocumentModel> add(DocumentModel value);

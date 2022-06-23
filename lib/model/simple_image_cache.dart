@@ -115,6 +115,16 @@ class SimpleImageCache implements SimpleImageRepository {
     });
   }
 
+  @override
+  Future<SimpleImageEntity?> getEntity(String? id, {Function(Exception p1)? onError}) {
+    return reference.getEntity(id, onError: onError);
+  }
+
+  @override
+  SimpleImageEntity? fromMap(Object? o) {
+    return reference.fromMap(o);
+  }
+
   Future<void> deleteAll() {
     return reference.deleteAll();
   }

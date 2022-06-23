@@ -36,6 +36,11 @@ import 'package:eliud_core/tools/firestore/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
 class SimpleTextFirestore implements SimpleTextRepository {
+  @override
+  SimpleTextEntity? fromMap(Object? o) {
+    return SimpleTextEntity.fromMap(o);
+  }
+
   Future<SimpleTextEntity> addEntity(String documentID, SimpleTextEntity value) {
     return SimpleTextCollection.doc(documentID).set(value.toDocument()).then((_) => value);
   }

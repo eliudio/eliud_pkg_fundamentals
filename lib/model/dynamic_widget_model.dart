@@ -18,6 +18,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/model_base.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:eliud_core/model/app_model.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
@@ -72,24 +73,19 @@ class DynamicWidgetModel implements ModelBase, WithAppId {
           conditions == other.conditions;
 
   @override
-  Future<String> toRichJsonString({String? appId}) async {
-    var document = toEntity(appId: appId).toDocument();
-    document['documentID'] = documentID;
-    return jsonEncode(document);
-  }
-
-  @override
   String toString() {
     return 'DynamicWidgetModel{documentID: $documentID, appId: $appId, description: $description, content: $content, background: $background, conditions: $conditions}';
   }
 
-  DynamicWidgetEntity toEntity({String? appId}) {
+  DynamicWidgetEntity toEntity({String? appId, List<ModelBase>? referencesCollector}) {
+    if (referencesCollector != null) {
+    }
     return DynamicWidgetEntity(
           appId: (appId != null) ? appId : null, 
           description: (description != null) ? description : null, 
           content: (content != null) ? content : null, 
-          background: (background != null) ? background!.toEntity(appId: appId) : null, 
-          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
+          background: (background != null) ? background!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
     );
   }
 

@@ -19,6 +19,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/model_base.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:eliud_core/model/app_model.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
@@ -73,29 +74,24 @@ class TutorialModel implements ModelBase, WithAppId {
           conditions == other.conditions;
 
   @override
-  Future<String> toRichJsonString({String? appId}) async {
-    var document = toEntity(appId: appId).toDocument();
-    document['documentID'] = documentID;
-    return jsonEncode(document);
-  }
-
-  @override
   String toString() {
     String tutorialEntriesCsv = (tutorialEntries == null) ? '' : tutorialEntries!.join(', ');
 
     return 'TutorialModel{documentID: $documentID, appId: $appId, name: $name, title: $title, description: $description, tutorialEntries: TutorialEntry[] { $tutorialEntriesCsv }, conditions: $conditions}';
   }
 
-  TutorialEntity toEntity({String? appId}) {
+  TutorialEntity toEntity({String? appId, List<ModelBase>? referencesCollector}) {
+    if (referencesCollector != null) {
+    }
     return TutorialEntity(
           appId: (appId != null) ? appId : null, 
           name: (name != null) ? name : null, 
           title: (title != null) ? title : null, 
           description: (description != null) ? description : null, 
           tutorialEntries: (tutorialEntries != null) ? tutorialEntries
-            !.map((item) => item.toEntity(appId: appId))
+            !.map((item) => item.toEntity(appId: appId, referencesCollector: referencesCollector))
             .toList() : null, 
-          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
     );
   }
 

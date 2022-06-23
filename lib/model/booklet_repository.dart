@@ -37,7 +37,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 typedef BookletModelTrigger(List<BookletModel?> list);
 typedef BookletChanged(BookletModel? value);
 
-abstract class BookletRepository extends RepositoryBase<BookletModel> {
+abstract class BookletRepository extends RepositoryBase<BookletModel, BookletEntity> {
   Future<BookletEntity> addEntity(String documentID, BookletEntity value);
   Future<BookletEntity> updateEntity(String documentID, BookletEntity value);
   Future<BookletModel> add(BookletModel value);

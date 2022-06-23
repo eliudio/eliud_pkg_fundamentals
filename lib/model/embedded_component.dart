@@ -254,6 +254,15 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
     throw UnimplementedError();
   }
   
+  @override
+  Future<DocumentItemEntity?> getEntity(String? id, {Function(Exception p1)? onError}) {
+    throw UnimplementedError();
+  }
+
+  @override
+  DocumentItemEntity? fromMap(Object? o) {
+    throw UnimplementedError();
+  }
 
     Future<void> deleteAll() async {}
 }
@@ -365,6 +374,15 @@ class LinkInMemoryRepository implements LinkRepository {
     throw UnimplementedError();
   }
   
+  @override
+  Future<LinkEntity?> getEntity(String? id, {Function(Exception p1)? onError}) {
+    throw UnimplementedError();
+  }
+
+  @override
+  LinkEntity? fromMap(Object? o) {
+    throw UnimplementedError();
+  }
 
     Future<void> deleteAll() async {}
 }
@@ -476,6 +494,15 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
     throw UnimplementedError();
   }
   
+  @override
+  Future<ListedItemEntity?> getEntity(String? id, {Function(Exception p1)? onError}) {
+    throw UnimplementedError();
+  }
+
+  @override
+  ListedItemEntity? fromMap(Object? o) {
+    throw UnimplementedError();
+  }
 
     Future<void> deleteAll() async {}
 }
@@ -587,6 +614,15 @@ class SectionInMemoryRepository implements SectionRepository {
     throw UnimplementedError();
   }
   
+  @override
+  Future<SectionEntity?> getEntity(String? id, {Function(Exception p1)? onError}) {
+    throw UnimplementedError();
+  }
+
+  @override
+  SectionEntity? fromMap(Object? o) {
+    throw UnimplementedError();
+  }
 
     Future<void> deleteAll() async {}
 }
@@ -698,6 +734,15 @@ class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
     throw UnimplementedError();
   }
   
+  @override
+  Future<TutorialEntryEntity?> getEntity(String? id, {Function(Exception p1)? onError}) {
+    throw UnimplementedError();
+  }
+
+  @override
+  TutorialEntryEntity? fromMap(Object? o) {
+    throw UnimplementedError();
+  }
 
     Future<void> deleteAll() async {}
 }

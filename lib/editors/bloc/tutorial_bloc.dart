@@ -7,7 +7,9 @@ import 'package:eliud_pkg_fundamentals/model/tutorial_entry_model.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_model.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_model.dart';
 
-class TutorialBloc extends ExtEditorBaseBloc<TutorialModel, TutorialEntryModel> {
+import '../../model/tutorial_entity.dart';
+
+class TutorialBloc extends ExtEditorBaseBloc<TutorialModel, TutorialEntryModel, TutorialEntity> {
 
   TutorialBloc(String appId, EditorFeedback feedback)
       : super(appId, tutorialRepository(appId: appId)!, feedback);

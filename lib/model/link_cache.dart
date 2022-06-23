@@ -110,6 +110,16 @@ class LinkCache implements LinkRepository {
     });
   }
 
+  @override
+  Future<LinkEntity?> getEntity(String? id, {Function(Exception p1)? onError}) {
+    return reference.getEntity(id, onError: onError);
+  }
+
+  @override
+  LinkEntity? fromMap(Object? o) {
+    return reference.fromMap(o);
+  }
+
   Future<void> deleteAll() {
     return reference.deleteAll();
   }

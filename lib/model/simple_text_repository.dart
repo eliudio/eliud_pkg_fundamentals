@@ -37,7 +37,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 typedef SimpleTextModelTrigger(List<SimpleTextModel?> list);
 typedef SimpleTextChanged(SimpleTextModel? value);
 
-abstract class SimpleTextRepository extends RepositoryBase<SimpleTextModel> {
+abstract class SimpleTextRepository extends RepositoryBase<SimpleTextModel, SimpleTextEntity> {
   Future<SimpleTextEntity> addEntity(String documentID, SimpleTextEntity value);
   Future<SimpleTextEntity> updateEntity(String documentID, SimpleTextEntity value);
   Future<SimpleTextModel> add(SimpleTextModel value);

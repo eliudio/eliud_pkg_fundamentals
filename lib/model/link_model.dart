@@ -18,6 +18,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/model_base.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:eliud_core/model/app_model.dart';
 
 import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
@@ -60,21 +61,16 @@ class LinkModel implements ModelBase {
           action == other.action;
 
   @override
-  Future<String> toRichJsonString({String? appId}) async {
-    var document = toEntity(appId: appId).toDocument();
-    document['documentID'] = documentID;
-    return jsonEncode(document);
-  }
-
-  @override
   String toString() {
     return 'LinkModel{documentID: $documentID, linkText: $linkText, action: $action}';
   }
 
-  LinkEntity toEntity({String? appId}) {
+  LinkEntity toEntity({String? appId, List<ModelBase>? referencesCollector}) {
+    if (referencesCollector != null) {
+    }
     return LinkEntity(
           linkText: (linkText != null) ? linkText : null, 
-          action: (action != null) ? action!.toEntity(appId: appId) : null, 
+          action: (action != null) ? action!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
     );
   }
 

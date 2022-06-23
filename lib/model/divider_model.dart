@@ -18,6 +18,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/model_base.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:eliud_core/model/app_model.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
@@ -84,27 +85,22 @@ class DividerModel implements ModelBase, WithAppId {
           conditions == other.conditions;
 
   @override
-  Future<String> toRichJsonString({String? appId}) async {
-    var document = toEntity(appId: appId).toDocument();
-    document['documentID'] = documentID;
-    return jsonEncode(document);
-  }
-
-  @override
   String toString() {
     return 'DividerModel{documentID: $documentID, appId: $appId, description: $description, color: $color, height: $height, thickness: $thickness, indent: $indent, endIndent: $endIndent, conditions: $conditions}';
   }
 
-  DividerEntity toEntity({String? appId}) {
+  DividerEntity toEntity({String? appId, List<ModelBase>? referencesCollector}) {
+    if (referencesCollector != null) {
+    }
     return DividerEntity(
           appId: (appId != null) ? appId : null, 
           description: (description != null) ? description : null, 
-          color: (color != null) ? color!.toEntity(appId: appId) : null, 
+          color: (color != null) ? color!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
           height: (height != null) ? height : null, 
           thickness: (thickness != null) ? thickness : null, 
           indent: (indent != null) ? indent : null, 
           endIndent: (endIndent != null) ? endIndent : null, 
-          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
     );
   }
 

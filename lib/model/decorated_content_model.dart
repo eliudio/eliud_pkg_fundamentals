@@ -18,6 +18,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/model_base.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:eliud_core/model/app_model.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
@@ -102,18 +103,13 @@ class DecoratedContentModel implements ModelBase, WithAppId {
           conditions == other.conditions;
 
   @override
-  Future<String> toRichJsonString({String? appId}) async {
-    var document = toEntity(appId: appId).toDocument();
-    document['documentID'] = documentID;
-    return jsonEncode(document);
-  }
-
-  @override
   String toString() {
     return 'DecoratedContentModel{documentID: $documentID, appId: $appId, description: $description, decoratingComponentName: $decoratingComponentName, decoratingComponentId: $decoratingComponentId, contentComponentName: $contentComponentName, contentComponentId: $contentComponentId, decorationComponentPosition: $decorationComponentPosition, percentageDecorationVisible: $percentageDecorationVisible, conditions: $conditions}';
   }
 
-  DecoratedContentEntity toEntity({String? appId}) {
+  DecoratedContentEntity toEntity({String? appId, List<ModelBase>? referencesCollector}) {
+    if (referencesCollector != null) {
+    }
     return DecoratedContentEntity(
           appId: (appId != null) ? appId : null, 
           description: (description != null) ? description : null, 
@@ -123,7 +119,7 @@ class DecoratedContentModel implements ModelBase, WithAppId {
           contentComponentId: (contentComponentId != null) ? contentComponentId : null, 
           decorationComponentPosition: (decorationComponentPosition != null) ? decorationComponentPosition!.index : null, 
           percentageDecorationVisible: (percentageDecorationVisible != null) ? percentageDecorationVisible : null, 
-          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
     );
   }
 

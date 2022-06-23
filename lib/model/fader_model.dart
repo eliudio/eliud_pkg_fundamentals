@@ -19,6 +19,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/model_base.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:eliud_core/model/app_model.dart';
 
 import 'package:eliud_core/model/repository_export.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart';
@@ -77,29 +78,24 @@ class FaderModel implements ModelBase, WithAppId {
           conditions == other.conditions;
 
   @override
-  Future<String> toRichJsonString({String? appId}) async {
-    var document = toEntity(appId: appId).toDocument();
-    document['documentID'] = documentID;
-    return jsonEncode(document);
-  }
-
-  @override
   String toString() {
     String itemsCsv = (items == null) ? '' : items!.join(', ');
 
     return 'FaderModel{documentID: $documentID, appId: $appId, description: $description, animationMilliseconds: $animationMilliseconds, imageSeconds: $imageSeconds, items: ListedItem[] { $itemsCsv }, conditions: $conditions}';
   }
 
-  FaderEntity toEntity({String? appId}) {
+  FaderEntity toEntity({String? appId, List<ModelBase>? referencesCollector}) {
+    if (referencesCollector != null) {
+    }
     return FaderEntity(
           appId: (appId != null) ? appId : null, 
           description: (description != null) ? description : null, 
           animationMilliseconds: (animationMilliseconds != null) ? animationMilliseconds : null, 
           imageSeconds: (imageSeconds != null) ? imageSeconds : null, 
           items: (items != null) ? items
-            !.map((item) => item.toEntity(appId: appId))
+            !.map((item) => item.toEntity(appId: appId, referencesCollector: referencesCollector))
             .toList() : null, 
-          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
     );
   }
 

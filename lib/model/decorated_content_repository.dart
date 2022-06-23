@@ -37,7 +37,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 typedef DecoratedContentModelTrigger(List<DecoratedContentModel?> list);
 typedef DecoratedContentChanged(DecoratedContentModel? value);
 
-abstract class DecoratedContentRepository extends RepositoryBase<DecoratedContentModel> {
+abstract class DecoratedContentRepository extends RepositoryBase<DecoratedContentModel, DecoratedContentEntity> {
   Future<DecoratedContentEntity> addEntity(String documentID, DecoratedContentEntity value);
   Future<DecoratedContentEntity> updateEntity(String documentID, DecoratedContentEntity value);
   Future<DecoratedContentModel> add(DecoratedContentModel value);

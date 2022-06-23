@@ -33,7 +33,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 typedef LinkModelTrigger(List<LinkModel?> list);
 typedef LinkChanged(LinkModel? value);
 
-abstract class LinkRepository extends RepositoryBase<LinkModel> {
+abstract class LinkRepository extends RepositoryBase<LinkModel, LinkEntity> {
   Future<LinkEntity> addEntity(String documentID, LinkEntity value);
   Future<LinkEntity> updateEntity(String documentID, LinkEntity value);
   Future<LinkModel> add(LinkModel value);

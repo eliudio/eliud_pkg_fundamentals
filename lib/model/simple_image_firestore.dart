@@ -36,6 +36,11 @@ import 'package:eliud_core/tools/firestore/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
 class SimpleImageFirestore implements SimpleImageRepository {
+  @override
+  SimpleImageEntity? fromMap(Object? o) {
+    return SimpleImageEntity.fromMap(o);
+  }
+
   Future<SimpleImageEntity> addEntity(String documentID, SimpleImageEntity value) {
     return SimpleImageCollection.doc(documentID).set(value.toDocument()).then((_) => value);
   }

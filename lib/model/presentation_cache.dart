@@ -115,6 +115,16 @@ class PresentationCache implements PresentationRepository {
     });
   }
 
+  @override
+  Future<PresentationEntity?> getEntity(String? id, {Function(Exception p1)? onError}) {
+    return reference.getEntity(id, onError: onError);
+  }
+
+  @override
+  PresentationEntity? fromMap(Object? o) {
+    return reference.fromMap(o);
+  }
+
   Future<void> deleteAll() {
     return reference.deleteAll();
   }

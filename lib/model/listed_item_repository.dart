@@ -37,7 +37,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 typedef ListedItemModelTrigger(List<ListedItemModel?> list);
 typedef ListedItemChanged(ListedItemModel? value);
 
-abstract class ListedItemRepository extends RepositoryBase<ListedItemModel> {
+abstract class ListedItemRepository extends RepositoryBase<ListedItemModel, ListedItemEntity> {
   Future<ListedItemEntity> addEntity(String documentID, ListedItemEntity value);
   Future<ListedItemEntity> updateEntity(String documentID, ListedItemEntity value);
   Future<ListedItemModel> add(ListedItemModel value);

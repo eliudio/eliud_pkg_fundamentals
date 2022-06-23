@@ -37,7 +37,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 typedef DynamicWidgetModelTrigger(List<DynamicWidgetModel?> list);
 typedef DynamicWidgetChanged(DynamicWidgetModel? value);
 
-abstract class DynamicWidgetRepository extends RepositoryBase<DynamicWidgetModel> {
+abstract class DynamicWidgetRepository extends RepositoryBase<DynamicWidgetModel, DynamicWidgetEntity> {
   Future<DynamicWidgetEntity> addEntity(String documentID, DynamicWidgetEntity value);
   Future<DynamicWidgetEntity> updateEntity(String documentID, DynamicWidgetEntity value);
   Future<DynamicWidgetModel> add(DynamicWidgetModel value);

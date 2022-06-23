@@ -37,7 +37,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 typedef SimpleImageModelTrigger(List<SimpleImageModel?> list);
 typedef SimpleImageChanged(SimpleImageModel? value);
 
-abstract class SimpleImageRepository extends RepositoryBase<SimpleImageModel> {
+abstract class SimpleImageRepository extends RepositoryBase<SimpleImageModel, SimpleImageEntity> {
   Future<SimpleImageEntity> addEntity(String documentID, SimpleImageEntity value);
   Future<SimpleImageEntity> updateEntity(String documentID, SimpleImageEntity value);
   Future<SimpleImageModel> add(SimpleImageModel value);

@@ -9,7 +9,9 @@ import 'package:eliud_pkg_fundamentals/model/document_model.dart';
 import 'package:eliud_pkg_fundamentals/model/document_model.dart';
 import 'package:eliud_pkg_fundamentals/model/listed_item_model.dart';
 
-class DocumentBloc extends ExtEditorBaseBloc<DocumentModel, DocumentItemModel> {
+import '../../model/document_entity.dart';
+
+class DocumentBloc extends ExtEditorBaseBloc<DocumentModel, DocumentItemModel, DocumentEntity> {
   DocumentBloc(String appId, EditorFeedback feedback)
       : super(appId, documentRepository(appId: appId)!, feedback);
 
