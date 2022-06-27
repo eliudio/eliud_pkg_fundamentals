@@ -69,6 +69,9 @@ SectionImageAlignment toSectionImageAlignment(int? index) {
 
 
 class SectionModel implements ModelBase {
+  static const String packageName = 'eliud_pkg_fundamentals';
+  static const String id = 'Section';
+
   String documentID;
   String? title;
   String? description;
@@ -112,9 +115,9 @@ class SectionModel implements ModelBase {
     return 'SectionModel{documentID: $documentID, title: $title, description: $description, image: $image, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth, links: Link[] { $linksCsv }}';
   }
 
-  SectionEntity toEntity({String? appId, List<ModelBase>? referencesCollector}) {
+  SectionEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
-      if (image != null) referencesCollector.add(image!);
+      if (image != null) referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, image!));
     }
     return SectionEntity(
           title: (title != null) ? title : null, 

@@ -42,7 +42,6 @@
     {
       "fieldName": "image",
       "fieldType": "PlatformMedium",
-      "extractImage": "url",
       "association": true,
       "optional": false,
       "group": "image"

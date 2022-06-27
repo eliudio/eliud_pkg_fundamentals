@@ -40,6 +40,9 @@ import 'package:eliud_core/tools/random.dart';
 
 
 class DynamicWidgetModel implements ModelBase, WithAppId {
+  static const String packageName = 'eliud_pkg_fundamentals';
+  static const String id = 'DynamicWidget';
+
   String documentID;
   String appId;
   String? description;
@@ -77,7 +80,7 @@ class DynamicWidgetModel implements ModelBase, WithAppId {
     return 'DynamicWidgetModel{documentID: $documentID, appId: $appId, description: $description, content: $content, background: $background, conditions: $conditions}';
   }
 
-  DynamicWidgetEntity toEntity({String? appId, List<ModelBase>? referencesCollector}) {
+  DynamicWidgetEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
     }
     return DynamicWidgetEntity(

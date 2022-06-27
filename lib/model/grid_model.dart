@@ -41,6 +41,9 @@ import 'package:eliud_core/tools/random.dart';
 
 
 class GridModel implements ModelBase, WithAppId {
+  static const String packageName = 'eliud_pkg_fundamentals';
+  static const String id = 'Grid';
+
   String documentID;
   String appId;
   String? description;
@@ -80,9 +83,9 @@ class GridModel implements ModelBase, WithAppId {
     return 'GridModel{documentID: $documentID, appId: $appId, description: $description, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, gridView: $gridView, conditions: $conditions}';
   }
 
-  GridEntity toEntity({String? appId, List<ModelBase>? referencesCollector}) {
+  GridEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
-      if (gridView != null) referencesCollector.add(gridView!);
+      if (gridView != null) referencesCollector.add(ModelReference(GridViewModel.packageName, GridViewModel.id, gridView!));
     }
     return GridEntity(
           appId: (appId != null) ? appId : null, 

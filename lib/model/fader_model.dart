@@ -41,6 +41,9 @@ import 'package:eliud_core/tools/random.dart';
 
 
 class FaderModel implements ModelBase, WithAppId {
+  static const String packageName = 'eliud_pkg_fundamentals';
+  static const String id = 'Fader';
+
   String documentID;
   String appId;
   String? description;
@@ -84,7 +87,7 @@ class FaderModel implements ModelBase, WithAppId {
     return 'FaderModel{documentID: $documentID, appId: $appId, description: $description, animationMilliseconds: $animationMilliseconds, imageSeconds: $imageSeconds, items: ListedItem[] { $itemsCsv }, conditions: $conditions}';
   }
 
-  FaderEntity toEntity({String? appId, List<ModelBase>? referencesCollector}) {
+  FaderEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
     }
     return FaderEntity(

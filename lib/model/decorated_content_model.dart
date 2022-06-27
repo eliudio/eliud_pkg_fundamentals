@@ -56,6 +56,9 @@ DecorationComponentPosition toDecorationComponentPosition(int? index) {
 
 
 class DecoratedContentModel implements ModelBase, WithAppId {
+  static const String packageName = 'eliud_pkg_fundamentals';
+  static const String id = 'DecoratedContent';
+
   String documentID;
   String appId;
   String? description;
@@ -107,7 +110,7 @@ class DecoratedContentModel implements ModelBase, WithAppId {
     return 'DecoratedContentModel{documentID: $documentID, appId: $appId, description: $description, decoratingComponentName: $decoratingComponentName, decoratingComponentId: $decoratingComponentId, contentComponentName: $contentComponentName, contentComponentId: $contentComponentId, decorationComponentPosition: $decorationComponentPosition, percentageDecorationVisible: $percentageDecorationVisible, conditions: $conditions}';
   }
 
-  DecoratedContentEntity toEntity({String? appId, List<ModelBase>? referencesCollector}) {
+  DecoratedContentEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
     }
     return DecoratedContentEntity(

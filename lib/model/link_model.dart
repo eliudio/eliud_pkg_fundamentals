@@ -36,6 +36,9 @@ import 'package:eliud_core/tools/random.dart';
 
 
 class LinkModel implements ModelBase {
+  static const String packageName = 'eliud_pkg_fundamentals';
+  static const String id = 'Link';
+
   String documentID;
   String? linkText;
   ActionModel? action;
@@ -65,7 +68,7 @@ class LinkModel implements ModelBase {
     return 'LinkModel{documentID: $documentID, linkText: $linkText, action: $action}';
   }
 
-  LinkEntity toEntity({String? appId, List<ModelBase>? referencesCollector}) {
+  LinkEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
     }
     return LinkEntity(

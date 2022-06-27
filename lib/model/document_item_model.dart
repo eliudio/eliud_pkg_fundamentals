@@ -40,6 +40,9 @@ import 'package:eliud_core/tools/random.dart';
 
 
 class DocumentItemModel implements ModelBase {
+  static const String packageName = 'eliud_pkg_fundamentals';
+  static const String id = 'DocumentItem';
+
   String documentID;
 
   // This is the reference which you can use inside your document to use to this image, e.g. <img src = \"\${REFERENCE}\"
@@ -71,9 +74,9 @@ class DocumentItemModel implements ModelBase {
     return 'DocumentItemModel{documentID: $documentID, reference: $reference, image: $image}';
   }
 
-  DocumentItemEntity toEntity({String? appId, List<ModelBase>? referencesCollector}) {
+  DocumentItemEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
-      if (image != null) referencesCollector.add(image!);
+      if (image != null) referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, image!));
     }
     return DocumentItemEntity(
           reference: (reference != null) ? reference : null, 

@@ -40,6 +40,9 @@ import 'package:eliud_core/tools/random.dart';
 
 
 class DividerModel implements ModelBase, WithAppId {
+  static const String packageName = 'eliud_pkg_fundamentals';
+  static const String id = 'Divider';
+
   String documentID;
   String appId;
   String? description;
@@ -89,7 +92,7 @@ class DividerModel implements ModelBase, WithAppId {
     return 'DividerModel{documentID: $documentID, appId: $appId, description: $description, color: $color, height: $height, thickness: $thickness, indent: $indent, endIndent: $endIndent, conditions: $conditions}';
   }
 
-  DividerEntity toEntity({String? appId, List<ModelBase>? referencesCollector}) {
+  DividerEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
     }
     return DividerEntity(

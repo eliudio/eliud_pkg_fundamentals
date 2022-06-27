@@ -41,6 +41,9 @@ import 'package:eliud_core/tools/random.dart';
 
 
 class DocumentModel implements ModelBase, WithAppId {
+  static const String packageName = 'eliud_pkg_fundamentals';
+  static const String id = 'Document';
+
   String documentID;
   String appId;
   String? description;
@@ -86,7 +89,7 @@ class DocumentModel implements ModelBase, WithAppId {
     return 'DocumentModel{documentID: $documentID, appId: $appId, description: $description, content: $content, padding: $padding, images: DocumentItem[] { $imagesCsv }, background: $background, conditions: $conditions}';
   }
 
-  DocumentEntity toEntity({String? appId, List<ModelBase>? referencesCollector}) {
+  DocumentEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
     }
     return DocumentEntity(

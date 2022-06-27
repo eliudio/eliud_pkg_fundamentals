@@ -69,6 +69,9 @@ PresentationImageAlignment toPresentationImageAlignment(int? index) {
 
 
 class PresentationModel implements ModelBase, WithAppId {
+  static const String packageName = 'eliud_pkg_fundamentals';
+  static const String id = 'Presentation';
+
   String documentID;
   String appId;
   String? description;
@@ -114,9 +117,9 @@ class PresentationModel implements ModelBase, WithAppId {
     return 'PresentationModel{documentID: $documentID, appId: $appId, description: $description, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, image: $image, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth, conditions: $conditions}';
   }
 
-  PresentationEntity toEntity({String? appId, List<ModelBase>? referencesCollector}) {
+  PresentationEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
-      if (image != null) referencesCollector.add(image!);
+      if (image != null) referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, image!));
     }
     return PresentationEntity(
           appId: (appId != null) ? appId : null, 

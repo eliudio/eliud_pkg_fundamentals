@@ -56,6 +56,9 @@ SimpleTextAlign toSimpleTextAlign(int? index) {
 
 
 class SimpleTextModel implements ModelBase, WithAppId {
+  static const String packageName = 'eliud_pkg_fundamentals';
+  static const String id = 'SimpleText';
+
   String documentID;
   String appId;
   String? description;
@@ -93,7 +96,7 @@ class SimpleTextModel implements ModelBase, WithAppId {
     return 'SimpleTextModel{documentID: $documentID, appId: $appId, description: $description, title: $title, text: $text, conditions: $conditions, textAlign: $textAlign}';
   }
 
-  SimpleTextEntity toEntity({String? appId, List<ModelBase>? referencesCollector}) {
+  SimpleTextEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
     }
     return SimpleTextEntity(
