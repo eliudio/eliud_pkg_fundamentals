@@ -96,7 +96,7 @@ class SimpleTextModel implements ModelBase, WithAppId {
     return 'SimpleTextModel{documentID: $documentID, appId: $appId, description: $description, title: $title, text: $text, conditions: $conditions, textAlign: $textAlign}';
   }
 
-  SimpleTextEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
+  SimpleTextEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
     }
     return SimpleTextEntity(

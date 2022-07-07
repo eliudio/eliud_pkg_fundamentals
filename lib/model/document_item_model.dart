@@ -74,7 +74,7 @@ class DocumentItemModel implements ModelBase {
     return 'DocumentItemModel{documentID: $documentID, reference: $reference, image: $image}';
   }
 
-  DocumentItemEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
+  DocumentItemEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
       if (image != null) referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, image!));
     }

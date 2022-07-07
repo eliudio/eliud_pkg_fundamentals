@@ -74,7 +74,7 @@ class TutorialEntryModel implements ModelBase {
     return 'TutorialEntryModel{documentID: $documentID, description: $description, image: $image, code: $code}';
   }
 
-  TutorialEntryEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
+  TutorialEntryEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
       if (image != null) referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, image!));
     }

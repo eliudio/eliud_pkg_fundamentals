@@ -68,7 +68,7 @@ class LinkModel implements ModelBase {
     return 'LinkModel{documentID: $documentID, linkText: $linkText, action: $action}';
   }
 
-  LinkEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
+  LinkEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
     }
     return LinkEntity(

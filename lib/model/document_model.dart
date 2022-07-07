@@ -89,7 +89,7 @@ class DocumentModel implements ModelBase, WithAppId {
     return 'DocumentModel{documentID: $documentID, appId: $appId, description: $description, content: $content, padding: $padding, images: DocumentItem[] { $imagesCsv }, background: $background, conditions: $conditions}';
   }
 
-  DocumentEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
+  DocumentEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
     }
     return DocumentEntity(

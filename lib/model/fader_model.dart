@@ -87,7 +87,7 @@ class FaderModel implements ModelBase, WithAppId {
     return 'FaderModel{documentID: $documentID, appId: $appId, description: $description, animationMilliseconds: $animationMilliseconds, imageSeconds: $imageSeconds, items: ListedItem[] { $itemsCsv }, conditions: $conditions}';
   }
 
-  FaderEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
+  FaderEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
     }
     return FaderEntity(

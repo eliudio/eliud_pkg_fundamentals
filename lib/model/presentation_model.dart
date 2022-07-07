@@ -117,7 +117,7 @@ class PresentationModel implements ModelBase, WithAppId {
     return 'PresentationModel{documentID: $documentID, appId: $appId, description: $description, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, image: $image, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth, conditions: $conditions}';
   }
 
-  PresentationEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
+  PresentationEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
       if (image != null) referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, image!));
     }

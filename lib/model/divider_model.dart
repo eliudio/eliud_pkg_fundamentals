@@ -92,7 +92,7 @@ class DividerModel implements ModelBase, WithAppId {
     return 'DividerModel{documentID: $documentID, appId: $appId, description: $description, color: $color, height: $height, thickness: $thickness, indent: $indent, endIndent: $endIndent, conditions: $conditions}';
   }
 
-  DividerEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
+  DividerEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
     }
     return DividerEntity(

@@ -115,7 +115,7 @@ class SectionModel implements ModelBase {
     return 'SectionModel{documentID: $documentID, title: $title, description: $description, image: $image, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth, links: Link[] { $linksCsv }}';
   }
 
-  SectionEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
+  SectionEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
       if (image != null) referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, image!));
     }

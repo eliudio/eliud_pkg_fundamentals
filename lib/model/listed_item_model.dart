@@ -76,7 +76,7 @@ class ListedItemModel implements ModelBase {
     return 'ListedItemModel{documentID: $documentID, description: $description, action: $action, image: $image, posSize: $posSize}';
   }
 
-  ListedItemEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
+  ListedItemEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
       if (image != null) referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, image!));
     }

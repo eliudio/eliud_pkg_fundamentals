@@ -83,7 +83,7 @@ class TutorialModel implements ModelBase, WithAppId {
     return 'TutorialModel{documentID: $documentID, appId: $appId, name: $name, title: $title, description: $description, tutorialEntries: TutorialEntry[] { $tutorialEntriesCsv }, conditions: $conditions}';
   }
 
-  TutorialEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
+  TutorialEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
     }
     return TutorialEntity(

@@ -110,7 +110,7 @@ class DecoratedContentModel implements ModelBase, WithAppId {
     return 'DecoratedContentModel{documentID: $documentID, appId: $appId, description: $description, decoratingComponentName: $decoratingComponentName, decoratingComponentId: $decoratingComponentId, contentComponentName: $contentComponentName, contentComponentId: $contentComponentId, decorationComponentPosition: $decorationComponentPosition, percentageDecorationVisible: $percentageDecorationVisible, conditions: $conditions}';
   }
 
-  DecoratedContentEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
+  DecoratedContentEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
     }
     return DecoratedContentEntity(

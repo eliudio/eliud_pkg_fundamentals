@@ -80,7 +80,7 @@ class DynamicWidgetModel implements ModelBase, WithAppId {
     return 'DynamicWidgetModel{documentID: $documentID, appId: $appId, description: $description, content: $content, background: $background, conditions: $conditions}';
   }
 
-  DynamicWidgetEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
+  DynamicWidgetEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
     }
     return DynamicWidgetEntity(

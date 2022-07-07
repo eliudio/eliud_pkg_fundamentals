@@ -76,7 +76,7 @@ class SimpleImageModel implements ModelBase, WithAppId {
     return 'SimpleImageModel{documentID: $documentID, appId: $appId, description: $description, image: $image, conditions: $conditions}';
   }
 
-  SimpleImageEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
+  SimpleImageEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
       if (image != null) referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, image!));
     }

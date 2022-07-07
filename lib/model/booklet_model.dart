@@ -79,7 +79,7 @@ class BookletModel implements ModelBase, WithAppId {
     return 'BookletModel{documentID: $documentID, appId: $appId, description: $description, sections: Section[] { $sectionsCsv }, conditions: $conditions}';
   }
 
-  BookletEntity toEntity({String? appId, Set<ModelReference>? referencesCollector}) {
+  BookletEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
     if (referencesCollector != null) {
     }
     return BookletEntity(
