@@ -57,7 +57,7 @@ SimpleTextAlign toSimpleTextAlign(int? index) {
 
 class SimpleTextModel implements ModelBase, WithAppId {
   static const String packageName = 'eliud_pkg_fundamentals';
-  static const String id = 'SimpleText';
+  static const String id = 'simpleTexts';
 
   String documentID;
   String appId;

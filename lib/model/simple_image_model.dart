@@ -41,7 +41,7 @@ import 'package:eliud_core/tools/random.dart';
 
 class SimpleImageModel implements ModelBase, WithAppId {
   static const String packageName = 'eliud_pkg_fundamentals';
-  static const String id = 'SimpleImage';
+  static const String id = 'simpleImages';
 
   String documentID;
   String appId;

@@ -42,7 +42,7 @@ import 'package:eliud_core/tools/random.dart';
 
 class GridModel implements ModelBase, WithAppId {
   static const String packageName = 'eliud_pkg_fundamentals';
-  static const String id = 'Grid';
+  static const String id = 'grids';
 
   String documentID;
   String appId;

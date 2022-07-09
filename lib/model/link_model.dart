@@ -37,7 +37,7 @@ import 'package:eliud_core/tools/random.dart';
 
 class LinkModel implements ModelBase {
   static const String packageName = 'eliud_pkg_fundamentals';
-  static const String id = 'Link';
+  static const String id = 'links';
 
   String documentID;
   String? linkText;

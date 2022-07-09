@@ -70,7 +70,7 @@ PresentationImageAlignment toPresentationImageAlignment(int? index) {
 
 class PresentationModel implements ModelBase, WithAppId {
   static const String packageName = 'eliud_pkg_fundamentals';
-  static const String id = 'Presentation';
+  static const String id = 'presentations';
 
   String documentID;
   String appId;

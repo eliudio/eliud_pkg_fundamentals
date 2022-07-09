@@ -57,7 +57,7 @@ DecorationComponentPosition toDecorationComponentPosition(int? index) {
 
 class DecoratedContentModel implements ModelBase, WithAppId {
   static const String packageName = 'eliud_pkg_fundamentals';
-  static const String id = 'DecoratedContent';
+  static const String id = 'decoratedContents';
 
   String documentID;
   String appId;

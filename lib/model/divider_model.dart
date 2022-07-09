@@ -41,7 +41,7 @@ import 'package:eliud_core/tools/random.dart';
 
 class DividerModel implements ModelBase, WithAppId {
   static const String packageName = 'eliud_pkg_fundamentals';
-  static const String id = 'Divider';
+  static const String id = 'dividers';
 
   String documentID;
   String appId;

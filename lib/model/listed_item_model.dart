@@ -41,7 +41,7 @@ import 'package:eliud_core/tools/random.dart';
 
 class ListedItemModel implements ModelBase {
   static const String packageName = 'eliud_pkg_fundamentals';
-  static const String id = 'ListedItem';
+  static const String id = 'listedItems';
 
   String documentID;
   String? description;

@@ -41,7 +41,7 @@ import 'package:eliud_core/tools/random.dart';
 
 class DynamicWidgetModel implements ModelBase, WithAppId {
   static const String packageName = 'eliud_pkg_fundamentals';
-  static const String id = 'DynamicWidget';
+  static const String id = 'dynamicWidgets';
 
   String documentID;
   String appId;

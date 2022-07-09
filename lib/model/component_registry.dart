@@ -98,6 +98,17 @@ class ComponentRegistry {
       ComponentSpec('simpleTexts', SimpleTextComponentConstructorDefault(), SimpleTextComponentSelector(), SimpleTextComponentEditorConstructor(), ({String? appId}) => simpleTextRepository(appId: appId)! ), 
       ComponentSpec('tutorials', TutorialComponentConstructorDefault(), TutorialComponentSelector(), TutorialComponentEditorConstructor(), ({String? appId}) => tutorialRepository(appId: appId)! ), 
     ]);
+      Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals', 'booklets', ({String? appId}) => bookletRepository(appId: appId)!);
+      Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals', 'decoratedContents', ({String? appId}) => decoratedContentRepository(appId: appId)!);
+      Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals', 'dividers', ({String? appId}) => dividerRepository(appId: appId)!);
+      Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals', 'documents', ({String? appId}) => documentRepository(appId: appId)!);
+      Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals', 'dynamicWidgets', ({String? appId}) => dynamicWidgetRepository(appId: appId)!);
+      Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals', 'faders', ({String? appId}) => faderRepository(appId: appId)!);
+      Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals', 'grids', ({String? appId}) => gridRepository(appId: appId)!);
+      Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals', 'presentations', ({String? appId}) => presentationRepository(appId: appId)!);
+      Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals', 'simpleImages', ({String? appId}) => simpleImageRepository(appId: appId)!);
+      Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals', 'simpleTexts', ({String? appId}) => simpleTextRepository(appId: appId)!);
+      Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals', 'tutorials', ({String? appId}) => tutorialRepository(appId: appId)!);
 
   }
 }

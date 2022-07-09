@@ -42,7 +42,7 @@ import 'package:eliud_core/tools/random.dart';
 
 class FaderModel implements ModelBase, WithAppId {
   static const String packageName = 'eliud_pkg_fundamentals';
-  static const String id = 'Fader';
+  static const String id = 'faders';
 
   String documentID;
   String appId;

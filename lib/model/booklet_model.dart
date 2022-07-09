@@ -42,7 +42,7 @@ import 'package:eliud_core/tools/random.dart';
 
 class BookletModel implements ModelBase, WithAppId {
   static const String packageName = 'eliud_pkg_fundamentals';
-  static const String id = 'Booklet';
+  static const String id = 'booklets';
 
   String documentID;
   String appId;

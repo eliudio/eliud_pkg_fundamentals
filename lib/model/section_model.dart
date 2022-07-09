@@ -70,7 +70,7 @@ SectionImageAlignment toSectionImageAlignment(int? index) {
 
 class SectionModel implements ModelBase {
   static const String packageName = 'eliud_pkg_fundamentals';
-  static const String id = 'Section';
+  static const String id = 'sections';
 
   String documentID;
   String? title;
