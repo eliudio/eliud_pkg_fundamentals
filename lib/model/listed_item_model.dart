@@ -76,15 +76,23 @@ class ListedItemModel implements ModelBase {
     return 'ListedItemModel{documentID: $documentID, description: $description, action: $action, image: $image, posSize: $posSize}';
   }
 
-  ListedItemEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
-    if (referencesCollector != null) {
-      if (image != null) referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, image!));
+  Future<List<ModelReference>> collectReferences({String? appId}) async {
+    List<ModelReference> referencesCollector = [];
+    if (image != null) {
+      referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, image!));
     }
+    if (action != null) referencesCollector.addAll(await action!.collectReferences(appId: appId));
+    if (image != null) referencesCollector.addAll(await image!.collectReferences(appId: appId));
+    if (posSize != null) referencesCollector.addAll(await posSize!.collectReferences(appId: appId));
+    return referencesCollector;
+  }
+
+  ListedItemEntity toEntity({String? appId}) {
     return ListedItemEntity(
           description: (description != null) ? description : null, 
-          action: (action != null) ? action!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
+          action: (action != null) ? action!.toEntity(appId: appId) : null, 
           imageId: (image != null) ? image!.documentID : null, 
-          posSize: (posSize != null) ? posSize!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
+          posSize: (posSize != null) ? posSize!.toEntity(appId: appId) : null, 
     );
   }
 

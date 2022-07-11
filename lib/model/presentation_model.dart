@@ -117,21 +117,33 @@ class PresentationModel implements ModelBase, WithAppId {
     return 'PresentationModel{documentID: $documentID, appId: $appId, description: $description, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, image: $image, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth, conditions: $conditions}';
   }
 
-  PresentationEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
-    if (referencesCollector != null) {
-      if (image != null) referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, image!));
+  Future<List<ModelReference>> collectReferences({String? appId}) async {
+    List<ModelReference> referencesCollector = [];
+    if (image != null) {
+      referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, image!));
     }
+    if (bodyComponents != null) {
+      for (var item in bodyComponents!) {
+        referencesCollector.addAll(await item.collectReferences(appId: appId));
+      }
+    }
+    if (image != null) referencesCollector.addAll(await image!.collectReferences(appId: appId));
+    if (conditions != null) referencesCollector.addAll(await conditions!.collectReferences(appId: appId));
+    return referencesCollector;
+  }
+
+  PresentationEntity toEntity({String? appId}) {
     return PresentationEntity(
           appId: (appId != null) ? appId : null, 
           description: (description != null) ? description : null, 
           bodyComponents: (bodyComponents != null) ? bodyComponents
-            !.map((item) => item.toEntity(appId: appId, referencesCollector: referencesCollector))
+            !.map((item) => item.toEntity(appId: appId))
             .toList() : null, 
           imageId: (image != null) ? image!.documentID : null, 
           imagePositionRelative: (imagePositionRelative != null) ? imagePositionRelative!.index : null, 
           imageAlignment: (imageAlignment != null) ? imageAlignment!.index : null, 
           imageWidth: (imageWidth != null) ? imageWidth : null, 
-          conditions: (conditions != null) ? conditions!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
     );
   }
 

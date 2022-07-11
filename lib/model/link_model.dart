@@ -68,12 +68,16 @@ class LinkModel implements ModelBase {
     return 'LinkModel{documentID: $documentID, linkText: $linkText, action: $action}';
   }
 
-  LinkEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
-    if (referencesCollector != null) {
-    }
+  Future<List<ModelReference>> collectReferences({String? appId}) async {
+    List<ModelReference> referencesCollector = [];
+    if (action != null) referencesCollector.addAll(await action!.collectReferences(appId: appId));
+    return referencesCollector;
+  }
+
+  LinkEntity toEntity({String? appId}) {
     return LinkEntity(
           linkText: (linkText != null) ? linkText : null, 
-          action: (action != null) ? action!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
+          action: (action != null) ? action!.toEntity(appId: appId) : null, 
     );
   }
 

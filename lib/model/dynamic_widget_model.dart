@@ -80,15 +80,20 @@ class DynamicWidgetModel implements ModelBase, WithAppId {
     return 'DynamicWidgetModel{documentID: $documentID, appId: $appId, description: $description, content: $content, background: $background, conditions: $conditions}';
   }
 
-  DynamicWidgetEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
-    if (referencesCollector != null) {
-    }
+  Future<List<ModelReference>> collectReferences({String? appId}) async {
+    List<ModelReference> referencesCollector = [];
+    if (background != null) referencesCollector.addAll(await background!.collectReferences(appId: appId));
+    if (conditions != null) referencesCollector.addAll(await conditions!.collectReferences(appId: appId));
+    return referencesCollector;
+  }
+
+  DynamicWidgetEntity toEntity({String? appId}) {
     return DynamicWidgetEntity(
           appId: (appId != null) ? appId : null, 
           description: (description != null) ? description : null, 
           content: (content != null) ? content : null, 
-          background: (background != null) ? background!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
-          conditions: (conditions != null) ? conditions!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
+          background: (background != null) ? background!.toEntity(appId: appId) : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
     );
   }
 

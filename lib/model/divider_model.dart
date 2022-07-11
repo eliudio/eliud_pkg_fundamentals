@@ -92,18 +92,23 @@ class DividerModel implements ModelBase, WithAppId {
     return 'DividerModel{documentID: $documentID, appId: $appId, description: $description, color: $color, height: $height, thickness: $thickness, indent: $indent, endIndent: $endIndent, conditions: $conditions}';
   }
 
-  DividerEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
-    if (referencesCollector != null) {
-    }
+  Future<List<ModelReference>> collectReferences({String? appId}) async {
+    List<ModelReference> referencesCollector = [];
+    if (color != null) referencesCollector.addAll(await color!.collectReferences(appId: appId));
+    if (conditions != null) referencesCollector.addAll(await conditions!.collectReferences(appId: appId));
+    return referencesCollector;
+  }
+
+  DividerEntity toEntity({String? appId}) {
     return DividerEntity(
           appId: (appId != null) ? appId : null, 
           description: (description != null) ? description : null, 
-          color: (color != null) ? color!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
+          color: (color != null) ? color!.toEntity(appId: appId) : null, 
           height: (height != null) ? height : null, 
           thickness: (thickness != null) ? thickness : null, 
           indent: (indent != null) ? indent : null, 
           endIndent: (endIndent != null) ? endIndent : null, 
-          conditions: (conditions != null) ? conditions!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
     );
   }
 

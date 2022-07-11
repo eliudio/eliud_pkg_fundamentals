@@ -74,10 +74,16 @@ class TutorialEntryModel implements ModelBase {
     return 'TutorialEntryModel{documentID: $documentID, description: $description, image: $image, code: $code}';
   }
 
-  TutorialEntryEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
-    if (referencesCollector != null) {
-      if (image != null) referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, image!));
+  Future<List<ModelReference>> collectReferences({String? appId}) async {
+    List<ModelReference> referencesCollector = [];
+    if (image != null) {
+      referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, image!));
     }
+    if (image != null) referencesCollector.addAll(await image!.collectReferences(appId: appId));
+    return referencesCollector;
+  }
+
+  TutorialEntryEntity toEntity({String? appId}) {
     return TutorialEntryEntity(
           description: (description != null) ? description : null, 
           imageId: (image != null) ? image!.documentID : null, 

@@ -79,16 +79,25 @@ class BookletModel implements ModelBase, WithAppId {
     return 'BookletModel{documentID: $documentID, appId: $appId, description: $description, sections: Section[] { $sectionsCsv }, conditions: $conditions}';
   }
 
-  BookletEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
-    if (referencesCollector != null) {
+  Future<List<ModelReference>> collectReferences({String? appId}) async {
+    List<ModelReference> referencesCollector = [];
+    if (sections != null) {
+      for (var item in sections!) {
+        referencesCollector.addAll(await item.collectReferences(appId: appId));
+      }
     }
+    if (conditions != null) referencesCollector.addAll(await conditions!.collectReferences(appId: appId));
+    return referencesCollector;
+  }
+
+  BookletEntity toEntity({String? appId}) {
     return BookletEntity(
           appId: (appId != null) ? appId : null, 
           description: (description != null) ? description : null, 
           sections: (sections != null) ? sections
-            !.map((item) => item.toEntity(appId: appId, referencesCollector: referencesCollector))
+            !.map((item) => item.toEntity(appId: appId))
             .toList() : null, 
-          conditions: (conditions != null) ? conditions!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
     );
   }
 

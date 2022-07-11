@@ -89,19 +89,29 @@ class DocumentModel implements ModelBase, WithAppId {
     return 'DocumentModel{documentID: $documentID, appId: $appId, description: $description, content: $content, padding: $padding, images: DocumentItem[] { $imagesCsv }, background: $background, conditions: $conditions}';
   }
 
-  DocumentEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
-    if (referencesCollector != null) {
+  Future<List<ModelReference>> collectReferences({String? appId}) async {
+    List<ModelReference> referencesCollector = [];
+    if (images != null) {
+      for (var item in images!) {
+        referencesCollector.addAll(await item.collectReferences(appId: appId));
+      }
     }
+    if (background != null) referencesCollector.addAll(await background!.collectReferences(appId: appId));
+    if (conditions != null) referencesCollector.addAll(await conditions!.collectReferences(appId: appId));
+    return referencesCollector;
+  }
+
+  DocumentEntity toEntity({String? appId}) {
     return DocumentEntity(
           appId: (appId != null) ? appId : null, 
           description: (description != null) ? description : null, 
           content: (content != null) ? content : null, 
           padding: (padding != null) ? padding : null, 
           images: (images != null) ? images
-            !.map((item) => item.toEntity(appId: appId, referencesCollector: referencesCollector))
+            !.map((item) => item.toEntity(appId: appId))
             .toList() : null, 
-          background: (background != null) ? background!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
-          conditions: (conditions != null) ? conditions!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
+          background: (background != null) ? background!.toEntity(appId: appId) : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
     );
   }
 

@@ -74,10 +74,16 @@ class DocumentItemModel implements ModelBase {
     return 'DocumentItemModel{documentID: $documentID, reference: $reference, image: $image}';
   }
 
-  DocumentItemEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
-    if (referencesCollector != null) {
-      if (image != null) referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, image!));
+  Future<List<ModelReference>> collectReferences({String? appId}) async {
+    List<ModelReference> referencesCollector = [];
+    if (image != null) {
+      referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, image!));
     }
+    if (image != null) referencesCollector.addAll(await image!.collectReferences(appId: appId));
+    return referencesCollector;
+  }
+
+  DocumentItemEntity toEntity({String? appId}) {
     return DocumentItemEntity(
           reference: (reference != null) ? reference : null, 
           imageId: (image != null) ? image!.documentID : null, 

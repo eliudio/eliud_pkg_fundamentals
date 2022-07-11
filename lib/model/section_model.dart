@@ -115,10 +115,22 @@ class SectionModel implements ModelBase {
     return 'SectionModel{documentID: $documentID, title: $title, description: $description, image: $image, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth, links: Link[] { $linksCsv }}';
   }
 
-  SectionEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
-    if (referencesCollector != null) {
-      if (image != null) referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, image!));
+  Future<List<ModelReference>> collectReferences({String? appId}) async {
+    List<ModelReference> referencesCollector = [];
+    if (image != null) {
+      referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, image!));
     }
+    if (image != null) referencesCollector.addAll(await image!.collectReferences(appId: appId));
+    if (links != null) {
+      for (var item in links!) {
+        referencesCollector.addAll(await item.collectReferences(appId: appId));
+      }
+    }
+
+    return referencesCollector;
+  }
+
+  SectionEntity toEntity({String? appId}) {
     return SectionEntity(
           title: (title != null) ? title : null, 
           description: (description != null) ? description : null, 
@@ -127,7 +139,7 @@ class SectionModel implements ModelBase {
           imageAlignment: (imageAlignment != null) ? imageAlignment!.index : null, 
           imageWidth: (imageWidth != null) ? imageWidth : null, 
           links: (links != null) ? links
-            !.map((item) => item.toEntity(appId: appId, referencesCollector: referencesCollector))
+            !.map((item) => item.toEntity(appId: appId))
             .toList() : null, 
     );
   }

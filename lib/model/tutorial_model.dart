@@ -83,18 +83,27 @@ class TutorialModel implements ModelBase, WithAppId {
     return 'TutorialModel{documentID: $documentID, appId: $appId, name: $name, title: $title, description: $description, tutorialEntries: TutorialEntry[] { $tutorialEntriesCsv }, conditions: $conditions}';
   }
 
-  TutorialEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
-    if (referencesCollector != null) {
+  Future<List<ModelReference>> collectReferences({String? appId}) async {
+    List<ModelReference> referencesCollector = [];
+    if (tutorialEntries != null) {
+      for (var item in tutorialEntries!) {
+        referencesCollector.addAll(await item.collectReferences(appId: appId));
+      }
     }
+    if (conditions != null) referencesCollector.addAll(await conditions!.collectReferences(appId: appId));
+    return referencesCollector;
+  }
+
+  TutorialEntity toEntity({String? appId}) {
     return TutorialEntity(
           appId: (appId != null) ? appId : null, 
           name: (name != null) ? name : null, 
           title: (title != null) ? title : null, 
           description: (description != null) ? description : null, 
           tutorialEntries: (tutorialEntries != null) ? tutorialEntries
-            !.map((item) => item.toEntity(appId: appId, referencesCollector: referencesCollector))
+            !.map((item) => item.toEntity(appId: appId))
             .toList() : null, 
-          conditions: (conditions != null) ? conditions!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
     );
   }
 

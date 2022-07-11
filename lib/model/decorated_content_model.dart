@@ -110,9 +110,13 @@ class DecoratedContentModel implements ModelBase, WithAppId {
     return 'DecoratedContentModel{documentID: $documentID, appId: $appId, description: $description, decoratingComponentName: $decoratingComponentName, decoratingComponentId: $decoratingComponentId, contentComponentName: $contentComponentName, contentComponentId: $contentComponentId, decorationComponentPosition: $decorationComponentPosition, percentageDecorationVisible: $percentageDecorationVisible, conditions: $conditions}';
   }
 
-  DecoratedContentEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
-    if (referencesCollector != null) {
-    }
+  Future<List<ModelReference>> collectReferences({String? appId}) async {
+    List<ModelReference> referencesCollector = [];
+    if (conditions != null) referencesCollector.addAll(await conditions!.collectReferences(appId: appId));
+    return referencesCollector;
+  }
+
+  DecoratedContentEntity toEntity({String? appId}) {
     return DecoratedContentEntity(
           appId: (appId != null) ? appId : null, 
           description: (description != null) ? description : null, 
@@ -122,7 +126,7 @@ class DecoratedContentModel implements ModelBase, WithAppId {
           contentComponentId: (contentComponentId != null) ? contentComponentId : null, 
           decorationComponentPosition: (decorationComponentPosition != null) ? decorationComponentPosition!.index : null, 
           percentageDecorationVisible: (percentageDecorationVisible != null) ? percentageDecorationVisible : null, 
-          conditions: (conditions != null) ? conditions!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
     );
   }
 

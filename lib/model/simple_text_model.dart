@@ -96,15 +96,19 @@ class SimpleTextModel implements ModelBase, WithAppId {
     return 'SimpleTextModel{documentID: $documentID, appId: $appId, description: $description, title: $title, text: $text, conditions: $conditions, textAlign: $textAlign}';
   }
 
-  SimpleTextEntity toEntity({String? appId, List<ModelReference>? referencesCollector}) {
-    if (referencesCollector != null) {
-    }
+  Future<List<ModelReference>> collectReferences({String? appId}) async {
+    List<ModelReference> referencesCollector = [];
+    if (conditions != null) referencesCollector.addAll(await conditions!.collectReferences(appId: appId));
+    return referencesCollector;
+  }
+
+  SimpleTextEntity toEntity({String? appId}) {
     return SimpleTextEntity(
           appId: (appId != null) ? appId : null, 
           description: (description != null) ? description : null, 
           title: (title != null) ? title : null, 
           text: (text != null) ? text : null, 
-          conditions: (conditions != null) ? conditions!.toEntity(appId: appId, referencesCollector: referencesCollector) : null, 
+          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
           textAlign: (textAlign != null) ? textAlign!.index : null, 
     );
   }
