@@ -30,7 +30,9 @@ class TutorialEntryEntity implements EntityBase {
 
   TutorialEntryEntity({this.description, this.imageId, this.code, });
 
-
+  TutorialEntryEntity copyWith({String? documentID, String? description, String? imageId, String? code, }) {
+    return TutorialEntryEntity(description : description ?? this.description, imageId : imageId ?? this.imageId, code : code ?? this.code, );
+  }
   List<Object?> get props => [description, imageId, code, ];
 
   @override
@@ -58,6 +60,12 @@ class TutorialEntryEntity implements EntityBase {
     if (code != null) theDocument["code"] = code;
       else theDocument["code"] = null;
     return theDocument;
+  }
+
+  @override
+  TutorialEntryEntity switchAppId({required String newAppId}) {
+    var newEntity = copyWith();
+    return newEntity;
   }
 
   static TutorialEntryEntity? fromJsonString(String json) {

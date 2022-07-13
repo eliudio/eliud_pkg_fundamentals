@@ -32,7 +32,9 @@ class DynamicWidgetEntity implements EntityBase {
 
   DynamicWidgetEntity({required this.appId, this.description, this.content, this.background, this.conditions, });
 
-
+  DynamicWidgetEntity copyWith({String? documentID, String? appId, String? description, String? content, BackgroundEntity? background, StorageConditionsEntity? conditions, }) {
+    return DynamicWidgetEntity(appId : appId ?? this.appId, description : description ?? this.description, content : content ?? this.content, background : background ?? this.background, conditions : conditions ?? this.conditions, );
+  }
   List<Object?> get props => [appId, description, content, background, conditions, ];
 
   @override
@@ -82,6 +84,12 @@ class DynamicWidgetEntity implements EntityBase {
     if (conditions != null) theDocument["conditions"] = conditionsMap;
       else theDocument["conditions"] = null;
     return theDocument;
+  }
+
+  @override
+  DynamicWidgetEntity switchAppId({required String newAppId}) {
+    var newEntity = copyWith(appId: newAppId);
+    return newEntity;
   }
 
   static DynamicWidgetEntity? fromJsonString(String json) {

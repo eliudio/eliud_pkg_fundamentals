@@ -31,7 +31,9 @@ class BookletEntity implements EntityBase {
 
   BookletEntity({required this.appId, this.description, this.sections, this.conditions, });
 
-
+  BookletEntity copyWith({String? documentID, String? appId, String? description, List<SectionEntity>? sections, StorageConditionsEntity? conditions, }) {
+    return BookletEntity(appId : appId ?? this.appId, description : description ?? this.description, sections : sections ?? this.sections, conditions : conditions ?? this.conditions, );
+  }
   List<Object?> get props => [appId, description, sections, conditions, ];
 
   @override
@@ -84,6 +86,13 @@ class BookletEntity implements EntityBase {
     if (conditions != null) theDocument["conditions"] = conditionsMap;
       else theDocument["conditions"] = null;
     return theDocument;
+  }
+
+  @override
+  BookletEntity switchAppId({required String newAppId}) {
+    var newEntity = copyWith(appId: newAppId);
+    newEntity = newEntity.copyWith(sections: (sections == null) ? null : (sections!.map((section) => section.copyWith(links: (section.links == null) ? null : (section.links!.map((link) => (link.copyWith( action: link.action == null ? null : link.action!.copyWith(appId: newAppId))))).toList()))).toList());
+    return newEntity;
   }
 
   static BookletEntity? fromJsonString(String json) {

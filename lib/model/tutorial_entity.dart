@@ -33,7 +33,9 @@ class TutorialEntity implements EntityBase {
 
   TutorialEntity({required this.appId, this.name, this.title, this.description, this.tutorialEntries, this.conditions, });
 
-
+  TutorialEntity copyWith({String? documentID, String? appId, String? name, String? title, String? description, List<TutorialEntryEntity>? tutorialEntries, StorageConditionsEntity? conditions, }) {
+    return TutorialEntity(appId : appId ?? this.appId, name : name ?? this.name, title : title ?? this.title, description : description ?? this.description, tutorialEntries : tutorialEntries ?? this.tutorialEntries, conditions : conditions ?? this.conditions, );
+  }
   List<Object?> get props => [appId, name, title, description, tutorialEntries, conditions, ];
 
   @override
@@ -92,6 +94,12 @@ class TutorialEntity implements EntityBase {
     if (conditions != null) theDocument["conditions"] = conditionsMap;
       else theDocument["conditions"] = null;
     return theDocument;
+  }
+
+  @override
+  TutorialEntity switchAppId({required String newAppId}) {
+    var newEntity = copyWith(appId: newAppId);
+    return newEntity;
   }
 
   static TutorialEntity? fromJsonString(String json) {

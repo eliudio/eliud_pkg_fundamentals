@@ -126,7 +126,6 @@ class SectionModel implements ModelBase {
         referencesCollector.addAll(await item.collectReferences(appId: appId));
       }
     }
-
     return referencesCollector;
   }
 

@@ -28,7 +28,9 @@ class LinkEntity implements EntityBase {
 
   LinkEntity({this.linkText, this.action, });
 
-
+  LinkEntity copyWith({String? documentID, String? linkText, ActionEntity? action, }) {
+    return LinkEntity(linkText : linkText ?? this.linkText, action : action ?? this.action, );
+  }
   List<Object?> get props => [linkText, action, ];
 
   @override
@@ -62,6 +64,12 @@ class LinkEntity implements EntityBase {
     if (action != null) theDocument["action"] = actionMap;
       else theDocument["action"] = null;
     return theDocument;
+  }
+
+  @override
+  LinkEntity switchAppId({required String newAppId}) {
+    var newEntity = copyWith();
+    return newEntity;
   }
 
   static LinkEntity? fromJsonString(String json) {

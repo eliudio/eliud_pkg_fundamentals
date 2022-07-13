@@ -31,7 +31,9 @@ class ListedItemEntity implements EntityBase {
 
   ListedItemEntity({this.description, this.action, this.imageId, this.posSize, });
 
-
+  ListedItemEntity copyWith({String? documentID, String? description, ActionEntity? action, String? imageId, PosSizeEntity? posSize, }) {
+    return ListedItemEntity(description : description ?? this.description, action : action ?? this.action, imageId : imageId ?? this.imageId, posSize : posSize ?? this.posSize, );
+  }
   List<Object?> get props => [description, action, imageId, posSize, ];
 
   @override
@@ -78,6 +80,12 @@ class ListedItemEntity implements EntityBase {
     if (posSize != null) theDocument["posSize"] = posSizeMap;
       else theDocument["posSize"] = null;
     return theDocument;
+  }
+
+  @override
+  ListedItemEntity switchAppId({required String newAppId}) {
+    var newEntity = copyWith();
+    return newEntity;
   }
 
   static ListedItemEntity? fromJsonString(String json) {

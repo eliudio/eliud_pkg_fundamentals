@@ -20,6 +20,7 @@
     "isExtension": true,
     "documentSubCollectionOf": "app"
   },
+  "codeForNewAppId": "newEntity = newEntity.copyWith(sections: (sections == null) ? null : (sections!.map((section) => section.copyWith(links: (section.links == null) ? null : (section.links!.map((link) => (link.copyWith( action: link.action == null ? null : link.action!.copyWith(appId: newAppId))))).toList()))).toList());",
   "fields": [
     {
       "fieldName": "documentID",

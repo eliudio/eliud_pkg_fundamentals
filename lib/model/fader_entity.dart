@@ -33,7 +33,9 @@ class FaderEntity implements EntityBase {
 
   FaderEntity({required this.appId, this.description, this.animationMilliseconds, this.imageSeconds, this.items, this.conditions, });
 
-
+  FaderEntity copyWith({String? documentID, String? appId, String? description, int? animationMilliseconds, int? imageSeconds, List<ListedItemEntity>? items, StorageConditionsEntity? conditions, }) {
+    return FaderEntity(appId : appId ?? this.appId, description : description ?? this.description, animationMilliseconds : animationMilliseconds ?? this.animationMilliseconds, imageSeconds : imageSeconds ?? this.imageSeconds, items : items ?? this.items, conditions : conditions ?? this.conditions, );
+  }
   List<Object?> get props => [appId, description, animationMilliseconds, imageSeconds, items, conditions, ];
 
   @override
@@ -92,6 +94,12 @@ class FaderEntity implements EntityBase {
     if (conditions != null) theDocument["conditions"] = conditionsMap;
       else theDocument["conditions"] = null;
     return theDocument;
+  }
+
+  @override
+  FaderEntity switchAppId({required String newAppId}) {
+    var newEntity = copyWith(appId: newAppId);
+    return newEntity;
   }
 
   static FaderEntity? fromJsonString(String json) {

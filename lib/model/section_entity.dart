@@ -34,7 +34,9 @@ class SectionEntity implements EntityBase {
 
   SectionEntity({this.title, this.description, this.imageId, this.imagePositionRelative, this.imageAlignment, this.imageWidth, this.links, });
 
-
+  SectionEntity copyWith({String? documentID, String? title, String? description, String? imageId, int? imagePositionRelative, int? imageAlignment, double? imageWidth, List<LinkEntity>? links, }) {
+    return SectionEntity(title : title ?? this.title, description : description ?? this.description, imageId : imageId ?? this.imageId, imagePositionRelative : imagePositionRelative ?? this.imagePositionRelative, imageAlignment : imageAlignment ?? this.imageAlignment, imageWidth : imageWidth ?? this.imageWidth, links : links ?? this.links, );
+  }
   List<Object?> get props => [title, description, imageId, imagePositionRelative, imageAlignment, imageWidth, links, ];
 
   @override
@@ -89,6 +91,12 @@ class SectionEntity implements EntityBase {
     if (links != null) theDocument["links"] = linksListMap;
       else theDocument["links"] = null;
     return theDocument;
+  }
+
+  @override
+  SectionEntity switchAppId({required String newAppId}) {
+    var newEntity = copyWith();
+    return newEntity;
   }
 
   static SectionEntity? fromJsonString(String json) {

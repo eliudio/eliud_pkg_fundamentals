@@ -36,7 +36,9 @@ class DecoratedContentEntity implements EntityBase {
 
   DecoratedContentEntity({required this.appId, this.description, this.decoratingComponentName, this.decoratingComponentId, this.contentComponentName, this.contentComponentId, this.decorationComponentPosition, this.percentageDecorationVisible, this.conditions, });
 
-
+  DecoratedContentEntity copyWith({String? documentID, String? appId, String? description, String? decoratingComponentName, String? decoratingComponentId, String? contentComponentName, String? contentComponentId, int? decorationComponentPosition, double? percentageDecorationVisible, StorageConditionsEntity? conditions, }) {
+    return DecoratedContentEntity(appId : appId ?? this.appId, description : description ?? this.description, decoratingComponentName : decoratingComponentName ?? this.decoratingComponentName, decoratingComponentId : decoratingComponentId ?? this.decoratingComponentId, contentComponentName : contentComponentName ?? this.contentComponentName, contentComponentId : contentComponentId ?? this.contentComponentId, decorationComponentPosition : decorationComponentPosition ?? this.decorationComponentPosition, percentageDecorationVisible : percentageDecorationVisible ?? this.percentageDecorationVisible, conditions : conditions ?? this.conditions, );
+  }
   List<Object?> get props => [appId, description, decoratingComponentName, decoratingComponentId, contentComponentName, contentComponentId, decorationComponentPosition, percentageDecorationVisible, conditions, ];
 
   @override
@@ -91,6 +93,12 @@ class DecoratedContentEntity implements EntityBase {
     if (conditions != null) theDocument["conditions"] = conditionsMap;
       else theDocument["conditions"] = null;
     return theDocument;
+  }
+
+  @override
+  DecoratedContentEntity switchAppId({required String newAppId}) {
+    var newEntity = copyWith(appId: newAppId);
+    return newEntity;
   }
 
   static DecoratedContentEntity? fromJsonString(String json) {

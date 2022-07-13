@@ -31,7 +31,9 @@ class SimpleImageEntity implements EntityBase {
 
   SimpleImageEntity({required this.appId, this.description, this.imageId, this.conditions, });
 
-
+  SimpleImageEntity copyWith({String? documentID, String? appId, String? description, String? imageId, StorageConditionsEntity? conditions, }) {
+    return SimpleImageEntity(appId : appId ?? this.appId, description : description ?? this.description, imageId : imageId ?? this.imageId, conditions : conditions ?? this.conditions, );
+  }
   List<Object?> get props => [appId, description, imageId, conditions, ];
 
   @override
@@ -71,6 +73,12 @@ class SimpleImageEntity implements EntityBase {
     if (conditions != null) theDocument["conditions"] = conditionsMap;
       else theDocument["conditions"] = null;
     return theDocument;
+  }
+
+  @override
+  SimpleImageEntity switchAppId({required String newAppId}) {
+    var newEntity = copyWith(appId: newAppId);
+    return newEntity;
   }
 
   static SimpleImageEntity? fromJsonString(String json) {

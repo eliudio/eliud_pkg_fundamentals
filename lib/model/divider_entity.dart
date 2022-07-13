@@ -35,7 +35,9 @@ class DividerEntity implements EntityBase {
 
   DividerEntity({required this.appId, this.description, this.color, this.height, this.thickness, this.indent, this.endIndent, this.conditions, });
 
-
+  DividerEntity copyWith({String? documentID, String? appId, String? description, RgbEntity? color, double? height, double? thickness, double? indent, double? endIndent, StorageConditionsEntity? conditions, }) {
+    return DividerEntity(appId : appId ?? this.appId, description : description ?? this.description, color : color ?? this.color, height : height ?? this.height, thickness : thickness ?? this.thickness, indent : indent ?? this.indent, endIndent : endIndent ?? this.endIndent, conditions : conditions ?? this.conditions, );
+  }
   List<Object?> get props => [appId, description, color, height, thickness, indent, endIndent, conditions, ];
 
   @override
@@ -94,6 +96,12 @@ class DividerEntity implements EntityBase {
     if (conditions != null) theDocument["conditions"] = conditionsMap;
       else theDocument["conditions"] = null;
     return theDocument;
+  }
+
+  @override
+  DividerEntity switchAppId({required String newAppId}) {
+    var newEntity = copyWith(appId: newAppId);
+    return newEntity;
   }
 
   static DividerEntity? fromJsonString(String json) {

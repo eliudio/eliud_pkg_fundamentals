@@ -33,7 +33,9 @@ class SimpleTextEntity implements EntityBase {
 
   SimpleTextEntity({required this.appId, this.description, this.title, this.text, this.conditions, this.textAlign, });
 
-
+  SimpleTextEntity copyWith({String? documentID, String? appId, String? description, String? title, String? text, StorageConditionsEntity? conditions, int? textAlign, }) {
+    return SimpleTextEntity(appId : appId ?? this.appId, description : description ?? this.description, title : title ?? this.title, text : text ?? this.text, conditions : conditions ?? this.conditions, textAlign : textAlign ?? this.textAlign, );
+  }
   List<Object?> get props => [appId, description, title, text, conditions, textAlign, ];
 
   @override
@@ -79,6 +81,12 @@ class SimpleTextEntity implements EntityBase {
     if (textAlign != null) theDocument["textAlign"] = textAlign;
       else theDocument["textAlign"] = null;
     return theDocument;
+  }
+
+  @override
+  SimpleTextEntity switchAppId({required String newAppId}) {
+    var newEntity = copyWith(appId: newAppId);
+    return newEntity;
   }
 
   static SimpleTextEntity? fromJsonString(String json) {

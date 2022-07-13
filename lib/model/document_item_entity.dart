@@ -29,7 +29,9 @@ class DocumentItemEntity implements EntityBase {
 
   DocumentItemEntity({this.reference, this.imageId, });
 
-
+  DocumentItemEntity copyWith({String? documentID, String? reference, String? imageId, }) {
+    return DocumentItemEntity(reference : reference ?? this.reference, imageId : imageId ?? this.imageId, );
+  }
   List<Object?> get props => [reference, imageId, ];
 
   @override
@@ -54,6 +56,12 @@ class DocumentItemEntity implements EntityBase {
     if (imageId != null) theDocument["imageId"] = imageId;
       else theDocument["imageId"] = null;
     return theDocument;
+  }
+
+  @override
+  DocumentItemEntity switchAppId({required String newAppId}) {
+    var newEntity = copyWith();
+    return newEntity;
   }
 
   static DocumentItemEntity? fromJsonString(String json) {

@@ -34,7 +34,9 @@ class DocumentEntity implements EntityBase {
 
   DocumentEntity({required this.appId, this.description, this.content, this.padding, this.images, this.background, this.conditions, });
 
-
+  DocumentEntity copyWith({String? documentID, String? appId, String? description, String? content, double? padding, List<DocumentItemEntity>? images, BackgroundEntity? background, StorageConditionsEntity? conditions, }) {
+    return DocumentEntity(appId : appId ?? this.appId, description : description ?? this.description, content : content ?? this.content, padding : padding ?? this.padding, images : images ?? this.images, background : background ?? this.background, conditions : conditions ?? this.conditions, );
+  }
   List<Object?> get props => [appId, description, content, padding, images, background, conditions, ];
 
   @override
@@ -103,6 +105,12 @@ class DocumentEntity implements EntityBase {
     if (conditions != null) theDocument["conditions"] = conditionsMap;
       else theDocument["conditions"] = null;
     return theDocument;
+  }
+
+  @override
+  DocumentEntity switchAppId({required String newAppId}) {
+    var newEntity = copyWith(appId: newAppId);
+    return newEntity;
   }
 
   static DocumentEntity? fromJsonString(String json) {

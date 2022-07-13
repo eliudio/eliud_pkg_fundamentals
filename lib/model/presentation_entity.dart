@@ -35,7 +35,9 @@ class PresentationEntity implements EntityBase {
 
   PresentationEntity({required this.appId, this.description, this.bodyComponents, this.imageId, this.imagePositionRelative, this.imageAlignment, this.imageWidth, this.conditions, });
 
-
+  PresentationEntity copyWith({String? documentID, String? appId, String? description, List<BodyComponentEntity>? bodyComponents, String? imageId, int? imagePositionRelative, int? imageAlignment, double? imageWidth, StorageConditionsEntity? conditions, }) {
+    return PresentationEntity(appId : appId ?? this.appId, description : description ?? this.description, bodyComponents : bodyComponents ?? this.bodyComponents, imageId : imageId ?? this.imageId, imagePositionRelative : imagePositionRelative ?? this.imagePositionRelative, imageAlignment : imageAlignment ?? this.imageAlignment, imageWidth : imageWidth ?? this.imageWidth, conditions : conditions ?? this.conditions, );
+  }
   List<Object?> get props => [appId, description, bodyComponents, imageId, imagePositionRelative, imageAlignment, imageWidth, conditions, ];
 
   @override
@@ -100,6 +102,12 @@ class PresentationEntity implements EntityBase {
     if (conditions != null) theDocument["conditions"] = conditionsMap;
       else theDocument["conditions"] = null;
     return theDocument;
+  }
+
+  @override
+  PresentationEntity switchAppId({required String newAppId}) {
+    var newEntity = copyWith(appId: newAppId);
+    return newEntity;
   }
 
   static PresentationEntity? fromJsonString(String json) {

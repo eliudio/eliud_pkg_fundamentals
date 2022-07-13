@@ -32,7 +32,9 @@ class GridEntity implements EntityBase {
 
   GridEntity({required this.appId, this.description, this.bodyComponents, this.gridViewId, this.conditions, });
 
-
+  GridEntity copyWith({String? documentID, String? appId, String? description, List<BodyComponentEntity>? bodyComponents, String? gridViewId, StorageConditionsEntity? conditions, }) {
+    return GridEntity(appId : appId ?? this.appId, description : description ?? this.description, bodyComponents : bodyComponents ?? this.bodyComponents, gridViewId : gridViewId ?? this.gridViewId, conditions : conditions ?? this.conditions, );
+  }
   List<Object?> get props => [appId, description, bodyComponents, gridViewId, conditions, ];
 
   @override
@@ -88,6 +90,12 @@ class GridEntity implements EntityBase {
     if (conditions != null) theDocument["conditions"] = conditionsMap;
       else theDocument["conditions"] = null;
     return theDocument;
+  }
+
+  @override
+  GridEntity switchAppId({required String newAppId}) {
+    var newEntity = copyWith(appId: newAppId);
+    return newEntity;
   }
 
   static GridEntity? fromJsonString(String json) {
