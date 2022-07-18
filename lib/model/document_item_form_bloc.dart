@@ -45,11 +45,7 @@ import 'package:eliud_pkg_fundamentals/model/document_item_repository.dart';
 class DocumentItemFormBloc extends Bloc<DocumentItemFormEvent, DocumentItemFormState> {
   final String? appId;
 
-  DocumentItemFormBloc(this.appId, ): super(DocumentItemFormUninitialized());
-  @override
-  Stream<DocumentItemFormState> mapEventToState(DocumentItemFormEvent event) async* {
-    final currentState = state;
-    if (currentState is DocumentItemFormUninitialized) {
+  DocumentItemFormBloc(this.appId, ): super(DocumentItemFormUninitialized()) {
       on <InitialiseNewDocumentItemFormEvent> ((event, emit) {
         DocumentItemFormLoaded loaded = DocumentItemFormLoaded(value: DocumentItemModel(
                                                documentID: "IDENTIFIER", 
@@ -60,27 +56,32 @@ class DocumentItemFormBloc extends Bloc<DocumentItemFormEvent, DocumentItemFormS
       });
 
 
-      if (event is InitialiseDocumentItemFormEvent) {
+      on <InitialiseDocumentItemFormEvent> ((event, emit) async {
         DocumentItemFormLoaded loaded = DocumentItemFormLoaded(value: event.value);
         emit(loaded);
-      } else if (event is InitialiseDocumentItemFormNoLoadEvent) {
+      });
+      on <InitialiseDocumentItemFormNoLoadEvent> ((event, emit) async {
         DocumentItemFormLoaded loaded = DocumentItemFormLoaded(value: event.value);
         emit(loaded);
-      }
-    } else if (currentState is DocumentItemFormInitialized) {
+      });
       DocumentItemModel? newValue = null;
       on <ChangedDocumentItemReference> ((event, emit) async {
+      if (state is DocumentItemFormInitialized) {
+        final currentState = state as DocumentItemFormInitialized;
         newValue = currentState.value!.copyWith(reference: event.value);
         emit(SubmittableDocumentItemForm(value: newValue));
 
+      }
       });
       on <ChangedDocumentItemImage> ((event, emit) async {
+      if (state is DocumentItemFormInitialized) {
+        final currentState = state as DocumentItemFormInitialized;
         if (event.value != null)
           newValue = currentState.value!.copyWith(image: await platformMediumRepository(appId: appId)!.get(event.value));
         emit(SubmittableDocumentItemForm(value: newValue));
 
+      }
       });
-    }
   }
 
 

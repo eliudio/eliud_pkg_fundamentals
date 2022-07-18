@@ -46,11 +46,7 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
   final FormAction? formAction;
   final String? appId;
 
-  PresentationFormBloc(this.appId, { this.formAction }): super(PresentationFormUninitialized());
-  @override
-  Stream<PresentationFormState> mapEventToState(PresentationFormEvent event) async* {
-    final currentState = state;
-    if (currentState is PresentationFormUninitialized) {
+  PresentationFormBloc(this.appId, { this.formAction }): super(PresentationFormUninitialized()) {
       on <InitialiseNewPresentationFormEvent> ((event, emit) {
         PresentationFormLoaded loaded = PresentationFormLoaded(value: PresentationModel(
                                                documentID: "",
@@ -64,17 +60,19 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
       });
 
 
-      if (event is InitialisePresentationFormEvent) {
+      on <InitialisePresentationFormEvent> ((event, emit) async {
         // Need to re-retrieve the document from the repository so that I get all associated types
         PresentationFormLoaded loaded = PresentationFormLoaded(value: await presentationRepository(appId: appId)!.get(event.value!.documentID));
         emit(loaded);
-      } else if (event is InitialisePresentationFormNoLoadEvent) {
+      });
+      on <InitialisePresentationFormNoLoadEvent> ((event, emit) async {
         PresentationFormLoaded loaded = PresentationFormLoaded(value: event.value);
         emit(loaded);
-      }
-    } else if (currentState is PresentationFormInitialized) {
+      });
       PresentationModel? newValue = null;
       on <ChangedPresentationDocumentID> ((event, emit) async {
+      if (state is PresentationFormInitialized) {
+        final currentState = state as PresentationFormInitialized;
         newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
           emit(await _isDocumentIDValid(event.value, newValue!));
@@ -82,34 +80,52 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
           emit(SubmittablePresentationForm(value: newValue));
         }
 
+      }
       });
       on <ChangedPresentationDescription> ((event, emit) async {
+      if (state is PresentationFormInitialized) {
+        final currentState = state as PresentationFormInitialized;
         newValue = currentState.value!.copyWith(description: event.value);
         emit(SubmittablePresentationForm(value: newValue));
 
+      }
       });
       on <ChangedPresentationBodyComponents> ((event, emit) async {
+      if (state is PresentationFormInitialized) {
+        final currentState = state as PresentationFormInitialized;
         newValue = currentState.value!.copyWith(bodyComponents: event.value);
         emit(SubmittablePresentationForm(value: newValue));
 
+      }
       });
       on <ChangedPresentationImage> ((event, emit) async {
+      if (state is PresentationFormInitialized) {
+        final currentState = state as PresentationFormInitialized;
         if (event.value != null)
           newValue = currentState.value!.copyWith(image: await platformMediumRepository(appId: appId)!.get(event.value));
         emit(SubmittablePresentationForm(value: newValue));
 
+      }
       });
       on <ChangedPresentationImagePositionRelative> ((event, emit) async {
+      if (state is PresentationFormInitialized) {
+        final currentState = state as PresentationFormInitialized;
         newValue = currentState.value!.copyWith(imagePositionRelative: event.value);
         emit(SubmittablePresentationForm(value: newValue));
 
+      }
       });
       on <ChangedPresentationImageAlignment> ((event, emit) async {
+      if (state is PresentationFormInitialized) {
+        final currentState = state as PresentationFormInitialized;
         newValue = currentState.value!.copyWith(imageAlignment: event.value);
         emit(SubmittablePresentationForm(value: newValue));
 
+      }
       });
       on <ChangedPresentationImageWidth> ((event, emit) async {
+      if (state is PresentationFormInitialized) {
+        final currentState = state as PresentationFormInitialized;
         if (isDouble(event.value!)) {
           newValue = currentState.value!.copyWith(imageWidth: double.parse(event.value!));
           emit(SubmittablePresentationForm(value: newValue));
@@ -118,13 +134,16 @@ class PresentationFormBloc extends Bloc<PresentationFormEvent, PresentationFormS
           newValue = currentState.value!.copyWith(imageWidth: 0.0);
           emit(ImageWidthPresentationFormError(message: "Value should be a number or decimal number", value: newValue));
         }
+      }
       });
       on <ChangedPresentationConditions> ((event, emit) async {
+      if (state is PresentationFormInitialized) {
+        final currentState = state as PresentationFormInitialized;
         newValue = currentState.value!.copyWith(conditions: event.value);
         emit(SubmittablePresentationForm(value: newValue));
 
+      }
       });
-    }
   }
 
 

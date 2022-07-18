@@ -45,11 +45,7 @@ import 'package:eliud_pkg_fundamentals/model/tutorial_entry_repository.dart';
 class TutorialEntryFormBloc extends Bloc<TutorialEntryFormEvent, TutorialEntryFormState> {
   final String? appId;
 
-  TutorialEntryFormBloc(this.appId, ): super(TutorialEntryFormUninitialized());
-  @override
-  Stream<TutorialEntryFormState> mapEventToState(TutorialEntryFormEvent event) async* {
-    final currentState = state;
-    if (currentState is TutorialEntryFormUninitialized) {
+  TutorialEntryFormBloc(this.appId, ): super(TutorialEntryFormUninitialized()) {
       on <InitialiseNewTutorialEntryFormEvent> ((event, emit) {
         TutorialEntryFormLoaded loaded = TutorialEntryFormLoaded(value: TutorialEntryModel(
                                                documentID: "IDENTIFIED", 
@@ -61,32 +57,40 @@ class TutorialEntryFormBloc extends Bloc<TutorialEntryFormEvent, TutorialEntryFo
       });
 
 
-      if (event is InitialiseTutorialEntryFormEvent) {
+      on <InitialiseTutorialEntryFormEvent> ((event, emit) async {
         TutorialEntryFormLoaded loaded = TutorialEntryFormLoaded(value: event.value);
         emit(loaded);
-      } else if (event is InitialiseTutorialEntryFormNoLoadEvent) {
+      });
+      on <InitialiseTutorialEntryFormNoLoadEvent> ((event, emit) async {
         TutorialEntryFormLoaded loaded = TutorialEntryFormLoaded(value: event.value);
         emit(loaded);
-      }
-    } else if (currentState is TutorialEntryFormInitialized) {
+      });
       TutorialEntryModel? newValue = null;
       on <ChangedTutorialEntryDescription> ((event, emit) async {
+      if (state is TutorialEntryFormInitialized) {
+        final currentState = state as TutorialEntryFormInitialized;
         newValue = currentState.value!.copyWith(description: event.value);
         emit(SubmittableTutorialEntryForm(value: newValue));
 
+      }
       });
       on <ChangedTutorialEntryImage> ((event, emit) async {
+      if (state is TutorialEntryFormInitialized) {
+        final currentState = state as TutorialEntryFormInitialized;
         if (event.value != null)
           newValue = currentState.value!.copyWith(image: await platformMediumRepository(appId: appId)!.get(event.value));
         emit(SubmittableTutorialEntryForm(value: newValue));
 
+      }
       });
       on <ChangedTutorialEntryCode> ((event, emit) async {
+      if (state is TutorialEntryFormInitialized) {
+        final currentState = state as TutorialEntryFormInitialized;
         newValue = currentState.value!.copyWith(code: event.value);
         emit(SubmittableTutorialEntryForm(value: newValue));
 
+      }
       });
-    }
   }
 
 

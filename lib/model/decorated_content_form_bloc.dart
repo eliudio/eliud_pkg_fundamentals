@@ -46,11 +46,7 @@ class DecoratedContentFormBloc extends Bloc<DecoratedContentFormEvent, Decorated
   final FormAction? formAction;
   final String? appId;
 
-  DecoratedContentFormBloc(this.appId, { this.formAction }): super(DecoratedContentFormUninitialized());
-  @override
-  Stream<DecoratedContentFormState> mapEventToState(DecoratedContentFormEvent event) async* {
-    final currentState = state;
-    if (currentState is DecoratedContentFormUninitialized) {
+  DecoratedContentFormBloc(this.appId, { this.formAction }): super(DecoratedContentFormUninitialized()) {
       on <InitialiseNewDecoratedContentFormEvent> ((event, emit) {
         DecoratedContentFormLoaded loaded = DecoratedContentFormLoaded(value: DecoratedContentModel(
                                                documentID: "",
@@ -67,17 +63,19 @@ class DecoratedContentFormBloc extends Bloc<DecoratedContentFormEvent, Decorated
       });
 
 
-      if (event is InitialiseDecoratedContentFormEvent) {
+      on <InitialiseDecoratedContentFormEvent> ((event, emit) async {
         // Need to re-retrieve the document from the repository so that I get all associated types
         DecoratedContentFormLoaded loaded = DecoratedContentFormLoaded(value: await decoratedContentRepository(appId: appId)!.get(event.value!.documentID));
         emit(loaded);
-      } else if (event is InitialiseDecoratedContentFormNoLoadEvent) {
+      });
+      on <InitialiseDecoratedContentFormNoLoadEvent> ((event, emit) async {
         DecoratedContentFormLoaded loaded = DecoratedContentFormLoaded(value: event.value);
         emit(loaded);
-      }
-    } else if (currentState is DecoratedContentFormInitialized) {
+      });
       DecoratedContentModel? newValue = null;
       on <ChangedDecoratedContentDocumentID> ((event, emit) async {
+      if (state is DecoratedContentFormInitialized) {
+        final currentState = state as DecoratedContentFormInitialized;
         newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
           emit(await _isDocumentIDValid(event.value, newValue!));
@@ -85,38 +83,59 @@ class DecoratedContentFormBloc extends Bloc<DecoratedContentFormEvent, Decorated
           emit(SubmittableDecoratedContentForm(value: newValue));
         }
 
+      }
       });
       on <ChangedDecoratedContentDescription> ((event, emit) async {
+      if (state is DecoratedContentFormInitialized) {
+        final currentState = state as DecoratedContentFormInitialized;
         newValue = currentState.value!.copyWith(description: event.value);
         emit(SubmittableDecoratedContentForm(value: newValue));
 
+      }
       });
       on <ChangedDecoratedContentDecoratingComponentName> ((event, emit) async {
+      if (state is DecoratedContentFormInitialized) {
+        final currentState = state as DecoratedContentFormInitialized;
         newValue = currentState.value!.copyWith(decoratingComponentName: event.value);
         emit(SubmittableDecoratedContentForm(value: newValue));
 
+      }
       });
       on <ChangedDecoratedContentDecoratingComponentId> ((event, emit) async {
+      if (state is DecoratedContentFormInitialized) {
+        final currentState = state as DecoratedContentFormInitialized;
         newValue = currentState.value!.copyWith(decoratingComponentId: event.value);
         emit(SubmittableDecoratedContentForm(value: newValue));
 
+      }
       });
       on <ChangedDecoratedContentContentComponentName> ((event, emit) async {
+      if (state is DecoratedContentFormInitialized) {
+        final currentState = state as DecoratedContentFormInitialized;
         newValue = currentState.value!.copyWith(contentComponentName: event.value);
         emit(SubmittableDecoratedContentForm(value: newValue));
 
+      }
       });
       on <ChangedDecoratedContentContentComponentId> ((event, emit) async {
+      if (state is DecoratedContentFormInitialized) {
+        final currentState = state as DecoratedContentFormInitialized;
         newValue = currentState.value!.copyWith(contentComponentId: event.value);
         emit(SubmittableDecoratedContentForm(value: newValue));
 
+      }
       });
       on <ChangedDecoratedContentDecorationComponentPosition> ((event, emit) async {
+      if (state is DecoratedContentFormInitialized) {
+        final currentState = state as DecoratedContentFormInitialized;
         newValue = currentState.value!.copyWith(decorationComponentPosition: event.value);
         emit(SubmittableDecoratedContentForm(value: newValue));
 
+      }
       });
       on <ChangedDecoratedContentPercentageDecorationVisible> ((event, emit) async {
+      if (state is DecoratedContentFormInitialized) {
+        final currentState = state as DecoratedContentFormInitialized;
         if (isDouble(event.value!)) {
           newValue = currentState.value!.copyWith(percentageDecorationVisible: double.parse(event.value!));
           emit(SubmittableDecoratedContentForm(value: newValue));
@@ -125,13 +144,16 @@ class DecoratedContentFormBloc extends Bloc<DecoratedContentFormEvent, Decorated
           newValue = currentState.value!.copyWith(percentageDecorationVisible: 0.0);
           emit(PercentageDecorationVisibleDecoratedContentFormError(message: "Value should be a number or decimal number", value: newValue));
         }
+      }
       });
       on <ChangedDecoratedContentConditions> ((event, emit) async {
+      if (state is DecoratedContentFormInitialized) {
+        final currentState = state as DecoratedContentFormInitialized;
         newValue = currentState.value!.copyWith(conditions: event.value);
         emit(SubmittableDecoratedContentForm(value: newValue));
 
+      }
       });
-    }
   }
 
 

@@ -45,11 +45,7 @@ import 'package:eliud_pkg_fundamentals/model/listed_item_repository.dart';
 class ListedItemFormBloc extends Bloc<ListedItemFormEvent, ListedItemFormState> {
   final String? appId;
 
-  ListedItemFormBloc(this.appId, ): super(ListedItemFormUninitialized());
-  @override
-  Stream<ListedItemFormState> mapEventToState(ListedItemFormEvent event) async* {
-    final currentState = state;
-    if (currentState is ListedItemFormUninitialized) {
+  ListedItemFormBloc(this.appId, ): super(ListedItemFormUninitialized()) {
       on <InitialiseNewListedItemFormEvent> ((event, emit) {
         ListedItemFormLoaded loaded = ListedItemFormLoaded(value: ListedItemModel(
                                                documentID: "IDENTIFIED", 
@@ -60,37 +56,48 @@ class ListedItemFormBloc extends Bloc<ListedItemFormEvent, ListedItemFormState> 
       });
 
 
-      if (event is InitialiseListedItemFormEvent) {
+      on <InitialiseListedItemFormEvent> ((event, emit) async {
         ListedItemFormLoaded loaded = ListedItemFormLoaded(value: event.value);
         emit(loaded);
-      } else if (event is InitialiseListedItemFormNoLoadEvent) {
+      });
+      on <InitialiseListedItemFormNoLoadEvent> ((event, emit) async {
         ListedItemFormLoaded loaded = ListedItemFormLoaded(value: event.value);
         emit(loaded);
-      }
-    } else if (currentState is ListedItemFormInitialized) {
+      });
       ListedItemModel? newValue = null;
       on <ChangedListedItemDescription> ((event, emit) async {
+      if (state is ListedItemFormInitialized) {
+        final currentState = state as ListedItemFormInitialized;
         newValue = currentState.value!.copyWith(description: event.value);
         emit(SubmittableListedItemForm(value: newValue));
 
+      }
       });
       on <ChangedListedItemAction> ((event, emit) async {
+      if (state is ListedItemFormInitialized) {
+        final currentState = state as ListedItemFormInitialized;
         newValue = currentState.value!.copyWith(action: event.value);
         emit(SubmittableListedItemForm(value: newValue));
 
+      }
       });
       on <ChangedListedItemImage> ((event, emit) async {
+      if (state is ListedItemFormInitialized) {
+        final currentState = state as ListedItemFormInitialized;
         if (event.value != null)
           newValue = currentState.value!.copyWith(image: await platformMediumRepository(appId: appId)!.get(event.value));
         emit(SubmittableListedItemForm(value: newValue));
 
+      }
       });
       on <ChangedListedItemPosSize> ((event, emit) async {
+      if (state is ListedItemFormInitialized) {
+        final currentState = state as ListedItemFormInitialized;
         newValue = currentState.value!.copyWith(posSize: event.value);
         emit(SubmittableListedItemForm(value: newValue));
 
+      }
       });
-    }
   }
 
 

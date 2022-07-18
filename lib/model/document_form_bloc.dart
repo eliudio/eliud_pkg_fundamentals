@@ -46,11 +46,7 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
   final FormAction? formAction;
   final String? appId;
 
-  DocumentFormBloc(this.appId, { this.formAction }): super(DocumentFormUninitialized());
-  @override
-  Stream<DocumentFormState> mapEventToState(DocumentFormEvent event) async* {
-    final currentState = state;
-    if (currentState is DocumentFormUninitialized) {
+  DocumentFormBloc(this.appId, { this.formAction }): super(DocumentFormUninitialized()) {
       on <InitialiseNewDocumentFormEvent> ((event, emit) {
         DocumentFormLoaded loaded = DocumentFormLoaded(value: DocumentModel(
                                                documentID: "",
@@ -65,17 +61,19 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
       });
 
 
-      if (event is InitialiseDocumentFormEvent) {
+      on <InitialiseDocumentFormEvent> ((event, emit) async {
         // Need to re-retrieve the document from the repository so that I get all associated types
         DocumentFormLoaded loaded = DocumentFormLoaded(value: await documentRepository(appId: appId)!.get(event.value!.documentID));
         emit(loaded);
-      } else if (event is InitialiseDocumentFormNoLoadEvent) {
+      });
+      on <InitialiseDocumentFormNoLoadEvent> ((event, emit) async {
         DocumentFormLoaded loaded = DocumentFormLoaded(value: event.value);
         emit(loaded);
-      }
-    } else if (currentState is DocumentFormInitialized) {
+      });
       DocumentModel? newValue = null;
       on <ChangedDocumentDocumentID> ((event, emit) async {
+      if (state is DocumentFormInitialized) {
+        final currentState = state as DocumentFormInitialized;
         newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
           emit(await _isDocumentIDValid(event.value, newValue!));
@@ -83,18 +81,27 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
           emit(SubmittableDocumentForm(value: newValue));
         }
 
+      }
       });
       on <ChangedDocumentDescription> ((event, emit) async {
+      if (state is DocumentFormInitialized) {
+        final currentState = state as DocumentFormInitialized;
         newValue = currentState.value!.copyWith(description: event.value);
         emit(SubmittableDocumentForm(value: newValue));
 
+      }
       });
       on <ChangedDocumentContent> ((event, emit) async {
+      if (state is DocumentFormInitialized) {
+        final currentState = state as DocumentFormInitialized;
         newValue = currentState.value!.copyWith(content: event.value);
         emit(SubmittableDocumentForm(value: newValue));
 
+      }
       });
       on <ChangedDocumentPadding> ((event, emit) async {
+      if (state is DocumentFormInitialized) {
+        final currentState = state as DocumentFormInitialized;
         if (isDouble(event.value!)) {
           newValue = currentState.value!.copyWith(padding: double.parse(event.value!));
           emit(SubmittableDocumentForm(value: newValue));
@@ -103,23 +110,32 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
           newValue = currentState.value!.copyWith(padding: 0.0);
           emit(PaddingDocumentFormError(message: "Value should be a number or decimal number", value: newValue));
         }
+      }
       });
       on <ChangedDocumentImages> ((event, emit) async {
+      if (state is DocumentFormInitialized) {
+        final currentState = state as DocumentFormInitialized;
         newValue = currentState.value!.copyWith(images: event.value);
         emit(SubmittableDocumentForm(value: newValue));
 
+      }
       });
       on <ChangedDocumentBackground> ((event, emit) async {
+      if (state is DocumentFormInitialized) {
+        final currentState = state as DocumentFormInitialized;
         newValue = currentState.value!.copyWith(background: event.value);
         emit(SubmittableDocumentForm(value: newValue));
 
+      }
       });
       on <ChangedDocumentConditions> ((event, emit) async {
+      if (state is DocumentFormInitialized) {
+        final currentState = state as DocumentFormInitialized;
         newValue = currentState.value!.copyWith(conditions: event.value);
         emit(SubmittableDocumentForm(value: newValue));
 
+      }
       });
-    }
   }
 
 

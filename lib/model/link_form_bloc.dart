@@ -41,11 +41,7 @@ import 'package:eliud_pkg_fundamentals/model/link_repository.dart';
 class LinkFormBloc extends Bloc<LinkFormEvent, LinkFormState> {
   final String? appId;
 
-  LinkFormBloc(this.appId, ): super(LinkFormUninitialized());
-  @override
-  Stream<LinkFormState> mapEventToState(LinkFormEvent event) async* {
-    final currentState = state;
-    if (currentState is LinkFormUninitialized) {
+  LinkFormBloc(this.appId, ): super(LinkFormUninitialized()) {
       on <InitialiseNewLinkFormEvent> ((event, emit) {
         LinkFormLoaded loaded = LinkFormLoaded(value: LinkModel(
                                                documentID: "IDENTIFIED", 
@@ -56,26 +52,31 @@ class LinkFormBloc extends Bloc<LinkFormEvent, LinkFormState> {
       });
 
 
-      if (event is InitialiseLinkFormEvent) {
+      on <InitialiseLinkFormEvent> ((event, emit) async {
         LinkFormLoaded loaded = LinkFormLoaded(value: event.value);
         emit(loaded);
-      } else if (event is InitialiseLinkFormNoLoadEvent) {
+      });
+      on <InitialiseLinkFormNoLoadEvent> ((event, emit) async {
         LinkFormLoaded loaded = LinkFormLoaded(value: event.value);
         emit(loaded);
-      }
-    } else if (currentState is LinkFormInitialized) {
+      });
       LinkModel? newValue = null;
       on <ChangedLinkLinkText> ((event, emit) async {
+      if (state is LinkFormInitialized) {
+        final currentState = state as LinkFormInitialized;
         newValue = currentState.value!.copyWith(linkText: event.value);
         emit(SubmittableLinkForm(value: newValue));
 
+      }
       });
       on <ChangedLinkAction> ((event, emit) async {
+      if (state is LinkFormInitialized) {
+        final currentState = state as LinkFormInitialized;
         newValue = currentState.value!.copyWith(action: event.value);
         emit(SubmittableLinkForm(value: newValue));
 
+      }
       });
-    }
   }
 
 

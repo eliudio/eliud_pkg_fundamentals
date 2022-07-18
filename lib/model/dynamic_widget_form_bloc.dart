@@ -46,11 +46,7 @@ class DynamicWidgetFormBloc extends Bloc<DynamicWidgetFormEvent, DynamicWidgetFo
   final FormAction? formAction;
   final String? appId;
 
-  DynamicWidgetFormBloc(this.appId, { this.formAction }): super(DynamicWidgetFormUninitialized());
-  @override
-  Stream<DynamicWidgetFormState> mapEventToState(DynamicWidgetFormEvent event) async* {
-    final currentState = state;
-    if (currentState is DynamicWidgetFormUninitialized) {
+  DynamicWidgetFormBloc(this.appId, { this.formAction }): super(DynamicWidgetFormUninitialized()) {
       on <InitialiseNewDynamicWidgetFormEvent> ((event, emit) {
         DynamicWidgetFormLoaded loaded = DynamicWidgetFormLoaded(value: DynamicWidgetModel(
                                                documentID: "",
@@ -63,17 +59,19 @@ class DynamicWidgetFormBloc extends Bloc<DynamicWidgetFormEvent, DynamicWidgetFo
       });
 
 
-      if (event is InitialiseDynamicWidgetFormEvent) {
+      on <InitialiseDynamicWidgetFormEvent> ((event, emit) async {
         // Need to re-retrieve the document from the repository so that I get all associated types
         DynamicWidgetFormLoaded loaded = DynamicWidgetFormLoaded(value: await dynamicWidgetRepository(appId: appId)!.get(event.value!.documentID));
         emit(loaded);
-      } else if (event is InitialiseDynamicWidgetFormNoLoadEvent) {
+      });
+      on <InitialiseDynamicWidgetFormNoLoadEvent> ((event, emit) async {
         DynamicWidgetFormLoaded loaded = DynamicWidgetFormLoaded(value: event.value);
         emit(loaded);
-      }
-    } else if (currentState is DynamicWidgetFormInitialized) {
+      });
       DynamicWidgetModel? newValue = null;
       on <ChangedDynamicWidgetDocumentID> ((event, emit) async {
+      if (state is DynamicWidgetFormInitialized) {
+        final currentState = state as DynamicWidgetFormInitialized;
         newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
           emit(await _isDocumentIDValid(event.value, newValue!));
@@ -81,28 +79,40 @@ class DynamicWidgetFormBloc extends Bloc<DynamicWidgetFormEvent, DynamicWidgetFo
           emit(SubmittableDynamicWidgetForm(value: newValue));
         }
 
+      }
       });
       on <ChangedDynamicWidgetDescription> ((event, emit) async {
+      if (state is DynamicWidgetFormInitialized) {
+        final currentState = state as DynamicWidgetFormInitialized;
         newValue = currentState.value!.copyWith(description: event.value);
         emit(SubmittableDynamicWidgetForm(value: newValue));
 
+      }
       });
       on <ChangedDynamicWidgetContent> ((event, emit) async {
+      if (state is DynamicWidgetFormInitialized) {
+        final currentState = state as DynamicWidgetFormInitialized;
         newValue = currentState.value!.copyWith(content: event.value);
         emit(SubmittableDynamicWidgetForm(value: newValue));
 
+      }
       });
       on <ChangedDynamicWidgetBackground> ((event, emit) async {
+      if (state is DynamicWidgetFormInitialized) {
+        final currentState = state as DynamicWidgetFormInitialized;
         newValue = currentState.value!.copyWith(background: event.value);
         emit(SubmittableDynamicWidgetForm(value: newValue));
 
+      }
       });
       on <ChangedDynamicWidgetConditions> ((event, emit) async {
+      if (state is DynamicWidgetFormInitialized) {
+        final currentState = state as DynamicWidgetFormInitialized;
         newValue = currentState.value!.copyWith(conditions: event.value);
         emit(SubmittableDynamicWidgetForm(value: newValue));
 
+      }
       });
-    }
   }
 
 

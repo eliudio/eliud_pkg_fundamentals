@@ -46,11 +46,7 @@ class SimpleImageFormBloc extends Bloc<SimpleImageFormEvent, SimpleImageFormStat
   final FormAction? formAction;
   final String? appId;
 
-  SimpleImageFormBloc(this.appId, { this.formAction }): super(SimpleImageFormUninitialized());
-  @override
-  Stream<SimpleImageFormState> mapEventToState(SimpleImageFormEvent event) async* {
-    final currentState = state;
-    if (currentState is SimpleImageFormUninitialized) {
+  SimpleImageFormBloc(this.appId, { this.formAction }): super(SimpleImageFormUninitialized()) {
       on <InitialiseNewSimpleImageFormEvent> ((event, emit) {
         SimpleImageFormLoaded loaded = SimpleImageFormLoaded(value: SimpleImageModel(
                                                documentID: "",
@@ -62,17 +58,19 @@ class SimpleImageFormBloc extends Bloc<SimpleImageFormEvent, SimpleImageFormStat
       });
 
 
-      if (event is InitialiseSimpleImageFormEvent) {
+      on <InitialiseSimpleImageFormEvent> ((event, emit) async {
         // Need to re-retrieve the document from the repository so that I get all associated types
         SimpleImageFormLoaded loaded = SimpleImageFormLoaded(value: await simpleImageRepository(appId: appId)!.get(event.value!.documentID));
         emit(loaded);
-      } else if (event is InitialiseSimpleImageFormNoLoadEvent) {
+      });
+      on <InitialiseSimpleImageFormNoLoadEvent> ((event, emit) async {
         SimpleImageFormLoaded loaded = SimpleImageFormLoaded(value: event.value);
         emit(loaded);
-      }
-    } else if (currentState is SimpleImageFormInitialized) {
+      });
       SimpleImageModel? newValue = null;
       on <ChangedSimpleImageDocumentID> ((event, emit) async {
+      if (state is SimpleImageFormInitialized) {
+        final currentState = state as SimpleImageFormInitialized;
         newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
           emit(await _isDocumentIDValid(event.value, newValue!));
@@ -80,24 +78,33 @@ class SimpleImageFormBloc extends Bloc<SimpleImageFormEvent, SimpleImageFormStat
           emit(SubmittableSimpleImageForm(value: newValue));
         }
 
+      }
       });
       on <ChangedSimpleImageDescription> ((event, emit) async {
+      if (state is SimpleImageFormInitialized) {
+        final currentState = state as SimpleImageFormInitialized;
         newValue = currentState.value!.copyWith(description: event.value);
         emit(SubmittableSimpleImageForm(value: newValue));
 
+      }
       });
       on <ChangedSimpleImageImage> ((event, emit) async {
+      if (state is SimpleImageFormInitialized) {
+        final currentState = state as SimpleImageFormInitialized;
         if (event.value != null)
           newValue = currentState.value!.copyWith(image: await platformMediumRepository(appId: appId)!.get(event.value));
         emit(SubmittableSimpleImageForm(value: newValue));
 
+      }
       });
       on <ChangedSimpleImageConditions> ((event, emit) async {
+      if (state is SimpleImageFormInitialized) {
+        final currentState = state as SimpleImageFormInitialized;
         newValue = currentState.value!.copyWith(conditions: event.value);
         emit(SubmittableSimpleImageForm(value: newValue));
 
+      }
       });
-    }
   }
 
 

@@ -46,11 +46,7 @@ class GridFormBloc extends Bloc<GridFormEvent, GridFormState> {
   final FormAction? formAction;
   final String? appId;
 
-  GridFormBloc(this.appId, { this.formAction }): super(GridFormUninitialized());
-  @override
-  Stream<GridFormState> mapEventToState(GridFormEvent event) async* {
-    final currentState = state;
-    if (currentState is GridFormUninitialized) {
+  GridFormBloc(this.appId, { this.formAction }): super(GridFormUninitialized()) {
       on <InitialiseNewGridFormEvent> ((event, emit) {
         GridFormLoaded loaded = GridFormLoaded(value: GridModel(
                                                documentID: "",
@@ -63,17 +59,19 @@ class GridFormBloc extends Bloc<GridFormEvent, GridFormState> {
       });
 
 
-      if (event is InitialiseGridFormEvent) {
+      on <InitialiseGridFormEvent> ((event, emit) async {
         // Need to re-retrieve the document from the repository so that I get all associated types
         GridFormLoaded loaded = GridFormLoaded(value: await gridRepository(appId: appId)!.get(event.value!.documentID));
         emit(loaded);
-      } else if (event is InitialiseGridFormNoLoadEvent) {
+      });
+      on <InitialiseGridFormNoLoadEvent> ((event, emit) async {
         GridFormLoaded loaded = GridFormLoaded(value: event.value);
         emit(loaded);
-      }
-    } else if (currentState is GridFormInitialized) {
+      });
       GridModel? newValue = null;
       on <ChangedGridDocumentID> ((event, emit) async {
+      if (state is GridFormInitialized) {
+        final currentState = state as GridFormInitialized;
         newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
           emit(await _isDocumentIDValid(event.value, newValue!));
@@ -81,29 +79,41 @@ class GridFormBloc extends Bloc<GridFormEvent, GridFormState> {
           emit(SubmittableGridForm(value: newValue));
         }
 
+      }
       });
       on <ChangedGridDescription> ((event, emit) async {
+      if (state is GridFormInitialized) {
+        final currentState = state as GridFormInitialized;
         newValue = currentState.value!.copyWith(description: event.value);
         emit(SubmittableGridForm(value: newValue));
 
+      }
       });
       on <ChangedGridBodyComponents> ((event, emit) async {
+      if (state is GridFormInitialized) {
+        final currentState = state as GridFormInitialized;
         newValue = currentState.value!.copyWith(bodyComponents: event.value);
         emit(SubmittableGridForm(value: newValue));
 
+      }
       });
       on <ChangedGridGridView> ((event, emit) async {
+      if (state is GridFormInitialized) {
+        final currentState = state as GridFormInitialized;
         if (event.value != null)
           newValue = currentState.value!.copyWith(gridView: await gridViewRepository(appId: appId)!.get(event.value));
         emit(SubmittableGridForm(value: newValue));
 
+      }
       });
       on <ChangedGridConditions> ((event, emit) async {
+      if (state is GridFormInitialized) {
+        final currentState = state as GridFormInitialized;
         newValue = currentState.value!.copyWith(conditions: event.value);
         emit(SubmittableGridForm(value: newValue));
 
+      }
       });
-    }
   }
 
 

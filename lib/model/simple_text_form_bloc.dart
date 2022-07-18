@@ -46,11 +46,7 @@ class SimpleTextFormBloc extends Bloc<SimpleTextFormEvent, SimpleTextFormState> 
   final FormAction? formAction;
   final String? appId;
 
-  SimpleTextFormBloc(this.appId, { this.formAction }): super(SimpleTextFormUninitialized());
-  @override
-  Stream<SimpleTextFormState> mapEventToState(SimpleTextFormEvent event) async* {
-    final currentState = state;
-    if (currentState is SimpleTextFormUninitialized) {
+  SimpleTextFormBloc(this.appId, { this.formAction }): super(SimpleTextFormUninitialized()) {
       on <InitialiseNewSimpleTextFormEvent> ((event, emit) {
         SimpleTextFormLoaded loaded = SimpleTextFormLoaded(value: SimpleTextModel(
                                                documentID: "",
@@ -64,17 +60,19 @@ class SimpleTextFormBloc extends Bloc<SimpleTextFormEvent, SimpleTextFormState> 
       });
 
 
-      if (event is InitialiseSimpleTextFormEvent) {
+      on <InitialiseSimpleTextFormEvent> ((event, emit) async {
         // Need to re-retrieve the document from the repository so that I get all associated types
         SimpleTextFormLoaded loaded = SimpleTextFormLoaded(value: await simpleTextRepository(appId: appId)!.get(event.value!.documentID));
         emit(loaded);
-      } else if (event is InitialiseSimpleTextFormNoLoadEvent) {
+      });
+      on <InitialiseSimpleTextFormNoLoadEvent> ((event, emit) async {
         SimpleTextFormLoaded loaded = SimpleTextFormLoaded(value: event.value);
         emit(loaded);
-      }
-    } else if (currentState is SimpleTextFormInitialized) {
+      });
       SimpleTextModel? newValue = null;
       on <ChangedSimpleTextDocumentID> ((event, emit) async {
+      if (state is SimpleTextFormInitialized) {
+        final currentState = state as SimpleTextFormInitialized;
         newValue = currentState.value!.copyWith(documentID: event.value);
         if (formAction == FormAction.AddAction) {
           emit(await _isDocumentIDValid(event.value, newValue!));
@@ -82,33 +80,48 @@ class SimpleTextFormBloc extends Bloc<SimpleTextFormEvent, SimpleTextFormState> 
           emit(SubmittableSimpleTextForm(value: newValue));
         }
 
+      }
       });
       on <ChangedSimpleTextDescription> ((event, emit) async {
+      if (state is SimpleTextFormInitialized) {
+        final currentState = state as SimpleTextFormInitialized;
         newValue = currentState.value!.copyWith(description: event.value);
         emit(SubmittableSimpleTextForm(value: newValue));
 
+      }
       });
       on <ChangedSimpleTextTitle> ((event, emit) async {
+      if (state is SimpleTextFormInitialized) {
+        final currentState = state as SimpleTextFormInitialized;
         newValue = currentState.value!.copyWith(title: event.value);
         emit(SubmittableSimpleTextForm(value: newValue));
 
+      }
       });
       on <ChangedSimpleTextText> ((event, emit) async {
+      if (state is SimpleTextFormInitialized) {
+        final currentState = state as SimpleTextFormInitialized;
         newValue = currentState.value!.copyWith(text: event.value);
         emit(SubmittableSimpleTextForm(value: newValue));
 
+      }
       });
       on <ChangedSimpleTextConditions> ((event, emit) async {
+      if (state is SimpleTextFormInitialized) {
+        final currentState = state as SimpleTextFormInitialized;
         newValue = currentState.value!.copyWith(conditions: event.value);
         emit(SubmittableSimpleTextForm(value: newValue));
 
+      }
       });
       on <ChangedSimpleTextTextAlign> ((event, emit) async {
+      if (state is SimpleTextFormInitialized) {
+        final currentState = state as SimpleTextFormInitialized;
         newValue = currentState.value!.copyWith(textAlign: event.value);
         emit(SubmittableSimpleTextForm(value: newValue));
 
+      }
       });
-    }
   }
 
 
