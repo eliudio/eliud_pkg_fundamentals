@@ -131,6 +131,18 @@ class ChangedFaderItems extends FaderFormEvent {
   String toString() => 'ChangedFaderItems{ value: $value }';
 }
 
+class ChangedFaderBackground extends FaderFormEvent {
+  final BackgroundModel? value;
+
+  ChangedFaderBackground({this.value});
+
+  @override
+  List<Object?> get props => [ value ];
+
+  @override
+  String toString() => 'ChangedFaderBackground{ value: $value }';
+}
+
 class ChangedFaderConditions extends FaderFormEvent {
   final StorageConditionsModel? value;
 

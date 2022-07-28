@@ -182,6 +182,18 @@ class _MyFaderFormState extends State<MyFaderForm> {
                   child: StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().groupTitle(widget.app, context, 'General')
                 ));
 
+
+
+        children.add(Container(height: 20.0));
+        children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().divider(widget.app, context));
+
+
+         children.add(Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                  child: StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().groupTitle(widget.app, context, 'General')
+                ));
+
         children.add(
 
                   StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Document ID', icon: Icons.vpn_key, readOnly: (formAction == FormAction.UpdateAction), textEditingController: _documentIDController, keyboardType: TextInputType.text, validator: (_) => state is DocumentIDFaderFormError ? state.message : null, hintText: null)
@@ -275,6 +287,7 @@ class _MyFaderFormState extends State<MyFaderForm> {
                               animationMilliseconds: state.value!.animationMilliseconds, 
                               imageSeconds: state.value!.imageSeconds, 
                               items: state.value!.items, 
+                              background: state.value!.background, 
                               conditions: state.value!.conditions, 
                         )));
                       } else {
@@ -286,6 +299,7 @@ class _MyFaderFormState extends State<MyFaderForm> {
                               animationMilliseconds: state.value!.animationMilliseconds, 
                               imageSeconds: state.value!.imageSeconds, 
                               items: state.value!.items, 
+                              background: state.value!.background, 
                               conditions: state.value!.conditions, 
                           )));
                       }

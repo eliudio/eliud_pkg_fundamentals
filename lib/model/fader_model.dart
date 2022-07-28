@@ -54,18 +54,19 @@ class FaderModel implements ModelBase, WithAppId {
   // The time to display 1 image
   int? imageSeconds;
   List<ListedItemModel>? items;
+  BackgroundModel? background;
   StorageConditionsModel? conditions;
 
-  FaderModel({required this.documentID, required this.appId, this.description, this.animationMilliseconds, this.imageSeconds, this.items, this.conditions, })  {
+  FaderModel({required this.documentID, required this.appId, this.description, this.animationMilliseconds, this.imageSeconds, this.items, this.background, this.conditions, })  {
     assert(documentID != null);
   }
 
-  FaderModel copyWith({String? documentID, String? appId, String? description, int? animationMilliseconds, int? imageSeconds, List<ListedItemModel>? items, StorageConditionsModel? conditions, }) {
-    return FaderModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, description: description ?? this.description, animationMilliseconds: animationMilliseconds ?? this.animationMilliseconds, imageSeconds: imageSeconds ?? this.imageSeconds, items: items ?? this.items, conditions: conditions ?? this.conditions, );
+  FaderModel copyWith({String? documentID, String? appId, String? description, int? animationMilliseconds, int? imageSeconds, List<ListedItemModel>? items, BackgroundModel? background, StorageConditionsModel? conditions, }) {
+    return FaderModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, description: description ?? this.description, animationMilliseconds: animationMilliseconds ?? this.animationMilliseconds, imageSeconds: imageSeconds ?? this.imageSeconds, items: items ?? this.items, background: background ?? this.background, conditions: conditions ?? this.conditions, );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ appId.hashCode ^ description.hashCode ^ animationMilliseconds.hashCode ^ imageSeconds.hashCode ^ items.hashCode ^ conditions.hashCode;
+  int get hashCode => documentID.hashCode ^ appId.hashCode ^ description.hashCode ^ animationMilliseconds.hashCode ^ imageSeconds.hashCode ^ items.hashCode ^ background.hashCode ^ conditions.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -78,13 +79,14 @@ class FaderModel implements ModelBase, WithAppId {
           animationMilliseconds == other.animationMilliseconds &&
           imageSeconds == other.imageSeconds &&
           ListEquality().equals(items, other.items) &&
+          background == other.background &&
           conditions == other.conditions;
 
   @override
   String toString() {
     String itemsCsv = (items == null) ? '' : items!.join(', ');
 
-    return 'FaderModel{documentID: $documentID, appId: $appId, description: $description, animationMilliseconds: $animationMilliseconds, imageSeconds: $imageSeconds, items: ListedItem[] { $itemsCsv }, conditions: $conditions}';
+    return 'FaderModel{documentID: $documentID, appId: $appId, description: $description, animationMilliseconds: $animationMilliseconds, imageSeconds: $imageSeconds, items: ListedItem[] { $itemsCsv }, background: $background, conditions: $conditions}';
   }
 
   Future<List<ModelReference>> collectReferences({String? appId}) async {
@@ -94,6 +96,7 @@ class FaderModel implements ModelBase, WithAppId {
         referencesCollector.addAll(await item.collectReferences(appId: appId));
       }
     }
+    if (background != null) referencesCollector.addAll(await background!.collectReferences(appId: appId));
     if (conditions != null) referencesCollector.addAll(await conditions!.collectReferences(appId: appId));
     return referencesCollector;
   }
@@ -107,6 +110,7 @@ class FaderModel implements ModelBase, WithAppId {
           items: (items != null) ? items
             !.map((item) => item.toEntity(appId: appId))
             .toList() : null, 
+          background: (background != null) ? background!.toEntity(appId: appId) : null, 
           conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
     );
   }
@@ -127,6 +131,8 @@ class FaderModel implements ModelBase, WithAppId {
               return ListedItemModel.fromEntity(counter.toString(), item);
             })
             .toList())), 
+          background: 
+            await BackgroundModel.fromEntity(entity.background), 
           conditions: 
             await StorageConditionsModel.fromEntity(entity.conditions), 
     );
@@ -148,6 +154,8 @@ class FaderModel implements ModelBase, WithAppId {
             counter++;
             return ListedItemModel.fromEntityPlus(counter.toString(), item, appId: appId);})
             .toList())), 
+          background: 
+            await BackgroundModel.fromEntityPlus(entity.background, appId: appId), 
           conditions: 
             await StorageConditionsModel.fromEntityPlus(entity.conditions, appId: appId), 
     );

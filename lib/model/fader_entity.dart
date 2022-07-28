@@ -29,20 +29,21 @@ class FaderEntity implements EntityBase {
   final int? animationMilliseconds;
   final int? imageSeconds;
   final List<ListedItemEntity>? items;
+  final BackgroundEntity? background;
   final StorageConditionsEntity? conditions;
 
-  FaderEntity({required this.appId, this.description, this.animationMilliseconds, this.imageSeconds, this.items, this.conditions, });
+  FaderEntity({required this.appId, this.description, this.animationMilliseconds, this.imageSeconds, this.items, this.background, this.conditions, });
 
-  FaderEntity copyWith({String? documentID, String? appId, String? description, int? animationMilliseconds, int? imageSeconds, List<ListedItemEntity>? items, StorageConditionsEntity? conditions, }) {
-    return FaderEntity(appId : appId ?? this.appId, description : description ?? this.description, animationMilliseconds : animationMilliseconds ?? this.animationMilliseconds, imageSeconds : imageSeconds ?? this.imageSeconds, items : items ?? this.items, conditions : conditions ?? this.conditions, );
+  FaderEntity copyWith({String? documentID, String? appId, String? description, int? animationMilliseconds, int? imageSeconds, List<ListedItemEntity>? items, BackgroundEntity? background, StorageConditionsEntity? conditions, }) {
+    return FaderEntity(appId : appId ?? this.appId, description : description ?? this.description, animationMilliseconds : animationMilliseconds ?? this.animationMilliseconds, imageSeconds : imageSeconds ?? this.imageSeconds, items : items ?? this.items, background : background ?? this.background, conditions : conditions ?? this.conditions, );
   }
-  List<Object?> get props => [appId, description, animationMilliseconds, imageSeconds, items, conditions, ];
+  List<Object?> get props => [appId, description, animationMilliseconds, imageSeconds, items, background, conditions, ];
 
   @override
   String toString() {
     String itemsCsv = (items == null) ? '' : items!.join(', ');
 
-    return 'FaderEntity{appId: $appId, description: $description, animationMilliseconds: $animationMilliseconds, imageSeconds: $imageSeconds, items: ListedItem[] { $itemsCsv }, conditions: $conditions}';
+    return 'FaderEntity{appId: $appId, description: $description, animationMilliseconds: $animationMilliseconds, imageSeconds: $imageSeconds, items: ListedItem[] { $itemsCsv }, background: $background, conditions: $conditions}';
   }
 
   static FaderEntity? fromMap(Object? o) {
@@ -57,6 +58,10 @@ class FaderEntity implements EntityBase {
         .map((dynamic item) =>
         ListedItemEntity.fromMap(item as Map)!)
         .toList();
+    var backgroundFromMap;
+    backgroundFromMap = map['background'];
+    if (backgroundFromMap != null)
+      backgroundFromMap = BackgroundEntity.fromMap(backgroundFromMap);
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
     if (conditionsFromMap != null)
@@ -68,6 +73,7 @@ class FaderEntity implements EntityBase {
       animationMilliseconds: int.tryParse(map['animationMilliseconds'].toString()), 
       imageSeconds: int.tryParse(map['imageSeconds'].toString()), 
       items: itemsList, 
+      background: backgroundFromMap, 
       conditions: conditionsFromMap, 
     );
   }
@@ -75,6 +81,9 @@ class FaderEntity implements EntityBase {
   Map<String, Object?> toDocument() {
     final List<Map<String?, dynamic>>? itemsListMap = items != null 
         ? items!.map((item) => item.toDocument()).toList()
+        : null;
+    final Map<String, dynamic>? backgroundMap = background != null 
+        ? background!.toDocument()
         : null;
     final Map<String, dynamic>? conditionsMap = conditions != null 
         ? conditions!.toDocument()
@@ -91,6 +100,8 @@ class FaderEntity implements EntityBase {
       else theDocument["imageSeconds"] = null;
     if (items != null) theDocument["items"] = itemsListMap;
       else theDocument["items"] = null;
+    if (background != null) theDocument["background"] = backgroundMap;
+      else theDocument["background"] = null;
     if (conditions != null) theDocument["conditions"] = conditionsMap;
       else theDocument["conditions"] = null;
     return theDocument;

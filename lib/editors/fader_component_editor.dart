@@ -1,11 +1,13 @@
 import 'package:eliud_core/core/blocs/access/state/access_determined.dart';
 import 'package:eliud_core/core/blocs/access/state/access_state.dart';
 import 'package:eliud_core/core/registry.dart';
+import 'package:eliud_core/model/background_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/model/pos_size_model.dart';
 import 'package:eliud_core/model/storage_conditions_model.dart';
 import 'package:eliud_core/tools/helpers/parse_helper.dart';
 import 'package:eliud_core/tools/screen_size.dart';
+import 'package:eliud_core/tools/widgets/background_widget.dart';
 import 'package:eliud_pkg_fundamentals/editors/widgets/listed_item_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/listed_item_model.dart';
 import 'package:flutter/material.dart';
@@ -104,6 +106,7 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
 
   @override
   Widget build(BuildContext context) {
+    var ownerId = AccessBloc.member(context)!.documentID;
     return BlocBuilder<AccessBloc, AccessState>(
         builder: (aContext, accessState) {
       if (accessState is AccessDetermined) {
@@ -151,6 +154,36 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
                                 labelText: 'Description',
                               ),
                             )),
+                      ]),
+                  topicContainer(widget.app, context,
+                      title: 'Background',
+                      collapsible: true,
+                      collapsed: true,
+                      children: [
+                        checkboxListTile(
+                            widget.app,
+                            context,
+                            'Background?',
+                            faderState.model.background !=
+                                null, (value) {
+                          setState(() {
+                            if (value!) {
+                              faderState.model.background =
+                                  BackgroundModel();
+                            } else {
+                              faderState.model.background =
+                              null;
+                            }
+                          });
+                        }),
+                        if (faderState.model.background !=
+                            null)
+                          BackgroundWidget(
+                              app: widget.app,
+                              memberId: ownerId,
+                              value:
+                              faderState.model.background!,
+                              label: 'Background'),
                       ]),
                   topicContainer(widget.app, context,
                       title: 'Animation settings',

@@ -1,6 +1,7 @@
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/model/app_model.dart';
+import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/tools/component/component_constructor.dart';
 import 'package:eliud_pkg_fundamentals/extensions/fader_widgets/fader_widgets.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
@@ -30,12 +31,27 @@ class FaderComponent extends AbstractFaderComponent {
 
   @override
   Widget yourWidget(BuildContext context, FaderModel? value) {
-    var items = value!.items!;
-    var images = items.map((li) => li.image).toList();
-    var positionsAndSizes = items.map((element) => element.posSize).toList();
-    var actions = items.map((element) => element.action).toList();
-    var orientation = MediaQuery.of(context).orientation;
-    return TheImageGF(images, positionsAndSizes, actions, orientation,
-        value.imageSeconds, value.animationMilliseconds);
+    if (value == null) {
+      return text(app, context, "No fademodel");
+    } else {
+      var items = value.items!;
+      var member = AccessBloc.member(context);
+      var images = items.map((li) => li.image).toList();
+      var positionsAndSizes = items.map((element) => element.posSize).toList();
+      var actions = items.map((element) => element.action).toList();
+      var orientation = MediaQuery
+          .of(context)
+          .orientation;
+      return TheImageGF(
+          app,
+          member,
+          value.background,
+          images,
+          positionsAndSizes,
+          actions,
+          orientation,
+          value.imageSeconds,
+          value.animationMilliseconds);
+    }
   }
 }

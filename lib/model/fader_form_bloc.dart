@@ -125,6 +125,14 @@ class FaderFormBloc extends Bloc<FaderFormEvent, FaderFormState> {
 
       }
       });
+      on <ChangedFaderBackground> ((event, emit) async {
+      if (state is FaderFormInitialized) {
+        final currentState = state as FaderFormInitialized;
+        newValue = currentState.value!.copyWith(background: event.value);
+        emit(SubmittableFaderForm(value: newValue));
+
+      }
+      });
       on <ChangedFaderConditions> ((event, emit) async {
       if (state is FaderFormInitialized) {
         final currentState = state as FaderFormInitialized;
