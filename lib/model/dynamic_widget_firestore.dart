@@ -37,8 +37,8 @@ import 'package:eliud_core/tools/common_tools.dart';
 
 class DynamicWidgetFirestore implements DynamicWidgetRepository {
   @override
-  DynamicWidgetEntity? fromMap(Object? o) {
-    return DynamicWidgetEntity.fromMap(o);
+  DynamicWidgetEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return DynamicWidgetEntity.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<DynamicWidgetEntity> addEntity(String documentID, DynamicWidgetEntity value) {

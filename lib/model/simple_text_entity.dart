@@ -15,6 +15,7 @@
 
 import 'dart:collection';
 import 'dart:convert';
+import 'package:eliud_core/tools/random.dart';
 import 'abstract_repository_singleton.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/entity_base.dart';
@@ -43,14 +44,14 @@ class SimpleTextEntity implements EntityBase {
     return 'SimpleTextEntity{appId: $appId, description: $description, title: $title, text: $text, conditions: $conditions, textAlign: $textAlign}';
   }
 
-  static SimpleTextEntity? fromMap(Object? o) {
+  static SimpleTextEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     if (o == null) return null;
     var map = o as Map<String, dynamic>;
 
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
     if (conditionsFromMap != null)
-      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap);
+      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap, newDocumentIds: newDocumentIds);
 
     return SimpleTextEntity(
       appId: map['appId'], 
@@ -89,9 +90,9 @@ class SimpleTextEntity implements EntityBase {
     return newEntity;
   }
 
-  static SimpleTextEntity? fromJsonString(String json) {
+  static SimpleTextEntity? fromJsonString(String json, {Map<String, String>? newDocumentIds}) {
     Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
-    return fromMap(generationSpecificationMap);
+    return fromMap(generationSpecificationMap, newDocumentIds: newDocumentIds);
   }
 
   String toJsonString() {

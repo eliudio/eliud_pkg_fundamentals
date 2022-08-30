@@ -15,6 +15,7 @@
 
 import 'dart:collection';
 import 'dart:convert';
+import 'package:eliud_core/tools/random.dart';
 import 'abstract_repository_singleton.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/entity_base.dart';
@@ -38,14 +39,14 @@ class LinkEntity implements EntityBase {
     return 'LinkEntity{linkText: $linkText, action: $action}';
   }
 
-  static LinkEntity? fromMap(Object? o) {
+  static LinkEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     if (o == null) return null;
     var map = o as Map<String, dynamic>;
 
     var actionFromMap;
     actionFromMap = map['action'];
     if (actionFromMap != null)
-      actionFromMap = ActionEntity.fromMap(actionFromMap);
+      actionFromMap = ActionEntity.fromMap(actionFromMap, newDocumentIds: newDocumentIds);
 
     return LinkEntity(
       linkText: map['linkText'], 
@@ -72,9 +73,9 @@ class LinkEntity implements EntityBase {
     return newEntity;
   }
 
-  static LinkEntity? fromJsonString(String json) {
+  static LinkEntity? fromJsonString(String json, {Map<String, String>? newDocumentIds}) {
     Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
-    return fromMap(generationSpecificationMap);
+    return fromMap(generationSpecificationMap, newDocumentIds: newDocumentIds);
   }
 
   String toJsonString() {

@@ -15,6 +15,7 @@
 
 import 'dart:collection';
 import 'dart:convert';
+import 'package:eliud_core/tools/random.dart';
 import 'abstract_repository_singleton.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/entity_base.dart';
@@ -41,23 +42,29 @@ class ListedItemEntity implements EntityBase {
     return 'ListedItemEntity{description: $description, action: $action, imageId: $imageId, posSize: $posSize}';
   }
 
-  static ListedItemEntity? fromMap(Object? o) {
+  static ListedItemEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     if (o == null) return null;
     var map = o as Map<String, dynamic>;
 
     var actionFromMap;
     actionFromMap = map['action'];
     if (actionFromMap != null)
-      actionFromMap = ActionEntity.fromMap(actionFromMap);
+      actionFromMap = ActionEntity.fromMap(actionFromMap, newDocumentIds: newDocumentIds);
+    var imageIdNewDocmentId = map['imageId'];
+    if ((newDocumentIds != null) && (imageIdNewDocmentId != null)) {
+      var imageIdOldDocmentId = imageIdNewDocmentId;
+      imageIdNewDocmentId = newRandomKey();
+      newDocumentIds[imageIdOldDocmentId] = imageIdNewDocmentId;
+    }
     var posSizeFromMap;
     posSizeFromMap = map['posSize'];
     if (posSizeFromMap != null)
-      posSizeFromMap = PosSizeEntity.fromMap(posSizeFromMap);
+      posSizeFromMap = PosSizeEntity.fromMap(posSizeFromMap, newDocumentIds: newDocumentIds);
 
     return ListedItemEntity(
       description: map['description'], 
       action: actionFromMap, 
-      imageId: map['imageId'], 
+      imageId: imageIdNewDocmentId, 
       posSize: posSizeFromMap, 
     );
   }
@@ -88,9 +95,9 @@ class ListedItemEntity implements EntityBase {
     return newEntity;
   }
 
-  static ListedItemEntity? fromJsonString(String json) {
+  static ListedItemEntity? fromJsonString(String json, {Map<String, String>? newDocumentIds}) {
     Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
-    return fromMap(generationSpecificationMap);
+    return fromMap(generationSpecificationMap, newDocumentIds: newDocumentIds);
   }
 
   String toJsonString() {

@@ -37,8 +37,8 @@ import 'package:eliud_core/tools/common_tools.dart';
 
 class TutorialFirestore implements TutorialRepository {
   @override
-  TutorialEntity? fromMap(Object? o) {
-    return TutorialEntity.fromMap(o);
+  TutorialEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return TutorialEntity.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<TutorialEntity> addEntity(String documentID, TutorialEntity value) {

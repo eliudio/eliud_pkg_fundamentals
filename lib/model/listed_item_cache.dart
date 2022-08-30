@@ -121,8 +121,8 @@ class ListedItemCache implements ListedItemRepository {
   }
 
   @override
-  ListedItemEntity? fromMap(Object? o) {
-    return reference.fromMap(o);
+  ListedItemEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return reference.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<void> deleteAll() {

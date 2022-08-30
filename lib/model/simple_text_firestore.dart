@@ -37,8 +37,8 @@ import 'package:eliud_core/tools/common_tools.dart';
 
 class SimpleTextFirestore implements SimpleTextRepository {
   @override
-  SimpleTextEntity? fromMap(Object? o) {
-    return SimpleTextEntity.fromMap(o);
+  SimpleTextEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return SimpleTextEntity.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<SimpleTextEntity> addEntity(String documentID, SimpleTextEntity value) {

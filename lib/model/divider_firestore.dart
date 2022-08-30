@@ -37,8 +37,8 @@ import 'package:eliud_core/tools/common_tools.dart';
 
 class DividerFirestore implements DividerRepository {
   @override
-  DividerEntity? fromMap(Object? o) {
-    return DividerEntity.fromMap(o);
+  DividerEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return DividerEntity.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<DividerEntity> addEntity(String documentID, DividerEntity value) {

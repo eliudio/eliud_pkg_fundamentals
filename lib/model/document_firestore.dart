@@ -37,8 +37,8 @@ import 'package:eliud_core/tools/common_tools.dart';
 
 class DocumentFirestore implements DocumentRepository {
   @override
-  DocumentEntity? fromMap(Object? o) {
-    return DocumentEntity.fromMap(o);
+  DocumentEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return DocumentEntity.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<DocumentEntity> addEntity(String documentID, DocumentEntity value) {

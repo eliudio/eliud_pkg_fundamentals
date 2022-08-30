@@ -15,6 +15,7 @@
 
 import 'dart:collection';
 import 'dart:convert';
+import 'package:eliud_core/tools/random.dart';
 import 'abstract_repository_singleton.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/entity_base.dart';
@@ -41,19 +42,25 @@ class SimpleImageEntity implements EntityBase {
     return 'SimpleImageEntity{appId: $appId, description: $description, imageId: $imageId, conditions: $conditions}';
   }
 
-  static SimpleImageEntity? fromMap(Object? o) {
+  static SimpleImageEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     if (o == null) return null;
     var map = o as Map<String, dynamic>;
 
+    var imageIdNewDocmentId = map['imageId'];
+    if ((newDocumentIds != null) && (imageIdNewDocmentId != null)) {
+      var imageIdOldDocmentId = imageIdNewDocmentId;
+      imageIdNewDocmentId = newRandomKey();
+      newDocumentIds[imageIdOldDocmentId] = imageIdNewDocmentId;
+    }
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
     if (conditionsFromMap != null)
-      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap);
+      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap, newDocumentIds: newDocumentIds);
 
     return SimpleImageEntity(
       appId: map['appId'], 
       description: map['description'], 
-      imageId: map['imageId'], 
+      imageId: imageIdNewDocmentId, 
       conditions: conditionsFromMap, 
     );
   }
@@ -81,9 +88,9 @@ class SimpleImageEntity implements EntityBase {
     return newEntity;
   }
 
-  static SimpleImageEntity? fromJsonString(String json) {
+  static SimpleImageEntity? fromJsonString(String json, {Map<String, String>? newDocumentIds}) {
     Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
-    return fromMap(generationSpecificationMap);
+    return fromMap(generationSpecificationMap, newDocumentIds: newDocumentIds);
   }
 
   String toJsonString() {

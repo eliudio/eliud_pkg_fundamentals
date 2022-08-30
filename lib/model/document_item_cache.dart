@@ -121,8 +121,8 @@ class DocumentItemCache implements DocumentItemRepository {
   }
 
   @override
-  DocumentItemEntity? fromMap(Object? o) {
-    return reference.fromMap(o);
+  DocumentItemEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return reference.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<void> deleteAll() {

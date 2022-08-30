@@ -15,6 +15,7 @@
 
 import 'dart:collection';
 import 'dart:convert';
+import 'package:eliud_core/tools/random.dart';
 import 'abstract_repository_singleton.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/entity_base.dart';
@@ -43,7 +44,7 @@ class BookletEntity implements EntityBase {
     return 'BookletEntity{appId: $appId, description: $description, sections: Section[] { $sectionsCsv }, conditions: $conditions}';
   }
 
-  static BookletEntity? fromMap(Object? o) {
+  static BookletEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     if (o == null) return null;
     var map = o as Map<String, dynamic>;
 
@@ -53,12 +54,12 @@ class BookletEntity implements EntityBase {
     if (sectionsFromMap != null)
       sectionsList = (map['sections'] as List<dynamic>)
         .map((dynamic item) =>
-        SectionEntity.fromMap(item as Map)!)
+        SectionEntity.fromMap(item as Map, newDocumentIds: newDocumentIds)!)
         .toList();
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
     if (conditionsFromMap != null)
-      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap);
+      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap, newDocumentIds: newDocumentIds);
 
     return BookletEntity(
       appId: map['appId'], 
@@ -95,9 +96,9 @@ class BookletEntity implements EntityBase {
     return newEntity;
   }
 
-  static BookletEntity? fromJsonString(String json) {
+  static BookletEntity? fromJsonString(String json, {Map<String, String>? newDocumentIds}) {
     Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
-    return fromMap(generationSpecificationMap);
+    return fromMap(generationSpecificationMap, newDocumentIds: newDocumentIds);
   }
 
   String toJsonString() {

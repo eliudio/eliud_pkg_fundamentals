@@ -15,6 +15,7 @@
 
 import 'dart:collection';
 import 'dart:convert';
+import 'package:eliud_core/tools/random.dart';
 import 'abstract_repository_singleton.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/entity_base.dart';
@@ -47,7 +48,7 @@ class PresentationEntity implements EntityBase {
     return 'PresentationEntity{appId: $appId, description: $description, bodyComponents: BodyComponent[] { $bodyComponentsCsv }, imageId: $imageId, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth, conditions: $conditions}';
   }
 
-  static PresentationEntity? fromMap(Object? o) {
+  static PresentationEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     if (o == null) return null;
     var map = o as Map<String, dynamic>;
 
@@ -57,18 +58,24 @@ class PresentationEntity implements EntityBase {
     if (bodyComponentsFromMap != null)
       bodyComponentsList = (map['bodyComponents'] as List<dynamic>)
         .map((dynamic item) =>
-        BodyComponentEntity.fromMap(item as Map)!)
+        BodyComponentEntity.fromMap(item as Map, newDocumentIds: newDocumentIds)!)
         .toList();
+    var imageIdNewDocmentId = map['imageId'];
+    if ((newDocumentIds != null) && (imageIdNewDocmentId != null)) {
+      var imageIdOldDocmentId = imageIdNewDocmentId;
+      imageIdNewDocmentId = newRandomKey();
+      newDocumentIds[imageIdOldDocmentId] = imageIdNewDocmentId;
+    }
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
     if (conditionsFromMap != null)
-      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap);
+      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap, newDocumentIds: newDocumentIds);
 
     return PresentationEntity(
       appId: map['appId'], 
       description: map['description'], 
       bodyComponents: bodyComponentsList, 
-      imageId: map['imageId'], 
+      imageId: imageIdNewDocmentId, 
       imagePositionRelative: map['imagePositionRelative'], 
       imageAlignment: map['imageAlignment'], 
       imageWidth: double.tryParse(map['imageWidth'].toString()), 
@@ -110,9 +117,9 @@ class PresentationEntity implements EntityBase {
     return newEntity;
   }
 
-  static PresentationEntity? fromJsonString(String json) {
+  static PresentationEntity? fromJsonString(String json, {Map<String, String>? newDocumentIds}) {
     Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
-    return fromMap(generationSpecificationMap);
+    return fromMap(generationSpecificationMap, newDocumentIds: newDocumentIds);
   }
 
   String toJsonString() {

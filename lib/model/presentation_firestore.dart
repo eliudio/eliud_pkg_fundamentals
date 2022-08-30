@@ -37,8 +37,8 @@ import 'package:eliud_core/tools/common_tools.dart';
 
 class PresentationFirestore implements PresentationRepository {
   @override
-  PresentationEntity? fromMap(Object? o) {
-    return PresentationEntity.fromMap(o);
+  PresentationEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return PresentationEntity.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<PresentationEntity> addEntity(String documentID, PresentationEntity value) {

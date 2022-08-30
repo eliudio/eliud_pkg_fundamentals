@@ -121,8 +121,8 @@ class GridCache implements GridRepository {
   }
 
   @override
-  GridEntity? fromMap(Object? o) {
-    return reference.fromMap(o);
+  GridEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return reference.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<void> deleteAll() {

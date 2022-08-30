@@ -121,8 +121,8 @@ class PresentationCache implements PresentationRepository {
   }
 
   @override
-  PresentationEntity? fromMap(Object? o) {
-    return reference.fromMap(o);
+  PresentationEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return reference.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<void> deleteAll() {

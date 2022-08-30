@@ -121,8 +121,8 @@ class DynamicWidgetCache implements DynamicWidgetRepository {
   }
 
   @override
-  DynamicWidgetEntity? fromMap(Object? o) {
-    return reference.fromMap(o);
+  DynamicWidgetEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return reference.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<void> deleteAll() {

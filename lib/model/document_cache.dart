@@ -121,8 +121,8 @@ class DocumentCache implements DocumentRepository {
   }
 
   @override
-  DocumentEntity? fromMap(Object? o) {
-    return reference.fromMap(o);
+  DocumentEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return reference.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<void> deleteAll() {

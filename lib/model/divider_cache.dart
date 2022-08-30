@@ -121,8 +121,8 @@ class DividerCache implements DividerRepository {
   }
 
   @override
-  DividerEntity? fromMap(Object? o) {
-    return reference.fromMap(o);
+  DividerEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return reference.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<void> deleteAll() {

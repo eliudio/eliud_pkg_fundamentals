@@ -121,8 +121,8 @@ class SectionCache implements SectionRepository {
   }
 
   @override
-  SectionEntity? fromMap(Object? o) {
-    return reference.fromMap(o);
+  SectionEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return reference.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<void> deleteAll() {

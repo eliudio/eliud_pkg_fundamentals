@@ -37,8 +37,8 @@ import 'package:eliud_core/tools/common_tools.dart';
 
 class DecoratedContentFirestore implements DecoratedContentRepository {
   @override
-  DecoratedContentEntity? fromMap(Object? o) {
-    return DecoratedContentEntity.fromMap(o);
+  DecoratedContentEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return DecoratedContentEntity.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<DecoratedContentEntity> addEntity(String documentID, DecoratedContentEntity value) {

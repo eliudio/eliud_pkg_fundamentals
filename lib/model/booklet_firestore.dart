@@ -37,8 +37,8 @@ import 'package:eliud_core/tools/common_tools.dart';
 
 class BookletFirestore implements BookletRepository {
   @override
-  BookletEntity? fromMap(Object? o) {
-    return BookletEntity.fromMap(o);
+  BookletEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return BookletEntity.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<BookletEntity> addEntity(String documentID, BookletEntity value) {

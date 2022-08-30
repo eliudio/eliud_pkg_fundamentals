@@ -260,7 +260,7 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
   }
 
   @override
-  DocumentItemEntity? fromMap(Object? o) {
+  DocumentItemEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     throw UnimplementedError();
   }
 
@@ -380,7 +380,7 @@ class LinkInMemoryRepository implements LinkRepository {
   }
 
   @override
-  LinkEntity? fromMap(Object? o) {
+  LinkEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     throw UnimplementedError();
   }
 
@@ -500,7 +500,7 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
   }
 
   @override
-  ListedItemEntity? fromMap(Object? o) {
+  ListedItemEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     throw UnimplementedError();
   }
 
@@ -620,7 +620,7 @@ class SectionInMemoryRepository implements SectionRepository {
   }
 
   @override
-  SectionEntity? fromMap(Object? o) {
+  SectionEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     throw UnimplementedError();
   }
 
@@ -740,7 +740,7 @@ class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
   }
 
   @override
-  TutorialEntryEntity? fromMap(Object? o) {
+  TutorialEntryEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     throw UnimplementedError();
   }
 

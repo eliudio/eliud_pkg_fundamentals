@@ -121,8 +121,8 @@ class TutorialCache implements TutorialRepository {
   }
 
   @override
-  TutorialEntity? fromMap(Object? o) {
-    return reference.fromMap(o);
+  TutorialEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return reference.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<void> deleteAll() {

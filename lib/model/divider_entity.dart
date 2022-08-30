@@ -15,6 +15,7 @@
 
 import 'dart:collection';
 import 'dart:convert';
+import 'package:eliud_core/tools/random.dart';
 import 'abstract_repository_singleton.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/entity_base.dart';
@@ -45,18 +46,18 @@ class DividerEntity implements EntityBase {
     return 'DividerEntity{appId: $appId, description: $description, color: $color, height: $height, thickness: $thickness, indent: $indent, endIndent: $endIndent, conditions: $conditions}';
   }
 
-  static DividerEntity? fromMap(Object? o) {
+  static DividerEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     if (o == null) return null;
     var map = o as Map<String, dynamic>;
 
     var colorFromMap;
     colorFromMap = map['color'];
     if (colorFromMap != null)
-      colorFromMap = RgbEntity.fromMap(colorFromMap);
+      colorFromMap = RgbEntity.fromMap(colorFromMap, newDocumentIds: newDocumentIds);
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
     if (conditionsFromMap != null)
-      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap);
+      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap, newDocumentIds: newDocumentIds);
 
     return DividerEntity(
       appId: map['appId'], 
@@ -104,9 +105,9 @@ class DividerEntity implements EntityBase {
     return newEntity;
   }
 
-  static DividerEntity? fromJsonString(String json) {
+  static DividerEntity? fromJsonString(String json, {Map<String, String>? newDocumentIds}) {
     Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
-    return fromMap(generationSpecificationMap);
+    return fromMap(generationSpecificationMap, newDocumentIds: newDocumentIds);
   }
 
   String toJsonString() {

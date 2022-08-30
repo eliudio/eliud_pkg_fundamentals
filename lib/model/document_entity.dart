@@ -15,6 +15,7 @@
 
 import 'dart:collection';
 import 'dart:convert';
+import 'package:eliud_core/tools/random.dart';
 import 'abstract_repository_singleton.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/entity_base.dart';
@@ -46,7 +47,7 @@ class DocumentEntity implements EntityBase {
     return 'DocumentEntity{appId: $appId, description: $description, content: $content, padding: $padding, images: DocumentItem[] { $imagesCsv }, background: $background, conditions: $conditions}';
   }
 
-  static DocumentEntity? fromMap(Object? o) {
+  static DocumentEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     if (o == null) return null;
     var map = o as Map<String, dynamic>;
 
@@ -56,16 +57,16 @@ class DocumentEntity implements EntityBase {
     if (imagesFromMap != null)
       imagesList = (map['images'] as List<dynamic>)
         .map((dynamic item) =>
-        DocumentItemEntity.fromMap(item as Map)!)
+        DocumentItemEntity.fromMap(item as Map, newDocumentIds: newDocumentIds)!)
         .toList();
     var backgroundFromMap;
     backgroundFromMap = map['background'];
     if (backgroundFromMap != null)
-      backgroundFromMap = BackgroundEntity.fromMap(backgroundFromMap);
+      backgroundFromMap = BackgroundEntity.fromMap(backgroundFromMap, newDocumentIds: newDocumentIds);
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
     if (conditionsFromMap != null)
-      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap);
+      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap, newDocumentIds: newDocumentIds);
 
     return DocumentEntity(
       appId: map['appId'], 
@@ -113,9 +114,9 @@ class DocumentEntity implements EntityBase {
     return newEntity;
   }
 
-  static DocumentEntity? fromJsonString(String json) {
+  static DocumentEntity? fromJsonString(String json, {Map<String, String>? newDocumentIds}) {
     Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
-    return fromMap(generationSpecificationMap);
+    return fromMap(generationSpecificationMap, newDocumentIds: newDocumentIds);
   }
 
   String toJsonString() {

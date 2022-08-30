@@ -121,8 +121,8 @@ class FaderCache implements FaderRepository {
   }
 
   @override
-  FaderEntity? fromMap(Object? o) {
-    return reference.fromMap(o);
+  FaderEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return reference.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<void> deleteAll() {

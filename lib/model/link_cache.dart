@@ -116,8 +116,8 @@ class LinkCache implements LinkRepository {
   }
 
   @override
-  LinkEntity? fromMap(Object? o) {
-    return reference.fromMap(o);
+  LinkEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return reference.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<void> deleteAll() {

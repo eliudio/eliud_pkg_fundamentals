@@ -121,8 +121,8 @@ class SimpleTextCache implements SimpleTextRepository {
   }
 
   @override
-  SimpleTextEntity? fromMap(Object? o) {
-    return reference.fromMap(o);
+  SimpleTextEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+    return reference.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
   Future<void> deleteAll() {
