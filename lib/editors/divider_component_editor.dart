@@ -60,7 +60,7 @@ class DividerComponentEditorConstructor extends ComponentEditorConstructor {
     } else {
       openErrorDialog(app, context, app.documentID + '/_error',
           title: 'Error',
-          errorMessage: 'Cannot find notification dashboard with id $id');
+          errorMessage: 'Cannot find dividerwith id $id');
     }
   }
 
@@ -69,10 +69,10 @@ class DividerComponentEditorConstructor extends ComponentEditorConstructor {
     openComplexDialog(
       app,
       context,
-      app.documentID + '/notificationdashboard',
+      app.documentID + '/dividereditor',
       title: create
-          ? 'Create Notification Dashboard'
-          : 'Update Notification Dashboard',
+          ? 'Create Divider'
+          : 'Update Divider',
       includeHeading: false,
       widthFraction: .9,
       child: BlocProvider<DividerBloc>(
