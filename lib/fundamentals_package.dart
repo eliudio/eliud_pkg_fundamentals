@@ -10,6 +10,10 @@ import 'package:eliud_pkg_fundamentals/model/component_registry.dart';
 import 'package:eliud_pkg_fundamentals/model/repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/wizards/fader_page_wizard.dart';
 
+import 'package:eliud_pkg_fundamentals/fundamentals_package_stub.dart'
+if (dart.library.io) 'fundamentals_mobile_package.dart'
+if (dart.library.html) 'fundamentals_web_package.dart';
+
 abstract class FundamentalsPackage extends Package {
   FundamentalsPackage() : super('eliud_pkg_fundamentals');
 
@@ -31,4 +35,6 @@ abstract class FundamentalsPackage extends Package {
 
   @override
   List<MemberCollectionInfo> getMemberCollectionInfo() => AbstractRepositorySingleton.collections;
+
+  static FundamentalsPackage instance() => getFundamentalsPackage();
 }

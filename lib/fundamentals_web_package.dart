@@ -1,5 +1,6 @@
-
 import 'fundamentals_package.dart';
+
+FundamentalsPackage getFundamentalsPackage() => FundamentalsWebPackage();
 
 class FundamentalsWebPackage extends FundamentalsPackage {
 
