@@ -91,7 +91,7 @@ class TutorialComponent extends AbstractTutorialComponent {
           context,
           label: 'Copy to clipboard',
           onPressed: () {
-            Clipboard.setData(ClipboardData(text: element.code));
+            Clipboard.setData(ClipboardData(text: element.code ?? ''));
           },
         )));
         widgets.add(_aBitSpace());
