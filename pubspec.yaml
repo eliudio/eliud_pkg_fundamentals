@@ -1,28 +1,37 @@
 name: eliud_pkg_fundamentals
 description: Package with fundamental classes to build your app
+homepage: https://eliud.io
+repository: https://github.com/eliudio/eliud
 
-version: 1.0.0+2
+version: 1.0.0+1
 
 environment:
-  sdk: ">=2.17.0 <3.0.0"
+  sdk: ">=2.17.0 <4.0.0"
+  flutter: ">=3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  eliud_core:
-    path: ../eliud_core
-
-  getwidget: 3.0.1
+  eliud_core: ^1.0.1
+  getwidget: ^3.0.1
   transparent_image : ^2.0.0
-# dynamic_widget is currently not supported by flutter 3.1.
-# dynamic_widget: ^4.0.5
+  bloc: ^8.1.0
+  flutter_bloc: ^8.1.2
+  photo_view: ^0.14.0
+  equatable: ^2.0.5
+  flutter_markdown: ^0.6.13
+  cloud_firestore: ^4.6.0
+  intl: ^0.18.1
+  datetime_picker_formfield: ^2.0.0
+  meta: ^1.8.0
+  http: ^0.13.5
+  collection: ^1.17.0
 
 dev_dependencies:
-  build_runner: "2.1.2"
+  build_runner: ^2.1.0
 
-  eliud_generator:
-    path: ../eliud_generator
+  eliud_generator: ^1.0.0
 
 flutter:
   uses-material-design: true
@@ -32,3 +41,8 @@ flutter:
     - packages/eliud_pkg_fundamentals/assets/wizards/fader/iphone.jpg
     - packages/eliud_pkg_fundamentals/assets/wizards/fader/macbook.jpg
     - packages/eliud_pkg_fundamentals/assets/wizards/fader/tablet.jpg
+
+platforms:
+  android:
+  ios:
+  web:
