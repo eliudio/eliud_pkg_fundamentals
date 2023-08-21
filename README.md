@@ -4,7 +4,7 @@ Eliud fundamental spackage
 
 ## Dependency diagram
 
-![Dependency diagram](depends.jpg)
+![Dependency diagram](https://github.com/eliudio/eliud_pkg_fundamentals/blob/main/depends.jpg)
 
 ## eliud.io
 
