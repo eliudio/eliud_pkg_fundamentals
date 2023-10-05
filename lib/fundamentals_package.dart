@@ -1,6 +1,7 @@
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_core/core/wizards/registry/registry.dart';
+import 'package:eliud_core/eliud.dart';
 import 'package:eliud_core/model/access_model.dart';
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/member_model.dart';
@@ -37,4 +38,10 @@ abstract class FundamentalsPackage extends Package {
   List<MemberCollectionInfo> getMemberCollectionInfo() => AbstractRepositorySingleton.collections;
 
   static FundamentalsPackage instance() => getFundamentalsPackage();
+
+  /*
+   * Register depending packages
+   */
+  void registerDependencies(Eliud eliud) {
+  }
 }
