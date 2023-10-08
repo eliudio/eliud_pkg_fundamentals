@@ -127,15 +127,21 @@ class SimpleImageFirestore implements SimpleImageRepository {
   }
 
   @override
-  StreamSubscription<SimpleImageModel?> listenTo(String documentId, SimpleImageChanged changed) {
+  StreamSubscription<SimpleImageModel?> listenTo(String documentId, SimpleImageChanged changed, {SimpleImageErrorHandler? errorHandler}) {
     var stream = SimpleImageCollection.doc(documentId)
         .snapshots()
         .asyncMap((data) {
       return _populateDocPlus(data);
     });
-    return stream.listen((value) {
+    var theStream = stream.listen((value) {
       changed(value);
     });
+    theStream.onError((theException, theStacktrace) {
+      if (errorHandler != null) {
+        errorHandler(theException, theStacktrace);
+      }
+    });
+    return theStream;
   }
 
   Stream<List<SimpleImageModel?>> values({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) {

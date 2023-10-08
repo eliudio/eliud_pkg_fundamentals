@@ -140,13 +140,13 @@ class DividerCache implements DividerRepository {
   }
 
   @override
-  StreamSubscription<DividerModel?> listenTo(String documentId, DividerChanged changed) {
+  StreamSubscription<DividerModel?> listenTo(String documentId, DividerChanged changed, {DividerErrorHandler? errorHandler}) {
     return reference.listenTo(documentId, ((value) {
       if (value != null) {
         fullCache[value.documentID] = value;
       }
       changed(value);
-    }));
+    }), errorHandler: errorHandler);
   }
 
   static Future<DividerModel> refreshRelations(DividerModel model) async {

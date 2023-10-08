@@ -245,7 +245,7 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
   }
   
   @override
-  StreamSubscription<DocumentItemModel> listenTo(String documentId, DocumentItemChanged changed) {
+  StreamSubscription<DocumentItemModel> listenTo(String documentId, DocumentItemChanged changed, {DocumentItemErrorHandler? errorHandler}) {
     throw UnimplementedError();
   }
 
@@ -365,7 +365,7 @@ class LinkInMemoryRepository implements LinkRepository {
   }
   
   @override
-  StreamSubscription<LinkModel> listenTo(String documentId, LinkChanged changed) {
+  StreamSubscription<LinkModel> listenTo(String documentId, LinkChanged changed, {LinkErrorHandler? errorHandler}) {
     throw UnimplementedError();
   }
 
@@ -485,7 +485,7 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
   }
   
   @override
-  StreamSubscription<ListedItemModel> listenTo(String documentId, ListedItemChanged changed) {
+  StreamSubscription<ListedItemModel> listenTo(String documentId, ListedItemChanged changed, {ListedItemErrorHandler? errorHandler}) {
     throw UnimplementedError();
   }
 
@@ -605,7 +605,7 @@ class SectionInMemoryRepository implements SectionRepository {
   }
   
   @override
-  StreamSubscription<SectionModel> listenTo(String documentId, SectionChanged changed) {
+  StreamSubscription<SectionModel> listenTo(String documentId, SectionChanged changed, {SectionErrorHandler? errorHandler}) {
     throw UnimplementedError();
   }
 
@@ -725,7 +725,7 @@ class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
   }
   
   @override
-  StreamSubscription<TutorialEntryModel> listenTo(String documentId, TutorialEntryChanged changed) {
+  StreamSubscription<TutorialEntryModel> listenTo(String documentId, TutorialEntryChanged changed, {TutorialEntryErrorHandler? errorHandler}) {
     throw UnimplementedError();
   }
 

@@ -140,13 +140,13 @@ class ListedItemCache implements ListedItemRepository {
   }
 
   @override
-  StreamSubscription<ListedItemModel?> listenTo(String documentId, ListedItemChanged changed) {
+  StreamSubscription<ListedItemModel?> listenTo(String documentId, ListedItemChanged changed, {ListedItemErrorHandler? errorHandler}) {
     return reference.listenTo(documentId, ((value) {
       if (value != null) {
         fullCache[value.documentID] = value;
       }
       changed(value);
-    }));
+    }), errorHandler: errorHandler);
   }
 
   static Future<ListedItemModel> refreshRelations(ListedItemModel model) async {

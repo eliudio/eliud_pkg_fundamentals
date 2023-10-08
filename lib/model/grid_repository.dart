@@ -36,6 +36,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 
 typedef GridModelTrigger(List<GridModel?> list);
 typedef GridChanged(GridModel? value);
+typedef GridErrorHandler(o, e);
 
 abstract class GridRepository extends RepositoryBase<GridModel, GridEntity> {
   Future<GridEntity> addEntity(String documentID, GridEntity value);
@@ -52,7 +53,7 @@ abstract class GridRepository extends RepositoryBase<GridModel, GridEntity> {
 
   StreamSubscription<List<GridModel?>> listen(GridModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
   StreamSubscription<List<GridModel?>> listenWithDetails(GridModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
-  StreamSubscription<GridModel?> listenTo(String documentId, GridChanged changed);
+  StreamSubscription<GridModel?> listenTo(String documentId, GridChanged changed, {GridErrorHandler? errorHandler});
   void flush();
   
   String? timeStampToString(dynamic timeStamp);

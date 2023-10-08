@@ -36,6 +36,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 
 typedef FaderModelTrigger(List<FaderModel?> list);
 typedef FaderChanged(FaderModel? value);
+typedef FaderErrorHandler(o, e);
 
 abstract class FaderRepository extends RepositoryBase<FaderModel, FaderEntity> {
   Future<FaderEntity> addEntity(String documentID, FaderEntity value);
@@ -52,7 +53,7 @@ abstract class FaderRepository extends RepositoryBase<FaderModel, FaderEntity> {
 
   StreamSubscription<List<FaderModel?>> listen(FaderModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
   StreamSubscription<List<FaderModel?>> listenWithDetails(FaderModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
-  StreamSubscription<FaderModel?> listenTo(String documentId, FaderChanged changed);
+  StreamSubscription<FaderModel?> listenTo(String documentId, FaderChanged changed, {FaderErrorHandler? errorHandler});
   void flush();
   
   String? timeStampToString(dynamic timeStamp);

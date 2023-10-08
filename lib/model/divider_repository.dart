@@ -36,6 +36,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 
 typedef DividerModelTrigger(List<DividerModel?> list);
 typedef DividerChanged(DividerModel? value);
+typedef DividerErrorHandler(o, e);
 
 abstract class DividerRepository extends RepositoryBase<DividerModel, DividerEntity> {
   Future<DividerEntity> addEntity(String documentID, DividerEntity value);
@@ -52,7 +53,7 @@ abstract class DividerRepository extends RepositoryBase<DividerModel, DividerEnt
 
   StreamSubscription<List<DividerModel?>> listen(DividerModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
   StreamSubscription<List<DividerModel?>> listenWithDetails(DividerModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
-  StreamSubscription<DividerModel?> listenTo(String documentId, DividerChanged changed);
+  StreamSubscription<DividerModel?> listenTo(String documentId, DividerChanged changed, {DividerErrorHandler? errorHandler});
   void flush();
   
   String? timeStampToString(dynamic timeStamp);

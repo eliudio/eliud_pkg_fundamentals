@@ -140,13 +140,13 @@ class SectionCache implements SectionRepository {
   }
 
   @override
-  StreamSubscription<SectionModel?> listenTo(String documentId, SectionChanged changed) {
+  StreamSubscription<SectionModel?> listenTo(String documentId, SectionChanged changed, {SectionErrorHandler? errorHandler}) {
     return reference.listenTo(documentId, ((value) {
       if (value != null) {
         fullCache[value.documentID] = value;
       }
       changed(value);
-    }));
+    }), errorHandler: errorHandler);
   }
 
   static Future<SectionModel> refreshRelations(SectionModel model) async {

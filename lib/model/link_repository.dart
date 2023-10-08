@@ -32,6 +32,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 
 typedef LinkModelTrigger(List<LinkModel?> list);
 typedef LinkChanged(LinkModel? value);
+typedef LinkErrorHandler(o, e);
 
 abstract class LinkRepository extends RepositoryBase<LinkModel, LinkEntity> {
   Future<LinkEntity> addEntity(String documentID, LinkEntity value);
@@ -48,7 +49,7 @@ abstract class LinkRepository extends RepositoryBase<LinkModel, LinkEntity> {
 
   StreamSubscription<List<LinkModel?>> listen(LinkModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
   StreamSubscription<List<LinkModel?>> listenWithDetails(LinkModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
-  StreamSubscription<LinkModel?> listenTo(String documentId, LinkChanged changed);
+  StreamSubscription<LinkModel?> listenTo(String documentId, LinkChanged changed, {LinkErrorHandler? errorHandler});
   void flush();
   
   String? timeStampToString(dynamic timeStamp);

@@ -140,13 +140,13 @@ class SimpleImageCache implements SimpleImageRepository {
   }
 
   @override
-  StreamSubscription<SimpleImageModel?> listenTo(String documentId, SimpleImageChanged changed) {
+  StreamSubscription<SimpleImageModel?> listenTo(String documentId, SimpleImageChanged changed, {SimpleImageErrorHandler? errorHandler}) {
     return reference.listenTo(documentId, ((value) {
       if (value != null) {
         fullCache[value.documentID] = value;
       }
       changed(value);
-    }));
+    }), errorHandler: errorHandler);
   }
 
   static Future<SimpleImageModel> refreshRelations(SimpleImageModel model) async {

@@ -140,13 +140,13 @@ class PresentationCache implements PresentationRepository {
   }
 
   @override
-  StreamSubscription<PresentationModel?> listenTo(String documentId, PresentationChanged changed) {
+  StreamSubscription<PresentationModel?> listenTo(String documentId, PresentationChanged changed, {PresentationErrorHandler? errorHandler}) {
     return reference.listenTo(documentId, ((value) {
       if (value != null) {
         fullCache[value.documentID] = value;
       }
       changed(value);
-    }));
+    }), errorHandler: errorHandler);
   }
 
   static Future<PresentationModel> refreshRelations(PresentationModel model) async {

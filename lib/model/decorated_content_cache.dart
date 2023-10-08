@@ -140,13 +140,13 @@ class DecoratedContentCache implements DecoratedContentRepository {
   }
 
   @override
-  StreamSubscription<DecoratedContentModel?> listenTo(String documentId, DecoratedContentChanged changed) {
+  StreamSubscription<DecoratedContentModel?> listenTo(String documentId, DecoratedContentChanged changed, {DecoratedContentErrorHandler? errorHandler}) {
     return reference.listenTo(documentId, ((value) {
       if (value != null) {
         fullCache[value.documentID] = value;
       }
       changed(value);
-    }));
+    }), errorHandler: errorHandler);
   }
 
   static Future<DecoratedContentModel> refreshRelations(DecoratedContentModel model) async {

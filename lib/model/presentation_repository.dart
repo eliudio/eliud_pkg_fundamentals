@@ -36,6 +36,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 
 typedef PresentationModelTrigger(List<PresentationModel?> list);
 typedef PresentationChanged(PresentationModel? value);
+typedef PresentationErrorHandler(o, e);
 
 abstract class PresentationRepository extends RepositoryBase<PresentationModel, PresentationEntity> {
   Future<PresentationEntity> addEntity(String documentID, PresentationEntity value);
@@ -52,7 +53,7 @@ abstract class PresentationRepository extends RepositoryBase<PresentationModel, 
 
   StreamSubscription<List<PresentationModel?>> listen(PresentationModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
   StreamSubscription<List<PresentationModel?>> listenWithDetails(PresentationModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
-  StreamSubscription<PresentationModel?> listenTo(String documentId, PresentationChanged changed);
+  StreamSubscription<PresentationModel?> listenTo(String documentId, PresentationChanged changed, {PresentationErrorHandler? errorHandler});
   void flush();
   
   String? timeStampToString(dynamic timeStamp);

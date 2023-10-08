@@ -140,13 +140,13 @@ class BookletCache implements BookletRepository {
   }
 
   @override
-  StreamSubscription<BookletModel?> listenTo(String documentId, BookletChanged changed) {
+  StreamSubscription<BookletModel?> listenTo(String documentId, BookletChanged changed, {BookletErrorHandler? errorHandler}) {
     return reference.listenTo(documentId, ((value) {
       if (value != null) {
         fullCache[value.documentID] = value;
       }
       changed(value);
-    }));
+    }), errorHandler: errorHandler);
   }
 
   static Future<BookletModel> refreshRelations(BookletModel model) async {

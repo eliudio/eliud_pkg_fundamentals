@@ -135,13 +135,13 @@ class LinkCache implements LinkRepository {
   }
 
   @override
-  StreamSubscription<LinkModel?> listenTo(String documentId, LinkChanged changed) {
+  StreamSubscription<LinkModel?> listenTo(String documentId, LinkChanged changed, {LinkErrorHandler? errorHandler}) {
     return reference.listenTo(documentId, ((value) {
       if (value != null) {
         fullCache[value.documentID] = value;
       }
       changed(value);
-    }));
+    }), errorHandler: errorHandler);
   }
 
   static Future<LinkModel> refreshRelations(LinkModel model) async {

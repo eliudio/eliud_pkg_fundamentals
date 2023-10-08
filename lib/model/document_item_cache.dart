@@ -140,13 +140,13 @@ class DocumentItemCache implements DocumentItemRepository {
   }
 
   @override
-  StreamSubscription<DocumentItemModel?> listenTo(String documentId, DocumentItemChanged changed) {
+  StreamSubscription<DocumentItemModel?> listenTo(String documentId, DocumentItemChanged changed, {DocumentItemErrorHandler? errorHandler}) {
     return reference.listenTo(documentId, ((value) {
       if (value != null) {
         fullCache[value.documentID] = value;
       }
       changed(value);
-    }));
+    }), errorHandler: errorHandler);
   }
 
   static Future<DocumentItemModel> refreshRelations(DocumentItemModel model) async {

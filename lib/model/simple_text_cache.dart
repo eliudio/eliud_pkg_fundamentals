@@ -140,13 +140,13 @@ class SimpleTextCache implements SimpleTextRepository {
   }
 
   @override
-  StreamSubscription<SimpleTextModel?> listenTo(String documentId, SimpleTextChanged changed) {
+  StreamSubscription<SimpleTextModel?> listenTo(String documentId, SimpleTextChanged changed, {SimpleTextErrorHandler? errorHandler}) {
     return reference.listenTo(documentId, ((value) {
       if (value != null) {
         fullCache[value.documentID] = value;
       }
       changed(value);
-    }));
+    }), errorHandler: errorHandler);
   }
 
   static Future<SimpleTextModel> refreshRelations(SimpleTextModel model) async {

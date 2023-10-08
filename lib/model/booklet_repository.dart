@@ -36,6 +36,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 
 typedef BookletModelTrigger(List<BookletModel?> list);
 typedef BookletChanged(BookletModel? value);
+typedef BookletErrorHandler(o, e);
 
 abstract class BookletRepository extends RepositoryBase<BookletModel, BookletEntity> {
   Future<BookletEntity> addEntity(String documentID, BookletEntity value);
@@ -52,7 +53,7 @@ abstract class BookletRepository extends RepositoryBase<BookletModel, BookletEnt
 
   StreamSubscription<List<BookletModel?>> listen(BookletModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
   StreamSubscription<List<BookletModel?>> listenWithDetails(BookletModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
-  StreamSubscription<BookletModel?> listenTo(String documentId, BookletChanged changed);
+  StreamSubscription<BookletModel?> listenTo(String documentId, BookletChanged changed, {BookletErrorHandler? errorHandler});
   void flush();
   
   String? timeStampToString(dynamic timeStamp);

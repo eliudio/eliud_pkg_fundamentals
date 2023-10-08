@@ -36,6 +36,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 
 typedef SimpleImageModelTrigger(List<SimpleImageModel?> list);
 typedef SimpleImageChanged(SimpleImageModel? value);
+typedef SimpleImageErrorHandler(o, e);
 
 abstract class SimpleImageRepository extends RepositoryBase<SimpleImageModel, SimpleImageEntity> {
   Future<SimpleImageEntity> addEntity(String documentID, SimpleImageEntity value);
@@ -52,7 +53,7 @@ abstract class SimpleImageRepository extends RepositoryBase<SimpleImageModel, Si
 
   StreamSubscription<List<SimpleImageModel?>> listen(SimpleImageModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
   StreamSubscription<List<SimpleImageModel?>> listenWithDetails(SimpleImageModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
-  StreamSubscription<SimpleImageModel?> listenTo(String documentId, SimpleImageChanged changed);
+  StreamSubscription<SimpleImageModel?> listenTo(String documentId, SimpleImageChanged changed, {SimpleImageErrorHandler? errorHandler});
   void flush();
   
   String? timeStampToString(dynamic timeStamp);

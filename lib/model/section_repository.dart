@@ -36,6 +36,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 
 typedef SectionModelTrigger(List<SectionModel?> list);
 typedef SectionChanged(SectionModel? value);
+typedef SectionErrorHandler(o, e);
 
 abstract class SectionRepository extends RepositoryBase<SectionModel, SectionEntity> {
   Future<SectionEntity> addEntity(String documentID, SectionEntity value);
@@ -52,7 +53,7 @@ abstract class SectionRepository extends RepositoryBase<SectionModel, SectionEnt
 
   StreamSubscription<List<SectionModel?>> listen(SectionModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
   StreamSubscription<List<SectionModel?>> listenWithDetails(SectionModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
-  StreamSubscription<SectionModel?> listenTo(String documentId, SectionChanged changed);
+  StreamSubscription<SectionModel?> listenTo(String documentId, SectionChanged changed, {SectionErrorHandler? errorHandler});
   void flush();
   
   String? timeStampToString(dynamic timeStamp);

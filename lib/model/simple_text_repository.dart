@@ -36,6 +36,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 
 typedef SimpleTextModelTrigger(List<SimpleTextModel?> list);
 typedef SimpleTextChanged(SimpleTextModel? value);
+typedef SimpleTextErrorHandler(o, e);
 
 abstract class SimpleTextRepository extends RepositoryBase<SimpleTextModel, SimpleTextEntity> {
   Future<SimpleTextEntity> addEntity(String documentID, SimpleTextEntity value);
@@ -52,7 +53,7 @@ abstract class SimpleTextRepository extends RepositoryBase<SimpleTextModel, Simp
 
   StreamSubscription<List<SimpleTextModel?>> listen(SimpleTextModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
   StreamSubscription<List<SimpleTextModel?>> listenWithDetails(SimpleTextModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
-  StreamSubscription<SimpleTextModel?> listenTo(String documentId, SimpleTextChanged changed);
+  StreamSubscription<SimpleTextModel?> listenTo(String documentId, SimpleTextChanged changed, {SimpleTextErrorHandler? errorHandler});
   void flush();
   
   String? timeStampToString(dynamic timeStamp);

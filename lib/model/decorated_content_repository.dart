@@ -36,6 +36,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 
 typedef DecoratedContentModelTrigger(List<DecoratedContentModel?> list);
 typedef DecoratedContentChanged(DecoratedContentModel? value);
+typedef DecoratedContentErrorHandler(o, e);
 
 abstract class DecoratedContentRepository extends RepositoryBase<DecoratedContentModel, DecoratedContentEntity> {
   Future<DecoratedContentEntity> addEntity(String documentID, DecoratedContentEntity value);
@@ -52,7 +53,7 @@ abstract class DecoratedContentRepository extends RepositoryBase<DecoratedConten
 
   StreamSubscription<List<DecoratedContentModel?>> listen(DecoratedContentModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
   StreamSubscription<List<DecoratedContentModel?>> listenWithDetails(DecoratedContentModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
-  StreamSubscription<DecoratedContentModel?> listenTo(String documentId, DecoratedContentChanged changed);
+  StreamSubscription<DecoratedContentModel?> listenTo(String documentId, DecoratedContentChanged changed, {DecoratedContentErrorHandler? errorHandler});
   void flush();
   
   String? timeStampToString(dynamic timeStamp);

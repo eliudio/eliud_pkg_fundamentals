@@ -36,6 +36,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 
 typedef TutorialEntryModelTrigger(List<TutorialEntryModel?> list);
 typedef TutorialEntryChanged(TutorialEntryModel? value);
+typedef TutorialEntryErrorHandler(o, e);
 
 abstract class TutorialEntryRepository extends RepositoryBase<TutorialEntryModel, TutorialEntryEntity> {
   Future<TutorialEntryEntity> addEntity(String documentID, TutorialEntryEntity value);
@@ -52,7 +53,7 @@ abstract class TutorialEntryRepository extends RepositoryBase<TutorialEntryModel
 
   StreamSubscription<List<TutorialEntryModel?>> listen(TutorialEntryModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
   StreamSubscription<List<TutorialEntryModel?>> listenWithDetails(TutorialEntryModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
-  StreamSubscription<TutorialEntryModel?> listenTo(String documentId, TutorialEntryChanged changed);
+  StreamSubscription<TutorialEntryModel?> listenTo(String documentId, TutorialEntryChanged changed, {TutorialEntryErrorHandler? errorHandler});
   void flush();
   
   String? timeStampToString(dynamic timeStamp);

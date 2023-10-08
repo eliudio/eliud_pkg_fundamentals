@@ -36,6 +36,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 
 typedef DynamicWidgetModelTrigger(List<DynamicWidgetModel?> list);
 typedef DynamicWidgetChanged(DynamicWidgetModel? value);
+typedef DynamicWidgetErrorHandler(o, e);
 
 abstract class DynamicWidgetRepository extends RepositoryBase<DynamicWidgetModel, DynamicWidgetEntity> {
   Future<DynamicWidgetEntity> addEntity(String documentID, DynamicWidgetEntity value);
@@ -52,7 +53,7 @@ abstract class DynamicWidgetRepository extends RepositoryBase<DynamicWidgetModel
 
   StreamSubscription<List<DynamicWidgetModel?>> listen(DynamicWidgetModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
   StreamSubscription<List<DynamicWidgetModel?>> listenWithDetails(DynamicWidgetModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
-  StreamSubscription<DynamicWidgetModel?> listenTo(String documentId, DynamicWidgetChanged changed);
+  StreamSubscription<DynamicWidgetModel?> listenTo(String documentId, DynamicWidgetChanged changed, {DynamicWidgetErrorHandler? errorHandler});
   void flush();
   
   String? timeStampToString(dynamic timeStamp);

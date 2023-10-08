@@ -127,15 +127,21 @@ class DynamicWidgetFirestore implements DynamicWidgetRepository {
   }
 
   @override
-  StreamSubscription<DynamicWidgetModel?> listenTo(String documentId, DynamicWidgetChanged changed) {
+  StreamSubscription<DynamicWidgetModel?> listenTo(String documentId, DynamicWidgetChanged changed, {DynamicWidgetErrorHandler? errorHandler}) {
     var stream = DynamicWidgetCollection.doc(documentId)
         .snapshots()
         .asyncMap((data) {
       return _populateDocPlus(data);
     });
-    return stream.listen((value) {
+    var theStream = stream.listen((value) {
       changed(value);
     });
+    theStream.onError((theException, theStacktrace) {
+      if (errorHandler != null) {
+        errorHandler(theException, theStacktrace);
+      }
+    });
+    return theStream;
   }
 
   Stream<List<DynamicWidgetModel?>> values({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) {

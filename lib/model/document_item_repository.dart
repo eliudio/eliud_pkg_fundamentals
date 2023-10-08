@@ -36,6 +36,7 @@ import 'package:eliud_core/core/base/repository_base.dart';
 
 typedef DocumentItemModelTrigger(List<DocumentItemModel?> list);
 typedef DocumentItemChanged(DocumentItemModel? value);
+typedef DocumentItemErrorHandler(o, e);
 
 abstract class DocumentItemRepository extends RepositoryBase<DocumentItemModel, DocumentItemEntity> {
   Future<DocumentItemEntity> addEntity(String documentID, DocumentItemEntity value);
@@ -52,7 +53,7 @@ abstract class DocumentItemRepository extends RepositoryBase<DocumentItemModel, 
 
   StreamSubscription<List<DocumentItemModel?>> listen(DocumentItemModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
   StreamSubscription<List<DocumentItemModel?>> listenWithDetails(DocumentItemModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
-  StreamSubscription<DocumentItemModel?> listenTo(String documentId, DocumentItemChanged changed);
+  StreamSubscription<DocumentItemModel?> listenTo(String documentId, DocumentItemChanged changed, {DocumentItemErrorHandler? errorHandler});
   void flush();
   
   String? timeStampToString(dynamic timeStamp);

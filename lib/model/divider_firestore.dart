@@ -127,15 +127,21 @@ class DividerFirestore implements DividerRepository {
   }
 
   @override
-  StreamSubscription<DividerModel?> listenTo(String documentId, DividerChanged changed) {
+  StreamSubscription<DividerModel?> listenTo(String documentId, DividerChanged changed, {DividerErrorHandler? errorHandler}) {
     var stream = DividerCollection.doc(documentId)
         .snapshots()
         .asyncMap((data) {
       return _populateDocPlus(data);
     });
-    return stream.listen((value) {
+    var theStream = stream.listen((value) {
       changed(value);
     });
+    theStream.onError((theException, theStacktrace) {
+      if (errorHandler != null) {
+        errorHandler(theException, theStacktrace);
+      }
+    });
+    return theStream;
   }
 
   Stream<List<DividerModel?>> values({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) {
