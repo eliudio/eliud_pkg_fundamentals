@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  eliud_core: ^1.0.18+1
+  eliud_core: ^1.0.19
   getwidget: ^3.0.1
   transparent_image: ^2.0.0
   bloc: ^8.1.0
