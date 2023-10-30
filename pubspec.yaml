@@ -3,14 +3,14 @@ name: eliud_pkg_fundamentals
 description: Package with fundamental classes to build your app
 homepage: https://eliud.io
 repository: https://github.com/eliudio/eliud_pkg_fundamentals
-version: 1.0.2+10
+version: 1.0.2+11
 environment:
   sdk: '>=2.17.0 <4.0.0'
   flutter: '>=3.0.0'
 dependencies:
   flutter:
     sdk: flutter
-  eliud_core: ^1.0.19+3
+  eliud_core: ^1.0.20+1
   getwidget: ^3.0.1
   transparent_image: ^2.0.0
   bloc: ^8.1.0
