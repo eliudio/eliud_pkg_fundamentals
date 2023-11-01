@@ -14,29 +14,16 @@
 */
 
 import 'package:collection/collection.dart';
-import 'package:eliud_core/tools/common_tools.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/model_base.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:eliud_core/model/app_model.dart';
 
-import 'package:eliud_core/model/repository_export.dart';
-import 'package:eliud_core/model/abstract_repository_singleton.dart';
-import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
-import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
 import 'package:eliud_core/model/model_export.dart';
-import '../tools/bespoke_models.dart';
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
-import 'package:eliud_core/model/entity_export.dart';
-import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 
 import 'package:eliud_pkg_fundamentals/model/document_entity.dart';
 
-import 'package:eliud_core/tools/random.dart';
 
 
 
@@ -58,7 +45,6 @@ class DocumentModel implements ModelBase, WithAppId {
   StorageConditionsModel? conditions;
 
   DocumentModel({required this.documentID, required this.appId, this.description, this.content, this.padding, this.images, this.background, this.conditions, })  {
-    assert(documentID != null);
   }
 
   DocumentModel copyWith({String? documentID, String? appId, String? description, String? content, double? padding, List<DocumentItemModel>? images, BackgroundModel? background, StorageConditionsModel? conditions, }) {

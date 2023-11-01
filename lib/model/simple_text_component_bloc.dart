@@ -16,11 +16,9 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 
-import 'package:eliud_pkg_fundamentals/model/simple_text_model.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_text_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_text_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_text_repository.dart';
-import 'package:flutter/services.dart';
 
 class SimpleTextComponentBloc extends Bloc<SimpleTextComponentEvent, SimpleTextComponentState> {
   final SimpleTextRepository? simpleTextRepository;

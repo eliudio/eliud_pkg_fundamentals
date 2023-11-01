@@ -16,11 +16,9 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 
-import 'package:eliud_pkg_fundamentals/model/divider_model.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_repository.dart';
-import 'package:flutter/services.dart';
 
 class DividerComponentBloc extends Bloc<DividerComponentEvent, DividerComponentState> {
   final DividerRepository? dividerRepository;

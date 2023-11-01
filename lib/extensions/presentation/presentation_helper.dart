@@ -1,4 +1,3 @@
-import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/tools/screen_size.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_model.dart';

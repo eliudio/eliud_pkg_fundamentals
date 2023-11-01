@@ -17,7 +17,6 @@
 import 'package:eliud_pkg_fundamentals/model/booklet_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
-import 'package:eliud_pkg_fundamentals/model/booklet_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_component_state.dart';
 
 import 'package:flutter/material.dart';
@@ -25,7 +24,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'abstract_repository_singleton.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
-import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
 import 'package:eliud_core/model/app_model.dart';
 
 abstract class AbstractBookletComponent extends StatelessWidget {
@@ -48,11 +46,7 @@ abstract class AbstractBookletComponent extends StatelessWidget {
   Widget _bookletBlockBuilder(BuildContext context) {
     return BlocBuilder<BookletComponentBloc, BookletComponentState>(builder: (context, state) {
       if (state is BookletComponentLoaded) {
-        if (state.value == null) {
-          return AlertWidget(app: app, title: "Error", content: 'No Booklet defined');
-        } else {
-          return yourWidget(context, state.value);
-        }
+        return yourWidget(context, state.value);
       } else if (state is BookletComponentPermissionDenied) {
         return Icon(
           Icons.highlight_off,

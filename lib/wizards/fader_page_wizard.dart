@@ -81,6 +81,7 @@ class FaderPageWizard extends NewAppWizardInfoWithActionSpecification {
       throw Exception(
           'Unexpected class for parameters: ' + parameters.toString());
     }
+    return null;
   }
 
   @override

@@ -16,11 +16,9 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 
-import 'package:eliud_pkg_fundamentals/model/dynamic_widget_model.dart';
 import 'package:eliud_pkg_fundamentals/model/dynamic_widget_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/dynamic_widget_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/dynamic_widget_repository.dart';
-import 'package:flutter/services.dart';
 
 class DynamicWidgetComponentBloc extends Bloc<DynamicWidgetComponentEvent, DynamicWidgetComponentState> {
   final DynamicWidgetRepository? dynamicWidgetRepository;

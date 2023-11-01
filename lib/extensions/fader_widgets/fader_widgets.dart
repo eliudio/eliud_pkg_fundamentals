@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/background_model.dart';
-import 'package:eliud_core/model/member_medium_model.dart';
 import 'package:eliud_core/model/member_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/model/pos_size_model.dart';

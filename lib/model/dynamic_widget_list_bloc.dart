@@ -15,16 +15,20 @@
 
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 import 'package:eliud_pkg_fundamentals/model/dynamic_widget_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/dynamic_widget_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/dynamic_widget_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
+import 'dynamic_widget_model.dart';
+
+typedef List<DynamicWidgetModel?> FilterDynamicWidgetModels(List<DynamicWidgetModel?> values);
+
 
 
 class DynamicWidgetListBloc extends Bloc<DynamicWidgetListEvent, DynamicWidgetListState> {
+  final FilterDynamicWidgetModels? filter;
   final DynamicWidgetRepository _dynamicWidgetRepository;
   StreamSubscription? _dynamicWidgetsListSubscription;
   EliudQuery? eliudQuery;
@@ -35,9 +39,8 @@ class DynamicWidgetListBloc extends Bloc<DynamicWidgetListEvent, DynamicWidgetLi
   final bool? detailed;
   final int dynamicWidgetLimit;
 
-  DynamicWidgetListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required DynamicWidgetRepository dynamicWidgetRepository, this.dynamicWidgetLimit = 5})
-      : assert(dynamicWidgetRepository != null),
-        _dynamicWidgetRepository = dynamicWidgetRepository,
+  DynamicWidgetListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required DynamicWidgetRepository dynamicWidgetRepository, this.dynamicWidgetLimit = 5})
+      : _dynamicWidgetRepository = dynamicWidgetRepository,
         super(DynamicWidgetListLoading()) {
     on <LoadDynamicWidgetList> ((event, emit) {
       if ((detailed == null) || (!detailed!)) {
@@ -78,11 +81,19 @@ class DynamicWidgetListBloc extends Bloc<DynamicWidgetListEvent, DynamicWidgetLi
     });
   }
 
+  List<DynamicWidgetModel?> _filter(List<DynamicWidgetModel?> original) {
+    if (filter != null) {
+      return filter!(original);
+    } else {
+      return original;
+    }
+  }
+
   Future<void> _mapLoadDynamicWidgetListToState() async {
     int amountNow =  (state is DynamicWidgetListLoaded) ? (state as DynamicWidgetListLoaded).values!.length : 0;
     _dynamicWidgetsListSubscription?.cancel();
     _dynamicWidgetsListSubscription = _dynamicWidgetRepository.listen(
-          (list) => add(DynamicWidgetListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+          (list) => add(DynamicWidgetListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
@@ -94,7 +105,7 @@ class DynamicWidgetListBloc extends Bloc<DynamicWidgetListEvent, DynamicWidgetLi
     int amountNow =  (state is DynamicWidgetListLoaded) ? (state as DynamicWidgetListLoaded).values!.length : 0;
     _dynamicWidgetsListSubscription?.cancel();
     _dynamicWidgetsListSubscription = _dynamicWidgetRepository.listenWithDetails(
-            (list) => add(DynamicWidgetListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+            (list) => add(DynamicWidgetListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,

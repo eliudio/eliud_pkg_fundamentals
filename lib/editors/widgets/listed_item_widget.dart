@@ -10,7 +10,6 @@ import 'package:eliud_core/tools/widgets/platform_medium_widget.dart';
 import 'package:eliud_core/tools/widgets/pos_size_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/listed_item_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 typedef void ListedItemModelCallback(ListedItemModel listedItemModel);
 

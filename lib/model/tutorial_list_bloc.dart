@@ -15,16 +15,20 @@
 
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 import 'package:eliud_pkg_fundamentals/model/tutorial_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
+import 'tutorial_model.dart';
+
+typedef List<TutorialModel?> FilterTutorialModels(List<TutorialModel?> values);
+
 
 
 class TutorialListBloc extends Bloc<TutorialListEvent, TutorialListState> {
+  final FilterTutorialModels? filter;
   final TutorialRepository _tutorialRepository;
   StreamSubscription? _tutorialsListSubscription;
   EliudQuery? eliudQuery;
@@ -35,9 +39,8 @@ class TutorialListBloc extends Bloc<TutorialListEvent, TutorialListState> {
   final bool? detailed;
   final int tutorialLimit;
 
-  TutorialListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required TutorialRepository tutorialRepository, this.tutorialLimit = 5})
-      : assert(tutorialRepository != null),
-        _tutorialRepository = tutorialRepository,
+  TutorialListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required TutorialRepository tutorialRepository, this.tutorialLimit = 5})
+      : _tutorialRepository = tutorialRepository,
         super(TutorialListLoading()) {
     on <LoadTutorialList> ((event, emit) {
       if ((detailed == null) || (!detailed!)) {
@@ -78,11 +81,19 @@ class TutorialListBloc extends Bloc<TutorialListEvent, TutorialListState> {
     });
   }
 
+  List<TutorialModel?> _filter(List<TutorialModel?> original) {
+    if (filter != null) {
+      return filter!(original);
+    } else {
+      return original;
+    }
+  }
+
   Future<void> _mapLoadTutorialListToState() async {
     int amountNow =  (state is TutorialListLoaded) ? (state as TutorialListLoaded).values!.length : 0;
     _tutorialsListSubscription?.cancel();
     _tutorialsListSubscription = _tutorialRepository.listen(
-          (list) => add(TutorialListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+          (list) => add(TutorialListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
@@ -94,7 +105,7 @@ class TutorialListBloc extends Bloc<TutorialListEvent, TutorialListState> {
     int amountNow =  (state is TutorialListLoaded) ? (state as TutorialListLoaded).values!.length : 0;
     _tutorialsListSubscription?.cancel();
     _tutorialsListSubscription = _tutorialRepository.listenWithDetails(
-            (list) => add(TutorialListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+            (list) => add(TutorialListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,

@@ -22,7 +22,6 @@ import 'package:eliud_pkg_fundamentals/editors/widgets/section_image_alignment.d
 import 'package:eliud_pkg_fundamentals/model/link_model.dart';
 import 'package:eliud_pkg_fundamentals/model/section_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'link_model_widget.dart';

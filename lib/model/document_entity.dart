@@ -15,15 +15,10 @@
 
 import 'dart:collection';
 import 'dart:convert';
-import 'package:eliud_core/tools/random.dart';
-import 'abstract_repository_singleton.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/entity_base.dart';
 import 'package:eliud_core/model/entity_export.dart';
-import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-import 'package:eliud_core/tools/common_tools.dart';
 class DocumentEntity implements EntityBase {
   final String? appId;
   final String? description;
@@ -53,12 +48,15 @@ class DocumentEntity implements EntityBase {
 
     var imagesFromMap;
     imagesFromMap = map['images'];
-    var imagesList;
-    if (imagesFromMap != null)
+    List<DocumentItemEntity> imagesList;
+    if (imagesFromMap != null) {
       imagesList = (map['images'] as List<dynamic>)
         .map((dynamic item) =>
         DocumentItemEntity.fromMap(item as Map, newDocumentIds: newDocumentIds)!)
         .toList();
+    } else {
+      imagesList = [];
+    }
     var backgroundFromMap;
     backgroundFromMap = map['background'];
     if (backgroundFromMap != null)

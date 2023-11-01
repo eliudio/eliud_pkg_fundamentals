@@ -15,16 +15,20 @@
 
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 import 'package:eliud_pkg_fundamentals/model/section_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/section_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/section_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
+import 'section_model.dart';
+
+typedef List<SectionModel?> FilterSectionModels(List<SectionModel?> values);
+
 
 
 class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
+  final FilterSectionModels? filter;
   final SectionRepository _sectionRepository;
   StreamSubscription? _sectionsListSubscription;
   EliudQuery? eliudQuery;
@@ -35,9 +39,8 @@ class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
   final bool? detailed;
   final int sectionLimit;
 
-  SectionListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required SectionRepository sectionRepository, this.sectionLimit = 5})
-      : assert(sectionRepository != null),
-        _sectionRepository = sectionRepository,
+  SectionListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required SectionRepository sectionRepository, this.sectionLimit = 5})
+      : _sectionRepository = sectionRepository,
         super(SectionListLoading()) {
     on <LoadSectionList> ((event, emit) {
       if ((detailed == null) || (!detailed!)) {
@@ -78,11 +81,19 @@ class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
     });
   }
 
+  List<SectionModel?> _filter(List<SectionModel?> original) {
+    if (filter != null) {
+      return filter!(original);
+    } else {
+      return original;
+    }
+  }
+
   Future<void> _mapLoadSectionListToState() async {
     int amountNow =  (state is SectionListLoaded) ? (state as SectionListLoaded).values!.length : 0;
     _sectionsListSubscription?.cancel();
     _sectionsListSubscription = _sectionRepository.listen(
-          (list) => add(SectionListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+          (list) => add(SectionListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
@@ -94,7 +105,7 @@ class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
     int amountNow =  (state is SectionListLoaded) ? (state as SectionListLoaded).values!.length : 0;
     _sectionsListSubscription?.cancel();
     _sectionsListSubscription = _sectionRepository.listenWithDetails(
-            (list) => add(SectionListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+            (list) => add(SectionListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,

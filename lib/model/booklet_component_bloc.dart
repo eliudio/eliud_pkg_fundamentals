@@ -16,11 +16,9 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 
-import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_repository.dart';
-import 'package:flutter/services.dart';
 
 class BookletComponentBloc extends Bloc<BookletComponentEvent, BookletComponentState> {
   final BookletRepository? bookletRepository;

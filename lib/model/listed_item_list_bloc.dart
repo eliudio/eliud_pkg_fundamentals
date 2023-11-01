@@ -15,16 +15,20 @@
 
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 import 'package:eliud_pkg_fundamentals/model/listed_item_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/listed_item_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/listed_item_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
+import 'listed_item_model.dart';
+
+typedef List<ListedItemModel?> FilterListedItemModels(List<ListedItemModel?> values);
+
 
 
 class ListedItemListBloc extends Bloc<ListedItemListEvent, ListedItemListState> {
+  final FilterListedItemModels? filter;
   final ListedItemRepository _listedItemRepository;
   StreamSubscription? _listedItemsListSubscription;
   EliudQuery? eliudQuery;
@@ -35,9 +39,8 @@ class ListedItemListBloc extends Bloc<ListedItemListEvent, ListedItemListState> 
   final bool? detailed;
   final int listedItemLimit;
 
-  ListedItemListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required ListedItemRepository listedItemRepository, this.listedItemLimit = 5})
-      : assert(listedItemRepository != null),
-        _listedItemRepository = listedItemRepository,
+  ListedItemListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required ListedItemRepository listedItemRepository, this.listedItemLimit = 5})
+      : _listedItemRepository = listedItemRepository,
         super(ListedItemListLoading()) {
     on <LoadListedItemList> ((event, emit) {
       if ((detailed == null) || (!detailed!)) {
@@ -78,11 +81,19 @@ class ListedItemListBloc extends Bloc<ListedItemListEvent, ListedItemListState> 
     });
   }
 
+  List<ListedItemModel?> _filter(List<ListedItemModel?> original) {
+    if (filter != null) {
+      return filter!(original);
+    } else {
+      return original;
+    }
+  }
+
   Future<void> _mapLoadListedItemListToState() async {
     int amountNow =  (state is ListedItemListLoaded) ? (state as ListedItemListLoaded).values!.length : 0;
     _listedItemsListSubscription?.cancel();
     _listedItemsListSubscription = _listedItemRepository.listen(
-          (list) => add(ListedItemListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+          (list) => add(ListedItemListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
@@ -94,7 +105,7 @@ class ListedItemListBloc extends Bloc<ListedItemListEvent, ListedItemListState> 
     int amountNow =  (state is ListedItemListLoaded) ? (state as ListedItemListLoaded).values!.length : 0;
     _listedItemsListSubscription?.cancel();
     _listedItemsListSubscription = _listedItemRepository.listenWithDetails(
-            (list) => add(ListedItemListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+            (list) => add(ListedItemListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,

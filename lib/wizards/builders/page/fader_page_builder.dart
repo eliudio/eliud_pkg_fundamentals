@@ -1,5 +1,4 @@
 import 'package:eliud_core/core/wizards/builders/page_builder.dart';
-import 'package:eliud_core/core/wizards/registry/registry.dart';
 import 'package:eliud_core/core/wizards/tools/documentIdentifier.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart'
     as corerepo;
@@ -15,11 +14,8 @@ import 'package:eliud_core/model/storage_conditions_model.dart';
 import 'package:eliud_core/tools/random.dart';
 import 'package:eliud_core/tools/storage/platform_medium_helper.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
-import 'package:eliud_pkg_fundamentals/model/booklet_component.dart';
-import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_component.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_model.dart';
-import 'package:eliud_pkg_fundamentals/model/link_model.dart';
 import 'package:eliud_pkg_fundamentals/model/listed_item_model.dart';
 import 'package:eliud_pkg_fundamentals/model/section_model.dart';
 

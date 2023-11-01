@@ -16,7 +16,6 @@ import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/tools/component/component_spec.dart';
 import 'package:eliud_core/tools/component_title_helper.dart';
 import 'package:eliud_core/tools/random.dart';
-import 'package:eliud_core/tools/rgb_formfield.dart';
 import 'package:eliud_core/tools/screen_size.dart';
 import 'package:eliud_core/tools/widgets/condition_simple_widget.dart';
 import 'package:eliud_core/tools/widgets/editor/body_component_model_widget.dart';

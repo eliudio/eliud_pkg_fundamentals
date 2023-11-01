@@ -15,16 +15,20 @@
 
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 import 'package:eliud_pkg_fundamentals/model/tutorial_entry_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_entry_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_entry_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
+import 'tutorial_entry_model.dart';
+
+typedef List<TutorialEntryModel?> FilterTutorialEntryModels(List<TutorialEntryModel?> values);
+
 
 
 class TutorialEntryListBloc extends Bloc<TutorialEntryListEvent, TutorialEntryListState> {
+  final FilterTutorialEntryModels? filter;
   final TutorialEntryRepository _tutorialEntryRepository;
   StreamSubscription? _tutorialEntrysListSubscription;
   EliudQuery? eliudQuery;
@@ -35,9 +39,8 @@ class TutorialEntryListBloc extends Bloc<TutorialEntryListEvent, TutorialEntryLi
   final bool? detailed;
   final int tutorialEntryLimit;
 
-  TutorialEntryListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required TutorialEntryRepository tutorialEntryRepository, this.tutorialEntryLimit = 5})
-      : assert(tutorialEntryRepository != null),
-        _tutorialEntryRepository = tutorialEntryRepository,
+  TutorialEntryListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required TutorialEntryRepository tutorialEntryRepository, this.tutorialEntryLimit = 5})
+      : _tutorialEntryRepository = tutorialEntryRepository,
         super(TutorialEntryListLoading()) {
     on <LoadTutorialEntryList> ((event, emit) {
       if ((detailed == null) || (!detailed!)) {
@@ -78,11 +81,19 @@ class TutorialEntryListBloc extends Bloc<TutorialEntryListEvent, TutorialEntryLi
     });
   }
 
+  List<TutorialEntryModel?> _filter(List<TutorialEntryModel?> original) {
+    if (filter != null) {
+      return filter!(original);
+    } else {
+      return original;
+    }
+  }
+
   Future<void> _mapLoadTutorialEntryListToState() async {
     int amountNow =  (state is TutorialEntryListLoaded) ? (state as TutorialEntryListLoaded).values!.length : 0;
     _tutorialEntrysListSubscription?.cancel();
     _tutorialEntrysListSubscription = _tutorialEntryRepository.listen(
-          (list) => add(TutorialEntryListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+          (list) => add(TutorialEntryListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
@@ -94,7 +105,7 @@ class TutorialEntryListBloc extends Bloc<TutorialEntryListEvent, TutorialEntryLi
     int amountNow =  (state is TutorialEntryListLoaded) ? (state as TutorialEntryListLoaded).values!.length : 0;
     _tutorialEntrysListSubscription?.cancel();
     _tutorialEntrysListSubscription = _tutorialEntryRepository.listenWithDetails(
-            (list) => add(TutorialEntryListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+            (list) => add(TutorialEntryListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,

@@ -13,29 +13,14 @@
 
 */
 
-import 'package:eliud_core/tools/common_tools.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/model_base.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:eliud_core/model/app_model.dart';
 
-import 'package:eliud_core/model/repository_export.dart';
-import 'package:eliud_core/model/abstract_repository_singleton.dart';
-import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
-import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
 import 'package:eliud_core/model/model_export.dart';
-import '../tools/bespoke_models.dart';
-import 'package:eliud_pkg_fundamentals/model/model_export.dart';
-import 'package:eliud_core/model/entity_export.dart';
-import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 
 import 'package:eliud_pkg_fundamentals/model/decorated_content_entity.dart';
 
-import 'package:eliud_core/tools/random.dart';
 
 enum DecorationComponentPosition {
   LeftIfSpaceAvailableOtherwiseTop, LeftIfSpaceAvailableOtherwiseDrop, LeftIfSpaceAvailableOtherwiseBottom, RightIfSpaceAvailableOtherwiseTop, RightIfSpaceAvailableOtherwiseDrop, RightIfSpaceAvailableOtherwiseBottom, Unknown
@@ -79,7 +64,6 @@ class DecoratedContentModel implements ModelBase, WithAppId {
   StorageConditionsModel? conditions;
 
   DecoratedContentModel({required this.documentID, required this.appId, this.description, this.decoratingComponentName, this.decoratingComponentId, this.contentComponentName, this.contentComponentId, this.decorationComponentPosition, this.percentageDecorationVisible, this.conditions, })  {
-    assert(documentID != null);
   }
 
   DecoratedContentModel copyWith({String? documentID, String? appId, String? description, String? decoratingComponentName, String? decoratingComponentId, String? contentComponentName, String? contentComponentId, DecorationComponentPosition? decorationComponentPosition, double? percentageDecorationVisible, StorageConditionsModel? conditions, }) {

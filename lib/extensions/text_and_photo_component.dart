@@ -1,15 +1,10 @@
-import 'package:eliud_core/core/blocs/access/access_bloc.dart';
-import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
-import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/component/component_constructor.dart';
-import 'package:eliud_core/tools/etc.dart';
 import 'package:eliud_core/tools/screen_size.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_component.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
-import 'package:eliud_pkg_fundamentals/model/booklet_repository.dart';
 import 'package:flutter/material.dart';
 
 class BookletComponentConstructorDefault implements ComponentConstructor {

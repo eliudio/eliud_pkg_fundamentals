@@ -15,16 +15,20 @@
 
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 import 'package:eliud_pkg_fundamentals/model/fader_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
+import 'fader_model.dart';
+
+typedef List<FaderModel?> FilterFaderModels(List<FaderModel?> values);
+
 
 
 class FaderListBloc extends Bloc<FaderListEvent, FaderListState> {
+  final FilterFaderModels? filter;
   final FaderRepository _faderRepository;
   StreamSubscription? _fadersListSubscription;
   EliudQuery? eliudQuery;
@@ -35,9 +39,8 @@ class FaderListBloc extends Bloc<FaderListEvent, FaderListState> {
   final bool? detailed;
   final int faderLimit;
 
-  FaderListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required FaderRepository faderRepository, this.faderLimit = 5})
-      : assert(faderRepository != null),
-        _faderRepository = faderRepository,
+  FaderListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required FaderRepository faderRepository, this.faderLimit = 5})
+      : _faderRepository = faderRepository,
         super(FaderListLoading()) {
     on <LoadFaderList> ((event, emit) {
       if ((detailed == null) || (!detailed!)) {
@@ -78,11 +81,19 @@ class FaderListBloc extends Bloc<FaderListEvent, FaderListState> {
     });
   }
 
+  List<FaderModel?> _filter(List<FaderModel?> original) {
+    if (filter != null) {
+      return filter!(original);
+    } else {
+      return original;
+    }
+  }
+
   Future<void> _mapLoadFaderListToState() async {
     int amountNow =  (state is FaderListLoaded) ? (state as FaderListLoaded).values!.length : 0;
     _fadersListSubscription?.cancel();
     _fadersListSubscription = _faderRepository.listen(
-          (list) => add(FaderListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+          (list) => add(FaderListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
@@ -94,7 +105,7 @@ class FaderListBloc extends Bloc<FaderListEvent, FaderListState> {
     int amountNow =  (state is FaderListLoaded) ? (state as FaderListLoaded).values!.length : 0;
     _fadersListSubscription?.cancel();
     _fadersListSubscription = _faderRepository.listenWithDetails(
-            (list) => add(FaderListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+            (list) => add(FaderListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,

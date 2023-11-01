@@ -6,13 +6,9 @@ import 'package:eliud_core/model/background_model.dart';
 import 'package:eliud_core/model/member_model.dart';
 import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
-import 'package:eliud_core/style/style_registry.dart';
 import 'package:eliud_core/tools/router_builders.dart';
-import 'package:eliud_core/tools/screen_size.dart';
 import 'package:eliud_pkg_fundamentals/model/document_item_model.dart';
-import 'package:eliud_pkg_fundamentals/model/document_model.dart';
 import 'package:eliud_pkg_fundamentals/tools/document_renderer.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -16,11 +16,9 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 
-import 'package:eliud_pkg_fundamentals/model/grid_model.dart';
 import 'package:eliud_pkg_fundamentals/model/grid_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/grid_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/grid_repository.dart';
-import 'package:flutter/services.dart';
 
 
 class GridComponentBloc extends Bloc<GridComponentEvent, GridComponentState> {

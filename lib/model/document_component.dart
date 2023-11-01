@@ -17,7 +17,6 @@
 import 'package:eliud_pkg_fundamentals/model/document_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/document_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/document_model.dart';
-import 'package:eliud_pkg_fundamentals/model/document_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/document_component_state.dart';
 
 import 'package:flutter/material.dart';
@@ -25,7 +24,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eliud_core/style/style_registry.dart';
 import 'abstract_repository_singleton.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
-import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
 import 'package:eliud_core/model/app_model.dart';
 
 abstract class AbstractDocumentComponent extends StatelessWidget {
@@ -48,11 +46,7 @@ abstract class AbstractDocumentComponent extends StatelessWidget {
   Widget _documentBlockBuilder(BuildContext context) {
     return BlocBuilder<DocumentComponentBloc, DocumentComponentState>(builder: (context, state) {
       if (state is DocumentComponentLoaded) {
-        if (state.value == null) {
-          return AlertWidget(app: app, title: "Error", content: 'No Document defined');
-        } else {
-          return yourWidget(context, state.value);
-        }
+        return yourWidget(context, state.value);
       } else if (state is DocumentComponentPermissionDenied) {
         return Icon(
           Icons.highlight_off,

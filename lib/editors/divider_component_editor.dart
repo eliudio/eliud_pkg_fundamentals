@@ -20,7 +20,6 @@ import 'package:flutter/material.dart';
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:eliud_core/core/editor/editor_base_bloc/editor_base_bloc.dart';
 import 'package:eliud_core/core/editor/editor_base_bloc/editor_base_event.dart';
 import 'package:eliud_core/core/editor/editor_base_bloc/editor_base_state.dart';
 

@@ -52,7 +52,6 @@ import 'simple_text_component_selector.dart';
 import '../extensions/tutorial_component.dart';
 import '../editors/tutorial_component_editor.dart';
 import 'tutorial_component_selector.dart';
-import 'package:eliud_pkg_fundamentals/model/internal_component.dart';
 
 
 

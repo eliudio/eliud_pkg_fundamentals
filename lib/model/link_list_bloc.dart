@@ -15,16 +15,20 @@
 
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 import 'package:eliud_pkg_fundamentals/model/link_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/link_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/link_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
+import 'link_model.dart';
+
+typedef List<LinkModel?> FilterLinkModels(List<LinkModel?> values);
+
 
 
 class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
+  final FilterLinkModels? filter;
   final LinkRepository _linkRepository;
   StreamSubscription? _linksListSubscription;
   EliudQuery? eliudQuery;
@@ -35,9 +39,8 @@ class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
   final bool? detailed;
   final int linkLimit;
 
-  LinkListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required LinkRepository linkRepository, this.linkLimit = 5})
-      : assert(linkRepository != null),
-        _linkRepository = linkRepository,
+  LinkListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required LinkRepository linkRepository, this.linkLimit = 5})
+      : _linkRepository = linkRepository,
         super(LinkListLoading()) {
     on <LoadLinkList> ((event, emit) {
       if ((detailed == null) || (!detailed!)) {
@@ -78,11 +81,19 @@ class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
     });
   }
 
+  List<LinkModel?> _filter(List<LinkModel?> original) {
+    if (filter != null) {
+      return filter!(original);
+    } else {
+      return original;
+    }
+  }
+
   Future<void> _mapLoadLinkListToState() async {
     int amountNow =  (state is LinkListLoaded) ? (state as LinkListLoaded).values!.length : 0;
     _linksListSubscription?.cancel();
     _linksListSubscription = _linkRepository.listen(
-          (list) => add(LinkListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+          (list) => add(LinkListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
@@ -94,7 +105,7 @@ class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
     int amountNow =  (state is LinkListLoaded) ? (state as LinkListLoaded).values!.length : 0;
     _linksListSubscription?.cancel();
     _linksListSubscription = _linkRepository.listenWithDetails(
-            (list) => add(LinkListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+            (list) => add(LinkListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,

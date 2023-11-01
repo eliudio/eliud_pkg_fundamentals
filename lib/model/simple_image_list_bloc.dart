@@ -15,16 +15,20 @@
 
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 import 'package:eliud_pkg_fundamentals/model/simple_image_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
+import 'simple_image_model.dart';
+
+typedef List<SimpleImageModel?> FilterSimpleImageModels(List<SimpleImageModel?> values);
+
 
 
 class SimpleImageListBloc extends Bloc<SimpleImageListEvent, SimpleImageListState> {
+  final FilterSimpleImageModels? filter;
   final SimpleImageRepository _simpleImageRepository;
   StreamSubscription? _simpleImagesListSubscription;
   EliudQuery? eliudQuery;
@@ -35,9 +39,8 @@ class SimpleImageListBloc extends Bloc<SimpleImageListEvent, SimpleImageListStat
   final bool? detailed;
   final int simpleImageLimit;
 
-  SimpleImageListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required SimpleImageRepository simpleImageRepository, this.simpleImageLimit = 5})
-      : assert(simpleImageRepository != null),
-        _simpleImageRepository = simpleImageRepository,
+  SimpleImageListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required SimpleImageRepository simpleImageRepository, this.simpleImageLimit = 5})
+      : _simpleImageRepository = simpleImageRepository,
         super(SimpleImageListLoading()) {
     on <LoadSimpleImageList> ((event, emit) {
       if ((detailed == null) || (!detailed!)) {
@@ -78,11 +81,19 @@ class SimpleImageListBloc extends Bloc<SimpleImageListEvent, SimpleImageListStat
     });
   }
 
+  List<SimpleImageModel?> _filter(List<SimpleImageModel?> original) {
+    if (filter != null) {
+      return filter!(original);
+    } else {
+      return original;
+    }
+  }
+
   Future<void> _mapLoadSimpleImageListToState() async {
     int amountNow =  (state is SimpleImageListLoaded) ? (state as SimpleImageListLoaded).values!.length : 0;
     _simpleImagesListSubscription?.cancel();
     _simpleImagesListSubscription = _simpleImageRepository.listen(
-          (list) => add(SimpleImageListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+          (list) => add(SimpleImageListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
@@ -94,7 +105,7 @@ class SimpleImageListBloc extends Bloc<SimpleImageListEvent, SimpleImageListStat
     int amountNow =  (state is SimpleImageListLoaded) ? (state as SimpleImageListLoaded).values!.length : 0;
     _simpleImagesListSubscription?.cancel();
     _simpleImagesListSubscription = _simpleImageRepository.listenWithDetails(
-            (list) => add(SimpleImageListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+            (list) => add(SimpleImageListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,

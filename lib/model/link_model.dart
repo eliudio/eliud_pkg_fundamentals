@@ -13,25 +13,14 @@
 
 */
 
-import 'package:eliud_core/tools/common_tools.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/model_base.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:eliud_core/model/app_model.dart';
 
-import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
-import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
 import '../tools/bespoke_models.dart';
-import 'package:eliud_pkg_fundamentals/model/model_export.dart';
-import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 
 import 'package:eliud_pkg_fundamentals/model/link_entity.dart';
 
-import 'package:eliud_core/tools/random.dart';
 
 
 
@@ -44,7 +33,6 @@ class LinkModel implements ModelBase {
   ActionModel? action;
 
   LinkModel({required this.documentID, this.linkText, this.action, })  {
-    assert(documentID != null);
   }
 
   LinkModel copyWith({String? documentID, String? linkText, ActionModel? action, }) {

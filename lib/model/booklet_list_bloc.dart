@@ -15,16 +15,20 @@
 
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 import 'package:eliud_pkg_fundamentals/model/booklet_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
+import 'booklet_model.dart';
+
+typedef List<BookletModel?> FilterBookletModels(List<BookletModel?> values);
+
 
 
 class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
+  final FilterBookletModels? filter;
   final BookletRepository _bookletRepository;
   StreamSubscription? _bookletsListSubscription;
   EliudQuery? eliudQuery;
@@ -35,9 +39,8 @@ class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
   final bool? detailed;
   final int bookletLimit;
 
-  BookletListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required BookletRepository bookletRepository, this.bookletLimit = 5})
-      : assert(bookletRepository != null),
-        _bookletRepository = bookletRepository,
+  BookletListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required BookletRepository bookletRepository, this.bookletLimit = 5})
+      : _bookletRepository = bookletRepository,
         super(BookletListLoading()) {
     on <LoadBookletList> ((event, emit) {
       if ((detailed == null) || (!detailed!)) {
@@ -78,11 +81,19 @@ class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
     });
   }
 
+  List<BookletModel?> _filter(List<BookletModel?> original) {
+    if (filter != null) {
+      return filter!(original);
+    } else {
+      return original;
+    }
+  }
+
   Future<void> _mapLoadBookletListToState() async {
     int amountNow =  (state is BookletListLoaded) ? (state as BookletListLoaded).values!.length : 0;
     _bookletsListSubscription?.cancel();
     _bookletsListSubscription = _bookletRepository.listen(
-          (list) => add(BookletListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+          (list) => add(BookletListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
@@ -94,7 +105,7 @@ class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
     int amountNow =  (state is BookletListLoaded) ? (state as BookletListLoaded).values!.length : 0;
     _bookletsListSubscription?.cancel();
     _bookletsListSubscription = _bookletRepository.listenWithDetails(
-            (list) => add(BookletListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+            (list) => add(BookletListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,

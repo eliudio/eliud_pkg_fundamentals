@@ -15,15 +15,10 @@
 
 import 'dart:collection';
 import 'dart:convert';
-import 'package:eliud_core/tools/random.dart';
-import 'abstract_repository_singleton.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliud_core/core/base/entity_base.dart';
 import 'package:eliud_core/model/entity_export.dart';
-import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-import 'package:eliud_core/tools/common_tools.dart';
 class BookletEntity implements EntityBase {
   final String? appId;
   final String? description;
@@ -50,12 +45,15 @@ class BookletEntity implements EntityBase {
 
     var sectionsFromMap;
     sectionsFromMap = map['sections'];
-    var sectionsList;
-    if (sectionsFromMap != null)
+    List<SectionEntity> sectionsList;
+    if (sectionsFromMap != null) {
       sectionsList = (map['sections'] as List<dynamic>)
         .map((dynamic item) =>
         SectionEntity.fromMap(item as Map, newDocumentIds: newDocumentIds)!)
         .toList();
+    } else {
+      sectionsList = [];
+    }
     var conditionsFromMap;
     conditionsFromMap = map['conditions'];
     if (conditionsFromMap != null)

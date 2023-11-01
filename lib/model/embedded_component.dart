@@ -23,7 +23,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 
 import '../model/document_item_list_bloc.dart';
 import '../model/document_item_list.dart';
@@ -154,7 +153,7 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
 
     DocumentItemInMemoryRepository(this.trigger, this.items) {
         List<List<DocumentItemModel>> myList = <List<DocumentItemModel>>[];
-        if (items != null) myList.add(items);
+        myList.add(items);
         theValues = Stream<List<DocumentItemModel>>.fromIterable(myList);
     }
 
@@ -274,7 +273,7 @@ class LinkInMemoryRepository implements LinkRepository {
 
     LinkInMemoryRepository(this.trigger, this.items) {
         List<List<LinkModel>> myList = <List<LinkModel>>[];
-        if (items != null) myList.add(items);
+        myList.add(items);
         theValues = Stream<List<LinkModel>>.fromIterable(myList);
     }
 
@@ -394,7 +393,7 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
 
     ListedItemInMemoryRepository(this.trigger, this.items) {
         List<List<ListedItemModel>> myList = <List<ListedItemModel>>[];
-        if (items != null) myList.add(items);
+        myList.add(items);
         theValues = Stream<List<ListedItemModel>>.fromIterable(myList);
     }
 
@@ -514,7 +513,7 @@ class SectionInMemoryRepository implements SectionRepository {
 
     SectionInMemoryRepository(this.trigger, this.items) {
         List<List<SectionModel>> myList = <List<SectionModel>>[];
-        if (items != null) myList.add(items);
+        myList.add(items);
         theValues = Stream<List<SectionModel>>.fromIterable(myList);
     }
 
@@ -634,7 +633,7 @@ class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
 
     TutorialEntryInMemoryRepository(this.trigger, this.items) {
         List<List<TutorialEntryModel>> myList = <List<TutorialEntryModel>>[];
-        if (items != null) myList.add(items);
+        myList.add(items);
         theValues = Stream<List<TutorialEntryModel>>.fromIterable(myList);
     }
 

@@ -15,16 +15,20 @@
 
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 import 'package:eliud_pkg_fundamentals/model/grid_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/grid_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/grid_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
+import 'grid_model.dart';
+
+typedef List<GridModel?> FilterGridModels(List<GridModel?> values);
+
 
 
 class GridListBloc extends Bloc<GridListEvent, GridListState> {
+  final FilterGridModels? filter;
   final GridRepository _gridRepository;
   StreamSubscription? _gridsListSubscription;
   EliudQuery? eliudQuery;
@@ -35,9 +39,8 @@ class GridListBloc extends Bloc<GridListEvent, GridListState> {
   final bool? detailed;
   final int gridLimit;
 
-  GridListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required GridRepository gridRepository, this.gridLimit = 5})
-      : assert(gridRepository != null),
-        _gridRepository = gridRepository,
+  GridListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required GridRepository gridRepository, this.gridLimit = 5})
+      : _gridRepository = gridRepository,
         super(GridListLoading()) {
     on <LoadGridList> ((event, emit) {
       if ((detailed == null) || (!detailed!)) {
@@ -78,11 +81,19 @@ class GridListBloc extends Bloc<GridListEvent, GridListState> {
     });
   }
 
+  List<GridModel?> _filter(List<GridModel?> original) {
+    if (filter != null) {
+      return filter!(original);
+    } else {
+      return original;
+    }
+  }
+
   Future<void> _mapLoadGridListToState() async {
     int amountNow =  (state is GridListLoaded) ? (state as GridListLoaded).values!.length : 0;
     _gridsListSubscription?.cancel();
     _gridsListSubscription = _gridRepository.listen(
-          (list) => add(GridListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+          (list) => add(GridListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
@@ -94,7 +105,7 @@ class GridListBloc extends Bloc<GridListEvent, GridListState> {
     int amountNow =  (state is GridListLoaded) ? (state as GridListLoaded).values!.length : 0;
     _gridsListSubscription?.cancel();
     _gridsListSubscription = _gridRepository.listenWithDetails(
-            (list) => add(GridListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+            (list) => add(GridListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,

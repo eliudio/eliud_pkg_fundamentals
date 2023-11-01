@@ -15,16 +15,20 @@
 
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 import 'package:eliud_pkg_fundamentals/model/divider_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
+import 'divider_model.dart';
+
+typedef List<DividerModel?> FilterDividerModels(List<DividerModel?> values);
+
 
 
 class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
+  final FilterDividerModels? filter;
   final DividerRepository _dividerRepository;
   StreamSubscription? _dividersListSubscription;
   EliudQuery? eliudQuery;
@@ -35,9 +39,8 @@ class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
   final bool? detailed;
   final int dividerLimit;
 
-  DividerListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required DividerRepository dividerRepository, this.dividerLimit = 5})
-      : assert(dividerRepository != null),
-        _dividerRepository = dividerRepository,
+  DividerListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required DividerRepository dividerRepository, this.dividerLimit = 5})
+      : _dividerRepository = dividerRepository,
         super(DividerListLoading()) {
     on <LoadDividerList> ((event, emit) {
       if ((detailed == null) || (!detailed!)) {
@@ -78,11 +81,19 @@ class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
     });
   }
 
+  List<DividerModel?> _filter(List<DividerModel?> original) {
+    if (filter != null) {
+      return filter!(original);
+    } else {
+      return original;
+    }
+  }
+
   Future<void> _mapLoadDividerListToState() async {
     int amountNow =  (state is DividerListLoaded) ? (state as DividerListLoaded).values!.length : 0;
     _dividersListSubscription?.cancel();
     _dividersListSubscription = _dividerRepository.listen(
-          (list) => add(DividerListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+          (list) => add(DividerListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
@@ -94,7 +105,7 @@ class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
     int amountNow =  (state is DividerListLoaded) ? (state as DividerListLoaded).values!.length : 0;
     _dividersListSubscription?.cancel();
     _dividersListSubscription = _dividerRepository.listenWithDetails(
-            (list) => add(DividerListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+            (list) => add(DividerListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,

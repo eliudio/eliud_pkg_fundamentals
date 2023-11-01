@@ -5,7 +5,6 @@ import 'package:eliud_core/tools/random.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_entry_model.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_model.dart';
-import 'package:eliud_pkg_fundamentals/model/tutorial_model.dart';
 
 import '../../model/tutorial_entity.dart';
 

@@ -8,7 +8,6 @@ import 'package:eliud_core/tools/widgets/header_widget.dart';
 import 'package:eliud_core/tools/widgets/platform_medium_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/document_item_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 typedef void DocumentItemModelCallback(DocumentItemModel documentItemModel);
 

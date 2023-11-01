@@ -6,7 +6,6 @@ import 'package:eliud_core/tools/screen_size.dart';
 import 'package:eliud_pkg_fundamentals/editors/widgets/tutorial_item_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_entry_model.dart';
 import 'package:flutter/material.dart';
-import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/style/frontend/has_container.dart';

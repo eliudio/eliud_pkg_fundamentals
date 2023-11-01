@@ -15,16 +15,20 @@
 
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 import 'package:eliud_pkg_fundamentals/model/simple_text_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_text_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_text_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
+import 'simple_text_model.dart';
+
+typedef List<SimpleTextModel?> FilterSimpleTextModels(List<SimpleTextModel?> values);
+
 
 
 class SimpleTextListBloc extends Bloc<SimpleTextListEvent, SimpleTextListState> {
+  final FilterSimpleTextModels? filter;
   final SimpleTextRepository _simpleTextRepository;
   StreamSubscription? _simpleTextsListSubscription;
   EliudQuery? eliudQuery;
@@ -35,9 +39,8 @@ class SimpleTextListBloc extends Bloc<SimpleTextListEvent, SimpleTextListState> 
   final bool? detailed;
   final int simpleTextLimit;
 
-  SimpleTextListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required SimpleTextRepository simpleTextRepository, this.simpleTextLimit = 5})
-      : assert(simpleTextRepository != null),
-        _simpleTextRepository = simpleTextRepository,
+  SimpleTextListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required SimpleTextRepository simpleTextRepository, this.simpleTextLimit = 5})
+      : _simpleTextRepository = simpleTextRepository,
         super(SimpleTextListLoading()) {
     on <LoadSimpleTextList> ((event, emit) {
       if ((detailed == null) || (!detailed!)) {
@@ -78,11 +81,19 @@ class SimpleTextListBloc extends Bloc<SimpleTextListEvent, SimpleTextListState> 
     });
   }
 
+  List<SimpleTextModel?> _filter(List<SimpleTextModel?> original) {
+    if (filter != null) {
+      return filter!(original);
+    } else {
+      return original;
+    }
+  }
+
   Future<void> _mapLoadSimpleTextListToState() async {
     int amountNow =  (state is SimpleTextListLoaded) ? (state as SimpleTextListLoaded).values!.length : 0;
     _simpleTextsListSubscription?.cancel();
     _simpleTextsListSubscription = _simpleTextRepository.listen(
-          (list) => add(SimpleTextListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+          (list) => add(SimpleTextListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
@@ -94,7 +105,7 @@ class SimpleTextListBloc extends Bloc<SimpleTextListEvent, SimpleTextListState> 
     int amountNow =  (state is SimpleTextListLoaded) ? (state as SimpleTextListLoaded).values!.length : 0;
     _simpleTextsListSubscription?.cancel();
     _simpleTextsListSubscription = _simpleTextRepository.listenWithDetails(
-            (list) => add(SimpleTextListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+            (list) => add(SimpleTextListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,

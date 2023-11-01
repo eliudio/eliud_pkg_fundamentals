@@ -15,16 +15,20 @@
 
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 import 'package:eliud_pkg_fundamentals/model/presentation_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
+import 'presentation_model.dart';
+
+typedef List<PresentationModel?> FilterPresentationModels(List<PresentationModel?> values);
+
 
 
 class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListState> {
+  final FilterPresentationModels? filter;
   final PresentationRepository _presentationRepository;
   StreamSubscription? _presentationsListSubscription;
   EliudQuery? eliudQuery;
@@ -35,9 +39,8 @@ class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListS
   final bool? detailed;
   final int presentationLimit;
 
-  PresentationListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required PresentationRepository presentationRepository, this.presentationLimit = 5})
-      : assert(presentationRepository != null),
-        _presentationRepository = presentationRepository,
+  PresentationListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required PresentationRepository presentationRepository, this.presentationLimit = 5})
+      : _presentationRepository = presentationRepository,
         super(PresentationListLoading()) {
     on <LoadPresentationList> ((event, emit) {
       if ((detailed == null) || (!detailed!)) {
@@ -78,11 +81,19 @@ class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListS
     });
   }
 
+  List<PresentationModel?> _filter(List<PresentationModel?> original) {
+    if (filter != null) {
+      return filter!(original);
+    } else {
+      return original;
+    }
+  }
+
   Future<void> _mapLoadPresentationListToState() async {
     int amountNow =  (state is PresentationListLoaded) ? (state as PresentationListLoaded).values!.length : 0;
     _presentationsListSubscription?.cancel();
     _presentationsListSubscription = _presentationRepository.listen(
-          (list) => add(PresentationListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+          (list) => add(PresentationListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
@@ -94,7 +105,7 @@ class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListS
     int amountNow =  (state is PresentationListLoaded) ? (state as PresentationListLoaded).values!.length : 0;
     _presentationsListSubscription?.cancel();
     _presentationsListSubscription = _presentationRepository.listenWithDetails(
-            (list) => add(PresentationListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+            (list) => add(PresentationListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,

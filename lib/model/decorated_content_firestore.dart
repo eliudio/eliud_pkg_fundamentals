@@ -16,16 +16,8 @@
 import 'package:eliud_pkg_fundamentals/model/decorated_content_repository.dart';
 
 
-import 'package:eliud_core/model/repository_export.dart';
-import 'package:eliud_core/model/abstract_repository_singleton.dart';
-import 'package:eliud_core/tools/main_abstract_repository_singleton.dart';
-import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
-import 'package:eliud_core/model/model_export.dart';
-import '../tools/bespoke_models.dart';
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
-import 'package:eliud_core/model/entity_export.dart';
-import '../tools/bespoke_entities.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 
@@ -81,6 +73,7 @@ class DecoratedContentFirestore implements DecoratedContentRepository {
         print("Exceptoin: $e");
       }
     };
+return null;
   }
 
   Future<DecoratedContentModel?> get(String? id, {Function(Exception)? onError}) async {
@@ -96,6 +89,7 @@ class DecoratedContentFirestore implements DecoratedContentRepository {
         print("Exceptoin: $e");
       }
     };
+return null;
   }
 
   StreamSubscription<List<DecoratedContentModel?>> listen(DecoratedContentModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery}) {

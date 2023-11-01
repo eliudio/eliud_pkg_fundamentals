@@ -15,16 +15,20 @@
 
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 import 'package:eliud_pkg_fundamentals/model/document_repository.dart';
 import 'package:eliud_pkg_fundamentals/model/document_list_event.dart';
 import 'package:eliud_pkg_fundamentals/model/document_list_state.dart';
 import 'package:eliud_core/tools/query/query_tools.dart';
 
+import 'document_model.dart';
+
+typedef List<DocumentModel?> FilterDocumentModels(List<DocumentModel?> values);
+
 
 
 class DocumentListBloc extends Bloc<DocumentListEvent, DocumentListState> {
+  final FilterDocumentModels? filter;
   final DocumentRepository _documentRepository;
   StreamSubscription? _documentsListSubscription;
   EliudQuery? eliudQuery;
@@ -35,9 +39,8 @@ class DocumentListBloc extends Bloc<DocumentListEvent, DocumentListState> {
   final bool? detailed;
   final int documentLimit;
 
-  DocumentListBloc({this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required DocumentRepository documentRepository, this.documentLimit = 5})
-      : assert(documentRepository != null),
-        _documentRepository = documentRepository,
+  DocumentListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required DocumentRepository documentRepository, this.documentLimit = 5})
+      : _documentRepository = documentRepository,
         super(DocumentListLoading()) {
     on <LoadDocumentList> ((event, emit) {
       if ((detailed == null) || (!detailed!)) {
@@ -78,11 +81,19 @@ class DocumentListBloc extends Bloc<DocumentListEvent, DocumentListState> {
     });
   }
 
+  List<DocumentModel?> _filter(List<DocumentModel?> original) {
+    if (filter != null) {
+      return filter!(original);
+    } else {
+      return original;
+    }
+  }
+
   Future<void> _mapLoadDocumentListToState() async {
     int amountNow =  (state is DocumentListLoaded) ? (state as DocumentListLoaded).values!.length : 0;
     _documentsListSubscription?.cancel();
     _documentsListSubscription = _documentRepository.listen(
-          (list) => add(DocumentListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+          (list) => add(DocumentListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
       orderBy: orderBy,
       descending: descending,
       eliudQuery: eliudQuery,
@@ -94,7 +105,7 @@ class DocumentListBloc extends Bloc<DocumentListEvent, DocumentListState> {
     int amountNow =  (state is DocumentListLoaded) ? (state as DocumentListLoaded).values!.length : 0;
     _documentsListSubscription?.cancel();
     _documentsListSubscription = _documentRepository.listenWithDetails(
-            (list) => add(DocumentListUpdated(value: list, mightHaveMore: amountNow != list.length)),
+            (list) => add(DocumentListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
