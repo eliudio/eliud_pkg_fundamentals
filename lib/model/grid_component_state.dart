@@ -27,7 +27,7 @@ class GridComponentUninitialized extends GridComponentState {}
 
 class GridComponentError extends GridComponentState {
   final String? message;
-  GridComponentError({ this.message });
+  GridComponentError({this.message});
 }
 
 class GridComponentPermissionDenied extends GridComponentState {
@@ -37,10 +37,10 @@ class GridComponentPermissionDenied extends GridComponentState {
 class GridComponentLoaded extends GridComponentState {
   final GridModel value;
 
-  const GridComponentLoaded({ required this.value });
+  const GridComponentLoaded({required this.value});
 
-  GridComponentLoaded copyWith({ GridModel? copyThis }) {
-    return GridComponentLoaded(value: copyThis ?? this.value);
+  GridComponentLoaded copyWith({GridModel? copyThis}) {
+    return GridComponentLoaded(value: copyThis ?? value);
   }
 
   @override
@@ -49,4 +49,3 @@ class GridComponentLoaded extends GridComponentState {
   @override
   String toString() => 'GridComponentLoaded { value: $value }';
 }
-

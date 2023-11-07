@@ -27,7 +27,7 @@ class SimpleTextComponentUninitialized extends SimpleTextComponentState {}
 
 class SimpleTextComponentError extends SimpleTextComponentState {
   final String? message;
-  SimpleTextComponentError({ this.message });
+  SimpleTextComponentError({this.message});
 }
 
 class SimpleTextComponentPermissionDenied extends SimpleTextComponentState {
@@ -37,10 +37,10 @@ class SimpleTextComponentPermissionDenied extends SimpleTextComponentState {
 class SimpleTextComponentLoaded extends SimpleTextComponentState {
   final SimpleTextModel value;
 
-  const SimpleTextComponentLoaded({ required this.value });
+  const SimpleTextComponentLoaded({required this.value});
 
-  SimpleTextComponentLoaded copyWith({ SimpleTextModel? copyThis }) {
-    return SimpleTextComponentLoaded(value: copyThis ?? this.value);
+  SimpleTextComponentLoaded copyWith({SimpleTextModel? copyThis}) {
+    return SimpleTextComponentLoaded(value: copyThis ?? value);
   }
 
   @override
@@ -49,4 +49,3 @@ class SimpleTextComponentLoaded extends SimpleTextComponentState {
   @override
   String toString() => 'SimpleTextComponentLoaded { value: $value }';
 }
-

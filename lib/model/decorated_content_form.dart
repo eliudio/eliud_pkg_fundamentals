@@ -22,9 +22,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eliud_core/style/style_registry.dart';
 
-
-
-
 import 'package:eliud_core/tools/bespoke_formfields.dart';
 
 import 'package:eliud_core/tools/enums.dart';
@@ -39,74 +36,88 @@ import 'package:eliud_pkg_fundamentals/model/decorated_content_form_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/decorated_content_form_event.dart';
 import 'package:eliud_pkg_fundamentals/model/decorated_content_form_state.dart';
 
-
 class DecoratedContentForm extends StatelessWidget {
   final AppModel app;
-  FormAction formAction;
-  DecoratedContentModel? value;
-  ActionModel? submitAction;
+  final FormAction formAction;
+  final DecoratedContentModel? value;
+  final ActionModel? submitAction;
 
-  DecoratedContentForm({Key? key, required this.app, required this.formAction, required this.value, this.submitAction}) : super(key: key);
+  DecoratedContentForm(
+      {super.key,
+      required this.app,
+      required this.formAction,
+      required this.value,
+      this.submitAction});
 
+  /// Build the DecoratedContentForm
   @override
   Widget build(BuildContext context) {
-    var accessState = AccessBloc.getState(context);
+    //var accessState = AccessBloc.getState(context);
     var appId = app.documentID;
-    if (formAction == FormAction.ShowData) {
-      return BlocProvider<DecoratedContentFormBloc >(
-            create: (context) => DecoratedContentFormBloc(appId,
-                                       formAction: formAction,
-
-                                                )..add(InitialiseDecoratedContentFormEvent(value: value)),
-  
-        child: MyDecoratedContentForm(app:app, submitAction: submitAction, formAction: formAction),
-          );
-    } if (formAction == FormAction.ShowPreloadedData) {
-      return BlocProvider<DecoratedContentFormBloc >(
-            create: (context) => DecoratedContentFormBloc(appId,
-                                       formAction: formAction,
-
-                                                )..add(InitialiseDecoratedContentFormNoLoadEvent(value: value)),
-  
-        child: MyDecoratedContentForm(app:app, submitAction: submitAction, formAction: formAction),
-          );
+    if (formAction == FormAction.showData) {
+      return BlocProvider<DecoratedContentFormBloc>(
+        create: (context) => DecoratedContentFormBloc(
+          appId,
+          formAction: formAction,
+        )..add(InitialiseDecoratedContentFormEvent(value: value)),
+        child: MyDecoratedContentForm(
+            app: app, submitAction: submitAction, formAction: formAction),
+      );
+    }
+    if (formAction == FormAction.showPreloadedData) {
+      return BlocProvider<DecoratedContentFormBloc>(
+        create: (context) => DecoratedContentFormBloc(
+          appId,
+          formAction: formAction,
+        )..add(InitialiseDecoratedContentFormNoLoadEvent(value: value)),
+        child: MyDecoratedContentForm(
+            app: app, submitAction: submitAction, formAction: formAction),
+      );
     } else {
       return Scaffold(
-        appBar: StyleRegistry.registry().styleWithApp(app).adminFormStyle().appBarWithString(app, context, title: formAction == FormAction.UpdateAction ? 'Update DecoratedContent' : 'Add DecoratedContent'),
-        body: BlocProvider<DecoratedContentFormBloc >(
-            create: (context) => DecoratedContentFormBloc(appId,
-                                       formAction: formAction,
-
-                                                )..add((formAction == FormAction.UpdateAction ? InitialiseDecoratedContentFormEvent(value: value) : InitialiseNewDecoratedContentFormEvent())),
-  
-        child: MyDecoratedContentForm(app: app, submitAction: submitAction, formAction: formAction),
+          appBar: StyleRegistry.registry()
+              .styleWithApp(app)
+              .adminFormStyle()
+              .appBarWithString(app, context,
+                  title: formAction == FormAction.updateAction
+                      ? 'Update DecoratedContent'
+                      : 'Add DecoratedContent'),
+          body: BlocProvider<DecoratedContentFormBloc>(
+            create: (context) => DecoratedContentFormBloc(
+              appId,
+              formAction: formAction,
+            )..add((formAction == FormAction.updateAction
+                ? InitialiseDecoratedContentFormEvent(value: value)
+                : InitialiseNewDecoratedContentFormEvent())),
+            child: MyDecoratedContentForm(
+                app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
 }
-
 
 class MyDecoratedContentForm extends StatefulWidget {
   final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MyDecoratedContentForm({required this.app, this.formAction, this.submitAction});
+  MyDecoratedContentForm(
+      {required this.app, this.formAction, this.submitAction});
 
-  _MyDecoratedContentFormState createState() => _MyDecoratedContentFormState(this.formAction);
+  @override
+  State<MyDecoratedContentForm> createState() =>
+      _MyDecoratedContentFormState(formAction);
 }
-
 
 class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
   final FormAction? formAction;
   late DecoratedContentFormBloc _myFormBloc;
 
   final TextEditingController _documentIDController = TextEditingController();
-  final TextEditingController _appIdController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   int? _decorationComponentPositionSelectedRadioTile;
-  final TextEditingController _percentageDecorationVisibleController = TextEditingController();
-
+  final TextEditingController _percentageDecorationVisibleController =
+      TextEditingController();
 
   _MyDecoratedContentFormState(this.formAction);
 
@@ -115,276 +126,391 @@ class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
     super.initState();
     _myFormBloc = BlocProvider.of<DecoratedContentFormBloc>(context);
     _documentIDController.addListener(_onDocumentIDChanged);
-    _appIdController.addListener(_onAppIdChanged);
     _descriptionController.addListener(_onDescriptionChanged);
     _decorationComponentPositionSelectedRadioTile = 0;
-    _percentageDecorationVisibleController.addListener(_onPercentageDecorationVisibleChanged);
+    _percentageDecorationVisibleController
+        .addListener(_onPercentageDecorationVisibleChanged);
   }
 
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    return BlocBuilder<DecoratedContentFormBloc, DecoratedContentFormState>(builder: (context, state) {
-      if (state is DecoratedContentFormUninitialized) return Center(
-        child: StyleRegistry.registry().styleWithApp(widget.app).adminListStyle().progressIndicator(widget.app, context),
-      );
+    return BlocBuilder<DecoratedContentFormBloc, DecoratedContentFormState>(
+        builder: (context, state) {
+      if (state is DecoratedContentFormUninitialized) {
+        return Center(
+          child: StyleRegistry.registry()
+              .styleWithApp(widget.app)
+              .adminListStyle()
+              .progressIndicator(widget.app, context),
+        );
+      }
 
       if (state is DecoratedContentFormLoaded) {
-        if (state.value!.documentID != null)
-          _documentIDController.text = state.value!.documentID.toString();
-        else
-          _documentIDController.text = "";
-        if (state.value!.appId != null)
-          _appIdController.text = state.value!.appId.toString();
-        else
-          _appIdController.text = "";
-        if (state.value!.description != null)
-          _descriptionController.text = state.value!.description.toString();
-        else
-          _descriptionController.text = "";
-        if (state.value!.decorationComponentPosition != null)
-          _decorationComponentPositionSelectedRadioTile = state.value!.decorationComponentPosition!.index;
-        else
+        _documentIDController.text = state.value!.documentID.toString();
+        _descriptionController.text = state.value!.description.toString();
+        if (state.value!.decorationComponentPosition != null) {
+          _decorationComponentPositionSelectedRadioTile =
+              state.value!.decorationComponentPosition!.index;
+        } else {
           _decorationComponentPositionSelectedRadioTile = 0;
-        if (state.value!.percentageDecorationVisible != null)
-          _percentageDecorationVisibleController.text = state.value!.percentageDecorationVisible.toString();
-        else
-          _percentageDecorationVisibleController.text = "";
+        }
+        _percentageDecorationVisibleController.text =
+            state.value!.percentageDecorationVisible.toString();
       }
       if (state is DecoratedContentFormInitialized) {
         List<Widget> children = [];
-         children.add(Container(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  child: StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().groupTitle(widget.app, context, 'General')
-                ));
+        children.add(Container(
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+            child: StyleRegistry.registry()
+                .styleWithApp(widget.app)
+                .adminFormStyle()
+                .groupTitle(widget.app, context, 'General')));
 
-        children.add(
+        children.add(ExtensionTypeField(
+            widget.app,
+            state.value!.decoratingComponentName,
+            _onDecoratingComponentNameChanged));
 
-                ExtensionTypeField(widget.app, state.value!.decoratingComponentName, _onDecoratingComponentNameChanged)
-          );
+        children.add(ComponentIdField(widget.app,
+            componentName: state.value!.decoratingComponentName,
+            originalValue: state.value!.decoratingComponentId,
+            trigger: (value, _) => _onDecoratingComponentIdChanged(value)));
 
-        children.add(
+        children.add(ExtensionTypeField(widget.app,
+            state.value!.contentComponentName, _onContentComponentNameChanged));
 
-                ComponentIdField(widget.app, componentName: state.value!.decoratingComponentName, value: state.value!.decoratingComponentId, trigger: (value, _) => _onDecoratingComponentIdChanged(value))
-          );
+        children.add(ComponentIdField(widget.app,
+            componentName: state.value!.contentComponentName,
+            originalValue: state.value!.contentComponentId,
+            trigger: (value, _) => _onContentComponentIdChanged(value)));
 
-        children.add(
-
-                ExtensionTypeField(widget.app, state.value!.contentComponentName, _onContentComponentNameChanged)
-          );
-
-        children.add(
-
-                ComponentIdField(widget.app, componentName: state.value!.contentComponentName, value: state.value!.contentComponentId, trigger: (value, _) => _onContentComponentIdChanged(value))
-          );
-
-        children.add(
-
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Percentage Decoration Visible', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _percentageDecorationVisibleController, keyboardType: TextInputType.number, validator: (_) => state is PercentageDecorationVisibleDecoratedContentFormError ? state.message : null, hintText: null)
-          );
-
-
-        children.add(Container(height: 20.0));
-        children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().divider(widget.app, context));
-
-
-         children.add(Container(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  child: StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().groupTitle(widget.app, context, 'General')
-                ));
-
-        children.add(
-
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Document ID', icon: Icons.vpn_key, readOnly: (formAction == FormAction.UpdateAction), textEditingController: _documentIDController, keyboardType: TextInputType.text, validator: (_) => state is DocumentIDDecoratedContentFormError ? state.message : null, hintText: null)
-          );
-
-        children.add(
-
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Description', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _descriptionController, keyboardType: TextInputType.text, validator: (_) => state is DescriptionDecoratedContentFormError ? state.message : null, hintText: null)
-          );
-
+        children.add(StyleRegistry.registry()
+            .styleWithApp(widget.app)
+            .adminFormStyle()
+            .textFormField(widget.app, context,
+                labelText: 'Percentage Decoration Visible',
+                icon: Icons.text_format,
+                readOnly: _readOnly(accessState, state),
+                textEditingController: _percentageDecorationVisibleController,
+                keyboardType: TextInputType.number,
+                validator: (_) => state
+                        is PercentageDecorationVisibleDecoratedContentFormError
+                    ? state.message
+                    : null,
+                hintText: null));
 
         children.add(Container(height: 20.0));
-        children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().divider(widget.app, context));
+        children.add(StyleRegistry.registry()
+            .styleWithApp(widget.app)
+            .adminFormStyle()
+            .divider(widget.app, context));
 
+        children.add(Container(
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+            child: StyleRegistry.registry()
+                .styleWithApp(widget.app)
+                .adminFormStyle()
+                .groupTitle(widget.app, context, 'General')));
 
-         children.add(Container(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  child: StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().groupTitle(widget.app, context, 'Conditions')
-                ));
+        children.add(StyleRegistry.registry()
+            .styleWithApp(widget.app)
+            .adminFormStyle()
+            .textFormField(widget.app, context,
+                labelText: 'Document ID',
+                icon: Icons.vpn_key,
+                readOnly: (formAction == FormAction.updateAction),
+                textEditingController: _documentIDController,
+                keyboardType: TextInputType.text,
+                validator: (_) => state is DocumentIDDecoratedContentFormError
+                    ? state.message
+                    : null,
+                hintText: null));
 
-
-
-        children.add(Container(height: 20.0));
-        children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().divider(widget.app, context));
-
-
-         children.add(Container(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  child: StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().groupTitle(widget.app, context, 'Conditions')
-                ));
-
-        children.add(
-
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _decorationComponentPositionSelectedRadioTile, 'LeftIfSpaceAvailableOtherwiseTop', 'LeftIfSpaceAvailableOtherwiseTop', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
-          );
-        children.add(
-
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _decorationComponentPositionSelectedRadioTile, 'LeftIfSpaceAvailableOtherwiseDrop', 'LeftIfSpaceAvailableOtherwiseDrop', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
-          );
-        children.add(
-
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _decorationComponentPositionSelectedRadioTile, 'LeftIfSpaceAvailableOtherwiseBottom', 'LeftIfSpaceAvailableOtherwiseBottom', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
-          );
-        children.add(
-
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _decorationComponentPositionSelectedRadioTile, 'RightIfSpaceAvailableOtherwiseTop', 'RightIfSpaceAvailableOtherwiseTop', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
-          );
-        children.add(
-
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _decorationComponentPositionSelectedRadioTile, 'RightIfSpaceAvailableOtherwiseDrop', 'RightIfSpaceAvailableOtherwiseDrop', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
-          );
-        children.add(
-
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().radioListTile(widget.app, context, 0, _decorationComponentPositionSelectedRadioTile, 'RightIfSpaceAvailableOtherwiseBottom', 'RightIfSpaceAvailableOtherwiseBottom', !accessState.memberIsOwner(widget.app.documentID) ? null : (dynamic val) => setSelectionDecorationComponentPosition(val))
-          );
-
+        children.add(StyleRegistry.registry()
+            .styleWithApp(widget.app)
+            .adminFormStyle()
+            .textFormField(widget.app, context,
+                labelText: 'Description',
+                icon: Icons.text_format,
+                readOnly: _readOnly(accessState, state),
+                textEditingController: _descriptionController,
+                keyboardType: TextInputType.text,
+                validator: (_) => state is DescriptionDecoratedContentFormError
+                    ? state.message
+                    : null,
+                hintText: null));
 
         children.add(Container(height: 20.0));
-        children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().divider(widget.app, context));
+        children.add(StyleRegistry.registry()
+            .styleWithApp(widget.app)
+            .adminFormStyle()
+            .divider(widget.app, context));
 
+        children.add(Container(
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+            child: StyleRegistry.registry()
+                .styleWithApp(widget.app)
+                .adminFormStyle()
+                .groupTitle(widget.app, context, 'Conditions')));
 
-        if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
-          children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().button(widget.app, context, label: 'Submit',
-                  onPressed: _readOnly(accessState, state) ? null : () {
-                    if (state is DecoratedContentFormError) {
-                      return null;
-                    } else {
-                      if (formAction == FormAction.UpdateAction) {
-                        BlocProvider.of<DecoratedContentListBloc>(context).add(
-                          UpdateDecoratedContentList(value: state.value!.copyWith(
-                              documentID: state.value!.documentID, 
-                              appId: state.value!.appId, 
-                              description: state.value!.description, 
-                              decoratingComponentName: state.value!.decoratingComponentName, 
-                              decoratingComponentId: state.value!.decoratingComponentId, 
-                              contentComponentName: state.value!.contentComponentName, 
-                              contentComponentId: state.value!.contentComponentId, 
-                              decorationComponentPosition: state.value!.decorationComponentPosition, 
-                              percentageDecorationVisible: state.value!.percentageDecorationVisible, 
-                              conditions: state.value!.conditions, 
-                        )));
-                      } else {
-                        BlocProvider.of<DecoratedContentListBloc>(context).add(
-                          AddDecoratedContentList(value: DecoratedContentModel(
-                              documentID: state.value!.documentID, 
-                              appId: state.value!.appId, 
-                              description: state.value!.description, 
-                              decoratingComponentName: state.value!.decoratingComponentName, 
-                              decoratingComponentId: state.value!.decoratingComponentId, 
-                              contentComponentName: state.value!.contentComponentName, 
-                              contentComponentId: state.value!.contentComponentId, 
-                              decorationComponentPosition: state.value!.decorationComponentPosition, 
-                              percentageDecorationVisible: state.value!.percentageDecorationVisible, 
-                              conditions: state.value!.conditions, 
-                          )));
-                      }
-                      if (widget.submitAction != null) {
-                        eliudrouter.Router.navigateTo(context, widget.submitAction!);
-                      } else {
-                        Navigator.pop(context);
-                      }
-                    }
-                  },
-                ));
+        children.add(Container(height: 20.0));
+        children.add(StyleRegistry.registry()
+            .styleWithApp(widget.app)
+            .adminFormStyle()
+            .divider(widget.app, context));
 
-        return StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().container(widget.app, context, Form(
-            child: ListView(
-              padding: const EdgeInsets.all(8),
-              physics: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? NeverScrollableScrollPhysics() : null,
-              shrinkWrap: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)),
-              children: children
-            ),
-          ), formAction!
-        );
+        children.add(Container(
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+            child: StyleRegistry.registry()
+                .styleWithApp(widget.app)
+                .adminFormStyle()
+                .groupTitle(widget.app, context, 'Conditions')));
+
+        children.add(StyleRegistry.registry()
+            .styleWithApp(widget.app)
+            .adminFormStyle()
+            .radioListTile(
+                widget.app,
+                context,
+                0,
+                _decorationComponentPositionSelectedRadioTile,
+                'leftIfSpaceAvailableOtherwiseTop',
+                'leftIfSpaceAvailableOtherwiseTop',
+                !accessState.memberIsOwner(widget.app.documentID)
+                    ? null
+                    : (dynamic val) =>
+                        setSelectionDecorationComponentPosition(val)));
+        children.add(StyleRegistry.registry()
+            .styleWithApp(widget.app)
+            .adminFormStyle()
+            .radioListTile(
+                widget.app,
+                context,
+                0,
+                _decorationComponentPositionSelectedRadioTile,
+                'leftIfSpaceAvailableOtherwiseDrop',
+                'leftIfSpaceAvailableOtherwiseDrop',
+                !accessState.memberIsOwner(widget.app.documentID)
+                    ? null
+                    : (dynamic val) =>
+                        setSelectionDecorationComponentPosition(val)));
+        children.add(StyleRegistry.registry()
+            .styleWithApp(widget.app)
+            .adminFormStyle()
+            .radioListTile(
+                widget.app,
+                context,
+                0,
+                _decorationComponentPositionSelectedRadioTile,
+                'leftIfSpaceAvailableOtherwiseBottom',
+                'leftIfSpaceAvailableOtherwiseBottom',
+                !accessState.memberIsOwner(widget.app.documentID)
+                    ? null
+                    : (dynamic val) =>
+                        setSelectionDecorationComponentPosition(val)));
+        children.add(StyleRegistry.registry()
+            .styleWithApp(widget.app)
+            .adminFormStyle()
+            .radioListTile(
+                widget.app,
+                context,
+                0,
+                _decorationComponentPositionSelectedRadioTile,
+                'rightIfSpaceAvailableOtherwiseTop',
+                'rightIfSpaceAvailableOtherwiseTop',
+                !accessState.memberIsOwner(widget.app.documentID)
+                    ? null
+                    : (dynamic val) =>
+                        setSelectionDecorationComponentPosition(val)));
+        children.add(StyleRegistry.registry()
+            .styleWithApp(widget.app)
+            .adminFormStyle()
+            .radioListTile(
+                widget.app,
+                context,
+                0,
+                _decorationComponentPositionSelectedRadioTile,
+                'rightIfSpaceAvailableOtherwiseDrop',
+                'rightIfSpaceAvailableOtherwiseDrop',
+                !accessState.memberIsOwner(widget.app.documentID)
+                    ? null
+                    : (dynamic val) =>
+                        setSelectionDecorationComponentPosition(val)));
+        children.add(StyleRegistry.registry()
+            .styleWithApp(widget.app)
+            .adminFormStyle()
+            .radioListTile(
+                widget.app,
+                context,
+                0,
+                _decorationComponentPositionSelectedRadioTile,
+                'rightIfSpaceAvailableOtherwiseBottom',
+                'rightIfSpaceAvailableOtherwiseBottom',
+                !accessState.memberIsOwner(widget.app.documentID)
+                    ? null
+                    : (dynamic val) =>
+                        setSelectionDecorationComponentPosition(val)));
+
+        children.add(Container(height: 20.0));
+        children.add(StyleRegistry.registry()
+            .styleWithApp(widget.app)
+            .adminFormStyle()
+            .divider(widget.app, context));
+
+        if ((formAction != FormAction.showData) &&
+            (formAction != FormAction.showPreloadedData)) {
+          children.add(StyleRegistry.registry()
+              .styleWithApp(widget.app)
+              .adminFormStyle()
+              .button(
+                widget.app,
+                context,
+                label: 'Submit',
+                onPressed: _readOnly(accessState, state)
+                    ? null
+                    : () {
+                        if (state is DecoratedContentFormError) {
+                          return;
+                        } else {
+                          if (formAction == FormAction.updateAction) {
+                            BlocProvider.of<DecoratedContentListBloc>(context)
+                                .add(UpdateDecoratedContentList(
+                                    value: state.value!.copyWith(
+                              documentID: state.value!.documentID,
+                              appId: state.value!.appId,
+                              description: state.value!.description,
+                              decoratingComponentName:
+                                  state.value!.decoratingComponentName,
+                              decoratingComponentId:
+                                  state.value!.decoratingComponentId,
+                              contentComponentName:
+                                  state.value!.contentComponentName,
+                              contentComponentId:
+                                  state.value!.contentComponentId,
+                              decorationComponentPosition:
+                                  state.value!.decorationComponentPosition,
+                              percentageDecorationVisible:
+                                  state.value!.percentageDecorationVisible,
+                              conditions: state.value!.conditions,
+                            )));
+                          } else {
+                            BlocProvider.of<DecoratedContentListBloc>(context)
+                                .add(AddDecoratedContentList(
+                                    value: DecoratedContentModel(
+                              documentID: state.value!.documentID,
+                              appId: state.value!.appId,
+                              description: state.value!.description,
+                              decoratingComponentName:
+                                  state.value!.decoratingComponentName,
+                              decoratingComponentId:
+                                  state.value!.decoratingComponentId,
+                              contentComponentName:
+                                  state.value!.contentComponentName,
+                              contentComponentId:
+                                  state.value!.contentComponentId,
+                              decorationComponentPosition:
+                                  state.value!.decorationComponentPosition,
+                              percentageDecorationVisible:
+                                  state.value!.percentageDecorationVisible,
+                              conditions: state.value!.conditions,
+                            )));
+                          }
+                          if (widget.submitAction != null) {
+                            eliudrouter.Router.navigateTo(
+                                context, widget.submitAction!);
+                          } else {
+                            Navigator.pop(context);
+                          }
+                        }
+                      },
+              ));
+        }
+
+        return StyleRegistry.registry()
+            .styleWithApp(widget.app)
+            .adminFormStyle()
+            .container(
+                widget.app,
+                context,
+                Form(
+                  child: ListView(
+                      padding: const EdgeInsets.all(8),
+                      physics: ((formAction == FormAction.showData) ||
+                              (formAction == FormAction.showPreloadedData))
+                          ? NeverScrollableScrollPhysics()
+                          : null,
+                      shrinkWrap: ((formAction == FormAction.showData) ||
+                          (formAction == FormAction.showPreloadedData)),
+                      children: children),
+                ),
+                formAction!);
       } else {
-        return StyleRegistry.registry().styleWithApp(widget.app).adminListStyle().progressIndicator(widget.app, context);
+        return StyleRegistry.registry()
+            .styleWithApp(widget.app)
+            .adminListStyle()
+            .progressIndicator(widget.app, context);
       }
     });
   }
 
   void _onDocumentIDChanged() {
-    _myFormBloc.add(ChangedDecoratedContentDocumentID(value: _documentIDController.text));
+    _myFormBloc.add(
+        ChangedDecoratedContentDocumentID(value: _documentIDController.text));
   }
-
-
-  void _onAppIdChanged() {
-    _myFormBloc.add(ChangedDecoratedContentAppId(value: _appIdController.text));
-  }
-
 
   void _onDescriptionChanged() {
-    _myFormBloc.add(ChangedDecoratedContentDescription(value: _descriptionController.text));
+    _myFormBloc.add(
+        ChangedDecoratedContentDescription(value: _descriptionController.text));
   }
-
 
   void _onDecoratingComponentNameChanged(value) {
-    _myFormBloc.add(ChangedDecoratedContentDecoratingComponentName(value: value));
-    
+    _myFormBloc
+        .add(ChangedDecoratedContentDecoratingComponentName(value: value));
   }
-
 
   void _onDecoratingComponentIdChanged(value) {
     _myFormBloc.add(ChangedDecoratedContentDecoratingComponentId(value: value));
-    
   }
-
 
   void _onContentComponentNameChanged(value) {
     _myFormBloc.add(ChangedDecoratedContentContentComponentName(value: value));
-    
   }
-
 
   void _onContentComponentIdChanged(value) {
     _myFormBloc.add(ChangedDecoratedContentContentComponentId(value: value));
-    
   }
-
 
   void setSelectionDecorationComponentPosition(int? val) {
     setState(() {
       _decorationComponentPositionSelectedRadioTile = val;
     });
-    _myFormBloc.add(ChangedDecoratedContentDecorationComponentPosition(value: toDecorationComponentPosition(val)));
+    _myFormBloc.add(ChangedDecoratedContentDecorationComponentPosition(
+        value: toDecorationComponentPosition(val)));
   }
-
 
   void _onPercentageDecorationVisibleChanged() {
-    _myFormBloc.add(ChangedDecoratedContentPercentageDecorationVisible(value: _percentageDecorationVisibleController.text));
+    _myFormBloc.add(ChangedDecoratedContentPercentageDecorationVisible(
+        value: _percentageDecorationVisibleController.text));
   }
-
-
 
   @override
   void dispose() {
     _documentIDController.dispose();
-    _appIdController.dispose();
     _descriptionController.dispose();
     _percentageDecorationVisibleController.dispose();
     super.dispose();
   }
 
-  bool _readOnly(AccessState accessState, DecoratedContentFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID));
+  /// Is the form read-only?
+  bool _readOnly(
+      AccessState accessState, DecoratedContentFormInitialized state) {
+    return (formAction == FormAction.showData) ||
+        (formAction == FormAction.showPreloadedData) ||
+        (!accessState.memberIsOwner(widget.app.documentID));
   }
-  
-
 }
-
-
-

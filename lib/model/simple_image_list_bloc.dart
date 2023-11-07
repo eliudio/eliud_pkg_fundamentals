@@ -23,11 +23,11 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 
 import 'simple_image_model.dart';
 
-typedef List<SimpleImageModel?> FilterSimpleImageModels(List<SimpleImageModel?> values);
+typedef FilterSimpleImageModels = List<SimpleImageModel?> Function(
+    List<SimpleImageModel?> values);
 
-
-
-class SimpleImageListBloc extends Bloc<SimpleImageListEvent, SimpleImageListState> {
+class SimpleImageListBloc
+    extends Bloc<SimpleImageListEvent, SimpleImageListState> {
   final FilterSimpleImageModels? filter;
   final SimpleImageRepository _simpleImageRepository;
   StreamSubscription? _simpleImagesListSubscription;
@@ -39,23 +39,32 @@ class SimpleImageListBloc extends Bloc<SimpleImageListEvent, SimpleImageListStat
   final bool? detailed;
   final int simpleImageLimit;
 
-  SimpleImageListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required SimpleImageRepository simpleImageRepository, this.simpleImageLimit = 5})
+  SimpleImageListBloc(
+      {this.filter,
+      this.paged,
+      this.orderBy,
+      this.descending,
+      this.detailed,
+      this.eliudQuery,
+      required SimpleImageRepository simpleImageRepository,
+      this.simpleImageLimit = 5})
       : _simpleImageRepository = simpleImageRepository,
         super(SimpleImageListLoading()) {
-    on <LoadSimpleImageList> ((event, emit) {
+    on<LoadSimpleImageList>((event, emit) {
       if ((detailed == null) || (!detailed!)) {
         _mapLoadSimpleImageListToState();
       } else {
         _mapLoadSimpleImageListWithDetailsToState();
       }
     });
-    
-    on <NewPage> ((event, emit) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+
+    on<NewPage>((event, emit) {
+      pages = pages +
+          1; // it doesn't matter so much if we increase pages beyond the end
       _mapLoadSimpleImageListWithDetailsToState();
     });
-    
-    on <SimpleImageChangeQuery> ((event, emit) {
+
+    on<SimpleImageChangeQuery>((event, emit) {
       eliudQuery = event.newQuery;
       if ((detailed == null) || (!detailed!)) {
         _mapLoadSimpleImageListToState();
@@ -63,20 +72,20 @@ class SimpleImageListBloc extends Bloc<SimpleImageListEvent, SimpleImageListStat
         _mapLoadSimpleImageListWithDetailsToState();
       }
     });
-      
-    on <AddSimpleImageList> ((event, emit) async {
+
+    on<AddSimpleImageList>((event, emit) async {
       await _mapAddSimpleImageListToState(event);
     });
-    
-    on <UpdateSimpleImageList> ((event, emit) async {
+
+    on<UpdateSimpleImageList>((event, emit) async {
       await _mapUpdateSimpleImageListToState(event);
     });
-    
-    on <DeleteSimpleImageList> ((event, emit) async {
+
+    on<DeleteSimpleImageList>((event, emit) async {
       await _mapDeleteSimpleImageListToState(event);
     });
-    
-    on <SimpleImageListUpdated> ((event, emit) {
+
+    on<SimpleImageListUpdated>((event, emit) {
       emit(_mapSimpleImageListUpdatedToState(event));
     });
   }
@@ -90,27 +99,31 @@ class SimpleImageListBloc extends Bloc<SimpleImageListEvent, SimpleImageListStat
   }
 
   Future<void> _mapLoadSimpleImageListToState() async {
-    int amountNow =  (state is SimpleImageListLoaded) ? (state as SimpleImageListLoaded).values!.length : 0;
+    int amountNow = (state is SimpleImageListLoaded)
+        ? (state as SimpleImageListLoaded).values!.length
+        : 0;
     _simpleImagesListSubscription?.cancel();
     _simpleImagesListSubscription = _simpleImageRepository.listen(
-          (list) => add(SimpleImageListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
-      orderBy: orderBy,
-      descending: descending,
-      eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * simpleImageLimit : null
-    );
-  }
-
-  Future<void> _mapLoadSimpleImageListWithDetailsToState() async {
-    int amountNow =  (state is SimpleImageListLoaded) ? (state as SimpleImageListLoaded).values!.length : 0;
-    _simpleImagesListSubscription?.cancel();
-    _simpleImagesListSubscription = _simpleImageRepository.listenWithDetails(
-            (list) => add(SimpleImageListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
+        (list) => add(SimpleImageListUpdated(
+            value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * simpleImageLimit : null
-    );
+        limit: ((paged != null) && paged!) ? pages * simpleImageLimit : null);
+  }
+
+  Future<void> _mapLoadSimpleImageListWithDetailsToState() async {
+    int amountNow = (state is SimpleImageListLoaded)
+        ? (state as SimpleImageListLoaded).values!.length
+        : 0;
+    _simpleImagesListSubscription?.cancel();
+    _simpleImagesListSubscription = _simpleImageRepository.listenWithDetails(
+        (list) => add(SimpleImageListUpdated(
+            value: _filter(list), mightHaveMore: amountNow != list.length)),
+        orderBy: orderBy,
+        descending: descending,
+        eliudQuery: eliudQuery,
+        limit: ((paged != null) && paged!) ? pages * simpleImageLimit : null);
   }
 
   Future<void> _mapAddSimpleImageListToState(AddSimpleImageList event) async {
@@ -120,14 +133,16 @@ class SimpleImageListBloc extends Bloc<SimpleImageListEvent, SimpleImageListStat
     }
   }
 
-  Future<void> _mapUpdateSimpleImageListToState(UpdateSimpleImageList event) async {
+  Future<void> _mapUpdateSimpleImageListToState(
+      UpdateSimpleImageList event) async {
     var value = event.value;
     if (value != null) {
       await _simpleImageRepository.update(value);
     }
   }
 
-  Future<void> _mapDeleteSimpleImageListToState(DeleteSimpleImageList event) async {
+  Future<void> _mapDeleteSimpleImageListToState(
+      DeleteSimpleImageList event) async {
     var value = event.value;
     if (value != null) {
       await _simpleImageRepository.delete(value);
@@ -135,7 +150,9 @@ class SimpleImageListBloc extends Bloc<SimpleImageListEvent, SimpleImageListStat
   }
 
   SimpleImageListLoaded _mapSimpleImageListUpdatedToState(
-      SimpleImageListUpdated event) => SimpleImageListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
+          SimpleImageListUpdated event) =>
+      SimpleImageListLoaded(
+          values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {
@@ -143,5 +160,3 @@ class SimpleImageListBloc extends Bloc<SimpleImageListEvent, SimpleImageListStat
     return super.close();
   }
 }
-
-

@@ -30,10 +30,10 @@ class NewPage extends TutorialEntryListEvent {}
 class AddTutorialEntryList extends TutorialEntryListEvent {
   final TutorialEntryModel? value;
 
-  const AddTutorialEntryList({ this.value });
+  const AddTutorialEntryList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'AddTutorialEntryList{ value: $value }';
@@ -42,10 +42,10 @@ class AddTutorialEntryList extends TutorialEntryListEvent {
 class UpdateTutorialEntryList extends TutorialEntryListEvent {
   final TutorialEntryModel? value;
 
-  const UpdateTutorialEntryList({ this.value });
+  const UpdateTutorialEntryList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'UpdateTutorialEntryList{ value: $value }';
@@ -54,10 +54,10 @@ class UpdateTutorialEntryList extends TutorialEntryListEvent {
 class DeleteTutorialEntryList extends TutorialEntryListEvent {
   final TutorialEntryModel? value;
 
-  const DeleteTutorialEntryList({ this.value });
+  const DeleteTutorialEntryList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'DeleteTutorialEntryList{ value: $value }';
@@ -67,24 +67,24 @@ class TutorialEntryListUpdated extends TutorialEntryListEvent {
   final List<TutorialEntryModel?>? value;
   final bool? mightHaveMore;
 
-  const TutorialEntryListUpdated({ this.value, this.mightHaveMore });
+  const TutorialEntryListUpdated({this.value, this.mightHaveMore});
 
   @override
-  List<Object?> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [value, mightHaveMore];
 
   @override
-  String toString() => 'TutorialEntryListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+  String toString() =>
+      'TutorialEntryListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 
 class TutorialEntryChangeQuery extends TutorialEntryListEvent {
   final EliudQuery? newQuery;
 
-  const TutorialEntryChangeQuery({ required this.newQuery });
+  const TutorialEntryChangeQuery({required this.newQuery});
 
   @override
-  List<Object?> get props => [ newQuery ];
+  List<Object?> get props => [newQuery];
 
   @override
   String toString() => 'TutorialEntryChangeQuery{ value: $newQuery }';
 }
-

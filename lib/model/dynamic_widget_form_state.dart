@@ -41,9 +41,9 @@ class DynamicWidgetFormInitialized extends DynamicWidgetFormState {
   final DynamicWidgetModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
-  const DynamicWidgetFormInitialized({ this.value });
+  const DynamicWidgetFormInitialized({this.value});
 }
 
 // Menu has been initialised and hence a menu is available
@@ -51,9 +51,9 @@ abstract class DynamicWidgetFormError extends DynamicWidgetFormInitialized {
   final String? message;
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
-  const DynamicWidgetFormError({this.message, DynamicWidgetModel? value }) : super(value: value);
+  const DynamicWidgetFormError({this.message, super.value});
 
   @override
   String toString() {
@@ -63,11 +63,12 @@ abstract class DynamicWidgetFormError extends DynamicWidgetFormInitialized {
     }''';
   }
 }
-class DocumentIDDynamicWidgetFormError extends DynamicWidgetFormError { 
-  const DocumentIDDynamicWidgetFormError({ String? message, DynamicWidgetModel? value }): super(message: message, value: value);
+
+class DocumentIDDynamicWidgetFormError extends DynamicWidgetFormError {
+  const DocumentIDDynamicWidgetFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -78,12 +79,11 @@ class DocumentIDDynamicWidgetFormError extends DynamicWidgetFormError {
   }
 }
 
-
-class AppIdDynamicWidgetFormError extends DynamicWidgetFormError { 
-  const AppIdDynamicWidgetFormError({ String? message, DynamicWidgetModel? value }): super(message: message, value: value);
+class AppIdDynamicWidgetFormError extends DynamicWidgetFormError {
+  const AppIdDynamicWidgetFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -94,12 +94,11 @@ class AppIdDynamicWidgetFormError extends DynamicWidgetFormError {
   }
 }
 
-
-class DescriptionDynamicWidgetFormError extends DynamicWidgetFormError { 
-  const DescriptionDynamicWidgetFormError({ String? message, DynamicWidgetModel? value }): super(message: message, value: value);
+class DescriptionDynamicWidgetFormError extends DynamicWidgetFormError {
+  const DescriptionDynamicWidgetFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -110,12 +109,11 @@ class DescriptionDynamicWidgetFormError extends DynamicWidgetFormError {
   }
 }
 
-
-class ContentDynamicWidgetFormError extends DynamicWidgetFormError { 
-  const ContentDynamicWidgetFormError({ String? message, DynamicWidgetModel? value }): super(message: message, value: value);
+class ContentDynamicWidgetFormError extends DynamicWidgetFormError {
+  const ContentDynamicWidgetFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -126,12 +124,11 @@ class ContentDynamicWidgetFormError extends DynamicWidgetFormError {
   }
 }
 
-
-class BackgroundDynamicWidgetFormError extends DynamicWidgetFormError { 
-  const BackgroundDynamicWidgetFormError({ String? message, DynamicWidgetModel? value }): super(message: message, value: value);
+class BackgroundDynamicWidgetFormError extends DynamicWidgetFormError {
+  const BackgroundDynamicWidgetFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -142,12 +139,11 @@ class BackgroundDynamicWidgetFormError extends DynamicWidgetFormError {
   }
 }
 
-
-class ConditionsDynamicWidgetFormError extends DynamicWidgetFormError { 
-  const ConditionsDynamicWidgetFormError({ String? message, DynamicWidgetModel? value }): super(message: message, value: value);
+class ConditionsDynamicWidgetFormError extends DynamicWidgetFormError {
+  const ConditionsDynamicWidgetFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -158,12 +154,11 @@ class ConditionsDynamicWidgetFormError extends DynamicWidgetFormError {
   }
 }
 
-
-class DynamicWidgetFormLoaded extends DynamicWidgetFormInitialized { 
-  const DynamicWidgetFormLoaded({ DynamicWidgetModel? value }): super(value: value);
+class DynamicWidgetFormLoaded extends DynamicWidgetFormInitialized {
+  const DynamicWidgetFormLoaded({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -173,12 +168,11 @@ class DynamicWidgetFormLoaded extends DynamicWidgetFormInitialized {
   }
 }
 
-
-class SubmittableDynamicWidgetForm extends DynamicWidgetFormInitialized { 
-  const SubmittableDynamicWidgetForm({ DynamicWidgetModel? value }): super(value: value);
+class SubmittableDynamicWidgetForm extends DynamicWidgetFormInitialized {
+  const SubmittableDynamicWidgetForm({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -187,5 +181,3 @@ class SubmittableDynamicWidgetForm extends DynamicWidgetFormInitialized {
     }''';
   }
 }
-
-

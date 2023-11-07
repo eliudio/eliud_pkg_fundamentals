@@ -18,7 +18,6 @@ import 'package:meta/meta.dart';
 import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 
-
 @immutable
 abstract class DecoratedContentFormEvent extends Equatable {
   const DecoratedContentFormEvent();
@@ -27,24 +26,24 @@ abstract class DecoratedContentFormEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class InitialiseNewDecoratedContentFormEvent extends DecoratedContentFormEvent {
-}
-
+class InitialiseNewDecoratedContentFormEvent
+    extends DecoratedContentFormEvent {}
 
 class InitialiseDecoratedContentFormEvent extends DecoratedContentFormEvent {
   final DecoratedContentModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialiseDecoratedContentFormEvent({this.value});
 }
 
-class InitialiseDecoratedContentFormNoLoadEvent extends DecoratedContentFormEvent {
+class InitialiseDecoratedContentFormNoLoadEvent
+    extends DecoratedContentFormEvent {
   final DecoratedContentModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialiseDecoratedContentFormNoLoadEvent({this.value});
 }
@@ -55,7 +54,7 @@ class ChangedDecoratedContentDocumentID extends DecoratedContentFormEvent {
   ChangedDecoratedContentDocumentID({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedDecoratedContentDocumentID{ value: $value }';
@@ -67,7 +66,7 @@ class ChangedDecoratedContentAppId extends DecoratedContentFormEvent {
   ChangedDecoratedContentAppId({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedDecoratedContentAppId{ value: $value }';
@@ -79,82 +78,94 @@ class ChangedDecoratedContentDescription extends DecoratedContentFormEvent {
   ChangedDecoratedContentDescription({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedDecoratedContentDescription{ value: $value }';
 }
 
-class ChangedDecoratedContentDecoratingComponentName extends DecoratedContentFormEvent {
+class ChangedDecoratedContentDecoratingComponentName
+    extends DecoratedContentFormEvent {
   final String? value;
 
   ChangedDecoratedContentDecoratingComponentName({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
-  String toString() => 'ChangedDecoratedContentDecoratingComponentName{ value: $value }';
+  String toString() =>
+      'ChangedDecoratedContentDecoratingComponentName{ value: $value }';
 }
 
-class ChangedDecoratedContentDecoratingComponentId extends DecoratedContentFormEvent {
+class ChangedDecoratedContentDecoratingComponentId
+    extends DecoratedContentFormEvent {
   final String? value;
 
   ChangedDecoratedContentDecoratingComponentId({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
-  String toString() => 'ChangedDecoratedContentDecoratingComponentId{ value: $value }';
+  String toString() =>
+      'ChangedDecoratedContentDecoratingComponentId{ value: $value }';
 }
 
-class ChangedDecoratedContentContentComponentName extends DecoratedContentFormEvent {
+class ChangedDecoratedContentContentComponentName
+    extends DecoratedContentFormEvent {
   final String? value;
 
   ChangedDecoratedContentContentComponentName({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
-  String toString() => 'ChangedDecoratedContentContentComponentName{ value: $value }';
+  String toString() =>
+      'ChangedDecoratedContentContentComponentName{ value: $value }';
 }
 
-class ChangedDecoratedContentContentComponentId extends DecoratedContentFormEvent {
+class ChangedDecoratedContentContentComponentId
+    extends DecoratedContentFormEvent {
   final String? value;
 
   ChangedDecoratedContentContentComponentId({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
-  String toString() => 'ChangedDecoratedContentContentComponentId{ value: $value }';
+  String toString() =>
+      'ChangedDecoratedContentContentComponentId{ value: $value }';
 }
 
-class ChangedDecoratedContentDecorationComponentPosition extends DecoratedContentFormEvent {
+class ChangedDecoratedContentDecorationComponentPosition
+    extends DecoratedContentFormEvent {
   final DecorationComponentPosition? value;
 
   ChangedDecoratedContentDecorationComponentPosition({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
-  String toString() => 'ChangedDecoratedContentDecorationComponentPosition{ value: $value }';
+  String toString() =>
+      'ChangedDecoratedContentDecorationComponentPosition{ value: $value }';
 }
 
-class ChangedDecoratedContentPercentageDecorationVisible extends DecoratedContentFormEvent {
+class ChangedDecoratedContentPercentageDecorationVisible
+    extends DecoratedContentFormEvent {
   final String? value;
 
   ChangedDecoratedContentPercentageDecorationVisible({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
-  String toString() => 'ChangedDecoratedContentPercentageDecorationVisible{ value: $value }';
+  String toString() =>
+      'ChangedDecoratedContentPercentageDecorationVisible{ value: $value }';
 }
 
 class ChangedDecoratedContentConditions extends DecoratedContentFormEvent {
@@ -163,9 +174,8 @@ class ChangedDecoratedContentConditions extends DecoratedContentFormEvent {
   ChangedDecoratedContentConditions({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedDecoratedContentConditions{ value: $value }';
 }
-

@@ -27,7 +27,7 @@ class SimpleImageComponentUninitialized extends SimpleImageComponentState {}
 
 class SimpleImageComponentError extends SimpleImageComponentState {
   final String? message;
-  SimpleImageComponentError({ this.message });
+  SimpleImageComponentError({this.message});
 }
 
 class SimpleImageComponentPermissionDenied extends SimpleImageComponentState {
@@ -37,10 +37,10 @@ class SimpleImageComponentPermissionDenied extends SimpleImageComponentState {
 class SimpleImageComponentLoaded extends SimpleImageComponentState {
   final SimpleImageModel value;
 
-  const SimpleImageComponentLoaded({ required this.value });
+  const SimpleImageComponentLoaded({required this.value});
 
-  SimpleImageComponentLoaded copyWith({ SimpleImageModel? copyThis }) {
-    return SimpleImageComponentLoaded(value: copyThis ?? this.value);
+  SimpleImageComponentLoaded copyWith({SimpleImageModel? copyThis}) {
+    return SimpleImageComponentLoaded(value: copyThis ?? value);
   }
 
   @override
@@ -49,4 +49,3 @@ class SimpleImageComponentLoaded extends SimpleImageComponentState {
   @override
   String toString() => 'SimpleImageComponentLoaded { value: $value }';
 }
-

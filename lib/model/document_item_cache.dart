@@ -26,12 +26,13 @@ import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class DocumentItemCache implements DocumentItemRepository {
-
   final DocumentItemRepository reference;
-  final Map<String?, DocumentItemModel?> fullCache = Map();
+  final Map<String?, DocumentItemModel?> fullCache = {};
 
   DocumentItemCache(this.reference);
 
+  /// Add a DocumentItemModel to the repository, cached
+  @override
   Future<DocumentItemModel> add(DocumentItemModel value) {
     return reference.add(value).then((newValue) {
       fullCache[value.documentID] = newValue;
@@ -39,21 +40,32 @@ class DocumentItemCache implements DocumentItemRepository {
     });
   }
 
-  Future<DocumentItemEntity> addEntity(String documentID, DocumentItemEntity value) {
+  /// Add a DocumentItemEntity to the repository, cached
+  @override
+  Future<DocumentItemEntity> addEntity(
+      String documentID, DocumentItemEntity value) {
     return reference.addEntity(documentID, value);
   }
 
-  Future<DocumentItemEntity> updateEntity(String documentID, DocumentItemEntity value) {
+  /// Update a DocumentItemEntity in the repository, cached
+  @override
+  Future<DocumentItemEntity> updateEntity(
+      String documentID, DocumentItemEntity value) {
     return reference.updateEntity(documentID, value);
   }
 
-  Future<void> delete(DocumentItemModel value){
+  /// Delete a DocumentItemModel from the repository, cached
+  @override
+  Future<void> delete(DocumentItemModel value) {
     fullCache.remove(value.documentID);
     reference.delete(value);
     return Future.value();
   }
 
-  Future<DocumentItemModel?> get(String? id, {Function(Exception)? onError}) async {
+  /// Retrieve a DocumentItemModel with it's id, cached
+  @override
+  Future<DocumentItemModel?> get(String? id,
+      {Function(Exception)? onError}) async {
     var value = fullCache[id];
     if (value != null) return refreshRelations(value);
     value = await reference.get(id, onError: onError);
@@ -61,6 +73,8 @@ class DocumentItemCache implements DocumentItemRepository {
     return value;
   }
 
+  /// Update a DocumentItemModel
+  @override
   Future<DocumentItemModel> update(DocumentItemModel value) {
     return reference.update(value).then((newValue) {
       fullCache[value.documentID] = newValue;
@@ -68,71 +82,164 @@ class DocumentItemCache implements DocumentItemRepository {
     });
   }
 
+  /// Retrieve list of List<DocumentItemModel?>
   @override
-  Stream<List<DocumentItemModel?>> values({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) {
-    return reference.values(orderBy: orderBy, descending: descending, startAfter: startAfter, limit: limit, setLastDoc: setLastDoc, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery);
+  Stream<List<DocumentItemModel?>> values(
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      SetLastDoc? setLastDoc,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery}) {
+    return reference.values(
+        orderBy: orderBy,
+        descending: descending,
+        startAfter: startAfter,
+        limit: limit,
+        setLastDoc: setLastDoc,
+        privilegeLevel: privilegeLevel,
+        eliudQuery: eliudQuery);
   }
 
   @override
-  Stream<List<DocumentItemModel?>> valuesWithDetails({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) {
-    return reference.valuesWithDetails(orderBy: orderBy, descending: descending, startAfter: startAfter, limit: limit, setLastDoc: setLastDoc, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery);
+  Stream<List<DocumentItemModel?>> valuesWithDetails(
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      SetLastDoc? setLastDoc,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery}) {
+    return reference.valuesWithDetails(
+        orderBy: orderBy,
+        descending: descending,
+        startAfter: startAfter,
+        limit: limit,
+        setLastDoc: setLastDoc,
+        privilegeLevel: privilegeLevel,
+        eliudQuery: eliudQuery);
   }
 
   @override
-  Future<List<DocumentItemModel?>> valuesList({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) async {
-    return await reference.valuesList(orderBy: orderBy, descending: descending, startAfter: startAfter, limit: limit, setLastDoc: setLastDoc, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery);
-  }
-  
-  @override
-  Future<List<DocumentItemModel?>> valuesListWithDetails({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) async {
-    return await reference.valuesListWithDetails(orderBy: orderBy, descending: descending, startAfter: startAfter, limit: limit, setLastDoc: setLastDoc, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery);
+  Future<List<DocumentItemModel?>> valuesList(
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      SetLastDoc? setLastDoc,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery}) async {
+    return await reference.valuesList(
+        orderBy: orderBy,
+        descending: descending,
+        startAfter: startAfter,
+        limit: limit,
+        setLastDoc: setLastDoc,
+        privilegeLevel: privilegeLevel,
+        eliudQuery: eliudQuery);
   }
 
+  @override
+  Future<List<DocumentItemModel?>> valuesListWithDetails(
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      SetLastDoc? setLastDoc,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery}) async {
+    return await reference.valuesListWithDetails(
+        orderBy: orderBy,
+        descending: descending,
+        startAfter: startAfter,
+        limit: limit,
+        setLastDoc: setLastDoc,
+        privilegeLevel: privilegeLevel,
+        eliudQuery: eliudQuery);
+  }
+
+  @override
   void flush() {
     fullCache.clear();
   }
-  
+
+  @override
   String? timeStampToString(dynamic timeStamp) {
     return reference.timeStampToString(timeStamp);
-  } 
+  }
 
+  @override
   dynamic getSubCollection(String documentId, String name) {
     return reference.getSubCollection(documentId, name);
   }
 
-  Future<DocumentItemModel> changeValue(String documentId, String fieldName, num changeByThisValue) {
-    return reference.changeValue(documentId, fieldName, changeByThisValue).then((newValue) {
+  @override
+  Future<DocumentItemModel> changeValue(
+      String documentId, String fieldName, num changeByThisValue) {
+    return reference
+        .changeValue(documentId, fieldName, changeByThisValue)
+        .then((newValue) {
       fullCache[documentId] = newValue;
       return newValue!;
     });
   }
 
   @override
-  Future<DocumentItemEntity?> getEntity(String? id, {Function(Exception p1)? onError}) {
+  Future<DocumentItemEntity?> getEntity(String? id,
+      {Function(Exception p1)? onError}) {
     return reference.getEntity(id, onError: onError);
   }
 
   @override
-  DocumentItemEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+  DocumentItemEntity? fromMap(Object? o,
+      {Map<String, String>? newDocumentIds}) {
     return reference.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
+  @override
   Future<void> deleteAll() {
     return reference.deleteAll();
   }
 
   @override
-  StreamSubscription<List<DocumentItemModel?>> listen(trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery}) {
-    return reference.listen(trigger, orderBy: orderBy, descending: descending, startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery);
+  StreamSubscription<List<DocumentItemModel?>> listen(trigger,
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery}) {
+    return reference.listen(trigger,
+        orderBy: orderBy,
+        descending: descending,
+        startAfter: startAfter,
+        limit: limit,
+        privilegeLevel: privilegeLevel,
+        eliudQuery: eliudQuery);
   }
 
   @override
-  StreamSubscription<List<DocumentItemModel?>> listenWithDetails(trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery}) {
-    return reference.listenWithDetails(trigger, orderBy: orderBy, descending: descending, startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery);
+  StreamSubscription<List<DocumentItemModel?>> listenWithDetails(trigger,
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery}) {
+    return reference.listenWithDetails(trigger,
+        orderBy: orderBy,
+        descending: descending,
+        startAfter: startAfter,
+        limit: limit,
+        privilegeLevel: privilegeLevel,
+        eliudQuery: eliudQuery);
   }
 
   @override
-  StreamSubscription<DocumentItemModel?> listenTo(String documentId, DocumentItemChanged changed, {DocumentItemErrorHandler? errorHandler}) {
+  StreamSubscription<DocumentItemModel?> listenTo(
+      String documentId, DocumentItemChanged changed,
+      {DocumentItemErrorHandler? errorHandler}) {
     return reference.listenTo(documentId, ((value) {
       if (value != null) {
         fullCache[value.documentID] = value;
@@ -141,23 +248,21 @@ class DocumentItemCache implements DocumentItemRepository {
     }), errorHandler: errorHandler);
   }
 
-  static Future<DocumentItemModel> refreshRelations(DocumentItemModel model) async {
-
+  static Future<DocumentItemModel> refreshRelations(
+      DocumentItemModel model) async {
     PlatformMediumModel? imageHolder;
     if (model.image != null) {
       try {
-        await platformMediumRepository()!.get(model.image!.documentID).then((val) {
+        await platformMediumRepository()!
+            .get(model.image!.documentID)
+            .then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}
     }
 
     return model.copyWith(
-        image: imageHolder,
-
-
+      image: imageHolder,
     );
   }
-
 }
-

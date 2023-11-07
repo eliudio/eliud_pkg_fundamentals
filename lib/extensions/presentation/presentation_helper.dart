@@ -28,10 +28,10 @@ class PresentationHelper {
 
   static Align _toAlignment(
       PresentationImageAlignment? sectionImageAlignment, Widget widget) {
-    if (sectionImageAlignment == PresentationImageAlignment.Left) {
+    if (sectionImageAlignment == PresentationImageAlignment.left) {
       return Align(child: widget, alignment: Alignment.topLeft);
     }
-    if (sectionImageAlignment == PresentationImageAlignment.Right) {
+    if (sectionImageAlignment == PresentationImageAlignment.right) {
       return Align(child: widget, alignment: Alignment.topRight);
     }
 
@@ -51,12 +51,12 @@ class PresentationHelper {
     }
 
     if ((relativeImagePosition == null) ||
-        (relativeImagePosition == PresentationRelativeImagePosition.Unknown)) {
-      relativeImagePosition = PresentationRelativeImagePosition.Above;
+        (relativeImagePosition == PresentationRelativeImagePosition.unknown)) {
+      relativeImagePosition = PresentationRelativeImagePosition.above;
     }
     if ((imageAlignment == null) ||
-        (imageAlignment == PresentationImageAlignment.Unknown)) {
-      imageAlignment = PresentationImageAlignment.Left;
+        (imageAlignment == PresentationImageAlignment.unknown)) {
+      imageAlignment = PresentationImageAlignment.left;
     }
 
     double? size;
@@ -65,7 +65,7 @@ class PresentationHelper {
     }
     var widgetImage = Image.network(image.url!);
 
-    if (relativeImagePosition == PresentationRelativeImagePosition.Aside) {
+    if (relativeImagePosition == PresentationRelativeImagePosition.aside) {
       Widget column1;
       Widget column2;
       if (size != null) {
@@ -85,7 +85,7 @@ class PresentationHelper {
         ]);
         column2 = Column(children: [_makeBox(widgets)]);
       }
-      if (imageAlignment == PresentationImageAlignment.Left) {
+      if (imageAlignment == PresentationImageAlignment.left) {
         return Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             verticalDirection: VerticalDirection.down,
@@ -99,25 +99,25 @@ class PresentationHelper {
     }
 
     Widget alignedWidget = _toAlignment(imageAlignment, widgetImage);
-    if (relativeImagePosition == PresentationRelativeImagePosition.Below) {
+    if (relativeImagePosition == PresentationRelativeImagePosition.below) {
       var widgets = <Widget>[];
       widgets.addAll(widgets);
       widgets.add(alignedWidget);
       return _makeBox(widgets);
     }
-    if (relativeImagePosition == PresentationRelativeImagePosition.Above) {
+    if (relativeImagePosition == PresentationRelativeImagePosition.above) {
       var newList = <Widget>[];
       newList.add(alignedWidget);
       newList.addAll(widgets);
       return _makeBox(newList);
     }
-    if (relativeImagePosition == PresentationRelativeImagePosition.Behind) {
+    if (relativeImagePosition == PresentationRelativeImagePosition.behind) {
       return Stack(children: <Widget>[
         alignedWidget,
         _makeBox(widgets),
       ]);
     }
-    if (relativeImagePosition == PresentationRelativeImagePosition.InFront) {
+    if (relativeImagePosition == PresentationRelativeImagePosition.inFront) {
       return Stack(children: <Widget>[
         _makeBox(widgets),
         alignedWidget,

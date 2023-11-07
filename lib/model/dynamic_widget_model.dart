@@ -18,17 +18,15 @@ import 'package:eliud_core/core/base/model_base.dart';
 import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-
 import 'package:eliud_pkg_fundamentals/model/dynamic_widget_entity.dart';
-
-
-
 
 class DynamicWidgetModel implements ModelBase, WithAppId {
   static const String packageName = 'eliud_pkg_fundamentals';
   static const String id = 'dynamicWidgets';
 
+  @override
   String documentID;
+  @override
   String appId;
   String? description;
 
@@ -37,21 +35,48 @@ class DynamicWidgetModel implements ModelBase, WithAppId {
   BackgroundModel? background;
   StorageConditionsModel? conditions;
 
-  DynamicWidgetModel({required this.documentID, required this.appId, this.description, this.content, this.background, this.conditions, })  {
-  }
+  DynamicWidgetModel({
+    required this.documentID,
+    required this.appId,
+    this.description,
+    this.content,
+    this.background,
+    this.conditions,
+  });
 
-  DynamicWidgetModel copyWith({String? documentID, String? appId, String? description, String? content, BackgroundModel? background, StorageConditionsModel? conditions, }) {
-    return DynamicWidgetModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, description: description ?? this.description, content: content ?? this.content, background: background ?? this.background, conditions: conditions ?? this.conditions, );
+  @override
+  DynamicWidgetModel copyWith({
+    String? documentID,
+    String? appId,
+    String? description,
+    String? content,
+    BackgroundModel? background,
+    StorageConditionsModel? conditions,
+  }) {
+    return DynamicWidgetModel(
+      documentID: documentID ?? this.documentID,
+      appId: appId ?? this.appId,
+      description: description ?? this.description,
+      content: content ?? this.content,
+      background: background ?? this.background,
+      conditions: conditions ?? this.conditions,
+    );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ appId.hashCode ^ description.hashCode ^ content.hashCode ^ background.hashCode ^ conditions.hashCode;
+  int get hashCode =>
+      documentID.hashCode ^
+      appId.hashCode ^
+      description.hashCode ^
+      content.hashCode ^
+      background.hashCode ^
+      conditions.hashCode;
 
   @override
   bool operator ==(Object other) =>
-          identical(this, other) ||
-          other is DynamicWidgetModel &&
-          runtimeType == other.runtimeType && 
+      identical(this, other) ||
+      other is DynamicWidgetModel &&
+          runtimeType == other.runtimeType &&
           documentID == other.documentID &&
           appId == other.appId &&
           description == other.description &&
@@ -64,53 +89,60 @@ class DynamicWidgetModel implements ModelBase, WithAppId {
     return 'DynamicWidgetModel{documentID: $documentID, appId: $appId, description: $description, content: $content, background: $background, conditions: $conditions}';
   }
 
+  @override
   Future<List<ModelReference>> collectReferences({String? appId}) async {
     List<ModelReference> referencesCollector = [];
-    if (background != null) referencesCollector.addAll(await background!.collectReferences(appId: appId));
-    if (conditions != null) referencesCollector.addAll(await conditions!.collectReferences(appId: appId));
+    if (background != null) {
+      referencesCollector
+          .addAll(await background!.collectReferences(appId: appId));
+    }
+    if (conditions != null) {
+      referencesCollector
+          .addAll(await conditions!.collectReferences(appId: appId));
+    }
     return referencesCollector;
   }
 
+  @override
   DynamicWidgetEntity toEntity({String? appId}) {
     return DynamicWidgetEntity(
-          appId: (appId != null) ? appId : null, 
-          description: (description != null) ? description : null, 
-          content: (content != null) ? content : null, 
-          background: (background != null) ? background!.toEntity(appId: appId) : null, 
-          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
+      appId: appId,
+      description: (description != null) ? description : null,
+      content: (content != null) ? content : null,
+      background:
+          (background != null) ? background!.toEntity(appId: appId) : null,
+      conditions:
+          (conditions != null) ? conditions!.toEntity(appId: appId) : null,
     );
   }
 
-  static Future<DynamicWidgetModel?> fromEntity(String documentID, DynamicWidgetEntity? entity) async {
+  static Future<DynamicWidgetModel?> fromEntity(
+      String documentID, DynamicWidgetEntity? entity) async {
     if (entity == null) return null;
-    var counter = 0;
     return DynamicWidgetModel(
-          documentID: documentID, 
-          appId: entity.appId ?? '', 
-          description: entity.description, 
-          content: entity.content, 
-          background: 
-            await BackgroundModel.fromEntity(entity.background), 
-          conditions: 
-            await StorageConditionsModel.fromEntity(entity.conditions), 
+      documentID: documentID,
+      appId: entity.appId ?? '',
+      description: entity.description,
+      content: entity.content,
+      background: await BackgroundModel.fromEntity(entity.background),
+      conditions: await StorageConditionsModel.fromEntity(entity.conditions),
     );
   }
 
-  static Future<DynamicWidgetModel?> fromEntityPlus(String documentID, DynamicWidgetEntity? entity, { String? appId}) async {
+  static Future<DynamicWidgetModel?> fromEntityPlus(
+      String documentID, DynamicWidgetEntity? entity,
+      {String? appId}) async {
     if (entity == null) return null;
 
-    var counter = 0;
     return DynamicWidgetModel(
-          documentID: documentID, 
-          appId: entity.appId ?? '', 
-          description: entity.description, 
-          content: entity.content, 
-          background: 
-            await BackgroundModel.fromEntityPlus(entity.background, appId: appId), 
-          conditions: 
-            await StorageConditionsModel.fromEntityPlus(entity.conditions, appId: appId), 
+      documentID: documentID,
+      appId: entity.appId ?? '',
+      description: entity.description,
+      content: entity.content,
+      background:
+          await BackgroundModel.fromEntityPlus(entity.background, appId: appId),
+      conditions: await StorageConditionsModel.fromEntityPlus(entity.conditions,
+          appId: appId),
     );
   }
-
 }
-

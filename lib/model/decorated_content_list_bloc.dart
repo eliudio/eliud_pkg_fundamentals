@@ -23,11 +23,11 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 
 import 'decorated_content_model.dart';
 
-typedef List<DecoratedContentModel?> FilterDecoratedContentModels(List<DecoratedContentModel?> values);
+typedef FilterDecoratedContentModels = List<DecoratedContentModel?> Function(
+    List<DecoratedContentModel?> values);
 
-
-
-class DecoratedContentListBloc extends Bloc<DecoratedContentListEvent, DecoratedContentListState> {
+class DecoratedContentListBloc
+    extends Bloc<DecoratedContentListEvent, DecoratedContentListState> {
   final FilterDecoratedContentModels? filter;
   final DecoratedContentRepository _decoratedContentRepository;
   StreamSubscription? _decoratedContentsListSubscription;
@@ -39,23 +39,32 @@ class DecoratedContentListBloc extends Bloc<DecoratedContentListEvent, Decorated
   final bool? detailed;
   final int decoratedContentLimit;
 
-  DecoratedContentListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required DecoratedContentRepository decoratedContentRepository, this.decoratedContentLimit = 5})
+  DecoratedContentListBloc(
+      {this.filter,
+      this.paged,
+      this.orderBy,
+      this.descending,
+      this.detailed,
+      this.eliudQuery,
+      required DecoratedContentRepository decoratedContentRepository,
+      this.decoratedContentLimit = 5})
       : _decoratedContentRepository = decoratedContentRepository,
         super(DecoratedContentListLoading()) {
-    on <LoadDecoratedContentList> ((event, emit) {
+    on<LoadDecoratedContentList>((event, emit) {
       if ((detailed == null) || (!detailed!)) {
         _mapLoadDecoratedContentListToState();
       } else {
         _mapLoadDecoratedContentListWithDetailsToState();
       }
     });
-    
-    on <NewPage> ((event, emit) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+
+    on<NewPage>((event, emit) {
+      pages = pages +
+          1; // it doesn't matter so much if we increase pages beyond the end
       _mapLoadDecoratedContentListWithDetailsToState();
     });
-    
-    on <DecoratedContentChangeQuery> ((event, emit) {
+
+    on<DecoratedContentChangeQuery>((event, emit) {
       eliudQuery = event.newQuery;
       if ((detailed == null) || (!detailed!)) {
         _mapLoadDecoratedContentListToState();
@@ -63,20 +72,20 @@ class DecoratedContentListBloc extends Bloc<DecoratedContentListEvent, Decorated
         _mapLoadDecoratedContentListWithDetailsToState();
       }
     });
-      
-    on <AddDecoratedContentList> ((event, emit) async {
+
+    on<AddDecoratedContentList>((event, emit) async {
       await _mapAddDecoratedContentListToState(event);
     });
-    
-    on <UpdateDecoratedContentList> ((event, emit) async {
+
+    on<UpdateDecoratedContentList>((event, emit) async {
       await _mapUpdateDecoratedContentListToState(event);
     });
-    
-    on <DeleteDecoratedContentList> ((event, emit) async {
+
+    on<DeleteDecoratedContentList>((event, emit) async {
       await _mapDeleteDecoratedContentListToState(event);
     });
-    
-    on <DecoratedContentListUpdated> ((event, emit) {
+
+    on<DecoratedContentListUpdated>((event, emit) {
       emit(_mapDecoratedContentListUpdatedToState(event));
     });
   }
@@ -90,44 +99,55 @@ class DecoratedContentListBloc extends Bloc<DecoratedContentListEvent, Decorated
   }
 
   Future<void> _mapLoadDecoratedContentListToState() async {
-    int amountNow =  (state is DecoratedContentListLoaded) ? (state as DecoratedContentListLoaded).values!.length : 0;
+    int amountNow = (state is DecoratedContentListLoaded)
+        ? (state as DecoratedContentListLoaded).values!.length
+        : 0;
     _decoratedContentsListSubscription?.cancel();
     _decoratedContentsListSubscription = _decoratedContentRepository.listen(
-          (list) => add(DecoratedContentListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
-      orderBy: orderBy,
-      descending: descending,
-      eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * decoratedContentLimit : null
-    );
-  }
-
-  Future<void> _mapLoadDecoratedContentListWithDetailsToState() async {
-    int amountNow =  (state is DecoratedContentListLoaded) ? (state as DecoratedContentListLoaded).values!.length : 0;
-    _decoratedContentsListSubscription?.cancel();
-    _decoratedContentsListSubscription = _decoratedContentRepository.listenWithDetails(
-            (list) => add(DecoratedContentListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
+        (list) => add(DecoratedContentListUpdated(
+            value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * decoratedContentLimit : null
-    );
+        limit:
+            ((paged != null) && paged!) ? pages * decoratedContentLimit : null);
   }
 
-  Future<void> _mapAddDecoratedContentListToState(AddDecoratedContentList event) async {
+  Future<void> _mapLoadDecoratedContentListWithDetailsToState() async {
+    int amountNow = (state is DecoratedContentListLoaded)
+        ? (state as DecoratedContentListLoaded).values!.length
+        : 0;
+    _decoratedContentsListSubscription?.cancel();
+    _decoratedContentsListSubscription =
+        _decoratedContentRepository.listenWithDetails(
+            (list) => add(DecoratedContentListUpdated(
+                value: _filter(list), mightHaveMore: amountNow != list.length)),
+            orderBy: orderBy,
+            descending: descending,
+            eliudQuery: eliudQuery,
+            limit: ((paged != null) && paged!)
+                ? pages * decoratedContentLimit
+                : null);
+  }
+
+  Future<void> _mapAddDecoratedContentListToState(
+      AddDecoratedContentList event) async {
     var value = event.value;
     if (value != null) {
       await _decoratedContentRepository.add(value);
     }
   }
 
-  Future<void> _mapUpdateDecoratedContentListToState(UpdateDecoratedContentList event) async {
+  Future<void> _mapUpdateDecoratedContentListToState(
+      UpdateDecoratedContentList event) async {
     var value = event.value;
     if (value != null) {
       await _decoratedContentRepository.update(value);
     }
   }
 
-  Future<void> _mapDeleteDecoratedContentListToState(DeleteDecoratedContentList event) async {
+  Future<void> _mapDeleteDecoratedContentListToState(
+      DeleteDecoratedContentList event) async {
     var value = event.value;
     if (value != null) {
       await _decoratedContentRepository.delete(value);
@@ -135,7 +155,9 @@ class DecoratedContentListBloc extends Bloc<DecoratedContentListEvent, Decorated
   }
 
   DecoratedContentListLoaded _mapDecoratedContentListUpdatedToState(
-      DecoratedContentListUpdated event) => DecoratedContentListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
+          DecoratedContentListUpdated event) =>
+      DecoratedContentListLoaded(
+          values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {
@@ -143,5 +165,3 @@ class DecoratedContentListBloc extends Bloc<DecoratedContentListEvent, Decorated
     return super.close();
   }
 }
-
-

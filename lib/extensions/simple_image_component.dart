@@ -23,8 +23,7 @@ class SimpleImageComponentConstructorDefault implements ComponentConstructor {
 
 class SimpleImageComponent extends AbstractSimpleImageComponent {
   SimpleImageComponent(
-      {Key? key, required AppModel app, required String simpleImageId})
-      : super(key: key, app: app, simpleImageId: simpleImageId);
+      {super.key, required super.app, required super.simpleImageId});
 
   @override
   Widget yourWidget(BuildContext context, SimpleImageModel? value) {

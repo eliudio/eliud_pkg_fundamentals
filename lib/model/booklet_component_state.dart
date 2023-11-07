@@ -27,7 +27,7 @@ class BookletComponentUninitialized extends BookletComponentState {}
 
 class BookletComponentError extends BookletComponentState {
   final String? message;
-  BookletComponentError({ this.message });
+  BookletComponentError({this.message});
 }
 
 class BookletComponentPermissionDenied extends BookletComponentState {
@@ -37,10 +37,10 @@ class BookletComponentPermissionDenied extends BookletComponentState {
 class BookletComponentLoaded extends BookletComponentState {
   final BookletModel value;
 
-  const BookletComponentLoaded({ required this.value });
+  const BookletComponentLoaded({required this.value});
 
-  BookletComponentLoaded copyWith({ BookletModel? copyThis }) {
-    return BookletComponentLoaded(value: copyThis ?? this.value);
+  BookletComponentLoaded copyWith({BookletModel? copyThis}) {
+    return BookletComponentLoaded(value: copyThis ?? value);
   }
 
   @override
@@ -49,4 +49,3 @@ class BookletComponentLoaded extends BookletComponentState {
   @override
   String toString() => 'BookletComponentLoaded { value: $value }';
 }
-

@@ -30,10 +30,10 @@ class NewPage extends DecoratedContentListEvent {}
 class AddDecoratedContentList extends DecoratedContentListEvent {
   final DecoratedContentModel? value;
 
-  const AddDecoratedContentList({ this.value });
+  const AddDecoratedContentList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'AddDecoratedContentList{ value: $value }';
@@ -42,10 +42,10 @@ class AddDecoratedContentList extends DecoratedContentListEvent {
 class UpdateDecoratedContentList extends DecoratedContentListEvent {
   final DecoratedContentModel? value;
 
-  const UpdateDecoratedContentList({ this.value });
+  const UpdateDecoratedContentList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'UpdateDecoratedContentList{ value: $value }';
@@ -54,10 +54,10 @@ class UpdateDecoratedContentList extends DecoratedContentListEvent {
 class DeleteDecoratedContentList extends DecoratedContentListEvent {
   final DecoratedContentModel? value;
 
-  const DeleteDecoratedContentList({ this.value });
+  const DeleteDecoratedContentList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'DeleteDecoratedContentList{ value: $value }';
@@ -67,24 +67,24 @@ class DecoratedContentListUpdated extends DecoratedContentListEvent {
   final List<DecoratedContentModel?>? value;
   final bool? mightHaveMore;
 
-  const DecoratedContentListUpdated({ this.value, this.mightHaveMore });
+  const DecoratedContentListUpdated({this.value, this.mightHaveMore});
 
   @override
-  List<Object?> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [value, mightHaveMore];
 
   @override
-  String toString() => 'DecoratedContentListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+  String toString() =>
+      'DecoratedContentListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 
 class DecoratedContentChangeQuery extends DecoratedContentListEvent {
   final EliudQuery? newQuery;
 
-  const DecoratedContentChangeQuery({ required this.newQuery });
+  const DecoratedContentChangeQuery({required this.newQuery});
 
   @override
-  List<Object?> get props => [ newQuery ];
+  List<Object?> get props => [newQuery];
 
   @override
   String toString() => 'DecoratedContentChangeQuery{ value: $newQuery }';
 }
-

@@ -24,7 +24,6 @@ class DividerBloc extends EditorBaseBloc<DividerModel, DividerEntity> {
   @override
   DividerModel setDefaultValues(
       DividerModel t, StorageConditionsModel conditions) {
-    return t.copyWith(
-        conditions: t.conditions ?? conditions);
+    return t.copyWith(conditions: t.conditions ?? conditions);
   }
 }

@@ -20,37 +20,57 @@ import 'package:eliud_core/model/model_export.dart';
 import '../tools/bespoke_models.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-
 import 'package:eliud_pkg_fundamentals/model/listed_item_entity.dart';
-
-
-
 
 class ListedItemModel implements ModelBase {
   static const String packageName = 'eliud_pkg_fundamentals';
   static const String id = 'listedItems';
 
+  @override
   String documentID;
   String? description;
   ActionModel? action;
   PlatformMediumModel? image;
   PosSizeModel? posSize;
 
-  ListedItemModel({required this.documentID, this.description, this.action, this.image, this.posSize, })  {
-  }
+  ListedItemModel({
+    required this.documentID,
+    this.description,
+    this.action,
+    this.image,
+    this.posSize,
+  });
 
-  ListedItemModel copyWith({String? documentID, String? description, ActionModel? action, PlatformMediumModel? image, PosSizeModel? posSize, }) {
-    return ListedItemModel(documentID: documentID ?? this.documentID, description: description ?? this.description, action: action ?? this.action, image: image ?? this.image, posSize: posSize ?? this.posSize, );
+  @override
+  ListedItemModel copyWith({
+    String? documentID,
+    String? description,
+    ActionModel? action,
+    PlatformMediumModel? image,
+    PosSizeModel? posSize,
+  }) {
+    return ListedItemModel(
+      documentID: documentID ?? this.documentID,
+      description: description ?? this.description,
+      action: action ?? this.action,
+      image: image ?? this.image,
+      posSize: posSize ?? this.posSize,
+    );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ description.hashCode ^ action.hashCode ^ image.hashCode ^ posSize.hashCode;
+  int get hashCode =>
+      documentID.hashCode ^
+      description.hashCode ^
+      action.hashCode ^
+      image.hashCode ^
+      posSize.hashCode;
 
   @override
   bool operator ==(Object other) =>
-          identical(this, other) ||
-          other is ListedItemModel &&
-          runtimeType == other.runtimeType && 
+      identical(this, other) ||
+      other is ListedItemModel &&
+          runtimeType == other.runtimeType &&
           documentID == other.documentID &&
           description == other.description &&
           action == other.action &&
@@ -62,64 +82,71 @@ class ListedItemModel implements ModelBase {
     return 'ListedItemModel{documentID: $documentID, description: $description, action: $action, image: $image, posSize: $posSize}';
   }
 
+  @override
   Future<List<ModelReference>> collectReferences({String? appId}) async {
     List<ModelReference> referencesCollector = [];
     if (image != null) {
-      referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, image!));
+      referencesCollector.add(ModelReference(
+          PlatformMediumModel.packageName, PlatformMediumModel.id, image!));
     }
-    if (action != null) referencesCollector.addAll(await action!.collectReferences(appId: appId));
-    if (image != null) referencesCollector.addAll(await image!.collectReferences(appId: appId));
-    if (posSize != null) referencesCollector.addAll(await posSize!.collectReferences(appId: appId));
+    if (action != null) {
+      referencesCollector.addAll(await action!.collectReferences(appId: appId));
+    }
+    if (image != null) {
+      referencesCollector.addAll(await image!.collectReferences(appId: appId));
+    }
+    if (posSize != null) {
+      referencesCollector
+          .addAll(await posSize!.collectReferences(appId: appId));
+    }
     return referencesCollector;
   }
 
+  @override
   ListedItemEntity toEntity({String? appId}) {
     return ListedItemEntity(
-          description: (description != null) ? description : null, 
-          action: (action != null) ? action!.toEntity(appId: appId) : null, 
-          imageId: (image != null) ? image!.documentID : null, 
-          posSize: (posSize != null) ? posSize!.toEntity(appId: appId) : null, 
+      description: (description != null) ? description : null,
+      action: (action != null) ? action!.toEntity(appId: appId) : null,
+      imageId: (image != null) ? image!.documentID : null,
+      posSize: (posSize != null) ? posSize!.toEntity(appId: appId) : null,
     );
   }
 
-  static Future<ListedItemModel?> fromEntity(String documentID, ListedItemEntity? entity) async {
+  static Future<ListedItemModel?> fromEntity(
+      String documentID, ListedItemEntity? entity) async {
     if (entity == null) return null;
-    var counter = 0;
     return ListedItemModel(
-          documentID: documentID, 
-          description: entity.description, 
-          action: 
-            await ActionModel.fromEntity(entity.action), 
-          posSize: 
-            await PosSizeModel.fromEntity(entity.posSize), 
+      documentID: documentID,
+      description: entity.description,
+      action: await ActionModel.fromEntity(entity.action),
+      posSize: await PosSizeModel.fromEntity(entity.posSize),
     );
   }
 
-  static Future<ListedItemModel?> fromEntityPlus(String documentID, ListedItemEntity? entity, { String? appId}) async {
+  static Future<ListedItemModel?> fromEntityPlus(
+      String documentID, ListedItemEntity? entity,
+      {String? appId}) async {
     if (entity == null) return null;
 
     PlatformMediumModel? imageHolder;
     if (entity.imageId != null) {
       try {
-          imageHolder = await platformMediumRepository(appId: appId)!.get(entity.imageId);
-      } on Exception catch(e) {
+        imageHolder =
+            await platformMediumRepository(appId: appId)!.get(entity.imageId);
+      } on Exception catch (e) {
         print('Error whilst trying to initialise image');
-        print('Error whilst retrieving platformMedium with id ${entity.imageId}');
+        print(
+            'Error whilst retrieving platformMedium with id ${entity.imageId}');
         print('Exception: $e');
       }
     }
 
-    var counter = 0;
     return ListedItemModel(
-          documentID: documentID, 
-          description: entity.description, 
-          action: 
-            await ActionModel.fromEntityPlus(entity.action, appId: appId), 
-          image: imageHolder, 
-          posSize: 
-            await PosSizeModel.fromEntityPlus(entity.posSize, appId: appId), 
+      documentID: documentID,
+      description: entity.description,
+      action: await ActionModel.fromEntityPlus(entity.action, appId: appId),
+      image: imageHolder,
+      posSize: await PosSizeModel.fromEntityPlus(entity.posSize, appId: appId),
     );
   }
-
 }
-

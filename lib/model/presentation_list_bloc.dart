@@ -23,11 +23,11 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 
 import 'presentation_model.dart';
 
-typedef List<PresentationModel?> FilterPresentationModels(List<PresentationModel?> values);
+typedef FilterPresentationModels = List<PresentationModel?> Function(
+    List<PresentationModel?> values);
 
-
-
-class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListState> {
+class PresentationListBloc
+    extends Bloc<PresentationListEvent, PresentationListState> {
   final FilterPresentationModels? filter;
   final PresentationRepository _presentationRepository;
   StreamSubscription? _presentationsListSubscription;
@@ -39,23 +39,32 @@ class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListS
   final bool? detailed;
   final int presentationLimit;
 
-  PresentationListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required PresentationRepository presentationRepository, this.presentationLimit = 5})
+  PresentationListBloc(
+      {this.filter,
+      this.paged,
+      this.orderBy,
+      this.descending,
+      this.detailed,
+      this.eliudQuery,
+      required PresentationRepository presentationRepository,
+      this.presentationLimit = 5})
       : _presentationRepository = presentationRepository,
         super(PresentationListLoading()) {
-    on <LoadPresentationList> ((event, emit) {
+    on<LoadPresentationList>((event, emit) {
       if ((detailed == null) || (!detailed!)) {
         _mapLoadPresentationListToState();
       } else {
         _mapLoadPresentationListWithDetailsToState();
       }
     });
-    
-    on <NewPage> ((event, emit) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+
+    on<NewPage>((event, emit) {
+      pages = pages +
+          1; // it doesn't matter so much if we increase pages beyond the end
       _mapLoadPresentationListWithDetailsToState();
     });
-    
-    on <PresentationChangeQuery> ((event, emit) {
+
+    on<PresentationChangeQuery>((event, emit) {
       eliudQuery = event.newQuery;
       if ((detailed == null) || (!detailed!)) {
         _mapLoadPresentationListToState();
@@ -63,20 +72,20 @@ class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListS
         _mapLoadPresentationListWithDetailsToState();
       }
     });
-      
-    on <AddPresentationList> ((event, emit) async {
+
+    on<AddPresentationList>((event, emit) async {
       await _mapAddPresentationListToState(event);
     });
-    
-    on <UpdatePresentationList> ((event, emit) async {
+
+    on<UpdatePresentationList>((event, emit) async {
       await _mapUpdatePresentationListToState(event);
     });
-    
-    on <DeletePresentationList> ((event, emit) async {
+
+    on<DeletePresentationList>((event, emit) async {
       await _mapDeletePresentationListToState(event);
     });
-    
-    on <PresentationListUpdated> ((event, emit) {
+
+    on<PresentationListUpdated>((event, emit) {
       emit(_mapPresentationListUpdatedToState(event));
     });
   }
@@ -90,27 +99,31 @@ class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListS
   }
 
   Future<void> _mapLoadPresentationListToState() async {
-    int amountNow =  (state is PresentationListLoaded) ? (state as PresentationListLoaded).values!.length : 0;
+    int amountNow = (state is PresentationListLoaded)
+        ? (state as PresentationListLoaded).values!.length
+        : 0;
     _presentationsListSubscription?.cancel();
     _presentationsListSubscription = _presentationRepository.listen(
-          (list) => add(PresentationListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
-      orderBy: orderBy,
-      descending: descending,
-      eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * presentationLimit : null
-    );
-  }
-
-  Future<void> _mapLoadPresentationListWithDetailsToState() async {
-    int amountNow =  (state is PresentationListLoaded) ? (state as PresentationListLoaded).values!.length : 0;
-    _presentationsListSubscription?.cancel();
-    _presentationsListSubscription = _presentationRepository.listenWithDetails(
-            (list) => add(PresentationListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
+        (list) => add(PresentationListUpdated(
+            value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * presentationLimit : null
-    );
+        limit: ((paged != null) && paged!) ? pages * presentationLimit : null);
+  }
+
+  Future<void> _mapLoadPresentationListWithDetailsToState() async {
+    int amountNow = (state is PresentationListLoaded)
+        ? (state as PresentationListLoaded).values!.length
+        : 0;
+    _presentationsListSubscription?.cancel();
+    _presentationsListSubscription = _presentationRepository.listenWithDetails(
+        (list) => add(PresentationListUpdated(
+            value: _filter(list), mightHaveMore: amountNow != list.length)),
+        orderBy: orderBy,
+        descending: descending,
+        eliudQuery: eliudQuery,
+        limit: ((paged != null) && paged!) ? pages * presentationLimit : null);
   }
 
   Future<void> _mapAddPresentationListToState(AddPresentationList event) async {
@@ -120,14 +133,16 @@ class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListS
     }
   }
 
-  Future<void> _mapUpdatePresentationListToState(UpdatePresentationList event) async {
+  Future<void> _mapUpdatePresentationListToState(
+      UpdatePresentationList event) async {
     var value = event.value;
     if (value != null) {
       await _presentationRepository.update(value);
     }
   }
 
-  Future<void> _mapDeletePresentationListToState(DeletePresentationList event) async {
+  Future<void> _mapDeletePresentationListToState(
+      DeletePresentationList event) async {
     var value = event.value;
     if (value != null) {
       await _presentationRepository.delete(value);
@@ -135,7 +150,9 @@ class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListS
   }
 
   PresentationListLoaded _mapPresentationListUpdatedToState(
-      PresentationListUpdated event) => PresentationListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
+          PresentationListUpdated event) =>
+      PresentationListLoaded(
+          values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {
@@ -143,5 +160,3 @@ class PresentationListBloc extends Bloc<PresentationListEvent, PresentationListS
     return super.close();
   }
 }
-
-

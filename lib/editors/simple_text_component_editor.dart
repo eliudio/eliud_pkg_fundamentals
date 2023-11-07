@@ -24,8 +24,7 @@ import 'package:eliud_core/core/editor/editor_base_bloc/editor_base_state.dart';
 
 import '../model/simple_text_entity.dart';
 
-class SimpleTextComponentEditorConstructor
-    extends ComponentEditorConstructor {
+class SimpleTextComponentEditorConstructor extends ComponentEditorConstructor {
   @override
   void updateComponent(
       AppModel app, BuildContext context, model, EditorFeedback feedback) {
@@ -45,7 +44,7 @@ class SimpleTextComponentEditorConstructor
           description: 'New text',
           conditions: StorageConditionsModel(
               privilegeLevelRequired:
-                  PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
+                  PrivilegeLevelRequiredSimple.noPrivilegeRequiredSimple),
         ),
         feedback);
   }
@@ -53,12 +52,11 @@ class SimpleTextComponentEditorConstructor
   @override
   void updateComponentWithID(AppModel app, BuildContext context, String id,
       EditorFeedback feedback) async {
-    var simpleText =
-        await simpleTextRepository(appId: app.documentID)!.get(id);
+    var simpleText = await simpleTextRepository(appId: app.documentID)!.get(id);
     if (simpleText != null) {
       _openIt(app, context, false, simpleText, feedback);
     } else {
-      openErrorDialog(app, context, app.documentID + '/_error',
+      openErrorDialog(app, context, '${app.documentID}/_error',
           title: 'Error',
           errorMessage: 'Cannot find chat dashboard with id $id');
     }
@@ -69,10 +67,8 @@ class SimpleTextComponentEditorConstructor
     openComplexDialog(
       app,
       context,
-      app.documentID + '/chatdashboard',
-      title: create
-          ? 'Create Chat Dashboard'
-          : 'Update Chat Dashboard',
+      '${app.documentID}/chatdashboard',
+      title: create ? 'Create Chat Dashboard' : 'Update Chat Dashboard',
       includeHeading: false,
       widthFraction: .9,
       child: BlocProvider<SimpleTextBloc>(
@@ -89,9 +85,7 @@ class SimpleTextComponentEditorConstructor
   }
 }
 
-class SimpleTextBloc
-    extends EditorBaseBloc<SimpleTextModel, SimpleTextEntity> {
-
+class SimpleTextBloc extends EditorBaseBloc<SimpleTextModel, SimpleTextEntity> {
   SimpleTextBloc(String appId, EditorFeedback feedback)
       : super(appId, simpleTextRepository(appId: appId)!, feedback);
 
@@ -115,17 +109,15 @@ class SimpleTextComponentEditor extends StatefulWidget {
   final AppModel app;
 
   const SimpleTextComponentEditor({
-    Key? key,
+    super.key,
     required this.app,
-  }) : super(key: key);
+  });
 
   @override
-  State<StatefulWidget> createState() =>
-      _SimpleTextComponentEditorState();
+  State<StatefulWidget> createState() => _SimpleTextComponentEditorState();
 }
 
-class _SimpleTextComponentEditorState
-    extends State<SimpleTextComponentEditor> {
+class _SimpleTextComponentEditorState extends State<SimpleTextComponentEditor> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AccessBloc, AccessState>(
@@ -142,8 +134,8 @@ class _SimpleTextComponentEditorState
                     app: widget.app,
                     title: 'SimpleText',
                     okAction: () async {
-                      await BlocProvider.of<SimpleTextBloc>(context)
-                          .save(EditorBaseApplyChanges<SimpleTextModel>(
+                      await BlocProvider.of<SimpleTextBloc>(context).save(
+                          EditorBaseApplyChanges<SimpleTextModel>(
                               model: simpleTextState.model));
                       return true;
                     },
@@ -219,5 +211,4 @@ class _SimpleTextComponentEditorState
       }
     });
   }
-
 }

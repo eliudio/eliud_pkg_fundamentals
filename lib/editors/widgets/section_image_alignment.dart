@@ -8,15 +8,14 @@ typedef SectionImageAlignmentCallback = Function(
     SectionImageAlignment sectionImageAlignment);
 
 class SectionImageAlignmentWidget extends StatefulWidget {
-  SectionImageAlignmentCallback sectionImageAlignmentCallback;
+  final SectionImageAlignmentCallback sectionImageAlignmentCallback;
   final SectionImageAlignment sectionImageAlignment;
   final AppModel app;
   SectionImageAlignmentWidget(
-      {Key? key,
-        required this.app,
-        required this.sectionImageAlignmentCallback,
-        required this.sectionImageAlignment})
-      : super(key: key);
+      {super.key,
+      required this.app,
+      required this.sectionImageAlignmentCallback,
+      required this.sectionImageAlignment});
 
   @override
   State<StatefulWidget> createState() {
@@ -24,22 +23,29 @@ class SectionImageAlignmentWidget extends StatefulWidget {
   }
 }
 
-class _SectionImageAlignmentWidgetState extends State<SectionImageAlignmentWidget> {
+class _SectionImageAlignmentWidgetState
+    extends State<SectionImageAlignmentWidget> {
   int? _heightTypeSelectedRadioTile;
 
+  @override
   void initState() {
     super.initState();
     _heightTypeSelectedRadioTile = widget.sectionImageAlignment.index;
   }
 
-  String heighttTypeLandscapeStringValue(SectionImageAlignment? sectionImageAlignment) {
+  String heighttTypeLandscapeStringValue(
+      SectionImageAlignment? sectionImageAlignment) {
     switch (sectionImageAlignment) {
-      case SectionImageAlignment.Center:
+      case SectionImageAlignment.center:
         return 'Center';
-      case SectionImageAlignment.Left:
+      case SectionImageAlignment.left:
         return 'Left';
-      case SectionImageAlignment.Right:
+      case SectionImageAlignment.right:
         return 'Right';
+      case SectionImageAlignment.unknown:
+        break;
+      case null:
+        break;
     }
     return '?';
   }
@@ -62,15 +68,15 @@ class _SectionImageAlignmentWidgetState extends State<SectionImageAlignmentWidge
             _heightTypeSelectedRadioTile,
             stringValue,
             null,
-                (dynamic val) => setSelection(val)));
+            (dynamic val) => setSelection(val)));
   }
 
   @override
   Widget build(BuildContext context) {
     return ListView(children: [
-      getPrivilegeOption(SectionImageAlignment.Right),
-      getPrivilegeOption(SectionImageAlignment.Left),
-      getPrivilegeOption(SectionImageAlignment.Center),
+      getPrivilegeOption(SectionImageAlignment.right),
+      getPrivilegeOption(SectionImageAlignment.left),
+      getPrivilegeOption(SectionImageAlignment.center),
     ], shrinkWrap: true, physics: ScrollPhysics());
   }
 }

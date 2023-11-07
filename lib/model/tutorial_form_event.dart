@@ -18,7 +18,6 @@ import 'package:meta/meta.dart';
 import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 
-
 @immutable
 abstract class TutorialFormEvent extends Equatable {
   const TutorialFormEvent();
@@ -27,15 +26,13 @@ abstract class TutorialFormEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class InitialiseNewTutorialFormEvent extends TutorialFormEvent {
-}
-
+class InitialiseNewTutorialFormEvent extends TutorialFormEvent {}
 
 class InitialiseTutorialFormEvent extends TutorialFormEvent {
   final TutorialModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialiseTutorialFormEvent({this.value});
 }
@@ -44,7 +41,7 @@ class InitialiseTutorialFormNoLoadEvent extends TutorialFormEvent {
   final TutorialModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialiseTutorialFormNoLoadEvent({this.value});
 }
@@ -55,7 +52,7 @@ class ChangedTutorialDocumentID extends TutorialFormEvent {
   ChangedTutorialDocumentID({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedTutorialDocumentID{ value: $value }';
@@ -67,7 +64,7 @@ class ChangedTutorialAppId extends TutorialFormEvent {
   ChangedTutorialAppId({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedTutorialAppId{ value: $value }';
@@ -79,7 +76,7 @@ class ChangedTutorialName extends TutorialFormEvent {
   ChangedTutorialName({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedTutorialName{ value: $value }';
@@ -91,7 +88,7 @@ class ChangedTutorialTitle extends TutorialFormEvent {
   ChangedTutorialTitle({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedTutorialTitle{ value: $value }';
@@ -103,7 +100,7 @@ class ChangedTutorialDescription extends TutorialFormEvent {
   ChangedTutorialDescription({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedTutorialDescription{ value: $value }';
@@ -115,7 +112,7 @@ class ChangedTutorialTutorialEntries extends TutorialFormEvent {
   ChangedTutorialTutorialEntries({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedTutorialTutorialEntries{ value: $value }';
@@ -127,9 +124,8 @@ class ChangedTutorialConditions extends TutorialFormEvent {
   ChangedTutorialConditions({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedTutorialConditions{ value: $value }';
 }
-

@@ -8,15 +8,14 @@ typedef PresentationImageAlignmentCallback = Function(
     PresentationImageAlignment presentationImageAlignment);
 
 class PresentationImageAlignmentWidget extends StatefulWidget {
-  PresentationImageAlignmentCallback presentationImageAlignmentCallback;
+  final PresentationImageAlignmentCallback presentationImageAlignmentCallback;
   final PresentationImageAlignment presentationImageAlignment;
   final AppModel app;
   PresentationImageAlignmentWidget(
-      {Key? key,
-        required this.app,
-        required this.presentationImageAlignmentCallback,
-        required this.presentationImageAlignment})
-      : super(key: key);
+      {super.key,
+      required this.app,
+      required this.presentationImageAlignmentCallback,
+      required this.presentationImageAlignment});
 
   @override
   State<StatefulWidget> createState() {
@@ -24,22 +23,29 @@ class PresentationImageAlignmentWidget extends StatefulWidget {
   }
 }
 
-class _PresentationImageAlignmentWidgetState extends State<PresentationImageAlignmentWidget> {
+class _PresentationImageAlignmentWidgetState
+    extends State<PresentationImageAlignmentWidget> {
   int? _heightTypeSelectedRadioTile;
 
+  @override
   void initState() {
     super.initState();
     _heightTypeSelectedRadioTile = widget.presentationImageAlignment.index;
   }
 
-  String heighttTypeLandscapeStringValue(PresentationImageAlignment? presentationImageAlignment) {
+  String heighttTypeLandscapeStringValue(
+      PresentationImageAlignment? presentationImageAlignment) {
     switch (presentationImageAlignment) {
-      case PresentationImageAlignment.Right:
+      case PresentationImageAlignment.right:
         return 'Right';
-      case PresentationImageAlignment.Left:
+      case PresentationImageAlignment.left:
         return 'Left';
-      case PresentationImageAlignment.Center:
+      case PresentationImageAlignment.center:
         return 'Center';
+      case PresentationImageAlignment.unknown:
+        break;
+      case null:
+        break;
     }
     return '?';
   }
@@ -47,13 +53,16 @@ class _PresentationImageAlignmentWidgetState extends State<PresentationImageAlig
   void setSelection(int? val) {
     setState(() {
       _heightTypeSelectedRadioTile = val;
-      widget.presentationImageAlignmentCallback(toPresentationImageAlignment(val));
+      widget.presentationImageAlignmentCallback(
+          toPresentationImageAlignment(val));
     });
   }
 
-  Widget getPrivilegeOption(PresentationImageAlignment? presentationImageAlignment) {
+  Widget getPrivilegeOption(
+      PresentationImageAlignment? presentationImageAlignment) {
     if (presentationImageAlignment == null) return Text("?");
-    var stringValue = heighttTypeLandscapeStringValue(presentationImageAlignment);
+    var stringValue =
+        heighttTypeLandscapeStringValue(presentationImageAlignment);
     return Center(
         child: radioListTile(
             widget.app,
@@ -62,15 +71,15 @@ class _PresentationImageAlignmentWidgetState extends State<PresentationImageAlig
             _heightTypeSelectedRadioTile,
             stringValue,
             null,
-                (dynamic val) => setSelection(val)));
+            (dynamic val) => setSelection(val)));
   }
 
   @override
   Widget build(BuildContext context) {
     return ListView(children: [
-      getPrivilegeOption(PresentationImageAlignment.Left),
-      getPrivilegeOption(PresentationImageAlignment.Center),
-      getPrivilegeOption(PresentationImageAlignment.Right),
+      getPrivilegeOption(PresentationImageAlignment.left),
+      getPrivilegeOption(PresentationImageAlignment.center),
+      getPrivilegeOption(PresentationImageAlignment.right),
     ], shrinkWrap: true, physics: ScrollPhysics());
   }
 }

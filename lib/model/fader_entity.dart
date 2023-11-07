@@ -28,12 +28,47 @@ class FaderEntity implements EntityBase {
   final BackgroundEntity? background;
   final StorageConditionsEntity? conditions;
 
-  FaderEntity({required this.appId, this.description, this.animationMilliseconds, this.imageSeconds, this.items, this.background, this.conditions, });
+  FaderEntity({
+    required this.appId,
+    this.description,
+    this.animationMilliseconds,
+    this.imageSeconds,
+    this.items,
+    this.background,
+    this.conditions,
+  });
 
-  FaderEntity copyWith({String? documentID, String? appId, String? description, int? animationMilliseconds, int? imageSeconds, List<ListedItemEntity>? items, BackgroundEntity? background, StorageConditionsEntity? conditions, }) {
-    return FaderEntity(appId : appId ?? this.appId, description : description ?? this.description, animationMilliseconds : animationMilliseconds ?? this.animationMilliseconds, imageSeconds : imageSeconds ?? this.imageSeconds, items : items ?? this.items, background : background ?? this.background, conditions : conditions ?? this.conditions, );
+  FaderEntity copyWith({
+    String? documentID,
+    String? appId,
+    String? description,
+    int? animationMilliseconds,
+    int? imageSeconds,
+    List<ListedItemEntity>? items,
+    BackgroundEntity? background,
+    StorageConditionsEntity? conditions,
+  }) {
+    return FaderEntity(
+      appId: appId ?? this.appId,
+      description: description ?? this.description,
+      animationMilliseconds:
+          animationMilliseconds ?? this.animationMilliseconds,
+      imageSeconds: imageSeconds ?? this.imageSeconds,
+      items: items ?? this.items,
+      background: background ?? this.background,
+      conditions: conditions ?? this.conditions,
+    );
   }
-  List<Object?> get props => [appId, description, animationMilliseconds, imageSeconds, items, background, conditions, ];
+
+  List<Object?> get props => [
+        appId,
+        description,
+        animationMilliseconds,
+        imageSeconds,
+        items,
+        background,
+        conditions,
+      ];
 
   @override
   String toString() {
@@ -42,67 +77,89 @@ class FaderEntity implements EntityBase {
     return 'FaderEntity{appId: $appId, description: $description, animationMilliseconds: $animationMilliseconds, imageSeconds: $imageSeconds, items: ListedItem[] { $itemsCsv }, background: $background, conditions: $conditions}';
   }
 
-  static FaderEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+  static FaderEntity? fromMap(Object? o,
+      {Map<String, String>? newDocumentIds}) {
     if (o == null) return null;
     var map = o as Map<String, dynamic>;
 
-    var itemsFromMap;
-    itemsFromMap = map['items'];
+    var itemsFromMap = map['items'];
     List<ListedItemEntity> itemsList;
     if (itemsFromMap != null) {
       itemsList = (map['items'] as List<dynamic>)
-        .map((dynamic item) =>
-        ListedItemEntity.fromMap(item as Map, newDocumentIds: newDocumentIds)!)
-        .toList();
+          .map((dynamic item) => ListedItemEntity.fromMap(item as Map,
+              newDocumentIds: newDocumentIds)!)
+          .toList();
     } else {
       itemsList = [];
     }
-    var backgroundFromMap;
-    backgroundFromMap = map['background'];
-    if (backgroundFromMap != null)
-      backgroundFromMap = BackgroundEntity.fromMap(backgroundFromMap, newDocumentIds: newDocumentIds);
-    var conditionsFromMap;
-    conditionsFromMap = map['conditions'];
-    if (conditionsFromMap != null)
-      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap, newDocumentIds: newDocumentIds);
+    var backgroundFromMap = map['background'];
+    if (backgroundFromMap != null) {
+      backgroundFromMap = BackgroundEntity.fromMap(backgroundFromMap,
+          newDocumentIds: newDocumentIds);
+    }
+    var conditionsFromMap = map['conditions'];
+    if (conditionsFromMap != null) {
+      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap,
+          newDocumentIds: newDocumentIds);
+    }
 
     return FaderEntity(
-      appId: map['appId'], 
-      description: map['description'], 
-      animationMilliseconds: int.tryParse(map['animationMilliseconds'].toString()), 
-      imageSeconds: int.tryParse(map['imageSeconds'].toString()), 
-      items: itemsList, 
-      background: backgroundFromMap, 
-      conditions: conditionsFromMap, 
+      appId: map['appId'],
+      description: map['description'],
+      animationMilliseconds:
+          int.tryParse(map['animationMilliseconds'].toString()),
+      imageSeconds: int.tryParse(map['imageSeconds'].toString()),
+      items: itemsList,
+      background: backgroundFromMap,
+      conditions: conditionsFromMap,
     );
   }
 
+  @override
   Map<String, Object?> toDocument() {
-    final List<Map<String?, dynamic>>? itemsListMap = items != null 
-        ? items!.map((item) => item.toDocument()).toList()
-        : null;
-    final Map<String, dynamic>? backgroundMap = background != null 
-        ? background!.toDocument()
-        : null;
-    final Map<String, dynamic>? conditionsMap = conditions != null 
-        ? conditions!.toDocument()
-        : null;
+    final List<Map<String?, dynamic>>? itemsListMap =
+        items != null ? items!.map((item) => item.toDocument()).toList() : null;
+    final Map<String, dynamic>? backgroundMap =
+        background != null ? background!.toDocument() : null;
+    final Map<String, dynamic>? conditionsMap =
+        conditions != null ? conditions!.toDocument() : null;
 
     Map<String, Object?> theDocument = HashMap();
-    if (appId != null) theDocument["appId"] = appId;
-      else theDocument["appId"] = null;
-    if (description != null) theDocument["description"] = description;
-      else theDocument["description"] = null;
-    if (animationMilliseconds != null) theDocument["animationMilliseconds"] = animationMilliseconds;
-      else theDocument["animationMilliseconds"] = null;
-    if (imageSeconds != null) theDocument["imageSeconds"] = imageSeconds;
-      else theDocument["imageSeconds"] = null;
-    if (items != null) theDocument["items"] = itemsListMap;
-      else theDocument["items"] = null;
-    if (background != null) theDocument["background"] = backgroundMap;
-      else theDocument["background"] = null;
-    if (conditions != null) theDocument["conditions"] = conditionsMap;
-      else theDocument["conditions"] = null;
+    if (appId != null) {
+      theDocument["appId"] = appId;
+    } else {
+      theDocument["appId"] = null;
+    }
+    if (description != null) {
+      theDocument["description"] = description;
+    } else {
+      theDocument["description"] = null;
+    }
+    if (animationMilliseconds != null) {
+      theDocument["animationMilliseconds"] = animationMilliseconds;
+    } else {
+      theDocument["animationMilliseconds"] = null;
+    }
+    if (imageSeconds != null) {
+      theDocument["imageSeconds"] = imageSeconds;
+    } else {
+      theDocument["imageSeconds"] = null;
+    }
+    if (items != null) {
+      theDocument["items"] = itemsListMap;
+    } else {
+      theDocument["items"] = null;
+    }
+    if (background != null) {
+      theDocument["background"] = backgroundMap;
+    } else {
+      theDocument["background"] = null;
+    }
+    if (conditions != null) {
+      theDocument["conditions"] = conditionsMap;
+    } else {
+      theDocument["conditions"] = null;
+    }
     return theDocument;
   }
 
@@ -112,7 +169,8 @@ class FaderEntity implements EntityBase {
     return newEntity;
   }
 
-  static FaderEntity? fromJsonString(String json, {Map<String, String>? newDocumentIds}) {
+  static FaderEntity? fromJsonString(String json,
+      {Map<String, String>? newDocumentIds}) {
     Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
     return fromMap(generationSpecificationMap, newDocumentIds: newDocumentIds);
   }
@@ -121,9 +179,9 @@ class FaderEntity implements EntityBase {
     return jsonEncode(toDocument());
   }
 
-  Future<Map<String, Object?>> enrichedDocument(Map<String, Object?> theDocument) async {
+  @override
+  Future<Map<String, Object?>> enrichedDocument(
+      Map<String, Object?> theDocument) async {
     return theDocument;
   }
-
 }
-

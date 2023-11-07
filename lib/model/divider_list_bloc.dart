@@ -23,9 +23,8 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 
 import 'divider_model.dart';
 
-typedef List<DividerModel?> FilterDividerModels(List<DividerModel?> values);
-
-
+typedef FilterDividerModels = List<DividerModel?> Function(
+    List<DividerModel?> values);
 
 class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
   final FilterDividerModels? filter;
@@ -39,23 +38,32 @@ class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
   final bool? detailed;
   final int dividerLimit;
 
-  DividerListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required DividerRepository dividerRepository, this.dividerLimit = 5})
+  DividerListBloc(
+      {this.filter,
+      this.paged,
+      this.orderBy,
+      this.descending,
+      this.detailed,
+      this.eliudQuery,
+      required DividerRepository dividerRepository,
+      this.dividerLimit = 5})
       : _dividerRepository = dividerRepository,
         super(DividerListLoading()) {
-    on <LoadDividerList> ((event, emit) {
+    on<LoadDividerList>((event, emit) {
       if ((detailed == null) || (!detailed!)) {
         _mapLoadDividerListToState();
       } else {
         _mapLoadDividerListWithDetailsToState();
       }
     });
-    
-    on <NewPage> ((event, emit) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+
+    on<NewPage>((event, emit) {
+      pages = pages +
+          1; // it doesn't matter so much if we increase pages beyond the end
       _mapLoadDividerListWithDetailsToState();
     });
-    
-    on <DividerChangeQuery> ((event, emit) {
+
+    on<DividerChangeQuery>((event, emit) {
       eliudQuery = event.newQuery;
       if ((detailed == null) || (!detailed!)) {
         _mapLoadDividerListToState();
@@ -63,20 +71,20 @@ class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
         _mapLoadDividerListWithDetailsToState();
       }
     });
-      
-    on <AddDividerList> ((event, emit) async {
+
+    on<AddDividerList>((event, emit) async {
       await _mapAddDividerListToState(event);
     });
-    
-    on <UpdateDividerList> ((event, emit) async {
+
+    on<UpdateDividerList>((event, emit) async {
       await _mapUpdateDividerListToState(event);
     });
-    
-    on <DeleteDividerList> ((event, emit) async {
+
+    on<DeleteDividerList>((event, emit) async {
       await _mapDeleteDividerListToState(event);
     });
-    
-    on <DividerListUpdated> ((event, emit) {
+
+    on<DividerListUpdated>((event, emit) {
       emit(_mapDividerListUpdatedToState(event));
     });
   }
@@ -90,27 +98,31 @@ class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
   }
 
   Future<void> _mapLoadDividerListToState() async {
-    int amountNow =  (state is DividerListLoaded) ? (state as DividerListLoaded).values!.length : 0;
+    int amountNow = (state is DividerListLoaded)
+        ? (state as DividerListLoaded).values!.length
+        : 0;
     _dividersListSubscription?.cancel();
     _dividersListSubscription = _dividerRepository.listen(
-          (list) => add(DividerListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
-      orderBy: orderBy,
-      descending: descending,
-      eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * dividerLimit : null
-    );
-  }
-
-  Future<void> _mapLoadDividerListWithDetailsToState() async {
-    int amountNow =  (state is DividerListLoaded) ? (state as DividerListLoaded).values!.length : 0;
-    _dividersListSubscription?.cancel();
-    _dividersListSubscription = _dividerRepository.listenWithDetails(
-            (list) => add(DividerListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
+        (list) => add(DividerListUpdated(
+            value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * dividerLimit : null
-    );
+        limit: ((paged != null) && paged!) ? pages * dividerLimit : null);
+  }
+
+  Future<void> _mapLoadDividerListWithDetailsToState() async {
+    int amountNow = (state is DividerListLoaded)
+        ? (state as DividerListLoaded).values!.length
+        : 0;
+    _dividersListSubscription?.cancel();
+    _dividersListSubscription = _dividerRepository.listenWithDetails(
+        (list) => add(DividerListUpdated(
+            value: _filter(list), mightHaveMore: amountNow != list.length)),
+        orderBy: orderBy,
+        descending: descending,
+        eliudQuery: eliudQuery,
+        limit: ((paged != null) && paged!) ? pages * dividerLimit : null);
   }
 
   Future<void> _mapAddDividerListToState(AddDividerList event) async {
@@ -134,8 +146,9 @@ class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
     }
   }
 
-  DividerListLoaded _mapDividerListUpdatedToState(
-      DividerListUpdated event) => DividerListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
+  DividerListLoaded _mapDividerListUpdatedToState(DividerListUpdated event) =>
+      DividerListLoaded(
+          values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {
@@ -143,5 +156,3 @@ class DividerListBloc extends Bloc<DividerListEvent, DividerListState> {
     return super.close();
   }
 }
-
-

@@ -31,8 +31,8 @@ class DynamicWidgetComponentConstructorDefault implements ComponentConstructor {
 
 class DynamicWidgetComponent extends AbstractDynamicWidgetComponent {
   DynamicWidgetComponent(
-      {Key? key, required AppModel app, required String documentId})
-      : super(key: key, app: app, dynamicWidgetId: documentId);
+      {super.key, required super.app, required String documentId})
+      : super(dynamicWidgetId: documentId);
 
   @override
   Widget yourWidget(BuildContext context, DynamicWidgetModel? value) {
@@ -40,7 +40,8 @@ class DynamicWidgetComponent extends AbstractDynamicWidgetComponent {
         builder: (context, accessState) {
       if (accessState is AccessDetermined) {
 // UPGRADE dynamic_widget
-        return text(app, context, "dynamic_widget needs an upgrade cos it includes reference to RaisedButton which has been removed from flutter sdk");
+        return text(app, context,
+            "dynamic_widget needs an upgrade cos it includes reference to RaisedButton which has been removed from flutter sdk");
 /*
         var theWidget = DynamicWidgetBuilder.build(value!.content ?? '', context, DefaultClickListener());
         if (theWidget != null) {

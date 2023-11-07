@@ -20,7 +20,8 @@ import 'package:eliud_pkg_fundamentals/model/document_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/document_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/document_repository.dart';
 
-class DocumentComponentBloc extends Bloc<DocumentComponentEvent, DocumentComponentState> {
+class DocumentComponentBloc
+    extends Bloc<DocumentComponentEvent, DocumentComponentState> {
   final DocumentRepository? documentRepository;
   StreamSubscription? _documentSubscription;
 
@@ -33,11 +34,12 @@ class DocumentComponentBloc extends Bloc<DocumentComponentEvent, DocumentCompone
     });
   }
 
-  DocumentComponentBloc({ this.documentRepository }): super(DocumentComponentUninitialized()) {
-    on <FetchDocumentComponent> ((event, emit) {
+  DocumentComponentBloc({this.documentRepository})
+      : super(DocumentComponentUninitialized()) {
+    on<FetchDocumentComponent>((event, emit) {
       _mapLoadDocumentComponentUpdateToState(event.id!);
     });
-    on <DocumentComponentUpdated> ((event, emit) {
+    on<DocumentComponentUpdated>((event, emit) {
       emit(DocumentComponentLoaded(value: event.value));
     });
   }
@@ -47,6 +49,4 @@ class DocumentComponentBloc extends Bloc<DocumentComponentEvent, DocumentCompone
     _documentSubscription?.cancel();
     return super.close();
   }
-
 }
-

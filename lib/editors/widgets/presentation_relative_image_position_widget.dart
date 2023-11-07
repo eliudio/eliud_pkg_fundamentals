@@ -8,15 +8,15 @@ typedef PresentationRelativeImagePositionCallback = Function(
     PresentationRelativeImagePosition presentationRelativeImagePosition);
 
 class PresentationRelativeImagePositionWidget extends StatefulWidget {
-  PresentationRelativeImagePositionCallback presentationRelativeImagePositionCallback;
+  final PresentationRelativeImagePositionCallback
+      presentationRelativeImagePositionCallback;
   final PresentationRelativeImagePosition presentationRelativeImagePosition;
   final AppModel app;
   PresentationRelativeImagePositionWidget(
-      {Key? key,
-        required this.app,
-        required this.presentationRelativeImagePositionCallback,
-        required this.presentationRelativeImagePosition})
-      : super(key: key);
+      {super.key,
+      required this.app,
+      required this.presentationRelativeImagePositionCallback,
+      required this.presentationRelativeImagePosition});
 
   @override
   State<StatefulWidget> createState() {
@@ -24,26 +24,34 @@ class PresentationRelativeImagePositionWidget extends StatefulWidget {
   }
 }
 
-class _PresentationRelativeImagePositionWidgetState extends State<PresentationRelativeImagePositionWidget> {
+class _PresentationRelativeImagePositionWidgetState
+    extends State<PresentationRelativeImagePositionWidget> {
   int? _heightTypeSelectedRadioTile;
 
+  @override
   void initState() {
     super.initState();
-    _heightTypeSelectedRadioTile = widget.presentationRelativeImagePosition.index;
+    _heightTypeSelectedRadioTile =
+        widget.presentationRelativeImagePosition.index;
   }
 
-  String heighttTypeLandscapeStringValue(PresentationRelativeImagePosition? presentationRelativeImagePosition) {
+  String heighttTypeLandscapeStringValue(
+      PresentationRelativeImagePosition? presentationRelativeImagePosition) {
     switch (presentationRelativeImagePosition) {
-      case PresentationRelativeImagePosition.Behind:
+      case PresentationRelativeImagePosition.behind:
         return 'Behind';
-      case PresentationRelativeImagePosition.InFront:
+      case PresentationRelativeImagePosition.inFront:
         return 'In front';
-      case PresentationRelativeImagePosition.Below:
+      case PresentationRelativeImagePosition.below:
         return 'Behind';
-      case PresentationRelativeImagePosition.Above:
-          return 'Above';
-      case PresentationRelativeImagePosition.Aside:
-          return 'Aside';
+      case PresentationRelativeImagePosition.above:
+        return 'Above';
+      case PresentationRelativeImagePosition.aside:
+        return 'Aside';
+      case PresentationRelativeImagePosition.unknown:
+        break;
+      case null:
+        break;
     }
     return '?';
   }
@@ -51,13 +59,16 @@ class _PresentationRelativeImagePositionWidgetState extends State<PresentationRe
   void setSelection(int? val) {
     setState(() {
       _heightTypeSelectedRadioTile = val;
-      widget.presentationRelativeImagePositionCallback(toPresentationRelativeImagePosition(val));
+      widget.presentationRelativeImagePositionCallback(
+          toPresentationRelativeImagePosition(val));
     });
   }
 
-  Widget getPrivilegeOption(PresentationRelativeImagePosition? presentationRelativeImagePosition) {
+  Widget getPrivilegeOption(
+      PresentationRelativeImagePosition? presentationRelativeImagePosition) {
     if (presentationRelativeImagePosition == null) return Text("?");
-    var stringValue = heighttTypeLandscapeStringValue(presentationRelativeImagePosition);
+    var stringValue =
+        heighttTypeLandscapeStringValue(presentationRelativeImagePosition);
     return Center(
         child: radioListTile(
             widget.app,
@@ -66,17 +77,17 @@ class _PresentationRelativeImagePositionWidgetState extends State<PresentationRe
             _heightTypeSelectedRadioTile,
             stringValue,
             null,
-                (dynamic val) => setSelection(val)));
+            (dynamic val) => setSelection(val)));
   }
 
   @override
   Widget build(BuildContext context) {
     return ListView(children: [
-      getPrivilegeOption(PresentationRelativeImagePosition.Behind),
-      getPrivilegeOption(PresentationRelativeImagePosition.InFront),
-      getPrivilegeOption(PresentationRelativeImagePosition.Below),
-      getPrivilegeOption(PresentationRelativeImagePosition.Above),
-      getPrivilegeOption(PresentationRelativeImagePosition.Aside),
+      getPrivilegeOption(PresentationRelativeImagePosition.behind),
+      getPrivilegeOption(PresentationRelativeImagePosition.inFront),
+      getPrivilegeOption(PresentationRelativeImagePosition.below),
+      getPrivilegeOption(PresentationRelativeImagePosition.above),
+      getPrivilegeOption(PresentationRelativeImagePosition.aside),
     ], shrinkWrap: true, physics: ScrollPhysics());
   }
 }

@@ -11,7 +11,8 @@ import 'package:eliud_core/tools/widgets/pos_size_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/listed_item_model.dart';
 import 'package:flutter/material.dart';
 
-typedef void ListedItemModelCallback(ListedItemModel listedItemModel);
+typedef ListedItemModelCallback = void Function(
+    ListedItemModel listedItemModel);
 
 class ListedItemModelWidget extends StatefulWidget {
   final bool create;
@@ -23,7 +24,6 @@ class ListedItemModelWidget extends StatefulWidget {
   final int containerPrivilege;
 
   ListedItemModelWidget._({
-    Key? key,
     required this.app,
     required this.create,
     required this.widgetWidth,
@@ -31,7 +31,7 @@ class ListedItemModelWidget extends StatefulWidget {
     required this.listedItemModel,
     required this.listedItemModelCallback,
     required this.containerPrivilege,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() {
@@ -115,7 +115,9 @@ class _ListedItemModelWidgetState extends State<ListedItemModelWidget> {
               widget.listedItemModel.action = action;
             });
           }),
-      if (widget.listedItemModel.image != null) PlatformMediumWidget(app: widget.app, platformMediumModel: widget.listedItemModel.image!)
+      if (widget.listedItemModel.image != null)
+        PlatformMediumWidget(
+            app: widget.app, platformMediumModel: widget.listedItemModel.image!)
     ]);
   }
 }

@@ -22,19 +22,34 @@ class DocumentItemEntity implements EntityBase {
   final String? reference;
   final String? imageId;
 
-  DocumentItemEntity({this.reference, this.imageId, });
+  DocumentItemEntity({
+    this.reference,
+    this.imageId,
+  });
 
-  DocumentItemEntity copyWith({String? documentID, String? reference, String? imageId, }) {
-    return DocumentItemEntity(reference : reference ?? this.reference, imageId : imageId ?? this.imageId, );
+  DocumentItemEntity copyWith({
+    String? documentID,
+    String? reference,
+    String? imageId,
+  }) {
+    return DocumentItemEntity(
+      reference: reference ?? this.reference,
+      imageId: imageId ?? this.imageId,
+    );
   }
-  List<Object?> get props => [reference, imageId, ];
+
+  List<Object?> get props => [
+        reference,
+        imageId,
+      ];
 
   @override
   String toString() {
     return 'DocumentItemEntity{reference: $reference, imageId: $imageId}';
   }
 
-  static DocumentItemEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+  static DocumentItemEntity? fromMap(Object? o,
+      {Map<String, String>? newDocumentIds}) {
     if (o == null) return null;
     var map = o as Map<String, dynamic>;
 
@@ -45,17 +60,24 @@ class DocumentItemEntity implements EntityBase {
       newDocumentIds[imageIdOldDocmentId] = imageIdNewDocmentId;
     }
     return DocumentItemEntity(
-      reference: map['reference'], 
-      imageId: imageIdNewDocmentId, 
+      reference: map['reference'],
+      imageId: imageIdNewDocmentId,
     );
   }
 
+  @override
   Map<String, Object?> toDocument() {
     Map<String, Object?> theDocument = HashMap();
-    if (reference != null) theDocument["reference"] = reference;
-      else theDocument["reference"] = null;
-    if (imageId != null) theDocument["imageId"] = imageId;
-      else theDocument["imageId"] = null;
+    if (reference != null) {
+      theDocument["reference"] = reference;
+    } else {
+      theDocument["reference"] = null;
+    }
+    if (imageId != null) {
+      theDocument["imageId"] = imageId;
+    } else {
+      theDocument["imageId"] = null;
+    }
     return theDocument;
   }
 
@@ -65,7 +87,8 @@ class DocumentItemEntity implements EntityBase {
     return newEntity;
   }
 
-  static DocumentItemEntity? fromJsonString(String json, {Map<String, String>? newDocumentIds}) {
+  static DocumentItemEntity? fromJsonString(String json,
+      {Map<String, String>? newDocumentIds}) {
     Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
     return fromMap(generationSpecificationMap, newDocumentIds: newDocumentIds);
   }
@@ -74,9 +97,9 @@ class DocumentItemEntity implements EntityBase {
     return jsonEncode(toDocument());
   }
 
-  Future<Map<String, Object?>> enrichedDocument(Map<String, Object?> theDocument) async {
+  @override
+  Future<Map<String, Object?>> enrichedDocument(
+      Map<String, Object?> theDocument) async {
     return theDocument;
   }
-
 }
-

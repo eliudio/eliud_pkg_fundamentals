@@ -9,7 +9,8 @@ import 'package:eliud_core/tools/widgets/platform_medium_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_entry_model.dart';
 import 'package:flutter/material.dart';
 
-typedef void TutorialEntryModelCallback(TutorialEntryModel tutorialEntryModel);
+typedef TutorialEntryModelCallback = void Function(
+    TutorialEntryModel tutorialEntryModel);
 
 class TutorialEntryModelWidget extends StatefulWidget {
   final bool create;
@@ -20,14 +21,13 @@ class TutorialEntryModelWidget extends StatefulWidget {
   final TutorialEntryModelCallback tutorialEntryModelCallback;
 
   TutorialEntryModelWidget._({
-    Key? key,
     required this.app,
     required this.create,
     required this.widgetWidth,
     required this.widgetHeight,
     required this.tutorialEntryModel,
     required this.tutorialEntryModelCallback,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() {
@@ -116,7 +116,10 @@ class _TutorialEntryModelWidgetState extends State<TutorialEntryModelWidget> {
                   ),
                 )),
           ]),
-      if (widget.tutorialEntryModel.image != null) PlatformMediumWidget(app: widget.app, platformMediumModel: widget.tutorialEntryModel.image!)
+      if (widget.tutorialEntryModel.image != null)
+        PlatformMediumWidget(
+            app: widget.app,
+            platformMediumModel: widget.tutorialEntryModel.image!)
     ]);
   }
 }

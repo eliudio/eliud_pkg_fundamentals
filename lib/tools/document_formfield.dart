@@ -12,62 +12,61 @@ import 'package:eliud_pkg_fundamentals/tools/document_renderer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-typedef DocumentTextFieldTrigger(String value);
+typedef DocumentTextFieldTrigger = Function(String value);
 
 class DocumentTextField extends StatefulWidget {
   final AppModel app;
   final String label;
-  String? documentValue;
+  final String? originalDocumentValue;
   final List<DocumentItemModel>? images;
   final DocumentTextFieldTrigger trigger;
   final BackgroundModel? bdm;
 
-  DocumentTextField(this.app, this.label, this.documentValue,
+  DocumentTextField(this.app, this.label, this.originalDocumentValue,
       this.images, this.bdm, this.trigger);
 
   @override
   DocumentTextFieldState createState() {
-    return DocumentTextFieldState();
+    return DocumentTextFieldState(originalDocumentValue ?? "");
   }
 }
 
 class DocumentTextFieldState extends State<DocumentTextField> {
+  String value;
+
+  DocumentTextFieldState(this.value);
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AccessBloc, AccessState>(
         builder: (context, accessState) {
-          if (accessState is AccessDetermined) {
-            return _buildExcludeDocument(accessState, context);
-          } else {
-            return progressIndicator(widget.app, context);
-          }
-        });
+      if (accessState is AccessDetermined) {
+        return _buildExcludeDocument(accessState, context);
+      } else {
+        return progressIndicator(widget.app, context);
+      }
+    });
   }
 
   Widget _buildExcludeDocument(AccessState accessState, BuildContext context) {
     return button(widget.app, context,
-            label: widget.label,
-            icon: Icon(Icons.fullscreen),
-            onPressed: () => _fullScreen(widget.app, accessState));
+        label: widget.label,
+        icon: Icon(Icons.fullscreen),
+        onPressed: () => _fullScreen(widget.app, accessState));
   }
-
 
   void _fullScreen(AppModel app, AccessState appState) async {
     if (appState is AccessDetermined) {
       await Navigator.of(context).push(pageRouteBuilder(app,
-          page: DocumentTextFieldFullScreen(app,
-              widget.label,
-              widget.documentValue,
-              widget.images,
-              widget.bdm,
-              _onChange)));
+          page: DocumentTextFieldFullScreen(
+              app, widget.label, value, widget.images, widget.bdm, _onChange)));
     }
   }
 
   void _onChange(val) {
     widget.trigger(val);
     setState(() {
-      widget.documentValue = val;
+      value = val;
     });
   }
 }
@@ -80,8 +79,8 @@ class DocumentTextFieldFullScreen extends StatefulWidget {
   final BackgroundModel? bdm;
   final DocumentTextFieldTrigger trigger;
 
-  DocumentTextFieldFullScreen(this.app, this.label,
-      this.documentValue, this.images, this.bdm, this.trigger);
+  DocumentTextFieldFullScreen(this.app, this.label, this.documentValue,
+      this.images, this.bdm, this.trigger);
 
   @override
   DocumentTextFieldFullScreenState createState() {
@@ -103,17 +102,17 @@ class DocumentTextFieldFullScreenState
   Widget build(BuildContext context) {
     return BlocBuilder<AccessBloc, AccessState>(
         builder: (context, accessState) {
-          if (accessState is AccessDetermined) {
-            return tabs(accessState);
-          } else {
-            return progressIndicator(widget.app, context);
-          }
-        });
+      if (accessState is AccessDetermined) {
+        return tabs(accessState);
+      } else {
+        return progressIndicator(widget.app, context);
+      }
+    });
   }
 
   Widget _document(AppModel app, MemberModel? member) {
-    var w = DocumentRendererTool().render(app,
-        context, member, value!, widget.images, widget.bdm);
+    var w = DocumentRendererTool()
+        .render(app, context, member, value!, widget.images, widget.bdm);
     return ListView(children: <Widget>[w]);
   }
 

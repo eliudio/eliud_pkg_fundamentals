@@ -24,13 +24,11 @@ abstract class GridComponentEvent extends Equatable {
 class FetchGridComponent extends GridComponentEvent {
   final String? id;
 
-  FetchGridComponent({ this.id });
+  FetchGridComponent({this.id});
 }
 
 class GridComponentUpdated extends GridComponentEvent {
   final GridModel value;
 
-  GridComponentUpdated({ required this.value });
+  GridComponentUpdated({required this.value});
 }
-
-

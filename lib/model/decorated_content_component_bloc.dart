@@ -20,24 +20,27 @@ import 'package:eliud_pkg_fundamentals/model/decorated_content_component_event.d
 import 'package:eliud_pkg_fundamentals/model/decorated_content_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/decorated_content_repository.dart';
 
-class DecoratedContentComponentBloc extends Bloc<DecoratedContentComponentEvent, DecoratedContentComponentState> {
+class DecoratedContentComponentBloc extends Bloc<DecoratedContentComponentEvent,
+    DecoratedContentComponentState> {
   final DecoratedContentRepository? decoratedContentRepository;
   StreamSubscription? _decoratedContentSubscription;
 
   void _mapLoadDecoratedContentComponentUpdateToState(String documentId) {
     _decoratedContentSubscription?.cancel();
-    _decoratedContentSubscription = decoratedContentRepository!.listenTo(documentId, (value) {
+    _decoratedContentSubscription =
+        decoratedContentRepository!.listenTo(documentId, (value) {
       if (value != null) {
         add(DecoratedContentComponentUpdated(value: value));
       }
     });
   }
 
-  DecoratedContentComponentBloc({ this.decoratedContentRepository }): super(DecoratedContentComponentUninitialized()) {
-    on <FetchDecoratedContentComponent> ((event, emit) {
+  DecoratedContentComponentBloc({this.decoratedContentRepository})
+      : super(DecoratedContentComponentUninitialized()) {
+    on<FetchDecoratedContentComponent>((event, emit) {
       _mapLoadDecoratedContentComponentUpdateToState(event.id!);
     });
-    on <DecoratedContentComponentUpdated> ((event, emit) {
+    on<DecoratedContentComponentUpdated>((event, emit) {
       emit(DecoratedContentComponentLoaded(value: event.value));
     });
   }
@@ -47,6 +50,4 @@ class DecoratedContentComponentBloc extends Bloc<DecoratedContentComponentEvent,
     _decoratedContentSubscription?.cancel();
     return super.close();
   }
-
 }
-

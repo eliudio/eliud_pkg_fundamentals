@@ -27,7 +27,7 @@ class DividerComponentUninitialized extends DividerComponentState {}
 
 class DividerComponentError extends DividerComponentState {
   final String? message;
-  DividerComponentError({ this.message });
+  DividerComponentError({this.message});
 }
 
 class DividerComponentPermissionDenied extends DividerComponentState {
@@ -37,10 +37,10 @@ class DividerComponentPermissionDenied extends DividerComponentState {
 class DividerComponentLoaded extends DividerComponentState {
   final DividerModel value;
 
-  const DividerComponentLoaded({ required this.value });
+  const DividerComponentLoaded({required this.value});
 
-  DividerComponentLoaded copyWith({ DividerModel? copyThis }) {
-    return DividerComponentLoaded(value: copyThis ?? this.value);
+  DividerComponentLoaded copyWith({DividerModel? copyThis}) {
+    return DividerComponentLoaded(value: copyThis ?? value);
   }
 
   @override
@@ -49,4 +49,3 @@ class DividerComponentLoaded extends DividerComponentState {
   @override
   String toString() => 'DividerComponentLoaded { value: $value }';
 }
-

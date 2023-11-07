@@ -41,9 +41,9 @@ class DividerFormInitialized extends DividerFormState {
   final DividerModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
-  const DividerFormInitialized({ this.value });
+  const DividerFormInitialized({this.value});
 }
 
 // Menu has been initialised and hence a menu is available
@@ -51,9 +51,9 @@ abstract class DividerFormError extends DividerFormInitialized {
   final String? message;
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
-  const DividerFormError({this.message, DividerModel? value }) : super(value: value);
+  const DividerFormError({this.message, super.value});
 
   @override
   String toString() {
@@ -63,11 +63,12 @@ abstract class DividerFormError extends DividerFormInitialized {
     }''';
   }
 }
-class DocumentIDDividerFormError extends DividerFormError { 
-  const DocumentIDDividerFormError({ String? message, DividerModel? value }): super(message: message, value: value);
+
+class DocumentIDDividerFormError extends DividerFormError {
+  const DocumentIDDividerFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -78,12 +79,11 @@ class DocumentIDDividerFormError extends DividerFormError {
   }
 }
 
-
-class AppIdDividerFormError extends DividerFormError { 
-  const AppIdDividerFormError({ String? message, DividerModel? value }): super(message: message, value: value);
+class AppIdDividerFormError extends DividerFormError {
+  const AppIdDividerFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -94,12 +94,11 @@ class AppIdDividerFormError extends DividerFormError {
   }
 }
 
-
-class DescriptionDividerFormError extends DividerFormError { 
-  const DescriptionDividerFormError({ String? message, DividerModel? value }): super(message: message, value: value);
+class DescriptionDividerFormError extends DividerFormError {
+  const DescriptionDividerFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -110,12 +109,11 @@ class DescriptionDividerFormError extends DividerFormError {
   }
 }
 
-
-class ColorDividerFormError extends DividerFormError { 
-  const ColorDividerFormError({ String? message, DividerModel? value }): super(message: message, value: value);
+class ColorDividerFormError extends DividerFormError {
+  const ColorDividerFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -126,12 +124,11 @@ class ColorDividerFormError extends DividerFormError {
   }
 }
 
-
-class HeightDividerFormError extends DividerFormError { 
-  const HeightDividerFormError({ String? message, DividerModel? value }): super(message: message, value: value);
+class HeightDividerFormError extends DividerFormError {
+  const HeightDividerFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -142,12 +139,11 @@ class HeightDividerFormError extends DividerFormError {
   }
 }
 
-
-class ThicknessDividerFormError extends DividerFormError { 
-  const ThicknessDividerFormError({ String? message, DividerModel? value }): super(message: message, value: value);
+class ThicknessDividerFormError extends DividerFormError {
+  const ThicknessDividerFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -158,12 +154,11 @@ class ThicknessDividerFormError extends DividerFormError {
   }
 }
 
-
-class IndentDividerFormError extends DividerFormError { 
-  const IndentDividerFormError({ String? message, DividerModel? value }): super(message: message, value: value);
+class IndentDividerFormError extends DividerFormError {
+  const IndentDividerFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -174,12 +169,11 @@ class IndentDividerFormError extends DividerFormError {
   }
 }
 
-
-class EndIndentDividerFormError extends DividerFormError { 
-  const EndIndentDividerFormError({ String? message, DividerModel? value }): super(message: message, value: value);
+class EndIndentDividerFormError extends DividerFormError {
+  const EndIndentDividerFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -190,12 +184,11 @@ class EndIndentDividerFormError extends DividerFormError {
   }
 }
 
-
-class ConditionsDividerFormError extends DividerFormError { 
-  const ConditionsDividerFormError({ String? message, DividerModel? value }): super(message: message, value: value);
+class ConditionsDividerFormError extends DividerFormError {
+  const ConditionsDividerFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -206,12 +199,11 @@ class ConditionsDividerFormError extends DividerFormError {
   }
 }
 
-
-class DividerFormLoaded extends DividerFormInitialized { 
-  const DividerFormLoaded({ DividerModel? value }): super(value: value);
+class DividerFormLoaded extends DividerFormInitialized {
+  const DividerFormLoaded({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -221,12 +213,11 @@ class DividerFormLoaded extends DividerFormInitialized {
   }
 }
 
-
-class SubmittableDividerForm extends DividerFormInitialized { 
-  const SubmittableDividerForm({ DividerModel? value }): super(value: value);
+class SubmittableDividerForm extends DividerFormInitialized {
+  const SubmittableDividerForm({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -235,5 +226,3 @@ class SubmittableDividerForm extends DividerFormInitialized {
     }''';
   }
 }
-
-

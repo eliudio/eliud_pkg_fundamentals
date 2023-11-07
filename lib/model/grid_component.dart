@@ -13,7 +13,6 @@
 
 */
 
-
 import 'package:eliud_pkg_fundamentals/model/grid_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/grid_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/grid_model.dart';
@@ -31,20 +30,21 @@ abstract class AbstractGridComponent extends StatelessWidget {
   final AppModel app;
   final String gridId;
 
-  AbstractGridComponent({Key? key, required this.app, required this.gridId}): super(key: key);
+  AbstractGridComponent({super.key, required this.app, required this.gridId});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<GridComponentBloc> (
-          create: (context) => GridComponentBloc(
-            gridRepository: gridRepository(appId: app.documentID)!)
+    return BlocProvider<GridComponentBloc>(
+      create: (context) => GridComponentBloc(
+          gridRepository: gridRepository(appId: app.documentID)!)
         ..add(FetchGridComponent(id: gridId)),
       child: _gridBlockBuilder(context),
     );
   }
 
   Widget _gridBlockBuilder(BuildContext context) {
-    return BlocBuilder<GridComponentBloc, GridComponentState>(builder: (context, state) {
+    return BlocBuilder<GridComponentBloc, GridComponentState>(
+        builder: (context, state) {
       if (state is GridComponentLoaded) {
         return yourWidget(context, state.value);
       } else if (state is GridComponentPermissionDenied) {
@@ -57,7 +57,11 @@ abstract class AbstractGridComponent extends StatelessWidget {
         return AlertWidget(app: app, title: 'Error', content: state.message);
       } else {
         return Center(
-          child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().progressIndicatorStyle().progressIndicator(app, context),
+          child: StyleRegistry.registry()
+              .styleWithApp(app)
+              .frontEndStyle()
+              .progressIndicatorStyle()
+              .progressIndicator(app, context),
         );
       }
     });
@@ -65,4 +69,3 @@ abstract class AbstractGridComponent extends StatelessWidget {
 
   Widget yourWidget(BuildContext context, GridModel value);
 }
-

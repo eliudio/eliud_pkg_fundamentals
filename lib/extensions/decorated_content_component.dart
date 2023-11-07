@@ -26,8 +26,7 @@ class DecoratedContentComponentConstructorDefault
 
 class DecoratedContentComponent extends AbstractDecoratedContentComponent {
   DecoratedContentComponent(
-      {Key? key, required AppModel app, required String decoratedContentId})
-      : super(key: key, app: app, decoratedContentId: decoratedContentId);
+      {super.key, required super.app, required super.decoratedContentId});
 
   @override
   Widget yourWidget(BuildContext context, DecoratedContentModel? value) {
@@ -43,17 +42,17 @@ class DecoratedContentComponent extends AbstractDecoratedContentComponent {
     // When the ration of the screen is such that the decoration can not fit niceless on the side, then we might drop it, or we might put it above or below, depending on config
     if (ratio < 1) {
       var isDrop = (value.decorationComponentPosition ==
-              DecorationComponentPosition.LeftIfSpaceAvailableOtherwiseDrop) ||
+              DecorationComponentPosition.leftIfSpaceAvailableOtherwiseDrop) ||
           (value.decorationComponentPosition ==
-              DecorationComponentPosition.RightIfSpaceAvailableOtherwiseDrop);
+              DecorationComponentPosition.rightIfSpaceAvailableOtherwiseDrop);
       if (isDrop) {
         return contents;
       } else {
-        var children;
+        List<Widget> children;
         var isTop = (value.decorationComponentPosition ==
-                DecorationComponentPosition.LeftIfSpaceAvailableOtherwiseTop) ||
+                DecorationComponentPosition.leftIfSpaceAvailableOtherwiseTop) ||
             (value.decorationComponentPosition ==
-                DecorationComponentPosition.RightIfSpaceAvailableOtherwiseTop);
+                DecorationComponentPosition.rightIfSpaceAvailableOtherwiseTop);
         if (isTop) {
           children = [
             image,
@@ -79,10 +78,10 @@ class DecoratedContentComponent extends AbstractDecoratedContentComponent {
       var fraction2 = Expanded(
           flex: (10 - (10 * percentageImageVisible)).toInt(), child: contents);
       var isLeft = value.decorationComponentPosition ==
-              DecorationComponentPosition.LeftIfSpaceAvailableOtherwiseTop ||
+              DecorationComponentPosition.leftIfSpaceAvailableOtherwiseTop ||
           value.decorationComponentPosition ==
-              DecorationComponentPosition.LeftIfSpaceAvailableOtherwiseBottom;
-      var row;
+              DecorationComponentPosition.leftIfSpaceAvailableOtherwiseBottom;
+      Row row;
       if (isLeft) {
         row = Row(children: [fraction1, fraction2]);
       } else {

@@ -1,11 +1,9 @@
-import 'package:eliud_core/core/blocs/access/access_bloc.dart';
-import 'package:eliud_core/core/navigate/router.dart' as EliudRouter;
+import 'package:eliud_core/core/navigate/router.dart' as er;
 import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/style/frontend/has_button.dart';
 import 'package:eliud_core/style/frontend/has_text.dart';
 import 'package:eliud_core/tools/component/component_constructor.dart';
-import 'package:eliud_core/tools/screen_size.dart';
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_component.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
@@ -29,8 +27,7 @@ class BookletComponentConstructorDefault implements ComponentConstructor {
 }
 
 class BookletComponent extends AbstractBookletComponent {
-  BookletComponent({Key? key, required AppModel app, required String bookletId})
-      : super(key: key, app: app, bookletId: bookletId);
+  BookletComponent({super.key, required super.app, required super.bookletId});
 
   Widget _aBitSpace() => SizedBox(height: 30);
 
@@ -57,10 +54,12 @@ class BookletComponent extends AbstractBookletComponent {
 
   Align _toAlignment(
       SectionImageAlignment? sectionImageAlignment, Widget widget) {
-    if (sectionImageAlignment == SectionImageAlignment.Left)
+    if (sectionImageAlignment == SectionImageAlignment.left) {
       return Align(child: widget, alignment: Alignment.topLeft);
-    if (sectionImageAlignment == SectionImageAlignment.Right)
+    }
+    if (sectionImageAlignment == SectionImageAlignment.right) {
       return Align(child: widget, alignment: Alignment.topRight);
+    }
 
     // default center
     return Align(child: widget, alignment: Alignment.topCenter);
@@ -73,26 +72,24 @@ class BookletComponent extends AbstractBookletComponent {
       RelativeImagePosition? relativeImagePosition,
       SectionImageAlignment? sectionImageAlignment,
       double? imageSize) {
-    var state = AccessBloc.getState(context);
+    //var state = AccessBloc.getState(context);
     if (image == null) {
       return _makeBox(widgets);
     }
 
     if ((relativeImagePosition == null) ||
-        (relativeImagePosition == RelativeImagePosition.Unknown))
-      relativeImagePosition = RelativeImagePosition.Above;
-    if ((sectionImageAlignment == null) ||
-        (sectionImageAlignment == SectionImageAlignment.Unknown))
-      sectionImageAlignment = SectionImageAlignment.Left;
-
-    double size;
-    if (imageSize != null) {
-      size = fullScreenWidth(context) * imageSize;
+        (relativeImagePosition == RelativeImagePosition.unknown)) {
+      relativeImagePosition = RelativeImagePosition.above;
     }
+    if ((sectionImageAlignment == null) ||
+        (sectionImageAlignment == SectionImageAlignment.unknown)) {
+      sectionImageAlignment = SectionImageAlignment.left;
+    }
+
     var widgetImage = Image.network(image.url!, scale: 1);
 
-    if (relativeImagePosition == RelativeImagePosition.Aside) {
-      if (sectionImageAlignment == SectionImageAlignment.Left) {
+    if (relativeImagePosition == RelativeImagePosition.aside) {
+      if (sectionImageAlignment == SectionImageAlignment.left) {
         return Table(border: null, children: [
           TableRow(children: [
             Column(children: [
@@ -101,7 +98,7 @@ class BookletComponent extends AbstractBookletComponent {
             Column(children: [_makeBox(widgets)]),
           ])
         ]);
-      } else if (sectionImageAlignment == SectionImageAlignment.Center) {
+      } else if (sectionImageAlignment == SectionImageAlignment.center) {
         return Table(border: null, children: [
           TableRow(children: [
             Column(children: [_makeBox(widgets)]),
@@ -120,23 +117,23 @@ class BookletComponent extends AbstractBookletComponent {
     }
 
     Widget alignedWidget = _toAlignment(sectionImageAlignment, widgetImage);
-    if (relativeImagePosition == RelativeImagePosition.Below) {
+    if (relativeImagePosition == RelativeImagePosition.below) {
       widgets.add(alignedWidget);
       return _makeBox(widgets);
     }
-    if (relativeImagePosition == RelativeImagePosition.Above) {
+    if (relativeImagePosition == RelativeImagePosition.above) {
       var newList = <Widget>[];
       newList.add(alignedWidget);
       newList.addAll(widgets);
       return _makeBox(newList);
     }
-    if (relativeImagePosition == RelativeImagePosition.Behind) {
+    if (relativeImagePosition == RelativeImagePosition.behind) {
       return Stack(children: <Widget>[
         alignedWidget,
         _makeBox(widgets),
       ]);
     }
-    if (relativeImagePosition == RelativeImagePosition.InFront) {
+    if (relativeImagePosition == RelativeImagePosition.inFront) {
       return Stack(children: <Widget>[
         _makeBox(widgets),
         alignedWidget,
@@ -149,33 +146,34 @@ class BookletComponent extends AbstractBookletComponent {
 
   @override
   Widget yourWidget(BuildContext context, BookletModel? value) {
-    var accessState = AccessBloc.getState(context);
+    //var accessState = AccessBloc.getState(context);
     var documentParameterProcessor = ExtendedDocumentParameterProcessor(
-      context,app,
+      context,
+      app,
     );
 
     var groupedWidgets = <Widget>[];
 
-    value!.sections!.forEach((element) {
+    for (var element in value!.sections!) {
       var widgets = <Widget>[];
-      widgets.add(
-          h3(app, context, documentParameterProcessor.process(element.title ?? '')));
+      widgets.add(h3(app, context,
+          documentParameterProcessor.process(element.title ?? '')));
       widgets.add(_aBitSpace());
       widgets.add(text(app, context,
           documentParameterProcessor.process(element.description ?? '')));
       widgets.add(_aBitSpace());
       if (element.links != null && element.links!.isNotEmpty) {
         var children = <Widget>[];
-        element.links!.forEach((link) {
+        for (var link in element.links!) {
           children.add(button(
             app,
             context,
             label: link.linkText!,
             onPressed: () {
-              EliudRouter.Router.navigateTo(context, link.action!);
+              er.Router.navigateTo(context, link.action!);
             },
           ));
-        });
+        }
         widgets.add(Wrap(
           spacing: 8.0,
           runSpacing: 8.0,
@@ -194,7 +192,7 @@ class BookletComponent extends AbstractBookletComponent {
           element.imagePositionRelative,
           element.imageAlignment,
           element.imageWidth));
-    });
+    }
 
     return ListView(
         padding: EdgeInsets.all(10),

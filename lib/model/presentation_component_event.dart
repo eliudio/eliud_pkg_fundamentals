@@ -24,13 +24,11 @@ abstract class PresentationComponentEvent extends Equatable {
 class FetchPresentationComponent extends PresentationComponentEvent {
   final String? id;
 
-  FetchPresentationComponent({ this.id });
+  FetchPresentationComponent({this.id});
 }
 
 class PresentationComponentUpdated extends PresentationComponentEvent {
   final PresentationModel value;
 
-  PresentationComponentUpdated({ required this.value });
+  PresentationComponentUpdated({required this.value});
 }
-
-

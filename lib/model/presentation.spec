@@ -63,7 +63,7 @@
       "displayName": "Relative position of the image",
       "fieldType": "enum",
       "enumName": "PresentationRelativeImagePosition",
-      "enumValues" : [ "Behind", "InFront", "Below", "Above", "Aside" ],
+      "enumValues" : [ "behind", "inFront", "below", "above", "aside" ],
       "group": "imagePositionRelative"
     },
     {
@@ -71,7 +71,7 @@
       "displayName": "Alignment of the image",
       "fieldType": "enum",
       "enumName": "PresentationImageAlignment",
-      "enumValues" : [ "Left", "Center", "Right" ],
+      "enumValues" : [ "left", "center", "right" ],
       "group": "imageAlignment"
     },
     {
@@ -115,7 +115,7 @@
     }
   ],
   "listFields": {
-    "title": "value.description != null ? Center(child: text(app, context, value.description!)) : value.documentID != null ? Center(child: text(app, context, value.documentID)) : Container()"
+    "title": "value.description != null ? Center(child: text(app, context, value.description!)) : Center(child: text(app, context, value.documentID))"
   },
   "depends": ["eliud_core"]
 }

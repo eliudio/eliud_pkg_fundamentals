@@ -20,25 +20,27 @@ import 'package:eliud_pkg_fundamentals/model/simple_image_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_repository.dart';
 
-
-class SimpleImageComponentBloc extends Bloc<SimpleImageComponentEvent, SimpleImageComponentState> {
+class SimpleImageComponentBloc
+    extends Bloc<SimpleImageComponentEvent, SimpleImageComponentState> {
   final SimpleImageRepository? simpleImageRepository;
   StreamSubscription? _simpleImageSubscription;
 
   void _mapLoadSimpleImageComponentUpdateToState(String documentId) {
     _simpleImageSubscription?.cancel();
-    _simpleImageSubscription = simpleImageRepository!.listenTo(documentId, (value) {
+    _simpleImageSubscription =
+        simpleImageRepository!.listenTo(documentId, (value) {
       if (value != null) {
         add(SimpleImageComponentUpdated(value: value));
       }
     });
   }
 
-  SimpleImageComponentBloc({ this.simpleImageRepository }): super(SimpleImageComponentUninitialized()) {
-    on <FetchSimpleImageComponent> ((event, emit) {
+  SimpleImageComponentBloc({this.simpleImageRepository})
+      : super(SimpleImageComponentUninitialized()) {
+    on<FetchSimpleImageComponent>((event, emit) {
       _mapLoadSimpleImageComponentUpdateToState(event.id!);
     });
-    on <SimpleImageComponentUpdated> ((event, emit) {
+    on<SimpleImageComponentUpdated>((event, emit) {
       emit(SimpleImageComponentLoaded(value: event.value));
     });
   }
@@ -48,6 +50,4 @@ class SimpleImageComponentBloc extends Bloc<SimpleImageComponentEvent, SimpleIma
     _simpleImageSubscription?.cancel();
     return super.close();
   }
-
 }
-

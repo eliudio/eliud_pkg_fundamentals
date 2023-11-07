@@ -23,9 +23,7 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 
 import 'link_model.dart';
 
-typedef List<LinkModel?> FilterLinkModels(List<LinkModel?> values);
-
-
+typedef FilterLinkModels = List<LinkModel?> Function(List<LinkModel?> values);
 
 class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
   final FilterLinkModels? filter;
@@ -39,23 +37,32 @@ class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
   final bool? detailed;
   final int linkLimit;
 
-  LinkListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required LinkRepository linkRepository, this.linkLimit = 5})
+  LinkListBloc(
+      {this.filter,
+      this.paged,
+      this.orderBy,
+      this.descending,
+      this.detailed,
+      this.eliudQuery,
+      required LinkRepository linkRepository,
+      this.linkLimit = 5})
       : _linkRepository = linkRepository,
         super(LinkListLoading()) {
-    on <LoadLinkList> ((event, emit) {
+    on<LoadLinkList>((event, emit) {
       if ((detailed == null) || (!detailed!)) {
         _mapLoadLinkListToState();
       } else {
         _mapLoadLinkListWithDetailsToState();
       }
     });
-    
-    on <NewPage> ((event, emit) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+
+    on<NewPage>((event, emit) {
+      pages = pages +
+          1; // it doesn't matter so much if we increase pages beyond the end
       _mapLoadLinkListWithDetailsToState();
     });
-    
-    on <LinkChangeQuery> ((event, emit) {
+
+    on<LinkChangeQuery>((event, emit) {
       eliudQuery = event.newQuery;
       if ((detailed == null) || (!detailed!)) {
         _mapLoadLinkListToState();
@@ -63,20 +70,20 @@ class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
         _mapLoadLinkListWithDetailsToState();
       }
     });
-      
-    on <AddLinkList> ((event, emit) async {
+
+    on<AddLinkList>((event, emit) async {
       await _mapAddLinkListToState(event);
     });
-    
-    on <UpdateLinkList> ((event, emit) async {
+
+    on<UpdateLinkList>((event, emit) async {
       await _mapUpdateLinkListToState(event);
     });
-    
-    on <DeleteLinkList> ((event, emit) async {
+
+    on<DeleteLinkList>((event, emit) async {
       await _mapDeleteLinkListToState(event);
     });
-    
-    on <LinkListUpdated> ((event, emit) {
+
+    on<LinkListUpdated>((event, emit) {
       emit(_mapLinkListUpdatedToState(event));
     });
   }
@@ -90,27 +97,31 @@ class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
   }
 
   Future<void> _mapLoadLinkListToState() async {
-    int amountNow =  (state is LinkListLoaded) ? (state as LinkListLoaded).values!.length : 0;
+    int amountNow = (state is LinkListLoaded)
+        ? (state as LinkListLoaded).values!.length
+        : 0;
     _linksListSubscription?.cancel();
     _linksListSubscription = _linkRepository.listen(
-          (list) => add(LinkListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
-      orderBy: orderBy,
-      descending: descending,
-      eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * linkLimit : null
-    );
-  }
-
-  Future<void> _mapLoadLinkListWithDetailsToState() async {
-    int amountNow =  (state is LinkListLoaded) ? (state as LinkListLoaded).values!.length : 0;
-    _linksListSubscription?.cancel();
-    _linksListSubscription = _linkRepository.listenWithDetails(
-            (list) => add(LinkListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
+        (list) => add(LinkListUpdated(
+            value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * linkLimit : null
-    );
+        limit: ((paged != null) && paged!) ? pages * linkLimit : null);
+  }
+
+  Future<void> _mapLoadLinkListWithDetailsToState() async {
+    int amountNow = (state is LinkListLoaded)
+        ? (state as LinkListLoaded).values!.length
+        : 0;
+    _linksListSubscription?.cancel();
+    _linksListSubscription = _linkRepository.listenWithDetails(
+        (list) => add(LinkListUpdated(
+            value: _filter(list), mightHaveMore: amountNow != list.length)),
+        orderBy: orderBy,
+        descending: descending,
+        eliudQuery: eliudQuery,
+        limit: ((paged != null) && paged!) ? pages * linkLimit : null);
   }
 
   Future<void> _mapAddLinkListToState(AddLinkList event) async {
@@ -134,8 +145,8 @@ class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
     }
   }
 
-  LinkListLoaded _mapLinkListUpdatedToState(
-      LinkListUpdated event) => LinkListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
+  LinkListLoaded _mapLinkListUpdatedToState(LinkListUpdated event) =>
+      LinkListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {
@@ -143,5 +154,3 @@ class LinkListBloc extends Bloc<LinkListEvent, LinkListState> {
     return super.close();
   }
 }
-
-

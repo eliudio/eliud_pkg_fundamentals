@@ -28,8 +28,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/booklet_bloc.dart';
 import 'bloc/section_bloc.dart';
 
-class BookletComponentEditorConstructor
-    extends ComponentEditorConstructor {
+class BookletComponentEditorConstructor extends ComponentEditorConstructor {
   @override
   void updateComponent(
       AppModel app, BuildContext context, model, EditorFeedback feedback) {
@@ -49,7 +48,7 @@ class BookletComponentEditorConstructor
           description: 'New booklet',
           conditions: StorageConditionsModel(
               privilegeLevelRequired:
-                  PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
+                  PrivilegeLevelRequiredSimple.noPrivilegeRequiredSimple),
         ),
         feedback);
   }
@@ -57,12 +56,11 @@ class BookletComponentEditorConstructor
   @override
   void updateComponentWithID(AppModel app, BuildContext context, String id,
       EditorFeedback feedback) async {
-    var booklet =
-        await bookletRepository(appId: app.documentID)!.get(id);
+    var booklet = await bookletRepository(appId: app.documentID)!.get(id);
     if (booklet != null) {
       _openIt(app, context, false, booklet, feedback);
     } else {
-      openErrorDialog(app, context, app.documentID + '/_error',
+      openErrorDialog(app, context, '${app.documentID}/_error',
           title: 'Error',
           errorMessage: 'Cannot find membership dashboard with id $id');
     }
@@ -73,7 +71,7 @@ class BookletComponentEditorConstructor
     openComplexDialog(
       app,
       context,
-      app.documentID + '/membershipdashboard',
+      '${app.documentID}/membershipdashboard',
       title: create
           ? 'Create Membership Dashboard'
           : 'Update Membership Dashboard',
@@ -97,26 +95,23 @@ class BookletComponentEditor extends StatefulWidget {
   final AppModel app;
 
   const BookletComponentEditor({
-    Key? key,
+    super.key,
     required this.app,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() => _BookletComponentEditorState();
 }
 
-class _BookletComponentEditorState
-    extends State<BookletComponentEditor> {
+class _BookletComponentEditorState extends State<BookletComponentEditor> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AccessBloc, AccessState>(
         builder: (aContext, accessState) {
       if (accessState is AccessDetermined) {
-        return BlocBuilder<BookletBloc,
-                ExtEditorBaseState<BookletModel>>(
+        return BlocBuilder<BookletBloc, ExtEditorBaseState<BookletModel>>(
             builder: (ppContext, bookletState) {
-          if (bookletState
-              is ExtEditorBaseInitialised<BookletModel, dynamic>) {
+          if (bookletState is ExtEditorBaseInitialised<BookletModel, dynamic>) {
             return ListView(
                 shrinkWrap: true,
                 physics: ScrollPhysics(),
@@ -175,7 +170,8 @@ class _BookletComponentEditorState
                             leading: Icon(Icons.security),
                             title: ConditionsSimpleWidget(
                               app: widget.app,
-                              readOnly: (bookletState.model.sections != null) && (bookletState.model.sections!.isNotEmpty),
+                              readOnly: (bookletState.model.sections != null) &&
+                                  (bookletState.model.sections!.isNotEmpty),
                               value: bookletState.model.conditions!,
                             )),
                       ]),
@@ -208,34 +204,23 @@ class _BookletComponentEditorState
                   return getListTile(
                     context,
                     widget.app,
-                    title: text(
-                        widget.app,
-                        context,
-                        value.documentID +
-                            ' - ' +
-                            (value.title ?? ' no title')),
-                    trailing: popupMenuButton<int>(
-                      widget.app, context,
+                    title: text(widget.app, context,
+                        '${value.documentID} - ${value.title ?? ' no title'}'),
+                    trailing: popupMenuButton<int>(widget.app, context,
                         child: Icon(Icons.more_vert),
                         itemBuilder: (context) => [
-                              popupMenuItem(
-                                widget.app, context,
-                                value: 1,
-                                label: 'Update'
-                              ),
-                              popupMenuItem(
-                                widget.app, context,
-                                value: 2,
-                                label: 'Delete'
-                              ),
+                              popupMenuItem(widget.app, context,
+                                  value: 1, label: 'Update'),
+                              popupMenuItem(widget.app, context,
+                                  value: 2, label: 'Delete'),
                             ],
                         onSelected: (selectedValue) {
                           if (selectedValue == 1) {
                             open(
                                 value,
                                 (newItem) =>
-                                    BlocProvider.of<BookletBloc>(context)
-                                        .add(UpdateItemEvent<BookletModel,
+                                    BlocProvider.of<BookletBloc>(context).add(
+                                        UpdateItemEvent<BookletModel,
                                                 SectionModel>(
                                             oldItem: value, newItem: newItem)),
                                 ((state.model.conditions == null) ||
@@ -247,8 +232,8 @@ class _BookletComponentEditorState
                                         .privilegeLevelRequired!.index);
                           } else if (selectedValue == 2) {
                             BlocProvider.of<BookletBloc>(context).add(
-                                DeleteItemEvent<BookletModel,
-                                    SectionModel>(itemModel: value));
+                                DeleteItemEvent<BookletModel, SectionModel>(
+                                    itemModel: value));
                           }
                         }),
                   );
@@ -286,29 +271,24 @@ class _BookletComponentEditorState
     );
   }
 
-  void open(
-      SectionModel value,
-      SectionModelCallback sectionCallback,
+  void open(SectionModel value, SectionModelCallback sectionCallback,
       int privilegeContainer) {
     openFlexibleDialog(
-      widget.app,
-      context,
-      widget.app.documentID + '/_memberaction',
-      includeHeading: false,
-      widthFraction: .8,
-      child: BlocProvider<SectionBloc>(
-          create: (context) => SectionBloc(
-            widget.app.documentID,
-          )..add(ExtEditorBaseInitialise<SectionModel>(value)),
-          child: SectionModelWidget.getIt(
-          context,
-          widget.app,
-    false,
-    fullScreenWidth(context) * .8,
-    fullScreenHeight(context) - 100,
-    value,
-    sectionCallback,
-    privilegeContainer)
-    ));
+        widget.app, context, '${widget.app.documentID}/_memberaction',
+        includeHeading: false,
+        widthFraction: .8,
+        child: BlocProvider<SectionBloc>(
+            create: (context) => SectionBloc(
+                  widget.app.documentID,
+                )..add(ExtEditorBaseInitialise<SectionModel>(value)),
+            child: SectionModelWidget.getIt(
+                context,
+                widget.app,
+                false,
+                fullScreenWidth(context) * .8,
+                fullScreenHeight(context) - 100,
+                value,
+                sectionCallback,
+                privilegeContainer)));
   }
 }

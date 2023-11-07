@@ -24,13 +24,11 @@ abstract class SimpleImageComponentEvent extends Equatable {
 class FetchSimpleImageComponent extends SimpleImageComponentEvent {
   final String? id;
 
-  FetchSimpleImageComponent({ this.id });
+  FetchSimpleImageComponent({this.id});
 }
 
 class SimpleImageComponentUpdated extends SimpleImageComponentEvent {
   final SimpleImageModel value;
 
-  SimpleImageComponentUpdated({ required this.value });
+  SimpleImageComponentUpdated({required this.value});
 }
-
-

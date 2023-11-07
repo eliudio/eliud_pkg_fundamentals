@@ -24,13 +24,11 @@ abstract class SimpleTextComponentEvent extends Equatable {
 class FetchSimpleTextComponent extends SimpleTextComponentEvent {
   final String? id;
 
-  FetchSimpleTextComponent({ this.id });
+  FetchSimpleTextComponent({this.id});
 }
 
 class SimpleTextComponentUpdated extends SimpleTextComponentEvent {
   final SimpleTextModel value;
 
-  SimpleTextComponentUpdated({ required this.value });
+  SimpleTextComponentUpdated({required this.value});
 }
-
-

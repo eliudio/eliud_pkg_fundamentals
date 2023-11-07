@@ -13,7 +13,6 @@
 
 */
 
-
 import 'package:eliud_pkg_fundamentals/model/simple_image_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_image_model.dart';
@@ -31,20 +30,22 @@ abstract class AbstractSimpleImageComponent extends StatelessWidget {
   final AppModel app;
   final String simpleImageId;
 
-  AbstractSimpleImageComponent({Key? key, required this.app, required this.simpleImageId}): super(key: key);
+  AbstractSimpleImageComponent(
+      {super.key, required this.app, required this.simpleImageId});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<SimpleImageComponentBloc> (
-          create: (context) => SimpleImageComponentBloc(
-            simpleImageRepository: simpleImageRepository(appId: app.documentID)!)
+    return BlocProvider<SimpleImageComponentBloc>(
+      create: (context) => SimpleImageComponentBloc(
+          simpleImageRepository: simpleImageRepository(appId: app.documentID)!)
         ..add(FetchSimpleImageComponent(id: simpleImageId)),
       child: _simpleImageBlockBuilder(context),
     );
   }
 
   Widget _simpleImageBlockBuilder(BuildContext context) {
-    return BlocBuilder<SimpleImageComponentBloc, SimpleImageComponentState>(builder: (context, state) {
+    return BlocBuilder<SimpleImageComponentBloc, SimpleImageComponentState>(
+        builder: (context, state) {
       if (state is SimpleImageComponentLoaded) {
         return yourWidget(context, state.value);
       } else if (state is SimpleImageComponentPermissionDenied) {
@@ -57,7 +58,11 @@ abstract class AbstractSimpleImageComponent extends StatelessWidget {
         return AlertWidget(app: app, title: 'Error', content: state.message);
       } else {
         return Center(
-          child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().progressIndicatorStyle().progressIndicator(app, context),
+          child: StyleRegistry.registry()
+              .styleWithApp(app)
+              .frontEndStyle()
+              .progressIndicatorStyle()
+              .progressIndicator(app, context),
         );
       }
     });
@@ -65,4 +70,3 @@ abstract class AbstractSimpleImageComponent extends StatelessWidget {
 
   Widget yourWidget(BuildContext context, SimpleImageModel value);
 }
-

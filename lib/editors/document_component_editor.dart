@@ -52,7 +52,7 @@ class DocumentComponentEditorConstructor extends ComponentEditorConstructor {
           description: 'New document',
           conditions: StorageConditionsModel(
               privilegeLevelRequired:
-                  PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
+                  PrivilegeLevelRequiredSimple.noPrivilegeRequiredSimple),
         ),
         feedback);
   }
@@ -64,14 +64,14 @@ class DocumentComponentEditorConstructor extends ComponentEditorConstructor {
     if (document != null) {
       _openIt(app, context, false, document, feedback);
     } else {
-      openErrorDialog(app, context, app.documentID + '/_error',
+      openErrorDialog(app, context, '${app.documentID}/_error',
           title: 'Error', errorMessage: 'Cannot find document with id $id');
     }
   }
 
   void _openIt(AppModel app, BuildContext context, bool create,
       DocumentModel model, EditorFeedback feedback) {
-    openComplexDialog(app, context, app.documentID + '/Document',
+    openComplexDialog(app, context, '${app.documentID}/Document',
         title: create ? 'Create document' : 'Update document',
         includeHeading: false,
         widthFraction: .9,
@@ -91,9 +91,9 @@ class DocumentComponentEditor extends StatefulWidget {
   final AppModel app;
 
   const DocumentComponentEditor({
-    Key? key,
+    super.key,
     required this.app,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() => _DocumentComponentEditorState();
@@ -193,7 +193,7 @@ class _DocumentComponentEditorState extends State<DocumentComponentEditor> {
                               valueChanged: (value) {
                                 setState(() {
                                   documentState.model.padding =
-                                      double_parse(value);
+                                      doubleParse(value);
                                 });
                               },
                               keyboardType: TextInputType.numberWithOptions(
@@ -248,11 +248,11 @@ class _DocumentComponentEditorState extends State<DocumentComponentEditor> {
     var items = state.model.images != null ? state.model.images! : [];
     if (state.model.images != null) {
       var photos = <PlatformMediumModel>[];
-      items.forEach((item) {
+      for (var item in items) {
         if (item.image != null) {
           photos.add(item.image!);
         }
-      });
+      }
     }
     for (var item in items) {
       var medium = item.image;
@@ -315,7 +315,7 @@ class _DocumentComponentEditorState extends State<DocumentComponentEditor> {
             openFlexibleDialog(
               widget.app,
               context,
-              widget.app.documentID + '/_listeditem',
+              '${widget.app.documentID}/_listeditem',
               includeHeading: false,
               widthFraction: .8,
               child: DocumentItemModelWidget.getIt(
@@ -373,21 +373,22 @@ class _DocumentComponentEditorState extends State<DocumentComponentEditor> {
     if (_progress != null) {
       return progressIndicatorWithValue(widget.app, context, value: _progress!);
     } else {
-      return popupMenuButton<int>(
-          widget.app, context,
+      return popupMenuButton<int>(widget.app, context,
           child: Icon(Icons.add),
           itemBuilder: (context) => [
                 if (Registry.registry()!.getMediumApi().hasCamera())
                   popupMenuItem(
-                    widget.app, context,
+                    widget.app,
+                    context,
                     value: 0,
                     label: 'Take photo',
                   ),
-                  popupMenuItem(
-                    widget.app, context,
-                        value: 1,
-                        label: 'Upload image',
-                  ),
+                popupMenuItem(
+                  widget.app,
+                  context,
+                  value: 1,
+                  label: 'Upload image',
+                ),
               ],
           onSelected: (value) async {
             if (value == 0) {

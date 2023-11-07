@@ -9,7 +9,8 @@ import 'package:eliud_core/tools/widgets/platform_medium_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/document_item_model.dart';
 import 'package:flutter/material.dart';
 
-typedef void DocumentItemModelCallback(DocumentItemModel documentItemModel);
+typedef DocumentItemModelCallback = void Function(
+    DocumentItemModel documentItemModel);
 
 class DocumentItemModelWidget extends StatefulWidget {
   final bool create;
@@ -21,7 +22,6 @@ class DocumentItemModelWidget extends StatefulWidget {
   final int containerPrivilege;
 
   DocumentItemModelWidget._({
-    Key? key,
     required this.app,
     required this.create,
     required this.widgetWidth,
@@ -29,7 +29,7 @@ class DocumentItemModelWidget extends StatefulWidget {
     required this.documentItemModel,
     required this.documentItemModelCallback,
     required this.containerPrivilege,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() {
@@ -95,11 +95,15 @@ class _DocumentItemModelWidgetState extends State<DocumentItemModelWidget> {
                   maxLines: 1,
                   decoration: const InputDecoration(
                     labelText: 'Image Reference',
-                    hintText: 'Image Reference which can be used from your document',
+                    hintText:
+                        'Image Reference which can be used from your document',
                   ),
                 )),
           ]),
-      if (widget.documentItemModel.image != null) PlatformMediumWidget(app: widget.app, platformMediumModel: widget.documentItemModel.image!)
+      if (widget.documentItemModel.image != null)
+        PlatformMediumWidget(
+            app: widget.app,
+            platformMediumModel: widget.documentItemModel.image!)
     ]);
   }
 }

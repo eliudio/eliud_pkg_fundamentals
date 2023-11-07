@@ -30,10 +30,10 @@ class NewPage extends DynamicWidgetListEvent {}
 class AddDynamicWidgetList extends DynamicWidgetListEvent {
   final DynamicWidgetModel? value;
 
-  const AddDynamicWidgetList({ this.value });
+  const AddDynamicWidgetList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'AddDynamicWidgetList{ value: $value }';
@@ -42,10 +42,10 @@ class AddDynamicWidgetList extends DynamicWidgetListEvent {
 class UpdateDynamicWidgetList extends DynamicWidgetListEvent {
   final DynamicWidgetModel? value;
 
-  const UpdateDynamicWidgetList({ this.value });
+  const UpdateDynamicWidgetList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'UpdateDynamicWidgetList{ value: $value }';
@@ -54,10 +54,10 @@ class UpdateDynamicWidgetList extends DynamicWidgetListEvent {
 class DeleteDynamicWidgetList extends DynamicWidgetListEvent {
   final DynamicWidgetModel? value;
 
-  const DeleteDynamicWidgetList({ this.value });
+  const DeleteDynamicWidgetList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'DeleteDynamicWidgetList{ value: $value }';
@@ -67,24 +67,24 @@ class DynamicWidgetListUpdated extends DynamicWidgetListEvent {
   final List<DynamicWidgetModel?>? value;
   final bool? mightHaveMore;
 
-  const DynamicWidgetListUpdated({ this.value, this.mightHaveMore });
+  const DynamicWidgetListUpdated({this.value, this.mightHaveMore});
 
   @override
-  List<Object?> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [value, mightHaveMore];
 
   @override
-  String toString() => 'DynamicWidgetListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+  String toString() =>
+      'DynamicWidgetListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 
 class DynamicWidgetChangeQuery extends DynamicWidgetListEvent {
   final EliudQuery? newQuery;
 
-  const DynamicWidgetChangeQuery({ required this.newQuery });
+  const DynamicWidgetChangeQuery({required this.newQuery});
 
   @override
-  List<Object?> get props => [ newQuery ];
+  List<Object?> get props => [newQuery];
 
   @override
   String toString() => 'DynamicWidgetChangeQuery{ value: $newQuery }';
 }
-

@@ -48,7 +48,7 @@ class TutorialComponentEditorConstructor extends ComponentEditorConstructor {
           description: 'New tutorial',
           conditions: StorageConditionsModel(
               privilegeLevelRequired:
-              PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
+                  PrivilegeLevelRequiredSimple.noPrivilegeRequiredSimple),
         ),
         feedback);
   }
@@ -60,14 +60,14 @@ class TutorialComponentEditorConstructor extends ComponentEditorConstructor {
     if (tutorial != null) {
       _openIt(app, context, false, tutorial, feedback);
     } else {
-      openErrorDialog(app, context, app.documentID + '/_error',
+      openErrorDialog(app, context, '${app.documentID}/_error',
           title: 'Error', errorMessage: 'Cannot find tutorial with id $id');
     }
   }
 
   void _openIt(AppModel app, BuildContext context, bool create,
       TutorialModel model, EditorFeedback feedback) {
-    openComplexDialog(app, context, app.documentID + '/Tutorial',
+    openComplexDialog(app, context, '${app.documentID}/Tutorial',
         title: create ? 'Create tutorial' : 'Update tutorial',
         includeHeading: false,
         widthFraction: .9,
@@ -87,9 +87,9 @@ class TutorialComponentEditor extends StatefulWidget {
   final AppModel app;
 
   const TutorialComponentEditor({
-    Key? key,
+    super.key,
     required this.app,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() => _TutorialComponentEditorState();
@@ -102,145 +102,154 @@ class _TutorialComponentEditorState extends State<TutorialComponentEditor> {
   Widget build(BuildContext context) {
     return BlocBuilder<AccessBloc, AccessState>(
         builder: (aContext, accessState) {
-          if (accessState is AccessDetermined) {
-            return BlocBuilder<TutorialBloc, ExtEditorBaseState<TutorialModel>>(
-                builder: (ppContext, tutorialState) {
-                  if (tutorialState is ExtEditorBaseInitialised<TutorialModel, dynamic>) {
-                    return ListView(
-                        shrinkWrap: true,
-                        physics: ScrollPhysics(),
-                        children: [
-                          HeaderWidget(
-                            app: widget.app,
-                            title: 'Tutorial',
-                            okAction: () async {
-                              await BlocProvider.of<TutorialBloc>(context)
-                                  .save(ExtEditorBaseApplyChanges<TutorialModel>(model: tutorialState.model));
-                              return true;
-                            },
-                            cancelAction: () async {
-                              return true;
-                            },
-                          ),
-                          topicContainer(widget.app, context,
-                              title: 'General',
-                              collapsible: true,
-                              collapsed: true,
-                              children: [
-                                getListTile(context, widget.app,
-                                    leading: Icon(Icons.vpn_key),
-                                    title: text(widget.app, context,
-                                        tutorialState.model.documentID)),
-                                getListTile(context, widget.app,
-                                    leading: Icon(Icons.description),
-                                    title: dialogField(
-                                      widget.app,
-                                      context,
-                                      initialValue: tutorialState.model.title,
-                                      valueChanged: (value) {
-                                        tutorialState.model.title = value;
-                                      },
-                                      maxLines: 1,
-                                      decoration: const InputDecoration(
-                                        hintText: 'Title',
-                                        labelText: 'Title',
-                                      ),
-                                    )),
-                                getListTile(context, widget.app,
-                                    leading: Icon(Icons.description),
-                                    title: dialogField(
-                                      widget.app,
-                                      context,
-                                      initialValue: tutorialState.model.name,
-                                      valueChanged: (value) {
-                                        tutorialState.model.name = value;
-                                      },
-                                      maxLines: 1,
-                                      decoration: const InputDecoration(
-                                        hintText: 'Name',
-                                        labelText: 'Name',
-                                      ),
-                                    )),
-                                getListTile(context, widget.app,
-                                    leading: Icon(Icons.description),
-                                    title: dialogField(
-                                      widget.app,
-                                      context,
-                                      initialValue: tutorialState.model.description,
-                                      valueChanged: (value) {
-                                        tutorialState.model.description = value;
-                                      },
-                                      maxLines: 1,
-                                      decoration: const InputDecoration(
-                                        hintText: 'Description',
-                                        labelText: 'Description',
-                                      ),
-                                    )),
-                              ]),
-                          topicContainer(widget.app, context,
-                              title: 'Images',
-                              collapsible: true,
-                              collapsed: true,
-                              children: [
-                                _images(context, tutorialState),
-                              ]),
-                          topicContainer(widget.app, context,
-                              title: 'Condition',
-                              collapsible: true,
-                              collapsed: true,
-                              children: [
-                                getListTile(context, widget.app,
-                                    leading: Icon(Icons.security),
-                                    title: ConditionsSimpleWidget(
-                                      app: widget.app,
-                                      value: tutorialState.model.conditions!,
-                                      readOnly: tutorialState.model.tutorialEntries != null && tutorialState.model.tutorialEntries!.isNotEmpty,
-                                    )),
-                              ]),
-                        ]);
-                  } else {
-                    return progressIndicator(widget.app, context);
-                  }
-                });
+      if (accessState is AccessDetermined) {
+        return BlocBuilder<TutorialBloc, ExtEditorBaseState<TutorialModel>>(
+            builder: (ppContext, tutorialState) {
+          if (tutorialState
+              is ExtEditorBaseInitialised<TutorialModel, dynamic>) {
+            return ListView(
+                shrinkWrap: true,
+                physics: ScrollPhysics(),
+                children: [
+                  HeaderWidget(
+                    app: widget.app,
+                    title: 'Tutorial',
+                    okAction: () async {
+                      await BlocProvider.of<TutorialBloc>(context).save(
+                          ExtEditorBaseApplyChanges<TutorialModel>(
+                              model: tutorialState.model));
+                      return true;
+                    },
+                    cancelAction: () async {
+                      return true;
+                    },
+                  ),
+                  topicContainer(widget.app, context,
+                      title: 'General',
+                      collapsible: true,
+                      collapsed: true,
+                      children: [
+                        getListTile(context, widget.app,
+                            leading: Icon(Icons.vpn_key),
+                            title: text(widget.app, context,
+                                tutorialState.model.documentID)),
+                        getListTile(context, widget.app,
+                            leading: Icon(Icons.description),
+                            title: dialogField(
+                              widget.app,
+                              context,
+                              initialValue: tutorialState.model.title,
+                              valueChanged: (value) {
+                                tutorialState.model.title = value;
+                              },
+                              maxLines: 1,
+                              decoration: const InputDecoration(
+                                hintText: 'Title',
+                                labelText: 'Title',
+                              ),
+                            )),
+                        getListTile(context, widget.app,
+                            leading: Icon(Icons.description),
+                            title: dialogField(
+                              widget.app,
+                              context,
+                              initialValue: tutorialState.model.name,
+                              valueChanged: (value) {
+                                tutorialState.model.name = value;
+                              },
+                              maxLines: 1,
+                              decoration: const InputDecoration(
+                                hintText: 'Name',
+                                labelText: 'Name',
+                              ),
+                            )),
+                        getListTile(context, widget.app,
+                            leading: Icon(Icons.description),
+                            title: dialogField(
+                              widget.app,
+                              context,
+                              initialValue: tutorialState.model.description,
+                              valueChanged: (value) {
+                                tutorialState.model.description = value;
+                              },
+                              maxLines: 1,
+                              decoration: const InputDecoration(
+                                hintText: 'Description',
+                                labelText: 'Description',
+                              ),
+                            )),
+                      ]),
+                  topicContainer(widget.app, context,
+                      title: 'Images',
+                      collapsible: true,
+                      collapsed: true,
+                      children: [
+                        _images(context, tutorialState),
+                      ]),
+                  topicContainer(widget.app, context,
+                      title: 'Condition',
+                      collapsible: true,
+                      collapsed: true,
+                      children: [
+                        getListTile(context, widget.app,
+                            leading: Icon(Icons.security),
+                            title: ConditionsSimpleWidget(
+                              app: widget.app,
+                              value: tutorialState.model.conditions!,
+                              readOnly:
+                                  tutorialState.model.tutorialEntries != null &&
+                                      tutorialState
+                                          .model.tutorialEntries!.isNotEmpty,
+                            )),
+                      ]),
+                ]);
           } else {
             return progressIndicator(widget.app, context);
           }
         });
+      } else {
+        return progressIndicator(widget.app, context);
+      }
+    });
   }
 
-  Widget _images(BuildContext context, ExtEditorBaseInitialised<TutorialModel, dynamic> state) {
+  Widget _images(BuildContext context,
+      ExtEditorBaseInitialised<TutorialModel, dynamic> state) {
     var widgets = <Widget>[];
-    var items = state.model.tutorialEntries != null ? state.model.tutorialEntries! : [];
+    var items =
+        state.model.tutorialEntries != null ? state.model.tutorialEntries! : [];
     if (state.model.tutorialEntries != null) {
       var photos = <PlatformMediumModel>[];
-      items.forEach((item) {
+      for (var item in items) {
         if (item.image != null) {
           photos.add(item.image!);
         }
-      });
+      }
     }
     for (var item in items) {
       var medium = item.image;
       if (medium != null) {
         widgets.add(GestureDetector(
             onTap: () {
-              BlocProvider.of<TutorialBloc>(context)
-                  .add(SelectForEditEvent<TutorialModel, TutorialEntryModel>(item: item));
+              BlocProvider.of<TutorialBloc>(context).add(
+                  SelectForEditEvent<TutorialModel, TutorialEntryModel>(
+                      item: item));
             },
             child: Padding(
-                padding: const EdgeInsets.all(5), child: item == state.currentEdit ? Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.red, width: 1 ),
-                ),
-                child: Image.network(
-                  medium.url!,
-                  //            height: height,
-                )
-            ) : Image.network(
-              medium.url!,
-              //            height: height,
-            ))
-        ));
+                padding: const EdgeInsets.all(5),
+                child: item == state.currentEdit
+                    ? Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.red, width: 1),
+                        ),
+                        child: Image.network(
+                          medium.url!,
+                          //            height: height,
+                        ))
+                    : Image.network(
+                        medium.url!,
+                        //            height: height,
+                      ))));
       }
     }
     widgets.add(_addButton(state));
@@ -264,105 +273,109 @@ class _TutorialComponentEditorState extends State<TutorialComponentEditor> {
               icon: Icon(
                 Icons.arrow_left,
               ),
-              label: 'Move up',
-              onPressed: () async {
-                BlocProvider.of<TutorialBloc>(context)
-                    .add(MoveEvent<TutorialModel, TutorialEntryModel>(isUp: true, item: currentEdit));
-
-              }),
+              label: 'Move up', onPressed: () async {
+            BlocProvider.of<TutorialBloc>(context).add(
+                MoveEvent<TutorialModel, TutorialEntryModel>(
+                    isUp: true, item: currentEdit));
+          }),
           Spacer(),
           button(widget.app, context,
               icon: Icon(
                 Icons.edit,
               ),
-              label: 'Edit',
-              onPressed: () async {
-                openFlexibleDialog(
-                  widget.app,
-                  context,
-                  widget.app.documentID + '/_listeditem',
-                  includeHeading: false,
-                  widthFraction: .8,
-                  child: TutorialEntryModelWidget.getIt(
-                    context,
-                    widget.app,
-                    false,
-                    fullScreenWidth(context) * .8,
-                    fullScreenHeight(context) - 100,
-                    currentEdit,
-                        (newItem) => _listedItemModelCallback(currentEdit, newItem),
-                  ),
-                );
-              }),
+              label: 'Edit', onPressed: () async {
+            openFlexibleDialog(
+              widget.app,
+              context,
+              '${widget.app.documentID}/_listeditem',
+              includeHeading: false,
+              widthFraction: .8,
+              child: TutorialEntryModelWidget.getIt(
+                context,
+                widget.app,
+                false,
+                fullScreenWidth(context) * .8,
+                fullScreenHeight(context) - 100,
+                currentEdit,
+                (newItem) => _listedItemModelCallback(currentEdit, newItem),
+              ),
+            );
+          }),
           Spacer(),
           button(widget.app, context,
               icon: Icon(
                 Icons.delete,
               ),
-              label: 'Delete',
-              onPressed: () async {
-                BlocProvider.of<TutorialBloc>(context)
-                    .add(DeleteItemEvent<TutorialModel, TutorialEntryModel>(itemModel: currentEdit));
-              }),
+              label: 'Delete', onPressed: () async {
+            BlocProvider.of<TutorialBloc>(context).add(
+                DeleteItemEvent<TutorialModel, TutorialEntryModel>(
+                    itemModel: currentEdit));
+          }),
           Spacer(),
           button(widget.app, context,
               icon: Icon(
                 Icons.arrow_right,
               ),
-              label: 'Move down',
-              onPressed: () async {
-                BlocProvider.of<TutorialBloc>(context)
-                    .add(MoveEvent<TutorialModel, TutorialEntryModel>(isUp: false, item: currentEdit));
-
-              }),
-        ]),      ]);
+              label: 'Move down', onPressed: () async {
+            BlocProvider.of<TutorialBloc>(context).add(
+                MoveEvent<TutorialModel, TutorialEntryModel>(
+                    isUp: false, item: currentEdit));
+          }),
+        ]),
+      ]);
     } else {
       return theWidget;
     }
   }
 
-  void _listedItemModelCallback(TutorialEntryModel oldItem, TutorialEntryModel newItem, ) {
-    BlocProvider.of<TutorialBloc>(context)
-        .add(UpdateItemEvent<TutorialModel, TutorialEntryModel>(oldItem: oldItem, newItem: newItem));
+  void _listedItemModelCallback(
+    TutorialEntryModel oldItem,
+    TutorialEntryModel newItem,
+  ) {
+    BlocProvider.of<TutorialBloc>(context).add(
+        UpdateItemEvent<TutorialModel, TutorialEntryModel>(
+            oldItem: oldItem, newItem: newItem));
   }
 
-  Widget _addButton(ExtEditorBaseInitialised<TutorialModel, dynamic> tutorialState) {
+  Widget _addButton(
+      ExtEditorBaseInitialised<TutorialModel, dynamic> tutorialState) {
     if (_progress != null) {
       return progressIndicatorWithValue(widget.app, context, value: _progress!);
     } else {
-      return popupMenuButton<int>(
-          widget.app, context,
+      return popupMenuButton<int>(widget.app, context,
           child: Icon(Icons.add),
           itemBuilder: (context) => [
-            if (Registry.registry()!.getMediumApi().hasCamera())
-              popupMenuItem(
-                widget.app, context,
-                value: 0,
-                label: 'Take photo',
-              ),
-            popupMenuItem(
-              widget.app, context,
-              value: 1,
-              label: 'Upload image',
-            ),
-          ],
+                if (Registry.registry()!.getMediumApi().hasCamera())
+                  popupMenuItem(
+                    widget.app,
+                    context,
+                    value: 0,
+                    label: 'Take photo',
+                  ),
+                popupMenuItem(
+                  widget.app,
+                  context,
+                  value: 1,
+                  label: 'Upload image',
+                ),
+              ],
           onSelected: (value) async {
             if (value == 0) {
               Registry.registry()!.getMediumApi().takePhoto(
                   context,
                   widget.app,
-                      () => PlatformMediumAccessRights(
+                  () => PlatformMediumAccessRights(
                       tutorialState.model.conditions!.privilegeLevelRequired!),
-                      (photo) => _photoFeedbackFunction(photo),
+                  (photo) => _photoFeedbackFunction(photo),
                   _photoUploading,
                   allowCrop: false);
             } else if (value == 1) {
               Registry.registry()!.getMediumApi().uploadPhoto(
                   context,
                   widget.app,
-                      () => PlatformMediumAccessRights(
+                  () => PlatformMediumAccessRights(
                       tutorialState.model.conditions!.privilegeLevelRequired!),
-                      (photo) => _photoFeedbackFunction(photo),
+                  (photo) => _photoFeedbackFunction(photo),
                   _photoUploading,
                   allowCrop: false);
             }
@@ -375,7 +388,8 @@ class _TutorialComponentEditorState extends State<TutorialComponentEditor> {
       _progress = null;
       if (platformMediumModel != null) {
         BlocProvider.of<TutorialBloc>(context)
-            .add(AddItemEvent<TutorialModel, TutorialEntryModel>(itemModel: TutorialEntryModel(
+            .add(AddItemEvent<TutorialModel, TutorialEntryModel>(
+                itemModel: TutorialEntryModel(
           documentID: newRandomKey(),
           description: '',
           image: platformMediumModel,

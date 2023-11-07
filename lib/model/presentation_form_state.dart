@@ -41,9 +41,9 @@ class PresentationFormInitialized extends PresentationFormState {
   final PresentationModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
-  const PresentationFormInitialized({ this.value });
+  const PresentationFormInitialized({this.value});
 }
 
 // Menu has been initialised and hence a menu is available
@@ -51,9 +51,9 @@ abstract class PresentationFormError extends PresentationFormInitialized {
   final String? message;
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
-  const PresentationFormError({this.message, PresentationModel? value }) : super(value: value);
+  const PresentationFormError({this.message, super.value});
 
   @override
   String toString() {
@@ -63,11 +63,12 @@ abstract class PresentationFormError extends PresentationFormInitialized {
     }''';
   }
 }
-class DocumentIDPresentationFormError extends PresentationFormError { 
-  const DocumentIDPresentationFormError({ String? message, PresentationModel? value }): super(message: message, value: value);
+
+class DocumentIDPresentationFormError extends PresentationFormError {
+  const DocumentIDPresentationFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -78,12 +79,11 @@ class DocumentIDPresentationFormError extends PresentationFormError {
   }
 }
 
-
-class AppIdPresentationFormError extends PresentationFormError { 
-  const AppIdPresentationFormError({ String? message, PresentationModel? value }): super(message: message, value: value);
+class AppIdPresentationFormError extends PresentationFormError {
+  const AppIdPresentationFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -94,12 +94,11 @@ class AppIdPresentationFormError extends PresentationFormError {
   }
 }
 
-
-class DescriptionPresentationFormError extends PresentationFormError { 
-  const DescriptionPresentationFormError({ String? message, PresentationModel? value }): super(message: message, value: value);
+class DescriptionPresentationFormError extends PresentationFormError {
+  const DescriptionPresentationFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -110,12 +109,11 @@ class DescriptionPresentationFormError extends PresentationFormError {
   }
 }
 
-
-class BodyComponentsPresentationFormError extends PresentationFormError { 
-  const BodyComponentsPresentationFormError({ String? message, PresentationModel? value }): super(message: message, value: value);
+class BodyComponentsPresentationFormError extends PresentationFormError {
+  const BodyComponentsPresentationFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -126,12 +124,11 @@ class BodyComponentsPresentationFormError extends PresentationFormError {
   }
 }
 
-
-class ImagePresentationFormError extends PresentationFormError { 
-  const ImagePresentationFormError({ String? message, PresentationModel? value }): super(message: message, value: value);
+class ImagePresentationFormError extends PresentationFormError {
+  const ImagePresentationFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -142,12 +139,12 @@ class ImagePresentationFormError extends PresentationFormError {
   }
 }
 
-
-class ImagePositionRelativePresentationFormError extends PresentationFormError { 
-  const ImagePositionRelativePresentationFormError({ String? message, PresentationModel? value }): super(message: message, value: value);
+class ImagePositionRelativePresentationFormError extends PresentationFormError {
+  const ImagePositionRelativePresentationFormError(
+      {super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -158,12 +155,11 @@ class ImagePositionRelativePresentationFormError extends PresentationFormError {
   }
 }
 
-
-class ImageAlignmentPresentationFormError extends PresentationFormError { 
-  const ImageAlignmentPresentationFormError({ String? message, PresentationModel? value }): super(message: message, value: value);
+class ImageAlignmentPresentationFormError extends PresentationFormError {
+  const ImageAlignmentPresentationFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -174,12 +170,11 @@ class ImageAlignmentPresentationFormError extends PresentationFormError {
   }
 }
 
-
-class ImageWidthPresentationFormError extends PresentationFormError { 
-  const ImageWidthPresentationFormError({ String? message, PresentationModel? value }): super(message: message, value: value);
+class ImageWidthPresentationFormError extends PresentationFormError {
+  const ImageWidthPresentationFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -190,12 +185,11 @@ class ImageWidthPresentationFormError extends PresentationFormError {
   }
 }
 
-
-class ConditionsPresentationFormError extends PresentationFormError { 
-  const ConditionsPresentationFormError({ String? message, PresentationModel? value }): super(message: message, value: value);
+class ConditionsPresentationFormError extends PresentationFormError {
+  const ConditionsPresentationFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -206,12 +200,11 @@ class ConditionsPresentationFormError extends PresentationFormError {
   }
 }
 
-
-class PresentationFormLoaded extends PresentationFormInitialized { 
-  const PresentationFormLoaded({ PresentationModel? value }): super(value: value);
+class PresentationFormLoaded extends PresentationFormInitialized {
+  const PresentationFormLoaded({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -221,12 +214,11 @@ class PresentationFormLoaded extends PresentationFormInitialized {
   }
 }
 
-
-class SubmittablePresentationForm extends PresentationFormInitialized { 
-  const SubmittablePresentationForm({ PresentationModel? value }): super(value: value);
+class SubmittablePresentationForm extends PresentationFormInitialized {
+  const SubmittablePresentationForm({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -235,5 +227,3 @@ class SubmittablePresentationForm extends PresentationFormInitialized {
     }''';
   }
 }
-
-

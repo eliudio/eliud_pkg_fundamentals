@@ -13,7 +13,6 @@
 
 */
 
-
 import 'package:eliud_pkg_fundamentals/model/booklet_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
@@ -31,20 +30,22 @@ abstract class AbstractBookletComponent extends StatelessWidget {
   final AppModel app;
   final String bookletId;
 
-  AbstractBookletComponent({Key? key, required this.app, required this.bookletId}): super(key: key);
+  AbstractBookletComponent(
+      {super.key, required this.app, required this.bookletId});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<BookletComponentBloc> (
-          create: (context) => BookletComponentBloc(
-            bookletRepository: bookletRepository(appId: app.documentID)!)
+    return BlocProvider<BookletComponentBloc>(
+      create: (context) => BookletComponentBloc(
+          bookletRepository: bookletRepository(appId: app.documentID)!)
         ..add(FetchBookletComponent(id: bookletId)),
       child: _bookletBlockBuilder(context),
     );
   }
 
   Widget _bookletBlockBuilder(BuildContext context) {
-    return BlocBuilder<BookletComponentBloc, BookletComponentState>(builder: (context, state) {
+    return BlocBuilder<BookletComponentBloc, BookletComponentState>(
+        builder: (context, state) {
       if (state is BookletComponentLoaded) {
         return yourWidget(context, state.value);
       } else if (state is BookletComponentPermissionDenied) {
@@ -57,7 +58,11 @@ abstract class AbstractBookletComponent extends StatelessWidget {
         return AlertWidget(app: app, title: 'Error', content: state.message);
       } else {
         return Center(
-          child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().progressIndicatorStyle().progressIndicator(app, context),
+          child: StyleRegistry.registry()
+              .styleWithApp(app)
+              .frontEndStyle()
+              .progressIndicatorStyle()
+              .progressIndicator(app, context),
         );
       }
     });
@@ -65,4 +70,3 @@ abstract class AbstractBookletComponent extends StatelessWidget {
 
   Widget yourWidget(BuildContext context, BookletModel value);
 }
-

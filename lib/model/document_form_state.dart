@@ -41,9 +41,9 @@ class DocumentFormInitialized extends DocumentFormState {
   final DocumentModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
-  const DocumentFormInitialized({ this.value });
+  const DocumentFormInitialized({this.value});
 }
 
 // Menu has been initialised and hence a menu is available
@@ -51,9 +51,9 @@ abstract class DocumentFormError extends DocumentFormInitialized {
   final String? message;
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
-  const DocumentFormError({this.message, DocumentModel? value }) : super(value: value);
+  const DocumentFormError({this.message, super.value});
 
   @override
   String toString() {
@@ -63,11 +63,12 @@ abstract class DocumentFormError extends DocumentFormInitialized {
     }''';
   }
 }
-class DocumentIDDocumentFormError extends DocumentFormError { 
-  const DocumentIDDocumentFormError({ String? message, DocumentModel? value }): super(message: message, value: value);
+
+class DocumentIDDocumentFormError extends DocumentFormError {
+  const DocumentIDDocumentFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -78,12 +79,11 @@ class DocumentIDDocumentFormError extends DocumentFormError {
   }
 }
 
-
-class AppIdDocumentFormError extends DocumentFormError { 
-  const AppIdDocumentFormError({ String? message, DocumentModel? value }): super(message: message, value: value);
+class AppIdDocumentFormError extends DocumentFormError {
+  const AppIdDocumentFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -94,12 +94,11 @@ class AppIdDocumentFormError extends DocumentFormError {
   }
 }
 
-
-class DescriptionDocumentFormError extends DocumentFormError { 
-  const DescriptionDocumentFormError({ String? message, DocumentModel? value }): super(message: message, value: value);
+class DescriptionDocumentFormError extends DocumentFormError {
+  const DescriptionDocumentFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -110,12 +109,11 @@ class DescriptionDocumentFormError extends DocumentFormError {
   }
 }
 
-
-class ContentDocumentFormError extends DocumentFormError { 
-  const ContentDocumentFormError({ String? message, DocumentModel? value }): super(message: message, value: value);
+class ContentDocumentFormError extends DocumentFormError {
+  const ContentDocumentFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -126,12 +124,11 @@ class ContentDocumentFormError extends DocumentFormError {
   }
 }
 
-
-class PaddingDocumentFormError extends DocumentFormError { 
-  const PaddingDocumentFormError({ String? message, DocumentModel? value }): super(message: message, value: value);
+class PaddingDocumentFormError extends DocumentFormError {
+  const PaddingDocumentFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -142,12 +139,11 @@ class PaddingDocumentFormError extends DocumentFormError {
   }
 }
 
-
-class ImagesDocumentFormError extends DocumentFormError { 
-  const ImagesDocumentFormError({ String? message, DocumentModel? value }): super(message: message, value: value);
+class ImagesDocumentFormError extends DocumentFormError {
+  const ImagesDocumentFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -158,12 +154,11 @@ class ImagesDocumentFormError extends DocumentFormError {
   }
 }
 
-
-class BackgroundDocumentFormError extends DocumentFormError { 
-  const BackgroundDocumentFormError({ String? message, DocumentModel? value }): super(message: message, value: value);
+class BackgroundDocumentFormError extends DocumentFormError {
+  const BackgroundDocumentFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -174,12 +169,11 @@ class BackgroundDocumentFormError extends DocumentFormError {
   }
 }
 
-
-class ConditionsDocumentFormError extends DocumentFormError { 
-  const ConditionsDocumentFormError({ String? message, DocumentModel? value }): super(message: message, value: value);
+class ConditionsDocumentFormError extends DocumentFormError {
+  const ConditionsDocumentFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -190,12 +184,11 @@ class ConditionsDocumentFormError extends DocumentFormError {
   }
 }
 
-
-class DocumentFormLoaded extends DocumentFormInitialized { 
-  const DocumentFormLoaded({ DocumentModel? value }): super(value: value);
+class DocumentFormLoaded extends DocumentFormInitialized {
+  const DocumentFormLoaded({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -205,12 +198,11 @@ class DocumentFormLoaded extends DocumentFormInitialized {
   }
 }
 
-
-class SubmittableDocumentForm extends DocumentFormInitialized { 
-  const SubmittableDocumentForm({ DocumentModel? value }): super(value: value);
+class SubmittableDocumentForm extends DocumentFormInitialized {
+  const SubmittableDocumentForm({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -219,5 +211,3 @@ class SubmittableDocumentForm extends DocumentFormInitialized {
     }''';
   }
 }
-
-

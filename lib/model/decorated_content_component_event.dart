@@ -24,13 +24,11 @@ abstract class DecoratedContentComponentEvent extends Equatable {
 class FetchDecoratedContentComponent extends DecoratedContentComponentEvent {
   final String? id;
 
-  FetchDecoratedContentComponent({ this.id });
+  FetchDecoratedContentComponent({this.id});
 }
 
 class DecoratedContentComponentUpdated extends DecoratedContentComponentEvent {
   final DecoratedContentModel value;
 
-  DecoratedContentComponentUpdated({ required this.value });
+  DecoratedContentComponentUpdated({required this.value});
 }
-
-

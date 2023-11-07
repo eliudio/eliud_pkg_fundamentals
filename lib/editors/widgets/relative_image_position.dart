@@ -8,15 +8,14 @@ typedef RelativeImagePositionCallback = Function(
     RelativeImagePosition relativeImagePosition);
 
 class RelativeImagePositionWidget extends StatefulWidget {
-  RelativeImagePositionCallback relativeImagePositionCallback;
+  final RelativeImagePositionCallback relativeImagePositionCallback;
   final RelativeImagePosition relativeImagePosition;
   final AppModel app;
   RelativeImagePositionWidget(
-      {Key? key,
-        required this.app,
-        required this.relativeImagePositionCallback,
-        required this.relativeImagePosition})
-      : super(key: key);
+      {super.key,
+      required this.app,
+      required this.relativeImagePositionCallback,
+      required this.relativeImagePosition});
 
   @override
   State<StatefulWidget> createState() {
@@ -24,26 +23,33 @@ class RelativeImagePositionWidget extends StatefulWidget {
   }
 }
 
-class _RelativeImagePositionWidgetState extends State<RelativeImagePositionWidget> {
+class _RelativeImagePositionWidgetState
+    extends State<RelativeImagePositionWidget> {
   int? _heightTypeSelectedRadioTile;
 
+  @override
   void initState() {
     super.initState();
     _heightTypeSelectedRadioTile = widget.relativeImagePosition.index;
   }
 
-  String heighttTypeLandscapeStringValue(RelativeImagePosition? relativeImagePosition) {
+  String heighttTypeLandscapeStringValue(
+      RelativeImagePosition? relativeImagePosition) {
     switch (relativeImagePosition) {
-      case RelativeImagePosition.Behind:
+      case RelativeImagePosition.behind:
         return 'Behind';
-      case RelativeImagePosition.InFront:
+      case RelativeImagePosition.inFront:
         return 'In front';
-      case RelativeImagePosition.Below:
+      case RelativeImagePosition.below:
         return 'Below';
-      case RelativeImagePosition.Above:
+      case RelativeImagePosition.above:
         return 'Above';
-      case RelativeImagePosition.Aside:
+      case RelativeImagePosition.aside:
         return 'Aside';
+      case RelativeImagePosition.unknown:
+        break;
+      case null:
+        break;
     }
     return '?';
   }
@@ -66,17 +72,17 @@ class _RelativeImagePositionWidgetState extends State<RelativeImagePositionWidge
             _heightTypeSelectedRadioTile,
             stringValue,
             null,
-                (dynamic val) => setSelection(val)));
+            (dynamic val) => setSelection(val)));
   }
 
   @override
   Widget build(BuildContext context) {
     return ListView(children: [
-      getPrivilegeOption(RelativeImagePosition.Behind),
-      getPrivilegeOption(RelativeImagePosition.InFront),
-      getPrivilegeOption(RelativeImagePosition.Below),
-      getPrivilegeOption(RelativeImagePosition.Above),
-      getPrivilegeOption(RelativeImagePosition.Aside),
+      getPrivilegeOption(RelativeImagePosition.behind),
+      getPrivilegeOption(RelativeImagePosition.inFront),
+      getPrivilegeOption(RelativeImagePosition.below),
+      getPrivilegeOption(RelativeImagePosition.above),
+      getPrivilegeOption(RelativeImagePosition.aside),
     ], shrinkWrap: true, physics: ScrollPhysics());
   }
 }

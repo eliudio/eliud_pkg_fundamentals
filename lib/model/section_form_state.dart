@@ -41,9 +41,9 @@ class SectionFormInitialized extends SectionFormState {
   final SectionModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
-  const SectionFormInitialized({ this.value });
+  const SectionFormInitialized({this.value});
 }
 
 // Menu has been initialised and hence a menu is available
@@ -51,9 +51,9 @@ abstract class SectionFormError extends SectionFormInitialized {
   final String? message;
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
-  const SectionFormError({this.message, SectionModel? value }) : super(value: value);
+  const SectionFormError({this.message, super.value});
 
   @override
   String toString() {
@@ -63,11 +63,12 @@ abstract class SectionFormError extends SectionFormInitialized {
     }''';
   }
 }
-class DocumentIDSectionFormError extends SectionFormError { 
-  const DocumentIDSectionFormError({ String? message, SectionModel? value }): super(message: message, value: value);
+
+class DocumentIDSectionFormError extends SectionFormError {
+  const DocumentIDSectionFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -78,12 +79,11 @@ class DocumentIDSectionFormError extends SectionFormError {
   }
 }
 
-
-class TitleSectionFormError extends SectionFormError { 
-  const TitleSectionFormError({ String? message, SectionModel? value }): super(message: message, value: value);
+class TitleSectionFormError extends SectionFormError {
+  const TitleSectionFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -94,12 +94,11 @@ class TitleSectionFormError extends SectionFormError {
   }
 }
 
-
-class DescriptionSectionFormError extends SectionFormError { 
-  const DescriptionSectionFormError({ String? message, SectionModel? value }): super(message: message, value: value);
+class DescriptionSectionFormError extends SectionFormError {
+  const DescriptionSectionFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -110,12 +109,11 @@ class DescriptionSectionFormError extends SectionFormError {
   }
 }
 
-
-class ImageSectionFormError extends SectionFormError { 
-  const ImageSectionFormError({ String? message, SectionModel? value }): super(message: message, value: value);
+class ImageSectionFormError extends SectionFormError {
+  const ImageSectionFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -126,12 +124,11 @@ class ImageSectionFormError extends SectionFormError {
   }
 }
 
-
-class ImagePositionRelativeSectionFormError extends SectionFormError { 
-  const ImagePositionRelativeSectionFormError({ String? message, SectionModel? value }): super(message: message, value: value);
+class ImagePositionRelativeSectionFormError extends SectionFormError {
+  const ImagePositionRelativeSectionFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -142,12 +139,11 @@ class ImagePositionRelativeSectionFormError extends SectionFormError {
   }
 }
 
-
-class ImageAlignmentSectionFormError extends SectionFormError { 
-  const ImageAlignmentSectionFormError({ String? message, SectionModel? value }): super(message: message, value: value);
+class ImageAlignmentSectionFormError extends SectionFormError {
+  const ImageAlignmentSectionFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -158,12 +154,11 @@ class ImageAlignmentSectionFormError extends SectionFormError {
   }
 }
 
-
-class ImageWidthSectionFormError extends SectionFormError { 
-  const ImageWidthSectionFormError({ String? message, SectionModel? value }): super(message: message, value: value);
+class ImageWidthSectionFormError extends SectionFormError {
+  const ImageWidthSectionFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -174,12 +169,11 @@ class ImageWidthSectionFormError extends SectionFormError {
   }
 }
 
-
-class LinksSectionFormError extends SectionFormError { 
-  const LinksSectionFormError({ String? message, SectionModel? value }): super(message: message, value: value);
+class LinksSectionFormError extends SectionFormError {
+  const LinksSectionFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -190,12 +184,11 @@ class LinksSectionFormError extends SectionFormError {
   }
 }
 
-
-class SectionFormLoaded extends SectionFormInitialized { 
-  const SectionFormLoaded({ SectionModel? value }): super(value: value);
+class SectionFormLoaded extends SectionFormInitialized {
+  const SectionFormLoaded({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -205,12 +198,11 @@ class SectionFormLoaded extends SectionFormInitialized {
   }
 }
 
-
-class SubmittableSectionForm extends SectionFormInitialized { 
-  const SubmittableSectionForm({ SectionModel? value }): super(value: value);
+class SubmittableSectionForm extends SectionFormInitialized {
+  const SubmittableSectionForm({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -219,5 +211,3 @@ class SubmittableSectionForm extends SectionFormInitialized {
     }''';
   }
 }
-
-

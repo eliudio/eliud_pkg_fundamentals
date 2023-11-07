@@ -30,10 +30,10 @@ class NewPage extends LinkListEvent {}
 class AddLinkList extends LinkListEvent {
   final LinkModel? value;
 
-  const AddLinkList({ this.value });
+  const AddLinkList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'AddLinkList{ value: $value }';
@@ -42,10 +42,10 @@ class AddLinkList extends LinkListEvent {
 class UpdateLinkList extends LinkListEvent {
   final LinkModel? value;
 
-  const UpdateLinkList({ this.value });
+  const UpdateLinkList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'UpdateLinkList{ value: $value }';
@@ -54,10 +54,10 @@ class UpdateLinkList extends LinkListEvent {
 class DeleteLinkList extends LinkListEvent {
   final LinkModel? value;
 
-  const DeleteLinkList({ this.value });
+  const DeleteLinkList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'DeleteLinkList{ value: $value }';
@@ -67,24 +67,24 @@ class LinkListUpdated extends LinkListEvent {
   final List<LinkModel?>? value;
   final bool? mightHaveMore;
 
-  const LinkListUpdated({ this.value, this.mightHaveMore });
+  const LinkListUpdated({this.value, this.mightHaveMore});
 
   @override
-  List<Object?> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [value, mightHaveMore];
 
   @override
-  String toString() => 'LinkListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+  String toString() =>
+      'LinkListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 
 class LinkChangeQuery extends LinkListEvent {
   final EliudQuery? newQuery;
 
-  const LinkChangeQuery({ required this.newQuery });
+  const LinkChangeQuery({required this.newQuery});
 
   @override
-  List<Object?> get props => [ newQuery ];
+  List<Object?> get props => [newQuery];
 
   @override
   String toString() => 'LinkChangeQuery{ value: $newQuery }';
 }
-

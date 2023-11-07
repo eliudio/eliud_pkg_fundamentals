@@ -18,7 +18,6 @@ import 'package:meta/meta.dart';
 import '../tools/bespoke_models.dart';
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 
-
 @immutable
 abstract class LinkFormEvent extends Equatable {
   const LinkFormEvent();
@@ -27,15 +26,13 @@ abstract class LinkFormEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class InitialiseNewLinkFormEvent extends LinkFormEvent {
-}
-
+class InitialiseNewLinkFormEvent extends LinkFormEvent {}
 
 class InitialiseLinkFormEvent extends LinkFormEvent {
   final LinkModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialiseLinkFormEvent({this.value});
 }
@@ -44,7 +41,7 @@ class InitialiseLinkFormNoLoadEvent extends LinkFormEvent {
   final LinkModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialiseLinkFormNoLoadEvent({this.value});
 }
@@ -55,7 +52,7 @@ class ChangedLinkDocumentID extends LinkFormEvent {
   ChangedLinkDocumentID({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedLinkDocumentID{ value: $value }';
@@ -67,7 +64,7 @@ class ChangedLinkLinkText extends LinkFormEvent {
   ChangedLinkLinkText({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedLinkLinkText{ value: $value }';
@@ -79,9 +76,8 @@ class ChangedLinkAction extends LinkFormEvent {
   ChangedLinkAction({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedLinkAction{ value: $value }';
 }
-

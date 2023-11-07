@@ -23,11 +23,11 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 
 import 'listed_item_model.dart';
 
-typedef List<ListedItemModel?> FilterListedItemModels(List<ListedItemModel?> values);
+typedef FilterListedItemModels = List<ListedItemModel?> Function(
+    List<ListedItemModel?> values);
 
-
-
-class ListedItemListBloc extends Bloc<ListedItemListEvent, ListedItemListState> {
+class ListedItemListBloc
+    extends Bloc<ListedItemListEvent, ListedItemListState> {
   final FilterListedItemModels? filter;
   final ListedItemRepository _listedItemRepository;
   StreamSubscription? _listedItemsListSubscription;
@@ -39,23 +39,32 @@ class ListedItemListBloc extends Bloc<ListedItemListEvent, ListedItemListState> 
   final bool? detailed;
   final int listedItemLimit;
 
-  ListedItemListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required ListedItemRepository listedItemRepository, this.listedItemLimit = 5})
+  ListedItemListBloc(
+      {this.filter,
+      this.paged,
+      this.orderBy,
+      this.descending,
+      this.detailed,
+      this.eliudQuery,
+      required ListedItemRepository listedItemRepository,
+      this.listedItemLimit = 5})
       : _listedItemRepository = listedItemRepository,
         super(ListedItemListLoading()) {
-    on <LoadListedItemList> ((event, emit) {
+    on<LoadListedItemList>((event, emit) {
       if ((detailed == null) || (!detailed!)) {
         _mapLoadListedItemListToState();
       } else {
         _mapLoadListedItemListWithDetailsToState();
       }
     });
-    
-    on <NewPage> ((event, emit) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+
+    on<NewPage>((event, emit) {
+      pages = pages +
+          1; // it doesn't matter so much if we increase pages beyond the end
       _mapLoadListedItemListWithDetailsToState();
     });
-    
-    on <ListedItemChangeQuery> ((event, emit) {
+
+    on<ListedItemChangeQuery>((event, emit) {
       eliudQuery = event.newQuery;
       if ((detailed == null) || (!detailed!)) {
         _mapLoadListedItemListToState();
@@ -63,20 +72,20 @@ class ListedItemListBloc extends Bloc<ListedItemListEvent, ListedItemListState> 
         _mapLoadListedItemListWithDetailsToState();
       }
     });
-      
-    on <AddListedItemList> ((event, emit) async {
+
+    on<AddListedItemList>((event, emit) async {
       await _mapAddListedItemListToState(event);
     });
-    
-    on <UpdateListedItemList> ((event, emit) async {
+
+    on<UpdateListedItemList>((event, emit) async {
       await _mapUpdateListedItemListToState(event);
     });
-    
-    on <DeleteListedItemList> ((event, emit) async {
+
+    on<DeleteListedItemList>((event, emit) async {
       await _mapDeleteListedItemListToState(event);
     });
-    
-    on <ListedItemListUpdated> ((event, emit) {
+
+    on<ListedItemListUpdated>((event, emit) {
       emit(_mapListedItemListUpdatedToState(event));
     });
   }
@@ -90,27 +99,31 @@ class ListedItemListBloc extends Bloc<ListedItemListEvent, ListedItemListState> 
   }
 
   Future<void> _mapLoadListedItemListToState() async {
-    int amountNow =  (state is ListedItemListLoaded) ? (state as ListedItemListLoaded).values!.length : 0;
+    int amountNow = (state is ListedItemListLoaded)
+        ? (state as ListedItemListLoaded).values!.length
+        : 0;
     _listedItemsListSubscription?.cancel();
     _listedItemsListSubscription = _listedItemRepository.listen(
-          (list) => add(ListedItemListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
-      orderBy: orderBy,
-      descending: descending,
-      eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * listedItemLimit : null
-    );
-  }
-
-  Future<void> _mapLoadListedItemListWithDetailsToState() async {
-    int amountNow =  (state is ListedItemListLoaded) ? (state as ListedItemListLoaded).values!.length : 0;
-    _listedItemsListSubscription?.cancel();
-    _listedItemsListSubscription = _listedItemRepository.listenWithDetails(
-            (list) => add(ListedItemListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
+        (list) => add(ListedItemListUpdated(
+            value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * listedItemLimit : null
-    );
+        limit: ((paged != null) && paged!) ? pages * listedItemLimit : null);
+  }
+
+  Future<void> _mapLoadListedItemListWithDetailsToState() async {
+    int amountNow = (state is ListedItemListLoaded)
+        ? (state as ListedItemListLoaded).values!.length
+        : 0;
+    _listedItemsListSubscription?.cancel();
+    _listedItemsListSubscription = _listedItemRepository.listenWithDetails(
+        (list) => add(ListedItemListUpdated(
+            value: _filter(list), mightHaveMore: amountNow != list.length)),
+        orderBy: orderBy,
+        descending: descending,
+        eliudQuery: eliudQuery,
+        limit: ((paged != null) && paged!) ? pages * listedItemLimit : null);
   }
 
   Future<void> _mapAddListedItemListToState(AddListedItemList event) async {
@@ -120,14 +133,16 @@ class ListedItemListBloc extends Bloc<ListedItemListEvent, ListedItemListState> 
     }
   }
 
-  Future<void> _mapUpdateListedItemListToState(UpdateListedItemList event) async {
+  Future<void> _mapUpdateListedItemListToState(
+      UpdateListedItemList event) async {
     var value = event.value;
     if (value != null) {
       await _listedItemRepository.update(value);
     }
   }
 
-  Future<void> _mapDeleteListedItemListToState(DeleteListedItemList event) async {
+  Future<void> _mapDeleteListedItemListToState(
+      DeleteListedItemList event) async {
     var value = event.value;
     if (value != null) {
       await _listedItemRepository.delete(value);
@@ -135,7 +150,9 @@ class ListedItemListBloc extends Bloc<ListedItemListEvent, ListedItemListState> 
   }
 
   ListedItemListLoaded _mapListedItemListUpdatedToState(
-      ListedItemListUpdated event) => ListedItemListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
+          ListedItemListUpdated event) =>
+      ListedItemListLoaded(
+          values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {
@@ -143,5 +160,3 @@ class ListedItemListBloc extends Bloc<ListedItemListEvent, ListedItemListState> 
     return super.close();
   }
 }
-
-

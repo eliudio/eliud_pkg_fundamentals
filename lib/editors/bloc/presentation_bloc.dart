@@ -8,23 +8,25 @@ import 'package:eliud_pkg_fundamentals/model/presentation_model.dart';
 
 import '../../model/presentation_entity.dart';
 
-class PresentationBloc extends ExtEditorBaseBloc<PresentationModel, BodyComponentModel, PresentationEntity> {
-
+class PresentationBloc extends ExtEditorBaseBloc<PresentationModel,
+    BodyComponentModel, PresentationEntity> {
   PresentationBloc(String appId, EditorFeedback feedback)
       : super(appId, presentationRepository(appId: appId)!, feedback);
 
   @override
-  PresentationModel addItem(PresentationModel model, BodyComponentModel newItem) {
+  PresentationModel addItem(
+      PresentationModel model, BodyComponentModel newItem) {
     List<BodyComponentModel> newItems = model.bodyComponents == null
         ? []
         : model.bodyComponents!.map((e) => e).toList();
     newItems.add(newItem);
-    var newModel = model.copyWith(bodyComponents:  newItems);
+    var newModel = model.copyWith(bodyComponents: newItems);
     return newModel;
   }
 
   @override
-  PresentationModel deleteItem(PresentationModel model, BodyComponentModel deleteItem) {
+  PresentationModel deleteItem(
+      PresentationModel model, BodyComponentModel deleteItem) {
     var newItems = <BodyComponentModel>[];
     for (var item in model.bodyComponents!) {
       if (item != deleteItem) {
@@ -46,16 +48,16 @@ class PresentationBloc extends ExtEditorBaseBloc<PresentationModel, BodyComponen
   }
 
   @override
-  PresentationModel setDefaultValues(PresentationModel t, StorageConditionsModel conditions) {
-    return t.copyWith(
-        conditions: t.conditions ?? conditions);
+  PresentationModel setDefaultValues(
+      PresentationModel t, StorageConditionsModel conditions) {
+    return t.copyWith(conditions: t.conditions ?? conditions);
   }
 
   @override
-  PresentationModel updateItem(PresentationModel model, BodyComponentModel oldItem, BodyComponentModel newItem) {
-    List<BodyComponentModel> currentItems = model.bodyComponents == null
-        ? []
-        : model.bodyComponents!;
+  PresentationModel updateItem(PresentationModel model,
+      BodyComponentModel oldItem, BodyComponentModel newItem) {
+    List<BodyComponentModel> currentItems =
+        model.bodyComponents == null ? [] : model.bodyComponents!;
     var index = currentItems.indexOf(oldItem);
     if (index != -1) {
       var newItems = currentItems.map((e) => e).toList();
@@ -63,7 +65,7 @@ class PresentationBloc extends ExtEditorBaseBloc<PresentationModel, BodyComponen
       var newModel = model.copyWith(bodyComponents: newItems);
       return newModel;
     } else {
-      throw Exception("Could not find " + oldItem.toString());
+      throw Exception("Could not find $oldItem");
     }
   }
 
@@ -71,5 +73,4 @@ class PresentationBloc extends ExtEditorBaseBloc<PresentationModel, BodyComponen
   List<BodyComponentModel> copyOf(List<BodyComponentModel> ts) {
     return ts.map((e) => e).toList();
   }
-
 }

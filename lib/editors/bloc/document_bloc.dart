@@ -9,7 +9,8 @@ import 'package:eliud_pkg_fundamentals/model/document_model.dart';
 
 import '../../model/document_entity.dart';
 
-class DocumentBloc extends ExtEditorBaseBloc<DocumentModel, DocumentItemModel, DocumentEntity> {
+class DocumentBloc extends ExtEditorBaseBloc<DocumentModel, DocumentItemModel,
+    DocumentEntity> {
   DocumentBloc(String appId, EditorFeedback feedback)
       : super(appId, documentRepository(appId: appId)!, feedback);
 
@@ -67,7 +68,7 @@ class DocumentBloc extends ExtEditorBaseBloc<DocumentModel, DocumentItemModel, D
       var newModel = model.copyWith(images: newItems);
       return newModel;
     } else {
-      throw Exception("Could not find " + oldItem.toString());
+      throw Exception("Could not find $oldItem");
     }
   }
 

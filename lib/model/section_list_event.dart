@@ -30,10 +30,10 @@ class NewPage extends SectionListEvent {}
 class AddSectionList extends SectionListEvent {
   final SectionModel? value;
 
-  const AddSectionList({ this.value });
+  const AddSectionList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'AddSectionList{ value: $value }';
@@ -42,10 +42,10 @@ class AddSectionList extends SectionListEvent {
 class UpdateSectionList extends SectionListEvent {
   final SectionModel? value;
 
-  const UpdateSectionList({ this.value });
+  const UpdateSectionList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'UpdateSectionList{ value: $value }';
@@ -54,10 +54,10 @@ class UpdateSectionList extends SectionListEvent {
 class DeleteSectionList extends SectionListEvent {
   final SectionModel? value;
 
-  const DeleteSectionList({ this.value });
+  const DeleteSectionList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'DeleteSectionList{ value: $value }';
@@ -67,24 +67,24 @@ class SectionListUpdated extends SectionListEvent {
   final List<SectionModel?>? value;
   final bool? mightHaveMore;
 
-  const SectionListUpdated({ this.value, this.mightHaveMore });
+  const SectionListUpdated({this.value, this.mightHaveMore});
 
   @override
-  List<Object?> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [value, mightHaveMore];
 
   @override
-  String toString() => 'SectionListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+  String toString() =>
+      'SectionListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 
 class SectionChangeQuery extends SectionListEvent {
   final EliudQuery? newQuery;
 
-  const SectionChangeQuery({ required this.newQuery });
+  const SectionChangeQuery({required this.newQuery});
 
   @override
-  List<Object?> get props => [ newQuery ];
+  List<Object?> get props => [newQuery];
 
   @override
   String toString() => 'SectionChangeQuery{ value: $newQuery }';
 }
-

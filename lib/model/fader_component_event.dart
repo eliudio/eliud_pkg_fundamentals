@@ -24,13 +24,11 @@ abstract class FaderComponentEvent extends Equatable {
 class FetchFaderComponent extends FaderComponentEvent {
   final String? id;
 
-  FetchFaderComponent({ this.id });
+  FetchFaderComponent({this.id});
 }
 
 class FaderComponentUpdated extends FaderComponentEvent {
   final FaderModel value;
 
-  FaderComponentUpdated({ required this.value });
+  FaderComponentUpdated({required this.value});
 }
-
-

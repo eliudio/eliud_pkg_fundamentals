@@ -23,13 +23,12 @@ class BookletComponentConstructorDefault implements ComponentConstructor {
 }
 
 class BookletComponent extends AbstractBookletComponent {
-  BookletComponent({Key? key, required AppModel app, required String bookletId})
-      : super(key: key, app: app, bookletId: bookletId);
+  BookletComponent({super.key, required super.app, required super.bookletId});
 
   @override
   Widget yourWidget(BuildContext context, BookletModel? value) {
     // part of the new component
-    bool isLeft = false;
+    //bool isLeft = false;
     var title = "Title";
     var contents =
         "sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj \nasdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd sdaosad loadksj asdkjasd ";
@@ -37,13 +36,15 @@ class BookletComponent extends AbstractBookletComponent {
 
     var ratio = screenRatio(context);
     var text = ListView(shrinkWrap: true, physics: ScrollPhysics(), children: [
-      h1(app,
+      h1(
+        app,
         context,
         title,
         textAlign: textAlign,
       ),
       Container(height: 20),
-      h5(app,
+      h5(
+        app,
         context,
         contents,
         textAlign: textAlign,
@@ -69,12 +70,14 @@ class BookletComponent extends AbstractBookletComponent {
               widthFactor: 1,
               child: text));
 
-      var row;
+      Row row;
+/*
       if (isLeft) {
         row = Row(children: [fraction1, fraction2]);
       } else {
-        row = Row(children: [fraction2, fraction1]);
-      }
+*/
+      row = Row(children: [fraction2, fraction1]);
+//      }
 
       return Container(
           height: double.infinity,
@@ -85,7 +88,8 @@ class BookletComponent extends AbstractBookletComponent {
                 width: double.infinity,
                 child: FittedBox(
                   fit: BoxFit.fitHeight,
-                  alignment: isLeft ? Alignment.topLeft : Alignment.topRight,
+                  alignment: /*isLeft ? Alignment.topLeft : */
+                      Alignment.topRight,
                   child: Image.network(value!.sections![0].image!.url!),
                 )),
             row

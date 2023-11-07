@@ -45,7 +45,7 @@ class SimpleImageComponentEditorConstructor extends ComponentEditorConstructor {
           description: 'New Image',
           conditions: StorageConditionsModel(
               privilegeLevelRequired:
-                  PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
+                  PrivilegeLevelRequiredSimple.noPrivilegeRequiredSimple),
         ),
         feedback);
   }
@@ -58,7 +58,7 @@ class SimpleImageComponentEditorConstructor extends ComponentEditorConstructor {
     if (simpleImage != null) {
       _openIt(app, context, false, simpleImage, feedback);
     } else {
-      openErrorDialog(app, context, app.documentID + '/_error',
+      openErrorDialog(app, context, '${app.documentID}/_error',
           title: 'Error',
           errorMessage: 'Cannot find chat dashboard with id $id');
     }
@@ -69,7 +69,7 @@ class SimpleImageComponentEditorConstructor extends ComponentEditorConstructor {
     openComplexDialog(
       app,
       context,
-      app.documentID + '/chatdashboard',
+      '${app.documentID}/chatdashboard',
       title: create ? 'Create Chat Dashboard' : 'Update Chat Dashboard',
       includeHeading: false,
       widthFraction: .9,
@@ -87,14 +87,18 @@ class SimpleImageComponentEditorConstructor extends ComponentEditorConstructor {
   }
 }
 
-class SimpleImageBloc extends EditorBaseBloc<SimpleImageModel, SimpleImageEntity> {
+class SimpleImageBloc
+    extends EditorBaseBloc<SimpleImageModel, SimpleImageEntity> {
   SimpleImageBloc(String appId, EditorFeedback feedback)
       : super(appId, simpleImageRepository(appId: appId)!, feedback);
 
   @override
   SimpleImageModel newInstance(StorageConditionsModel conditions) {
     return SimpleImageModel(
-        appId: appId, documentID: newRandomKey(), description: 'New image', conditions: conditions);
+        appId: appId,
+        documentID: newRandomKey(),
+        description: 'New image',
+        conditions: conditions);
   }
 
   @override
@@ -108,9 +112,9 @@ class SimpleImageComponentEditor extends StatefulWidget {
   final AppModel app;
 
   const SimpleImageComponentEditor({
-    Key? key,
+    super.key,
     required this.app,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() => _SimpleImageComponentEditorState();

@@ -20,25 +20,27 @@ import 'package:eliud_pkg_fundamentals/model/presentation_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_repository.dart';
 
-
-class PresentationComponentBloc extends Bloc<PresentationComponentEvent, PresentationComponentState> {
+class PresentationComponentBloc
+    extends Bloc<PresentationComponentEvent, PresentationComponentState> {
   final PresentationRepository? presentationRepository;
   StreamSubscription? _presentationSubscription;
 
   void _mapLoadPresentationComponentUpdateToState(String documentId) {
     _presentationSubscription?.cancel();
-    _presentationSubscription = presentationRepository!.listenTo(documentId, (value) {
+    _presentationSubscription =
+        presentationRepository!.listenTo(documentId, (value) {
       if (value != null) {
         add(PresentationComponentUpdated(value: value));
       }
     });
   }
 
-  PresentationComponentBloc({ this.presentationRepository }): super(PresentationComponentUninitialized()) {
-    on <FetchPresentationComponent> ((event, emit) {
+  PresentationComponentBloc({this.presentationRepository})
+      : super(PresentationComponentUninitialized()) {
+    on<FetchPresentationComponent>((event, emit) {
       _mapLoadPresentationComponentUpdateToState(event.id!);
     });
-    on <PresentationComponentUpdated> ((event, emit) {
+    on<PresentationComponentUpdated>((event, emit) {
       emit(PresentationComponentLoaded(value: event.value));
     });
   }
@@ -48,6 +50,4 @@ class PresentationComponentBloc extends Bloc<PresentationComponentEvent, Present
     _presentationSubscription?.cancel();
     return super.close();
   }
-
 }
-

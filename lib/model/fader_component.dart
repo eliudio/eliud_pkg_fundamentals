@@ -13,7 +13,6 @@
 
 */
 
-
 import 'package:eliud_pkg_fundamentals/model/fader_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_model.dart';
@@ -31,20 +30,21 @@ abstract class AbstractFaderComponent extends StatelessWidget {
   final AppModel app;
   final String faderId;
 
-  AbstractFaderComponent({Key? key, required this.app, required this.faderId}): super(key: key);
+  AbstractFaderComponent({super.key, required this.app, required this.faderId});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<FaderComponentBloc> (
-          create: (context) => FaderComponentBloc(
-            faderRepository: faderRepository(appId: app.documentID)!)
+    return BlocProvider<FaderComponentBloc>(
+      create: (context) => FaderComponentBloc(
+          faderRepository: faderRepository(appId: app.documentID)!)
         ..add(FetchFaderComponent(id: faderId)),
       child: _faderBlockBuilder(context),
     );
   }
 
   Widget _faderBlockBuilder(BuildContext context) {
-    return BlocBuilder<FaderComponentBloc, FaderComponentState>(builder: (context, state) {
+    return BlocBuilder<FaderComponentBloc, FaderComponentState>(
+        builder: (context, state) {
       if (state is FaderComponentLoaded) {
         return yourWidget(context, state.value);
       } else if (state is FaderComponentPermissionDenied) {
@@ -57,7 +57,11 @@ abstract class AbstractFaderComponent extends StatelessWidget {
         return AlertWidget(app: app, title: 'Error', content: state.message);
       } else {
         return Center(
-          child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().progressIndicatorStyle().progressIndicator(app, context),
+          child: StyleRegistry.registry()
+              .styleWithApp(app)
+              .frontEndStyle()
+              .progressIndicatorStyle()
+              .progressIndicator(app, context),
         );
       }
     });
@@ -65,4 +69,3 @@ abstract class AbstractFaderComponent extends StatelessWidget {
 
   Widget yourWidget(BuildContext context, FaderModel value);
 }
-

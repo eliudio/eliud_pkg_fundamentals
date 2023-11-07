@@ -18,7 +18,6 @@ import 'package:meta/meta.dart';
 import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 
-
 @immutable
 abstract class DocumentFormEvent extends Equatable {
   const DocumentFormEvent();
@@ -27,15 +26,13 @@ abstract class DocumentFormEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class InitialiseNewDocumentFormEvent extends DocumentFormEvent {
-}
-
+class InitialiseNewDocumentFormEvent extends DocumentFormEvent {}
 
 class InitialiseDocumentFormEvent extends DocumentFormEvent {
   final DocumentModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialiseDocumentFormEvent({this.value});
 }
@@ -44,7 +41,7 @@ class InitialiseDocumentFormNoLoadEvent extends DocumentFormEvent {
   final DocumentModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialiseDocumentFormNoLoadEvent({this.value});
 }
@@ -55,7 +52,7 @@ class ChangedDocumentDocumentID extends DocumentFormEvent {
   ChangedDocumentDocumentID({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedDocumentDocumentID{ value: $value }';
@@ -67,7 +64,7 @@ class ChangedDocumentAppId extends DocumentFormEvent {
   ChangedDocumentAppId({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedDocumentAppId{ value: $value }';
@@ -79,7 +76,7 @@ class ChangedDocumentDescription extends DocumentFormEvent {
   ChangedDocumentDescription({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedDocumentDescription{ value: $value }';
@@ -91,7 +88,7 @@ class ChangedDocumentContent extends DocumentFormEvent {
   ChangedDocumentContent({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedDocumentContent{ value: $value }';
@@ -103,7 +100,7 @@ class ChangedDocumentPadding extends DocumentFormEvent {
   ChangedDocumentPadding({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedDocumentPadding{ value: $value }';
@@ -115,7 +112,7 @@ class ChangedDocumentImages extends DocumentFormEvent {
   ChangedDocumentImages({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedDocumentImages{ value: $value }';
@@ -127,7 +124,7 @@ class ChangedDocumentBackground extends DocumentFormEvent {
   ChangedDocumentBackground({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedDocumentBackground{ value: $value }';
@@ -139,9 +136,8 @@ class ChangedDocumentConditions extends DocumentFormEvent {
   ChangedDocumentConditions({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedDocumentConditions{ value: $value }';
 }
-

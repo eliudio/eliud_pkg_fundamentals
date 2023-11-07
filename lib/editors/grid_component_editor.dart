@@ -49,7 +49,7 @@ class GridComponentEditorConstructor extends ComponentEditorConstructor {
           description: 'New grid',
           conditions: StorageConditionsModel(
               privilegeLevelRequired:
-                  PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
+                  PrivilegeLevelRequiredSimple.noPrivilegeRequiredSimple),
         ),
         feedback);
   }
@@ -61,7 +61,7 @@ class GridComponentEditorConstructor extends ComponentEditorConstructor {
     if (grid != null) {
       _openIt(app, context, false, grid, feedback);
     } else {
-      openErrorDialog(app, context, app.documentID + '/_error',
+      openErrorDialog(app, context, '${app.documentID}/_error',
           title: 'Error',
           errorMessage: 'Cannot find membership dashboard with id $id');
     }
@@ -72,7 +72,7 @@ class GridComponentEditorConstructor extends ComponentEditorConstructor {
     openComplexDialog(
       app,
       context,
-      app.documentID + '/membershipdashboard',
+      '${app.documentID}/membershipdashboard',
       title: create
           ? 'Create Membership Dashboard'
           : 'Update Membership Dashboard',
@@ -96,9 +96,9 @@ class GridComponentEditor extends StatefulWidget {
   final AppModel app;
 
   const GridComponentEditor({
-    Key? key,
+    super.key,
     required this.app,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() => _GridComponentEditorState();
@@ -212,21 +212,15 @@ class _GridComponentEditorState extends State<GridComponentEditor> {
                   return getListTile(
                     context,
                     widget.app,
-                    title: ComponentTitleHelper.title(context, widget.app, value.componentName ?? '?', value.componentId ?? '?'),
-                    trailing: popupMenuButton<int>(
-                        widget.app, context,
+                    title: ComponentTitleHelper.title(context, widget.app,
+                        value.componentName ?? '?', value.componentId ?? '?'),
+                    trailing: popupMenuButton<int>(widget.app, context,
                         child: Icon(Icons.more_vert),
                         itemBuilder: (context) => [
-                              popupMenuItem(
-                                widget.app, context,
-                                value: 1,
-                                label: 'Update'
-                              ),
-                              popupMenuItem(
-                                widget.app, context,
-                                value: 2,
-                                label: 'Delete'
-                              ),
+                              popupMenuItem(widget.app, context,
+                                  value: 1, label: 'Update'),
+                              popupMenuItem(widget.app, context,
+                                  value: 2, label: 'Delete'),
                             ],
                         onSelected: (selectedValue) {
                           if (selectedValue == 1) {
@@ -291,7 +285,7 @@ class _GridComponentEditorState extends State<GridComponentEditor> {
     openFlexibleDialog(
       widget.app,
       context,
-      widget.app.documentID + '/_memberaction',
+      '${widget.app.documentID}/_memberaction',
       includeHeading: false,
       widthFraction: .8,
       child: BodyComponentModelWidget.getIt(

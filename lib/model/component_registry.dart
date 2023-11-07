@@ -13,7 +13,6 @@
 
 */
 
-
 import '../model/internal_component.dart';
 import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_core/tools/component/component_spec.dart';
@@ -53,63 +52,180 @@ import '../extensions/tutorial_component.dart';
 import '../editors/tutorial_component_editor.dart';
 import 'tutorial_component_selector.dart';
 
-
-
-
 class ComponentRegistry {
-
   void init() {
-    Registry.registry()!.addInternalComponents('eliud_pkg_fundamentals', ["booklets", "decoratedContents", "dividers", "documents", "dynamicWidgets", "faders", "grids", "presentations", "simpleImages", "simpleTexts", "tutorials", ]);
-
-    Registry.registry()!.register(componentName: "eliud_pkg_fundamentals_internalWidgets", componentConstructor: ListComponentFactory());
-    Registry.registry()!.addDropDownSupporter("booklets", DropdownButtonComponentFactory());
-    Registry.registry()!.register(componentName: "booklets", componentConstructor: BookletComponentConstructorDefault());
-    Registry.registry()!.addDropDownSupporter("decoratedContents", DropdownButtonComponentFactory());
-    Registry.registry()!.register(componentName: "decoratedContents", componentConstructor: DecoratedContentComponentConstructorDefault());
-    Registry.registry()!.addDropDownSupporter("dividers", DropdownButtonComponentFactory());
-    Registry.registry()!.register(componentName: "dividers", componentConstructor: DividerComponentConstructorDefault());
-    Registry.registry()!.addDropDownSupporter("documents", DropdownButtonComponentFactory());
-    Registry.registry()!.register(componentName: "documents", componentConstructor: DocumentComponentConstructorDefault());
-    Registry.registry()!.addDropDownSupporter("dynamicWidgets", DropdownButtonComponentFactory());
-    Registry.registry()!.register(componentName: "dynamicWidgets", componentConstructor: DynamicWidgetComponentConstructorDefault());
-    Registry.registry()!.addDropDownSupporter("faders", DropdownButtonComponentFactory());
-    Registry.registry()!.register(componentName: "faders", componentConstructor: FaderComponentConstructorDefault());
-    Registry.registry()!.addDropDownSupporter("grids", DropdownButtonComponentFactory());
-    Registry.registry()!.register(componentName: "grids", componentConstructor: GridComponentConstructorDefault());
-    Registry.registry()!.addDropDownSupporter("presentations", DropdownButtonComponentFactory());
-    Registry.registry()!.register(componentName: "presentations", componentConstructor: PresentationComponentConstructorDefault());
-    Registry.registry()!.addDropDownSupporter("simpleImages", DropdownButtonComponentFactory());
-    Registry.registry()!.register(componentName: "simpleImages", componentConstructor: SimpleImageComponentConstructorDefault());
-    Registry.registry()!.addDropDownSupporter("simpleTexts", DropdownButtonComponentFactory());
-    Registry.registry()!.register(componentName: "simpleTexts", componentConstructor: SimpleTextComponentConstructorDefault());
-    Registry.registry()!.addDropDownSupporter("tutorials", DropdownButtonComponentFactory());
-    Registry.registry()!.register(componentName: "tutorials", componentConstructor: TutorialComponentConstructorDefault());
-    Registry.registry()!.addComponentSpec('eliud_pkg_fundamentals', 'fundamentals', [
-      ComponentSpec('booklets', BookletComponentConstructorDefault(), BookletComponentSelector(), BookletComponentEditorConstructor(), ({String? appId}) => bookletRepository(appId: appId)! ), 
-      ComponentSpec('decoratedContents', DecoratedContentComponentConstructorDefault(), DecoratedContentComponentSelector(), DecoratedContentComponentEditorConstructor(), ({String? appId}) => decoratedContentRepository(appId: appId)! ), 
-      ComponentSpec('dividers', DividerComponentConstructorDefault(), DividerComponentSelector(), DividerComponentEditorConstructor(), ({String? appId}) => dividerRepository(appId: appId)! ), 
-      ComponentSpec('documents', DocumentComponentConstructorDefault(), DocumentComponentSelector(), DocumentComponentEditorConstructor(), ({String? appId}) => documentRepository(appId: appId)! ), 
-      ComponentSpec('dynamicWidgets', DynamicWidgetComponentConstructorDefault(), DynamicWidgetComponentSelector(), DynamicWidgetComponentEditorConstructor(), ({String? appId}) => dynamicWidgetRepository(appId: appId)! ), 
-      ComponentSpec('faders', FaderComponentConstructorDefault(), FaderComponentSelector(), FaderComponentEditorConstructor(), ({String? appId}) => faderRepository(appId: appId)! ), 
-      ComponentSpec('grids', GridComponentConstructorDefault(), GridComponentSelector(), GridComponentEditorConstructor(), ({String? appId}) => gridRepository(appId: appId)! ), 
-      ComponentSpec('presentations', PresentationComponentConstructorDefault(), PresentationComponentSelector(), PresentationComponentEditorConstructor(), ({String? appId}) => presentationRepository(appId: appId)! ), 
-      ComponentSpec('simpleImages', SimpleImageComponentConstructorDefault(), SimpleImageComponentSelector(), SimpleImageComponentEditorConstructor(), ({String? appId}) => simpleImageRepository(appId: appId)! ), 
-      ComponentSpec('simpleTexts', SimpleTextComponentConstructorDefault(), SimpleTextComponentSelector(), SimpleTextComponentEditorConstructor(), ({String? appId}) => simpleTextRepository(appId: appId)! ), 
-      ComponentSpec('tutorials', TutorialComponentConstructorDefault(), TutorialComponentSelector(), TutorialComponentEditorConstructor(), ({String? appId}) => tutorialRepository(appId: appId)! ), 
+    Registry.registry()!.addInternalComponents('eliud_pkg_fundamentals', [
+      "booklets",
+      "decoratedContents",
+      "dividers",
+      "documents",
+      "dynamicWidgets",
+      "faders",
+      "grids",
+      "presentations",
+      "simpleImages",
+      "simpleTexts",
+      "tutorials",
     ]);
-      Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals', 'booklets', ({String? appId}) => bookletRepository(appId: appId)!);
-      Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals', 'decoratedContents', ({String? appId}) => decoratedContentRepository(appId: appId)!);
-      Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals', 'dividers', ({String? appId}) => dividerRepository(appId: appId)!);
-      Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals', 'documents', ({String? appId}) => documentRepository(appId: appId)!);
-      Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals', 'dynamicWidgets', ({String? appId}) => dynamicWidgetRepository(appId: appId)!);
-      Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals', 'faders', ({String? appId}) => faderRepository(appId: appId)!);
-      Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals', 'grids', ({String? appId}) => gridRepository(appId: appId)!);
-      Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals', 'presentations', ({String? appId}) => presentationRepository(appId: appId)!);
-      Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals', 'simpleImages', ({String? appId}) => simpleImageRepository(appId: appId)!);
-      Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals', 'simpleTexts', ({String? appId}) => simpleTextRepository(appId: appId)!);
-      Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals', 'tutorials', ({String? appId}) => tutorialRepository(appId: appId)!);
 
+    Registry.registry()!.register(
+        componentName: "eliud_pkg_fundamentals_internalWidgets",
+        componentConstructor: ListComponentFactory());
+    Registry.registry()!
+        .addDropDownSupporter("booklets", DropdownButtonComponentFactory());
+    Registry.registry()!.register(
+        componentName: "booklets",
+        componentConstructor: BookletComponentConstructorDefault());
+    Registry.registry()!.addDropDownSupporter(
+        "decoratedContents", DropdownButtonComponentFactory());
+    Registry.registry()!.register(
+        componentName: "decoratedContents",
+        componentConstructor: DecoratedContentComponentConstructorDefault());
+    Registry.registry()!
+        .addDropDownSupporter("dividers", DropdownButtonComponentFactory());
+    Registry.registry()!.register(
+        componentName: "dividers",
+        componentConstructor: DividerComponentConstructorDefault());
+    Registry.registry()!
+        .addDropDownSupporter("documents", DropdownButtonComponentFactory());
+    Registry.registry()!.register(
+        componentName: "documents",
+        componentConstructor: DocumentComponentConstructorDefault());
+    Registry.registry()!.addDropDownSupporter(
+        "dynamicWidgets", DropdownButtonComponentFactory());
+    Registry.registry()!.register(
+        componentName: "dynamicWidgets",
+        componentConstructor: DynamicWidgetComponentConstructorDefault());
+    Registry.registry()!
+        .addDropDownSupporter("faders", DropdownButtonComponentFactory());
+    Registry.registry()!.register(
+        componentName: "faders",
+        componentConstructor: FaderComponentConstructorDefault());
+    Registry.registry()!
+        .addDropDownSupporter("grids", DropdownButtonComponentFactory());
+    Registry.registry()!.register(
+        componentName: "grids",
+        componentConstructor: GridComponentConstructorDefault());
+    Registry.registry()!.addDropDownSupporter(
+        "presentations", DropdownButtonComponentFactory());
+    Registry.registry()!.register(
+        componentName: "presentations",
+        componentConstructor: PresentationComponentConstructorDefault());
+    Registry.registry()!
+        .addDropDownSupporter("simpleImages", DropdownButtonComponentFactory());
+    Registry.registry()!.register(
+        componentName: "simpleImages",
+        componentConstructor: SimpleImageComponentConstructorDefault());
+    Registry.registry()!
+        .addDropDownSupporter("simpleTexts", DropdownButtonComponentFactory());
+    Registry.registry()!.register(
+        componentName: "simpleTexts",
+        componentConstructor: SimpleTextComponentConstructorDefault());
+    Registry.registry()!
+        .addDropDownSupporter("tutorials", DropdownButtonComponentFactory());
+    Registry.registry()!.register(
+        componentName: "tutorials",
+        componentConstructor: TutorialComponentConstructorDefault());
+    Registry.registry()!
+        .addComponentSpec('eliud_pkg_fundamentals', 'fundamentals', [
+      ComponentSpec(
+          'booklets',
+          BookletComponentConstructorDefault(),
+          BookletComponentSelector(),
+          BookletComponentEditorConstructor(),
+          ({String? appId}) => bookletRepository(appId: appId)!),
+      ComponentSpec(
+          'decoratedContents',
+          DecoratedContentComponentConstructorDefault(),
+          DecoratedContentComponentSelector(),
+          DecoratedContentComponentEditorConstructor(),
+          ({String? appId}) => decoratedContentRepository(appId: appId)!),
+      ComponentSpec(
+          'dividers',
+          DividerComponentConstructorDefault(),
+          DividerComponentSelector(),
+          DividerComponentEditorConstructor(),
+          ({String? appId}) => dividerRepository(appId: appId)!),
+      ComponentSpec(
+          'documents',
+          DocumentComponentConstructorDefault(),
+          DocumentComponentSelector(),
+          DocumentComponentEditorConstructor(),
+          ({String? appId}) => documentRepository(appId: appId)!),
+      ComponentSpec(
+          'dynamicWidgets',
+          DynamicWidgetComponentConstructorDefault(),
+          DynamicWidgetComponentSelector(),
+          DynamicWidgetComponentEditorConstructor(),
+          ({String? appId}) => dynamicWidgetRepository(appId: appId)!),
+      ComponentSpec(
+          'faders',
+          FaderComponentConstructorDefault(),
+          FaderComponentSelector(),
+          FaderComponentEditorConstructor(),
+          ({String? appId}) => faderRepository(appId: appId)!),
+      ComponentSpec(
+          'grids',
+          GridComponentConstructorDefault(),
+          GridComponentSelector(),
+          GridComponentEditorConstructor(),
+          ({String? appId}) => gridRepository(appId: appId)!),
+      ComponentSpec(
+          'presentations',
+          PresentationComponentConstructorDefault(),
+          PresentationComponentSelector(),
+          PresentationComponentEditorConstructor(),
+          ({String? appId}) => presentationRepository(appId: appId)!),
+      ComponentSpec(
+          'simpleImages',
+          SimpleImageComponentConstructorDefault(),
+          SimpleImageComponentSelector(),
+          SimpleImageComponentEditorConstructor(),
+          ({String? appId}) => simpleImageRepository(appId: appId)!),
+      ComponentSpec(
+          'simpleTexts',
+          SimpleTextComponentConstructorDefault(),
+          SimpleTextComponentSelector(),
+          SimpleTextComponentEditorConstructor(),
+          ({String? appId}) => simpleTextRepository(appId: appId)!),
+      ComponentSpec(
+          'tutorials',
+          TutorialComponentConstructorDefault(),
+          TutorialComponentSelector(),
+          TutorialComponentEditorConstructor(),
+          ({String? appId}) => tutorialRepository(appId: appId)!),
+    ]);
+    Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals',
+        'booklets', ({String? appId}) => bookletRepository(appId: appId)!);
+    Registry.registry()!.registerRetrieveRepository(
+        'eliud_pkg_fundamentals',
+        'decoratedContents',
+        ({String? appId}) => decoratedContentRepository(appId: appId)!);
+    Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals',
+        'dividers', ({String? appId}) => dividerRepository(appId: appId)!);
+    Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals',
+        'documents', ({String? appId}) => documentRepository(appId: appId)!);
+    Registry.registry()!.registerRetrieveRepository(
+        'eliud_pkg_fundamentals',
+        'dynamicWidgets',
+        ({String? appId}) => dynamicWidgetRepository(appId: appId)!);
+    Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals',
+        'faders', ({String? appId}) => faderRepository(appId: appId)!);
+    Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals',
+        'grids', ({String? appId}) => gridRepository(appId: appId)!);
+    Registry.registry()!.registerRetrieveRepository(
+        'eliud_pkg_fundamentals',
+        'presentations',
+        ({String? appId}) => presentationRepository(appId: appId)!);
+    Registry.registry()!.registerRetrieveRepository(
+        'eliud_pkg_fundamentals',
+        'simpleImages',
+        ({String? appId}) => simpleImageRepository(appId: appId)!);
+    Registry.registry()!.registerRetrieveRepository(
+        'eliud_pkg_fundamentals',
+        'simpleTexts',
+        ({String? appId}) => simpleTextRepository(appId: appId)!);
+    Registry.registry()!.registerRetrieveRepository('eliud_pkg_fundamentals',
+        'tutorials', ({String? appId}) => tutorialRepository(appId: appId)!);
   }
 }
-
-

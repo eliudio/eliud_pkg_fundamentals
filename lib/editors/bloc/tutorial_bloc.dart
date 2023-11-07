@@ -8,16 +8,15 @@ import 'package:eliud_pkg_fundamentals/model/tutorial_model.dart';
 
 import '../../model/tutorial_entity.dart';
 
-class TutorialBloc extends ExtEditorBaseBloc<TutorialModel, TutorialEntryModel, TutorialEntity> {
-
+class TutorialBloc extends ExtEditorBaseBloc<TutorialModel, TutorialEntryModel,
+    TutorialEntity> {
   TutorialBloc(String appId, EditorFeedback feedback)
       : super(appId, tutorialRepository(appId: appId)!, feedback);
 
   @override
   TutorialModel addItem(TutorialModel model, TutorialEntryModel newItem) {
-    List<TutorialEntryModel> newItems = model.tutorialEntries == null
-        ? []
-        : model.tutorialEntries!;
+    List<TutorialEntryModel> newItems =
+        model.tutorialEntries == null ? [] : model.tutorialEntries!;
     newItems.add(newItem);
     var newModel = model.copyWith(tutorialEntries: newItems);
     return newModel;
@@ -50,15 +49,16 @@ class TutorialBloc extends ExtEditorBaseBloc<TutorialModel, TutorialEntryModel, 
   }
 
   @override
-  TutorialModel setDefaultValues(TutorialModel t, StorageConditionsModel conditions) {
+  TutorialModel setDefaultValues(
+      TutorialModel t, StorageConditionsModel conditions) {
     return t.copyWith(conditions: t.conditions ?? conditions);
   }
 
   @override
-  TutorialModel updateItem(TutorialModel model, TutorialEntryModel oldItem, TutorialEntryModel newItem) {
-    List<TutorialEntryModel> currentItems = model.tutorialEntries == null
-        ? []
-        : model.tutorialEntries!;
+  TutorialModel updateItem(TutorialModel model, TutorialEntryModel oldItem,
+      TutorialEntryModel newItem) {
+    List<TutorialEntryModel> currentItems =
+        model.tutorialEntries == null ? [] : model.tutorialEntries!;
     var index = currentItems.indexOf(oldItem);
     if (index != -1) {
       var newItems = currentItems.map((e) => e).toList();
@@ -66,7 +66,7 @@ class TutorialBloc extends ExtEditorBaseBloc<TutorialModel, TutorialEntryModel, 
       var newModel = model.copyWith(tutorialEntries: newItems);
       return newModel;
     } else {
-      throw Exception("Could not find " + oldItem.toString());
+      throw Exception("Could not find $oldItem");
     }
   }
 
@@ -74,5 +74,4 @@ class TutorialBloc extends ExtEditorBaseBloc<TutorialModel, TutorialEntryModel, 
   List<TutorialEntryModel> copyOf(List<TutorialEntryModel> ts) {
     return ts.map((t) => t).toList();
   }
-
 }

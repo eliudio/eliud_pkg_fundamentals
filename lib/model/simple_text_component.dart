@@ -13,7 +13,6 @@
 
 */
 
-
 import 'package:eliud_pkg_fundamentals/model/simple_text_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_text_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/simple_text_model.dart';
@@ -31,20 +30,22 @@ abstract class AbstractSimpleTextComponent extends StatelessWidget {
   final AppModel app;
   final String simpleTextId;
 
-  AbstractSimpleTextComponent({Key? key, required this.app, required this.simpleTextId}): super(key: key);
+  AbstractSimpleTextComponent(
+      {super.key, required this.app, required this.simpleTextId});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<SimpleTextComponentBloc> (
-          create: (context) => SimpleTextComponentBloc(
-            simpleTextRepository: simpleTextRepository(appId: app.documentID)!)
+    return BlocProvider<SimpleTextComponentBloc>(
+      create: (context) => SimpleTextComponentBloc(
+          simpleTextRepository: simpleTextRepository(appId: app.documentID)!)
         ..add(FetchSimpleTextComponent(id: simpleTextId)),
       child: _simpleTextBlockBuilder(context),
     );
   }
 
   Widget _simpleTextBlockBuilder(BuildContext context) {
-    return BlocBuilder<SimpleTextComponentBloc, SimpleTextComponentState>(builder: (context, state) {
+    return BlocBuilder<SimpleTextComponentBloc, SimpleTextComponentState>(
+        builder: (context, state) {
       if (state is SimpleTextComponentLoaded) {
         return yourWidget(context, state.value);
       } else if (state is SimpleTextComponentPermissionDenied) {
@@ -57,7 +58,11 @@ abstract class AbstractSimpleTextComponent extends StatelessWidget {
         return AlertWidget(app: app, title: 'Error', content: state.message);
       } else {
         return Center(
-          child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().progressIndicatorStyle().progressIndicator(app, context),
+          child: StyleRegistry.registry()
+              .styleWithApp(app)
+              .frontEndStyle()
+              .progressIndicatorStyle()
+              .progressIndicator(app, context),
         );
       }
     });
@@ -65,4 +70,3 @@ abstract class AbstractSimpleTextComponent extends StatelessWidget {
 
   Widget yourWidget(BuildContext context, SimpleTextModel value);
 }
-

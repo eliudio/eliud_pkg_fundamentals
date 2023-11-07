@@ -41,9 +41,9 @@ class FaderFormInitialized extends FaderFormState {
   final FaderModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
-  const FaderFormInitialized({ this.value });
+  const FaderFormInitialized({this.value});
 }
 
 // Menu has been initialised and hence a menu is available
@@ -51,9 +51,9 @@ abstract class FaderFormError extends FaderFormInitialized {
   final String? message;
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
-  const FaderFormError({this.message, FaderModel? value }) : super(value: value);
+  const FaderFormError({this.message, super.value});
 
   @override
   String toString() {
@@ -63,11 +63,12 @@ abstract class FaderFormError extends FaderFormInitialized {
     }''';
   }
 }
-class DocumentIDFaderFormError extends FaderFormError { 
-  const DocumentIDFaderFormError({ String? message, FaderModel? value }): super(message: message, value: value);
+
+class DocumentIDFaderFormError extends FaderFormError {
+  const DocumentIDFaderFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -78,12 +79,11 @@ class DocumentIDFaderFormError extends FaderFormError {
   }
 }
 
-
-class AppIdFaderFormError extends FaderFormError { 
-  const AppIdFaderFormError({ String? message, FaderModel? value }): super(message: message, value: value);
+class AppIdFaderFormError extends FaderFormError {
+  const AppIdFaderFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -94,12 +94,11 @@ class AppIdFaderFormError extends FaderFormError {
   }
 }
 
-
-class DescriptionFaderFormError extends FaderFormError { 
-  const DescriptionFaderFormError({ String? message, FaderModel? value }): super(message: message, value: value);
+class DescriptionFaderFormError extends FaderFormError {
+  const DescriptionFaderFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -110,12 +109,11 @@ class DescriptionFaderFormError extends FaderFormError {
   }
 }
 
-
-class AnimationMillisecondsFaderFormError extends FaderFormError { 
-  const AnimationMillisecondsFaderFormError({ String? message, FaderModel? value }): super(message: message, value: value);
+class AnimationMillisecondsFaderFormError extends FaderFormError {
+  const AnimationMillisecondsFaderFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -126,12 +124,11 @@ class AnimationMillisecondsFaderFormError extends FaderFormError {
   }
 }
 
-
-class ImageSecondsFaderFormError extends FaderFormError { 
-  const ImageSecondsFaderFormError({ String? message, FaderModel? value }): super(message: message, value: value);
+class ImageSecondsFaderFormError extends FaderFormError {
+  const ImageSecondsFaderFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -142,12 +139,11 @@ class ImageSecondsFaderFormError extends FaderFormError {
   }
 }
 
-
-class ItemsFaderFormError extends FaderFormError { 
-  const ItemsFaderFormError({ String? message, FaderModel? value }): super(message: message, value: value);
+class ItemsFaderFormError extends FaderFormError {
+  const ItemsFaderFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -158,12 +154,11 @@ class ItemsFaderFormError extends FaderFormError {
   }
 }
 
-
-class BackgroundFaderFormError extends FaderFormError { 
-  const BackgroundFaderFormError({ String? message, FaderModel? value }): super(message: message, value: value);
+class BackgroundFaderFormError extends FaderFormError {
+  const BackgroundFaderFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -174,12 +169,11 @@ class BackgroundFaderFormError extends FaderFormError {
   }
 }
 
-
-class ConditionsFaderFormError extends FaderFormError { 
-  const ConditionsFaderFormError({ String? message, FaderModel? value }): super(message: message, value: value);
+class ConditionsFaderFormError extends FaderFormError {
+  const ConditionsFaderFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -190,12 +184,11 @@ class ConditionsFaderFormError extends FaderFormError {
   }
 }
 
-
-class FaderFormLoaded extends FaderFormInitialized { 
-  const FaderFormLoaded({ FaderModel? value }): super(value: value);
+class FaderFormLoaded extends FaderFormInitialized {
+  const FaderFormLoaded({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -205,12 +198,11 @@ class FaderFormLoaded extends FaderFormInitialized {
   }
 }
 
-
-class SubmittableFaderForm extends FaderFormInitialized { 
-  const SubmittableFaderForm({ FaderModel? value }): super(value: value);
+class SubmittableFaderForm extends FaderFormInitialized {
+  const SubmittableFaderForm({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -219,5 +211,3 @@ class SubmittableFaderForm extends FaderFormInitialized {
     }''';
   }
 }
-
-

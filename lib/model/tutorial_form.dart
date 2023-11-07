@@ -23,9 +23,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eliud_core/style/style_registry.dart';
 
-
-
-
 import 'package:eliud_pkg_fundamentals/model/embedded_component.dart';
 
 import 'package:eliud_core/tools/enums.dart';
@@ -40,52 +37,65 @@ import 'package:eliud_pkg_fundamentals/model/tutorial_form_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_form_event.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_form_state.dart';
 
-
 class TutorialForm extends StatelessWidget {
   final AppModel app;
-  FormAction formAction;
-  TutorialModel? value;
-  ActionModel? submitAction;
+  final FormAction formAction;
+  final TutorialModel? value;
+  final ActionModel? submitAction;
 
-  TutorialForm({Key? key, required this.app, required this.formAction, required this.value, this.submitAction}) : super(key: key);
+  TutorialForm(
+      {super.key,
+      required this.app,
+      required this.formAction,
+      required this.value,
+      this.submitAction});
 
+  /// Build the TutorialForm
   @override
   Widget build(BuildContext context) {
-    var accessState = AccessBloc.getState(context);
+    //var accessState = AccessBloc.getState(context);
     var appId = app.documentID;
-    if (formAction == FormAction.ShowData) {
-      return BlocProvider<TutorialFormBloc >(
-            create: (context) => TutorialFormBloc(appId,
-                                       formAction: formAction,
-
-                                                )..add(InitialiseTutorialFormEvent(value: value)),
-  
-        child: MyTutorialForm(app:app, submitAction: submitAction, formAction: formAction),
-          );
-    } if (formAction == FormAction.ShowPreloadedData) {
-      return BlocProvider<TutorialFormBloc >(
-            create: (context) => TutorialFormBloc(appId,
-                                       formAction: formAction,
-
-                                                )..add(InitialiseTutorialFormNoLoadEvent(value: value)),
-  
-        child: MyTutorialForm(app:app, submitAction: submitAction, formAction: formAction),
-          );
+    if (formAction == FormAction.showData) {
+      return BlocProvider<TutorialFormBloc>(
+        create: (context) => TutorialFormBloc(
+          appId,
+          formAction: formAction,
+        )..add(InitialiseTutorialFormEvent(value: value)),
+        child: MyTutorialForm(
+            app: app, submitAction: submitAction, formAction: formAction),
+      );
+    }
+    if (formAction == FormAction.showPreloadedData) {
+      return BlocProvider<TutorialFormBloc>(
+        create: (context) => TutorialFormBloc(
+          appId,
+          formAction: formAction,
+        )..add(InitialiseTutorialFormNoLoadEvent(value: value)),
+        child: MyTutorialForm(
+            app: app, submitAction: submitAction, formAction: formAction),
+      );
     } else {
       return Scaffold(
-        appBar: StyleRegistry.registry().styleWithApp(app).adminFormStyle().appBarWithString(app, context, title: formAction == FormAction.UpdateAction ? 'Update Tutorial' : 'Add Tutorial'),
-        body: BlocProvider<TutorialFormBloc >(
-            create: (context) => TutorialFormBloc(appId,
-                                       formAction: formAction,
-
-                                                )..add((formAction == FormAction.UpdateAction ? InitialiseTutorialFormEvent(value: value) : InitialiseNewTutorialFormEvent())),
-  
-        child: MyTutorialForm(app: app, submitAction: submitAction, formAction: formAction),
+          appBar: StyleRegistry.registry()
+              .styleWithApp(app)
+              .adminFormStyle()
+              .appBarWithString(app, context,
+                  title: formAction == FormAction.updateAction
+                      ? 'Update Tutorial'
+                      : 'Add Tutorial'),
+          body: BlocProvider<TutorialFormBloc>(
+            create: (context) => TutorialFormBloc(
+              appId,
+              formAction: formAction,
+            )..add((formAction == FormAction.updateAction
+                ? InitialiseTutorialFormEvent(value: value)
+                : InitialiseNewTutorialFormEvent())),
+            child: MyTutorialForm(
+                app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
 }
-
 
 class MyTutorialForm extends StatefulWidget {
   final AppModel app;
@@ -94,20 +104,18 @@ class MyTutorialForm extends StatefulWidget {
 
   MyTutorialForm({required this.app, this.formAction, this.submitAction});
 
-  _MyTutorialFormState createState() => _MyTutorialFormState(this.formAction);
+  @override
+  State<MyTutorialForm> createState() => _MyTutorialFormState(formAction);
 }
-
 
 class _MyTutorialFormState extends State<MyTutorialForm> {
   final FormAction? formAction;
   late TutorialFormBloc _myFormBloc;
 
   final TextEditingController _documentIDController = TextEditingController();
-  final TextEditingController _appIdController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-
 
   _MyTutorialFormState(this.formAction);
 
@@ -116,7 +124,6 @@ class _MyTutorialFormState extends State<MyTutorialForm> {
     super.initState();
     _myFormBloc = BlocProvider.of<TutorialFormBloc>(context);
     _documentIDController.addListener(_onDocumentIDChanged);
-    _appIdController.addListener(_onAppIdChanged);
     _nameController.addListener(_onNameChanged);
     _titleController.addListener(_onTitleChanged);
     _descriptionController.addListener(_onDescriptionChanged);
@@ -125,198 +132,239 @@ class _MyTutorialFormState extends State<MyTutorialForm> {
   @override
   Widget build(BuildContext context) {
     var accessState = AccessBloc.getState(context);
-    return BlocBuilder<TutorialFormBloc, TutorialFormState>(builder: (context, state) {
-      if (state is TutorialFormUninitialized) return Center(
-        child: StyleRegistry.registry().styleWithApp(widget.app).adminListStyle().progressIndicator(widget.app, context),
-      );
+    return BlocBuilder<TutorialFormBloc, TutorialFormState>(
+        builder: (context, state) {
+      if (state is TutorialFormUninitialized) {
+        return Center(
+          child: StyleRegistry.registry()
+              .styleWithApp(widget.app)
+              .adminListStyle()
+              .progressIndicator(widget.app, context),
+        );
+      }
 
       if (state is TutorialFormLoaded) {
-        if (state.value!.documentID != null)
-          _documentIDController.text = state.value!.documentID.toString();
-        else
-          _documentIDController.text = "";
-        if (state.value!.appId != null)
-          _appIdController.text = state.value!.appId.toString();
-        else
-          _appIdController.text = "";
-        if (state.value!.name != null)
-          _nameController.text = state.value!.name.toString();
-        else
-          _nameController.text = "";
-        if (state.value!.title != null)
-          _titleController.text = state.value!.title.toString();
-        else
-          _titleController.text = "";
-        if (state.value!.description != null)
-          _descriptionController.text = state.value!.description.toString();
-        else
-          _descriptionController.text = "";
+        _documentIDController.text = state.value!.documentID.toString();
+        _nameController.text = state.value!.name.toString();
+        _titleController.text = state.value!.title.toString();
+        _descriptionController.text = state.value!.description.toString();
       }
       if (state is TutorialFormInitialized) {
         List<Widget> children = [];
-         children.add(Container(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  child: StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().groupTitle(widget.app, context, 'General')
-                ));
+        children.add(Container(
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+            child: StyleRegistry.registry()
+                .styleWithApp(widget.app)
+                .adminFormStyle()
+                .groupTitle(widget.app, context, 'General')));
 
-        children.add(
+        children.add(StyleRegistry.registry()
+            .styleWithApp(widget.app)
+            .adminFormStyle()
+            .textFormField(widget.app, context,
+                labelText: 'Document ID',
+                icon: Icons.vpn_key,
+                readOnly: (formAction == FormAction.updateAction),
+                textEditingController: _documentIDController,
+                keyboardType: TextInputType.text,
+                validator: (_) =>
+                    state is DocumentIDTutorialFormError ? state.message : null,
+                hintText: null));
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Document ID', icon: Icons.vpn_key, readOnly: (formAction == FormAction.UpdateAction), textEditingController: _documentIDController, keyboardType: TextInputType.text, validator: (_) => state is DocumentIDTutorialFormError ? state.message : null, hintText: null)
-          );
+        children.add(StyleRegistry.registry()
+            .styleWithApp(widget.app)
+            .adminFormStyle()
+            .textFormField(widget.app, context,
+                labelText: 'Name',
+                icon: Icons.text_format,
+                readOnly: _readOnly(accessState, state),
+                textEditingController: _nameController,
+                keyboardType: TextInputType.text,
+                validator: (_) =>
+                    state is NameTutorialFormError ? state.message : null,
+                hintText: null));
 
-        children.add(
+        children.add(StyleRegistry.registry()
+            .styleWithApp(widget.app)
+            .adminFormStyle()
+            .textFormField(widget.app, context,
+                labelText: 'Title',
+                icon: Icons.text_format,
+                readOnly: _readOnly(accessState, state),
+                textEditingController: _titleController,
+                keyboardType: TextInputType.text,
+                validator: (_) =>
+                    state is TitleTutorialFormError ? state.message : null,
+                hintText: null));
 
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Name', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _nameController, keyboardType: TextInputType.text, validator: (_) => state is NameTutorialFormError ? state.message : null, hintText: null)
-          );
-
-        children.add(
-
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Title', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _titleController, keyboardType: TextInputType.text, validator: (_) => state is TitleTutorialFormError ? state.message : null, hintText: null)
-          );
-
-        children.add(
-
-                  StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().textFormField(widget.app, context, labelText: 'Description', icon: Icons.text_format, readOnly: _readOnly(accessState, state), textEditingController: _descriptionController, keyboardType: TextInputType.text, validator: (_) => state is DescriptionTutorialFormError ? state.message : null, hintText: null)
-          );
-
+        children.add(StyleRegistry.registry()
+            .styleWithApp(widget.app)
+            .adminFormStyle()
+            .textFormField(widget.app, context,
+                labelText: 'Description',
+                icon: Icons.text_format,
+                readOnly: _readOnly(accessState, state),
+                textEditingController: _descriptionController,
+                keyboardType: TextInputType.text,
+                validator: (_) => state is DescriptionTutorialFormError
+                    ? state.message
+                    : null,
+                hintText: null));
 
         children.add(Container(height: 20.0));
-        children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().divider(widget.app, context));
+        children.add(StyleRegistry.registry()
+            .styleWithApp(widget.app)
+            .adminFormStyle()
+            .divider(widget.app, context));
 
+        children.add(Container(
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+            child: StyleRegistry.registry()
+                .styleWithApp(widget.app)
+                .adminFormStyle()
+                .groupTitle(widget.app, context, 'Tutorial Entries')));
 
-         children.add(Container(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  child: StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().groupTitle(widget.app, context, 'Tutorial Entries')
-                ));
-
-        children.add(
-
-                new Container(
-                    height: (fullScreenHeight(context) / 2.5), 
-                    child: tutorialEntrysList(widget.app, context, state.value!.tutorialEntries, _onTutorialEntriesChanged)
-                )
-          );
-
-
-        children.add(Container(height: 20.0));
-        children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().divider(widget.app, context));
-
-
-         children.add(Container(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  child: StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().groupTitle(widget.app, context, 'Conditions')
-                ));
-
-
+        children.add(Container(
+            height: (fullScreenHeight(context) / 2.5),
+            child: tutorialEntrysList(widget.app, context,
+                state.value!.tutorialEntries, _onTutorialEntriesChanged)));
 
         children.add(Container(height: 20.0));
-        children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().divider(widget.app, context));
+        children.add(StyleRegistry.registry()
+            .styleWithApp(widget.app)
+            .adminFormStyle()
+            .divider(widget.app, context));
 
+        children.add(Container(
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+            child: StyleRegistry.registry()
+                .styleWithApp(widget.app)
+                .adminFormStyle()
+                .groupTitle(widget.app, context, 'Conditions')));
 
-        if ((formAction != FormAction.ShowData) && (formAction != FormAction.ShowPreloadedData))
-          children.add(StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().button(widget.app, context, label: 'Submit',
-                  onPressed: _readOnly(accessState, state) ? null : () {
-                    if (state is TutorialFormError) {
-                      return null;
-                    } else {
-                      if (formAction == FormAction.UpdateAction) {
-                        BlocProvider.of<TutorialListBloc>(context).add(
-                          UpdateTutorialList(value: state.value!.copyWith(
-                              documentID: state.value!.documentID, 
-                              appId: state.value!.appId, 
-                              name: state.value!.name, 
-                              title: state.value!.title, 
-                              description: state.value!.description, 
-                              tutorialEntries: state.value!.tutorialEntries, 
-                              conditions: state.value!.conditions, 
-                        )));
-                      } else {
-                        BlocProvider.of<TutorialListBloc>(context).add(
-                          AddTutorialList(value: TutorialModel(
-                              documentID: state.value!.documentID, 
-                              appId: state.value!.appId, 
-                              name: state.value!.name, 
-                              title: state.value!.title, 
-                              description: state.value!.description, 
-                              tutorialEntries: state.value!.tutorialEntries, 
-                              conditions: state.value!.conditions, 
-                          )));
-                      }
-                      if (widget.submitAction != null) {
-                        eliudrouter.Router.navigateTo(context, widget.submitAction!);
-                      } else {
-                        Navigator.pop(context);
-                      }
-                    }
-                  },
-                ));
+        children.add(Container(height: 20.0));
+        children.add(StyleRegistry.registry()
+            .styleWithApp(widget.app)
+            .adminFormStyle()
+            .divider(widget.app, context));
 
-        return StyleRegistry.registry().styleWithApp(widget.app).adminFormStyle().container(widget.app, context, Form(
-            child: ListView(
-              padding: const EdgeInsets.all(8),
-              physics: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)) ? NeverScrollableScrollPhysics() : null,
-              shrinkWrap: ((formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData)),
-              children: children
-            ),
-          ), formAction!
-        );
+        if ((formAction != FormAction.showData) &&
+            (formAction != FormAction.showPreloadedData)) {
+          children.add(StyleRegistry.registry()
+              .styleWithApp(widget.app)
+              .adminFormStyle()
+              .button(
+                widget.app,
+                context,
+                label: 'Submit',
+                onPressed: _readOnly(accessState, state)
+                    ? null
+                    : () {
+                        if (state is TutorialFormError) {
+                          return;
+                        } else {
+                          if (formAction == FormAction.updateAction) {
+                            BlocProvider.of<TutorialListBloc>(context)
+                                .add(UpdateTutorialList(
+                                    value: state.value!.copyWith(
+                              documentID: state.value!.documentID,
+                              appId: state.value!.appId,
+                              name: state.value!.name,
+                              title: state.value!.title,
+                              description: state.value!.description,
+                              tutorialEntries: state.value!.tutorialEntries,
+                              conditions: state.value!.conditions,
+                            )));
+                          } else {
+                            BlocProvider.of<TutorialListBloc>(context)
+                                .add(AddTutorialList(
+                                    value: TutorialModel(
+                              documentID: state.value!.documentID,
+                              appId: state.value!.appId,
+                              name: state.value!.name,
+                              title: state.value!.title,
+                              description: state.value!.description,
+                              tutorialEntries: state.value!.tutorialEntries,
+                              conditions: state.value!.conditions,
+                            )));
+                          }
+                          if (widget.submitAction != null) {
+                            eliudrouter.Router.navigateTo(
+                                context, widget.submitAction!);
+                          } else {
+                            Navigator.pop(context);
+                          }
+                        }
+                      },
+              ));
+        }
+
+        return StyleRegistry.registry()
+            .styleWithApp(widget.app)
+            .adminFormStyle()
+            .container(
+                widget.app,
+                context,
+                Form(
+                  child: ListView(
+                      padding: const EdgeInsets.all(8),
+                      physics: ((formAction == FormAction.showData) ||
+                              (formAction == FormAction.showPreloadedData))
+                          ? NeverScrollableScrollPhysics()
+                          : null,
+                      shrinkWrap: ((formAction == FormAction.showData) ||
+                          (formAction == FormAction.showPreloadedData)),
+                      children: children),
+                ),
+                formAction!);
       } else {
-        return StyleRegistry.registry().styleWithApp(widget.app).adminListStyle().progressIndicator(widget.app, context);
+        return StyleRegistry.registry()
+            .styleWithApp(widget.app)
+            .adminListStyle()
+            .progressIndicator(widget.app, context);
       }
     });
   }
 
   void _onDocumentIDChanged() {
-    _myFormBloc.add(ChangedTutorialDocumentID(value: _documentIDController.text));
+    _myFormBloc
+        .add(ChangedTutorialDocumentID(value: _documentIDController.text));
   }
-
-
-  void _onAppIdChanged() {
-    _myFormBloc.add(ChangedTutorialAppId(value: _appIdController.text));
-  }
-
 
   void _onNameChanged() {
     _myFormBloc.add(ChangedTutorialName(value: _nameController.text));
   }
 
-
   void _onTitleChanged() {
     _myFormBloc.add(ChangedTutorialTitle(value: _titleController.text));
   }
 
-
   void _onDescriptionChanged() {
-    _myFormBloc.add(ChangedTutorialDescription(value: _descriptionController.text));
+    _myFormBloc
+        .add(ChangedTutorialDescription(value: _descriptionController.text));
   }
-
 
   void _onTutorialEntriesChanged(value) {
     _myFormBloc.add(ChangedTutorialTutorialEntries(value: value));
     setState(() {});
   }
 
-
-
   @override
   void dispose() {
     _documentIDController.dispose();
-    _appIdController.dispose();
     _nameController.dispose();
     _titleController.dispose();
     _descriptionController.dispose();
     super.dispose();
   }
 
+  /// Is the form read-only?
   bool _readOnly(AccessState accessState, TutorialFormInitialized state) {
-    return (formAction == FormAction.ShowData) || (formAction == FormAction.ShowPreloadedData) || (!accessState.memberIsOwner(widget.app.documentID));
+    return (formAction == FormAction.showData) ||
+        (formAction == FormAction.showPreloadedData) ||
+        (!accessState.memberIsOwner(widget.app.documentID));
   }
-  
-
 }
-
-
-

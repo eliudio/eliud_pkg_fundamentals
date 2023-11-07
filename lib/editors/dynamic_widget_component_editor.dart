@@ -23,7 +23,8 @@ import 'package:eliud_core/core/editor/editor_base_bloc/editor_base_state.dart';
 import '../model/dynamic_widget_model.dart';
 import 'bloc/dynamic_widget_bloc.dart';
 
-class DynamicWidgetComponentEditorConstructor extends ComponentEditorConstructor {
+class DynamicWidgetComponentEditorConstructor
+    extends ComponentEditorConstructor {
   @override
   void updateComponent(
       AppModel app, BuildContext context, model, EditorFeedback feedback) {
@@ -43,7 +44,7 @@ class DynamicWidgetComponentEditorConstructor extends ComponentEditorConstructor
           description: 'New dynamicWidget',
           conditions: StorageConditionsModel(
               privilegeLevelRequired:
-                  PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
+                  PrivilegeLevelRequiredSimple.noPrivilegeRequiredSimple),
         ),
         feedback);
   }
@@ -51,11 +52,12 @@ class DynamicWidgetComponentEditorConstructor extends ComponentEditorConstructor
   @override
   void updateComponentWithID(AppModel app, BuildContext context, String id,
       EditorFeedback feedback) async {
-    var dynamicWidget = await dynamicWidgetRepository(appId: app.documentID)!.get(id);
+    var dynamicWidget =
+        await dynamicWidgetRepository(appId: app.documentID)!.get(id);
     if (dynamicWidget != null) {
       _openIt(app, context, false, dynamicWidget, feedback);
     } else {
-      openErrorDialog(app, context, app.documentID + '/_error',
+      openErrorDialog(app, context, '${app.documentID}/_error',
           title: 'Error',
           errorMessage: 'Cannot find notification dashboard with id $id');
     }
@@ -66,7 +68,7 @@ class DynamicWidgetComponentEditorConstructor extends ComponentEditorConstructor
     openComplexDialog(
       app,
       context,
-      app.documentID + '/notificationdashboard',
+      '${app.documentID}/notificationdashboard',
       title: create
           ? 'Create Notification Dashboard'
           : 'Update Notification Dashboard',
@@ -90,21 +92,23 @@ class DynamicWidgetComponentEditor extends StatefulWidget {
   final AppModel app;
 
   const DynamicWidgetComponentEditor({
-    Key? key,
+    super.key,
     required this.app,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() => _DynamicWidgetComponentEditorState();
 }
 
-class _DynamicWidgetComponentEditorState extends State<DynamicWidgetComponentEditor> {
+class _DynamicWidgetComponentEditorState
+    extends State<DynamicWidgetComponentEditor> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AccessBloc, AccessState>(
         builder: (aContext, accessState) {
       if (accessState is AccessDetermined) {
-        return BlocBuilder<DynamicWidgetBloc, EditorBaseState<DynamicWidgetModel>>(
+        return BlocBuilder<DynamicWidgetBloc,
+                EditorBaseState<DynamicWidgetModel>>(
             builder: (ppContext, dynamicWidgetState) {
           if (dynamicWidgetState is EditorBaseInitialised<DynamicWidgetModel>) {
             return ListView(
@@ -138,7 +142,8 @@ class _DynamicWidgetComponentEditorState extends State<DynamicWidgetComponentEdi
                             title: dialogField(
                               widget.app,
                               context,
-                              initialValue: dynamicWidgetState.model.description,
+                              initialValue:
+                                  dynamicWidgetState.model.description,
                               valueChanged: (value) {
                                 dynamicWidgetState.model.description = value;
                               },

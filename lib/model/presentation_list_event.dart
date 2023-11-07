@@ -30,10 +30,10 @@ class NewPage extends PresentationListEvent {}
 class AddPresentationList extends PresentationListEvent {
   final PresentationModel? value;
 
-  const AddPresentationList({ this.value });
+  const AddPresentationList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'AddPresentationList{ value: $value }';
@@ -42,10 +42,10 @@ class AddPresentationList extends PresentationListEvent {
 class UpdatePresentationList extends PresentationListEvent {
   final PresentationModel? value;
 
-  const UpdatePresentationList({ this.value });
+  const UpdatePresentationList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'UpdatePresentationList{ value: $value }';
@@ -54,10 +54,10 @@ class UpdatePresentationList extends PresentationListEvent {
 class DeletePresentationList extends PresentationListEvent {
   final PresentationModel? value;
 
-  const DeletePresentationList({ this.value });
+  const DeletePresentationList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'DeletePresentationList{ value: $value }';
@@ -67,24 +67,24 @@ class PresentationListUpdated extends PresentationListEvent {
   final List<PresentationModel?>? value;
   final bool? mightHaveMore;
 
-  const PresentationListUpdated({ this.value, this.mightHaveMore });
+  const PresentationListUpdated({this.value, this.mightHaveMore});
 
   @override
-  List<Object?> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [value, mightHaveMore];
 
   @override
-  String toString() => 'PresentationListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+  String toString() =>
+      'PresentationListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 
 class PresentationChangeQuery extends PresentationListEvent {
   final EliudQuery? newQuery;
 
-  const PresentationChangeQuery({ required this.newQuery });
+  const PresentationChangeQuery({required this.newQuery});
 
   @override
-  List<Object?> get props => [ newQuery ];
+  List<Object?> get props => [newQuery];
 
   @override
   String toString() => 'PresentationChangeQuery{ value: $newQuery }';
 }
-

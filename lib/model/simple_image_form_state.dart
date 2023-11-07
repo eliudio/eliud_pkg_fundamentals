@@ -41,9 +41,9 @@ class SimpleImageFormInitialized extends SimpleImageFormState {
   final SimpleImageModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
-  const SimpleImageFormInitialized({ this.value });
+  const SimpleImageFormInitialized({this.value});
 }
 
 // Menu has been initialised and hence a menu is available
@@ -51,9 +51,9 @@ abstract class SimpleImageFormError extends SimpleImageFormInitialized {
   final String? message;
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
-  const SimpleImageFormError({this.message, SimpleImageModel? value }) : super(value: value);
+  const SimpleImageFormError({this.message, super.value});
 
   @override
   String toString() {
@@ -63,11 +63,12 @@ abstract class SimpleImageFormError extends SimpleImageFormInitialized {
     }''';
   }
 }
-class DocumentIDSimpleImageFormError extends SimpleImageFormError { 
-  const DocumentIDSimpleImageFormError({ String? message, SimpleImageModel? value }): super(message: message, value: value);
+
+class DocumentIDSimpleImageFormError extends SimpleImageFormError {
+  const DocumentIDSimpleImageFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -78,12 +79,11 @@ class DocumentIDSimpleImageFormError extends SimpleImageFormError {
   }
 }
 
-
-class AppIdSimpleImageFormError extends SimpleImageFormError { 
-  const AppIdSimpleImageFormError({ String? message, SimpleImageModel? value }): super(message: message, value: value);
+class AppIdSimpleImageFormError extends SimpleImageFormError {
+  const AppIdSimpleImageFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -94,12 +94,11 @@ class AppIdSimpleImageFormError extends SimpleImageFormError {
   }
 }
 
-
-class DescriptionSimpleImageFormError extends SimpleImageFormError { 
-  const DescriptionSimpleImageFormError({ String? message, SimpleImageModel? value }): super(message: message, value: value);
+class DescriptionSimpleImageFormError extends SimpleImageFormError {
+  const DescriptionSimpleImageFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -110,12 +109,11 @@ class DescriptionSimpleImageFormError extends SimpleImageFormError {
   }
 }
 
-
-class ImageSimpleImageFormError extends SimpleImageFormError { 
-  const ImageSimpleImageFormError({ String? message, SimpleImageModel? value }): super(message: message, value: value);
+class ImageSimpleImageFormError extends SimpleImageFormError {
+  const ImageSimpleImageFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -126,12 +124,11 @@ class ImageSimpleImageFormError extends SimpleImageFormError {
   }
 }
 
-
-class ConditionsSimpleImageFormError extends SimpleImageFormError { 
-  const ConditionsSimpleImageFormError({ String? message, SimpleImageModel? value }): super(message: message, value: value);
+class ConditionsSimpleImageFormError extends SimpleImageFormError {
+  const ConditionsSimpleImageFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -142,12 +139,11 @@ class ConditionsSimpleImageFormError extends SimpleImageFormError {
   }
 }
 
-
-class SimpleImageFormLoaded extends SimpleImageFormInitialized { 
-  const SimpleImageFormLoaded({ SimpleImageModel? value }): super(value: value);
+class SimpleImageFormLoaded extends SimpleImageFormInitialized {
+  const SimpleImageFormLoaded({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -157,12 +153,11 @@ class SimpleImageFormLoaded extends SimpleImageFormInitialized {
   }
 }
 
-
-class SubmittableSimpleImageForm extends SimpleImageFormInitialized { 
-  const SubmittableSimpleImageForm({ SimpleImageModel? value }): super(value: value);
+class SubmittableSimpleImageForm extends SimpleImageFormInitialized {
+  const SubmittableSimpleImageForm({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -171,5 +166,3 @@ class SubmittableSimpleImageForm extends SimpleImageFormInitialized {
     }''';
   }
 }
-
-

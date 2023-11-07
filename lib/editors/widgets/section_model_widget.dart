@@ -26,7 +26,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'link_model_widget.dart';
 
-typedef void SectionModelCallback(SectionModel sectionModel);
+typedef SectionModelCallback = void Function(SectionModel sectionModel);
 
 class SectionModelWidget extends StatefulWidget {
   final bool create;
@@ -38,7 +38,6 @@ class SectionModelWidget extends StatefulWidget {
   final int containerPrivilege;
 
   SectionModelWidget._({
-    Key? key,
     required this.app,
     required this.create,
     required this.widgetWidth,
@@ -46,7 +45,7 @@ class SectionModelWidget extends StatefulWidget {
 //    required this.sectionModel,
     required this.sectionModelCallback,
     required this.containerPrivilege,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() {
@@ -180,7 +179,7 @@ class _SectionModelWidgetState extends State<SectionModelWidget> {
                               RelativeImagePositionWidget(
                                 relativeImagePosition:
                                     sectionState.model.imagePositionRelative ??
-                                        RelativeImagePosition.Behind,
+                                        RelativeImagePosition.behind,
                                 relativeImagePositionCallback:
                                     (RelativeImagePosition
                                         relativeImagePosition) {
@@ -198,7 +197,7 @@ class _SectionModelWidgetState extends State<SectionModelWidget> {
                               SectionImageAlignmentWidget(
                                 sectionImageAlignment:
                                     sectionState.model.imageAlignment ??
-                                        SectionImageAlignment.Center,
+                                        SectionImageAlignment.center,
                                 sectionImageAlignmentCallback:
                                     (SectionImageAlignment value) {
                                   sectionState.model.imageAlignment = value;
@@ -235,23 +234,20 @@ class _SectionModelWidgetState extends State<SectionModelWidget> {
                   return getListTile(
                     context,
                     widget.app,
-                    title: text(
-                        widget.app,
-                        context,
-                        (value.documentID) +
-                            ' - ' +
-                            (value.linkText ?? ' no text')),
-                    trailing: popupMenuButton<int>(
-                        widget.app, context,
+                    title: text(widget.app, context,
+                        '${value.documentID} - ${value.linkText ?? ' no text'}'),
+                    trailing: popupMenuButton<int>(widget.app, context,
                         child: Icon(Icons.more_vert),
                         itemBuilder: (context) => [
                               popupMenuItem(
-                                widget.app, context,
+                                widget.app,
+                                context,
                                 value: 1,
                                 label: 'Update',
                               ),
                               popupMenuItem(
-                                widget.app, context,
+                                widget.app,
+                                context,
                                 value: 2,
                                 label: 'Delete',
                               ),
@@ -308,7 +304,7 @@ class _SectionModelWidgetState extends State<SectionModelWidget> {
     openFlexibleDialog(
       widget.app,
       context,
-      widget.app.documentID + '/_linkmodel',
+      '${widget.app.documentID}/_linkmodel',
       includeHeading: false,
       widthFraction: .8,
       child: LinkModelWidget.getIt(

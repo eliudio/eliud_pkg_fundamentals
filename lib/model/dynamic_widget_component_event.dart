@@ -24,13 +24,11 @@ abstract class DynamicWidgetComponentEvent extends Equatable {
 class FetchDynamicWidgetComponent extends DynamicWidgetComponentEvent {
   final String? id;
 
-  FetchDynamicWidgetComponent({ this.id });
+  FetchDynamicWidgetComponent({this.id});
 }
 
 class DynamicWidgetComponentUpdated extends DynamicWidgetComponentEvent {
   final DynamicWidgetModel value;
 
-  DynamicWidgetComponentUpdated({ required this.value });
+  DynamicWidgetComponentUpdated({required this.value});
 }
-
-

@@ -28,12 +28,47 @@ class SectionEntity implements EntityBase {
   final double? imageWidth;
   final List<LinkEntity>? links;
 
-  SectionEntity({this.title, this.description, this.imageId, this.imagePositionRelative, this.imageAlignment, this.imageWidth, this.links, });
+  SectionEntity({
+    this.title,
+    this.description,
+    this.imageId,
+    this.imagePositionRelative,
+    this.imageAlignment,
+    this.imageWidth,
+    this.links,
+  });
 
-  SectionEntity copyWith({String? documentID, String? title, String? description, String? imageId, int? imagePositionRelative, int? imageAlignment, double? imageWidth, List<LinkEntity>? links, }) {
-    return SectionEntity(title : title ?? this.title, description : description ?? this.description, imageId : imageId ?? this.imageId, imagePositionRelative : imagePositionRelative ?? this.imagePositionRelative, imageAlignment : imageAlignment ?? this.imageAlignment, imageWidth : imageWidth ?? this.imageWidth, links : links ?? this.links, );
+  SectionEntity copyWith({
+    String? documentID,
+    String? title,
+    String? description,
+    String? imageId,
+    int? imagePositionRelative,
+    int? imageAlignment,
+    double? imageWidth,
+    List<LinkEntity>? links,
+  }) {
+    return SectionEntity(
+      title: title ?? this.title,
+      description: description ?? this.description,
+      imageId: imageId ?? this.imageId,
+      imagePositionRelative:
+          imagePositionRelative ?? this.imagePositionRelative,
+      imageAlignment: imageAlignment ?? this.imageAlignment,
+      imageWidth: imageWidth ?? this.imageWidth,
+      links: links ?? this.links,
+    );
   }
-  List<Object?> get props => [title, description, imageId, imagePositionRelative, imageAlignment, imageWidth, links, ];
+
+  List<Object?> get props => [
+        title,
+        description,
+        imageId,
+        imagePositionRelative,
+        imageAlignment,
+        imageWidth,
+        links,
+      ];
 
   @override
   String toString() {
@@ -42,7 +77,8 @@ class SectionEntity implements EntityBase {
     return 'SectionEntity{title: $title, description: $description, imageId: $imageId, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth, links: Link[] { $linksCsv }}';
   }
 
-  static SectionEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+  static SectionEntity? fromMap(Object? o,
+      {Map<String, String>? newDocumentIds}) {
     if (o == null) return null;
     var map = o as Map<String, dynamic>;
 
@@ -52,49 +88,69 @@ class SectionEntity implements EntityBase {
       imageIdNewDocmentId = newRandomKey();
       newDocumentIds[imageIdOldDocmentId] = imageIdNewDocmentId;
     }
-    var linksFromMap;
-    linksFromMap = map['links'];
+    var linksFromMap = map['links'];
     List<LinkEntity> linksList;
     if (linksFromMap != null) {
       linksList = (map['links'] as List<dynamic>)
-        .map((dynamic item) =>
-        LinkEntity.fromMap(item as Map, newDocumentIds: newDocumentIds)!)
-        .toList();
+          .map((dynamic item) =>
+              LinkEntity.fromMap(item as Map, newDocumentIds: newDocumentIds)!)
+          .toList();
     } else {
       linksList = [];
     }
 
     return SectionEntity(
-      title: map['title'], 
-      description: map['description'], 
-      imageId: imageIdNewDocmentId, 
-      imagePositionRelative: map['imagePositionRelative'], 
-      imageAlignment: map['imageAlignment'], 
-      imageWidth: double.tryParse(map['imageWidth'].toString()), 
-      links: linksList, 
+      title: map['title'],
+      description: map['description'],
+      imageId: imageIdNewDocmentId,
+      imagePositionRelative: map['imagePositionRelative'],
+      imageAlignment: map['imageAlignment'],
+      imageWidth: double.tryParse(map['imageWidth'].toString()),
+      links: linksList,
     );
   }
 
+  @override
   Map<String, Object?> toDocument() {
-    final List<Map<String?, dynamic>>? linksListMap = links != null 
-        ? links!.map((item) => item.toDocument()).toList()
-        : null;
+    final List<Map<String?, dynamic>>? linksListMap =
+        links != null ? links!.map((item) => item.toDocument()).toList() : null;
 
     Map<String, Object?> theDocument = HashMap();
-    if (title != null) theDocument["title"] = title;
-      else theDocument["title"] = null;
-    if (description != null) theDocument["description"] = description;
-      else theDocument["description"] = null;
-    if (imageId != null) theDocument["imageId"] = imageId;
-      else theDocument["imageId"] = null;
-    if (imagePositionRelative != null) theDocument["imagePositionRelative"] = imagePositionRelative;
-      else theDocument["imagePositionRelative"] = null;
-    if (imageAlignment != null) theDocument["imageAlignment"] = imageAlignment;
-      else theDocument["imageAlignment"] = null;
-    if (imageWidth != null) theDocument["imageWidth"] = imageWidth;
-      else theDocument["imageWidth"] = null;
-    if (links != null) theDocument["links"] = linksListMap;
-      else theDocument["links"] = null;
+    if (title != null) {
+      theDocument["title"] = title;
+    } else {
+      theDocument["title"] = null;
+    }
+    if (description != null) {
+      theDocument["description"] = description;
+    } else {
+      theDocument["description"] = null;
+    }
+    if (imageId != null) {
+      theDocument["imageId"] = imageId;
+    } else {
+      theDocument["imageId"] = null;
+    }
+    if (imagePositionRelative != null) {
+      theDocument["imagePositionRelative"] = imagePositionRelative;
+    } else {
+      theDocument["imagePositionRelative"] = null;
+    }
+    if (imageAlignment != null) {
+      theDocument["imageAlignment"] = imageAlignment;
+    } else {
+      theDocument["imageAlignment"] = null;
+    }
+    if (imageWidth != null) {
+      theDocument["imageWidth"] = imageWidth;
+    } else {
+      theDocument["imageWidth"] = null;
+    }
+    if (links != null) {
+      theDocument["links"] = linksListMap;
+    } else {
+      theDocument["links"] = null;
+    }
     return theDocument;
   }
 
@@ -104,7 +160,8 @@ class SectionEntity implements EntityBase {
     return newEntity;
   }
 
-  static SectionEntity? fromJsonString(String json, {Map<String, String>? newDocumentIds}) {
+  static SectionEntity? fromJsonString(String json,
+      {Map<String, String>? newDocumentIds}) {
     Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
     return fromMap(generationSpecificationMap, newDocumentIds: newDocumentIds);
   }
@@ -113,9 +170,9 @@ class SectionEntity implements EntityBase {
     return jsonEncode(toDocument());
   }
 
-  Future<Map<String, Object?>> enrichedDocument(Map<String, Object?> theDocument) async {
+  @override
+  Future<Map<String, Object?>> enrichedDocument(
+      Map<String, Object?> theDocument) async {
     return theDocument;
   }
-
 }
-

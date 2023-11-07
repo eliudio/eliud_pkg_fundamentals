@@ -13,45 +13,106 @@
 
 */
 
-
-
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
-
 
 import 'dart:async';
 import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 import 'package:eliud_core/core/base/repository_base.dart';
 
-typedef TutorialEntryModelTrigger(List<TutorialEntryModel?> list);
-typedef TutorialEntryChanged(TutorialEntryModel? value);
-typedef TutorialEntryErrorHandler(o, e);
+typedef TutorialEntryModelTrigger = Function(List<TutorialEntryModel?> list);
+typedef TutorialEntryChanged = Function(TutorialEntryModel? value);
+typedef TutorialEntryErrorHandler = Function(dynamic o, dynamic e);
 
-abstract class TutorialEntryRepository extends RepositoryBase<TutorialEntryModel, TutorialEntryEntity> {
-  Future<TutorialEntryEntity> addEntity(String documentID, TutorialEntryEntity value);
-  Future<TutorialEntryEntity> updateEntity(String documentID, TutorialEntryEntity value);
+abstract class TutorialEntryRepository
+    extends RepositoryBase<TutorialEntryModel, TutorialEntryEntity> {
+  @override
+  Future<TutorialEntryEntity> addEntity(
+      String documentID, TutorialEntryEntity value);
+  @override
+  Future<TutorialEntryEntity> updateEntity(
+      String documentID, TutorialEntryEntity value);
+  @override
   Future<TutorialEntryModel> add(TutorialEntryModel value);
+  @override
   Future<void> delete(TutorialEntryModel value);
-  Future<TutorialEntryModel?> get(String? id, { Function(Exception)? onError });
+  @override
+  Future<TutorialEntryModel?> get(String? id, {Function(Exception)? onError});
+  @override
   Future<TutorialEntryModel> update(TutorialEntryModel value);
 
-  Stream<List<TutorialEntryModel?>> values({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery });
-  Stream<List<TutorialEntryModel?>> valuesWithDetails({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery });
-  Future<List<TutorialEntryModel?>> valuesList({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery });
-  Future<List<TutorialEntryModel?>> valuesListWithDetails({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery });
+  @override
+  Stream<List<TutorialEntryModel?>> values(
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      SetLastDoc? setLastDoc,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery});
+  @override
+  Stream<List<TutorialEntryModel?>> valuesWithDetails(
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      SetLastDoc? setLastDoc,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery});
+  @override
+  Future<List<TutorialEntryModel?>> valuesList(
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      SetLastDoc? setLastDoc,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery});
+  @override
+  Future<List<TutorialEntryModel?>> valuesListWithDetails(
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      SetLastDoc? setLastDoc,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery});
 
-  StreamSubscription<List<TutorialEntryModel?>> listen(TutorialEntryModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
-  StreamSubscription<List<TutorialEntryModel?>> listenWithDetails(TutorialEntryModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery });
-  StreamSubscription<TutorialEntryModel?> listenTo(String documentId, TutorialEntryChanged changed, {TutorialEntryErrorHandler? errorHandler});
+  @override
+  StreamSubscription<List<TutorialEntryModel?>> listen(
+      TutorialEntryModelTrigger trigger,
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery});
+  @override
+  StreamSubscription<List<TutorialEntryModel?>> listenWithDetails(
+      TutorialEntryModelTrigger trigger,
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery});
+  @override
+  StreamSubscription<TutorialEntryModel?> listenTo(
+      String documentId, TutorialEntryChanged changed,
+      {TutorialEntryErrorHandler? errorHandler});
+  @override
   void flush();
-  
+
+  @override
   String? timeStampToString(dynamic timeStamp);
 
+  @override
   dynamic getSubCollection(String documentId, String name);
-  Future<TutorialEntryModel?> changeValue(String documentId, String fieldName, num changeByThisValue);
+  @override
+  Future<TutorialEntryModel?> changeValue(
+      String documentId, String fieldName, num changeByThisValue);
 
+  @override
   Future<void> deleteAll();
 }
-
-

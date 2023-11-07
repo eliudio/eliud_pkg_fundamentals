@@ -13,11 +13,7 @@
 
 */
 
-
 import 'package:bloc/bloc.dart';
-
-
-
 
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 
@@ -27,44 +23,40 @@ import 'package:eliud_pkg_fundamentals/model/link_form_state.dart';
 class LinkFormBloc extends Bloc<LinkFormEvent, LinkFormState> {
   final String? appId;
 
-  LinkFormBloc(this.appId, ): super(LinkFormUninitialized()) {
-      on <InitialiseNewLinkFormEvent> ((event, emit) {
-        LinkFormLoaded loaded = LinkFormLoaded(value: LinkModel(
-                                               documentID: "IDENTIFIED", 
-                                 linkText: "",
+  LinkFormBloc(
+    this.appId,
+  ) : super(LinkFormUninitialized()) {
+    on<InitialiseNewLinkFormEvent>((event, emit) {
+      LinkFormLoaded loaded = LinkFormLoaded(
+          value: LinkModel(
+        documentID: "IDENTIFIED",
+        linkText: "",
+      ));
+      emit(loaded);
+    });
 
-        ));
-        emit(loaded);
-      });
-
-
-      on <InitialiseLinkFormEvent> ((event, emit) async {
-        LinkFormLoaded loaded = LinkFormLoaded(value: event.value);
-        emit(loaded);
-      });
-      on <InitialiseLinkFormNoLoadEvent> ((event, emit) async {
-        LinkFormLoaded loaded = LinkFormLoaded(value: event.value);
-        emit(loaded);
-      });
-      LinkModel? newValue = null;
-      on <ChangedLinkLinkText> ((event, emit) async {
+    on<InitialiseLinkFormEvent>((event, emit) async {
+      LinkFormLoaded loaded = LinkFormLoaded(value: event.value);
+      emit(loaded);
+    });
+    on<InitialiseLinkFormNoLoadEvent>((event, emit) async {
+      LinkFormLoaded loaded = LinkFormLoaded(value: event.value);
+      emit(loaded);
+    });
+    LinkModel? newValue;
+    on<ChangedLinkLinkText>((event, emit) async {
       if (state is LinkFormInitialized) {
         final currentState = state as LinkFormInitialized;
         newValue = currentState.value!.copyWith(linkText: event.value);
         emit(SubmittableLinkForm(value: newValue));
-
       }
-      });
-      on <ChangedLinkAction> ((event, emit) async {
+    });
+    on<ChangedLinkAction>((event, emit) async {
       if (state is LinkFormInitialized) {
         final currentState = state as LinkFormInitialized;
         newValue = currentState.value!.copyWith(action: event.value);
         emit(SubmittableLinkForm(value: newValue));
-
       }
-      });
+    });
   }
-
-
 }
-

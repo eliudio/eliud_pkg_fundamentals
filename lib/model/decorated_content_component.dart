@@ -13,7 +13,6 @@
 
 */
 
-
 import 'package:eliud_pkg_fundamentals/model/decorated_content_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/decorated_content_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/decorated_content_model.dart';
@@ -31,20 +30,23 @@ abstract class AbstractDecoratedContentComponent extends StatelessWidget {
   final AppModel app;
   final String decoratedContentId;
 
-  AbstractDecoratedContentComponent({Key? key, required this.app, required this.decoratedContentId}): super(key: key);
+  AbstractDecoratedContentComponent(
+      {super.key, required this.app, required this.decoratedContentId});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<DecoratedContentComponentBloc> (
-          create: (context) => DecoratedContentComponentBloc(
-            decoratedContentRepository: decoratedContentRepository(appId: app.documentID)!)
+    return BlocProvider<DecoratedContentComponentBloc>(
+      create: (context) => DecoratedContentComponentBloc(
+          decoratedContentRepository:
+              decoratedContentRepository(appId: app.documentID)!)
         ..add(FetchDecoratedContentComponent(id: decoratedContentId)),
       child: _decoratedContentBlockBuilder(context),
     );
   }
 
   Widget _decoratedContentBlockBuilder(BuildContext context) {
-    return BlocBuilder<DecoratedContentComponentBloc, DecoratedContentComponentState>(builder: (context, state) {
+    return BlocBuilder<DecoratedContentComponentBloc,
+        DecoratedContentComponentState>(builder: (context, state) {
       if (state is DecoratedContentComponentLoaded) {
         return yourWidget(context, state.value);
       } else if (state is DecoratedContentComponentPermissionDenied) {
@@ -57,7 +59,11 @@ abstract class AbstractDecoratedContentComponent extends StatelessWidget {
         return AlertWidget(app: app, title: 'Error', content: state.message);
       } else {
         return Center(
-          child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().progressIndicatorStyle().progressIndicator(app, context),
+          child: StyleRegistry.registry()
+              .styleWithApp(app)
+              .frontEndStyle()
+              .progressIndicatorStyle()
+              .progressIndicator(app, context),
         );
       }
     });
@@ -65,4 +71,3 @@ abstract class AbstractDecoratedContentComponent extends StatelessWidget {
 
   Widget yourWidget(BuildContext context, DecoratedContentModel value);
 }
-

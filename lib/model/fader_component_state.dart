@@ -27,7 +27,7 @@ class FaderComponentUninitialized extends FaderComponentState {}
 
 class FaderComponentError extends FaderComponentState {
   final String? message;
-  FaderComponentError({ this.message });
+  FaderComponentError({this.message});
 }
 
 class FaderComponentPermissionDenied extends FaderComponentState {
@@ -37,10 +37,10 @@ class FaderComponentPermissionDenied extends FaderComponentState {
 class FaderComponentLoaded extends FaderComponentState {
   final FaderModel value;
 
-  const FaderComponentLoaded({ required this.value });
+  const FaderComponentLoaded({required this.value});
 
-  FaderComponentLoaded copyWith({ FaderModel? copyThis }) {
-    return FaderComponentLoaded(value: copyThis ?? this.value);
+  FaderComponentLoaded copyWith({FaderModel? copyThis}) {
+    return FaderComponentLoaded(value: copyThis ?? value);
   }
 
   @override
@@ -49,4 +49,3 @@ class FaderComponentLoaded extends FaderComponentState {
   @override
   String toString() => 'FaderComponentLoaded { value: $value }';
 }
-

@@ -8,18 +8,17 @@ import 'package:eliud_pkg_fundamentals/model/section_model.dart';
 
 import '../../model/booklet_entity.dart';
 
-class BookletBloc extends ExtEditorBaseBloc<BookletModel, SectionModel, BookletEntity> {
-
+class BookletBloc
+    extends ExtEditorBaseBloc<BookletModel, SectionModel, BookletEntity> {
   BookletBloc(String appId, EditorFeedback feedback)
       : super(appId, bookletRepository(appId: appId)!, feedback);
 
   @override
   BookletModel addItem(BookletModel model, SectionModel newItem) {
-    List<SectionModel> newItems = model.sections == null
-        ? []
-        : model.sections!.map((e) => e).toList();
+    List<SectionModel> newItems =
+        model.sections == null ? [] : model.sections!.map((e) => e).toList();
     newItems.add(newItem);
-    var newModel = model.copyWith(sections:  newItems);
+    var newModel = model.copyWith(sections: newItems);
     return newModel;
   }
 
@@ -46,16 +45,16 @@ class BookletBloc extends ExtEditorBaseBloc<BookletModel, SectionModel, BookletE
   }
 
   @override
-  BookletModel setDefaultValues(BookletModel t, StorageConditionsModel conditions) {
-    return t.copyWith(
-        conditions: t.conditions ?? conditions);
+  BookletModel setDefaultValues(
+      BookletModel t, StorageConditionsModel conditions) {
+    return t.copyWith(conditions: t.conditions ?? conditions);
   }
 
   @override
-  BookletModel updateItem(BookletModel model, SectionModel oldItem, SectionModel newItem) {
-    List<SectionModel> currentItems = model.sections == null
-        ? []
-        : model.sections!;
+  BookletModel updateItem(
+      BookletModel model, SectionModel oldItem, SectionModel newItem) {
+    List<SectionModel> currentItems =
+        model.sections == null ? [] : model.sections!;
     var index = currentItems.indexOf(oldItem);
     if (index != -1) {
       var newItems = currentItems.map((e) => e).toList();
@@ -63,7 +62,7 @@ class BookletBloc extends ExtEditorBaseBloc<BookletModel, SectionModel, BookletE
       var newModel = model.copyWith(sections: newItems);
       return newModel;
     } else {
-      throw Exception("Could not find " + oldItem.toString());
+      throw Exception("Could not find $oldItem");
     }
   }
 
@@ -71,5 +70,4 @@ class BookletBloc extends ExtEditorBaseBloc<BookletModel, SectionModel, BookletE
   List<SectionModel> copyOf(List<SectionModel> ts) {
     return ts.map((e) => e).toList();
   }
-
 }

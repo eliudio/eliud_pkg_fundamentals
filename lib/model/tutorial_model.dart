@@ -21,17 +21,15 @@ import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-
 import 'package:eliud_pkg_fundamentals/model/tutorial_entity.dart';
-
-
-
 
 class TutorialModel implements ModelBase, WithAppId {
   static const String packageName = 'eliud_pkg_fundamentals';
   static const String id = 'tutorials';
 
+  @override
   String documentID;
+  @override
   String appId;
   String? name;
   String? title;
@@ -39,21 +37,52 @@ class TutorialModel implements ModelBase, WithAppId {
   List<TutorialEntryModel>? tutorialEntries;
   StorageConditionsModel? conditions;
 
-  TutorialModel({required this.documentID, required this.appId, this.name, this.title, this.description, this.tutorialEntries, this.conditions, })  {
-  }
+  TutorialModel({
+    required this.documentID,
+    required this.appId,
+    this.name,
+    this.title,
+    this.description,
+    this.tutorialEntries,
+    this.conditions,
+  });
 
-  TutorialModel copyWith({String? documentID, String? appId, String? name, String? title, String? description, List<TutorialEntryModel>? tutorialEntries, StorageConditionsModel? conditions, }) {
-    return TutorialModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, name: name ?? this.name, title: title ?? this.title, description: description ?? this.description, tutorialEntries: tutorialEntries ?? this.tutorialEntries, conditions: conditions ?? this.conditions, );
+  @override
+  TutorialModel copyWith({
+    String? documentID,
+    String? appId,
+    String? name,
+    String? title,
+    String? description,
+    List<TutorialEntryModel>? tutorialEntries,
+    StorageConditionsModel? conditions,
+  }) {
+    return TutorialModel(
+      documentID: documentID ?? this.documentID,
+      appId: appId ?? this.appId,
+      name: name ?? this.name,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      tutorialEntries: tutorialEntries ?? this.tutorialEntries,
+      conditions: conditions ?? this.conditions,
+    );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ appId.hashCode ^ name.hashCode ^ title.hashCode ^ description.hashCode ^ tutorialEntries.hashCode ^ conditions.hashCode;
+  int get hashCode =>
+      documentID.hashCode ^
+      appId.hashCode ^
+      name.hashCode ^
+      title.hashCode ^
+      description.hashCode ^
+      tutorialEntries.hashCode ^
+      conditions.hashCode;
 
   @override
   bool operator ==(Object other) =>
-          identical(this, other) ||
-          other is TutorialModel &&
-          runtimeType == other.runtimeType && 
+      identical(this, other) ||
+      other is TutorialModel &&
+          runtimeType == other.runtimeType &&
           documentID == other.documentID &&
           appId == other.appId &&
           name == other.name &&
@@ -64,11 +93,13 @@ class TutorialModel implements ModelBase, WithAppId {
 
   @override
   String toString() {
-    String tutorialEntriesCsv = (tutorialEntries == null) ? '' : tutorialEntries!.join(', ');
+    String tutorialEntriesCsv =
+        (tutorialEntries == null) ? '' : tutorialEntries!.join(', ');
 
     return 'TutorialModel{documentID: $documentID, appId: $appId, name: $name, title: $title, description: $description, tutorialEntries: TutorialEntry[] { $tutorialEntriesCsv }, conditions: $conditions}';
   }
 
+  @override
   Future<List<ModelReference>> collectReferences({String? appId}) async {
     List<ModelReference> referencesCollector = [];
     if (tutorialEntries != null) {
@@ -76,64 +107,71 @@ class TutorialModel implements ModelBase, WithAppId {
         referencesCollector.addAll(await item.collectReferences(appId: appId));
       }
     }
-    if (conditions != null) referencesCollector.addAll(await conditions!.collectReferences(appId: appId));
+    if (conditions != null) {
+      referencesCollector
+          .addAll(await conditions!.collectReferences(appId: appId));
+    }
     return referencesCollector;
   }
 
+  @override
   TutorialEntity toEntity({String? appId}) {
     return TutorialEntity(
-          appId: (appId != null) ? appId : null, 
-          name: (name != null) ? name : null, 
-          title: (title != null) ? title : null, 
-          description: (description != null) ? description : null, 
-          tutorialEntries: (tutorialEntries != null) ? tutorialEntries
-            !.map((item) => item.toEntity(appId: appId))
-            .toList() : null, 
-          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
+      appId: appId,
+      name: (name != null) ? name : null,
+      title: (title != null) ? title : null,
+      description: (description != null) ? description : null,
+      tutorialEntries: (tutorialEntries != null)
+          ? tutorialEntries!.map((item) => item.toEntity(appId: appId)).toList()
+          : null,
+      conditions:
+          (conditions != null) ? conditions!.toEntity(appId: appId) : null,
     );
   }
 
-  static Future<TutorialModel?> fromEntity(String documentID, TutorialEntity? entity) async {
+  static Future<TutorialModel?> fromEntity(
+      String documentID, TutorialEntity? entity) async {
     if (entity == null) return null;
     var counter = 0;
     return TutorialModel(
-          documentID: documentID, 
-          appId: entity.appId ?? '', 
-          name: entity.name, 
-          title: entity.title, 
-          description: entity.description, 
-          tutorialEntries: 
-            entity.tutorialEntries == null ? null : List<TutorialEntryModel>.from(await Future.wait(entity. tutorialEntries
-            !.map((item) {
-            counter++;
+      documentID: documentID,
+      appId: entity.appId ?? '',
+      name: entity.name,
+      title: entity.title,
+      description: entity.description,
+      tutorialEntries: entity.tutorialEntries == null
+          ? null
+          : List<TutorialEntryModel>.from(
+              await Future.wait(entity.tutorialEntries!.map((item) {
+              counter++;
               return TutorialEntryModel.fromEntity(counter.toString(), item);
-            })
-            .toList())), 
-          conditions: 
-            await StorageConditionsModel.fromEntity(entity.conditions), 
+            }).toList())),
+      conditions: await StorageConditionsModel.fromEntity(entity.conditions),
     );
   }
 
-  static Future<TutorialModel?> fromEntityPlus(String documentID, TutorialEntity? entity, { String? appId}) async {
+  static Future<TutorialModel?> fromEntityPlus(
+      String documentID, TutorialEntity? entity,
+      {String? appId}) async {
     if (entity == null) return null;
 
     var counter = 0;
     return TutorialModel(
-          documentID: documentID, 
-          appId: entity.appId ?? '', 
-          name: entity.name, 
-          title: entity.title, 
-          description: entity.description, 
-          tutorialEntries: 
-            entity. tutorialEntries == null ? null : List<TutorialEntryModel>.from(await Future.wait(entity. tutorialEntries
-            !.map((item) {
-            counter++;
-            return TutorialEntryModel.fromEntityPlus(counter.toString(), item, appId: appId);})
-            .toList())), 
-          conditions: 
-            await StorageConditionsModel.fromEntityPlus(entity.conditions, appId: appId), 
+      documentID: documentID,
+      appId: entity.appId ?? '',
+      name: entity.name,
+      title: entity.title,
+      description: entity.description,
+      tutorialEntries: entity.tutorialEntries == null
+          ? null
+          : List<TutorialEntryModel>.from(
+              await Future.wait(entity.tutorialEntries!.map((item) {
+              counter++;
+              return TutorialEntryModel.fromEntityPlus(counter.toString(), item,
+                  appId: appId);
+            }).toList())),
+      conditions: await StorageConditionsModel.fromEntityPlus(entity.conditions,
+          appId: appId),
     );
   }
-
 }
-

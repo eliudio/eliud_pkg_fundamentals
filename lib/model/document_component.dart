@@ -13,7 +13,6 @@
 
 */
 
-
 import 'package:eliud_pkg_fundamentals/model/document_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/document_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/document_model.dart';
@@ -31,20 +30,22 @@ abstract class AbstractDocumentComponent extends StatelessWidget {
   final AppModel app;
   final String documentId;
 
-  AbstractDocumentComponent({Key? key, required this.app, required this.documentId}): super(key: key);
+  AbstractDocumentComponent(
+      {super.key, required this.app, required this.documentId});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<DocumentComponentBloc> (
-          create: (context) => DocumentComponentBloc(
-            documentRepository: documentRepository(appId: app.documentID)!)
+    return BlocProvider<DocumentComponentBloc>(
+      create: (context) => DocumentComponentBloc(
+          documentRepository: documentRepository(appId: app.documentID)!)
         ..add(FetchDocumentComponent(id: documentId)),
       child: _documentBlockBuilder(context),
     );
   }
 
   Widget _documentBlockBuilder(BuildContext context) {
-    return BlocBuilder<DocumentComponentBloc, DocumentComponentState>(builder: (context, state) {
+    return BlocBuilder<DocumentComponentBloc, DocumentComponentState>(
+        builder: (context, state) {
       if (state is DocumentComponentLoaded) {
         return yourWidget(context, state.value);
       } else if (state is DocumentComponentPermissionDenied) {
@@ -57,7 +58,11 @@ abstract class AbstractDocumentComponent extends StatelessWidget {
         return AlertWidget(app: app, title: 'Error', content: state.message);
       } else {
         return Center(
-          child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().progressIndicatorStyle().progressIndicator(app, context),
+          child: StyleRegistry.registry()
+              .styleWithApp(app)
+              .frontEndStyle()
+              .progressIndicatorStyle()
+              .progressIndicator(app, context),
         );
       }
     });
@@ -65,4 +70,3 @@ abstract class AbstractDocumentComponent extends StatelessWidget {
 
   Widget yourWidget(BuildContext context, DocumentModel value);
 }
-

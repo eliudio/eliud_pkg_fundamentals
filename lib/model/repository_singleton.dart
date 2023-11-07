@@ -50,63 +50,123 @@ import '../model/tutorial_firestore.dart';
 import '../model/tutorial_repository.dart';
 import '../model/tutorial_cache.dart';
 
-
 class RepositorySingleton extends AbstractRepositorySingleton {
-    var _bookletRepository = HashMap<String, BookletRepository>();
-    var _decoratedContentRepository = HashMap<String, DecoratedContentRepository>();
-    var _dividerRepository = HashMap<String, DividerRepository>();
-    var _documentRepository = HashMap<String, DocumentRepository>();
-    var _dynamicWidgetRepository = HashMap<String, DynamicWidgetRepository>();
-    var _faderRepository = HashMap<String, FaderRepository>();
-    var _gridRepository = HashMap<String, GridRepository>();
-    var _presentationRepository = HashMap<String, PresentationRepository>();
-    var _simpleImageRepository = HashMap<String, SimpleImageRepository>();
-    var _simpleTextRepository = HashMap<String, SimpleTextRepository>();
-    var _tutorialRepository = HashMap<String, TutorialRepository>();
+  final _bookletRepository = HashMap<String, BookletRepository>();
+  final _decoratedContentRepository =
+      HashMap<String, DecoratedContentRepository>();
+  final _dividerRepository = HashMap<String, DividerRepository>();
+  final _documentRepository = HashMap<String, DocumentRepository>();
+  final _dynamicWidgetRepository = HashMap<String, DynamicWidgetRepository>();
+  final _faderRepository = HashMap<String, FaderRepository>();
+  final _gridRepository = HashMap<String, GridRepository>();
+  final _presentationRepository = HashMap<String, PresentationRepository>();
+  final _simpleImageRepository = HashMap<String, SimpleImageRepository>();
+  final _simpleTextRepository = HashMap<String, SimpleTextRepository>();
+  final _tutorialRepository = HashMap<String, TutorialRepository>();
 
-    BookletRepository? bookletRepository(String? appId) {
-      if ((appId != null) && (_bookletRepository[appId] == null)) _bookletRepository[appId] = BookletCache(BookletFirestore(() => appRepository()!.getSubCollection(appId, 'booklet'), appId));
-      return _bookletRepository[appId];
+  @override
+  BookletRepository? bookletRepository(String? appId) {
+    if ((appId != null) && (_bookletRepository[appId] == null)) {
+      _bookletRepository[appId] = BookletCache(BookletFirestore(
+          () => appRepository()!.getSubCollection(appId, 'booklet'), appId));
     }
-    DecoratedContentRepository? decoratedContentRepository(String? appId) {
-      if ((appId != null) && (_decoratedContentRepository[appId] == null)) _decoratedContentRepository[appId] = DecoratedContentCache(DecoratedContentFirestore(() => appRepository()!.getSubCollection(appId, 'decoratedcontent'), appId));
-      return _decoratedContentRepository[appId];
-    }
-    DividerRepository? dividerRepository(String? appId) {
-      if ((appId != null) && (_dividerRepository[appId] == null)) _dividerRepository[appId] = DividerCache(DividerFirestore(() => appRepository()!.getSubCollection(appId, 'divider'), appId));
-      return _dividerRepository[appId];
-    }
-    DocumentRepository? documentRepository(String? appId) {
-      if ((appId != null) && (_documentRepository[appId] == null)) _documentRepository[appId] = DocumentCache(DocumentFirestore(() => appRepository()!.getSubCollection(appId, 'document'), appId));
-      return _documentRepository[appId];
-    }
-    DynamicWidgetRepository? dynamicWidgetRepository(String? appId) {
-      if ((appId != null) && (_dynamicWidgetRepository[appId] == null)) _dynamicWidgetRepository[appId] = DynamicWidgetCache(DynamicWidgetFirestore(() => appRepository()!.getSubCollection(appId, 'dynamicwidget'), appId));
-      return _dynamicWidgetRepository[appId];
-    }
-    FaderRepository? faderRepository(String? appId) {
-      if ((appId != null) && (_faderRepository[appId] == null)) _faderRepository[appId] = FaderCache(FaderFirestore(() => appRepository()!.getSubCollection(appId, 'fader'), appId));
-      return _faderRepository[appId];
-    }
-    GridRepository? gridRepository(String? appId) {
-      if ((appId != null) && (_gridRepository[appId] == null)) _gridRepository[appId] = GridCache(GridFirestore(() => appRepository()!.getSubCollection(appId, 'grid'), appId));
-      return _gridRepository[appId];
-    }
-    PresentationRepository? presentationRepository(String? appId) {
-      if ((appId != null) && (_presentationRepository[appId] == null)) _presentationRepository[appId] = PresentationCache(PresentationFirestore(() => appRepository()!.getSubCollection(appId, 'presentation'), appId));
-      return _presentationRepository[appId];
-    }
-    SimpleImageRepository? simpleImageRepository(String? appId) {
-      if ((appId != null) && (_simpleImageRepository[appId] == null)) _simpleImageRepository[appId] = SimpleImageCache(SimpleImageFirestore(() => appRepository()!.getSubCollection(appId, 'simpleimage'), appId));
-      return _simpleImageRepository[appId];
-    }
-    SimpleTextRepository? simpleTextRepository(String? appId) {
-      if ((appId != null) && (_simpleTextRepository[appId] == null)) _simpleTextRepository[appId] = SimpleTextCache(SimpleTextFirestore(() => appRepository()!.getSubCollection(appId, 'simpletext'), appId));
-      return _simpleTextRepository[appId];
-    }
-    TutorialRepository? tutorialRepository(String? appId) {
-      if ((appId != null) && (_tutorialRepository[appId] == null)) _tutorialRepository[appId] = TutorialCache(TutorialFirestore(() => appRepository()!.getSubCollection(appId, 'tutorial'), appId));
-      return _tutorialRepository[appId];
-    }
+    return _bookletRepository[appId];
+  }
 
+  @override
+  DecoratedContentRepository? decoratedContentRepository(String? appId) {
+    if ((appId != null) && (_decoratedContentRepository[appId] == null)) {
+      _decoratedContentRepository[appId] = DecoratedContentCache(
+          DecoratedContentFirestore(
+              () =>
+                  appRepository()!.getSubCollection(appId, 'decoratedcontent'),
+              appId));
+    }
+    return _decoratedContentRepository[appId];
+  }
+
+  @override
+  DividerRepository? dividerRepository(String? appId) {
+    if ((appId != null) && (_dividerRepository[appId] == null)) {
+      _dividerRepository[appId] = DividerCache(DividerFirestore(
+          () => appRepository()!.getSubCollection(appId, 'divider'), appId));
+    }
+    return _dividerRepository[appId];
+  }
+
+  @override
+  DocumentRepository? documentRepository(String? appId) {
+    if ((appId != null) && (_documentRepository[appId] == null)) {
+      _documentRepository[appId] = DocumentCache(DocumentFirestore(
+          () => appRepository()!.getSubCollection(appId, 'document'), appId));
+    }
+    return _documentRepository[appId];
+  }
+
+  @override
+  DynamicWidgetRepository? dynamicWidgetRepository(String? appId) {
+    if ((appId != null) && (_dynamicWidgetRepository[appId] == null)) {
+      _dynamicWidgetRepository[appId] = DynamicWidgetCache(
+          DynamicWidgetFirestore(
+              () => appRepository()!.getSubCollection(appId, 'dynamicwidget'),
+              appId));
+    }
+    return _dynamicWidgetRepository[appId];
+  }
+
+  @override
+  FaderRepository? faderRepository(String? appId) {
+    if ((appId != null) && (_faderRepository[appId] == null)) {
+      _faderRepository[appId] = FaderCache(FaderFirestore(
+          () => appRepository()!.getSubCollection(appId, 'fader'), appId));
+    }
+    return _faderRepository[appId];
+  }
+
+  @override
+  GridRepository? gridRepository(String? appId) {
+    if ((appId != null) && (_gridRepository[appId] == null)) {
+      _gridRepository[appId] = GridCache(GridFirestore(
+          () => appRepository()!.getSubCollection(appId, 'grid'), appId));
+    }
+    return _gridRepository[appId];
+  }
+
+  @override
+  PresentationRepository? presentationRepository(String? appId) {
+    if ((appId != null) && (_presentationRepository[appId] == null)) {
+      _presentationRepository[appId] = PresentationCache(PresentationFirestore(
+          () => appRepository()!.getSubCollection(appId, 'presentation'),
+          appId));
+    }
+    return _presentationRepository[appId];
+  }
+
+  @override
+  SimpleImageRepository? simpleImageRepository(String? appId) {
+    if ((appId != null) && (_simpleImageRepository[appId] == null)) {
+      _simpleImageRepository[appId] = SimpleImageCache(SimpleImageFirestore(
+          () => appRepository()!.getSubCollection(appId, 'simpleimage'),
+          appId));
+    }
+    return _simpleImageRepository[appId];
+  }
+
+  @override
+  SimpleTextRepository? simpleTextRepository(String? appId) {
+    if ((appId != null) && (_simpleTextRepository[appId] == null)) {
+      _simpleTextRepository[appId] = SimpleTextCache(SimpleTextFirestore(
+          () => appRepository()!.getSubCollection(appId, 'simpletext'), appId));
+    }
+    return _simpleTextRepository[appId];
+  }
+
+  @override
+  TutorialRepository? tutorialRepository(String? appId) {
+    if ((appId != null) && (_tutorialRepository[appId] == null)) {
+      _tutorialRepository[appId] = TutorialCache(TutorialFirestore(
+          () => appRepository()!.getSubCollection(appId, 'tutorial'), appId));
+    }
+    return _tutorialRepository[appId];
+  }
 }

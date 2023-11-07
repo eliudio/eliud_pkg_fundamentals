@@ -17,7 +17,6 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 
-
 @immutable
 abstract class DocumentItemFormEvent extends Equatable {
   const DocumentItemFormEvent();
@@ -26,15 +25,13 @@ abstract class DocumentItemFormEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class InitialiseNewDocumentItemFormEvent extends DocumentItemFormEvent {
-}
-
+class InitialiseNewDocumentItemFormEvent extends DocumentItemFormEvent {}
 
 class InitialiseDocumentItemFormEvent extends DocumentItemFormEvent {
   final DocumentItemModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialiseDocumentItemFormEvent({this.value});
 }
@@ -43,7 +40,7 @@ class InitialiseDocumentItemFormNoLoadEvent extends DocumentItemFormEvent {
   final DocumentItemModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialiseDocumentItemFormNoLoadEvent({this.value});
 }
@@ -54,7 +51,7 @@ class ChangedDocumentItemDocumentID extends DocumentItemFormEvent {
   ChangedDocumentItemDocumentID({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedDocumentItemDocumentID{ value: $value }';
@@ -66,7 +63,7 @@ class ChangedDocumentItemReference extends DocumentItemFormEvent {
   ChangedDocumentItemReference({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedDocumentItemReference{ value: $value }';
@@ -78,9 +75,8 @@ class ChangedDocumentItemImage extends DocumentItemFormEvent {
   ChangedDocumentItemImage({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedDocumentItemImage{ value: $value }';
 }
-

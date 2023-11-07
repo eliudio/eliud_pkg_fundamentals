@@ -30,10 +30,10 @@ class NewPage extends DividerListEvent {}
 class AddDividerList extends DividerListEvent {
   final DividerModel? value;
 
-  const AddDividerList({ this.value });
+  const AddDividerList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'AddDividerList{ value: $value }';
@@ -42,10 +42,10 @@ class AddDividerList extends DividerListEvent {
 class UpdateDividerList extends DividerListEvent {
   final DividerModel? value;
 
-  const UpdateDividerList({ this.value });
+  const UpdateDividerList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'UpdateDividerList{ value: $value }';
@@ -54,10 +54,10 @@ class UpdateDividerList extends DividerListEvent {
 class DeleteDividerList extends DividerListEvent {
   final DividerModel? value;
 
-  const DeleteDividerList({ this.value });
+  const DeleteDividerList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'DeleteDividerList{ value: $value }';
@@ -67,24 +67,24 @@ class DividerListUpdated extends DividerListEvent {
   final List<DividerModel?>? value;
   final bool? mightHaveMore;
 
-  const DividerListUpdated({ this.value, this.mightHaveMore });
+  const DividerListUpdated({this.value, this.mightHaveMore});
 
   @override
-  List<Object?> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [value, mightHaveMore];
 
   @override
-  String toString() => 'DividerListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+  String toString() =>
+      'DividerListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 
 class DividerChangeQuery extends DividerListEvent {
   final EliudQuery? newQuery;
 
-  const DividerChangeQuery({ required this.newQuery });
+  const DividerChangeQuery({required this.newQuery});
 
   @override
-  List<Object?> get props => [ newQuery ];
+  List<Object?> get props => [newQuery];
 
   @override
   String toString() => 'DividerChangeQuery{ value: $newQuery }';
 }
-

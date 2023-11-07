@@ -8,8 +8,8 @@ import 'package:eliud_pkg_fundamentals/model/grid_model.dart';
 
 import '../../model/grid_entity.dart';
 
-class GridBloc extends ExtEditorBaseBloc<GridModel, BodyComponentModel, GridEntity> {
-
+class GridBloc
+    extends ExtEditorBaseBloc<GridModel, BodyComponentModel, GridEntity> {
   GridBloc(String appId, EditorFeedback feedback)
       : super(appId, gridRepository(appId: appId)!, feedback);
 
@@ -19,7 +19,7 @@ class GridBloc extends ExtEditorBaseBloc<GridModel, BodyComponentModel, GridEnti
         ? []
         : model.bodyComponents!.map((e) => e).toList();
     newItems.add(newItem);
-    var newModel = model.copyWith(bodyComponents:  newItems);
+    var newModel = model.copyWith(bodyComponents: newItems);
     return newModel;
   }
 
@@ -47,15 +47,14 @@ class GridBloc extends ExtEditorBaseBloc<GridModel, BodyComponentModel, GridEnti
 
   @override
   GridModel setDefaultValues(GridModel t, StorageConditionsModel conditions) {
-    return t.copyWith(
-        conditions: t.conditions ?? conditions);
+    return t.copyWith(conditions: t.conditions ?? conditions);
   }
 
   @override
-  GridModel updateItem(GridModel model, BodyComponentModel oldItem, BodyComponentModel newItem) {
-    List<BodyComponentModel> currentItems = model.bodyComponents == null
-        ? []
-        : model.bodyComponents!;
+  GridModel updateItem(
+      GridModel model, BodyComponentModel oldItem, BodyComponentModel newItem) {
+    List<BodyComponentModel> currentItems =
+        model.bodyComponents == null ? [] : model.bodyComponents!;
     var index = currentItems.indexOf(oldItem);
     if (index != -1) {
       var newItems = currentItems.map((e) => e).toList();
@@ -63,7 +62,7 @@ class GridBloc extends ExtEditorBaseBloc<GridModel, BodyComponentModel, GridEnti
       var newModel = model.copyWith(bodyComponents: newItems);
       return newModel;
     } else {
-      throw Exception("Could not find " + oldItem.toString());
+      throw Exception("Could not find $oldItem");
     }
   }
 
@@ -71,5 +70,4 @@ class GridBloc extends ExtEditorBaseBloc<GridModel, BodyComponentModel, GridEnti
   List<BodyComponentModel> copyOf(List<BodyComponentModel> ts) {
     return ts.map((e) => e).toList();
   }
-
 }

@@ -15,11 +15,9 @@
 
 import 'package:eliud_pkg_fundamentals/model/booklet_repository.dart';
 
-
 import 'package:eliud_pkg_fundamentals/model/repository_export.dart';
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
-
 
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -33,86 +31,112 @@ class BookletFirestore implements BookletRepository {
     return BookletEntity.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
+  @override
   Future<BookletEntity> addEntity(String documentID, BookletEntity value) {
-    return BookletCollection.doc(documentID).set(value.toDocument()).then((_) => value);
+    return bookletCollection
+        .doc(documentID)
+        .set(value.toDocument())
+        .then((_) => value);
   }
 
+  @override
   Future<BookletEntity> updateEntity(String documentID, BookletEntity value) {
-    return BookletCollection.doc(documentID).update(value.toDocument()).then((_) => value);
+    return bookletCollection
+        .doc(documentID)
+        .update(value.toDocument())
+        .then((_) => value);
   }
 
+  @override
   Future<BookletModel> add(BookletModel value) {
-    return BookletCollection.doc(value.documentID).set(value.toEntity(appId: appId).toDocument()).then((_) => value);
+    return bookletCollection
+        .doc(value.documentID)
+        .set(value.toEntity(appId: appId).toDocument())
+        .then((_) => value);
   }
 
+  @override
   Future<void> delete(BookletModel value) {
-    return BookletCollection.doc(value.documentID).delete();
+    return bookletCollection.doc(value.documentID).delete();
   }
 
+  @override
   Future<BookletModel> update(BookletModel value) {
-    return BookletCollection.doc(value.documentID).update(value.toEntity(appId: appId).toDocument()).then((_) => value);
+    return bookletCollection
+        .doc(value.documentID)
+        .update(value.toEntity(appId: appId).toDocument())
+        .then((_) => value);
   }
 
   Future<BookletModel?> _populateDoc(DocumentSnapshot value) async {
-    return BookletModel.fromEntity(value.id, BookletEntity.fromMap(value.data()));
+    return BookletModel.fromEntity(
+        value.id, BookletEntity.fromMap(value.data()));
   }
 
   Future<BookletModel?> _populateDocPlus(DocumentSnapshot value) async {
-    return BookletModel.fromEntityPlus(value.id, BookletEntity.fromMap(value.data()), appId: appId);  }
+    return BookletModel.fromEntityPlus(
+        value.id, BookletEntity.fromMap(value.data()),
+        appId: appId);
+  }
 
-  Future<BookletEntity?> getEntity(String? id, {Function(Exception)? onError}) async {
+  @override
+  Future<BookletEntity?> getEntity(String? id,
+      {Function(Exception)? onError}) async {
     try {
-      var collection = BookletCollection.doc(id);
+      var collection = bookletCollection.doc(id);
       var doc = await collection.get();
       return BookletEntity.fromMap(doc.data());
-    } on Exception catch(e) {
+    } on Exception catch (e) {
       if (onError != null) {
         onError(e);
       } else {
         print("Error whilst retrieving Booklet with id $id");
         print("Exceptoin: $e");
       }
-    };
-return null;
+    }
+    return null;
   }
 
+  @override
   Future<BookletModel?> get(String? id, {Function(Exception)? onError}) async {
     try {
-      var collection = BookletCollection.doc(id);
+      var collection = bookletCollection.doc(id);
       var doc = await collection.get();
       return await _populateDocPlus(doc);
-    } on Exception catch(e) {
+    } on Exception catch (e) {
       if (onError != null) {
         onError(e);
       } else {
         print("Error whilst retrieving Booklet with id $id");
         print("Exceptoin: $e");
       }
-    };
-return null;
+    }
+    return null;
   }
 
-  StreamSubscription<List<BookletModel?>> listen(BookletModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery}) {
+  @override
+  StreamSubscription<List<BookletModel?>> listen(BookletModelTrigger trigger,
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery}) {
     Stream<List<BookletModel?>> stream;
-    stream = getQuery(getCollection(), orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots()
+    stream = getQuery(getCollection(),
+            orderBy: orderBy,
+            descending: descending,
+            startAfter: startAfter as DocumentSnapshot?,
+            limit: limit,
+            privilegeLevel: privilegeLevel,
+            eliudQuery: eliudQuery,
+            appId: appId)!
+        .snapshots()
 //  see comment listen(...) above
-//  stream = getQuery(BookletCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots()
+//  stream = getQuery(bookletCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots()
         .asyncMap((data) async {
-      return await Future.wait(data.docs.map((doc) =>  _populateDoc(doc)).toList());
-    });
-
-    return stream.listen((listOfBookletModels) {
-      trigger(listOfBookletModels);
-    });
-  }
-
-  StreamSubscription<List<BookletModel?>> listenWithDetails(BookletModelTrigger trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery}) {
-    Stream<List<BookletModel?>> stream;
-    stream = getQuery(getCollection(), orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots()
-//  see comment listen(...) above
-//  stream = getQuery(BookletCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots()
-        .asyncMap((data) async {
-      return await Future.wait(data.docs.map((doc) =>  _populateDocPlus(doc)).toList());
+      return await Future.wait(
+          data.docs.map((doc) => _populateDoc(doc)).toList());
     });
 
     return stream.listen((listOfBookletModels) {
@@ -121,10 +145,41 @@ return null;
   }
 
   @override
-  StreamSubscription<BookletModel?> listenTo(String documentId, BookletChanged changed, {BookletErrorHandler? errorHandler}) {
-    var stream = BookletCollection.doc(documentId)
+  StreamSubscription<List<BookletModel?>> listenWithDetails(
+      BookletModelTrigger trigger,
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery}) {
+    Stream<List<BookletModel?>> stream;
+    stream = getQuery(getCollection(),
+            orderBy: orderBy,
+            descending: descending,
+            startAfter: startAfter as DocumentSnapshot?,
+            limit: limit,
+            privilegeLevel: privilegeLevel,
+            eliudQuery: eliudQuery,
+            appId: appId)!
         .snapshots()
-        .asyncMap((data) {
+//  see comment listen(...) above
+//  stream = getQuery(bookletCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots()
+        .asyncMap((data) async {
+      return await Future.wait(
+          data.docs.map((doc) => _populateDocPlus(doc)).toList());
+    });
+
+    return stream.listen((listOfBookletModels) {
+      trigger(listOfBookletModels);
+    });
+  }
+
+  @override
+  StreamSubscription<BookletModel?> listenTo(
+      String documentId, BookletChanged changed,
+      {BookletErrorHandler? errorHandler}) {
+    var stream = bookletCollection.doc(documentId).snapshots().asyncMap((data) {
       return _populateDocPlus(data);
     });
     var theStream = stream.listen((value) {
@@ -138,33 +193,84 @@ return null;
     return theStream;
   }
 
-  Stream<List<BookletModel?>> values({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) {
+  @override
+  Stream<List<BookletModel?>> values(
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      SetLastDoc? setLastDoc,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery}) {
     DocumentSnapshot? lastDoc;
-    Stream<List<BookletModel?>> _values = getQuery(BookletCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots().asyncMap((snapshot) {
+    Stream<List<BookletModel?>> values = getQuery(bookletCollection,
+            orderBy: orderBy,
+            descending: descending,
+            startAfter: startAfter as DocumentSnapshot?,
+            limit: limit,
+            privilegeLevel: privilegeLevel,
+            eliudQuery: eliudQuery,
+            appId: appId)!
+        .snapshots()
+        .asyncMap((snapshot) {
       return Future.wait(snapshot.docs.map((doc) {
         lastDoc = doc;
         return _populateDoc(doc);
       }).toList());
     });
     if ((setLastDoc != null) && (lastDoc != null)) setLastDoc(lastDoc);
-    return _values;
+    return values;
   }
 
-  Stream<List<BookletModel?>> valuesWithDetails({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) {
+  @override
+  Stream<List<BookletModel?>> valuesWithDetails(
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      SetLastDoc? setLastDoc,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery}) {
     DocumentSnapshot? lastDoc;
-    Stream<List<BookletModel?>> _values = getQuery(BookletCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.snapshots().asyncMap((snapshot) {
+    Stream<List<BookletModel?>> values = getQuery(bookletCollection,
+            orderBy: orderBy,
+            descending: descending,
+            startAfter: startAfter as DocumentSnapshot?,
+            limit: limit,
+            privilegeLevel: privilegeLevel,
+            eliudQuery: eliudQuery,
+            appId: appId)!
+        .snapshots()
+        .asyncMap((snapshot) {
       return Future.wait(snapshot.docs.map((doc) {
         lastDoc = doc;
         return _populateDocPlus(doc);
       }).toList());
     });
     if ((setLastDoc != null) && (lastDoc != null)) setLastDoc(lastDoc);
-    return _values;
+    return values;
   }
 
-  Future<List<BookletModel?>> valuesList({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) async {
+  @override
+  Future<List<BookletModel?>> valuesList(
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      SetLastDoc? setLastDoc,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery}) async {
     DocumentSnapshot? lastDoc;
-    List<BookletModel?> _values = await getQuery(BookletCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.get().then((value) {
+    List<BookletModel?> values = await getQuery(bookletCollection,
+            orderBy: orderBy,
+            descending: descending,
+            startAfter: startAfter as DocumentSnapshot?,
+            limit: limit,
+            privilegeLevel: privilegeLevel,
+            eliudQuery: eliudQuery,
+            appId: appId)!
+        .get()
+        .then((value) {
       var list = value.docs;
       return Future.wait(list.map((doc) {
         lastDoc = doc;
@@ -172,12 +278,29 @@ return null;
       }).toList());
     });
     if ((setLastDoc != null) && (lastDoc != null)) setLastDoc(lastDoc);
-    return _values;
+    return values;
   }
 
-  Future<List<BookletModel?>> valuesListWithDetails({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) async {
+  @override
+  Future<List<BookletModel?>> valuesListWithDetails(
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      SetLastDoc? setLastDoc,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery}) async {
     DocumentSnapshot? lastDoc;
-    List<BookletModel?> _values = await getQuery(BookletCollection, orderBy: orderBy,  descending: descending,  startAfter: startAfter as DocumentSnapshot?,  limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery, appId: appId)!.get().then((value) {
+    List<BookletModel?> values = await getQuery(bookletCollection,
+            orderBy: orderBy,
+            descending: descending,
+            startAfter: startAfter as DocumentSnapshot?,
+            limit: limit,
+            privilegeLevel: privilegeLevel,
+            eliudQuery: eliudQuery,
+            appId: appId)!
+        .get()
+        .then((value) {
       var list = value.docs;
       return Future.wait(list.map((doc) {
         lastDoc = doc;
@@ -185,37 +308,44 @@ return null;
       }).toList());
     });
     if ((setLastDoc != null) && (lastDoc != null)) setLastDoc(lastDoc);
-    return _values;
+    return values;
   }
 
+  @override
   void flush() {}
 
+  @override
   Future<void> deleteAll() {
-    return BookletCollection.get().then((snapshot) {
-      for (DocumentSnapshot ds in snapshot.docs){
+    return bookletCollection.get().then((snapshot) {
+      for (DocumentSnapshot ds in snapshot.docs) {
         ds.reference.delete();
       }
     });
   }
 
+  @override
   dynamic getSubCollection(String documentId, String name) {
-    return BookletCollection.doc(documentId).collection(name);
+    return bookletCollection.doc(documentId).collection(name);
   }
 
+  @override
   String? timeStampToString(dynamic timeStamp) {
     return firestoreTimeStampToString(timeStamp);
-  } 
-
-  Future<BookletModel?> changeValue(String documentId, String fieldName, num changeByThisValue) {
-    var change = FieldValue.increment(changeByThisValue);
-    return BookletCollection.doc(documentId).update({fieldName: change}).then((v) => get(documentId));
   }
 
+  @override
+  Future<BookletModel?> changeValue(
+      String documentId, String fieldName, num changeByThisValue) {
+    var change = FieldValue.increment(changeByThisValue);
+    return bookletCollection
+        .doc(documentId)
+        .update({fieldName: change}).then((v) => get(documentId));
+  }
 
   final String appId;
-  BookletFirestore(this.getCollection, this.appId): BookletCollection = getCollection();
+  BookletFirestore(this.getCollection, this.appId)
+      : bookletCollection = getCollection();
 
-  final CollectionReference BookletCollection;
+  final CollectionReference bookletCollection;
   final GetCollection getCollection;
 }
-

@@ -20,7 +20,6 @@ import 'package:eliud_pkg_fundamentals/model/grid_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/grid_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/grid_repository.dart';
 
-
 class GridComponentBloc extends Bloc<GridComponentEvent, GridComponentState> {
   final GridRepository? gridRepository;
   StreamSubscription? _gridSubscription;
@@ -34,11 +33,12 @@ class GridComponentBloc extends Bloc<GridComponentEvent, GridComponentState> {
     });
   }
 
-  GridComponentBloc({ this.gridRepository }): super(GridComponentUninitialized()) {
-    on <FetchGridComponent> ((event, emit) {
+  GridComponentBloc({this.gridRepository})
+      : super(GridComponentUninitialized()) {
+    on<FetchGridComponent>((event, emit) {
       _mapLoadGridComponentUpdateToState(event.id!);
     });
-    on <GridComponentUpdated> ((event, emit) {
+    on<GridComponentUpdated>((event, emit) {
       emit(GridComponentLoaded(value: event.value));
     });
   }
@@ -48,6 +48,4 @@ class GridComponentBloc extends Bloc<GridComponentEvent, GridComponentState> {
     _gridSubscription?.cancel();
     return super.close();
   }
-
 }
-

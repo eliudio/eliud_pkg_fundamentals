@@ -20,7 +20,8 @@ import 'package:eliud_pkg_fundamentals/model/tutorial_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_repository.dart';
 
-class TutorialComponentBloc extends Bloc<TutorialComponentEvent, TutorialComponentState> {
+class TutorialComponentBloc
+    extends Bloc<TutorialComponentEvent, TutorialComponentState> {
   final TutorialRepository? tutorialRepository;
   StreamSubscription? _tutorialSubscription;
 
@@ -33,11 +34,12 @@ class TutorialComponentBloc extends Bloc<TutorialComponentEvent, TutorialCompone
     });
   }
 
-  TutorialComponentBloc({ this.tutorialRepository }): super(TutorialComponentUninitialized()) {
-    on <FetchTutorialComponent> ((event, emit) {
+  TutorialComponentBloc({this.tutorialRepository})
+      : super(TutorialComponentUninitialized()) {
+    on<FetchTutorialComponent>((event, emit) {
       _mapLoadTutorialComponentUpdateToState(event.id!);
     });
-    on <TutorialComponentUpdated> ((event, emit) {
+    on<TutorialComponentUpdated>((event, emit) {
       emit(TutorialComponentLoaded(value: event.value));
     });
   }
@@ -47,6 +49,4 @@ class TutorialComponentBloc extends Bloc<TutorialComponentEvent, TutorialCompone
     _tutorialSubscription?.cancel();
     return super.close();
   }
-
 }
-

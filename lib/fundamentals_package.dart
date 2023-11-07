@@ -11,14 +11,21 @@ import 'package:eliud_pkg_fundamentals/model/repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals/wizards/fader_page_wizard.dart';
 
 import 'package:eliud_pkg_fundamentals/fundamentals_package_stub.dart'
-if (dart.library.io) 'fundamentals_mobile_package.dart'
-if (dart.library.html) 'fundamentals_web_package.dart';
+    if (dart.library.io) 'fundamentals_mobile_package.dart'
+    if (dart.library.html) 'fundamentals_web_package.dart';
 
 abstract class FundamentalsPackage extends Package {
   FundamentalsPackage() : super('eliud_pkg_fundamentals');
 
   @override
-  Future<List<PackageConditionDetails>>? getAndSubscribe(AccessBloc accessBloc, AppModel app, MemberModel? member, bool isOwner, bool? isBlocked, PrivilegeLevel? privilegeLevel) => null;
+  Future<List<PackageConditionDetails>>? getAndSubscribe(
+          AccessBloc accessBloc,
+          AppModel app,
+          MemberModel? member,
+          bool isOwner,
+          bool? isBlocked,
+          PrivilegeLevel? privilegeLevel) =>
+      null;
 
   @override
   List<String>? retrieveAllPackageConditions() => null;
@@ -34,13 +41,14 @@ abstract class FundamentalsPackage extends Package {
   }
 
   @override
-  List<MemberCollectionInfo> getMemberCollectionInfo() => AbstractRepositorySingleton.collections;
+  List<MemberCollectionInfo> getMemberCollectionInfo() =>
+      AbstractRepositorySingleton.collections;
 
   static FundamentalsPackage instance() => getFundamentalsPackage();
 
   /*
    * Register depending packages
    */
-  void registerDependencies(Eliud eliud) {
-  }
+  @override
+  void registerDependencies(Eliud eliud) {}
 }

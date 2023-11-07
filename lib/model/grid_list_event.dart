@@ -30,10 +30,10 @@ class NewPage extends GridListEvent {}
 class AddGridList extends GridListEvent {
   final GridModel? value;
 
-  const AddGridList({ this.value });
+  const AddGridList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'AddGridList{ value: $value }';
@@ -42,10 +42,10 @@ class AddGridList extends GridListEvent {
 class UpdateGridList extends GridListEvent {
   final GridModel? value;
 
-  const UpdateGridList({ this.value });
+  const UpdateGridList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'UpdateGridList{ value: $value }';
@@ -54,10 +54,10 @@ class UpdateGridList extends GridListEvent {
 class DeleteGridList extends GridListEvent {
   final GridModel? value;
 
-  const DeleteGridList({ this.value });
+  const DeleteGridList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'DeleteGridList{ value: $value }';
@@ -67,24 +67,24 @@ class GridListUpdated extends GridListEvent {
   final List<GridModel?>? value;
   final bool? mightHaveMore;
 
-  const GridListUpdated({ this.value, this.mightHaveMore });
+  const GridListUpdated({this.value, this.mightHaveMore});
 
   @override
-  List<Object?> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [value, mightHaveMore];
 
   @override
-  String toString() => 'GridListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+  String toString() =>
+      'GridListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 
 class GridChangeQuery extends GridListEvent {
   final EliudQuery? newQuery;
 
-  const GridChangeQuery({ required this.newQuery });
+  const GridChangeQuery({required this.newQuery});
 
   @override
-  List<Object?> get props => [ newQuery ];
+  List<Object?> get props => [newQuery];
 
   @override
   String toString() => 'GridChangeQuery{ value: $newQuery }';
 }
-

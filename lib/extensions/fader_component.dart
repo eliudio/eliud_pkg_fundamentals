@@ -24,8 +24,7 @@ class FaderComponentConstructorDefault implements ComponentConstructor {
 }
 
 class FaderComponent extends AbstractFaderComponent {
-  FaderComponent({Key? key, required AppModel app, required String faderId})
-      : super(key: key, app: app, faderId: faderId);
+  FaderComponent({super.key, required super.app, required super.faderId});
 
   @override
   Widget yourWidget(BuildContext context, FaderModel? value) {
@@ -37,9 +36,7 @@ class FaderComponent extends AbstractFaderComponent {
       var images = items.map((li) => li.image).toList();
       var positionsAndSizes = items.map((element) => element.posSize).toList();
       var actions = items.map((element) => element.action).toList();
-      var orientation = MediaQuery
-          .of(context)
-          .orientation;
+      var orientation = MediaQuery.of(context).orientation;
       return TheImageGF(
           app,
           member,

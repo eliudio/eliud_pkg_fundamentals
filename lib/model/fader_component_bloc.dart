@@ -20,7 +20,8 @@ import 'package:eliud_pkg_fundamentals/model/fader_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/fader_repository.dart';
 
-class FaderComponentBloc extends Bloc<FaderComponentEvent, FaderComponentState> {
+class FaderComponentBloc
+    extends Bloc<FaderComponentEvent, FaderComponentState> {
   final FaderRepository? faderRepository;
   StreamSubscription? _faderSubscription;
 
@@ -33,11 +34,12 @@ class FaderComponentBloc extends Bloc<FaderComponentEvent, FaderComponentState> 
     });
   }
 
-  FaderComponentBloc({ this.faderRepository }): super(FaderComponentUninitialized()) {
-    on <FetchFaderComponent> ((event, emit) {
+  FaderComponentBloc({this.faderRepository})
+      : super(FaderComponentUninitialized()) {
+    on<FetchFaderComponent>((event, emit) {
       _mapLoadFaderComponentUpdateToState(event.id!);
     });
-    on <FaderComponentUpdated> ((event, emit) {
+    on<FaderComponentUpdated>((event, emit) {
       emit(FaderComponentLoaded(value: event.value));
     });
   }
@@ -47,6 +49,4 @@ class FaderComponentBloc extends Bloc<FaderComponentEvent, FaderComponentState> 
     _faderSubscription?.cancel();
     return super.close();
   }
-
 }
-

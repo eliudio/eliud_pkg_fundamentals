@@ -27,7 +27,7 @@ class PresentationComponentUninitialized extends PresentationComponentState {}
 
 class PresentationComponentError extends PresentationComponentState {
   final String? message;
-  PresentationComponentError({ this.message });
+  PresentationComponentError({this.message});
 }
 
 class PresentationComponentPermissionDenied extends PresentationComponentState {
@@ -37,10 +37,10 @@ class PresentationComponentPermissionDenied extends PresentationComponentState {
 class PresentationComponentLoaded extends PresentationComponentState {
   final PresentationModel value;
 
-  const PresentationComponentLoaded({ required this.value });
+  const PresentationComponentLoaded({required this.value});
 
-  PresentationComponentLoaded copyWith({ PresentationModel? copyThis }) {
-    return PresentationComponentLoaded(value: copyThis ?? this.value);
+  PresentationComponentLoaded copyWith({PresentationModel? copyThis}) {
+    return PresentationComponentLoaded(value: copyThis ?? value);
   }
 
   @override
@@ -49,4 +49,3 @@ class PresentationComponentLoaded extends PresentationComponentState {
   @override
   String toString() => 'PresentationComponentLoaded { value: $value }';
 }
-

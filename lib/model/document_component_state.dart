@@ -27,7 +27,7 @@ class DocumentComponentUninitialized extends DocumentComponentState {}
 
 class DocumentComponentError extends DocumentComponentState {
   final String? message;
-  DocumentComponentError({ this.message });
+  DocumentComponentError({this.message});
 }
 
 class DocumentComponentPermissionDenied extends DocumentComponentState {
@@ -37,10 +37,10 @@ class DocumentComponentPermissionDenied extends DocumentComponentState {
 class DocumentComponentLoaded extends DocumentComponentState {
   final DocumentModel value;
 
-  const DocumentComponentLoaded({ required this.value });
+  const DocumentComponentLoaded({required this.value});
 
-  DocumentComponentLoaded copyWith({ DocumentModel? copyThis }) {
-    return DocumentComponentLoaded(value: copyThis ?? this.value);
+  DocumentComponentLoaded copyWith({DocumentModel? copyThis}) {
+    return DocumentComponentLoaded(value: copyThis ?? value);
   }
 
   @override
@@ -49,4 +49,3 @@ class DocumentComponentLoaded extends DocumentComponentState {
   @override
   String toString() => 'DocumentComponentLoaded { value: $value }';
 }
-

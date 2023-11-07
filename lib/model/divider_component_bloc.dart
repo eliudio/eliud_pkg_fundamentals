@@ -20,7 +20,8 @@ import 'package:eliud_pkg_fundamentals/model/divider_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_repository.dart';
 
-class DividerComponentBloc extends Bloc<DividerComponentEvent, DividerComponentState> {
+class DividerComponentBloc
+    extends Bloc<DividerComponentEvent, DividerComponentState> {
   final DividerRepository? dividerRepository;
   StreamSubscription? _dividerSubscription;
 
@@ -33,11 +34,12 @@ class DividerComponentBloc extends Bloc<DividerComponentEvent, DividerComponentS
     });
   }
 
-  DividerComponentBloc({ this.dividerRepository }): super(DividerComponentUninitialized()) {
-    on <FetchDividerComponent> ((event, emit) {
+  DividerComponentBloc({this.dividerRepository})
+      : super(DividerComponentUninitialized()) {
+    on<FetchDividerComponent>((event, emit) {
       _mapLoadDividerComponentUpdateToState(event.id!);
     });
-    on <DividerComponentUpdated> ((event, emit) {
+    on<DividerComponentUpdated>((event, emit) {
       emit(DividerComponentLoaded(value: event.value));
     });
   }
@@ -47,6 +49,4 @@ class DividerComponentBloc extends Bloc<DividerComponentEvent, DividerComponentS
     _dividerSubscription?.cancel();
     return super.close();
   }
-
 }
-

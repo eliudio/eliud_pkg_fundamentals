@@ -13,7 +13,6 @@
 
 */
 
-
 import 'package:eliud_pkg_fundamentals/model/presentation_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/presentation_model.dart';
@@ -31,20 +30,23 @@ abstract class AbstractPresentationComponent extends StatelessWidget {
   final AppModel app;
   final String presentationId;
 
-  AbstractPresentationComponent({Key? key, required this.app, required this.presentationId}): super(key: key);
+  AbstractPresentationComponent(
+      {super.key, required this.app, required this.presentationId});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<PresentationComponentBloc> (
-          create: (context) => PresentationComponentBloc(
-            presentationRepository: presentationRepository(appId: app.documentID)!)
+    return BlocProvider<PresentationComponentBloc>(
+      create: (context) => PresentationComponentBloc(
+          presentationRepository:
+              presentationRepository(appId: app.documentID)!)
         ..add(FetchPresentationComponent(id: presentationId)),
       child: _presentationBlockBuilder(context),
     );
   }
 
   Widget _presentationBlockBuilder(BuildContext context) {
-    return BlocBuilder<PresentationComponentBloc, PresentationComponentState>(builder: (context, state) {
+    return BlocBuilder<PresentationComponentBloc, PresentationComponentState>(
+        builder: (context, state) {
       if (state is PresentationComponentLoaded) {
         return yourWidget(context, state.value);
       } else if (state is PresentationComponentPermissionDenied) {
@@ -57,7 +59,11 @@ abstract class AbstractPresentationComponent extends StatelessWidget {
         return AlertWidget(app: app, title: 'Error', content: state.message);
       } else {
         return Center(
-          child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().progressIndicatorStyle().progressIndicator(app, context),
+          child: StyleRegistry.registry()
+              .styleWithApp(app)
+              .frontEndStyle()
+              .progressIndicatorStyle()
+              .progressIndicator(app, context),
         );
       }
     });
@@ -65,4 +71,3 @@ abstract class AbstractPresentationComponent extends StatelessWidget {
 
   Widget yourWidget(BuildContext context, PresentationModel value);
 }
-

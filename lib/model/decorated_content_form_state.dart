@@ -41,19 +41,20 @@ class DecoratedContentFormInitialized extends DecoratedContentFormState {
   final DecoratedContentModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
-  const DecoratedContentFormInitialized({ this.value });
+  const DecoratedContentFormInitialized({this.value});
 }
 
 // Menu has been initialised and hence a menu is available
-abstract class DecoratedContentFormError extends DecoratedContentFormInitialized {
+abstract class DecoratedContentFormError
+    extends DecoratedContentFormInitialized {
   final String? message;
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
-  const DecoratedContentFormError({this.message, DecoratedContentModel? value }) : super(value: value);
+  const DecoratedContentFormError({this.message, super.value});
 
   @override
   String toString() {
@@ -63,11 +64,12 @@ abstract class DecoratedContentFormError extends DecoratedContentFormInitialized
     }''';
   }
 }
-class DocumentIDDecoratedContentFormError extends DecoratedContentFormError { 
-  const DocumentIDDecoratedContentFormError({ String? message, DecoratedContentModel? value }): super(message: message, value: value);
+
+class DocumentIDDecoratedContentFormError extends DecoratedContentFormError {
+  const DocumentIDDecoratedContentFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -78,12 +80,11 @@ class DocumentIDDecoratedContentFormError extends DecoratedContentFormError {
   }
 }
 
-
-class AppIdDecoratedContentFormError extends DecoratedContentFormError { 
-  const AppIdDecoratedContentFormError({ String? message, DecoratedContentModel? value }): super(message: message, value: value);
+class AppIdDecoratedContentFormError extends DecoratedContentFormError {
+  const AppIdDecoratedContentFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -94,12 +95,11 @@ class AppIdDecoratedContentFormError extends DecoratedContentFormError {
   }
 }
 
-
-class DescriptionDecoratedContentFormError extends DecoratedContentFormError { 
-  const DescriptionDecoratedContentFormError({ String? message, DecoratedContentModel? value }): super(message: message, value: value);
+class DescriptionDecoratedContentFormError extends DecoratedContentFormError {
+  const DescriptionDecoratedContentFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -110,12 +110,13 @@ class DescriptionDecoratedContentFormError extends DecoratedContentFormError {
   }
 }
 
-
-class DecoratingComponentNameDecoratedContentFormError extends DecoratedContentFormError { 
-  const DecoratingComponentNameDecoratedContentFormError({ String? message, DecoratedContentModel? value }): super(message: message, value: value);
+class DecoratingComponentNameDecoratedContentFormError
+    extends DecoratedContentFormError {
+  const DecoratingComponentNameDecoratedContentFormError(
+      {super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -126,12 +127,13 @@ class DecoratingComponentNameDecoratedContentFormError extends DecoratedContentF
   }
 }
 
-
-class DecoratingComponentIdDecoratedContentFormError extends DecoratedContentFormError { 
-  const DecoratingComponentIdDecoratedContentFormError({ String? message, DecoratedContentModel? value }): super(message: message, value: value);
+class DecoratingComponentIdDecoratedContentFormError
+    extends DecoratedContentFormError {
+  const DecoratingComponentIdDecoratedContentFormError(
+      {super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -142,12 +144,13 @@ class DecoratingComponentIdDecoratedContentFormError extends DecoratedContentFor
   }
 }
 
-
-class ContentComponentNameDecoratedContentFormError extends DecoratedContentFormError { 
-  const ContentComponentNameDecoratedContentFormError({ String? message, DecoratedContentModel? value }): super(message: message, value: value);
+class ContentComponentNameDecoratedContentFormError
+    extends DecoratedContentFormError {
+  const ContentComponentNameDecoratedContentFormError(
+      {super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -158,12 +161,13 @@ class ContentComponentNameDecoratedContentFormError extends DecoratedContentForm
   }
 }
 
-
-class ContentComponentIdDecoratedContentFormError extends DecoratedContentFormError { 
-  const ContentComponentIdDecoratedContentFormError({ String? message, DecoratedContentModel? value }): super(message: message, value: value);
+class ContentComponentIdDecoratedContentFormError
+    extends DecoratedContentFormError {
+  const ContentComponentIdDecoratedContentFormError(
+      {super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -174,12 +178,13 @@ class ContentComponentIdDecoratedContentFormError extends DecoratedContentFormEr
   }
 }
 
-
-class DecorationComponentPositionDecoratedContentFormError extends DecoratedContentFormError { 
-  const DecorationComponentPositionDecoratedContentFormError({ String? message, DecoratedContentModel? value }): super(message: message, value: value);
+class DecorationComponentPositionDecoratedContentFormError
+    extends DecoratedContentFormError {
+  const DecorationComponentPositionDecoratedContentFormError(
+      {super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -190,12 +195,13 @@ class DecorationComponentPositionDecoratedContentFormError extends DecoratedCont
   }
 }
 
-
-class PercentageDecorationVisibleDecoratedContentFormError extends DecoratedContentFormError { 
-  const PercentageDecorationVisibleDecoratedContentFormError({ String? message, DecoratedContentModel? value }): super(message: message, value: value);
+class PercentageDecorationVisibleDecoratedContentFormError
+    extends DecoratedContentFormError {
+  const PercentageDecorationVisibleDecoratedContentFormError(
+      {super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -206,12 +212,11 @@ class PercentageDecorationVisibleDecoratedContentFormError extends DecoratedCont
   }
 }
 
-
-class ConditionsDecoratedContentFormError extends DecoratedContentFormError { 
-  const ConditionsDecoratedContentFormError({ String? message, DecoratedContentModel? value }): super(message: message, value: value);
+class ConditionsDecoratedContentFormError extends DecoratedContentFormError {
+  const ConditionsDecoratedContentFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -222,12 +227,11 @@ class ConditionsDecoratedContentFormError extends DecoratedContentFormError {
   }
 }
 
-
-class DecoratedContentFormLoaded extends DecoratedContentFormInitialized { 
-  const DecoratedContentFormLoaded({ DecoratedContentModel? value }): super(value: value);
+class DecoratedContentFormLoaded extends DecoratedContentFormInitialized {
+  const DecoratedContentFormLoaded({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -237,12 +241,11 @@ class DecoratedContentFormLoaded extends DecoratedContentFormInitialized {
   }
 }
 
-
-class SubmittableDecoratedContentForm extends DecoratedContentFormInitialized { 
-  const SubmittableDecoratedContentForm({ DecoratedContentModel? value }): super(value: value);
+class SubmittableDecoratedContentForm extends DecoratedContentFormInitialized {
+  const SubmittableDecoratedContentForm({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -251,5 +254,3 @@ class SubmittableDecoratedContentForm extends DecoratedContentFormInitialized {
     }''';
   }
 }
-
-

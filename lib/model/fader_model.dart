@@ -21,17 +21,15 @@ import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-
 import 'package:eliud_pkg_fundamentals/model/fader_entity.dart';
-
-
-
 
 class FaderModel implements ModelBase, WithAppId {
   static const String packageName = 'eliud_pkg_fundamentals';
   static const String id = 'faders';
 
+  @override
   String documentID;
+  @override
   String appId;
   String? description;
 
@@ -44,21 +42,57 @@ class FaderModel implements ModelBase, WithAppId {
   BackgroundModel? background;
   StorageConditionsModel? conditions;
 
-  FaderModel({required this.documentID, required this.appId, this.description, this.animationMilliseconds, this.imageSeconds, this.items, this.background, this.conditions, })  {
-  }
+  FaderModel({
+    required this.documentID,
+    required this.appId,
+    this.description,
+    this.animationMilliseconds,
+    this.imageSeconds,
+    this.items,
+    this.background,
+    this.conditions,
+  });
 
-  FaderModel copyWith({String? documentID, String? appId, String? description, int? animationMilliseconds, int? imageSeconds, List<ListedItemModel>? items, BackgroundModel? background, StorageConditionsModel? conditions, }) {
-    return FaderModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, description: description ?? this.description, animationMilliseconds: animationMilliseconds ?? this.animationMilliseconds, imageSeconds: imageSeconds ?? this.imageSeconds, items: items ?? this.items, background: background ?? this.background, conditions: conditions ?? this.conditions, );
+  @override
+  FaderModel copyWith({
+    String? documentID,
+    String? appId,
+    String? description,
+    int? animationMilliseconds,
+    int? imageSeconds,
+    List<ListedItemModel>? items,
+    BackgroundModel? background,
+    StorageConditionsModel? conditions,
+  }) {
+    return FaderModel(
+      documentID: documentID ?? this.documentID,
+      appId: appId ?? this.appId,
+      description: description ?? this.description,
+      animationMilliseconds:
+          animationMilliseconds ?? this.animationMilliseconds,
+      imageSeconds: imageSeconds ?? this.imageSeconds,
+      items: items ?? this.items,
+      background: background ?? this.background,
+      conditions: conditions ?? this.conditions,
+    );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ appId.hashCode ^ description.hashCode ^ animationMilliseconds.hashCode ^ imageSeconds.hashCode ^ items.hashCode ^ background.hashCode ^ conditions.hashCode;
+  int get hashCode =>
+      documentID.hashCode ^
+      appId.hashCode ^
+      description.hashCode ^
+      animationMilliseconds.hashCode ^
+      imageSeconds.hashCode ^
+      items.hashCode ^
+      background.hashCode ^
+      conditions.hashCode;
 
   @override
   bool operator ==(Object other) =>
-          identical(this, other) ||
-          other is FaderModel &&
-          runtimeType == other.runtimeType && 
+      identical(this, other) ||
+      other is FaderModel &&
+          runtimeType == other.runtimeType &&
           documentID == other.documentID &&
           appId == other.appId &&
           description == other.description &&
@@ -75,6 +109,7 @@ class FaderModel implements ModelBase, WithAppId {
     return 'FaderModel{documentID: $documentID, appId: $appId, description: $description, animationMilliseconds: $animationMilliseconds, imageSeconds: $imageSeconds, items: ListedItem[] { $itemsCsv }, background: $background, conditions: $conditions}';
   }
 
+  @override
   Future<List<ModelReference>> collectReferences({String? appId}) async {
     List<ModelReference> referencesCollector = [];
     if (items != null) {
@@ -82,70 +117,81 @@ class FaderModel implements ModelBase, WithAppId {
         referencesCollector.addAll(await item.collectReferences(appId: appId));
       }
     }
-    if (background != null) referencesCollector.addAll(await background!.collectReferences(appId: appId));
-    if (conditions != null) referencesCollector.addAll(await conditions!.collectReferences(appId: appId));
+    if (background != null) {
+      referencesCollector
+          .addAll(await background!.collectReferences(appId: appId));
+    }
+    if (conditions != null) {
+      referencesCollector
+          .addAll(await conditions!.collectReferences(appId: appId));
+    }
     return referencesCollector;
   }
 
+  @override
   FaderEntity toEntity({String? appId}) {
     return FaderEntity(
-          appId: (appId != null) ? appId : null, 
-          description: (description != null) ? description : null, 
-          animationMilliseconds: (animationMilliseconds != null) ? animationMilliseconds : null, 
-          imageSeconds: (imageSeconds != null) ? imageSeconds : null, 
-          items: (items != null) ? items
-            !.map((item) => item.toEntity(appId: appId))
-            .toList() : null, 
-          background: (background != null) ? background!.toEntity(appId: appId) : null, 
-          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
+      appId: appId,
+      description: (description != null) ? description : null,
+      animationMilliseconds:
+          (animationMilliseconds != null) ? animationMilliseconds : null,
+      imageSeconds: (imageSeconds != null) ? imageSeconds : null,
+      items: (items != null)
+          ? items!.map((item) => item.toEntity(appId: appId)).toList()
+          : null,
+      background:
+          (background != null) ? background!.toEntity(appId: appId) : null,
+      conditions:
+          (conditions != null) ? conditions!.toEntity(appId: appId) : null,
     );
   }
 
-  static Future<FaderModel?> fromEntity(String documentID, FaderEntity? entity) async {
+  static Future<FaderModel?> fromEntity(
+      String documentID, FaderEntity? entity) async {
     if (entity == null) return null;
     var counter = 0;
     return FaderModel(
-          documentID: documentID, 
-          appId: entity.appId ?? '', 
-          description: entity.description, 
-          animationMilliseconds: entity.animationMilliseconds, 
-          imageSeconds: entity.imageSeconds, 
-          items: 
-            entity.items == null ? null : List<ListedItemModel>.from(await Future.wait(entity. items
-            !.map((item) {
-            counter++;
+      documentID: documentID,
+      appId: entity.appId ?? '',
+      description: entity.description,
+      animationMilliseconds: entity.animationMilliseconds,
+      imageSeconds: entity.imageSeconds,
+      items: entity.items == null
+          ? null
+          : List<ListedItemModel>.from(
+              await Future.wait(entity.items!.map((item) {
+              counter++;
               return ListedItemModel.fromEntity(counter.toString(), item);
-            })
-            .toList())), 
-          background: 
-            await BackgroundModel.fromEntity(entity.background), 
-          conditions: 
-            await StorageConditionsModel.fromEntity(entity.conditions), 
+            }).toList())),
+      background: await BackgroundModel.fromEntity(entity.background),
+      conditions: await StorageConditionsModel.fromEntity(entity.conditions),
     );
   }
 
-  static Future<FaderModel?> fromEntityPlus(String documentID, FaderEntity? entity, { String? appId}) async {
+  static Future<FaderModel?> fromEntityPlus(
+      String documentID, FaderEntity? entity,
+      {String? appId}) async {
     if (entity == null) return null;
 
     var counter = 0;
     return FaderModel(
-          documentID: documentID, 
-          appId: entity.appId ?? '', 
-          description: entity.description, 
-          animationMilliseconds: entity.animationMilliseconds, 
-          imageSeconds: entity.imageSeconds, 
-          items: 
-            entity. items == null ? null : List<ListedItemModel>.from(await Future.wait(entity. items
-            !.map((item) {
-            counter++;
-            return ListedItemModel.fromEntityPlus(counter.toString(), item, appId: appId);})
-            .toList())), 
-          background: 
-            await BackgroundModel.fromEntityPlus(entity.background, appId: appId), 
-          conditions: 
-            await StorageConditionsModel.fromEntityPlus(entity.conditions, appId: appId), 
+      documentID: documentID,
+      appId: entity.appId ?? '',
+      description: entity.description,
+      animationMilliseconds: entity.animationMilliseconds,
+      imageSeconds: entity.imageSeconds,
+      items: entity.items == null
+          ? null
+          : List<ListedItemModel>.from(
+              await Future.wait(entity.items!.map((item) {
+              counter++;
+              return ListedItemModel.fromEntityPlus(counter.toString(), item,
+                  appId: appId);
+            }).toList())),
+      background:
+          await BackgroundModel.fromEntityPlus(entity.background, appId: appId),
+      conditions: await StorageConditionsModel.fromEntityPlus(entity.conditions,
+          appId: appId),
     );
   }
-
 }
-

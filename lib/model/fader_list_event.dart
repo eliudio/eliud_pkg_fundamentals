@@ -30,10 +30,10 @@ class NewPage extends FaderListEvent {}
 class AddFaderList extends FaderListEvent {
   final FaderModel? value;
 
-  const AddFaderList({ this.value });
+  const AddFaderList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'AddFaderList{ value: $value }';
@@ -42,10 +42,10 @@ class AddFaderList extends FaderListEvent {
 class UpdateFaderList extends FaderListEvent {
   final FaderModel? value;
 
-  const UpdateFaderList({ this.value });
+  const UpdateFaderList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'UpdateFaderList{ value: $value }';
@@ -54,10 +54,10 @@ class UpdateFaderList extends FaderListEvent {
 class DeleteFaderList extends FaderListEvent {
   final FaderModel? value;
 
-  const DeleteFaderList({ this.value });
+  const DeleteFaderList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'DeleteFaderList{ value: $value }';
@@ -67,24 +67,24 @@ class FaderListUpdated extends FaderListEvent {
   final List<FaderModel?>? value;
   final bool? mightHaveMore;
 
-  const FaderListUpdated({ this.value, this.mightHaveMore });
+  const FaderListUpdated({this.value, this.mightHaveMore});
 
   @override
-  List<Object?> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [value, mightHaveMore];
 
   @override
-  String toString() => 'FaderListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+  String toString() =>
+      'FaderListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 
 class FaderChangeQuery extends FaderListEvent {
   final EliudQuery? newQuery;
 
-  const FaderChangeQuery({ required this.newQuery });
+  const FaderChangeQuery({required this.newQuery});
 
   @override
-  List<Object?> get props => [ newQuery ];
+  List<Object?> get props => [newQuery];
 
   @override
   String toString() => 'FaderChangeQuery{ value: $newQuery }';
 }
-

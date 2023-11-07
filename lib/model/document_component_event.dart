@@ -24,13 +24,11 @@ abstract class DocumentComponentEvent extends Equatable {
 class FetchDocumentComponent extends DocumentComponentEvent {
   final String? id;
 
-  FetchDocumentComponent({ this.id });
+  FetchDocumentComponent({this.id});
 }
 
 class DocumentComponentUpdated extends DocumentComponentEvent {
   final DocumentModel value;
 
-  DocumentComponentUpdated({ required this.value });
+  DocumentComponentUpdated({required this.value});
 }
-
-

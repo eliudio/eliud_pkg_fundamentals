@@ -8,16 +8,14 @@ import 'package:eliud_pkg_fundamentals/model/listed_item_model.dart';
 
 import '../../model/fader_entity.dart';
 
-class FaderBloc extends ExtEditorBaseBloc<FaderModel, ListedItemModel, FaderEntity> {
-
+class FaderBloc
+    extends ExtEditorBaseBloc<FaderModel, ListedItemModel, FaderEntity> {
   FaderBloc(String appId, EditorFeedback feedback)
       : super(appId, faderRepository(appId: appId)!, feedback);
 
   @override
   FaderModel addItem(FaderModel model, ListedItemModel newItem) {
-    List<ListedItemModel> newItems = model.items == null
-        ? []
-        : model.items!;
+    List<ListedItemModel> newItems = model.items == null ? [] : model.items!;
     newItems.add(newItem);
     var newModel = model.copyWith(items: newItems);
     return newModel;
@@ -52,15 +50,14 @@ class FaderBloc extends ExtEditorBaseBloc<FaderModel, ListedItemModel, FaderEnti
 
   @override
   FaderModel setDefaultValues(FaderModel t, StorageConditionsModel conditions) {
-    return t.copyWith(
-        conditions: t.conditions ?? conditions);
+    return t.copyWith(conditions: t.conditions ?? conditions);
   }
 
   @override
-  FaderModel updateItem(FaderModel model, ListedItemModel oldItem, ListedItemModel newItem) {
-    List<ListedItemModel> currentItems = model.items == null
-        ? []
-        : model.items!;
+  FaderModel updateItem(
+      FaderModel model, ListedItemModel oldItem, ListedItemModel newItem) {
+    List<ListedItemModel> currentItems =
+        model.items == null ? [] : model.items!;
     var index = currentItems.indexOf(oldItem);
     if (index != -1) {
       var newItems = currentItems.map((e) => e).toList();
@@ -68,7 +65,7 @@ class FaderBloc extends ExtEditorBaseBloc<FaderModel, ListedItemModel, FaderEnti
       var newModel = model.copyWith(items: newItems);
       return newModel;
     } else {
-      throw Exception("Could not find " + oldItem.toString());
+      throw Exception("Could not find $oldItem");
     }
   }
 
@@ -76,5 +73,4 @@ class FaderBloc extends ExtEditorBaseBloc<FaderModel, ListedItemModel, FaderEnti
   List<ListedItemModel> copyOf(List<ListedItemModel> ts) {
     return ts.map((t) => t).toList();
   }
-
 }

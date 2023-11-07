@@ -13,7 +13,6 @@
 
 */
 
-
 import 'package:eliud_pkg_fundamentals/model/tutorial_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/tutorial_model.dart';
@@ -31,20 +30,22 @@ abstract class AbstractTutorialComponent extends StatelessWidget {
   final AppModel app;
   final String tutorialId;
 
-  AbstractTutorialComponent({Key? key, required this.app, required this.tutorialId}): super(key: key);
+  AbstractTutorialComponent(
+      {super.key, required this.app, required this.tutorialId});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<TutorialComponentBloc> (
-          create: (context) => TutorialComponentBloc(
-            tutorialRepository: tutorialRepository(appId: app.documentID)!)
+    return BlocProvider<TutorialComponentBloc>(
+      create: (context) => TutorialComponentBloc(
+          tutorialRepository: tutorialRepository(appId: app.documentID)!)
         ..add(FetchTutorialComponent(id: tutorialId)),
       child: _tutorialBlockBuilder(context),
     );
   }
 
   Widget _tutorialBlockBuilder(BuildContext context) {
-    return BlocBuilder<TutorialComponentBloc, TutorialComponentState>(builder: (context, state) {
+    return BlocBuilder<TutorialComponentBloc, TutorialComponentState>(
+        builder: (context, state) {
       if (state is TutorialComponentLoaded) {
         return yourWidget(context, state.value);
       } else if (state is TutorialComponentPermissionDenied) {
@@ -57,7 +58,11 @@ abstract class AbstractTutorialComponent extends StatelessWidget {
         return AlertWidget(app: app, title: 'Error', content: state.message);
       } else {
         return Center(
-          child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().progressIndicatorStyle().progressIndicator(app, context),
+          child: StyleRegistry.registry()
+              .styleWithApp(app)
+              .frontEndStyle()
+              .progressIndicatorStyle()
+              .progressIndicator(app, context),
         );
       }
     });
@@ -65,4 +70,3 @@ abstract class AbstractTutorialComponent extends StatelessWidget {
 
   Widget yourWidget(BuildContext context, TutorialModel value);
 }
-

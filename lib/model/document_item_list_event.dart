@@ -30,10 +30,10 @@ class NewPage extends DocumentItemListEvent {}
 class AddDocumentItemList extends DocumentItemListEvent {
   final DocumentItemModel? value;
 
-  const AddDocumentItemList({ this.value });
+  const AddDocumentItemList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'AddDocumentItemList{ value: $value }';
@@ -42,10 +42,10 @@ class AddDocumentItemList extends DocumentItemListEvent {
 class UpdateDocumentItemList extends DocumentItemListEvent {
   final DocumentItemModel? value;
 
-  const UpdateDocumentItemList({ this.value });
+  const UpdateDocumentItemList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'UpdateDocumentItemList{ value: $value }';
@@ -54,10 +54,10 @@ class UpdateDocumentItemList extends DocumentItemListEvent {
 class DeleteDocumentItemList extends DocumentItemListEvent {
   final DocumentItemModel? value;
 
-  const DeleteDocumentItemList({ this.value });
+  const DeleteDocumentItemList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'DeleteDocumentItemList{ value: $value }';
@@ -67,24 +67,24 @@ class DocumentItemListUpdated extends DocumentItemListEvent {
   final List<DocumentItemModel?>? value;
   final bool? mightHaveMore;
 
-  const DocumentItemListUpdated({ this.value, this.mightHaveMore });
+  const DocumentItemListUpdated({this.value, this.mightHaveMore});
 
   @override
-  List<Object?> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [value, mightHaveMore];
 
   @override
-  String toString() => 'DocumentItemListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+  String toString() =>
+      'DocumentItemListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 
 class DocumentItemChangeQuery extends DocumentItemListEvent {
   final EliudQuery? newQuery;
 
-  const DocumentItemChangeQuery({ required this.newQuery });
+  const DocumentItemChangeQuery({required this.newQuery});
 
   @override
-  List<Object?> get props => [ newQuery ];
+  List<Object?> get props => [newQuery];
 
   @override
   String toString() => 'DocumentItemChangeQuery{ value: $newQuery }';
 }
-

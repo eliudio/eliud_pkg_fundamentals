@@ -41,9 +41,9 @@ class DocumentItemFormInitialized extends DocumentItemFormState {
   final DocumentItemModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
-  const DocumentItemFormInitialized({ this.value });
+  const DocumentItemFormInitialized({this.value});
 }
 
 // Menu has been initialised and hence a menu is available
@@ -51,9 +51,9 @@ abstract class DocumentItemFormError extends DocumentItemFormInitialized {
   final String? message;
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
-  const DocumentItemFormError({this.message, DocumentItemModel? value }) : super(value: value);
+  const DocumentItemFormError({this.message, super.value});
 
   @override
   String toString() {
@@ -63,11 +63,12 @@ abstract class DocumentItemFormError extends DocumentItemFormInitialized {
     }''';
   }
 }
-class DocumentIDDocumentItemFormError extends DocumentItemFormError { 
-  const DocumentIDDocumentItemFormError({ String? message, DocumentItemModel? value }): super(message: message, value: value);
+
+class DocumentIDDocumentItemFormError extends DocumentItemFormError {
+  const DocumentIDDocumentItemFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -78,12 +79,11 @@ class DocumentIDDocumentItemFormError extends DocumentItemFormError {
   }
 }
 
-
-class ReferenceDocumentItemFormError extends DocumentItemFormError { 
-  const ReferenceDocumentItemFormError({ String? message, DocumentItemModel? value }): super(message: message, value: value);
+class ReferenceDocumentItemFormError extends DocumentItemFormError {
+  const ReferenceDocumentItemFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -94,12 +94,11 @@ class ReferenceDocumentItemFormError extends DocumentItemFormError {
   }
 }
 
-
-class ImageDocumentItemFormError extends DocumentItemFormError { 
-  const ImageDocumentItemFormError({ String? message, DocumentItemModel? value }): super(message: message, value: value);
+class ImageDocumentItemFormError extends DocumentItemFormError {
+  const ImageDocumentItemFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -110,12 +109,11 @@ class ImageDocumentItemFormError extends DocumentItemFormError {
   }
 }
 
-
-class DocumentItemFormLoaded extends DocumentItemFormInitialized { 
-  const DocumentItemFormLoaded({ DocumentItemModel? value }): super(value: value);
+class DocumentItemFormLoaded extends DocumentItemFormInitialized {
+  const DocumentItemFormLoaded({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -125,12 +123,11 @@ class DocumentItemFormLoaded extends DocumentItemFormInitialized {
   }
 }
 
-
-class SubmittableDocumentItemForm extends DocumentItemFormInitialized { 
-  const SubmittableDocumentItemForm({ DocumentItemModel? value }): super(value: value);
+class SubmittableDocumentItemForm extends DocumentItemFormInitialized {
+  const SubmittableDocumentItemForm({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -139,5 +136,3 @@ class SubmittableDocumentItemForm extends DocumentItemFormInitialized {
     }''';
   }
 }
-
-

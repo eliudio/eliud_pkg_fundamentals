@@ -23,9 +23,8 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 
 import 'section_model.dart';
 
-typedef List<SectionModel?> FilterSectionModels(List<SectionModel?> values);
-
-
+typedef FilterSectionModels = List<SectionModel?> Function(
+    List<SectionModel?> values);
 
 class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
   final FilterSectionModels? filter;
@@ -39,23 +38,32 @@ class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
   final bool? detailed;
   final int sectionLimit;
 
-  SectionListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required SectionRepository sectionRepository, this.sectionLimit = 5})
+  SectionListBloc(
+      {this.filter,
+      this.paged,
+      this.orderBy,
+      this.descending,
+      this.detailed,
+      this.eliudQuery,
+      required SectionRepository sectionRepository,
+      this.sectionLimit = 5})
       : _sectionRepository = sectionRepository,
         super(SectionListLoading()) {
-    on <LoadSectionList> ((event, emit) {
+    on<LoadSectionList>((event, emit) {
       if ((detailed == null) || (!detailed!)) {
         _mapLoadSectionListToState();
       } else {
         _mapLoadSectionListWithDetailsToState();
       }
     });
-    
-    on <NewPage> ((event, emit) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+
+    on<NewPage>((event, emit) {
+      pages = pages +
+          1; // it doesn't matter so much if we increase pages beyond the end
       _mapLoadSectionListWithDetailsToState();
     });
-    
-    on <SectionChangeQuery> ((event, emit) {
+
+    on<SectionChangeQuery>((event, emit) {
       eliudQuery = event.newQuery;
       if ((detailed == null) || (!detailed!)) {
         _mapLoadSectionListToState();
@@ -63,20 +71,20 @@ class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
         _mapLoadSectionListWithDetailsToState();
       }
     });
-      
-    on <AddSectionList> ((event, emit) async {
+
+    on<AddSectionList>((event, emit) async {
       await _mapAddSectionListToState(event);
     });
-    
-    on <UpdateSectionList> ((event, emit) async {
+
+    on<UpdateSectionList>((event, emit) async {
       await _mapUpdateSectionListToState(event);
     });
-    
-    on <DeleteSectionList> ((event, emit) async {
+
+    on<DeleteSectionList>((event, emit) async {
       await _mapDeleteSectionListToState(event);
     });
-    
-    on <SectionListUpdated> ((event, emit) {
+
+    on<SectionListUpdated>((event, emit) {
       emit(_mapSectionListUpdatedToState(event));
     });
   }
@@ -90,27 +98,31 @@ class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
   }
 
   Future<void> _mapLoadSectionListToState() async {
-    int amountNow =  (state is SectionListLoaded) ? (state as SectionListLoaded).values!.length : 0;
+    int amountNow = (state is SectionListLoaded)
+        ? (state as SectionListLoaded).values!.length
+        : 0;
     _sectionsListSubscription?.cancel();
     _sectionsListSubscription = _sectionRepository.listen(
-          (list) => add(SectionListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
-      orderBy: orderBy,
-      descending: descending,
-      eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * sectionLimit : null
-    );
-  }
-
-  Future<void> _mapLoadSectionListWithDetailsToState() async {
-    int amountNow =  (state is SectionListLoaded) ? (state as SectionListLoaded).values!.length : 0;
-    _sectionsListSubscription?.cancel();
-    _sectionsListSubscription = _sectionRepository.listenWithDetails(
-            (list) => add(SectionListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
+        (list) => add(SectionListUpdated(
+            value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * sectionLimit : null
-    );
+        limit: ((paged != null) && paged!) ? pages * sectionLimit : null);
+  }
+
+  Future<void> _mapLoadSectionListWithDetailsToState() async {
+    int amountNow = (state is SectionListLoaded)
+        ? (state as SectionListLoaded).values!.length
+        : 0;
+    _sectionsListSubscription?.cancel();
+    _sectionsListSubscription = _sectionRepository.listenWithDetails(
+        (list) => add(SectionListUpdated(
+            value: _filter(list), mightHaveMore: amountNow != list.length)),
+        orderBy: orderBy,
+        descending: descending,
+        eliudQuery: eliudQuery,
+        limit: ((paged != null) && paged!) ? pages * sectionLimit : null);
   }
 
   Future<void> _mapAddSectionListToState(AddSectionList event) async {
@@ -134,8 +146,9 @@ class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
     }
   }
 
-  SectionListLoaded _mapSectionListUpdatedToState(
-      SectionListUpdated event) => SectionListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
+  SectionListLoaded _mapSectionListUpdatedToState(SectionListUpdated event) =>
+      SectionListLoaded(
+          values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {
@@ -143,5 +156,3 @@ class SectionListBloc extends Bloc<SectionListEvent, SectionListState> {
     return super.close();
   }
 }
-
-

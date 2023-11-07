@@ -55,7 +55,7 @@
       "displayName": "Relative position of the image",
       "fieldType": "enum",
       "enumName": "RelativeImagePosition",
-      "enumValues" : [ "Behind", "InFront", "Below", "Above", "Aside" ],
+      "enumValues" : [ "behind", "inFront", "below", "Above", "Aside" ],
       "group": "imagePositionRelative"
     },
     {
@@ -63,7 +63,7 @@
       "displayName": "Alignment of the image",
       "fieldType": "enum",
       "enumName": "SectionImageAlignment",
-      "enumValues" : [ "Left", "Center", "Right" ],
+      "enumValues" : [ "left", "center", "right" ],
       "group": "imageAlignment"
     },
     {

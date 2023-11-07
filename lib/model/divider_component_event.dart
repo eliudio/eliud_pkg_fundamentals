@@ -24,13 +24,11 @@ abstract class DividerComponentEvent extends Equatable {
 class FetchDividerComponent extends DividerComponentEvent {
   final String? id;
 
-  FetchDividerComponent({ this.id });
+  FetchDividerComponent({this.id});
 }
 
 class DividerComponentUpdated extends DividerComponentEvent {
   final DividerModel value;
 
-  DividerComponentUpdated({ required this.value });
+  DividerComponentUpdated({required this.value});
 }
-
-

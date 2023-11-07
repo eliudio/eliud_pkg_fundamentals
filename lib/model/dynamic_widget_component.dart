@@ -13,7 +13,6 @@
 
 */
 
-
 import 'package:eliud_pkg_fundamentals/model/dynamic_widget_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/dynamic_widget_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/dynamic_widget_model.dart';
@@ -31,20 +30,23 @@ abstract class AbstractDynamicWidgetComponent extends StatelessWidget {
   final AppModel app;
   final String dynamicWidgetId;
 
-  AbstractDynamicWidgetComponent({Key? key, required this.app, required this.dynamicWidgetId}): super(key: key);
+  AbstractDynamicWidgetComponent(
+      {super.key, required this.app, required this.dynamicWidgetId});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<DynamicWidgetComponentBloc> (
-          create: (context) => DynamicWidgetComponentBloc(
-            dynamicWidgetRepository: dynamicWidgetRepository(appId: app.documentID)!)
+    return BlocProvider<DynamicWidgetComponentBloc>(
+      create: (context) => DynamicWidgetComponentBloc(
+          dynamicWidgetRepository:
+              dynamicWidgetRepository(appId: app.documentID)!)
         ..add(FetchDynamicWidgetComponent(id: dynamicWidgetId)),
       child: _dynamicWidgetBlockBuilder(context),
     );
   }
 
   Widget _dynamicWidgetBlockBuilder(BuildContext context) {
-    return BlocBuilder<DynamicWidgetComponentBloc, DynamicWidgetComponentState>(builder: (context, state) {
+    return BlocBuilder<DynamicWidgetComponentBloc, DynamicWidgetComponentState>(
+        builder: (context, state) {
       if (state is DynamicWidgetComponentLoaded) {
         return yourWidget(context, state.value);
       } else if (state is DynamicWidgetComponentPermissionDenied) {
@@ -57,7 +59,11 @@ abstract class AbstractDynamicWidgetComponent extends StatelessWidget {
         return AlertWidget(app: app, title: 'Error', content: state.message);
       } else {
         return Center(
-          child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().progressIndicatorStyle().progressIndicator(app, context),
+          child: StyleRegistry.registry()
+              .styleWithApp(app)
+              .frontEndStyle()
+              .progressIndicatorStyle()
+              .progressIndicator(app, context),
         );
       }
     });
@@ -65,4 +71,3 @@ abstract class AbstractDynamicWidgetComponent extends StatelessWidget {
 
   Widget yourWidget(BuildContext context, DynamicWidgetModel value);
 }
-

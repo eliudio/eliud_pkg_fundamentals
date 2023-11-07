@@ -30,9 +30,7 @@ class TutorialComponentConstructorDefault implements ComponentConstructor {
 }
 
 class TutorialComponent extends AbstractTutorialComponent {
-  TutorialComponent(
-      {Key? key, required AppModel app, required String tutorialId})
-      : super(key: key, app: app, tutorialId: tutorialId);
+  TutorialComponent({super.key, required super.app, required super.tutorialId});
 
   Widget _aBitSpace() => SizedBox(
         height: 20,
@@ -52,7 +50,7 @@ class TutorialComponent extends AbstractTutorialComponent {
       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
     ));
     widgets.add(_aBitSpace());
-    value.tutorialEntries!.forEach((element) {
+    for (var element in value.tutorialEntries!) {
       widgets.add(Text(
         documentParameterProcessor.process(element.description!),
       ));
@@ -78,8 +76,8 @@ class TutorialComponent extends AbstractTutorialComponent {
         widgets.add(_aBitSpace());
       }
       if (element.code != null) {
-        widgets.add(MarkdownBody(
-            selectable: true, data: '```\n' + element.code! + '```'));
+        widgets.add(
+            MarkdownBody(selectable: true, data: '```\n${element.code!}```'));
         widgets.add(Center(
             child: button(
           app,
@@ -91,7 +89,7 @@ class TutorialComponent extends AbstractTutorialComponent {
         )));
         widgets.add(_aBitSpace());
       }
-    });
+    }
 
     return ListView(padding: EdgeInsets.all(10), children: [
       Column(

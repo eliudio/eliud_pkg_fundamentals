@@ -22,44 +22,45 @@ import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-
 import 'package:eliud_pkg_fundamentals/model/section_entity.dart';
 
+enum RelativeImagePosition { behind, inFront, below, above, aside, unknown }
 
-enum RelativeImagePosition {
-  Behind, InFront, Below, Above, Aside, Unknown
-}
-
-enum SectionImageAlignment {
-  Left, Center, Right, Unknown
-}
-
+enum SectionImageAlignment { left, center, right, unknown }
 
 RelativeImagePosition toRelativeImagePosition(int? index) {
   switch (index) {
-    case 0: return RelativeImagePosition.Behind;
-    case 1: return RelativeImagePosition.InFront;
-    case 2: return RelativeImagePosition.Below;
-    case 3: return RelativeImagePosition.Above;
-    case 4: return RelativeImagePosition.Aside;
+    case 0:
+      return RelativeImagePosition.behind;
+    case 1:
+      return RelativeImagePosition.inFront;
+    case 2:
+      return RelativeImagePosition.below;
+    case 3:
+      return RelativeImagePosition.above;
+    case 4:
+      return RelativeImagePosition.aside;
   }
-  return RelativeImagePosition.Unknown;
+  return RelativeImagePosition.unknown;
 }
 
 SectionImageAlignment toSectionImageAlignment(int? index) {
   switch (index) {
-    case 0: return SectionImageAlignment.Left;
-    case 1: return SectionImageAlignment.Center;
-    case 2: return SectionImageAlignment.Right;
+    case 0:
+      return SectionImageAlignment.left;
+    case 1:
+      return SectionImageAlignment.center;
+    case 2:
+      return SectionImageAlignment.right;
   }
-  return SectionImageAlignment.Unknown;
+  return SectionImageAlignment.unknown;
 }
-
 
 class SectionModel implements ModelBase {
   static const String packageName = 'eliud_pkg_fundamentals';
   static const String id = 'sections';
 
+  @override
   String documentID;
   String? title;
   String? description;
@@ -71,21 +72,57 @@ class SectionModel implements ModelBase {
   double? imageWidth;
   List<LinkModel>? links;
 
-  SectionModel({required this.documentID, this.title, this.description, this.image, this.imagePositionRelative, this.imageAlignment, this.imageWidth, this.links, })  {
-  }
+  SectionModel({
+    required this.documentID,
+    this.title,
+    this.description,
+    this.image,
+    this.imagePositionRelative,
+    this.imageAlignment,
+    this.imageWidth,
+    this.links,
+  });
 
-  SectionModel copyWith({String? documentID, String? title, String? description, PlatformMediumModel? image, RelativeImagePosition? imagePositionRelative, SectionImageAlignment? imageAlignment, double? imageWidth, List<LinkModel>? links, }) {
-    return SectionModel(documentID: documentID ?? this.documentID, title: title ?? this.title, description: description ?? this.description, image: image ?? this.image, imagePositionRelative: imagePositionRelative ?? this.imagePositionRelative, imageAlignment: imageAlignment ?? this.imageAlignment, imageWidth: imageWidth ?? this.imageWidth, links: links ?? this.links, );
+  @override
+  SectionModel copyWith({
+    String? documentID,
+    String? title,
+    String? description,
+    PlatformMediumModel? image,
+    RelativeImagePosition? imagePositionRelative,
+    SectionImageAlignment? imageAlignment,
+    double? imageWidth,
+    List<LinkModel>? links,
+  }) {
+    return SectionModel(
+      documentID: documentID ?? this.documentID,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      image: image ?? this.image,
+      imagePositionRelative:
+          imagePositionRelative ?? this.imagePositionRelative,
+      imageAlignment: imageAlignment ?? this.imageAlignment,
+      imageWidth: imageWidth ?? this.imageWidth,
+      links: links ?? this.links,
+    );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ title.hashCode ^ description.hashCode ^ image.hashCode ^ imagePositionRelative.hashCode ^ imageAlignment.hashCode ^ imageWidth.hashCode ^ links.hashCode;
+  int get hashCode =>
+      documentID.hashCode ^
+      title.hashCode ^
+      description.hashCode ^
+      image.hashCode ^
+      imagePositionRelative.hashCode ^
+      imageAlignment.hashCode ^
+      imageWidth.hashCode ^
+      links.hashCode;
 
   @override
   bool operator ==(Object other) =>
-          identical(this, other) ||
-          other is SectionModel &&
-          runtimeType == other.runtimeType && 
+      identical(this, other) ||
+      other is SectionModel &&
+          runtimeType == other.runtimeType &&
           documentID == other.documentID &&
           title == other.title &&
           description == other.description &&
@@ -102,12 +139,16 @@ class SectionModel implements ModelBase {
     return 'SectionModel{documentID: $documentID, title: $title, description: $description, image: $image, imagePositionRelative: $imagePositionRelative, imageAlignment: $imageAlignment, imageWidth: $imageWidth, links: Link[] { $linksCsv }}';
   }
 
+  @override
   Future<List<ModelReference>> collectReferences({String? appId}) async {
     List<ModelReference> referencesCollector = [];
     if (image != null) {
-      referencesCollector.add(ModelReference(PlatformMediumModel.packageName, PlatformMediumModel.id, image!));
+      referencesCollector.add(ModelReference(
+          PlatformMediumModel.packageName, PlatformMediumModel.id, image!));
     }
-    if (image != null) referencesCollector.addAll(await image!.collectReferences(appId: appId));
+    if (image != null) {
+      referencesCollector.addAll(await image!.collectReferences(appId: appId));
+    }
     if (links != null) {
       for (var item in links!) {
         referencesCollector.addAll(await item.collectReferences(appId: appId));
@@ -116,71 +157,78 @@ class SectionModel implements ModelBase {
     return referencesCollector;
   }
 
+  @override
   SectionEntity toEntity({String? appId}) {
     return SectionEntity(
-          title: (title != null) ? title : null, 
-          description: (description != null) ? description : null, 
-          imageId: (image != null) ? image!.documentID : null, 
-          imagePositionRelative: (imagePositionRelative != null) ? imagePositionRelative!.index : null, 
-          imageAlignment: (imageAlignment != null) ? imageAlignment!.index : null, 
-          imageWidth: (imageWidth != null) ? imageWidth : null, 
-          links: (links != null) ? links
-            !.map((item) => item.toEntity(appId: appId))
-            .toList() : null, 
+      title: (title != null) ? title : null,
+      description: (description != null) ? description : null,
+      imageId: (image != null) ? image!.documentID : null,
+      imagePositionRelative:
+          (imagePositionRelative != null) ? imagePositionRelative!.index : null,
+      imageAlignment: (imageAlignment != null) ? imageAlignment!.index : null,
+      imageWidth: (imageWidth != null) ? imageWidth : null,
+      links: (links != null)
+          ? links!.map((item) => item.toEntity(appId: appId)).toList()
+          : null,
     );
   }
 
-  static Future<SectionModel?> fromEntity(String documentID, SectionEntity? entity) async {
+  static Future<SectionModel?> fromEntity(
+      String documentID, SectionEntity? entity) async {
     if (entity == null) return null;
     var counter = 0;
     return SectionModel(
-          documentID: documentID, 
-          title: entity.title, 
-          description: entity.description, 
-          imagePositionRelative: toRelativeImagePosition(entity.imagePositionRelative), 
-          imageAlignment: toSectionImageAlignment(entity.imageAlignment), 
-          imageWidth: entity.imageWidth, 
-          links: 
-            entity.links == null ? null : List<LinkModel>.from(await Future.wait(entity. links
-            !.map((item) {
-            counter++;
+      documentID: documentID,
+      title: entity.title,
+      description: entity.description,
+      imagePositionRelative:
+          toRelativeImagePosition(entity.imagePositionRelative),
+      imageAlignment: toSectionImageAlignment(entity.imageAlignment),
+      imageWidth: entity.imageWidth,
+      links: entity.links == null
+          ? null
+          : List<LinkModel>.from(await Future.wait(entity.links!.map((item) {
+              counter++;
               return LinkModel.fromEntity(counter.toString(), item);
-            })
-            .toList())), 
+            }).toList())),
     );
   }
 
-  static Future<SectionModel?> fromEntityPlus(String documentID, SectionEntity? entity, { String? appId}) async {
+  static Future<SectionModel?> fromEntityPlus(
+      String documentID, SectionEntity? entity,
+      {String? appId}) async {
     if (entity == null) return null;
 
     PlatformMediumModel? imageHolder;
     if (entity.imageId != null) {
       try {
-          imageHolder = await platformMediumRepository(appId: appId)!.get(entity.imageId);
-      } on Exception catch(e) {
+        imageHolder =
+            await platformMediumRepository(appId: appId)!.get(entity.imageId);
+      } on Exception catch (e) {
         print('Error whilst trying to initialise image');
-        print('Error whilst retrieving platformMedium with id ${entity.imageId}');
+        print(
+            'Error whilst retrieving platformMedium with id ${entity.imageId}');
         print('Exception: $e');
       }
     }
 
     var counter = 0;
     return SectionModel(
-          documentID: documentID, 
-          title: entity.title, 
-          description: entity.description, 
-          image: imageHolder, 
-          imagePositionRelative: toRelativeImagePosition(entity.imagePositionRelative), 
-          imageAlignment: toSectionImageAlignment(entity.imageAlignment), 
-          imageWidth: entity.imageWidth, 
-          links: 
-            entity. links == null ? null : List<LinkModel>.from(await Future.wait(entity. links
-            !.map((item) {
-            counter++;
-            return LinkModel.fromEntityPlus(counter.toString(), item, appId: appId);})
-            .toList())), 
+      documentID: documentID,
+      title: entity.title,
+      description: entity.description,
+      image: imageHolder,
+      imagePositionRelative:
+          toRelativeImagePosition(entity.imagePositionRelative),
+      imageAlignment: toSectionImageAlignment(entity.imageAlignment),
+      imageWidth: entity.imageWidth,
+      links: entity.links == null
+          ? null
+          : List<LinkModel>.from(await Future.wait(entity.links!.map((item) {
+              counter++;
+              return LinkModel.fromEntityPlus(counter.toString(), item,
+                  appId: appId);
+            }).toList())),
     );
   }
-
 }
-

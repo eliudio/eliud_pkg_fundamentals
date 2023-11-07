@@ -22,8 +22,7 @@ class DividerComponentConstructorDefault implements ComponentConstructor {
 }
 
 class DividerComponent extends AbstractDividerComponent {
-  DividerComponent({Key? key, required AppModel app, required String dividerId})
-      : super(key: key, app: app, dividerId: dividerId);
+  DividerComponent({super.key, required super.app, required super.dividerId});
 
   @override
   Widget yourWidget(BuildContext context, DividerModel? value) {

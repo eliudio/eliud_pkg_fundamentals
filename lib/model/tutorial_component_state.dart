@@ -27,7 +27,7 @@ class TutorialComponentUninitialized extends TutorialComponentState {}
 
 class TutorialComponentError extends TutorialComponentState {
   final String? message;
-  TutorialComponentError({ this.message });
+  TutorialComponentError({this.message});
 }
 
 class TutorialComponentPermissionDenied extends TutorialComponentState {
@@ -37,10 +37,10 @@ class TutorialComponentPermissionDenied extends TutorialComponentState {
 class TutorialComponentLoaded extends TutorialComponentState {
   final TutorialModel value;
 
-  const TutorialComponentLoaded({ required this.value });
+  const TutorialComponentLoaded({required this.value});
 
-  TutorialComponentLoaded copyWith({ TutorialModel? copyThis }) {
-    return TutorialComponentLoaded(value: copyThis ?? this.value);
+  TutorialComponentLoaded copyWith({TutorialModel? copyThis}) {
+    return TutorialComponentLoaded(value: copyThis ?? value);
   }
 
   @override
@@ -49,4 +49,3 @@ class TutorialComponentLoaded extends TutorialComponentState {
   @override
   String toString() => 'TutorialComponentLoaded { value: $value }';
 }
-

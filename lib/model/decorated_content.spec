@@ -56,7 +56,7 @@
       "group": "decoratingComponentId",
       "remark": "For that specific component, e.g. 'carousel', which Component ID, i.e. which carousel to include in the page",
       "fieldType": "String",
-      "bespokeFormField": "ComponentIdField(widget.app, componentName: state.value!.decoratingComponentName, value: state.value!.decoratingComponentId, trigger: (value, _) => _onDecoratingComponentIdChanged(value))"
+      "bespokeFormField": "ComponentIdField(widget.app, componentName: state.value!.decoratingComponentName, originalValue: state.value!.decoratingComponentId, trigger: (value, _) => _onDecoratingComponentIdChanged(value))"
     },
     {
       "fieldName": "contentComponentName",
@@ -70,14 +70,14 @@
       "group": "contentComponentId",
       "remark": "For that specific component, e.g. 'carousel', which Component ID, i.e. which carousel to include in the page",
       "fieldType": "String",
-      "bespokeFormField": "ComponentIdField(widget.app, componentName: state.value!.contentComponentName, value: state.value!.contentComponentId, trigger: (value, _) => _onContentComponentIdChanged(value))"
+      "bespokeFormField": "ComponentIdField(widget.app, componentName: state.value!.contentComponentName, originalValue: state.value!.contentComponentId, trigger: (value, _) => _onContentComponentIdChanged(value))"
     },
     {
       "fieldName": "decorationComponentPosition",
       "displayName": "Position of the decoration",
       "fieldType": "enum",
       "enumName": "DecorationComponentPosition",
-      "enumValues" : [ "LeftIfSpaceAvailableOtherwiseTop", "LeftIfSpaceAvailableOtherwiseDrop", "LeftIfSpaceAvailableOtherwiseBottom", "RightIfSpaceAvailableOtherwiseTop", "RightIfSpaceAvailableOtherwiseDrop", "RightIfSpaceAvailableOtherwiseBottom" ],
+      "enumValues" : [ "leftIfSpaceAvailableOtherwiseTop", "leftIfSpaceAvailableOtherwiseDrop", "leftIfSpaceAvailableOtherwiseBottom", "rightIfSpaceAvailableOtherwiseTop", "rightIfSpaceAvailableOtherwiseDrop", "rightIfSpaceAvailableOtherwiseBottom" ],
       "group": "imagePosition"
     },
     {
@@ -107,7 +107,7 @@
     }
   ],
   "listFields": {
-    "title": "value.description != null ? Center(child: text(app, context, value.description!)) : value.documentID != null ? Center(child: text(app, context, value.documentID)) : Container()"
+    "title": "value.description != null ? Center(child: text(app, context, value.description!)) : Center(child: text(app, context, value.documentID))"
   },
   "depends": ["eliud_core"]
 }

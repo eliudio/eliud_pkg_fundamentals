@@ -24,13 +24,11 @@ abstract class BookletComponentEvent extends Equatable {
 class FetchBookletComponent extends BookletComponentEvent {
   final String? id;
 
-  FetchBookletComponent({ this.id });
+  FetchBookletComponent({this.id});
 }
 
 class BookletComponentUpdated extends BookletComponentEvent {
   final BookletModel value;
 
-  BookletComponentUpdated({ required this.value });
+  BookletComponentUpdated({required this.value});
 }
-
-

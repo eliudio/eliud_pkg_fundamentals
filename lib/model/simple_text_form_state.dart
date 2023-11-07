@@ -41,9 +41,9 @@ class SimpleTextFormInitialized extends SimpleTextFormState {
   final SimpleTextModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
-  const SimpleTextFormInitialized({ this.value });
+  const SimpleTextFormInitialized({this.value});
 }
 
 // Menu has been initialised and hence a menu is available
@@ -51,9 +51,9 @@ abstract class SimpleTextFormError extends SimpleTextFormInitialized {
   final String? message;
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
-  const SimpleTextFormError({this.message, SimpleTextModel? value }) : super(value: value);
+  const SimpleTextFormError({this.message, super.value});
 
   @override
   String toString() {
@@ -63,11 +63,12 @@ abstract class SimpleTextFormError extends SimpleTextFormInitialized {
     }''';
   }
 }
-class DocumentIDSimpleTextFormError extends SimpleTextFormError { 
-  const DocumentIDSimpleTextFormError({ String? message, SimpleTextModel? value }): super(message: message, value: value);
+
+class DocumentIDSimpleTextFormError extends SimpleTextFormError {
+  const DocumentIDSimpleTextFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -78,12 +79,11 @@ class DocumentIDSimpleTextFormError extends SimpleTextFormError {
   }
 }
 
-
-class AppIdSimpleTextFormError extends SimpleTextFormError { 
-  const AppIdSimpleTextFormError({ String? message, SimpleTextModel? value }): super(message: message, value: value);
+class AppIdSimpleTextFormError extends SimpleTextFormError {
+  const AppIdSimpleTextFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -94,12 +94,11 @@ class AppIdSimpleTextFormError extends SimpleTextFormError {
   }
 }
 
-
-class DescriptionSimpleTextFormError extends SimpleTextFormError { 
-  const DescriptionSimpleTextFormError({ String? message, SimpleTextModel? value }): super(message: message, value: value);
+class DescriptionSimpleTextFormError extends SimpleTextFormError {
+  const DescriptionSimpleTextFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -110,12 +109,11 @@ class DescriptionSimpleTextFormError extends SimpleTextFormError {
   }
 }
 
-
-class TitleSimpleTextFormError extends SimpleTextFormError { 
-  const TitleSimpleTextFormError({ String? message, SimpleTextModel? value }): super(message: message, value: value);
+class TitleSimpleTextFormError extends SimpleTextFormError {
+  const TitleSimpleTextFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -126,12 +124,11 @@ class TitleSimpleTextFormError extends SimpleTextFormError {
   }
 }
 
-
-class TextSimpleTextFormError extends SimpleTextFormError { 
-  const TextSimpleTextFormError({ String? message, SimpleTextModel? value }): super(message: message, value: value);
+class TextSimpleTextFormError extends SimpleTextFormError {
+  const TextSimpleTextFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -142,12 +139,11 @@ class TextSimpleTextFormError extends SimpleTextFormError {
   }
 }
 
-
-class ConditionsSimpleTextFormError extends SimpleTextFormError { 
-  const ConditionsSimpleTextFormError({ String? message, SimpleTextModel? value }): super(message: message, value: value);
+class ConditionsSimpleTextFormError extends SimpleTextFormError {
+  const ConditionsSimpleTextFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -158,12 +154,11 @@ class ConditionsSimpleTextFormError extends SimpleTextFormError {
   }
 }
 
-
-class TextAlignSimpleTextFormError extends SimpleTextFormError { 
-  const TextAlignSimpleTextFormError({ String? message, SimpleTextModel? value }): super(message: message, value: value);
+class TextAlignSimpleTextFormError extends SimpleTextFormError {
+  const TextAlignSimpleTextFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -174,12 +169,11 @@ class TextAlignSimpleTextFormError extends SimpleTextFormError {
   }
 }
 
-
-class SimpleTextFormLoaded extends SimpleTextFormInitialized { 
-  const SimpleTextFormLoaded({ SimpleTextModel? value }): super(value: value);
+class SimpleTextFormLoaded extends SimpleTextFormInitialized {
+  const SimpleTextFormLoaded({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -189,12 +183,11 @@ class SimpleTextFormLoaded extends SimpleTextFormInitialized {
   }
 }
 
-
-class SubmittableSimpleTextForm extends SimpleTextFormInitialized { 
-  const SubmittableSimpleTextForm({ SimpleTextModel? value }): super(value: value);
+class SubmittableSimpleTextForm extends SimpleTextFormInitialized {
+  const SubmittableSimpleTextForm({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -203,5 +196,3 @@ class SubmittableSimpleTextForm extends SimpleTextFormInitialized {
     }''';
   }
 }
-
-

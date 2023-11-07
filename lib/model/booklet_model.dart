@@ -21,37 +21,58 @@ import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-
 import 'package:eliud_pkg_fundamentals/model/booklet_entity.dart';
-
-
-
 
 class BookletModel implements ModelBase, WithAppId {
   static const String packageName = 'eliud_pkg_fundamentals';
   static const String id = 'booklets';
 
+  @override
   String documentID;
+  @override
   String appId;
   String? description;
   List<SectionModel>? sections;
   StorageConditionsModel? conditions;
 
-  BookletModel({required this.documentID, required this.appId, this.description, this.sections, this.conditions, })  {
-  }
+  BookletModel({
+    required this.documentID,
+    required this.appId,
+    this.description,
+    this.sections,
+    this.conditions,
+  });
 
-  BookletModel copyWith({String? documentID, String? appId, String? description, List<SectionModel>? sections, StorageConditionsModel? conditions, }) {
-    return BookletModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, description: description ?? this.description, sections: sections ?? this.sections, conditions: conditions ?? this.conditions, );
+  @override
+  BookletModel copyWith({
+    String? documentID,
+    String? appId,
+    String? description,
+    List<SectionModel>? sections,
+    StorageConditionsModel? conditions,
+  }) {
+    return BookletModel(
+      documentID: documentID ?? this.documentID,
+      appId: appId ?? this.appId,
+      description: description ?? this.description,
+      sections: sections ?? this.sections,
+      conditions: conditions ?? this.conditions,
+    );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ appId.hashCode ^ description.hashCode ^ sections.hashCode ^ conditions.hashCode;
+  int get hashCode =>
+      documentID.hashCode ^
+      appId.hashCode ^
+      description.hashCode ^
+      sections.hashCode ^
+      conditions.hashCode;
 
   @override
   bool operator ==(Object other) =>
-          identical(this, other) ||
-          other is BookletModel &&
-          runtimeType == other.runtimeType && 
+      identical(this, other) ||
+      other is BookletModel &&
+          runtimeType == other.runtimeType &&
           documentID == other.documentID &&
           appId == other.appId &&
           description == other.description &&
@@ -65,6 +86,7 @@ class BookletModel implements ModelBase, WithAppId {
     return 'BookletModel{documentID: $documentID, appId: $appId, description: $description, sections: Section[] { $sectionsCsv }, conditions: $conditions}';
   }
 
+  @override
   Future<List<ModelReference>> collectReferences({String? appId}) async {
     List<ModelReference> referencesCollector = [];
     if (sections != null) {
@@ -72,58 +94,65 @@ class BookletModel implements ModelBase, WithAppId {
         referencesCollector.addAll(await item.collectReferences(appId: appId));
       }
     }
-    if (conditions != null) referencesCollector.addAll(await conditions!.collectReferences(appId: appId));
+    if (conditions != null) {
+      referencesCollector
+          .addAll(await conditions!.collectReferences(appId: appId));
+    }
     return referencesCollector;
   }
 
+  @override
   BookletEntity toEntity({String? appId}) {
     return BookletEntity(
-          appId: (appId != null) ? appId : null, 
-          description: (description != null) ? description : null, 
-          sections: (sections != null) ? sections
-            !.map((item) => item.toEntity(appId: appId))
-            .toList() : null, 
-          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
+      appId: appId,
+      description: (description != null) ? description : null,
+      sections: (sections != null)
+          ? sections!.map((item) => item.toEntity(appId: appId)).toList()
+          : null,
+      conditions:
+          (conditions != null) ? conditions!.toEntity(appId: appId) : null,
     );
   }
 
-  static Future<BookletModel?> fromEntity(String documentID, BookletEntity? entity) async {
+  static Future<BookletModel?> fromEntity(
+      String documentID, BookletEntity? entity) async {
     if (entity == null) return null;
     var counter = 0;
     return BookletModel(
-          documentID: documentID, 
-          appId: entity.appId ?? '', 
-          description: entity.description, 
-          sections: 
-            entity.sections == null ? null : List<SectionModel>.from(await Future.wait(entity. sections
-            !.map((item) {
-            counter++;
+      documentID: documentID,
+      appId: entity.appId ?? '',
+      description: entity.description,
+      sections: entity.sections == null
+          ? null
+          : List<SectionModel>.from(
+              await Future.wait(entity.sections!.map((item) {
+              counter++;
               return SectionModel.fromEntity(counter.toString(), item);
-            })
-            .toList())), 
-          conditions: 
-            await StorageConditionsModel.fromEntity(entity.conditions), 
+            }).toList())),
+      conditions: await StorageConditionsModel.fromEntity(entity.conditions),
     );
   }
 
-  static Future<BookletModel?> fromEntityPlus(String documentID, BookletEntity? entity, { String? appId}) async {
+  static Future<BookletModel?> fromEntityPlus(
+      String documentID, BookletEntity? entity,
+      {String? appId}) async {
     if (entity == null) return null;
 
     var counter = 0;
     return BookletModel(
-          documentID: documentID, 
-          appId: entity.appId ?? '', 
-          description: entity.description, 
-          sections: 
-            entity. sections == null ? null : List<SectionModel>.from(await Future.wait(entity. sections
-            !.map((item) {
-            counter++;
-            return SectionModel.fromEntityPlus(counter.toString(), item, appId: appId);})
-            .toList())), 
-          conditions: 
-            await StorageConditionsModel.fromEntityPlus(entity.conditions, appId: appId), 
+      documentID: documentID,
+      appId: entity.appId ?? '',
+      description: entity.description,
+      sections: entity.sections == null
+          ? null
+          : List<SectionModel>.from(
+              await Future.wait(entity.sections!.map((item) {
+              counter++;
+              return SectionModel.fromEntityPlus(counter.toString(), item,
+                  appId: appId);
+            }).toList())),
+      conditions: await StorageConditionsModel.fromEntityPlus(entity.conditions,
+          appId: appId),
     );
   }
-
 }
-

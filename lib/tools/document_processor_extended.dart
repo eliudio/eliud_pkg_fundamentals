@@ -1,15 +1,13 @@
 import 'package:eliud_core/core/tools/document_processor.dart';
-import 'package:eliud_core/model/app_model.dart';
 import 'package:eliud_pkg_fundamentals/model/document_item_model.dart';
 import 'package:flutter/widgets.dart';
 
-const String IMAGE = 'image';
-
 class ExtendedDocumentParameterProcessor extends DocumentParameterProcessor {
+  static String theImage = 'image';
+
   List<DocumentItemModel>? images;
 
-  ExtendedDocumentParameterProcessor(BuildContext context, AppModel app, {this.images})
-      : super(context, app);
+  ExtendedDocumentParameterProcessor(super.context, super.app, {this.images});
 
   String? image(KeyValue k) {
     try {
@@ -26,7 +24,7 @@ class ExtendedDocumentParameterProcessor extends DocumentParameterProcessor {
 
   @override
   String otherKeyValue(String myString, KeyValue k) {
-    if (k.key == IMAGE) {
+    if (k.key == theImage) {
       var value = k.value;
       var url = image(k);
       if (url != null) {
@@ -34,7 +32,8 @@ class ExtendedDocumentParameterProcessor extends DocumentParameterProcessor {
       } else {
         myString = k.replaceParamInStringWithString(
             // ignore: prefer_single_quotes
-            myString, "Image with reference $value does not exist");
+            myString,
+            "Image with reference $value does not exist");
       }
       return myString;
     } else {
@@ -42,4 +41,3 @@ class ExtendedDocumentParameterProcessor extends DocumentParameterProcessor {
     }
   }
 }
-

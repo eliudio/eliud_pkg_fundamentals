@@ -41,9 +41,9 @@ class TutorialEntryFormInitialized extends TutorialEntryFormState {
   final TutorialEntryModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
-  const TutorialEntryFormInitialized({ this.value });
+  const TutorialEntryFormInitialized({this.value});
 }
 
 // Menu has been initialised and hence a menu is available
@@ -51,9 +51,9 @@ abstract class TutorialEntryFormError extends TutorialEntryFormInitialized {
   final String? message;
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
-  const TutorialEntryFormError({this.message, TutorialEntryModel? value }) : super(value: value);
+  const TutorialEntryFormError({this.message, super.value});
 
   @override
   String toString() {
@@ -63,11 +63,12 @@ abstract class TutorialEntryFormError extends TutorialEntryFormInitialized {
     }''';
   }
 }
-class DocumentIDTutorialEntryFormError extends TutorialEntryFormError { 
-  const DocumentIDTutorialEntryFormError({ String? message, TutorialEntryModel? value }): super(message: message, value: value);
+
+class DocumentIDTutorialEntryFormError extends TutorialEntryFormError {
+  const DocumentIDTutorialEntryFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -78,12 +79,11 @@ class DocumentIDTutorialEntryFormError extends TutorialEntryFormError {
   }
 }
 
-
-class DescriptionTutorialEntryFormError extends TutorialEntryFormError { 
-  const DescriptionTutorialEntryFormError({ String? message, TutorialEntryModel? value }): super(message: message, value: value);
+class DescriptionTutorialEntryFormError extends TutorialEntryFormError {
+  const DescriptionTutorialEntryFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -94,12 +94,11 @@ class DescriptionTutorialEntryFormError extends TutorialEntryFormError {
   }
 }
 
-
-class ImageTutorialEntryFormError extends TutorialEntryFormError { 
-  const ImageTutorialEntryFormError({ String? message, TutorialEntryModel? value }): super(message: message, value: value);
+class ImageTutorialEntryFormError extends TutorialEntryFormError {
+  const ImageTutorialEntryFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -110,12 +109,11 @@ class ImageTutorialEntryFormError extends TutorialEntryFormError {
   }
 }
 
-
-class CodeTutorialEntryFormError extends TutorialEntryFormError { 
-  const CodeTutorialEntryFormError({ String? message, TutorialEntryModel? value }): super(message: message, value: value);
+class CodeTutorialEntryFormError extends TutorialEntryFormError {
+  const CodeTutorialEntryFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -126,12 +124,11 @@ class CodeTutorialEntryFormError extends TutorialEntryFormError {
   }
 }
 
-
-class TutorialEntryFormLoaded extends TutorialEntryFormInitialized { 
-  const TutorialEntryFormLoaded({ TutorialEntryModel? value }): super(value: value);
+class TutorialEntryFormLoaded extends TutorialEntryFormInitialized {
+  const TutorialEntryFormLoaded({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -141,12 +138,11 @@ class TutorialEntryFormLoaded extends TutorialEntryFormInitialized {
   }
 }
 
-
-class SubmittableTutorialEntryForm extends TutorialEntryFormInitialized { 
-  const SubmittableTutorialEntryForm({ TutorialEntryModel? value }): super(value: value);
+class SubmittableTutorialEntryForm extends TutorialEntryFormInitialized {
+  const SubmittableTutorialEntryForm({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -155,5 +151,3 @@ class SubmittableTutorialEntryForm extends TutorialEntryFormInitialized {
     }''';
   }
 }
-
-

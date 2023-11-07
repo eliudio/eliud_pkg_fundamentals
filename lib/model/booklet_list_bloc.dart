@@ -23,9 +23,8 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 
 import 'booklet_model.dart';
 
-typedef List<BookletModel?> FilterBookletModels(List<BookletModel?> values);
-
-
+typedef FilterBookletModels = List<BookletModel?> Function(
+    List<BookletModel?> values);
 
 class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
   final FilterBookletModels? filter;
@@ -39,23 +38,32 @@ class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
   final bool? detailed;
   final int bookletLimit;
 
-  BookletListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required BookletRepository bookletRepository, this.bookletLimit = 5})
+  BookletListBloc(
+      {this.filter,
+      this.paged,
+      this.orderBy,
+      this.descending,
+      this.detailed,
+      this.eliudQuery,
+      required BookletRepository bookletRepository,
+      this.bookletLimit = 5})
       : _bookletRepository = bookletRepository,
         super(BookletListLoading()) {
-    on <LoadBookletList> ((event, emit) {
+    on<LoadBookletList>((event, emit) {
       if ((detailed == null) || (!detailed!)) {
         _mapLoadBookletListToState();
       } else {
         _mapLoadBookletListWithDetailsToState();
       }
     });
-    
-    on <NewPage> ((event, emit) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+
+    on<NewPage>((event, emit) {
+      pages = pages +
+          1; // it doesn't matter so much if we increase pages beyond the end
       _mapLoadBookletListWithDetailsToState();
     });
-    
-    on <BookletChangeQuery> ((event, emit) {
+
+    on<BookletChangeQuery>((event, emit) {
       eliudQuery = event.newQuery;
       if ((detailed == null) || (!detailed!)) {
         _mapLoadBookletListToState();
@@ -63,20 +71,20 @@ class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
         _mapLoadBookletListWithDetailsToState();
       }
     });
-      
-    on <AddBookletList> ((event, emit) async {
+
+    on<AddBookletList>((event, emit) async {
       await _mapAddBookletListToState(event);
     });
-    
-    on <UpdateBookletList> ((event, emit) async {
+
+    on<UpdateBookletList>((event, emit) async {
       await _mapUpdateBookletListToState(event);
     });
-    
-    on <DeleteBookletList> ((event, emit) async {
+
+    on<DeleteBookletList>((event, emit) async {
       await _mapDeleteBookletListToState(event);
     });
-    
-    on <BookletListUpdated> ((event, emit) {
+
+    on<BookletListUpdated>((event, emit) {
       emit(_mapBookletListUpdatedToState(event));
     });
   }
@@ -90,27 +98,31 @@ class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
   }
 
   Future<void> _mapLoadBookletListToState() async {
-    int amountNow =  (state is BookletListLoaded) ? (state as BookletListLoaded).values!.length : 0;
+    int amountNow = (state is BookletListLoaded)
+        ? (state as BookletListLoaded).values!.length
+        : 0;
     _bookletsListSubscription?.cancel();
     _bookletsListSubscription = _bookletRepository.listen(
-          (list) => add(BookletListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
-      orderBy: orderBy,
-      descending: descending,
-      eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * bookletLimit : null
-    );
-  }
-
-  Future<void> _mapLoadBookletListWithDetailsToState() async {
-    int amountNow =  (state is BookletListLoaded) ? (state as BookletListLoaded).values!.length : 0;
-    _bookletsListSubscription?.cancel();
-    _bookletsListSubscription = _bookletRepository.listenWithDetails(
-            (list) => add(BookletListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
+        (list) => add(BookletListUpdated(
+            value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * bookletLimit : null
-    );
+        limit: ((paged != null) && paged!) ? pages * bookletLimit : null);
+  }
+
+  Future<void> _mapLoadBookletListWithDetailsToState() async {
+    int amountNow = (state is BookletListLoaded)
+        ? (state as BookletListLoaded).values!.length
+        : 0;
+    _bookletsListSubscription?.cancel();
+    _bookletsListSubscription = _bookletRepository.listenWithDetails(
+        (list) => add(BookletListUpdated(
+            value: _filter(list), mightHaveMore: amountNow != list.length)),
+        orderBy: orderBy,
+        descending: descending,
+        eliudQuery: eliudQuery,
+        limit: ((paged != null) && paged!) ? pages * bookletLimit : null);
   }
 
   Future<void> _mapAddBookletListToState(AddBookletList event) async {
@@ -134,8 +146,9 @@ class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
     }
   }
 
-  BookletListLoaded _mapBookletListUpdatedToState(
-      BookletListUpdated event) => BookletListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
+  BookletListLoaded _mapBookletListUpdatedToState(BookletListUpdated event) =>
+      BookletListLoaded(
+          values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {
@@ -143,5 +156,3 @@ class BookletListBloc extends Bloc<BookletListEvent, BookletListState> {
     return super.close();
   }
 }
-
-

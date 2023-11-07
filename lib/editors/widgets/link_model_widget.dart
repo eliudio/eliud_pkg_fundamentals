@@ -9,7 +9,7 @@ import 'package:eliud_core/tools/widgets/header_widget.dart';
 import 'package:eliud_pkg_fundamentals/model/link_model.dart';
 import 'package:flutter/material.dart';
 
-typedef void LinkModelCallback(LinkModel documentItemModel);
+typedef LinkModelCallback = void Function(LinkModel documentItemModel);
 
 class LinkModelWidget extends StatefulWidget {
   final bool create;
@@ -21,7 +21,6 @@ class LinkModelWidget extends StatefulWidget {
   final int containerPrivilege;
 
   LinkModelWidget._({
-    Key? key,
     required this.app,
     required this.create,
     required this.widgetWidth,
@@ -29,7 +28,7 @@ class LinkModelWidget extends StatefulWidget {
     required this.documentItemModel,
     required this.documentItemModelCallback,
     required this.containerPrivilege,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() {
@@ -88,11 +87,10 @@ class _LinkModelWidgetState extends State<LinkModelWidget> {
           app: widget.app,
           action: widget.documentItemModel.action,
           label: 'Action',
-          containerPrivilege:widget.containerPrivilege,
+          containerPrivilege: widget.containerPrivilege,
           actionSelected: (action) {
             setState(() {
-              widget.documentItemModel.action =
-                  action;
+              widget.documentItemModel.action = action;
             });
           }),
       topicContainer(widget.app, context,

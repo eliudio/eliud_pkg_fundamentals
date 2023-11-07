@@ -30,10 +30,10 @@ class NewPage extends SimpleImageListEvent {}
 class AddSimpleImageList extends SimpleImageListEvent {
   final SimpleImageModel? value;
 
-  const AddSimpleImageList({ this.value });
+  const AddSimpleImageList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'AddSimpleImageList{ value: $value }';
@@ -42,10 +42,10 @@ class AddSimpleImageList extends SimpleImageListEvent {
 class UpdateSimpleImageList extends SimpleImageListEvent {
   final SimpleImageModel? value;
 
-  const UpdateSimpleImageList({ this.value });
+  const UpdateSimpleImageList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'UpdateSimpleImageList{ value: $value }';
@@ -54,10 +54,10 @@ class UpdateSimpleImageList extends SimpleImageListEvent {
 class DeleteSimpleImageList extends SimpleImageListEvent {
   final SimpleImageModel? value;
 
-  const DeleteSimpleImageList({ this.value });
+  const DeleteSimpleImageList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'DeleteSimpleImageList{ value: $value }';
@@ -67,24 +67,24 @@ class SimpleImageListUpdated extends SimpleImageListEvent {
   final List<SimpleImageModel?>? value;
   final bool? mightHaveMore;
 
-  const SimpleImageListUpdated({ this.value, this.mightHaveMore });
+  const SimpleImageListUpdated({this.value, this.mightHaveMore});
 
   @override
-  List<Object?> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [value, mightHaveMore];
 
   @override
-  String toString() => 'SimpleImageListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+  String toString() =>
+      'SimpleImageListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 
 class SimpleImageChangeQuery extends SimpleImageListEvent {
   final EliudQuery? newQuery;
 
-  const SimpleImageChangeQuery({ required this.newQuery });
+  const SimpleImageChangeQuery({required this.newQuery});
 
   @override
-  List<Object?> get props => [ newQuery ];
+  List<Object?> get props => [newQuery];
 
   @override
   String toString() => 'SimpleImageChangeQuery{ value: $newQuery }';
 }
-

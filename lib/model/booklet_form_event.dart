@@ -18,7 +18,6 @@ import 'package:meta/meta.dart';
 import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 
-
 @immutable
 abstract class BookletFormEvent extends Equatable {
   const BookletFormEvent();
@@ -27,15 +26,13 @@ abstract class BookletFormEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class InitialiseNewBookletFormEvent extends BookletFormEvent {
-}
-
+class InitialiseNewBookletFormEvent extends BookletFormEvent {}
 
 class InitialiseBookletFormEvent extends BookletFormEvent {
   final BookletModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialiseBookletFormEvent({this.value});
 }
@@ -44,7 +41,7 @@ class InitialiseBookletFormNoLoadEvent extends BookletFormEvent {
   final BookletModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialiseBookletFormNoLoadEvent({this.value});
 }
@@ -55,7 +52,7 @@ class ChangedBookletDocumentID extends BookletFormEvent {
   ChangedBookletDocumentID({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedBookletDocumentID{ value: $value }';
@@ -67,7 +64,7 @@ class ChangedBookletAppId extends BookletFormEvent {
   ChangedBookletAppId({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedBookletAppId{ value: $value }';
@@ -79,7 +76,7 @@ class ChangedBookletDescription extends BookletFormEvent {
   ChangedBookletDescription({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedBookletDescription{ value: $value }';
@@ -91,7 +88,7 @@ class ChangedBookletSections extends BookletFormEvent {
   ChangedBookletSections({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedBookletSections{ value: $value }';
@@ -103,9 +100,8 @@ class ChangedBookletConditions extends BookletFormEvent {
   ChangedBookletConditions({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedBookletConditions{ value: $value }';
 }
-

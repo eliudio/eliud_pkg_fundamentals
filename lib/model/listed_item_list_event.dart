@@ -30,10 +30,10 @@ class NewPage extends ListedItemListEvent {}
 class AddListedItemList extends ListedItemListEvent {
   final ListedItemModel? value;
 
-  const AddListedItemList({ this.value });
+  const AddListedItemList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'AddListedItemList{ value: $value }';
@@ -42,10 +42,10 @@ class AddListedItemList extends ListedItemListEvent {
 class UpdateListedItemList extends ListedItemListEvent {
   final ListedItemModel? value;
 
-  const UpdateListedItemList({ this.value });
+  const UpdateListedItemList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'UpdateListedItemList{ value: $value }';
@@ -54,10 +54,10 @@ class UpdateListedItemList extends ListedItemListEvent {
 class DeleteListedItemList extends ListedItemListEvent {
   final ListedItemModel? value;
 
-  const DeleteListedItemList({ this.value });
+  const DeleteListedItemList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'DeleteListedItemList{ value: $value }';
@@ -67,24 +67,24 @@ class ListedItemListUpdated extends ListedItemListEvent {
   final List<ListedItemModel?>? value;
   final bool? mightHaveMore;
 
-  const ListedItemListUpdated({ this.value, this.mightHaveMore });
+  const ListedItemListUpdated({this.value, this.mightHaveMore});
 
   @override
-  List<Object?> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [value, mightHaveMore];
 
   @override
-  String toString() => 'ListedItemListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+  String toString() =>
+      'ListedItemListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 
 class ListedItemChangeQuery extends ListedItemListEvent {
   final EliudQuery? newQuery;
 
-  const ListedItemChangeQuery({ required this.newQuery });
+  const ListedItemChangeQuery({required this.newQuery});
 
   @override
-  List<Object?> get props => [ newQuery ];
+  List<Object?> get props => [newQuery];
 
   @override
   String toString() => 'ListedItemChangeQuery{ value: $newQuery }';
 }
-

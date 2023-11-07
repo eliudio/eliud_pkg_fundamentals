@@ -13,7 +13,6 @@
 
 */
 
-
 import 'package:eliud_pkg_fundamentals/model/divider_component_bloc.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/divider_model.dart';
@@ -31,20 +30,22 @@ abstract class AbstractDividerComponent extends StatelessWidget {
   final AppModel app;
   final String dividerId;
 
-  AbstractDividerComponent({Key? key, required this.app, required this.dividerId}): super(key: key);
+  AbstractDividerComponent(
+      {super.key, required this.app, required this.dividerId});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<DividerComponentBloc> (
-          create: (context) => DividerComponentBloc(
-            dividerRepository: dividerRepository(appId: app.documentID)!)
+    return BlocProvider<DividerComponentBloc>(
+      create: (context) => DividerComponentBloc(
+          dividerRepository: dividerRepository(appId: app.documentID)!)
         ..add(FetchDividerComponent(id: dividerId)),
       child: _dividerBlockBuilder(context),
     );
   }
 
   Widget _dividerBlockBuilder(BuildContext context) {
-    return BlocBuilder<DividerComponentBloc, DividerComponentState>(builder: (context, state) {
+    return BlocBuilder<DividerComponentBloc, DividerComponentState>(
+        builder: (context, state) {
       if (state is DividerComponentLoaded) {
         return yourWidget(context, state.value);
       } else if (state is DividerComponentPermissionDenied) {
@@ -57,7 +58,11 @@ abstract class AbstractDividerComponent extends StatelessWidget {
         return AlertWidget(app: app, title: 'Error', content: state.message);
       } else {
         return Center(
-          child: StyleRegistry.registry().styleWithApp(app).frontEndStyle().progressIndicatorStyle().progressIndicator(app, context),
+          child: StyleRegistry.registry()
+              .styleWithApp(app)
+              .frontEndStyle()
+              .progressIndicatorStyle()
+              .progressIndicator(app, context),
         );
       }
     });
@@ -65,4 +70,3 @@ abstract class AbstractDividerComponent extends StatelessWidget {
 
   Widget yourWidget(BuildContext context, DividerModel value);
 }
-

@@ -28,14 +28,13 @@ class PresentationComponentConstructorDefault implements ComponentConstructor {
 }
 
 class PresentationComponent extends AbstractPresentationComponent {
-  Map<String, dynamic>? parameters;
+  final Map<String, dynamic>? parameters;
 
   PresentationComponent(
-      {Key? key,
-      required AppModel app,
-      required String presentationId,
-      this.parameters})
-      : super(key: key, app: app, presentationId: presentationId);
+      {super.key,
+      required super.app,
+      required super.presentationId,
+      this.parameters});
 
   @override
   Widget yourWidget(BuildContext context, PresentationModel? value) {

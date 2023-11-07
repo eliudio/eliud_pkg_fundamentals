@@ -23,11 +23,11 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 
 import 'tutorial_entry_model.dart';
 
-typedef List<TutorialEntryModel?> FilterTutorialEntryModels(List<TutorialEntryModel?> values);
+typedef FilterTutorialEntryModels = List<TutorialEntryModel?> Function(
+    List<TutorialEntryModel?> values);
 
-
-
-class TutorialEntryListBloc extends Bloc<TutorialEntryListEvent, TutorialEntryListState> {
+class TutorialEntryListBloc
+    extends Bloc<TutorialEntryListEvent, TutorialEntryListState> {
   final FilterTutorialEntryModels? filter;
   final TutorialEntryRepository _tutorialEntryRepository;
   StreamSubscription? _tutorialEntrysListSubscription;
@@ -39,23 +39,32 @@ class TutorialEntryListBloc extends Bloc<TutorialEntryListEvent, TutorialEntryLi
   final bool? detailed;
   final int tutorialEntryLimit;
 
-  TutorialEntryListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required TutorialEntryRepository tutorialEntryRepository, this.tutorialEntryLimit = 5})
+  TutorialEntryListBloc(
+      {this.filter,
+      this.paged,
+      this.orderBy,
+      this.descending,
+      this.detailed,
+      this.eliudQuery,
+      required TutorialEntryRepository tutorialEntryRepository,
+      this.tutorialEntryLimit = 5})
       : _tutorialEntryRepository = tutorialEntryRepository,
         super(TutorialEntryListLoading()) {
-    on <LoadTutorialEntryList> ((event, emit) {
+    on<LoadTutorialEntryList>((event, emit) {
       if ((detailed == null) || (!detailed!)) {
         _mapLoadTutorialEntryListToState();
       } else {
         _mapLoadTutorialEntryListWithDetailsToState();
       }
     });
-    
-    on <NewPage> ((event, emit) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+
+    on<NewPage>((event, emit) {
+      pages = pages +
+          1; // it doesn't matter so much if we increase pages beyond the end
       _mapLoadTutorialEntryListWithDetailsToState();
     });
-    
-    on <TutorialEntryChangeQuery> ((event, emit) {
+
+    on<TutorialEntryChangeQuery>((event, emit) {
       eliudQuery = event.newQuery;
       if ((detailed == null) || (!detailed!)) {
         _mapLoadTutorialEntryListToState();
@@ -63,20 +72,20 @@ class TutorialEntryListBloc extends Bloc<TutorialEntryListEvent, TutorialEntryLi
         _mapLoadTutorialEntryListWithDetailsToState();
       }
     });
-      
-    on <AddTutorialEntryList> ((event, emit) async {
+
+    on<AddTutorialEntryList>((event, emit) async {
       await _mapAddTutorialEntryListToState(event);
     });
-    
-    on <UpdateTutorialEntryList> ((event, emit) async {
+
+    on<UpdateTutorialEntryList>((event, emit) async {
       await _mapUpdateTutorialEntryListToState(event);
     });
-    
-    on <DeleteTutorialEntryList> ((event, emit) async {
+
+    on<DeleteTutorialEntryList>((event, emit) async {
       await _mapDeleteTutorialEntryListToState(event);
     });
-    
-    on <TutorialEntryListUpdated> ((event, emit) {
+
+    on<TutorialEntryListUpdated>((event, emit) {
       emit(_mapTutorialEntryListUpdatedToState(event));
     });
   }
@@ -90,44 +99,54 @@ class TutorialEntryListBloc extends Bloc<TutorialEntryListEvent, TutorialEntryLi
   }
 
   Future<void> _mapLoadTutorialEntryListToState() async {
-    int amountNow =  (state is TutorialEntryListLoaded) ? (state as TutorialEntryListLoaded).values!.length : 0;
+    int amountNow = (state is TutorialEntryListLoaded)
+        ? (state as TutorialEntryListLoaded).values!.length
+        : 0;
     _tutorialEntrysListSubscription?.cancel();
     _tutorialEntrysListSubscription = _tutorialEntryRepository.listen(
-          (list) => add(TutorialEntryListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
-      orderBy: orderBy,
-      descending: descending,
-      eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * tutorialEntryLimit : null
-    );
-  }
-
-  Future<void> _mapLoadTutorialEntryListWithDetailsToState() async {
-    int amountNow =  (state is TutorialEntryListLoaded) ? (state as TutorialEntryListLoaded).values!.length : 0;
-    _tutorialEntrysListSubscription?.cancel();
-    _tutorialEntrysListSubscription = _tutorialEntryRepository.listenWithDetails(
-            (list) => add(TutorialEntryListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
+        (list) => add(TutorialEntryListUpdated(
+            value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * tutorialEntryLimit : null
-    );
+        limit: ((paged != null) && paged!) ? pages * tutorialEntryLimit : null);
   }
 
-  Future<void> _mapAddTutorialEntryListToState(AddTutorialEntryList event) async {
+  Future<void> _mapLoadTutorialEntryListWithDetailsToState() async {
+    int amountNow = (state is TutorialEntryListLoaded)
+        ? (state as TutorialEntryListLoaded).values!.length
+        : 0;
+    _tutorialEntrysListSubscription?.cancel();
+    _tutorialEntrysListSubscription =
+        _tutorialEntryRepository.listenWithDetails(
+            (list) => add(TutorialEntryListUpdated(
+                value: _filter(list), mightHaveMore: amountNow != list.length)),
+            orderBy: orderBy,
+            descending: descending,
+            eliudQuery: eliudQuery,
+            limit: ((paged != null) && paged!)
+                ? pages * tutorialEntryLimit
+                : null);
+  }
+
+  Future<void> _mapAddTutorialEntryListToState(
+      AddTutorialEntryList event) async {
     var value = event.value;
     if (value != null) {
       await _tutorialEntryRepository.add(value);
     }
   }
 
-  Future<void> _mapUpdateTutorialEntryListToState(UpdateTutorialEntryList event) async {
+  Future<void> _mapUpdateTutorialEntryListToState(
+      UpdateTutorialEntryList event) async {
     var value = event.value;
     if (value != null) {
       await _tutorialEntryRepository.update(value);
     }
   }
 
-  Future<void> _mapDeleteTutorialEntryListToState(DeleteTutorialEntryList event) async {
+  Future<void> _mapDeleteTutorialEntryListToState(
+      DeleteTutorialEntryList event) async {
     var value = event.value;
     if (value != null) {
       await _tutorialEntryRepository.delete(value);
@@ -135,7 +154,9 @@ class TutorialEntryListBloc extends Bloc<TutorialEntryListEvent, TutorialEntryLi
   }
 
   TutorialEntryListLoaded _mapTutorialEntryListUpdatedToState(
-      TutorialEntryListUpdated event) => TutorialEntryListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
+          TutorialEntryListUpdated event) =>
+      TutorialEntryListLoaded(
+          values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {
@@ -143,5 +164,3 @@ class TutorialEntryListBloc extends Bloc<TutorialEntryListEvent, TutorialEntryLi
     return super.close();
   }
 }
-
-

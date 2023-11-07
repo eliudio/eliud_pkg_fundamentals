@@ -23,9 +23,7 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 
 import 'grid_model.dart';
 
-typedef List<GridModel?> FilterGridModels(List<GridModel?> values);
-
-
+typedef FilterGridModels = List<GridModel?> Function(List<GridModel?> values);
 
 class GridListBloc extends Bloc<GridListEvent, GridListState> {
   final FilterGridModels? filter;
@@ -39,23 +37,32 @@ class GridListBloc extends Bloc<GridListEvent, GridListState> {
   final bool? detailed;
   final int gridLimit;
 
-  GridListBloc({this.filter, this.paged, this.orderBy, this.descending, this.detailed, this.eliudQuery, required GridRepository gridRepository, this.gridLimit = 5})
+  GridListBloc(
+      {this.filter,
+      this.paged,
+      this.orderBy,
+      this.descending,
+      this.detailed,
+      this.eliudQuery,
+      required GridRepository gridRepository,
+      this.gridLimit = 5})
       : _gridRepository = gridRepository,
         super(GridListLoading()) {
-    on <LoadGridList> ((event, emit) {
+    on<LoadGridList>((event, emit) {
       if ((detailed == null) || (!detailed!)) {
         _mapLoadGridListToState();
       } else {
         _mapLoadGridListWithDetailsToState();
       }
     });
-    
-    on <NewPage> ((event, emit) {
-      pages = pages + 1; // it doesn't matter so much if we increase pages beyond the end
+
+    on<NewPage>((event, emit) {
+      pages = pages +
+          1; // it doesn't matter so much if we increase pages beyond the end
       _mapLoadGridListWithDetailsToState();
     });
-    
-    on <GridChangeQuery> ((event, emit) {
+
+    on<GridChangeQuery>((event, emit) {
       eliudQuery = event.newQuery;
       if ((detailed == null) || (!detailed!)) {
         _mapLoadGridListToState();
@@ -63,20 +70,20 @@ class GridListBloc extends Bloc<GridListEvent, GridListState> {
         _mapLoadGridListWithDetailsToState();
       }
     });
-      
-    on <AddGridList> ((event, emit) async {
+
+    on<AddGridList>((event, emit) async {
       await _mapAddGridListToState(event);
     });
-    
-    on <UpdateGridList> ((event, emit) async {
+
+    on<UpdateGridList>((event, emit) async {
       await _mapUpdateGridListToState(event);
     });
-    
-    on <DeleteGridList> ((event, emit) async {
+
+    on<DeleteGridList>((event, emit) async {
       await _mapDeleteGridListToState(event);
     });
-    
-    on <GridListUpdated> ((event, emit) {
+
+    on<GridListUpdated>((event, emit) {
       emit(_mapGridListUpdatedToState(event));
     });
   }
@@ -90,27 +97,31 @@ class GridListBloc extends Bloc<GridListEvent, GridListState> {
   }
 
   Future<void> _mapLoadGridListToState() async {
-    int amountNow =  (state is GridListLoaded) ? (state as GridListLoaded).values!.length : 0;
+    int amountNow = (state is GridListLoaded)
+        ? (state as GridListLoaded).values!.length
+        : 0;
     _gridsListSubscription?.cancel();
     _gridsListSubscription = _gridRepository.listen(
-          (list) => add(GridListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
-      orderBy: orderBy,
-      descending: descending,
-      eliudQuery: eliudQuery,
-      limit: ((paged != null) && paged!) ? pages * gridLimit : null
-    );
-  }
-
-  Future<void> _mapLoadGridListWithDetailsToState() async {
-    int amountNow =  (state is GridListLoaded) ? (state as GridListLoaded).values!.length : 0;
-    _gridsListSubscription?.cancel();
-    _gridsListSubscription = _gridRepository.listenWithDetails(
-            (list) => add(GridListUpdated(value: _filter(list), mightHaveMore: amountNow != list.length)),
+        (list) => add(GridListUpdated(
+            value: _filter(list), mightHaveMore: amountNow != list.length)),
         orderBy: orderBy,
         descending: descending,
         eliudQuery: eliudQuery,
-        limit: ((paged != null) && paged!) ? pages * gridLimit : null
-    );
+        limit: ((paged != null) && paged!) ? pages * gridLimit : null);
+  }
+
+  Future<void> _mapLoadGridListWithDetailsToState() async {
+    int amountNow = (state is GridListLoaded)
+        ? (state as GridListLoaded).values!.length
+        : 0;
+    _gridsListSubscription?.cancel();
+    _gridsListSubscription = _gridRepository.listenWithDetails(
+        (list) => add(GridListUpdated(
+            value: _filter(list), mightHaveMore: amountNow != list.length)),
+        orderBy: orderBy,
+        descending: descending,
+        eliudQuery: eliudQuery,
+        limit: ((paged != null) && paged!) ? pages * gridLimit : null);
   }
 
   Future<void> _mapAddGridListToState(AddGridList event) async {
@@ -134,8 +145,8 @@ class GridListBloc extends Bloc<GridListEvent, GridListState> {
     }
   }
 
-  GridListLoaded _mapGridListUpdatedToState(
-      GridListUpdated event) => GridListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
+  GridListLoaded _mapGridListUpdatedToState(GridListUpdated event) =>
+      GridListLoaded(values: event.value, mightHaveMore: event.mightHaveMore);
 
   @override
   Future<void> close() {
@@ -143,5 +154,3 @@ class GridListBloc extends Bloc<GridListEvent, GridListState> {
     return super.close();
   }
 }
-
-

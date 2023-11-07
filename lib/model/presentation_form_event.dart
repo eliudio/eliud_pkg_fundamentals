@@ -18,7 +18,6 @@ import 'package:meta/meta.dart';
 import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 
-
 @immutable
 abstract class PresentationFormEvent extends Equatable {
   const PresentationFormEvent();
@@ -27,15 +26,13 @@ abstract class PresentationFormEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class InitialiseNewPresentationFormEvent extends PresentationFormEvent {
-}
-
+class InitialiseNewPresentationFormEvent extends PresentationFormEvent {}
 
 class InitialisePresentationFormEvent extends PresentationFormEvent {
   final PresentationModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialisePresentationFormEvent({this.value});
 }
@@ -44,7 +41,7 @@ class InitialisePresentationFormNoLoadEvent extends PresentationFormEvent {
   final PresentationModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialisePresentationFormNoLoadEvent({this.value});
 }
@@ -55,7 +52,7 @@ class ChangedPresentationDocumentID extends PresentationFormEvent {
   ChangedPresentationDocumentID({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedPresentationDocumentID{ value: $value }';
@@ -67,7 +64,7 @@ class ChangedPresentationAppId extends PresentationFormEvent {
   ChangedPresentationAppId({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedPresentationAppId{ value: $value }';
@@ -79,7 +76,7 @@ class ChangedPresentationDescription extends PresentationFormEvent {
   ChangedPresentationDescription({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedPresentationDescription{ value: $value }';
@@ -91,7 +88,7 @@ class ChangedPresentationBodyComponents extends PresentationFormEvent {
   ChangedPresentationBodyComponents({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedPresentationBodyComponents{ value: $value }';
@@ -103,7 +100,7 @@ class ChangedPresentationImage extends PresentationFormEvent {
   ChangedPresentationImage({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedPresentationImage{ value: $value }';
@@ -115,10 +112,11 @@ class ChangedPresentationImagePositionRelative extends PresentationFormEvent {
   ChangedPresentationImagePositionRelative({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
-  String toString() => 'ChangedPresentationImagePositionRelative{ value: $value }';
+  String toString() =>
+      'ChangedPresentationImagePositionRelative{ value: $value }';
 }
 
 class ChangedPresentationImageAlignment extends PresentationFormEvent {
@@ -127,7 +125,7 @@ class ChangedPresentationImageAlignment extends PresentationFormEvent {
   ChangedPresentationImageAlignment({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedPresentationImageAlignment{ value: $value }';
@@ -139,7 +137,7 @@ class ChangedPresentationImageWidth extends PresentationFormEvent {
   ChangedPresentationImageWidth({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedPresentationImageWidth{ value: $value }';
@@ -151,9 +149,8 @@ class ChangedPresentationConditions extends PresentationFormEvent {
   ChangedPresentationConditions({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedPresentationConditions{ value: $value }';
 }
-

@@ -1,5 +1,5 @@
 import 'package:eliud_core/core/wizards/builders/page_builder.dart';
-import 'package:eliud_core/core/wizards/tools/documentIdentifier.dart';
+import 'package:eliud_core/core/wizards/tools/document_identifier.dart';
 import 'package:eliud_core/model/abstract_repository_singleton.dart'
     as corerepo;
 import 'package:eliud_core/model/app_bar_model.dart';
@@ -20,18 +20,22 @@ import 'package:eliud_pkg_fundamentals/model/listed_item_model.dart';
 import 'package:eliud_pkg_fundamentals/model/section_model.dart';
 
 class FaderPageBuilder extends PageBuilder {
-  static String androidImage = 'packages/eliud_pkg_fundamentals/assets/wizards/fader/android.jpg';
-  static String iphoneImage = 'packages/eliud_pkg_fundamentals/assets/wizards/fader/iphone.jpg';
-  static String tabletImage = 'packages/eliud_pkg_fundamentals/assets/wizards/fader/tablet.jpg';
-  static String macbookImage = 'packages/eliud_pkg_fundamentals/assets/wizards/fader/macbook.jpg';
+  static String androidImage =
+      'packages/eliud_pkg_fundamentals/assets/wizards/fader/android.jpg';
+  static String iphoneImage =
+      'packages/eliud_pkg_fundamentals/assets/wizards/fader/iphone.jpg';
+  static String tabletImage =
+      'packages/eliud_pkg_fundamentals/assets/wizards/fader/tablet.jpg';
+  static String macbookImage =
+      'packages/eliud_pkg_fundamentals/assets/wizards/fader/macbook.jpg';
 
   final String componentId;
-  final RelativeImagePosition imagePosition = RelativeImagePosition.Aside;
-  final SectionImageAlignment alignment = SectionImageAlignment.Left;
+  final RelativeImagePosition imagePosition = RelativeImagePosition.aside;
+  final SectionImageAlignment alignment = SectionImageAlignment.left;
 
   FaderPageBuilder(
-      String uniqueId,
-      this.componentId,
+    String uniqueId,
+    this.componentId,
     String pageId,
     AppModel app,
     String memberId,
@@ -39,8 +43,16 @@ class FaderPageBuilder extends PageBuilder {
     AppBarModel theAppBar,
     DrawerModel leftDrawer,
     DrawerModel rightDrawer,
-  ) : super(uniqueId, pageId, app, memberId, theHomeMenu, theAppBar, leftDrawer,
-            rightDrawer, );
+  ) : super(
+          uniqueId,
+          pageId,
+          app,
+          memberId,
+          theHomeMenu,
+          theAppBar,
+          leftDrawer,
+          rightDrawer,
+        );
 
   Future<PageModel> _setupPage() async {
     return await corerepo.AbstractRepositorySingleton.singleton
@@ -53,7 +65,8 @@ class FaderPageBuilder extends PageBuilder {
     components.add(BodyComponentModel(
       documentID: "1",
       componentName: AbstractFaderComponent.componentName,
-      componentId: constructDocumentId(uniqueId: uniqueId, documentId: componentId),
+      componentId:
+          constructDocumentId(uniqueId: uniqueId, documentId: componentId),
     ));
 
     return PageModel(
@@ -65,40 +78,43 @@ class FaderPageBuilder extends PageBuilder {
         endDrawer: rightDrawer,
         appBar: theAppBar,
         homeMenu: theHomeMenu,
-        layout: PageLayout.ListView,
+        layout: PageLayout.listView,
         conditions: StorageConditionsModel(
-          privilegeLevelRequired: PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple,
+          privilegeLevelRequired:
+              PrivilegeLevelRequiredSimple.noPrivilegeRequiredSimple,
         ),
         bodyComponents: components);
   }
 
   Future<PlatformMediumModel> installImage(String location) async {
     return await PlatformMediumHelper(app, memberId,
-            PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple)
-        .createThumbnailUploadPhotoAsset(
-      newRandomKey(),
-        location
-    );
+            PrivilegeLevelRequiredSimple.noPrivilegeRequiredSimple)
+        .createThumbnailUploadPhotoAsset(newRandomKey(), location);
   }
 
   PosSizeModel screen75() {
     return PosSizeModel(
         widthPortrait: .75,
-        widthTypePortrait: WidthTypePortrait.PercentageWidth,
+        widthTypePortrait: WidthTypePortrait.percentageWidth,
         heightPortrait: .75,
-        heightTypePortrait: HeightTypePortrait.PercentageHeight,
-        fitPortrait: PortraitFitType.PortraitFitWidth,
-        alignTypePortrait: PortraitAlignType.PortraitAlignCenter,
+        heightTypePortrait: HeightTypePortrait.percentageHeight,
+        fitPortrait: PortraitFitType.portraitFitWidth,
+        alignTypePortrait: PortraitAlignType.portraitAlignCenter,
         widthLandscape: .75,
-        widthTypeLandscape: WidthTypeLandscape.PercentageWidth,
+        widthTypeLandscape: WidthTypeLandscape.percentageWidth,
         heightLandscape: .75,
-        heightTypeLandscape: HeightTypeLandscape.PercentageHeight,
-        fitLandscape: LandscapeFitType.LandscapeFitHeight,
-        alignTypeLandscape: LandscapeAlignType.LandscapeAlignCenter,
-        clip: ClipType.NoClip);
+        heightTypeLandscape: HeightTypeLandscape.percentageHeight,
+        fitLandscape: LandscapeFitType.landscapeFitHeight,
+        alignTypeLandscape: LandscapeAlignType.landscapeAlignCenter,
+        clip: ClipType.noClip);
   }
 
-  Future<FaderModel> createFader(PlatformMediumModel android, PlatformMediumModel iphone, PlatformMediumModel tablet, PlatformMediumModel macbook, ) async {
+  Future<FaderModel> createFader(
+    PlatformMediumModel android,
+    PlatformMediumModel iphone,
+    PlatformMediumModel tablet,
+    PlatformMediumModel macbook,
+  ) async {
     var items = <ListedItemModel>[];
     items.add(ListedItemModel(
         documentID: "android",
@@ -121,15 +137,16 @@ class FaderPageBuilder extends PageBuilder {
         posSize: screen75(),
         image: tablet));
     var model = FaderModel(
-      documentID: constructDocumentId(uniqueId: uniqueId, documentId: componentId),
+      documentID:
+          constructDocumentId(uniqueId: uniqueId, documentId: componentId),
       description: "Welcome fader",
       animationMilliseconds: 1000,
       imageSeconds: 5,
       items: items,
       appId: app.documentID,
       conditions: StorageConditionsModel(
-          privilegeLevelRequired: PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple
-      ),
+          privilegeLevelRequired:
+              PrivilegeLevelRequiredSimple.noPrivilegeRequiredSimple),
     );
     await AbstractRepositorySingleton.singleton
         .faderRepository(app.documentID)!
@@ -142,7 +159,12 @@ class FaderPageBuilder extends PageBuilder {
     var iphone = await installImage(iphoneImage);
     var tablet = await installImage(tabletImage);
     var macbook = await installImage(macbookImage);
-    await createFader( android,  iphone,  tablet,  macbook, );
+    await createFader(
+      android,
+      iphone,
+      tablet,
+      macbook,
+    );
     return await _setupPage();
   }
 }

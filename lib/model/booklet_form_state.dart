@@ -41,9 +41,9 @@ class BookletFormInitialized extends BookletFormState {
   final BookletModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
-  const BookletFormInitialized({ this.value });
+  const BookletFormInitialized({this.value});
 }
 
 // Menu has been initialised and hence a menu is available
@@ -51,9 +51,9 @@ abstract class BookletFormError extends BookletFormInitialized {
   final String? message;
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
-  const BookletFormError({this.message, BookletModel? value }) : super(value: value);
+  const BookletFormError({this.message, super.value});
 
   @override
   String toString() {
@@ -63,11 +63,12 @@ abstract class BookletFormError extends BookletFormInitialized {
     }''';
   }
 }
-class DocumentIDBookletFormError extends BookletFormError { 
-  const DocumentIDBookletFormError({ String? message, BookletModel? value }): super(message: message, value: value);
+
+class DocumentIDBookletFormError extends BookletFormError {
+  const DocumentIDBookletFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -78,12 +79,11 @@ class DocumentIDBookletFormError extends BookletFormError {
   }
 }
 
-
-class AppIdBookletFormError extends BookletFormError { 
-  const AppIdBookletFormError({ String? message, BookletModel? value }): super(message: message, value: value);
+class AppIdBookletFormError extends BookletFormError {
+  const AppIdBookletFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -94,12 +94,11 @@ class AppIdBookletFormError extends BookletFormError {
   }
 }
 
-
-class DescriptionBookletFormError extends BookletFormError { 
-  const DescriptionBookletFormError({ String? message, BookletModel? value }): super(message: message, value: value);
+class DescriptionBookletFormError extends BookletFormError {
+  const DescriptionBookletFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -110,12 +109,11 @@ class DescriptionBookletFormError extends BookletFormError {
   }
 }
 
-
-class SectionsBookletFormError extends BookletFormError { 
-  const SectionsBookletFormError({ String? message, BookletModel? value }): super(message: message, value: value);
+class SectionsBookletFormError extends BookletFormError {
+  const SectionsBookletFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -126,12 +124,11 @@ class SectionsBookletFormError extends BookletFormError {
   }
 }
 
-
-class ConditionsBookletFormError extends BookletFormError { 
-  const ConditionsBookletFormError({ String? message, BookletModel? value }): super(message: message, value: value);
+class ConditionsBookletFormError extends BookletFormError {
+  const ConditionsBookletFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -142,12 +139,11 @@ class ConditionsBookletFormError extends BookletFormError {
   }
 }
 
-
-class BookletFormLoaded extends BookletFormInitialized { 
-  const BookletFormLoaded({ BookletModel? value }): super(value: value);
+class BookletFormLoaded extends BookletFormInitialized {
+  const BookletFormLoaded({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -157,12 +153,11 @@ class BookletFormLoaded extends BookletFormInitialized {
   }
 }
 
-
-class SubmittableBookletForm extends BookletFormInitialized { 
-  const SubmittableBookletForm({ BookletModel? value }): super(value: value);
+class SubmittableBookletForm extends BookletFormInitialized {
+  const SubmittableBookletForm({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -171,5 +166,3 @@ class SubmittableBookletForm extends BookletFormInitialized {
     }''';
   }
 }
-
-

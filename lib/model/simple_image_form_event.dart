@@ -18,7 +18,6 @@ import 'package:meta/meta.dart';
 import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 
-
 @immutable
 abstract class SimpleImageFormEvent extends Equatable {
   const SimpleImageFormEvent();
@@ -27,15 +26,13 @@ abstract class SimpleImageFormEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class InitialiseNewSimpleImageFormEvent extends SimpleImageFormEvent {
-}
-
+class InitialiseNewSimpleImageFormEvent extends SimpleImageFormEvent {}
 
 class InitialiseSimpleImageFormEvent extends SimpleImageFormEvent {
   final SimpleImageModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialiseSimpleImageFormEvent({this.value});
 }
@@ -44,7 +41,7 @@ class InitialiseSimpleImageFormNoLoadEvent extends SimpleImageFormEvent {
   final SimpleImageModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialiseSimpleImageFormNoLoadEvent({this.value});
 }
@@ -55,7 +52,7 @@ class ChangedSimpleImageDocumentID extends SimpleImageFormEvent {
   ChangedSimpleImageDocumentID({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedSimpleImageDocumentID{ value: $value }';
@@ -67,7 +64,7 @@ class ChangedSimpleImageAppId extends SimpleImageFormEvent {
   ChangedSimpleImageAppId({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedSimpleImageAppId{ value: $value }';
@@ -79,7 +76,7 @@ class ChangedSimpleImageDescription extends SimpleImageFormEvent {
   ChangedSimpleImageDescription({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedSimpleImageDescription{ value: $value }';
@@ -91,7 +88,7 @@ class ChangedSimpleImageImage extends SimpleImageFormEvent {
   ChangedSimpleImageImage({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedSimpleImageImage{ value: $value }';
@@ -103,9 +100,8 @@ class ChangedSimpleImageConditions extends SimpleImageFormEvent {
   ChangedSimpleImageConditions({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedSimpleImageConditions{ value: $value }';
 }
-

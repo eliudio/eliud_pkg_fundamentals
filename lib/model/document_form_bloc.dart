@@ -19,7 +19,6 @@ import 'package:bloc/bloc.dart';
 
 import 'package:eliud_core/tools/enums.dart';
 
-
 import 'package:eliud_core/tools/string_validator.dart';
 
 import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
@@ -32,105 +31,109 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
   final FormAction? formAction;
   final String? appId;
 
-  DocumentFormBloc(this.appId, { this.formAction }): super(DocumentFormUninitialized()) {
-      on <InitialiseNewDocumentFormEvent> ((event, emit) {
-        DocumentFormLoaded loaded = DocumentFormLoaded(value: DocumentModel(
-                                               documentID: "",
-                                 appId: "",
-                                 description: "",
-                                 content: "",
-                                 padding: 0.0,
-                                 images: [],
+  DocumentFormBloc(this.appId, {this.formAction})
+      : super(DocumentFormUninitialized()) {
+    on<InitialiseNewDocumentFormEvent>((event, emit) {
+      DocumentFormLoaded loaded = DocumentFormLoaded(
+          value: DocumentModel(
+        documentID: "",
+        appId: "",
+        description: "",
+        content: "",
+        padding: 0.0,
+        images: [],
+      ));
+      emit(loaded);
+    });
 
-        ));
-        emit(loaded);
-      });
-
-
-      on <InitialiseDocumentFormEvent> ((event, emit) async {
-        // Need to re-retrieve the document from the repository so that I get all associated types
-        DocumentFormLoaded loaded = DocumentFormLoaded(value: await documentRepository(appId: appId)!.get(event.value!.documentID));
-        emit(loaded);
-      });
-      on <InitialiseDocumentFormNoLoadEvent> ((event, emit) async {
-        DocumentFormLoaded loaded = DocumentFormLoaded(value: event.value);
-        emit(loaded);
-      });
-      DocumentModel? newValue = null;
-      on <ChangedDocumentDocumentID> ((event, emit) async {
+    on<InitialiseDocumentFormEvent>((event, emit) async {
+      // Need to re-retrieve the document from the repository so that I get all associated types
+      DocumentFormLoaded loaded = DocumentFormLoaded(
+          value: await documentRepository(appId: appId)!
+              .get(event.value!.documentID));
+      emit(loaded);
+    });
+    on<InitialiseDocumentFormNoLoadEvent>((event, emit) async {
+      DocumentFormLoaded loaded = DocumentFormLoaded(value: event.value);
+      emit(loaded);
+    });
+    DocumentModel? newValue;
+    on<ChangedDocumentDocumentID>((event, emit) async {
       if (state is DocumentFormInitialized) {
         final currentState = state as DocumentFormInitialized;
         newValue = currentState.value!.copyWith(documentID: event.value);
-        if (formAction == FormAction.AddAction) {
+        if (formAction == FormAction.addAction) {
           emit(await _isDocumentIDValid(event.value, newValue!));
         } else {
           emit(SubmittableDocumentForm(value: newValue));
         }
-
       }
-      });
-      on <ChangedDocumentDescription> ((event, emit) async {
+    });
+    on<ChangedDocumentDescription>((event, emit) async {
       if (state is DocumentFormInitialized) {
         final currentState = state as DocumentFormInitialized;
         newValue = currentState.value!.copyWith(description: event.value);
         emit(SubmittableDocumentForm(value: newValue));
-
       }
-      });
-      on <ChangedDocumentContent> ((event, emit) async {
+    });
+    on<ChangedDocumentContent>((event, emit) async {
       if (state is DocumentFormInitialized) {
         final currentState = state as DocumentFormInitialized;
         newValue = currentState.value!.copyWith(content: event.value);
         emit(SubmittableDocumentForm(value: newValue));
-
       }
-      });
-      on <ChangedDocumentPadding> ((event, emit) async {
+    });
+    on<ChangedDocumentPadding>((event, emit) async {
       if (state is DocumentFormInitialized) {
         final currentState = state as DocumentFormInitialized;
         if (isDouble(event.value!)) {
-          newValue = currentState.value!.copyWith(padding: double.parse(event.value!));
+          newValue =
+              currentState.value!.copyWith(padding: double.parse(event.value!));
           emit(SubmittableDocumentForm(value: newValue));
-
         } else {
           newValue = currentState.value!.copyWith(padding: 0.0);
-          emit(PaddingDocumentFormError(message: "Value should be a number or decimal number", value: newValue));
+          emit(PaddingDocumentFormError(
+              message: "Value should be a number or decimal number",
+              value: newValue));
         }
       }
-      });
-      on <ChangedDocumentImages> ((event, emit) async {
+    });
+    on<ChangedDocumentImages>((event, emit) async {
       if (state is DocumentFormInitialized) {
         final currentState = state as DocumentFormInitialized;
         newValue = currentState.value!.copyWith(images: event.value);
         emit(SubmittableDocumentForm(value: newValue));
-
       }
-      });
-      on <ChangedDocumentBackground> ((event, emit) async {
+    });
+    on<ChangedDocumentBackground>((event, emit) async {
       if (state is DocumentFormInitialized) {
         final currentState = state as DocumentFormInitialized;
         newValue = currentState.value!.copyWith(background: event.value);
         emit(SubmittableDocumentForm(value: newValue));
-
       }
-      });
-      on <ChangedDocumentConditions> ((event, emit) async {
+    });
+    on<ChangedDocumentConditions>((event, emit) async {
       if (state is DocumentFormInitialized) {
         final currentState = state as DocumentFormInitialized;
         newValue = currentState.value!.copyWith(conditions: event.value);
         emit(SubmittableDocumentForm(value: newValue));
-
       }
-      });
+    });
   }
 
+  DocumentIDDocumentFormError error(String message, DocumentModel newValue) =>
+      DocumentIDDocumentFormError(message: message, value: newValue);
 
-  DocumentIDDocumentFormError error(String message, DocumentModel newValue) => DocumentIDDocumentFormError(message: message, value: newValue);
-
-  Future<DocumentFormState> _isDocumentIDValid(String? value, DocumentModel newValue) async {
-    if (value == null) return Future.value(error("Provide value for documentID", newValue));
-    if (value.length == 0) return Future.value(error("Provide value for documentID", newValue));
-    Future<DocumentModel?> findDocument = documentRepository(appId: appId)!.get(value);
+  Future<DocumentFormState> _isDocumentIDValid(
+      String? value, DocumentModel newValue) async {
+    if (value == null) {
+      return Future.value(error("Provide value for documentID", newValue));
+    }
+    if (value.isEmpty) {
+      return Future.value(error("Provide value for documentID", newValue));
+    }
+    Future<DocumentModel?> findDocument =
+        documentRepository(appId: appId)!.get(value);
     return await findDocument.then((documentFound) {
       if (documentFound == null) {
         return SubmittableDocumentForm(value: newValue);
@@ -139,7 +142,4 @@ class DocumentFormBloc extends Bloc<DocumentFormEvent, DocumentFormState> {
       }
     });
   }
-
-
 }
-

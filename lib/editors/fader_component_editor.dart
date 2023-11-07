@@ -54,7 +54,7 @@ class FaderComponentEditorConstructor extends ComponentEditorConstructor {
           description: 'New fader',
           conditions: StorageConditionsModel(
               privilegeLevelRequired:
-                  PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
+                  PrivilegeLevelRequiredSimple.noPrivilegeRequiredSimple),
         ),
         feedback);
   }
@@ -66,14 +66,14 @@ class FaderComponentEditorConstructor extends ComponentEditorConstructor {
     if (fader != null) {
       _openIt(app, context, false, fader, feedback);
     } else {
-      openErrorDialog(app, context, app.documentID + '/_error',
+      openErrorDialog(app, context, '${app.documentID}/_error',
           title: 'Error', errorMessage: 'Cannot find fader with id $id');
     }
   }
 
   void _openIt(AppModel app, BuildContext context, bool create,
       FaderModel model, EditorFeedback feedback) {
-    openComplexDialog(app, context, app.documentID + '/Fader',
+    openComplexDialog(app, context, '${app.documentID}/Fader',
         title: create ? 'Create fader' : 'Update fader',
         includeHeading: false,
         widthFraction: .9,
@@ -93,9 +93,9 @@ class FaderComponentEditor extends StatefulWidget {
   final AppModel app;
 
   const FaderComponentEditor({
-    Key? key,
+    super.key,
     required this.app,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() => _FaderComponentEditorState();
@@ -160,29 +160,21 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
                       collapsible: true,
                       collapsed: true,
                       children: [
-                        checkboxListTile(
-                            widget.app,
-                            context,
-                            'Background?',
-                            faderState.model.background !=
-                                null, (value) {
+                        checkboxListTile(widget.app, context, 'Background?',
+                            faderState.model.background != null, (value) {
                           setState(() {
                             if (value!) {
-                              faderState.model.background =
-                                  BackgroundModel();
+                              faderState.model.background = BackgroundModel();
                             } else {
-                              faderState.model.background =
-                              null;
+                              faderState.model.background = null;
                             }
                           });
                         }),
-                        if (faderState.model.background !=
-                            null)
+                        if (faderState.model.background != null)
                           BackgroundWidget(
                               app: widget.app,
                               memberId: ownerId,
-                              value:
-                              faderState.model.background!,
+                              value: faderState.model.background!,
                               label: 'Background'),
                       ]),
                   topicContainer(widget.app, context,
@@ -198,8 +190,7 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
                               initialValue:
                                   faderState.model.imageSeconds.toString(),
                               valueChanged: (value) {
-                                faderState.model.imageSeconds =
-                                    int_parse(value);
+                                faderState.model.imageSeconds = intParse(value);
                               },
                               maxLines: 1,
                               decoration: const InputDecoration(
@@ -217,7 +208,7 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
                                   .toString(),
                               valueChanged: (value) {
                                 faderState.model.animationMilliseconds =
-                                    int_parse(value);
+                                    intParse(value);
                               },
                               maxLines: 1,
                               decoration: const InputDecoration(
@@ -265,11 +256,11 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
     var items = state.model.items != null ? state.model.items! : [];
     if (state.model.items != null) {
       var photos = <PlatformMediumModel>[];
-      items.forEach((item) {
+      for (var item in items) {
         if (item.image != null) {
           photos.add(item.image!);
         }
-      });
+      }
     }
     for (var item in items) {
       var medium = item.image;
@@ -331,7 +322,7 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
             openFlexibleDialog(
               widget.app,
               context,
-              widget.app.documentID + '/_listeditem',
+              '${widget.app.documentID}/_listeditem',
               includeHeading: false,
               widthFraction: .8,
               child: ListedItemModelWidget.getIt(
@@ -388,18 +379,15 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
     if (_progress != null) {
       return progressIndicatorWithValue(widget.app, context, value: _progress!);
     } else {
-      return popupMenuButton<int>(
-        widget.app, context,
+      return popupMenuButton<int>(widget.app, context,
           child: Icon(Icons.add),
           itemBuilder: (context) => [
                 if (Registry.registry()!.getMediumApi().hasCamera())
-                  popupMenuItem(
-                    widget.app, context,
-                    value: 0,
-                    label: 'Take photo'
-                  ),
+                  popupMenuItem(widget.app, context,
+                      value: 0, label: 'Take photo'),
                 popupMenuItem(
-                  widget.app, context,
+                  widget.app,
+                  context,
                   value: 1,
                   label: 'Upload image',
                 ),
@@ -441,18 +429,18 @@ class _FaderComponentEditorState extends State<FaderComponentEditor> {
           image: platformMediumModel,
           posSize: PosSizeModel(
               widthPortrait: 1,
-              widthTypePortrait: WidthTypePortrait.PercentageWidth,
+              widthTypePortrait: WidthTypePortrait.percentageWidth,
               heightPortrait: .5,
-              heightTypePortrait: HeightTypePortrait.PercentageHeight,
-              fitPortrait: PortraitFitType.PortraitFitWidth,
-              alignTypePortrait: PortraitAlignType.PortraitAlignCenter,
+              heightTypePortrait: HeightTypePortrait.percentageHeight,
+              fitPortrait: PortraitFitType.portraitFitWidth,
+              alignTypePortrait: PortraitAlignType.portraitAlignCenter,
               widthLandscape: 1,
-              widthTypeLandscape: WidthTypeLandscape.PercentageWidth,
+              widthTypeLandscape: WidthTypeLandscape.percentageWidth,
               heightLandscape: .5,
-              heightTypeLandscape: HeightTypeLandscape.PercentageHeight,
-              fitLandscape: LandscapeFitType.LandscapeFitHeight,
-              alignTypeLandscape: LandscapeAlignType.LandscapeAlignCenter,
-              clip: ClipType.NoClip),
+              heightTypeLandscape: HeightTypeLandscape.percentageHeight,
+              fitLandscape: LandscapeFitType.landscapeFitHeight,
+              alignTypeLandscape: LandscapeAlignType.landscapeAlignCenter,
+              clip: ClipType.noClip),
         )));
       }
     });

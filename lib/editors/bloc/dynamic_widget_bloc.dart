@@ -7,7 +7,8 @@ import 'package:eliud_core/core/editor/editor_base_bloc/editor_base_bloc.dart';
 import '../../model/dynamic_widget_entity.dart';
 import '../../model/dynamic_widget_model.dart';
 
-class DynamicWidgetBloc extends EditorBaseBloc<DynamicWidgetModel, DynamicWidgetEntity> {
+class DynamicWidgetBloc
+    extends EditorBaseBloc<DynamicWidgetModel, DynamicWidgetEntity> {
   DynamicWidgetBloc(String appId, EditorFeedback feedback)
       : super(appId, dynamicWidgetRepository(appId: appId)!, feedback);
 
@@ -24,7 +25,6 @@ class DynamicWidgetBloc extends EditorBaseBloc<DynamicWidgetModel, DynamicWidget
   @override
   DynamicWidgetModel setDefaultValues(
       DynamicWidgetModel t, StorageConditionsModel conditions) {
-    return t.copyWith(
-        conditions: t.conditions ?? conditions);
+    return t.copyWith(conditions: t.conditions ?? conditions);
   }
 }

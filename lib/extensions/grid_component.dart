@@ -24,8 +24,7 @@ class GridComponentConstructorDefault implements ComponentConstructor {
 }
 
 class GridComponent extends AbstractGridComponent {
-  GridComponent({Key? key, required AppModel app, required String gridId})
-      : super(key: key, app: app, gridId: gridId);
+  GridComponent({super.key, required super.app, required super.gridId});
 
   @override
   Widget yourWidget(BuildContext context, GridModel? value) {

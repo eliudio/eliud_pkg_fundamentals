@@ -18,7 +18,6 @@ import 'package:meta/meta.dart';
 import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 
-
 @immutable
 abstract class FaderFormEvent extends Equatable {
   const FaderFormEvent();
@@ -27,15 +26,13 @@ abstract class FaderFormEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class InitialiseNewFaderFormEvent extends FaderFormEvent {
-}
-
+class InitialiseNewFaderFormEvent extends FaderFormEvent {}
 
 class InitialiseFaderFormEvent extends FaderFormEvent {
   final FaderModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialiseFaderFormEvent({this.value});
 }
@@ -44,7 +41,7 @@ class InitialiseFaderFormNoLoadEvent extends FaderFormEvent {
   final FaderModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialiseFaderFormNoLoadEvent({this.value});
 }
@@ -55,7 +52,7 @@ class ChangedFaderDocumentID extends FaderFormEvent {
   ChangedFaderDocumentID({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedFaderDocumentID{ value: $value }';
@@ -67,7 +64,7 @@ class ChangedFaderAppId extends FaderFormEvent {
   ChangedFaderAppId({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedFaderAppId{ value: $value }';
@@ -79,7 +76,7 @@ class ChangedFaderDescription extends FaderFormEvent {
   ChangedFaderDescription({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedFaderDescription{ value: $value }';
@@ -91,7 +88,7 @@ class ChangedFaderAnimationMilliseconds extends FaderFormEvent {
   ChangedFaderAnimationMilliseconds({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedFaderAnimationMilliseconds{ value: $value }';
@@ -103,7 +100,7 @@ class ChangedFaderImageSeconds extends FaderFormEvent {
   ChangedFaderImageSeconds({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedFaderImageSeconds{ value: $value }';
@@ -115,7 +112,7 @@ class ChangedFaderItems extends FaderFormEvent {
   ChangedFaderItems({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedFaderItems{ value: $value }';
@@ -127,7 +124,7 @@ class ChangedFaderBackground extends FaderFormEvent {
   ChangedFaderBackground({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedFaderBackground{ value: $value }';
@@ -139,9 +136,8 @@ class ChangedFaderConditions extends FaderFormEvent {
   ChangedFaderConditions({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedFaderConditions{ value: $value }';
 }
-

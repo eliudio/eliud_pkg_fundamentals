@@ -17,7 +17,6 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 
-
 @immutable
 abstract class SectionFormEvent extends Equatable {
   const SectionFormEvent();
@@ -26,15 +25,13 @@ abstract class SectionFormEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class InitialiseNewSectionFormEvent extends SectionFormEvent {
-}
-
+class InitialiseNewSectionFormEvent extends SectionFormEvent {}
 
 class InitialiseSectionFormEvent extends SectionFormEvent {
   final SectionModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialiseSectionFormEvent({this.value});
 }
@@ -43,7 +40,7 @@ class InitialiseSectionFormNoLoadEvent extends SectionFormEvent {
   final SectionModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   InitialiseSectionFormNoLoadEvent({this.value});
 }
@@ -54,7 +51,7 @@ class ChangedSectionDocumentID extends SectionFormEvent {
   ChangedSectionDocumentID({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedSectionDocumentID{ value: $value }';
@@ -66,7 +63,7 @@ class ChangedSectionTitle extends SectionFormEvent {
   ChangedSectionTitle({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedSectionTitle{ value: $value }';
@@ -78,7 +75,7 @@ class ChangedSectionDescription extends SectionFormEvent {
   ChangedSectionDescription({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedSectionDescription{ value: $value }';
@@ -90,7 +87,7 @@ class ChangedSectionImage extends SectionFormEvent {
   ChangedSectionImage({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedSectionImage{ value: $value }';
@@ -102,7 +99,7 @@ class ChangedSectionImagePositionRelative extends SectionFormEvent {
   ChangedSectionImagePositionRelative({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedSectionImagePositionRelative{ value: $value }';
@@ -114,7 +111,7 @@ class ChangedSectionImageAlignment extends SectionFormEvent {
   ChangedSectionImageAlignment({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedSectionImageAlignment{ value: $value }';
@@ -126,7 +123,7 @@ class ChangedSectionImageWidth extends SectionFormEvent {
   ChangedSectionImageWidth({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedSectionImageWidth{ value: $value }';
@@ -138,9 +135,8 @@ class ChangedSectionLinks extends SectionFormEvent {
   ChangedSectionLinks({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'ChangedSectionLinks{ value: $value }';
 }
-

@@ -26,55 +26,105 @@ class SimpleTextEntity implements EntityBase {
   final StorageConditionsEntity? conditions;
   final int? textAlign;
 
-  SimpleTextEntity({required this.appId, this.description, this.title, this.text, this.conditions, this.textAlign, });
+  SimpleTextEntity({
+    required this.appId,
+    this.description,
+    this.title,
+    this.text,
+    this.conditions,
+    this.textAlign,
+  });
 
-  SimpleTextEntity copyWith({String? documentID, String? appId, String? description, String? title, String? text, StorageConditionsEntity? conditions, int? textAlign, }) {
-    return SimpleTextEntity(appId : appId ?? this.appId, description : description ?? this.description, title : title ?? this.title, text : text ?? this.text, conditions : conditions ?? this.conditions, textAlign : textAlign ?? this.textAlign, );
+  SimpleTextEntity copyWith({
+    String? documentID,
+    String? appId,
+    String? description,
+    String? title,
+    String? text,
+    StorageConditionsEntity? conditions,
+    int? textAlign,
+  }) {
+    return SimpleTextEntity(
+      appId: appId ?? this.appId,
+      description: description ?? this.description,
+      title: title ?? this.title,
+      text: text ?? this.text,
+      conditions: conditions ?? this.conditions,
+      textAlign: textAlign ?? this.textAlign,
+    );
   }
-  List<Object?> get props => [appId, description, title, text, conditions, textAlign, ];
+
+  List<Object?> get props => [
+        appId,
+        description,
+        title,
+        text,
+        conditions,
+        textAlign,
+      ];
 
   @override
   String toString() {
     return 'SimpleTextEntity{appId: $appId, description: $description, title: $title, text: $text, conditions: $conditions, textAlign: $textAlign}';
   }
 
-  static SimpleTextEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
+  static SimpleTextEntity? fromMap(Object? o,
+      {Map<String, String>? newDocumentIds}) {
     if (o == null) return null;
     var map = o as Map<String, dynamic>;
 
-    var conditionsFromMap;
-    conditionsFromMap = map['conditions'];
-    if (conditionsFromMap != null)
-      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap, newDocumentIds: newDocumentIds);
+    var conditionsFromMap = map['conditions'];
+    if (conditionsFromMap != null) {
+      conditionsFromMap = StorageConditionsEntity.fromMap(conditionsFromMap,
+          newDocumentIds: newDocumentIds);
+    }
 
     return SimpleTextEntity(
-      appId: map['appId'], 
-      description: map['description'], 
-      title: map['title'], 
-      text: map['text'], 
-      conditions: conditionsFromMap, 
-      textAlign: map['textAlign'], 
+      appId: map['appId'],
+      description: map['description'],
+      title: map['title'],
+      text: map['text'],
+      conditions: conditionsFromMap,
+      textAlign: map['textAlign'],
     );
   }
 
+  @override
   Map<String, Object?> toDocument() {
-    final Map<String, dynamic>? conditionsMap = conditions != null 
-        ? conditions!.toDocument()
-        : null;
+    final Map<String, dynamic>? conditionsMap =
+        conditions != null ? conditions!.toDocument() : null;
 
     Map<String, Object?> theDocument = HashMap();
-    if (appId != null) theDocument["appId"] = appId;
-      else theDocument["appId"] = null;
-    if (description != null) theDocument["description"] = description;
-      else theDocument["description"] = null;
-    if (title != null) theDocument["title"] = title;
-      else theDocument["title"] = null;
-    if (text != null) theDocument["text"] = text;
-      else theDocument["text"] = null;
-    if (conditions != null) theDocument["conditions"] = conditionsMap;
-      else theDocument["conditions"] = null;
-    if (textAlign != null) theDocument["textAlign"] = textAlign;
-      else theDocument["textAlign"] = null;
+    if (appId != null) {
+      theDocument["appId"] = appId;
+    } else {
+      theDocument["appId"] = null;
+    }
+    if (description != null) {
+      theDocument["description"] = description;
+    } else {
+      theDocument["description"] = null;
+    }
+    if (title != null) {
+      theDocument["title"] = title;
+    } else {
+      theDocument["title"] = null;
+    }
+    if (text != null) {
+      theDocument["text"] = text;
+    } else {
+      theDocument["text"] = null;
+    }
+    if (conditions != null) {
+      theDocument["conditions"] = conditionsMap;
+    } else {
+      theDocument["conditions"] = null;
+    }
+    if (textAlign != null) {
+      theDocument["textAlign"] = textAlign;
+    } else {
+      theDocument["textAlign"] = null;
+    }
     return theDocument;
   }
 
@@ -84,7 +134,8 @@ class SimpleTextEntity implements EntityBase {
     return newEntity;
   }
 
-  static SimpleTextEntity? fromJsonString(String json, {Map<String, String>? newDocumentIds}) {
+  static SimpleTextEntity? fromJsonString(String json,
+      {Map<String, String>? newDocumentIds}) {
     Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
     return fromMap(generationSpecificationMap, newDocumentIds: newDocumentIds);
   }
@@ -93,9 +144,9 @@ class SimpleTextEntity implements EntityBase {
     return jsonEncode(toDocument());
   }
 
-  Future<Map<String, Object?>> enrichedDocument(Map<String, Object?> theDocument) async {
+  @override
+  Future<Map<String, Object?>> enrichedDocument(
+      Map<String, Object?> theDocument) async {
     return theDocument;
   }
-
 }
-

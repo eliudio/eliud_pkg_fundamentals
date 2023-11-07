@@ -52,7 +52,7 @@ class PresentationComponentEditorConstructor
           description: 'New presentation',
           conditions: StorageConditionsModel(
               privilegeLevelRequired:
-                  PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
+                  PrivilegeLevelRequiredSimple.noPrivilegeRequiredSimple),
         ),
         feedback);
   }
@@ -65,7 +65,7 @@ class PresentationComponentEditorConstructor
     if (presentation != null) {
       _openIt(app, context, false, presentation, feedback);
     } else {
-      openErrorDialog(app, context, app.documentID + '/_error',
+      openErrorDialog(app, context, '${app.documentID}/_error',
           title: 'Error',
           errorMessage: 'Cannot find membership dashboard with id $id');
     }
@@ -76,7 +76,7 @@ class PresentationComponentEditorConstructor
     openComplexDialog(
       app,
       context,
-      app.documentID + '/membershipdashboard',
+      '${app.documentID}/membershipdashboard',
       title: create
           ? 'Create Membership Dashboard'
           : 'Update Membership Dashboard',
@@ -100,9 +100,9 @@ class PresentationComponentEditor extends StatefulWidget {
   final AppModel app;
 
   const PresentationComponentEditor({
-    Key? key,
+    super.key,
     required this.app,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() => _PresentationComponentEditorState();
@@ -177,7 +177,7 @@ class _PresentationComponentEditorState
                           },
                           presentationImageAlignment:
                               presentationState.model.imageAlignment ??
-                                  PresentationImageAlignment.Center,
+                                  PresentationImageAlignment.center,
                         ),
                         PresentationRelativeImagePositionWidget(
                           app: widget.app,
@@ -189,7 +189,7 @@ class _PresentationComponentEditorState
                           },
                           presentationRelativeImagePosition:
                               presentationState.model.imagePositionRelative ??
-                                  PresentationRelativeImagePosition.Aside,
+                                  PresentationRelativeImagePosition.aside,
                         ),
                         getListTile(context, widget.app,
                             leading: Icon(Icons.height),
@@ -201,7 +201,7 @@ class _PresentationComponentEditorState
                               valueChanged: (value) {
                                 setState(() {
                                   presentationState.model.imageWidth =
-                                      double_parse(value);
+                                      doubleParse(value);
                                 });
                               },
                               keyboardType: TextInputType.numberWithOptions(
@@ -261,21 +261,19 @@ class _PresentationComponentEditorState
                   return getListTile(
                     context,
                     widget.app,
-                    title: ComponentTitleHelper.title(context, widget.app, value.componentName ?? '?', value.componentId ?? '?'),
-                    trailing: popupMenuButton<int>(
-                        widget.app, context,
+                    title: ComponentTitleHelper.title(context, widget.app,
+                        value.componentName ?? '?', value.componentId ?? '?'),
+                    trailing: popupMenuButton<int>(widget.app, context,
                         child: Icon(Icons.more_vert),
                         itemBuilder: (context) => [
                               popupMenuItem(
-                                widget.app, context,
+                                widget.app,
+                                context,
                                 value: 1,
                                 label: 'Update',
                               ),
-                              popupMenuItem(
-                                widget.app, context,
-                                value: 2,
-                                label: 'Delete'
-                              ),
+                              popupMenuItem(widget.app, context,
+                                  value: 2, label: 'Delete'),
                             ],
                         onSelected: (selectedValue) {
                           if (selectedValue == 1) {
@@ -341,7 +339,7 @@ class _PresentationComponentEditorState
     openFlexibleDialog(
       widget.app,
       context,
-      widget.app.documentID + '/_memberaction',
+      '${widget.app.documentID}/_memberaction',
       includeHeading: false,
       widthFraction: .8,
       child: BodyComponentModelWidget.getIt(

@@ -45,7 +45,7 @@ class DividerComponentEditorConstructor extends ComponentEditorConstructor {
           description: 'New divider',
           conditions: StorageConditionsModel(
               privilegeLevelRequired:
-                  PrivilegeLevelRequiredSimple.NoPrivilegeRequiredSimple),
+                  PrivilegeLevelRequiredSimple.noPrivilegeRequiredSimple),
         ),
         feedback);
   }
@@ -57,9 +57,8 @@ class DividerComponentEditorConstructor extends ComponentEditorConstructor {
     if (divider != null) {
       _openIt(app, context, false, divider, feedback);
     } else {
-      openErrorDialog(app, context, app.documentID + '/_error',
-          title: 'Error',
-          errorMessage: 'Cannot find dividerwith id $id');
+      openErrorDialog(app, context, '${app.documentID}/_error',
+          title: 'Error', errorMessage: 'Cannot find dividerwith id $id');
     }
   }
 
@@ -68,10 +67,8 @@ class DividerComponentEditorConstructor extends ComponentEditorConstructor {
     openComplexDialog(
       app,
       context,
-      app.documentID + '/dividereditor',
-      title: create
-          ? 'Create Divider'
-          : 'Update Divider',
+      '${app.documentID}/dividereditor',
+      title: create ? 'Create Divider' : 'Update Divider',
       includeHeading: false,
       widthFraction: .9,
       child: BlocProvider<DividerBloc>(
@@ -92,9 +89,9 @@ class DividerComponentEditor extends StatefulWidget {
   final AppModel app;
 
   const DividerComponentEditor({
-    Key? key,
+    super.key,
     required this.app,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() => _DividerComponentEditorState();
@@ -164,11 +161,11 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
                               widget.app,
                               context,
                               initialValue:
-                              dividerState.model.thickness.toString(),
+                                  dividerState.model.thickness.toString(),
                               valueChanged: (value) {
                                 setState(() {
                                   dividerState.model.thickness =
-                                      double_parse(value);
+                                      doubleParse(value);
                                 });
                               },
                               keyboardType: TextInputType.numberWithOptions(
@@ -185,11 +182,11 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
                               widget.app,
                               context,
                               initialValue:
-                              dividerState.model.height.toString(),
+                                  dividerState.model.height.toString(),
                               valueChanged: (value) {
                                 setState(() {
                                   dividerState.model.height =
-                                      double_parse(value);
+                                      doubleParse(value);
                                 });
                               },
                               keyboardType: TextInputType.numberWithOptions(
@@ -206,11 +203,11 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
                               widget.app,
                               context,
                               initialValue:
-                              dividerState.model.indent.toString(),
+                                  dividerState.model.indent.toString(),
                               valueChanged: (value) {
                                 setState(() {
                                   dividerState.model.indent =
-                                      double_parse(value);
+                                      doubleParse(value);
                                 });
                               },
                               keyboardType: TextInputType.numberWithOptions(
@@ -227,11 +224,11 @@ class _DividerComponentEditorState extends State<DividerComponentEditor> {
                               widget.app,
                               context,
                               initialValue:
-                              dividerState.model.endIndent.toString(),
+                                  dividerState.model.endIndent.toString(),
                               valueChanged: (value) {
                                 setState(() {
                                   dividerState.model.endIndent =
-                                      double_parse(value);
+                                      doubleParse(value);
                                 });
                               },
                               keyboardType: TextInputType.numberWithOptions(

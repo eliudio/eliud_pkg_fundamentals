@@ -21,17 +21,15 @@ import 'package:eliud_core/model/model_export.dart';
 import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-
 import 'package:eliud_pkg_fundamentals/model/document_entity.dart';
-
-
-
 
 class DocumentModel implements ModelBase, WithAppId {
   static const String packageName = 'eliud_pkg_fundamentals';
   static const String id = 'documents';
 
+  @override
   String documentID;
+  @override
   String appId;
   String? description;
 
@@ -44,21 +42,56 @@ class DocumentModel implements ModelBase, WithAppId {
   BackgroundModel? background;
   StorageConditionsModel? conditions;
 
-  DocumentModel({required this.documentID, required this.appId, this.description, this.content, this.padding, this.images, this.background, this.conditions, })  {
-  }
+  DocumentModel({
+    required this.documentID,
+    required this.appId,
+    this.description,
+    this.content,
+    this.padding,
+    this.images,
+    this.background,
+    this.conditions,
+  });
 
-  DocumentModel copyWith({String? documentID, String? appId, String? description, String? content, double? padding, List<DocumentItemModel>? images, BackgroundModel? background, StorageConditionsModel? conditions, }) {
-    return DocumentModel(documentID: documentID ?? this.documentID, appId: appId ?? this.appId, description: description ?? this.description, content: content ?? this.content, padding: padding ?? this.padding, images: images ?? this.images, background: background ?? this.background, conditions: conditions ?? this.conditions, );
+  @override
+  DocumentModel copyWith({
+    String? documentID,
+    String? appId,
+    String? description,
+    String? content,
+    double? padding,
+    List<DocumentItemModel>? images,
+    BackgroundModel? background,
+    StorageConditionsModel? conditions,
+  }) {
+    return DocumentModel(
+      documentID: documentID ?? this.documentID,
+      appId: appId ?? this.appId,
+      description: description ?? this.description,
+      content: content ?? this.content,
+      padding: padding ?? this.padding,
+      images: images ?? this.images,
+      background: background ?? this.background,
+      conditions: conditions ?? this.conditions,
+    );
   }
 
   @override
-  int get hashCode => documentID.hashCode ^ appId.hashCode ^ description.hashCode ^ content.hashCode ^ padding.hashCode ^ images.hashCode ^ background.hashCode ^ conditions.hashCode;
+  int get hashCode =>
+      documentID.hashCode ^
+      appId.hashCode ^
+      description.hashCode ^
+      content.hashCode ^
+      padding.hashCode ^
+      images.hashCode ^
+      background.hashCode ^
+      conditions.hashCode;
 
   @override
   bool operator ==(Object other) =>
-          identical(this, other) ||
-          other is DocumentModel &&
-          runtimeType == other.runtimeType && 
+      identical(this, other) ||
+      other is DocumentModel &&
+          runtimeType == other.runtimeType &&
           documentID == other.documentID &&
           appId == other.appId &&
           description == other.description &&
@@ -75,6 +108,7 @@ class DocumentModel implements ModelBase, WithAppId {
     return 'DocumentModel{documentID: $documentID, appId: $appId, description: $description, content: $content, padding: $padding, images: DocumentItem[] { $imagesCsv }, background: $background, conditions: $conditions}';
   }
 
+  @override
   Future<List<ModelReference>> collectReferences({String? appId}) async {
     List<ModelReference> referencesCollector = [];
     if (images != null) {
@@ -82,70 +116,80 @@ class DocumentModel implements ModelBase, WithAppId {
         referencesCollector.addAll(await item.collectReferences(appId: appId));
       }
     }
-    if (background != null) referencesCollector.addAll(await background!.collectReferences(appId: appId));
-    if (conditions != null) referencesCollector.addAll(await conditions!.collectReferences(appId: appId));
+    if (background != null) {
+      referencesCollector
+          .addAll(await background!.collectReferences(appId: appId));
+    }
+    if (conditions != null) {
+      referencesCollector
+          .addAll(await conditions!.collectReferences(appId: appId));
+    }
     return referencesCollector;
   }
 
+  @override
   DocumentEntity toEntity({String? appId}) {
     return DocumentEntity(
-          appId: (appId != null) ? appId : null, 
-          description: (description != null) ? description : null, 
-          content: (content != null) ? content : null, 
-          padding: (padding != null) ? padding : null, 
-          images: (images != null) ? images
-            !.map((item) => item.toEntity(appId: appId))
-            .toList() : null, 
-          background: (background != null) ? background!.toEntity(appId: appId) : null, 
-          conditions: (conditions != null) ? conditions!.toEntity(appId: appId) : null, 
+      appId: appId,
+      description: (description != null) ? description : null,
+      content: (content != null) ? content : null,
+      padding: (padding != null) ? padding : null,
+      images: (images != null)
+          ? images!.map((item) => item.toEntity(appId: appId)).toList()
+          : null,
+      background:
+          (background != null) ? background!.toEntity(appId: appId) : null,
+      conditions:
+          (conditions != null) ? conditions!.toEntity(appId: appId) : null,
     );
   }
 
-  static Future<DocumentModel?> fromEntity(String documentID, DocumentEntity? entity) async {
+  static Future<DocumentModel?> fromEntity(
+      String documentID, DocumentEntity? entity) async {
     if (entity == null) return null;
     var counter = 0;
     return DocumentModel(
-          documentID: documentID, 
-          appId: entity.appId ?? '', 
-          description: entity.description, 
-          content: entity.content, 
-          padding: entity.padding, 
-          images: 
-            entity.images == null ? null : List<DocumentItemModel>.from(await Future.wait(entity. images
-            !.map((item) {
-            counter++;
+      documentID: documentID,
+      appId: entity.appId ?? '',
+      description: entity.description,
+      content: entity.content,
+      padding: entity.padding,
+      images: entity.images == null
+          ? null
+          : List<DocumentItemModel>.from(
+              await Future.wait(entity.images!.map((item) {
+              counter++;
               return DocumentItemModel.fromEntity(counter.toString(), item);
-            })
-            .toList())), 
-          background: 
-            await BackgroundModel.fromEntity(entity.background), 
-          conditions: 
-            await StorageConditionsModel.fromEntity(entity.conditions), 
+            }).toList())),
+      background: await BackgroundModel.fromEntity(entity.background),
+      conditions: await StorageConditionsModel.fromEntity(entity.conditions),
     );
   }
 
-  static Future<DocumentModel?> fromEntityPlus(String documentID, DocumentEntity? entity, { String? appId}) async {
+  static Future<DocumentModel?> fromEntityPlus(
+      String documentID, DocumentEntity? entity,
+      {String? appId}) async {
     if (entity == null) return null;
 
     var counter = 0;
     return DocumentModel(
-          documentID: documentID, 
-          appId: entity.appId ?? '', 
-          description: entity.description, 
-          content: entity.content, 
-          padding: entity.padding, 
-          images: 
-            entity. images == null ? null : List<DocumentItemModel>.from(await Future.wait(entity. images
-            !.map((item) {
-            counter++;
-            return DocumentItemModel.fromEntityPlus(counter.toString(), item, appId: appId);})
-            .toList())), 
-          background: 
-            await BackgroundModel.fromEntityPlus(entity.background, appId: appId), 
-          conditions: 
-            await StorageConditionsModel.fromEntityPlus(entity.conditions, appId: appId), 
+      documentID: documentID,
+      appId: entity.appId ?? '',
+      description: entity.description,
+      content: entity.content,
+      padding: entity.padding,
+      images: entity.images == null
+          ? null
+          : List<DocumentItemModel>.from(
+              await Future.wait(entity.images!.map((item) {
+              counter++;
+              return DocumentItemModel.fromEntityPlus(counter.toString(), item,
+                  appId: appId);
+            }).toList())),
+      background:
+          await BackgroundModel.fromEntityPlus(entity.background, appId: appId),
+      conditions: await StorageConditionsModel.fromEntityPlus(entity.conditions,
+          appId: appId),
     );
   }
-
 }
-

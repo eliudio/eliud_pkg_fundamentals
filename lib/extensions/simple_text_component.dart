@@ -23,25 +23,26 @@ class SimpleTextComponentConstructorDefault implements ComponentConstructor {
 
 class SimpleTextComponent extends AbstractSimpleTextComponent {
   SimpleTextComponent(
-      {Key? key, required AppModel app, required String simpleTextId})
-      : super(key: key, app: app, simpleTextId: simpleTextId);
+      {super.key, required super.app, required super.simpleTextId});
 
   TextAlign toTextAlign(SimpleTextAlign? textAlign) {
     switch (textAlign) {
-      case SimpleTextAlign.Left:
+      case SimpleTextAlign.left:
         return TextAlign.left;
-      case SimpleTextAlign.Center:
+      case SimpleTextAlign.center:
         return TextAlign.center;
-      case SimpleTextAlign.Right:
+      case SimpleTextAlign.right:
         return TextAlign.right;
-      case SimpleTextAlign.End:
+      case SimpleTextAlign.end:
         return TextAlign.end;
-      case SimpleTextAlign.Justify:
+      case SimpleTextAlign.justify:
         return TextAlign.justify;
-      case SimpleTextAlign.Start:
+      case SimpleTextAlign.start:
         return TextAlign.start;
-      case SimpleTextAlign.Unknown:
+      case SimpleTextAlign.unknown:
         return TextAlign.left;
+      case null:
+        break;
     }
     return TextAlign.left;
   }

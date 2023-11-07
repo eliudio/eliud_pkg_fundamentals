@@ -3,19 +3,29 @@ import 'package:eliud_core/style/frontend/has_dialog.dart';
 import 'package:eliud_core/tools/component/component_spec.dart';
 import 'package:flutter/material.dart';
 
-class DecoratedContentComponentEditorConstructor extends ComponentEditorConstructor {
+class DecoratedContentComponentEditorConstructor
+    extends ComponentEditorConstructor {
   @override
-  void updateComponent(AppModel app, BuildContext context, model, EditorFeedback feedback) {
-    openErrorDialog(app, context, app.documentID + '/_error', title: 'Problem', errorMessage: 'No editor for this component available yet');
+  void updateComponent(
+      AppModel app, BuildContext context, model, EditorFeedback feedback) {
+    openErrorDialog(app, context, '${app.documentID}/_error',
+        title: 'Problem',
+        errorMessage: 'No editor for this component available yet');
   }
 
   @override
-  void createNewComponent(AppModel app, BuildContext context, EditorFeedback feedback) {
-    openErrorDialog(app, context, app.documentID + '/_error', title: 'Problem', errorMessage: 'No editor for this component available yet');
+  void createNewComponent(
+      AppModel app, BuildContext context, EditorFeedback feedback) {
+    openErrorDialog(app, context, '${app.documentID}/_error',
+        title: 'Problem',
+        errorMessage: 'No editor for this component available yet');
   }
 
   @override
-  void updateComponentWithID(AppModel app, BuildContext context, String id, EditorFeedback feedback) {
-    openErrorDialog(app, context, app.documentID + '/_error', title: 'Problem', errorMessage: 'No editor for this component available yet');
+  void updateComponentWithID(
+      AppModel app, BuildContext context, String id, EditorFeedback feedback) {
+    openErrorDialog(app, context, '${app.documentID}/_error',
+        title: 'Problem',
+        errorMessage: 'No editor for this component available yet');
   }
 }

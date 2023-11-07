@@ -41,9 +41,9 @@ class TutorialFormInitialized extends TutorialFormState {
   final TutorialModel? value;
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
-  const TutorialFormInitialized({ this.value });
+  const TutorialFormInitialized({this.value});
 }
 
 // Menu has been initialised and hence a menu is available
@@ -51,9 +51,9 @@ abstract class TutorialFormError extends TutorialFormInitialized {
   final String? message;
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
-  const TutorialFormError({this.message, TutorialModel? value }) : super(value: value);
+  const TutorialFormError({this.message, super.value});
 
   @override
   String toString() {
@@ -63,11 +63,12 @@ abstract class TutorialFormError extends TutorialFormInitialized {
     }''';
   }
 }
-class DocumentIDTutorialFormError extends TutorialFormError { 
-  const DocumentIDTutorialFormError({ String? message, TutorialModel? value }): super(message: message, value: value);
+
+class DocumentIDTutorialFormError extends TutorialFormError {
+  const DocumentIDTutorialFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -78,12 +79,11 @@ class DocumentIDTutorialFormError extends TutorialFormError {
   }
 }
 
-
-class AppIdTutorialFormError extends TutorialFormError { 
-  const AppIdTutorialFormError({ String? message, TutorialModel? value }): super(message: message, value: value);
+class AppIdTutorialFormError extends TutorialFormError {
+  const AppIdTutorialFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -94,12 +94,11 @@ class AppIdTutorialFormError extends TutorialFormError {
   }
 }
 
-
-class NameTutorialFormError extends TutorialFormError { 
-  const NameTutorialFormError({ String? message, TutorialModel? value }): super(message: message, value: value);
+class NameTutorialFormError extends TutorialFormError {
+  const NameTutorialFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -110,12 +109,11 @@ class NameTutorialFormError extends TutorialFormError {
   }
 }
 
-
-class TitleTutorialFormError extends TutorialFormError { 
-  const TitleTutorialFormError({ String? message, TutorialModel? value }): super(message: message, value: value);
+class TitleTutorialFormError extends TutorialFormError {
+  const TitleTutorialFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -126,12 +124,11 @@ class TitleTutorialFormError extends TutorialFormError {
   }
 }
 
-
-class DescriptionTutorialFormError extends TutorialFormError { 
-  const DescriptionTutorialFormError({ String? message, TutorialModel? value }): super(message: message, value: value);
+class DescriptionTutorialFormError extends TutorialFormError {
+  const DescriptionTutorialFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -142,12 +139,11 @@ class DescriptionTutorialFormError extends TutorialFormError {
   }
 }
 
-
-class TutorialEntriesTutorialFormError extends TutorialFormError { 
-  const TutorialEntriesTutorialFormError({ String? message, TutorialModel? value }): super(message: message, value: value);
+class TutorialEntriesTutorialFormError extends TutorialFormError {
+  const TutorialEntriesTutorialFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -158,12 +154,11 @@ class TutorialEntriesTutorialFormError extends TutorialFormError {
   }
 }
 
-
-class ConditionsTutorialFormError extends TutorialFormError { 
-  const ConditionsTutorialFormError({ String? message, TutorialModel? value }): super(message: message, value: value);
+class ConditionsTutorialFormError extends TutorialFormError {
+  const ConditionsTutorialFormError({super.message, super.value});
 
   @override
-  List<Object?> get props => [ message, value ];
+  List<Object?> get props => [message, value];
 
   @override
   String toString() {
@@ -174,12 +169,11 @@ class ConditionsTutorialFormError extends TutorialFormError {
   }
 }
 
-
-class TutorialFormLoaded extends TutorialFormInitialized { 
-  const TutorialFormLoaded({ TutorialModel? value }): super(value: value);
+class TutorialFormLoaded extends TutorialFormInitialized {
+  const TutorialFormLoaded({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -189,12 +183,11 @@ class TutorialFormLoaded extends TutorialFormInitialized {
   }
 }
 
-
-class SubmittableTutorialForm extends TutorialFormInitialized { 
-  const SubmittableTutorialForm({ TutorialModel? value }): super(value: value);
+class SubmittableTutorialForm extends TutorialFormInitialized {
+  const SubmittableTutorialForm({super.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() {
@@ -203,5 +196,3 @@ class SubmittableTutorialForm extends TutorialFormInitialized {
     }''';
   }
 }
-
-

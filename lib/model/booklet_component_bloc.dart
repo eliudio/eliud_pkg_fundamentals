@@ -20,7 +20,8 @@ import 'package:eliud_pkg_fundamentals/model/booklet_component_event.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/booklet_repository.dart';
 
-class BookletComponentBloc extends Bloc<BookletComponentEvent, BookletComponentState> {
+class BookletComponentBloc
+    extends Bloc<BookletComponentEvent, BookletComponentState> {
   final BookletRepository? bookletRepository;
   StreamSubscription? _bookletSubscription;
 
@@ -33,11 +34,12 @@ class BookletComponentBloc extends Bloc<BookletComponentEvent, BookletComponentS
     });
   }
 
-  BookletComponentBloc({ this.bookletRepository }): super(BookletComponentUninitialized()) {
-    on <FetchBookletComponent> ((event, emit) {
+  BookletComponentBloc({this.bookletRepository})
+      : super(BookletComponentUninitialized()) {
+    on<FetchBookletComponent>((event, emit) {
       _mapLoadBookletComponentUpdateToState(event.id!);
     });
-    on <BookletComponentUpdated> ((event, emit) {
+    on<BookletComponentUpdated>((event, emit) {
       emit(BookletComponentLoaded(value: event.value));
     });
   }
@@ -47,6 +49,4 @@ class BookletComponentBloc extends Bloc<BookletComponentEvent, BookletComponentS
     _bookletSubscription?.cancel();
     return super.close();
   }
-
 }
-

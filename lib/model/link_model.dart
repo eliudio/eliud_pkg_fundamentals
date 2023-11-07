@@ -18,25 +18,34 @@ import 'package:eliud_core/core/base/model_base.dart';
 import '../tools/bespoke_models.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
-
 import 'package:eliud_pkg_fundamentals/model/link_entity.dart';
-
-
-
 
 class LinkModel implements ModelBase {
   static const String packageName = 'eliud_pkg_fundamentals';
   static const String id = 'links';
 
+  @override
   String documentID;
   String? linkText;
   ActionModel? action;
 
-  LinkModel({required this.documentID, this.linkText, this.action, })  {
-  }
+  LinkModel({
+    required this.documentID,
+    this.linkText,
+    this.action,
+  });
 
-  LinkModel copyWith({String? documentID, String? linkText, ActionModel? action, }) {
-    return LinkModel(documentID: documentID ?? this.documentID, linkText: linkText ?? this.linkText, action: action ?? this.action, );
+  @override
+  LinkModel copyWith({
+    String? documentID,
+    String? linkText,
+    ActionModel? action,
+  }) {
+    return LinkModel(
+      documentID: documentID ?? this.documentID,
+      linkText: linkText ?? this.linkText,
+      action: action ?? this.action,
+    );
   }
 
   @override
@@ -44,9 +53,9 @@ class LinkModel implements ModelBase {
 
   @override
   bool operator ==(Object other) =>
-          identical(this, other) ||
-          other is LinkModel &&
-          runtimeType == other.runtimeType && 
+      identical(this, other) ||
+      other is LinkModel &&
+          runtimeType == other.runtimeType &&
           documentID == other.documentID &&
           linkText == other.linkText &&
           action == other.action;
@@ -56,41 +65,42 @@ class LinkModel implements ModelBase {
     return 'LinkModel{documentID: $documentID, linkText: $linkText, action: $action}';
   }
 
+  @override
   Future<List<ModelReference>> collectReferences({String? appId}) async {
     List<ModelReference> referencesCollector = [];
-    if (action != null) referencesCollector.addAll(await action!.collectReferences(appId: appId));
+    if (action != null) {
+      referencesCollector.addAll(await action!.collectReferences(appId: appId));
+    }
     return referencesCollector;
   }
 
+  @override
   LinkEntity toEntity({String? appId}) {
     return LinkEntity(
-          linkText: (linkText != null) ? linkText : null, 
-          action: (action != null) ? action!.toEntity(appId: appId) : null, 
+      linkText: (linkText != null) ? linkText : null,
+      action: (action != null) ? action!.toEntity(appId: appId) : null,
     );
   }
 
-  static Future<LinkModel?> fromEntity(String documentID, LinkEntity? entity) async {
+  static Future<LinkModel?> fromEntity(
+      String documentID, LinkEntity? entity) async {
     if (entity == null) return null;
-    var counter = 0;
     return LinkModel(
-          documentID: documentID, 
-          linkText: entity.linkText, 
-          action: 
-            await ActionModel.fromEntity(entity.action), 
+      documentID: documentID,
+      linkText: entity.linkText,
+      action: await ActionModel.fromEntity(entity.action),
     );
   }
 
-  static Future<LinkModel?> fromEntityPlus(String documentID, LinkEntity? entity, { String? appId}) async {
+  static Future<LinkModel?> fromEntityPlus(
+      String documentID, LinkEntity? entity,
+      {String? appId}) async {
     if (entity == null) return null;
 
-    var counter = 0;
     return LinkModel(
-          documentID: documentID, 
-          linkText: entity.linkText, 
-          action: 
-            await ActionModel.fromEntityPlus(entity.action, appId: appId), 
+      documentID: documentID,
+      linkText: entity.linkText,
+      action: await ActionModel.fromEntityPlus(entity.action, appId: appId),
     );
   }
-
 }
-

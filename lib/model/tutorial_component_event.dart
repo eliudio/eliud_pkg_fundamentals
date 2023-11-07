@@ -24,13 +24,11 @@ abstract class TutorialComponentEvent extends Equatable {
 class FetchTutorialComponent extends TutorialComponentEvent {
   final String? id;
 
-  FetchTutorialComponent({ this.id });
+  FetchTutorialComponent({this.id});
 }
 
 class TutorialComponentUpdated extends TutorialComponentEvent {
   final TutorialModel value;
 
-  TutorialComponentUpdated({ required this.value });
+  TutorialComponentUpdated({required this.value});
 }
-
-

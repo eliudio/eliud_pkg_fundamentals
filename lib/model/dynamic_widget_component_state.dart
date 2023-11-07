@@ -27,20 +27,21 @@ class DynamicWidgetComponentUninitialized extends DynamicWidgetComponentState {}
 
 class DynamicWidgetComponentError extends DynamicWidgetComponentState {
   final String? message;
-  DynamicWidgetComponentError({ this.message });
+  DynamicWidgetComponentError({this.message});
 }
 
-class DynamicWidgetComponentPermissionDenied extends DynamicWidgetComponentState {
+class DynamicWidgetComponentPermissionDenied
+    extends DynamicWidgetComponentState {
   DynamicWidgetComponentPermissionDenied();
 }
 
 class DynamicWidgetComponentLoaded extends DynamicWidgetComponentState {
   final DynamicWidgetModel value;
 
-  const DynamicWidgetComponentLoaded({ required this.value });
+  const DynamicWidgetComponentLoaded({required this.value});
 
-  DynamicWidgetComponentLoaded copyWith({ DynamicWidgetModel? copyThis }) {
-    return DynamicWidgetComponentLoaded(value: copyThis ?? this.value);
+  DynamicWidgetComponentLoaded copyWith({DynamicWidgetModel? copyThis}) {
+    return DynamicWidgetComponentLoaded(value: copyThis ?? value);
   }
 
   @override
@@ -49,4 +50,3 @@ class DynamicWidgetComponentLoaded extends DynamicWidgetComponentState {
   @override
   String toString() => 'DynamicWidgetComponentLoaded { value: $value }';
 }
-

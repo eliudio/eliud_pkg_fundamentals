@@ -27,16 +27,15 @@ class DocumentComponentConstructorDefault implements ComponentConstructor {
 }
 
 class DocumentComponent extends AbstractDocumentComponent {
-  DocumentComponent(
-      {Key? key, required AppModel app, required String documentId})
-      : super(key: key, app: app, documentId: documentId);
+  DocumentComponent({super.key, required super.app, required super.documentId});
 
   @override
   Widget yourWidget(BuildContext context, DocumentModel? value) {
     return BlocBuilder<AccessBloc, AccessState>(
         builder: (context, accessState) {
       if (accessState is AccessDetermined) {
-        return DocumentRendererTool().render(app,
+        return DocumentRendererTool().render(
+            app,
             context,
             accessState.getMember(),
             value!.content!,

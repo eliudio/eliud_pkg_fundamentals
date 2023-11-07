@@ -22,12 +22,26 @@ class LinkEntity implements EntityBase {
   final String? linkText;
   final ActionEntity? action;
 
-  LinkEntity({this.linkText, this.action, });
+  LinkEntity({
+    this.linkText,
+    this.action,
+  });
 
-  LinkEntity copyWith({String? documentID, String? linkText, ActionEntity? action, }) {
-    return LinkEntity(linkText : linkText ?? this.linkText, action : action ?? this.action, );
+  LinkEntity copyWith({
+    String? documentID,
+    String? linkText,
+    ActionEntity? action,
+  }) {
+    return LinkEntity(
+      linkText: linkText ?? this.linkText,
+      action: action ?? this.action,
+    );
   }
-  List<Object?> get props => [linkText, action, ];
+
+  List<Object?> get props => [
+        linkText,
+        action,
+      ];
 
   @override
   String toString() {
@@ -38,27 +52,34 @@ class LinkEntity implements EntityBase {
     if (o == null) return null;
     var map = o as Map<String, dynamic>;
 
-    var actionFromMap;
-    actionFromMap = map['action'];
-    if (actionFromMap != null)
-      actionFromMap = ActionEntity.fromMap(actionFromMap, newDocumentIds: newDocumentIds);
+    var actionFromMap = map['action'];
+    if (actionFromMap != null) {
+      actionFromMap =
+          ActionEntity.fromMap(actionFromMap, newDocumentIds: newDocumentIds);
+    }
 
     return LinkEntity(
-      linkText: map['linkText'], 
-      action: actionFromMap, 
+      linkText: map['linkText'],
+      action: actionFromMap,
     );
   }
 
+  @override
   Map<String, Object?> toDocument() {
-    final Map<String, dynamic>? actionMap = action != null 
-        ? action!.toDocument()
-        : null;
+    final Map<String, dynamic>? actionMap =
+        action != null ? action!.toDocument() : null;
 
     Map<String, Object?> theDocument = HashMap();
-    if (linkText != null) theDocument["linkText"] = linkText;
-      else theDocument["linkText"] = null;
-    if (action != null) theDocument["action"] = actionMap;
-      else theDocument["action"] = null;
+    if (linkText != null) {
+      theDocument["linkText"] = linkText;
+    } else {
+      theDocument["linkText"] = null;
+    }
+    if (action != null) {
+      theDocument["action"] = actionMap;
+    } else {
+      theDocument["action"] = null;
+    }
     return theDocument;
   }
 
@@ -68,7 +89,8 @@ class LinkEntity implements EntityBase {
     return newEntity;
   }
 
-  static LinkEntity? fromJsonString(String json, {Map<String, String>? newDocumentIds}) {
+  static LinkEntity? fromJsonString(String json,
+      {Map<String, String>? newDocumentIds}) {
     Map<String, dynamic>? generationSpecificationMap = jsonDecode(json);
     return fromMap(generationSpecificationMap, newDocumentIds: newDocumentIds);
   }
@@ -77,9 +99,9 @@ class LinkEntity implements EntityBase {
     return jsonEncode(toDocument());
   }
 
-  Future<Map<String, Object?>> enrichedDocument(Map<String, Object?> theDocument) async {
+  @override
+  Future<Map<String, Object?>> enrichedDocument(
+      Map<String, Object?> theDocument) async {
     return theDocument;
   }
-
 }
-

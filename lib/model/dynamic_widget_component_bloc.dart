@@ -20,24 +20,27 @@ import 'package:eliud_pkg_fundamentals/model/dynamic_widget_component_event.dart
 import 'package:eliud_pkg_fundamentals/model/dynamic_widget_component_state.dart';
 import 'package:eliud_pkg_fundamentals/model/dynamic_widget_repository.dart';
 
-class DynamicWidgetComponentBloc extends Bloc<DynamicWidgetComponentEvent, DynamicWidgetComponentState> {
+class DynamicWidgetComponentBloc
+    extends Bloc<DynamicWidgetComponentEvent, DynamicWidgetComponentState> {
   final DynamicWidgetRepository? dynamicWidgetRepository;
   StreamSubscription? _dynamicWidgetSubscription;
 
   void _mapLoadDynamicWidgetComponentUpdateToState(String documentId) {
     _dynamicWidgetSubscription?.cancel();
-    _dynamicWidgetSubscription = dynamicWidgetRepository!.listenTo(documentId, (value) {
+    _dynamicWidgetSubscription =
+        dynamicWidgetRepository!.listenTo(documentId, (value) {
       if (value != null) {
         add(DynamicWidgetComponentUpdated(value: value));
       }
     });
   }
 
-  DynamicWidgetComponentBloc({ this.dynamicWidgetRepository }): super(DynamicWidgetComponentUninitialized()) {
-    on <FetchDynamicWidgetComponent> ((event, emit) {
+  DynamicWidgetComponentBloc({this.dynamicWidgetRepository})
+      : super(DynamicWidgetComponentUninitialized()) {
+    on<FetchDynamicWidgetComponent>((event, emit) {
       _mapLoadDynamicWidgetComponentUpdateToState(event.id!);
     });
-    on <DynamicWidgetComponentUpdated> ((event, emit) {
+    on<DynamicWidgetComponentUpdated>((event, emit) {
       emit(DynamicWidgetComponentLoaded(value: event.value));
     });
   }
@@ -47,6 +50,4 @@ class DynamicWidgetComponentBloc extends Bloc<DynamicWidgetComponentEvent, Dynam
     _dynamicWidgetSubscription?.cancel();
     return super.close();
   }
-
 }
-

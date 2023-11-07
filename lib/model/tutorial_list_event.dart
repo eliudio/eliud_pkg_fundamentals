@@ -30,10 +30,10 @@ class NewPage extends TutorialListEvent {}
 class AddTutorialList extends TutorialListEvent {
   final TutorialModel? value;
 
-  const AddTutorialList({ this.value });
+  const AddTutorialList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'AddTutorialList{ value: $value }';
@@ -42,10 +42,10 @@ class AddTutorialList extends TutorialListEvent {
 class UpdateTutorialList extends TutorialListEvent {
   final TutorialModel? value;
 
-  const UpdateTutorialList({ this.value });
+  const UpdateTutorialList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'UpdateTutorialList{ value: $value }';
@@ -54,10 +54,10 @@ class UpdateTutorialList extends TutorialListEvent {
 class DeleteTutorialList extends TutorialListEvent {
   final TutorialModel? value;
 
-  const DeleteTutorialList({ this.value });
+  const DeleteTutorialList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'DeleteTutorialList{ value: $value }';
@@ -67,24 +67,24 @@ class TutorialListUpdated extends TutorialListEvent {
   final List<TutorialModel?>? value;
   final bool? mightHaveMore;
 
-  const TutorialListUpdated({ this.value, this.mightHaveMore });
+  const TutorialListUpdated({this.value, this.mightHaveMore});
 
   @override
-  List<Object?> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [value, mightHaveMore];
 
   @override
-  String toString() => 'TutorialListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+  String toString() =>
+      'TutorialListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 
 class TutorialChangeQuery extends TutorialListEvent {
   final EliudQuery? newQuery;
 
-  const TutorialChangeQuery({ required this.newQuery });
+  const TutorialChangeQuery({required this.newQuery});
 
   @override
-  List<Object?> get props => [ newQuery ];
+  List<Object?> get props => [newQuery];
 
   @override
   String toString() => 'TutorialChangeQuery{ value: $newQuery }';
 }
-

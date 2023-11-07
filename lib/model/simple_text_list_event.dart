@@ -30,10 +30,10 @@ class NewPage extends SimpleTextListEvent {}
 class AddSimpleTextList extends SimpleTextListEvent {
   final SimpleTextModel? value;
 
-  const AddSimpleTextList({ this.value });
+  const AddSimpleTextList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'AddSimpleTextList{ value: $value }';
@@ -42,10 +42,10 @@ class AddSimpleTextList extends SimpleTextListEvent {
 class UpdateSimpleTextList extends SimpleTextListEvent {
   final SimpleTextModel? value;
 
-  const UpdateSimpleTextList({ this.value });
+  const UpdateSimpleTextList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'UpdateSimpleTextList{ value: $value }';
@@ -54,10 +54,10 @@ class UpdateSimpleTextList extends SimpleTextListEvent {
 class DeleteSimpleTextList extends SimpleTextListEvent {
   final SimpleTextModel? value;
 
-  const DeleteSimpleTextList({ this.value });
+  const DeleteSimpleTextList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'DeleteSimpleTextList{ value: $value }';
@@ -67,24 +67,24 @@ class SimpleTextListUpdated extends SimpleTextListEvent {
   final List<SimpleTextModel?>? value;
   final bool? mightHaveMore;
 
-  const SimpleTextListUpdated({ this.value, this.mightHaveMore });
+  const SimpleTextListUpdated({this.value, this.mightHaveMore});
 
   @override
-  List<Object?> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [value, mightHaveMore];
 
   @override
-  String toString() => 'SimpleTextListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+  String toString() =>
+      'SimpleTextListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 
 class SimpleTextChangeQuery extends SimpleTextListEvent {
   final EliudQuery? newQuery;
 
-  const SimpleTextChangeQuery({ required this.newQuery });
+  const SimpleTextChangeQuery({required this.newQuery});
 
   @override
-  List<Object?> get props => [ newQuery ];
+  List<Object?> get props => [newQuery];
 
   @override
   String toString() => 'SimpleTextChangeQuery{ value: $newQuery }';
 }
-

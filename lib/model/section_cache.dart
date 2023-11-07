@@ -26,12 +26,13 @@ import 'package:eliud_pkg_fundamentals/model/model_export.dart';
 import 'package:eliud_pkg_fundamentals/model/entity_export.dart';
 
 class SectionCache implements SectionRepository {
-
   final SectionRepository reference;
-  final Map<String?, SectionModel?> fullCache = Map();
+  final Map<String?, SectionModel?> fullCache = {};
 
   SectionCache(this.reference);
 
+  /// Add a SectionModel to the repository, cached
+  @override
   Future<SectionModel> add(SectionModel value) {
     return reference.add(value).then((newValue) {
       fullCache[value.documentID] = newValue;
@@ -39,20 +40,28 @@ class SectionCache implements SectionRepository {
     });
   }
 
+  /// Add a SectionEntity to the repository, cached
+  @override
   Future<SectionEntity> addEntity(String documentID, SectionEntity value) {
     return reference.addEntity(documentID, value);
   }
 
+  /// Update a SectionEntity in the repository, cached
+  @override
   Future<SectionEntity> updateEntity(String documentID, SectionEntity value) {
     return reference.updateEntity(documentID, value);
   }
 
-  Future<void> delete(SectionModel value){
+  /// Delete a SectionModel from the repository, cached
+  @override
+  Future<void> delete(SectionModel value) {
     fullCache.remove(value.documentID);
     reference.delete(value);
     return Future.value();
   }
 
+  /// Retrieve a SectionModel with it's id, cached
+  @override
   Future<SectionModel?> get(String? id, {Function(Exception)? onError}) async {
     var value = fullCache[id];
     if (value != null) return refreshRelations(value);
@@ -61,6 +70,8 @@ class SectionCache implements SectionRepository {
     return value;
   }
 
+  /// Update a SectionModel
+  @override
   Future<SectionModel> update(SectionModel value) {
     return reference.update(value).then((newValue) {
       fullCache[value.documentID] = newValue;
@@ -68,47 +79,112 @@ class SectionCache implements SectionRepository {
     });
   }
 
+  /// Retrieve list of List<SectionModel?>
   @override
-  Stream<List<SectionModel?>> values({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) {
-    return reference.values(orderBy: orderBy, descending: descending, startAfter: startAfter, limit: limit, setLastDoc: setLastDoc, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery);
+  Stream<List<SectionModel?>> values(
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      SetLastDoc? setLastDoc,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery}) {
+    return reference.values(
+        orderBy: orderBy,
+        descending: descending,
+        startAfter: startAfter,
+        limit: limit,
+        setLastDoc: setLastDoc,
+        privilegeLevel: privilegeLevel,
+        eliudQuery: eliudQuery);
   }
 
   @override
-  Stream<List<SectionModel?>> valuesWithDetails({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) {
-    return reference.valuesWithDetails(orderBy: orderBy, descending: descending, startAfter: startAfter, limit: limit, setLastDoc: setLastDoc, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery);
+  Stream<List<SectionModel?>> valuesWithDetails(
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      SetLastDoc? setLastDoc,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery}) {
+    return reference.valuesWithDetails(
+        orderBy: orderBy,
+        descending: descending,
+        startAfter: startAfter,
+        limit: limit,
+        setLastDoc: setLastDoc,
+        privilegeLevel: privilegeLevel,
+        eliudQuery: eliudQuery);
   }
 
   @override
-  Future<List<SectionModel?>> valuesList({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) async {
-    return await reference.valuesList(orderBy: orderBy, descending: descending, startAfter: startAfter, limit: limit, setLastDoc: setLastDoc, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery);
-  }
-  
-  @override
-  Future<List<SectionModel?>> valuesListWithDetails({String? orderBy, bool? descending, Object? startAfter, int? limit, SetLastDoc? setLastDoc, int? privilegeLevel, EliudQuery? eliudQuery }) async {
-    return await reference.valuesListWithDetails(orderBy: orderBy, descending: descending, startAfter: startAfter, limit: limit, setLastDoc: setLastDoc, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery);
+  Future<List<SectionModel?>> valuesList(
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      SetLastDoc? setLastDoc,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery}) async {
+    return await reference.valuesList(
+        orderBy: orderBy,
+        descending: descending,
+        startAfter: startAfter,
+        limit: limit,
+        setLastDoc: setLastDoc,
+        privilegeLevel: privilegeLevel,
+        eliudQuery: eliudQuery);
   }
 
+  @override
+  Future<List<SectionModel?>> valuesListWithDetails(
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      SetLastDoc? setLastDoc,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery}) async {
+    return await reference.valuesListWithDetails(
+        orderBy: orderBy,
+        descending: descending,
+        startAfter: startAfter,
+        limit: limit,
+        setLastDoc: setLastDoc,
+        privilegeLevel: privilegeLevel,
+        eliudQuery: eliudQuery);
+  }
+
+  @override
   void flush() {
     fullCache.clear();
   }
-  
+
+  @override
   String? timeStampToString(dynamic timeStamp) {
     return reference.timeStampToString(timeStamp);
-  } 
+  }
 
+  @override
   dynamic getSubCollection(String documentId, String name) {
     return reference.getSubCollection(documentId, name);
   }
 
-  Future<SectionModel> changeValue(String documentId, String fieldName, num changeByThisValue) {
-    return reference.changeValue(documentId, fieldName, changeByThisValue).then((newValue) {
+  @override
+  Future<SectionModel> changeValue(
+      String documentId, String fieldName, num changeByThisValue) {
+    return reference
+        .changeValue(documentId, fieldName, changeByThisValue)
+        .then((newValue) {
       fullCache[documentId] = newValue;
       return newValue!;
     });
   }
 
   @override
-  Future<SectionEntity?> getEntity(String? id, {Function(Exception p1)? onError}) {
+  Future<SectionEntity?> getEntity(String? id,
+      {Function(Exception p1)? onError}) {
     return reference.getEntity(id, onError: onError);
   }
 
@@ -117,22 +193,49 @@ class SectionCache implements SectionRepository {
     return reference.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
+  @override
   Future<void> deleteAll() {
     return reference.deleteAll();
   }
 
   @override
-  StreamSubscription<List<SectionModel?>> listen(trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery}) {
-    return reference.listen(trigger, orderBy: orderBy, descending: descending, startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery);
+  StreamSubscription<List<SectionModel?>> listen(trigger,
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery}) {
+    return reference.listen(trigger,
+        orderBy: orderBy,
+        descending: descending,
+        startAfter: startAfter,
+        limit: limit,
+        privilegeLevel: privilegeLevel,
+        eliudQuery: eliudQuery);
   }
 
   @override
-  StreamSubscription<List<SectionModel?>> listenWithDetails(trigger, {String? orderBy, bool? descending, Object? startAfter, int? limit, int? privilegeLevel, EliudQuery? eliudQuery}) {
-    return reference.listenWithDetails(trigger, orderBy: orderBy, descending: descending, startAfter: startAfter, limit: limit, privilegeLevel: privilegeLevel, eliudQuery: eliudQuery);
+  StreamSubscription<List<SectionModel?>> listenWithDetails(trigger,
+      {String? orderBy,
+      bool? descending,
+      Object? startAfter,
+      int? limit,
+      int? privilegeLevel,
+      EliudQuery? eliudQuery}) {
+    return reference.listenWithDetails(trigger,
+        orderBy: orderBy,
+        descending: descending,
+        startAfter: startAfter,
+        limit: limit,
+        privilegeLevel: privilegeLevel,
+        eliudQuery: eliudQuery);
   }
 
   @override
-  StreamSubscription<SectionModel?> listenTo(String documentId, SectionChanged changed, {SectionErrorHandler? errorHandler}) {
+  StreamSubscription<SectionModel?> listenTo(
+      String documentId, SectionChanged changed,
+      {SectionErrorHandler? errorHandler}) {
     return reference.listenTo(documentId, ((value) {
       if (value != null) {
         fullCache[value.documentID] = value;
@@ -142,11 +245,12 @@ class SectionCache implements SectionRepository {
   }
 
   static Future<SectionModel> refreshRelations(SectionModel model) async {
-
     PlatformMediumModel? imageHolder;
     if (model.image != null) {
       try {
-        await platformMediumRepository()!.get(model.image!.documentID).then((val) {
+        await platformMediumRepository()!
+            .get(model.image!.documentID)
+            .then((val) {
           imageHolder = val;
         }).catchError((error) {});
       } catch (_) {}
@@ -154,19 +258,16 @@ class SectionCache implements SectionRepository {
 
     List<LinkModel>? linksHolder;
     if (model.links != null) {
-      linksHolder = List<LinkModel>.from(await Future.wait(await model.links!.map((element) async {
+      linksHolder = List<LinkModel>.from(
+              await Future.wait(model.links!.map((element) async {
         return await LinkCache.refreshRelations(element);
-      }))).toList();
+      })))
+          .toList();
     }
 
     return model.copyWith(
-        image: imageHolder,
-
-        links: linksHolder,
-
-
+      image: imageHolder,
+      links: linksHolder,
     );
   }
-
 }
-

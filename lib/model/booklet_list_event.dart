@@ -30,10 +30,10 @@ class NewPage extends BookletListEvent {}
 class AddBookletList extends BookletListEvent {
   final BookletModel? value;
 
-  const AddBookletList({ this.value });
+  const AddBookletList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'AddBookletList{ value: $value }';
@@ -42,10 +42,10 @@ class AddBookletList extends BookletListEvent {
 class UpdateBookletList extends BookletListEvent {
   final BookletModel? value;
 
-  const UpdateBookletList({ this.value });
+  const UpdateBookletList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'UpdateBookletList{ value: $value }';
@@ -54,10 +54,10 @@ class UpdateBookletList extends BookletListEvent {
 class DeleteBookletList extends BookletListEvent {
   final BookletModel? value;
 
-  const DeleteBookletList({ this.value });
+  const DeleteBookletList({this.value});
 
   @override
-  List<Object?> get props => [ value ];
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'DeleteBookletList{ value: $value }';
@@ -67,24 +67,24 @@ class BookletListUpdated extends BookletListEvent {
   final List<BookletModel?>? value;
   final bool? mightHaveMore;
 
-  const BookletListUpdated({ this.value, this.mightHaveMore });
+  const BookletListUpdated({this.value, this.mightHaveMore});
 
   @override
-  List<Object?> get props => [ value, mightHaveMore ];
+  List<Object?> get props => [value, mightHaveMore];
 
   @override
-  String toString() => 'BookletListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
+  String toString() =>
+      'BookletListUpdated{ value: $value, mightHaveMore: $mightHaveMore }';
 }
 
 class BookletChangeQuery extends BookletListEvent {
   final EliudQuery? newQuery;
 
-  const BookletChangeQuery({ required this.newQuery });
+  const BookletChangeQuery({required this.newQuery});
 
   @override
-  List<Object?> get props => [ newQuery ];
+  List<Object?> get props => [newQuery];
 
   @override
   String toString() => 'BookletChangeQuery{ value: $newQuery }';
 }
-
