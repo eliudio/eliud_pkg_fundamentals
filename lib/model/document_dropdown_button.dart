@@ -33,6 +33,9 @@ typedef DocumentChanged = Function(
   int? privilegeLevel,
 );
 
+/* 
+ * DocumentDropdownButtonWidget is the drop down widget to allow to select an instance of Document
+ */
 class DocumentDropdownButtonWidget extends StatefulWidget {
   final AppModel app;
   final int? privilegeLevel;
@@ -40,6 +43,9 @@ class DocumentDropdownButtonWidget extends StatefulWidget {
   final DocumentChanged? trigger;
   final bool? optional;
 
+  /* 
+   * construct a DocumentDropdownButtonWidget
+   */
   DocumentDropdownButtonWidget(
       {required this.app,
       this.privilegeLevel,
@@ -48,18 +54,21 @@ class DocumentDropdownButtonWidget extends StatefulWidget {
       this.optional,
       super.key});
 
+  /* 
+   * create state of DocumentDropdownButtonWidget
+   */
   @override
   State<StatefulWidget> createState() {
-    return DocumentDropdownButtonWidgetState(value);
+    return _DocumentDropdownButtonWidgetState(value);
   }
 }
 
-class DocumentDropdownButtonWidgetState
+class _DocumentDropdownButtonWidgetState
     extends State<DocumentDropdownButtonWidget> {
   DocumentListBloc? bloc;
   String? value;
 
-  DocumentDropdownButtonWidgetState(this.value);
+  _DocumentDropdownButtonWidgetState(this.value);
 
   @override
   void didChangeDependencies() {
@@ -73,7 +82,7 @@ class DocumentDropdownButtonWidgetState
     super.dispose();
   }
 
-  List<Widget> widgets(DocumentModel value) {
+  List<Widget> _widgets(DocumentModel value) {
     var app = widget.app;
     var widgets = <Widget>[];
     widgets.add(value.description != null
@@ -130,7 +139,7 @@ class DocumentDropdownButtonWidgetState
                   height: 100.0,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: widgets(element),
+                    children: _widgets(element),
                   ),
                 )));
           }

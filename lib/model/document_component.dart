@@ -25,14 +25,23 @@ import 'abstract_repository_singleton.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/model/app_model.dart';
 
+/*
+ * AbstractDocumentComponent is the base class to extend / implement in case you need to implement a component
+ */
 abstract class AbstractDocumentComponent extends StatelessWidget {
   static String componentName = "documents";
   final AppModel app;
   final String documentId;
 
+  /*
+   * Construct AbstractDocumentComponent
+   */
   AbstractDocumentComponent(
       {super.key, required this.app, required this.documentId});
 
+  /*
+   * build the component
+   */
   @override
   Widget build(BuildContext context) {
     return BlocProvider<DocumentComponentBloc>(
@@ -68,5 +77,8 @@ abstract class AbstractDocumentComponent extends StatelessWidget {
     });
   }
 
+  /*
+   * Implement this method to provide your widget
+   */
   Widget yourWidget(BuildContext context, DocumentModel value);
 }

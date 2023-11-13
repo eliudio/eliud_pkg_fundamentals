@@ -25,12 +25,21 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/tools/firestore/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
+/* 
+ * SimpleTextFirestore is the firestore implementation of SimpleTextRepository
+ */
 class SimpleTextFirestore implements SimpleTextRepository {
+  /* 
+   * transform a map into an entity
+   */
   @override
   SimpleTextEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     return SimpleTextEntity.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
+  /* 
+   * add an entity to the repository
+   */
   @override
   Future<SimpleTextEntity> addEntity(
       String documentID, SimpleTextEntity value) {
@@ -40,6 +49,9 @@ class SimpleTextFirestore implements SimpleTextRepository {
         .then((_) => value);
   }
 
+  /* 
+   * Update an entity
+   */
   @override
   Future<SimpleTextEntity> updateEntity(
       String documentID, SimpleTextEntity value) {
@@ -49,6 +61,9 @@ class SimpleTextFirestore implements SimpleTextRepository {
         .then((_) => value);
   }
 
+  /* 
+   * Add a model to the repository
+   */
   @override
   Future<SimpleTextModel> add(SimpleTextModel value) {
     return simpleTextCollection
@@ -57,11 +72,17 @@ class SimpleTextFirestore implements SimpleTextRepository {
         .then((_) => value);
   }
 
+  /* 
+   * Delete a model
+   */
   @override
   Future<void> delete(SimpleTextModel value) {
     return simpleTextCollection.doc(value.documentID).delete();
   }
 
+  /* 
+   * Update a model
+   */
   @override
   Future<SimpleTextModel> update(SimpleTextModel value) {
     return simpleTextCollection
@@ -81,6 +102,9 @@ class SimpleTextFirestore implements SimpleTextRepository {
         appId: appId);
   }
 
+  /* 
+   * Retrieve an entity from the repository with id
+   */
   @override
   Future<SimpleTextEntity?> getEntity(String? id,
       {Function(Exception)? onError}) async {
@@ -99,6 +123,9 @@ class SimpleTextFirestore implements SimpleTextRepository {
     return null;
   }
 
+  /* 
+   * Retrieve an model from the repository with id
+   */
   @override
   Future<SimpleTextModel?> get(String? id,
       {Function(Exception)? onError}) async {
@@ -117,6 +144,9 @@ class SimpleTextFirestore implements SimpleTextRepository {
     return null;
   }
 
+  /* 
+   * Listen to the repository using a query. Retrieve models
+   */
   @override
   StreamSubscription<List<SimpleTextModel?>> listen(
       SimpleTextModelTrigger trigger,
@@ -148,6 +178,9 @@ class SimpleTextFirestore implements SimpleTextRepository {
     });
   }
 
+  /* 
+   * Listen to the repository using a query. Retrieve models and linked models
+   */
   @override
   StreamSubscription<List<SimpleTextModel?>> listenWithDetails(
       SimpleTextModelTrigger trigger,
@@ -179,6 +212,9 @@ class SimpleTextFirestore implements SimpleTextRepository {
     });
   }
 
+  /* 
+   * Listen to 1 document in the repository
+   */
   @override
   StreamSubscription<SimpleTextModel?> listenTo(
       String documentId, SimpleTextChanged changed,
@@ -198,6 +234,9 @@ class SimpleTextFirestore implements SimpleTextRepository {
     return theStream;
   }
 
+  /* 
+   * Retrieve values/models from the repository
+   */
   @override
   Stream<List<SimpleTextModel?>> values(
       {String? orderBy,
@@ -227,6 +266,9 @@ class SimpleTextFirestore implements SimpleTextRepository {
     return values;
   }
 
+  /* 
+   * Retrieve values/models, including linked models, from the repository
+   */
   @override
   Stream<List<SimpleTextModel?>> valuesWithDetails(
       {String? orderBy,
@@ -256,6 +298,9 @@ class SimpleTextFirestore implements SimpleTextRepository {
     return values;
   }
 
+  /* 
+   * Retrieve values/models from the repository
+   */
   @override
   Future<List<SimpleTextModel?>> valuesList(
       {String? orderBy,
@@ -286,6 +331,9 @@ class SimpleTextFirestore implements SimpleTextRepository {
     return values;
   }
 
+  /* 
+   * Retrieve values/models, including linked models, from the repository
+   */
   @override
   Future<List<SimpleTextModel?>> valuesListWithDetails(
       {String? orderBy,
@@ -316,9 +364,15 @@ class SimpleTextFirestore implements SimpleTextRepository {
     return values;
   }
 
+  /* 
+   * Flush the repository
+   */
   @override
   void flush() {}
 
+  /* 
+   * Delete all entries in the repository
+   */
   @override
   Future<void> deleteAll() {
     return simpleTextCollection.get().then((snapshot) {
@@ -328,16 +382,25 @@ class SimpleTextFirestore implements SimpleTextRepository {
     });
   }
 
+  /* 
+   * Retrieve the subcollection of this repository
+   */
   @override
   dynamic getSubCollection(String documentId, String name) {
     return simpleTextCollection.doc(documentId).collection(name);
   }
 
+  /* 
+   * Retrieve a timestamp
+   */
   @override
   String? timeStampToString(dynamic timeStamp) {
     return firestoreTimeStampToString(timeStamp);
   }
 
+  /* 
+   * change 1 a fieldvalue for 1 document  
+   */
   @override
   Future<SimpleTextModel?> changeValue(
       String documentId, String fieldName, num changeByThisValue) {

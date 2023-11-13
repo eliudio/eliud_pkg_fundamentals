@@ -31,7 +31,13 @@ import 'document_list_event.dart';
 import 'document_list_state.dart';
 import 'document_model.dart';
 
+/* 
+ * DocumentComponentSelector is a component selector for Document, allowing to select a Document component
+ */
 class DocumentComponentSelector extends ComponentSelector {
+  /* 
+   * createSelectWidget creates the widget
+   */
   @override
   Widget createSelectWidget(BuildContext context, AppModel app,
       int privilegeLevel, double height, SelectComponent selected, editor) {
@@ -41,7 +47,7 @@ class DocumentComponentSelector extends ComponentSelector {
         eliudQuery: getComponentSelectorQuery(0, app.documentID),
         documentRepository: documentRepository(appId: appId)!,
       )..add(LoadDocumentList()),
-      child: SelectDocumentWidget(
+      child: _SelectDocumentWidget(
           app: app,
           height: height,
           containerPrivilege: privilegeLevel,
@@ -51,28 +57,30 @@ class DocumentComponentSelector extends ComponentSelector {
   }
 }
 
-class SelectDocumentWidget extends StatefulWidget {
+/* 
+ * _SelectDocumentWidget 
+ */
+class _SelectDocumentWidget extends StatefulWidget {
   final AppModel app;
   final double height;
   final SelectComponent selected;
   final int containerPrivilege;
   final ComponentEditorConstructor editorConstructor;
 
-  const SelectDocumentWidget(
-      {super.key,
-      required this.app,
+  const _SelectDocumentWidget(
+      {required this.app,
       required this.containerPrivilege,
       required this.height,
       required this.selected,
       required this.editorConstructor});
 
   @override
-  State<SelectDocumentWidget> createState() {
+  State<_SelectDocumentWidget> createState() {
     return _SelectDocumentWidgetState();
   }
 }
 
-class _SelectDocumentWidgetState extends State<SelectDocumentWidget>
+class _SelectDocumentWidgetState extends State<_SelectDocumentWidget>
     with TickerProviderStateMixin {
   TabController? _privilegeTabController;
   final List<String> _privilegeItems = ['No', 'L1', 'L2', 'Owner'];

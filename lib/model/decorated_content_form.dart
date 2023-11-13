@@ -60,7 +60,7 @@ class DecoratedContentForm extends StatelessWidget {
           appId,
           formAction: formAction,
         )..add(InitialiseDecoratedContentFormEvent(value: value)),
-        child: MyDecoratedContentForm(
+        child: _MyDecoratedContentForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     }
@@ -70,7 +70,7 @@ class DecoratedContentForm extends StatelessWidget {
           appId,
           formAction: formAction,
         )..add(InitialiseDecoratedContentFormNoLoadEvent(value: value)),
-        child: MyDecoratedContentForm(
+        child: _MyDecoratedContentForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     } else {
@@ -89,27 +89,27 @@ class DecoratedContentForm extends StatelessWidget {
             )..add((formAction == FormAction.updateAction
                 ? InitialiseDecoratedContentFormEvent(value: value)
                 : InitialiseNewDecoratedContentFormEvent())),
-            child: MyDecoratedContentForm(
+            child: _MyDecoratedContentForm(
                 app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
 }
 
-class MyDecoratedContentForm extends StatefulWidget {
+class _MyDecoratedContentForm extends StatefulWidget {
   final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MyDecoratedContentForm(
+  _MyDecoratedContentForm(
       {required this.app, this.formAction, this.submitAction});
 
   @override
-  State<MyDecoratedContentForm> createState() =>
+  State<_MyDecoratedContentForm> createState() =>
       _MyDecoratedContentFormState(formAction);
 }
 
-class _MyDecoratedContentFormState extends State<MyDecoratedContentForm> {
+class _MyDecoratedContentFormState extends State<_MyDecoratedContentForm> {
   final FormAction? formAction;
   late DecoratedContentFormBloc _myFormBloc;
 

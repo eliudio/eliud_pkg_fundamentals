@@ -60,7 +60,7 @@ class ListedItemForm extends StatelessWidget {
         create: (context) => ListedItemFormBloc(
           appId,
         )..add(InitialiseListedItemFormEvent(value: value)),
-        child: MyListedItemForm(
+        child: _MyListedItemForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     }
@@ -69,7 +69,7 @@ class ListedItemForm extends StatelessWidget {
         create: (context) => ListedItemFormBloc(
           appId,
         )..add(InitialiseListedItemFormNoLoadEvent(value: value)),
-        child: MyListedItemForm(
+        child: _MyListedItemForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     } else {
@@ -87,25 +87,25 @@ class ListedItemForm extends StatelessWidget {
             )..add((formAction == FormAction.updateAction
                 ? InitialiseListedItemFormEvent(value: value)
                 : InitialiseNewListedItemFormEvent())),
-            child: MyListedItemForm(
+            child: _MyListedItemForm(
                 app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
 }
 
-class MyListedItemForm extends StatefulWidget {
+class _MyListedItemForm extends StatefulWidget {
   final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MyListedItemForm({required this.app, this.formAction, this.submitAction});
+  _MyListedItemForm({required this.app, this.formAction, this.submitAction});
 
   @override
-  State<MyListedItemForm> createState() => _MyListedItemFormState(formAction);
+  State<_MyListedItemForm> createState() => _MyListedItemFormState(formAction);
 }
 
-class _MyListedItemFormState extends State<MyListedItemForm> {
+class _MyListedItemFormState extends State<_MyListedItemForm> {
   final FormAction? formAction;
   late ListedItemFormBloc _myFormBloc;
 

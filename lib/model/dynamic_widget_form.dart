@@ -58,7 +58,7 @@ class DynamicWidgetForm extends StatelessWidget {
           appId,
           formAction: formAction,
         )..add(InitialiseDynamicWidgetFormEvent(value: value)),
-        child: MyDynamicWidgetForm(
+        child: _MyDynamicWidgetForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     }
@@ -68,7 +68,7 @@ class DynamicWidgetForm extends StatelessWidget {
           appId,
           formAction: formAction,
         )..add(InitialiseDynamicWidgetFormNoLoadEvent(value: value)),
-        child: MyDynamicWidgetForm(
+        child: _MyDynamicWidgetForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     } else {
@@ -87,26 +87,26 @@ class DynamicWidgetForm extends StatelessWidget {
             )..add((formAction == FormAction.updateAction
                 ? InitialiseDynamicWidgetFormEvent(value: value)
                 : InitialiseNewDynamicWidgetFormEvent())),
-            child: MyDynamicWidgetForm(
+            child: _MyDynamicWidgetForm(
                 app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
 }
 
-class MyDynamicWidgetForm extends StatefulWidget {
+class _MyDynamicWidgetForm extends StatefulWidget {
   final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MyDynamicWidgetForm({required this.app, this.formAction, this.submitAction});
+  _MyDynamicWidgetForm({required this.app, this.formAction, this.submitAction});
 
   @override
-  State<MyDynamicWidgetForm> createState() =>
+  State<_MyDynamicWidgetForm> createState() =>
       _MyDynamicWidgetFormState(formAction);
 }
 
-class _MyDynamicWidgetFormState extends State<MyDynamicWidgetForm> {
+class _MyDynamicWidgetFormState extends State<_MyDynamicWidgetForm> {
   final FormAction? formAction;
   late DynamicWidgetFormBloc _myFormBloc;
 

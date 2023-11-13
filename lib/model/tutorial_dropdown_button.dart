@@ -33,6 +33,9 @@ typedef TutorialChanged = Function(
   int? privilegeLevel,
 );
 
+/* 
+ * TutorialDropdownButtonWidget is the drop down widget to allow to select an instance of Tutorial
+ */
 class TutorialDropdownButtonWidget extends StatefulWidget {
   final AppModel app;
   final int? privilegeLevel;
@@ -40,6 +43,9 @@ class TutorialDropdownButtonWidget extends StatefulWidget {
   final TutorialChanged? trigger;
   final bool? optional;
 
+  /* 
+   * construct a TutorialDropdownButtonWidget
+   */
   TutorialDropdownButtonWidget(
       {required this.app,
       this.privilegeLevel,
@@ -48,18 +54,21 @@ class TutorialDropdownButtonWidget extends StatefulWidget {
       this.optional,
       super.key});
 
+  /* 
+   * create state of TutorialDropdownButtonWidget
+   */
   @override
   State<StatefulWidget> createState() {
-    return TutorialDropdownButtonWidgetState(value);
+    return _TutorialDropdownButtonWidgetState(value);
   }
 }
 
-class TutorialDropdownButtonWidgetState
+class _TutorialDropdownButtonWidgetState
     extends State<TutorialDropdownButtonWidget> {
   TutorialListBloc? bloc;
   String? value;
 
-  TutorialDropdownButtonWidgetState(this.value);
+  _TutorialDropdownButtonWidgetState(this.value);
 
   @override
   void didChangeDependencies() {
@@ -73,7 +82,7 @@ class TutorialDropdownButtonWidgetState
     super.dispose();
   }
 
-  List<Widget> widgets(TutorialModel value) {
+  List<Widget> _widgets(TutorialModel value) {
     var app = widget.app;
     var widgets = <Widget>[];
     widgets.add(value.description != null
@@ -130,7 +139,7 @@ class TutorialDropdownButtonWidgetState
                   height: 100.0,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: widgets(element),
+                    children: _widgets(element),
                   ),
                 )));
           }

@@ -33,6 +33,9 @@ typedef SimpleImageChanged = Function(
   int? privilegeLevel,
 );
 
+/* 
+ * SimpleImageDropdownButtonWidget is the drop down widget to allow to select an instance of SimpleImage
+ */
 class SimpleImageDropdownButtonWidget extends StatefulWidget {
   final AppModel app;
   final int? privilegeLevel;
@@ -40,6 +43,9 @@ class SimpleImageDropdownButtonWidget extends StatefulWidget {
   final SimpleImageChanged? trigger;
   final bool? optional;
 
+  /* 
+   * construct a SimpleImageDropdownButtonWidget
+   */
   SimpleImageDropdownButtonWidget(
       {required this.app,
       this.privilegeLevel,
@@ -48,18 +54,21 @@ class SimpleImageDropdownButtonWidget extends StatefulWidget {
       this.optional,
       super.key});
 
+  /* 
+   * create state of SimpleImageDropdownButtonWidget
+   */
   @override
   State<StatefulWidget> createState() {
-    return SimpleImageDropdownButtonWidgetState(value);
+    return _SimpleImageDropdownButtonWidgetState(value);
   }
 }
 
-class SimpleImageDropdownButtonWidgetState
+class _SimpleImageDropdownButtonWidgetState
     extends State<SimpleImageDropdownButtonWidget> {
   SimpleImageListBloc? bloc;
   String? value;
 
-  SimpleImageDropdownButtonWidgetState(this.value);
+  _SimpleImageDropdownButtonWidgetState(this.value);
 
   @override
   void didChangeDependencies() {
@@ -73,7 +82,7 @@ class SimpleImageDropdownButtonWidgetState
     super.dispose();
   }
 
-  List<Widget> widgets(SimpleImageModel value) {
+  List<Widget> _widgets(SimpleImageModel value) {
     var app = widget.app;
     var widgets = <Widget>[];
     widgets.add(value.description != null
@@ -130,7 +139,7 @@ class SimpleImageDropdownButtonWidgetState
                   height: 100.0,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: widgets(element),
+                    children: _widgets(element),
                   ),
                 )));
           }

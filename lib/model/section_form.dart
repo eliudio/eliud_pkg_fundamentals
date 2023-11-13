@@ -61,7 +61,7 @@ class SectionForm extends StatelessWidget {
         create: (context) => SectionFormBloc(
           appId,
         )..add(InitialiseSectionFormEvent(value: value)),
-        child: MySectionForm(
+        child: _MySectionForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     }
@@ -70,7 +70,7 @@ class SectionForm extends StatelessWidget {
         create: (context) => SectionFormBloc(
           appId,
         )..add(InitialiseSectionFormNoLoadEvent(value: value)),
-        child: MySectionForm(
+        child: _MySectionForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     } else {
@@ -88,25 +88,25 @@ class SectionForm extends StatelessWidget {
             )..add((formAction == FormAction.updateAction
                 ? InitialiseSectionFormEvent(value: value)
                 : InitialiseNewSectionFormEvent())),
-            child: MySectionForm(
+            child: _MySectionForm(
                 app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
 }
 
-class MySectionForm extends StatefulWidget {
+class _MySectionForm extends StatefulWidget {
   final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MySectionForm({required this.app, this.formAction, this.submitAction});
+  _MySectionForm({required this.app, this.formAction, this.submitAction});
 
   @override
-  State<MySectionForm> createState() => _MySectionFormState(formAction);
+  State<_MySectionForm> createState() => _MySectionFormState(formAction);
 }
 
-class _MySectionFormState extends State<MySectionForm> {
+class _MySectionFormState extends State<_MySectionForm> {
   final FormAction? formAction;
   late SectionFormBloc _myFormBloc;
 

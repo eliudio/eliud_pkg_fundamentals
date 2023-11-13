@@ -31,7 +31,13 @@ import 'tutorial_list_event.dart';
 import 'tutorial_list_state.dart';
 import 'tutorial_model.dart';
 
+/* 
+ * TutorialComponentSelector is a component selector for Tutorial, allowing to select a Tutorial component
+ */
 class TutorialComponentSelector extends ComponentSelector {
+  /* 
+   * createSelectWidget creates the widget
+   */
   @override
   Widget createSelectWidget(BuildContext context, AppModel app,
       int privilegeLevel, double height, SelectComponent selected, editor) {
@@ -41,7 +47,7 @@ class TutorialComponentSelector extends ComponentSelector {
         eliudQuery: getComponentSelectorQuery(0, app.documentID),
         tutorialRepository: tutorialRepository(appId: appId)!,
       )..add(LoadTutorialList()),
-      child: SelectTutorialWidget(
+      child: _SelectTutorialWidget(
           app: app,
           height: height,
           containerPrivilege: privilegeLevel,
@@ -51,28 +57,30 @@ class TutorialComponentSelector extends ComponentSelector {
   }
 }
 
-class SelectTutorialWidget extends StatefulWidget {
+/* 
+ * _SelectTutorialWidget 
+ */
+class _SelectTutorialWidget extends StatefulWidget {
   final AppModel app;
   final double height;
   final SelectComponent selected;
   final int containerPrivilege;
   final ComponentEditorConstructor editorConstructor;
 
-  const SelectTutorialWidget(
-      {super.key,
-      required this.app,
+  const _SelectTutorialWidget(
+      {required this.app,
       required this.containerPrivilege,
       required this.height,
       required this.selected,
       required this.editorConstructor});
 
   @override
-  State<SelectTutorialWidget> createState() {
+  State<_SelectTutorialWidget> createState() {
     return _SelectTutorialWidgetState();
   }
 }
 
-class _SelectTutorialWidgetState extends State<SelectTutorialWidget>
+class _SelectTutorialWidgetState extends State<_SelectTutorialWidget>
     with TickerProviderStateMixin {
   TabController? _privilegeTabController;
   final List<String> _privilegeItems = ['No', 'L1', 'L2', 'Owner'];

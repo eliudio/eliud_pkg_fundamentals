@@ -34,6 +34,9 @@ class FaderComponentBloc
     });
   }
 
+  /*
+   * Construct FaderComponentBloc
+   */
   FaderComponentBloc({this.faderRepository})
       : super(FaderComponentUninitialized()) {
     on<FetchFaderComponent>((event, emit) {
@@ -44,6 +47,9 @@ class FaderComponentBloc
     });
   }
 
+  /*
+   * Close the FaderComponentBloc
+   */
   @override
   Future<void> close() {
     _faderSubscription?.cancel();

@@ -31,7 +31,13 @@ import 'fader_list_event.dart';
 import 'fader_list_state.dart';
 import 'fader_model.dart';
 
+/* 
+ * FaderComponentSelector is a component selector for Fader, allowing to select a Fader component
+ */
 class FaderComponentSelector extends ComponentSelector {
+  /* 
+   * createSelectWidget creates the widget
+   */
   @override
   Widget createSelectWidget(BuildContext context, AppModel app,
       int privilegeLevel, double height, SelectComponent selected, editor) {
@@ -41,7 +47,7 @@ class FaderComponentSelector extends ComponentSelector {
         eliudQuery: getComponentSelectorQuery(0, app.documentID),
         faderRepository: faderRepository(appId: appId)!,
       )..add(LoadFaderList()),
-      child: SelectFaderWidget(
+      child: _SelectFaderWidget(
           app: app,
           height: height,
           containerPrivilege: privilegeLevel,
@@ -51,28 +57,30 @@ class FaderComponentSelector extends ComponentSelector {
   }
 }
 
-class SelectFaderWidget extends StatefulWidget {
+/* 
+ * _SelectFaderWidget 
+ */
+class _SelectFaderWidget extends StatefulWidget {
   final AppModel app;
   final double height;
   final SelectComponent selected;
   final int containerPrivilege;
   final ComponentEditorConstructor editorConstructor;
 
-  const SelectFaderWidget(
-      {super.key,
-      required this.app,
+  const _SelectFaderWidget(
+      {required this.app,
       required this.containerPrivilege,
       required this.height,
       required this.selected,
       required this.editorConstructor});
 
   @override
-  State<SelectFaderWidget> createState() {
+  State<_SelectFaderWidget> createState() {
     return _SelectFaderWidgetState();
   }
 }
 
-class _SelectFaderWidgetState extends State<SelectFaderWidget>
+class _SelectFaderWidgetState extends State<_SelectFaderWidget>
     with TickerProviderStateMixin {
   TabController? _privilegeTabController;
   final List<String> _privilegeItems = ['No', 'L1', 'L2', 'Owner'];

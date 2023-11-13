@@ -61,7 +61,7 @@ class TutorialForm extends StatelessWidget {
           appId,
           formAction: formAction,
         )..add(InitialiseTutorialFormEvent(value: value)),
-        child: MyTutorialForm(
+        child: _MyTutorialForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     }
@@ -71,7 +71,7 @@ class TutorialForm extends StatelessWidget {
           appId,
           formAction: formAction,
         )..add(InitialiseTutorialFormNoLoadEvent(value: value)),
-        child: MyTutorialForm(
+        child: _MyTutorialForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     } else {
@@ -90,25 +90,25 @@ class TutorialForm extends StatelessWidget {
             )..add((formAction == FormAction.updateAction
                 ? InitialiseTutorialFormEvent(value: value)
                 : InitialiseNewTutorialFormEvent())),
-            child: MyTutorialForm(
+            child: _MyTutorialForm(
                 app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
 }
 
-class MyTutorialForm extends StatefulWidget {
+class _MyTutorialForm extends StatefulWidget {
   final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MyTutorialForm({required this.app, this.formAction, this.submitAction});
+  _MyTutorialForm({required this.app, this.formAction, this.submitAction});
 
   @override
-  State<MyTutorialForm> createState() => _MyTutorialFormState(formAction);
+  State<_MyTutorialForm> createState() => _MyTutorialFormState(formAction);
 }
 
-class _MyTutorialFormState extends State<MyTutorialForm> {
+class _MyTutorialFormState extends State<_MyTutorialForm> {
   final FormAction? formAction;
   late TutorialFormBloc _myFormBloc;
 

@@ -31,7 +31,13 @@ import 'presentation_list_event.dart';
 import 'presentation_list_state.dart';
 import 'presentation_model.dart';
 
+/* 
+ * PresentationComponentSelector is a component selector for Presentation, allowing to select a Presentation component
+ */
 class PresentationComponentSelector extends ComponentSelector {
+  /* 
+   * createSelectWidget creates the widget
+   */
   @override
   Widget createSelectWidget(BuildContext context, AppModel app,
       int privilegeLevel, double height, SelectComponent selected, editor) {
@@ -41,7 +47,7 @@ class PresentationComponentSelector extends ComponentSelector {
         eliudQuery: getComponentSelectorQuery(0, app.documentID),
         presentationRepository: presentationRepository(appId: appId)!,
       )..add(LoadPresentationList()),
-      child: SelectPresentationWidget(
+      child: _SelectPresentationWidget(
           app: app,
           height: height,
           containerPrivilege: privilegeLevel,
@@ -51,28 +57,30 @@ class PresentationComponentSelector extends ComponentSelector {
   }
 }
 
-class SelectPresentationWidget extends StatefulWidget {
+/* 
+ * _SelectPresentationWidget 
+ */
+class _SelectPresentationWidget extends StatefulWidget {
   final AppModel app;
   final double height;
   final SelectComponent selected;
   final int containerPrivilege;
   final ComponentEditorConstructor editorConstructor;
 
-  const SelectPresentationWidget(
-      {super.key,
-      required this.app,
+  const _SelectPresentationWidget(
+      {required this.app,
       required this.containerPrivilege,
       required this.height,
       required this.selected,
       required this.editorConstructor});
 
   @override
-  State<SelectPresentationWidget> createState() {
+  State<_SelectPresentationWidget> createState() {
     return _SelectPresentationWidgetState();
   }
 }
 
-class _SelectPresentationWidgetState extends State<SelectPresentationWidget>
+class _SelectPresentationWidgetState extends State<_SelectPresentationWidget>
     with TickerProviderStateMixin {
   TabController? _privilegeTabController;
   final List<String> _privilegeItems = ['No', 'L1', 'L2', 'Owner'];

@@ -59,7 +59,7 @@ class TutorialEntryForm extends StatelessWidget {
         create: (context) => TutorialEntryFormBloc(
           appId,
         )..add(InitialiseTutorialEntryFormEvent(value: value)),
-        child: MyTutorialEntryForm(
+        child: _MyTutorialEntryForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     }
@@ -68,7 +68,7 @@ class TutorialEntryForm extends StatelessWidget {
         create: (context) => TutorialEntryFormBloc(
           appId,
         )..add(InitialiseTutorialEntryFormNoLoadEvent(value: value)),
-        child: MyTutorialEntryForm(
+        child: _MyTutorialEntryForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     } else {
@@ -86,26 +86,26 @@ class TutorialEntryForm extends StatelessWidget {
             )..add((formAction == FormAction.updateAction
                 ? InitialiseTutorialEntryFormEvent(value: value)
                 : InitialiseNewTutorialEntryFormEvent())),
-            child: MyTutorialEntryForm(
+            child: _MyTutorialEntryForm(
                 app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
 }
 
-class MyTutorialEntryForm extends StatefulWidget {
+class _MyTutorialEntryForm extends StatefulWidget {
   final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MyTutorialEntryForm({required this.app, this.formAction, this.submitAction});
+  _MyTutorialEntryForm({required this.app, this.formAction, this.submitAction});
 
   @override
-  State<MyTutorialEntryForm> createState() =>
+  State<_MyTutorialEntryForm> createState() =>
       _MyTutorialEntryFormState(formAction);
 }
 
-class _MyTutorialEntryFormState extends State<MyTutorialEntryForm> {
+class _MyTutorialEntryFormState extends State<_MyTutorialEntryForm> {
   final FormAction? formAction;
   late TutorialEntryFormBloc _myFormBloc;
 

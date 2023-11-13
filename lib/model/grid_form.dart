@@ -62,7 +62,7 @@ class GridForm extends StatelessWidget {
           appId,
           formAction: formAction,
         )..add(InitialiseGridFormEvent(value: value)),
-        child: MyGridForm(
+        child: _MyGridForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     }
@@ -72,7 +72,7 @@ class GridForm extends StatelessWidget {
           appId,
           formAction: formAction,
         )..add(InitialiseGridFormNoLoadEvent(value: value)),
-        child: MyGridForm(
+        child: _MyGridForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     } else {
@@ -91,25 +91,25 @@ class GridForm extends StatelessWidget {
             )..add((formAction == FormAction.updateAction
                 ? InitialiseGridFormEvent(value: value)
                 : InitialiseNewGridFormEvent())),
-            child: MyGridForm(
+            child: _MyGridForm(
                 app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
 }
 
-class MyGridForm extends StatefulWidget {
+class _MyGridForm extends StatefulWidget {
   final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MyGridForm({required this.app, this.formAction, this.submitAction});
+  _MyGridForm({required this.app, this.formAction, this.submitAction});
 
   @override
-  State<MyGridForm> createState() => _MyGridFormState(formAction);
+  State<_MyGridForm> createState() => _MyGridFormState(formAction);
 }
 
-class _MyGridFormState extends State<MyGridForm> {
+class _MyGridFormState extends State<_MyGridForm> {
   final FormAction? formAction;
   late GridFormBloc _myFormBloc;
 

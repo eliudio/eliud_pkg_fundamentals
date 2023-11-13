@@ -31,7 +31,13 @@ import 'simple_text_list_event.dart';
 import 'simple_text_list_state.dart';
 import 'simple_text_model.dart';
 
+/* 
+ * SimpleTextComponentSelector is a component selector for SimpleText, allowing to select a SimpleText component
+ */
 class SimpleTextComponentSelector extends ComponentSelector {
+  /* 
+   * createSelectWidget creates the widget
+   */
   @override
   Widget createSelectWidget(BuildContext context, AppModel app,
       int privilegeLevel, double height, SelectComponent selected, editor) {
@@ -41,7 +47,7 @@ class SimpleTextComponentSelector extends ComponentSelector {
         eliudQuery: getComponentSelectorQuery(0, app.documentID),
         simpleTextRepository: simpleTextRepository(appId: appId)!,
       )..add(LoadSimpleTextList()),
-      child: SelectSimpleTextWidget(
+      child: _SelectSimpleTextWidget(
           app: app,
           height: height,
           containerPrivilege: privilegeLevel,
@@ -51,28 +57,30 @@ class SimpleTextComponentSelector extends ComponentSelector {
   }
 }
 
-class SelectSimpleTextWidget extends StatefulWidget {
+/* 
+ * _SelectSimpleTextWidget 
+ */
+class _SelectSimpleTextWidget extends StatefulWidget {
   final AppModel app;
   final double height;
   final SelectComponent selected;
   final int containerPrivilege;
   final ComponentEditorConstructor editorConstructor;
 
-  const SelectSimpleTextWidget(
-      {super.key,
-      required this.app,
+  const _SelectSimpleTextWidget(
+      {required this.app,
       required this.containerPrivilege,
       required this.height,
       required this.selected,
       required this.editorConstructor});
 
   @override
-  State<SelectSimpleTextWidget> createState() {
+  State<_SelectSimpleTextWidget> createState() {
     return _SelectSimpleTextWidgetState();
   }
 }
 
-class _SelectSimpleTextWidgetState extends State<SelectSimpleTextWidget>
+class _SelectSimpleTextWidgetState extends State<_SelectSimpleTextWidget>
     with TickerProviderStateMixin {
   TabController? _privilegeTabController;
   final List<String> _privilegeItems = ['No', 'L1', 'L2', 'Owner'];

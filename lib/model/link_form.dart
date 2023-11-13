@@ -58,7 +58,7 @@ class LinkForm extends StatelessWidget {
         create: (context) => LinkFormBloc(
           appId,
         )..add(InitialiseLinkFormEvent(value: value)),
-        child: MyLinkForm(
+        child: _MyLinkForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     }
@@ -67,7 +67,7 @@ class LinkForm extends StatelessWidget {
         create: (context) => LinkFormBloc(
           appId,
         )..add(InitialiseLinkFormNoLoadEvent(value: value)),
-        child: MyLinkForm(
+        child: _MyLinkForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     } else {
@@ -85,25 +85,25 @@ class LinkForm extends StatelessWidget {
             )..add((formAction == FormAction.updateAction
                 ? InitialiseLinkFormEvent(value: value)
                 : InitialiseNewLinkFormEvent())),
-            child: MyLinkForm(
+            child: _MyLinkForm(
                 app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
 }
 
-class MyLinkForm extends StatefulWidget {
+class _MyLinkForm extends StatefulWidget {
   final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MyLinkForm({required this.app, this.formAction, this.submitAction});
+  _MyLinkForm({required this.app, this.formAction, this.submitAction});
 
   @override
-  State<MyLinkForm> createState() => _MyLinkFormState(formAction);
+  State<_MyLinkForm> createState() => _MyLinkFormState(formAction);
 }
 
-class _MyLinkFormState extends State<MyLinkForm> {
+class _MyLinkFormState extends State<_MyLinkForm> {
   final FormAction? formAction;
   late LinkFormBloc _myFormBloc;
 

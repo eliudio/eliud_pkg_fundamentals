@@ -35,6 +35,9 @@ class DynamicWidgetComponentBloc
     });
   }
 
+  /*
+   * Construct DynamicWidgetComponentBloc
+   */
   DynamicWidgetComponentBloc({this.dynamicWidgetRepository})
       : super(DynamicWidgetComponentUninitialized()) {
     on<FetchDynamicWidgetComponent>((event, emit) {
@@ -45,6 +48,9 @@ class DynamicWidgetComponentBloc
     });
   }
 
+  /*
+   * Close the DynamicWidgetComponentBloc
+   */
   @override
   Future<void> close() {
     _dynamicWidgetSubscription?.cancel();

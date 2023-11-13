@@ -33,6 +33,9 @@ typedef FaderChanged = Function(
   int? privilegeLevel,
 );
 
+/* 
+ * FaderDropdownButtonWidget is the drop down widget to allow to select an instance of Fader
+ */
 class FaderDropdownButtonWidget extends StatefulWidget {
   final AppModel app;
   final int? privilegeLevel;
@@ -40,6 +43,9 @@ class FaderDropdownButtonWidget extends StatefulWidget {
   final FaderChanged? trigger;
   final bool? optional;
 
+  /* 
+   * construct a FaderDropdownButtonWidget
+   */
   FaderDropdownButtonWidget(
       {required this.app,
       this.privilegeLevel,
@@ -48,17 +54,20 @@ class FaderDropdownButtonWidget extends StatefulWidget {
       this.optional,
       super.key});
 
+  /* 
+   * create state of FaderDropdownButtonWidget
+   */
   @override
   State<StatefulWidget> createState() {
-    return FaderDropdownButtonWidgetState(value);
+    return _FaderDropdownButtonWidgetState(value);
   }
 }
 
-class FaderDropdownButtonWidgetState extends State<FaderDropdownButtonWidget> {
+class _FaderDropdownButtonWidgetState extends State<FaderDropdownButtonWidget> {
   FaderListBloc? bloc;
   String? value;
 
-  FaderDropdownButtonWidgetState(this.value);
+  _FaderDropdownButtonWidgetState(this.value);
 
   @override
   void didChangeDependencies() {
@@ -72,7 +81,7 @@ class FaderDropdownButtonWidgetState extends State<FaderDropdownButtonWidget> {
     super.dispose();
   }
 
-  List<Widget> widgets(FaderModel value) {
+  List<Widget> _widgets(FaderModel value) {
     var app = widget.app;
     var widgets = <Widget>[];
     widgets.add(value.description != null
@@ -129,7 +138,7 @@ class FaderDropdownButtonWidgetState extends State<FaderDropdownButtonWidget> {
                   height: 100.0,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: widgets(element),
+                    children: _widgets(element),
                   ),
                 )));
           }

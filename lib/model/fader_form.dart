@@ -61,7 +61,7 @@ class FaderForm extends StatelessWidget {
           appId,
           formAction: formAction,
         )..add(InitialiseFaderFormEvent(value: value)),
-        child: MyFaderForm(
+        child: _MyFaderForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     }
@@ -71,7 +71,7 @@ class FaderForm extends StatelessWidget {
           appId,
           formAction: formAction,
         )..add(InitialiseFaderFormNoLoadEvent(value: value)),
-        child: MyFaderForm(
+        child: _MyFaderForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     } else {
@@ -90,25 +90,25 @@ class FaderForm extends StatelessWidget {
             )..add((formAction == FormAction.updateAction
                 ? InitialiseFaderFormEvent(value: value)
                 : InitialiseNewFaderFormEvent())),
-            child: MyFaderForm(
+            child: _MyFaderForm(
                 app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
 }
 
-class MyFaderForm extends StatefulWidget {
+class _MyFaderForm extends StatefulWidget {
   final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MyFaderForm({required this.app, this.formAction, this.submitAction});
+  _MyFaderForm({required this.app, this.formAction, this.submitAction});
 
   @override
-  State<MyFaderForm> createState() => _MyFaderFormState(formAction);
+  State<_MyFaderForm> createState() => _MyFaderFormState(formAction);
 }
 
-class _MyFaderFormState extends State<MyFaderForm> {
+class _MyFaderFormState extends State<_MyFaderForm> {
   final FormAction? formAction;
   late FaderFormBloc _myFormBloc;
 

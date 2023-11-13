@@ -58,7 +58,7 @@ class SimpleTextForm extends StatelessWidget {
           appId,
           formAction: formAction,
         )..add(InitialiseSimpleTextFormEvent(value: value)),
-        child: MySimpleTextForm(
+        child: _MySimpleTextForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     }
@@ -68,7 +68,7 @@ class SimpleTextForm extends StatelessWidget {
           appId,
           formAction: formAction,
         )..add(InitialiseSimpleTextFormNoLoadEvent(value: value)),
-        child: MySimpleTextForm(
+        child: _MySimpleTextForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     } else {
@@ -87,25 +87,25 @@ class SimpleTextForm extends StatelessWidget {
             )..add((formAction == FormAction.updateAction
                 ? InitialiseSimpleTextFormEvent(value: value)
                 : InitialiseNewSimpleTextFormEvent())),
-            child: MySimpleTextForm(
+            child: _MySimpleTextForm(
                 app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
 }
 
-class MySimpleTextForm extends StatefulWidget {
+class _MySimpleTextForm extends StatefulWidget {
   final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MySimpleTextForm({required this.app, this.formAction, this.submitAction});
+  _MySimpleTextForm({required this.app, this.formAction, this.submitAction});
 
   @override
-  State<MySimpleTextForm> createState() => _MySimpleTextFormState(formAction);
+  State<_MySimpleTextForm> createState() => _MySimpleTextFormState(formAction);
 }
 
-class _MySimpleTextFormState extends State<MySimpleTextForm> {
+class _MySimpleTextFormState extends State<_MySimpleTextForm> {
   final FormAction? formAction;
   late SimpleTextFormBloc _myFormBloc;
 

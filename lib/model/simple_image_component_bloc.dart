@@ -35,6 +35,9 @@ class SimpleImageComponentBloc
     });
   }
 
+  /*
+   * Construct SimpleImageComponentBloc
+   */
   SimpleImageComponentBloc({this.simpleImageRepository})
       : super(SimpleImageComponentUninitialized()) {
     on<FetchSimpleImageComponent>((event, emit) {
@@ -45,6 +48,9 @@ class SimpleImageComponentBloc
     });
   }
 
+  /*
+   * Close the SimpleImageComponentBloc
+   */
   @override
   Future<void> close() {
     _simpleImageSubscription?.cancel();

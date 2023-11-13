@@ -34,6 +34,9 @@ class TutorialComponentBloc
     });
   }
 
+  /*
+   * Construct TutorialComponentBloc
+   */
   TutorialComponentBloc({this.tutorialRepository})
       : super(TutorialComponentUninitialized()) {
     on<FetchTutorialComponent>((event, emit) {
@@ -44,6 +47,9 @@ class TutorialComponentBloc
     });
   }
 
+  /*
+   * Close the TutorialComponentBloc
+   */
   @override
   Future<void> close() {
     _tutorialSubscription?.cancel();

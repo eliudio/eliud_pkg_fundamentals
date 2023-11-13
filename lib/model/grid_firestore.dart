@@ -25,12 +25,21 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/tools/firestore/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
+/* 
+ * GridFirestore is the firestore implementation of GridRepository
+ */
 class GridFirestore implements GridRepository {
+  /* 
+   * transform a map into an entity
+   */
   @override
   GridEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     return GridEntity.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
+  /* 
+   * add an entity to the repository
+   */
   @override
   Future<GridEntity> addEntity(String documentID, GridEntity value) {
     return gridCollection
@@ -39,6 +48,9 @@ class GridFirestore implements GridRepository {
         .then((_) => value);
   }
 
+  /* 
+   * Update an entity
+   */
   @override
   Future<GridEntity> updateEntity(String documentID, GridEntity value) {
     return gridCollection
@@ -47,6 +59,9 @@ class GridFirestore implements GridRepository {
         .then((_) => value);
   }
 
+  /* 
+   * Add a model to the repository
+   */
   @override
   Future<GridModel> add(GridModel value) {
     return gridCollection
@@ -55,11 +70,17 @@ class GridFirestore implements GridRepository {
         .then((_) => value);
   }
 
+  /* 
+   * Delete a model
+   */
   @override
   Future<void> delete(GridModel value) {
     return gridCollection.doc(value.documentID).delete();
   }
 
+  /* 
+   * Update a model
+   */
   @override
   Future<GridModel> update(GridModel value) {
     return gridCollection
@@ -77,6 +98,9 @@ class GridFirestore implements GridRepository {
         appId: appId);
   }
 
+  /* 
+   * Retrieve an entity from the repository with id
+   */
   @override
   Future<GridEntity?> getEntity(String? id,
       {Function(Exception)? onError}) async {
@@ -95,6 +119,9 @@ class GridFirestore implements GridRepository {
     return null;
   }
 
+  /* 
+   * Retrieve an model from the repository with id
+   */
   @override
   Future<GridModel?> get(String? id, {Function(Exception)? onError}) async {
     try {
@@ -112,6 +139,9 @@ class GridFirestore implements GridRepository {
     return null;
   }
 
+  /* 
+   * Listen to the repository using a query. Retrieve models
+   */
   @override
   StreamSubscription<List<GridModel?>> listen(GridModelTrigger trigger,
       {String? orderBy,
@@ -142,6 +172,9 @@ class GridFirestore implements GridRepository {
     });
   }
 
+  /* 
+   * Listen to the repository using a query. Retrieve models and linked models
+   */
   @override
   StreamSubscription<List<GridModel?>> listenWithDetails(
       GridModelTrigger trigger,
@@ -173,6 +206,9 @@ class GridFirestore implements GridRepository {
     });
   }
 
+  /* 
+   * Listen to 1 document in the repository
+   */
   @override
   StreamSubscription<GridModel?> listenTo(
       String documentId, GridChanged changed,
@@ -191,6 +227,9 @@ class GridFirestore implements GridRepository {
     return theStream;
   }
 
+  /* 
+   * Retrieve values/models from the repository
+   */
   @override
   Stream<List<GridModel?>> values(
       {String? orderBy,
@@ -220,6 +259,9 @@ class GridFirestore implements GridRepository {
     return values;
   }
 
+  /* 
+   * Retrieve values/models, including linked models, from the repository
+   */
   @override
   Stream<List<GridModel?>> valuesWithDetails(
       {String? orderBy,
@@ -249,6 +291,9 @@ class GridFirestore implements GridRepository {
     return values;
   }
 
+  /* 
+   * Retrieve values/models from the repository
+   */
   @override
   Future<List<GridModel?>> valuesList(
       {String? orderBy,
@@ -279,6 +324,9 @@ class GridFirestore implements GridRepository {
     return values;
   }
 
+  /* 
+   * Retrieve values/models, including linked models, from the repository
+   */
   @override
   Future<List<GridModel?>> valuesListWithDetails(
       {String? orderBy,
@@ -309,9 +357,15 @@ class GridFirestore implements GridRepository {
     return values;
   }
 
+  /* 
+   * Flush the repository
+   */
   @override
   void flush() {}
 
+  /* 
+   * Delete all entries in the repository
+   */
   @override
   Future<void> deleteAll() {
     return gridCollection.get().then((snapshot) {
@@ -321,16 +375,25 @@ class GridFirestore implements GridRepository {
     });
   }
 
+  /* 
+   * Retrieve the subcollection of this repository
+   */
   @override
   dynamic getSubCollection(String documentId, String name) {
     return gridCollection.doc(documentId).collection(name);
   }
 
+  /* 
+   * Retrieve a timestamp
+   */
   @override
   String? timeStampToString(dynamic timeStamp) {
     return firestoreTimeStampToString(timeStamp);
   }
 
+  /* 
+   * change 1 a fieldvalue for 1 document  
+   */
   @override
   Future<GridModel?> changeValue(
       String documentId, String fieldName, num changeByThisValue) {

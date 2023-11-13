@@ -25,12 +25,21 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/tools/firestore/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
+/* 
+ * BookletFirestore is the firestore implementation of BookletRepository
+ */
 class BookletFirestore implements BookletRepository {
+  /* 
+   * transform a map into an entity
+   */
   @override
   BookletEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     return BookletEntity.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
+  /* 
+   * add an entity to the repository
+   */
   @override
   Future<BookletEntity> addEntity(String documentID, BookletEntity value) {
     return bookletCollection
@@ -39,6 +48,9 @@ class BookletFirestore implements BookletRepository {
         .then((_) => value);
   }
 
+  /* 
+   * Update an entity
+   */
   @override
   Future<BookletEntity> updateEntity(String documentID, BookletEntity value) {
     return bookletCollection
@@ -47,6 +59,9 @@ class BookletFirestore implements BookletRepository {
         .then((_) => value);
   }
 
+  /* 
+   * Add a model to the repository
+   */
   @override
   Future<BookletModel> add(BookletModel value) {
     return bookletCollection
@@ -55,11 +70,17 @@ class BookletFirestore implements BookletRepository {
         .then((_) => value);
   }
 
+  /* 
+   * Delete a model
+   */
   @override
   Future<void> delete(BookletModel value) {
     return bookletCollection.doc(value.documentID).delete();
   }
 
+  /* 
+   * Update a model
+   */
   @override
   Future<BookletModel> update(BookletModel value) {
     return bookletCollection
@@ -79,6 +100,9 @@ class BookletFirestore implements BookletRepository {
         appId: appId);
   }
 
+  /* 
+   * Retrieve an entity from the repository with id
+   */
   @override
   Future<BookletEntity?> getEntity(String? id,
       {Function(Exception)? onError}) async {
@@ -97,6 +121,9 @@ class BookletFirestore implements BookletRepository {
     return null;
   }
 
+  /* 
+   * Retrieve an model from the repository with id
+   */
   @override
   Future<BookletModel?> get(String? id, {Function(Exception)? onError}) async {
     try {
@@ -114,6 +141,9 @@ class BookletFirestore implements BookletRepository {
     return null;
   }
 
+  /* 
+   * Listen to the repository using a query. Retrieve models
+   */
   @override
   StreamSubscription<List<BookletModel?>> listen(BookletModelTrigger trigger,
       {String? orderBy,
@@ -144,6 +174,9 @@ class BookletFirestore implements BookletRepository {
     });
   }
 
+  /* 
+   * Listen to the repository using a query. Retrieve models and linked models
+   */
   @override
   StreamSubscription<List<BookletModel?>> listenWithDetails(
       BookletModelTrigger trigger,
@@ -175,6 +208,9 @@ class BookletFirestore implements BookletRepository {
     });
   }
 
+  /* 
+   * Listen to 1 document in the repository
+   */
   @override
   StreamSubscription<BookletModel?> listenTo(
       String documentId, BookletChanged changed,
@@ -193,6 +229,9 @@ class BookletFirestore implements BookletRepository {
     return theStream;
   }
 
+  /* 
+   * Retrieve values/models from the repository
+   */
   @override
   Stream<List<BookletModel?>> values(
       {String? orderBy,
@@ -222,6 +261,9 @@ class BookletFirestore implements BookletRepository {
     return values;
   }
 
+  /* 
+   * Retrieve values/models, including linked models, from the repository
+   */
   @override
   Stream<List<BookletModel?>> valuesWithDetails(
       {String? orderBy,
@@ -251,6 +293,9 @@ class BookletFirestore implements BookletRepository {
     return values;
   }
 
+  /* 
+   * Retrieve values/models from the repository
+   */
   @override
   Future<List<BookletModel?>> valuesList(
       {String? orderBy,
@@ -281,6 +326,9 @@ class BookletFirestore implements BookletRepository {
     return values;
   }
 
+  /* 
+   * Retrieve values/models, including linked models, from the repository
+   */
   @override
   Future<List<BookletModel?>> valuesListWithDetails(
       {String? orderBy,
@@ -311,9 +359,15 @@ class BookletFirestore implements BookletRepository {
     return values;
   }
 
+  /* 
+   * Flush the repository
+   */
   @override
   void flush() {}
 
+  /* 
+   * Delete all entries in the repository
+   */
   @override
   Future<void> deleteAll() {
     return bookletCollection.get().then((snapshot) {
@@ -323,16 +377,25 @@ class BookletFirestore implements BookletRepository {
     });
   }
 
+  /* 
+   * Retrieve the subcollection of this repository
+   */
   @override
   dynamic getSubCollection(String documentId, String name) {
     return bookletCollection.doc(documentId).collection(name);
   }
 
+  /* 
+   * Retrieve a timestamp
+   */
   @override
   String? timeStampToString(dynamic timeStamp) {
     return firestoreTimeStampToString(timeStamp);
   }
 
+  /* 
+   * change 1 a fieldvalue for 1 document  
+   */
   @override
   Future<BookletModel?> changeValue(
       String documentId, String fieldName, num changeByThisValue) {

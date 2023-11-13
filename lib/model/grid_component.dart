@@ -25,13 +25,22 @@ import 'abstract_repository_singleton.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/model/app_model.dart';
 
+/*
+ * AbstractGridComponent is the base class to extend / implement in case you need to implement a component
+ */
 abstract class AbstractGridComponent extends StatelessWidget {
   static String componentName = "grids";
   final AppModel app;
   final String gridId;
 
+  /*
+   * Construct AbstractGridComponent
+   */
   AbstractGridComponent({super.key, required this.app, required this.gridId});
 
+  /*
+   * build the component
+   */
   @override
   Widget build(BuildContext context) {
     return BlocProvider<GridComponentBloc>(
@@ -67,5 +76,8 @@ abstract class AbstractGridComponent extends StatelessWidget {
     });
   }
 
+  /*
+   * Implement this method to provide your widget
+   */
   Widget yourWidget(BuildContext context, GridModel value);
 }

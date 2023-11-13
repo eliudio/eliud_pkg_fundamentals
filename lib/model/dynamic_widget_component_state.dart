@@ -16,6 +16,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:eliud_pkg_fundamentals/model/dynamic_widget_model.dart';
 
+/* 
+ * DynamicWidgetComponentState is the base class for state for DynamicWidgetComponentBloc
+ */
 abstract class DynamicWidgetComponentState extends Equatable {
   const DynamicWidgetComponentState();
 
@@ -23,23 +26,41 @@ abstract class DynamicWidgetComponentState extends Equatable {
   List<Object?> get props => [];
 }
 
+/* 
+ * DynamicWidgetComponentUninitialized is the uninitialized state of the DynamicWidgetComponentBloc 
+ */
 class DynamicWidgetComponentUninitialized extends DynamicWidgetComponentState {}
 
+/* 
+ * DynamicWidgetComponentError is the error state of the DynamicWidgetComponentBloc 
+ */
 class DynamicWidgetComponentError extends DynamicWidgetComponentState {
   final String? message;
   DynamicWidgetComponentError({this.message});
 }
 
+/* 
+ * DynamicWidgetComponentPermissionDenied is to indicate permission denied state of the DynamicWidgetComponentBloc 
+ */
 class DynamicWidgetComponentPermissionDenied
     extends DynamicWidgetComponentState {
   DynamicWidgetComponentPermissionDenied();
 }
 
+/* 
+ * DynamicWidgetComponentLoaded is used to set the state of the DynamicWidgetComponentBloc to the loaded state
+ */
 class DynamicWidgetComponentLoaded extends DynamicWidgetComponentState {
   final DynamicWidgetModel value;
 
+  /* 
+   * construct DynamicWidgetComponentLoaded
+   */
   const DynamicWidgetComponentLoaded({required this.value});
 
+  /* 
+   * copy method
+   */
   DynamicWidgetComponentLoaded copyWith({DynamicWidgetModel? copyThis}) {
     return DynamicWidgetComponentLoaded(value: copyThis ?? value);
   }

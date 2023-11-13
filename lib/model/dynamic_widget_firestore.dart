@@ -25,13 +25,22 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/tools/firestore/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
+/* 
+ * DynamicWidgetFirestore is the firestore implementation of DynamicWidgetRepository
+ */
 class DynamicWidgetFirestore implements DynamicWidgetRepository {
+  /* 
+   * transform a map into an entity
+   */
   @override
   DynamicWidgetEntity? fromMap(Object? o,
       {Map<String, String>? newDocumentIds}) {
     return DynamicWidgetEntity.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
+  /* 
+   * add an entity to the repository
+   */
   @override
   Future<DynamicWidgetEntity> addEntity(
       String documentID, DynamicWidgetEntity value) {
@@ -41,6 +50,9 @@ class DynamicWidgetFirestore implements DynamicWidgetRepository {
         .then((_) => value);
   }
 
+  /* 
+   * Update an entity
+   */
   @override
   Future<DynamicWidgetEntity> updateEntity(
       String documentID, DynamicWidgetEntity value) {
@@ -50,6 +62,9 @@ class DynamicWidgetFirestore implements DynamicWidgetRepository {
         .then((_) => value);
   }
 
+  /* 
+   * Add a model to the repository
+   */
   @override
   Future<DynamicWidgetModel> add(DynamicWidgetModel value) {
     return dynamicWidgetCollection
@@ -58,11 +73,17 @@ class DynamicWidgetFirestore implements DynamicWidgetRepository {
         .then((_) => value);
   }
 
+  /* 
+   * Delete a model
+   */
   @override
   Future<void> delete(DynamicWidgetModel value) {
     return dynamicWidgetCollection.doc(value.documentID).delete();
   }
 
+  /* 
+   * Update a model
+   */
   @override
   Future<DynamicWidgetModel> update(DynamicWidgetModel value) {
     return dynamicWidgetCollection
@@ -82,6 +103,9 @@ class DynamicWidgetFirestore implements DynamicWidgetRepository {
         appId: appId);
   }
 
+  /* 
+   * Retrieve an entity from the repository with id
+   */
   @override
   Future<DynamicWidgetEntity?> getEntity(String? id,
       {Function(Exception)? onError}) async {
@@ -100,6 +124,9 @@ class DynamicWidgetFirestore implements DynamicWidgetRepository {
     return null;
   }
 
+  /* 
+   * Retrieve an model from the repository with id
+   */
   @override
   Future<DynamicWidgetModel?> get(String? id,
       {Function(Exception)? onError}) async {
@@ -118,6 +145,9 @@ class DynamicWidgetFirestore implements DynamicWidgetRepository {
     return null;
   }
 
+  /* 
+   * Listen to the repository using a query. Retrieve models
+   */
   @override
   StreamSubscription<List<DynamicWidgetModel?>> listen(
       DynamicWidgetModelTrigger trigger,
@@ -149,6 +179,9 @@ class DynamicWidgetFirestore implements DynamicWidgetRepository {
     });
   }
 
+  /* 
+   * Listen to the repository using a query. Retrieve models and linked models
+   */
   @override
   StreamSubscription<List<DynamicWidgetModel?>> listenWithDetails(
       DynamicWidgetModelTrigger trigger,
@@ -180,6 +213,9 @@ class DynamicWidgetFirestore implements DynamicWidgetRepository {
     });
   }
 
+  /* 
+   * Listen to 1 document in the repository
+   */
   @override
   StreamSubscription<DynamicWidgetModel?> listenTo(
       String documentId, DynamicWidgetChanged changed,
@@ -199,6 +235,9 @@ class DynamicWidgetFirestore implements DynamicWidgetRepository {
     return theStream;
   }
 
+  /* 
+   * Retrieve values/models from the repository
+   */
   @override
   Stream<List<DynamicWidgetModel?>> values(
       {String? orderBy,
@@ -228,6 +267,9 @@ class DynamicWidgetFirestore implements DynamicWidgetRepository {
     return values;
   }
 
+  /* 
+   * Retrieve values/models, including linked models, from the repository
+   */
   @override
   Stream<List<DynamicWidgetModel?>> valuesWithDetails(
       {String? orderBy,
@@ -257,6 +299,9 @@ class DynamicWidgetFirestore implements DynamicWidgetRepository {
     return values;
   }
 
+  /* 
+   * Retrieve values/models from the repository
+   */
   @override
   Future<List<DynamicWidgetModel?>> valuesList(
       {String? orderBy,
@@ -287,6 +332,9 @@ class DynamicWidgetFirestore implements DynamicWidgetRepository {
     return values;
   }
 
+  /* 
+   * Retrieve values/models, including linked models, from the repository
+   */
   @override
   Future<List<DynamicWidgetModel?>> valuesListWithDetails(
       {String? orderBy,
@@ -317,9 +365,15 @@ class DynamicWidgetFirestore implements DynamicWidgetRepository {
     return values;
   }
 
+  /* 
+   * Flush the repository
+   */
   @override
   void flush() {}
 
+  /* 
+   * Delete all entries in the repository
+   */
   @override
   Future<void> deleteAll() {
     return dynamicWidgetCollection.get().then((snapshot) {
@@ -329,16 +383,25 @@ class DynamicWidgetFirestore implements DynamicWidgetRepository {
     });
   }
 
+  /* 
+   * Retrieve the subcollection of this repository
+   */
   @override
   dynamic getSubCollection(String documentId, String name) {
     return dynamicWidgetCollection.doc(documentId).collection(name);
   }
 
+  /* 
+   * Retrieve a timestamp
+   */
   @override
   String? timeStampToString(dynamic timeStamp) {
     return firestoreTimeStampToString(timeStamp);
   }
 
+  /* 
+   * change 1 a fieldvalue for 1 document  
+   */
   @override
   Future<DynamicWidgetModel?> changeValue(
       String documentId, String fieldName, num changeByThisValue) {

@@ -33,6 +33,9 @@ class GridComponentBloc extends Bloc<GridComponentEvent, GridComponentState> {
     });
   }
 
+  /*
+   * Construct GridComponentBloc
+   */
   GridComponentBloc({this.gridRepository})
       : super(GridComponentUninitialized()) {
     on<FetchGridComponent>((event, emit) {
@@ -43,6 +46,9 @@ class GridComponentBloc extends Bloc<GridComponentEvent, GridComponentState> {
     });
   }
 
+  /*
+   * Close the GridComponentBloc
+   */
   @override
   Future<void> close() {
     _gridSubscription?.cancel();

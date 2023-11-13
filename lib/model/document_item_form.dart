@@ -59,7 +59,7 @@ class DocumentItemForm extends StatelessWidget {
         create: (context) => DocumentItemFormBloc(
           appId,
         )..add(InitialiseDocumentItemFormEvent(value: value)),
-        child: MyDocumentItemForm(
+        child: _MyDocumentItemForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     }
@@ -68,7 +68,7 @@ class DocumentItemForm extends StatelessWidget {
         create: (context) => DocumentItemFormBloc(
           appId,
         )..add(InitialiseDocumentItemFormNoLoadEvent(value: value)),
-        child: MyDocumentItemForm(
+        child: _MyDocumentItemForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     } else {
@@ -86,26 +86,26 @@ class DocumentItemForm extends StatelessWidget {
             )..add((formAction == FormAction.updateAction
                 ? InitialiseDocumentItemFormEvent(value: value)
                 : InitialiseNewDocumentItemFormEvent())),
-            child: MyDocumentItemForm(
+            child: _MyDocumentItemForm(
                 app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
 }
 
-class MyDocumentItemForm extends StatefulWidget {
+class _MyDocumentItemForm extends StatefulWidget {
   final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MyDocumentItemForm({required this.app, this.formAction, this.submitAction});
+  _MyDocumentItemForm({required this.app, this.formAction, this.submitAction});
 
   @override
-  State<MyDocumentItemForm> createState() =>
+  State<_MyDocumentItemForm> createState() =>
       _MyDocumentItemFormState(formAction);
 }
 
-class _MyDocumentItemFormState extends State<MyDocumentItemForm> {
+class _MyDocumentItemFormState extends State<_MyDocumentItemForm> {
   final FormAction? formAction;
   late DocumentItemFormBloc _myFormBloc;
 

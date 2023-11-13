@@ -33,6 +33,9 @@ typedef DynamicWidgetChanged = Function(
   int? privilegeLevel,
 );
 
+/* 
+ * DynamicWidgetDropdownButtonWidget is the drop down widget to allow to select an instance of DynamicWidget
+ */
 class DynamicWidgetDropdownButtonWidget extends StatefulWidget {
   final AppModel app;
   final int? privilegeLevel;
@@ -40,6 +43,9 @@ class DynamicWidgetDropdownButtonWidget extends StatefulWidget {
   final DynamicWidgetChanged? trigger;
   final bool? optional;
 
+  /* 
+   * construct a DynamicWidgetDropdownButtonWidget
+   */
   DynamicWidgetDropdownButtonWidget(
       {required this.app,
       this.privilegeLevel,
@@ -48,18 +54,21 @@ class DynamicWidgetDropdownButtonWidget extends StatefulWidget {
       this.optional,
       super.key});
 
+  /* 
+   * create state of DynamicWidgetDropdownButtonWidget
+   */
   @override
   State<StatefulWidget> createState() {
-    return DynamicWidgetDropdownButtonWidgetState(value);
+    return _DynamicWidgetDropdownButtonWidgetState(value);
   }
 }
 
-class DynamicWidgetDropdownButtonWidgetState
+class _DynamicWidgetDropdownButtonWidgetState
     extends State<DynamicWidgetDropdownButtonWidget> {
   DynamicWidgetListBloc? bloc;
   String? value;
 
-  DynamicWidgetDropdownButtonWidgetState(this.value);
+  _DynamicWidgetDropdownButtonWidgetState(this.value);
 
   @override
   void didChangeDependencies() {
@@ -73,7 +82,7 @@ class DynamicWidgetDropdownButtonWidgetState
     super.dispose();
   }
 
-  List<Widget> widgets(DynamicWidgetModel value) {
+  List<Widget> _widgets(DynamicWidgetModel value) {
     var app = widget.app;
     var widgets = <Widget>[];
     widgets.add(value.description != null
@@ -130,7 +139,7 @@ class DynamicWidgetDropdownButtonWidgetState
                   height: 100.0,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: widgets(element),
+                    children: _widgets(element),
                   ),
                 )));
           }

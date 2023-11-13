@@ -35,6 +35,9 @@ class DecoratedContentComponentBloc extends Bloc<DecoratedContentComponentEvent,
     });
   }
 
+  /*
+   * Construct DecoratedContentComponentBloc
+   */
   DecoratedContentComponentBloc({this.decoratedContentRepository})
       : super(DecoratedContentComponentUninitialized()) {
     on<FetchDecoratedContentComponent>((event, emit) {
@@ -45,6 +48,9 @@ class DecoratedContentComponentBloc extends Bloc<DecoratedContentComponentEvent,
     });
   }
 
+  /*
+   * Close the DecoratedContentComponentBloc
+   */
   @override
   Future<void> close() {
     _decoratedContentSubscription?.cancel();

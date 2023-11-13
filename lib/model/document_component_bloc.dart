@@ -34,6 +34,9 @@ class DocumentComponentBloc
     });
   }
 
+  /*
+   * Construct DocumentComponentBloc
+   */
   DocumentComponentBloc({this.documentRepository})
       : super(DocumentComponentUninitialized()) {
     on<FetchDocumentComponent>((event, emit) {
@@ -44,6 +47,9 @@ class DocumentComponentBloc
     });
   }
 
+  /*
+   * Close the DocumentComponentBloc
+   */
   @override
   Future<void> close() {
     _documentSubscription?.cancel();

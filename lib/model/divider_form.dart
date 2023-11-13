@@ -60,7 +60,7 @@ class DividerForm extends StatelessWidget {
           appId,
           formAction: formAction,
         )..add(InitialiseDividerFormEvent(value: value)),
-        child: MyDividerForm(
+        child: _MyDividerForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     }
@@ -70,7 +70,7 @@ class DividerForm extends StatelessWidget {
           appId,
           formAction: formAction,
         )..add(InitialiseDividerFormNoLoadEvent(value: value)),
-        child: MyDividerForm(
+        child: _MyDividerForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     } else {
@@ -89,25 +89,25 @@ class DividerForm extends StatelessWidget {
             )..add((formAction == FormAction.updateAction
                 ? InitialiseDividerFormEvent(value: value)
                 : InitialiseNewDividerFormEvent())),
-            child: MyDividerForm(
+            child: _MyDividerForm(
                 app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
 }
 
-class MyDividerForm extends StatefulWidget {
+class _MyDividerForm extends StatefulWidget {
   final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MyDividerForm({required this.app, this.formAction, this.submitAction});
+  _MyDividerForm({required this.app, this.formAction, this.submitAction});
 
   @override
-  State<MyDividerForm> createState() => _MyDividerFormState(formAction);
+  State<_MyDividerForm> createState() => _MyDividerFormState(formAction);
 }
 
-class _MyDividerFormState extends State<MyDividerForm> {
+class _MyDividerFormState extends State<_MyDividerForm> {
   final FormAction? formAction;
   late DividerFormBloc _myFormBloc;
 

@@ -35,6 +35,9 @@ class SimpleTextComponentBloc
     });
   }
 
+  /*
+   * Construct SimpleTextComponentBloc
+   */
   SimpleTextComponentBloc({this.simpleTextRepository})
       : super(SimpleTextComponentUninitialized()) {
     on<FetchSimpleTextComponent>((event, emit) {
@@ -45,6 +48,9 @@ class SimpleTextComponentBloc
     });
   }
 
+  /*
+   * Close the SimpleTextComponentBloc
+   */
   @override
   Future<void> close() {
     _simpleTextSubscription?.cancel();

@@ -60,7 +60,7 @@ class SimpleImageForm extends StatelessWidget {
           appId,
           formAction: formAction,
         )..add(InitialiseSimpleImageFormEvent(value: value)),
-        child: MySimpleImageForm(
+        child: _MySimpleImageForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     }
@@ -70,7 +70,7 @@ class SimpleImageForm extends StatelessWidget {
           appId,
           formAction: formAction,
         )..add(InitialiseSimpleImageFormNoLoadEvent(value: value)),
-        child: MySimpleImageForm(
+        child: _MySimpleImageForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     } else {
@@ -89,25 +89,26 @@ class SimpleImageForm extends StatelessWidget {
             )..add((formAction == FormAction.updateAction
                 ? InitialiseSimpleImageFormEvent(value: value)
                 : InitialiseNewSimpleImageFormEvent())),
-            child: MySimpleImageForm(
+            child: _MySimpleImageForm(
                 app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
 }
 
-class MySimpleImageForm extends StatefulWidget {
+class _MySimpleImageForm extends StatefulWidget {
   final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MySimpleImageForm({required this.app, this.formAction, this.submitAction});
+  _MySimpleImageForm({required this.app, this.formAction, this.submitAction});
 
   @override
-  State<MySimpleImageForm> createState() => _MySimpleImageFormState(formAction);
+  State<_MySimpleImageForm> createState() =>
+      _MySimpleImageFormState(formAction);
 }
 
-class _MySimpleImageFormState extends State<MySimpleImageForm> {
+class _MySimpleImageFormState extends State<_MySimpleImageForm> {
   final FormAction? formAction;
   late SimpleImageFormBloc _myFormBloc;
 

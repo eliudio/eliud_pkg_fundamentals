@@ -25,13 +25,22 @@ import 'abstract_repository_singleton.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/model/app_model.dart';
 
+/*
+ * AbstractFaderComponent is the base class to extend / implement in case you need to implement a component
+ */
 abstract class AbstractFaderComponent extends StatelessWidget {
   static String componentName = "faders";
   final AppModel app;
   final String faderId;
 
+  /*
+   * Construct AbstractFaderComponent
+   */
   AbstractFaderComponent({super.key, required this.app, required this.faderId});
 
+  /*
+   * build the component
+   */
   @override
   Widget build(BuildContext context) {
     return BlocProvider<FaderComponentBloc>(
@@ -67,5 +76,8 @@ abstract class AbstractFaderComponent extends StatelessWidget {
     });
   }
 
+  /*
+   * Implement this method to provide your widget
+   */
   Widget yourWidget(BuildContext context, FaderModel value);
 }

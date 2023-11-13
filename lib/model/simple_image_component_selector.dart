@@ -31,7 +31,13 @@ import 'simple_image_list_event.dart';
 import 'simple_image_list_state.dart';
 import 'simple_image_model.dart';
 
+/* 
+ * SimpleImageComponentSelector is a component selector for SimpleImage, allowing to select a SimpleImage component
+ */
 class SimpleImageComponentSelector extends ComponentSelector {
+  /* 
+   * createSelectWidget creates the widget
+   */
   @override
   Widget createSelectWidget(BuildContext context, AppModel app,
       int privilegeLevel, double height, SelectComponent selected, editor) {
@@ -41,7 +47,7 @@ class SimpleImageComponentSelector extends ComponentSelector {
         eliudQuery: getComponentSelectorQuery(0, app.documentID),
         simpleImageRepository: simpleImageRepository(appId: appId)!,
       )..add(LoadSimpleImageList()),
-      child: SelectSimpleImageWidget(
+      child: _SelectSimpleImageWidget(
           app: app,
           height: height,
           containerPrivilege: privilegeLevel,
@@ -51,28 +57,30 @@ class SimpleImageComponentSelector extends ComponentSelector {
   }
 }
 
-class SelectSimpleImageWidget extends StatefulWidget {
+/* 
+ * _SelectSimpleImageWidget 
+ */
+class _SelectSimpleImageWidget extends StatefulWidget {
   final AppModel app;
   final double height;
   final SelectComponent selected;
   final int containerPrivilege;
   final ComponentEditorConstructor editorConstructor;
 
-  const SelectSimpleImageWidget(
-      {super.key,
-      required this.app,
+  const _SelectSimpleImageWidget(
+      {required this.app,
       required this.containerPrivilege,
       required this.height,
       required this.selected,
       required this.editorConstructor});
 
   @override
-  State<SelectSimpleImageWidget> createState() {
+  State<_SelectSimpleImageWidget> createState() {
     return _SelectSimpleImageWidgetState();
   }
 }
 
-class _SelectSimpleImageWidgetState extends State<SelectSimpleImageWidget>
+class _SelectSimpleImageWidgetState extends State<_SelectSimpleImageWidget>
     with TickerProviderStateMixin {
   TabController? _privilegeTabController;
   final List<String> _privilegeItems = ['No', 'L1', 'L2', 'Owner'];

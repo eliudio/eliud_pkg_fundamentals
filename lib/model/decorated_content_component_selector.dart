@@ -31,7 +31,13 @@ import 'decorated_content_list_event.dart';
 import 'decorated_content_list_state.dart';
 import 'decorated_content_model.dart';
 
+/* 
+ * DecoratedContentComponentSelector is a component selector for DecoratedContent, allowing to select a DecoratedContent component
+ */
 class DecoratedContentComponentSelector extends ComponentSelector {
+  /* 
+   * createSelectWidget creates the widget
+   */
   @override
   Widget createSelectWidget(BuildContext context, AppModel app,
       int privilegeLevel, double height, SelectComponent selected, editor) {
@@ -41,7 +47,7 @@ class DecoratedContentComponentSelector extends ComponentSelector {
         eliudQuery: getComponentSelectorQuery(0, app.documentID),
         decoratedContentRepository: decoratedContentRepository(appId: appId)!,
       )..add(LoadDecoratedContentList()),
-      child: SelectDecoratedContentWidget(
+      child: _SelectDecoratedContentWidget(
           app: app,
           height: height,
           containerPrivilege: privilegeLevel,
@@ -51,29 +57,31 @@ class DecoratedContentComponentSelector extends ComponentSelector {
   }
 }
 
-class SelectDecoratedContentWidget extends StatefulWidget {
+/* 
+ * _SelectDecoratedContentWidget 
+ */
+class _SelectDecoratedContentWidget extends StatefulWidget {
   final AppModel app;
   final double height;
   final SelectComponent selected;
   final int containerPrivilege;
   final ComponentEditorConstructor editorConstructor;
 
-  const SelectDecoratedContentWidget(
-      {super.key,
-      required this.app,
+  const _SelectDecoratedContentWidget(
+      {required this.app,
       required this.containerPrivilege,
       required this.height,
       required this.selected,
       required this.editorConstructor});
 
   @override
-  State<SelectDecoratedContentWidget> createState() {
+  State<_SelectDecoratedContentWidget> createState() {
     return _SelectDecoratedContentWidgetState();
   }
 }
 
 class _SelectDecoratedContentWidgetState
-    extends State<SelectDecoratedContentWidget> with TickerProviderStateMixin {
+    extends State<_SelectDecoratedContentWidget> with TickerProviderStateMixin {
   TabController? _privilegeTabController;
   final List<String> _privilegeItems = ['No', 'L1', 'L2', 'Owner'];
   final int _initialPrivilege = 0;

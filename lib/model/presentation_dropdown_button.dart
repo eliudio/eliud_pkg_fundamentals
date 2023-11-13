@@ -33,6 +33,9 @@ typedef PresentationChanged = Function(
   int? privilegeLevel,
 );
 
+/* 
+ * PresentationDropdownButtonWidget is the drop down widget to allow to select an instance of Presentation
+ */
 class PresentationDropdownButtonWidget extends StatefulWidget {
   final AppModel app;
   final int? privilegeLevel;
@@ -40,6 +43,9 @@ class PresentationDropdownButtonWidget extends StatefulWidget {
   final PresentationChanged? trigger;
   final bool? optional;
 
+  /* 
+   * construct a PresentationDropdownButtonWidget
+   */
   PresentationDropdownButtonWidget(
       {required this.app,
       this.privilegeLevel,
@@ -48,18 +54,21 @@ class PresentationDropdownButtonWidget extends StatefulWidget {
       this.optional,
       super.key});
 
+  /* 
+   * create state of PresentationDropdownButtonWidget
+   */
   @override
   State<StatefulWidget> createState() {
-    return PresentationDropdownButtonWidgetState(value);
+    return _PresentationDropdownButtonWidgetState(value);
   }
 }
 
-class PresentationDropdownButtonWidgetState
+class _PresentationDropdownButtonWidgetState
     extends State<PresentationDropdownButtonWidget> {
   PresentationListBloc? bloc;
   String? value;
 
-  PresentationDropdownButtonWidgetState(this.value);
+  _PresentationDropdownButtonWidgetState(this.value);
 
   @override
   void didChangeDependencies() {
@@ -73,7 +82,7 @@ class PresentationDropdownButtonWidgetState
     super.dispose();
   }
 
-  List<Widget> widgets(PresentationModel value) {
+  List<Widget> _widgets(PresentationModel value) {
     var app = widget.app;
     var widgets = <Widget>[];
     widgets.add(value.description != null
@@ -130,7 +139,7 @@ class PresentationDropdownButtonWidgetState
                   height: 100.0,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: widgets(element),
+                    children: _widgets(element),
                   ),
                 )));
           }

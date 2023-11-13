@@ -33,6 +33,9 @@ typedef DecoratedContentChanged = Function(
   int? privilegeLevel,
 );
 
+/* 
+ * DecoratedContentDropdownButtonWidget is the drop down widget to allow to select an instance of DecoratedContent
+ */
 class DecoratedContentDropdownButtonWidget extends StatefulWidget {
   final AppModel app;
   final int? privilegeLevel;
@@ -40,6 +43,9 @@ class DecoratedContentDropdownButtonWidget extends StatefulWidget {
   final DecoratedContentChanged? trigger;
   final bool? optional;
 
+  /* 
+   * construct a DecoratedContentDropdownButtonWidget
+   */
   DecoratedContentDropdownButtonWidget(
       {required this.app,
       this.privilegeLevel,
@@ -48,18 +54,21 @@ class DecoratedContentDropdownButtonWidget extends StatefulWidget {
       this.optional,
       super.key});
 
+  /* 
+   * create state of DecoratedContentDropdownButtonWidget
+   */
   @override
   State<StatefulWidget> createState() {
-    return DecoratedContentDropdownButtonWidgetState(value);
+    return _DecoratedContentDropdownButtonWidgetState(value);
   }
 }
 
-class DecoratedContentDropdownButtonWidgetState
+class _DecoratedContentDropdownButtonWidgetState
     extends State<DecoratedContentDropdownButtonWidget> {
   DecoratedContentListBloc? bloc;
   String? value;
 
-  DecoratedContentDropdownButtonWidgetState(this.value);
+  _DecoratedContentDropdownButtonWidgetState(this.value);
 
   @override
   void didChangeDependencies() {
@@ -73,7 +82,7 @@ class DecoratedContentDropdownButtonWidgetState
     super.dispose();
   }
 
-  List<Widget> widgets(DecoratedContentModel value) {
+  List<Widget> _widgets(DecoratedContentModel value) {
     var app = widget.app;
     var widgets = <Widget>[];
     widgets.add(value.description != null
@@ -130,7 +139,7 @@ class DecoratedContentDropdownButtonWidgetState
                   height: 100.0,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: widgets(element),
+                    children: _widgets(element),
                   ),
                 )));
           }

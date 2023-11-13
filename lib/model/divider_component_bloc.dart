@@ -34,6 +34,9 @@ class DividerComponentBloc
     });
   }
 
+  /*
+   * Construct DividerComponentBloc
+   */
   DividerComponentBloc({this.dividerRepository})
       : super(DividerComponentUninitialized()) {
     on<FetchDividerComponent>((event, emit) {
@@ -44,6 +47,9 @@ class DividerComponentBloc
     });
   }
 
+  /*
+   * Close the DividerComponentBloc
+   */
   @override
   Future<void> close() {
     _dividerSubscription?.cancel();

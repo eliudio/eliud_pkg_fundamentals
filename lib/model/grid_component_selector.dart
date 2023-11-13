@@ -31,7 +31,13 @@ import 'grid_list_event.dart';
 import 'grid_list_state.dart';
 import 'grid_model.dart';
 
+/* 
+ * GridComponentSelector is a component selector for Grid, allowing to select a Grid component
+ */
 class GridComponentSelector extends ComponentSelector {
+  /* 
+   * createSelectWidget creates the widget
+   */
   @override
   Widget createSelectWidget(BuildContext context, AppModel app,
       int privilegeLevel, double height, SelectComponent selected, editor) {
@@ -41,7 +47,7 @@ class GridComponentSelector extends ComponentSelector {
         eliudQuery: getComponentSelectorQuery(0, app.documentID),
         gridRepository: gridRepository(appId: appId)!,
       )..add(LoadGridList()),
-      child: SelectGridWidget(
+      child: _SelectGridWidget(
           app: app,
           height: height,
           containerPrivilege: privilegeLevel,
@@ -51,28 +57,30 @@ class GridComponentSelector extends ComponentSelector {
   }
 }
 
-class SelectGridWidget extends StatefulWidget {
+/* 
+ * _SelectGridWidget 
+ */
+class _SelectGridWidget extends StatefulWidget {
   final AppModel app;
   final double height;
   final SelectComponent selected;
   final int containerPrivilege;
   final ComponentEditorConstructor editorConstructor;
 
-  const SelectGridWidget(
-      {super.key,
-      required this.app,
+  const _SelectGridWidget(
+      {required this.app,
       required this.containerPrivilege,
       required this.height,
       required this.selected,
       required this.editorConstructor});
 
   @override
-  State<SelectGridWidget> createState() {
+  State<_SelectGridWidget> createState() {
     return _SelectGridWidgetState();
   }
 }
 
-class _SelectGridWidgetState extends State<SelectGridWidget>
+class _SelectGridWidgetState extends State<_SelectGridWidget>
     with TickerProviderStateMixin {
   TabController? _privilegeTabController;
   final List<String> _privilegeItems = ['No', 'L1', 'L2', 'Owner'];

@@ -35,6 +35,9 @@ class PresentationComponentBloc
     });
   }
 
+  /*
+   * Construct PresentationComponentBloc
+   */
   PresentationComponentBloc({this.presentationRepository})
       : super(PresentationComponentUninitialized()) {
     on<FetchPresentationComponent>((event, emit) {
@@ -45,6 +48,9 @@ class PresentationComponentBloc
     });
   }
 
+  /*
+   * Close the PresentationComponentBloc
+   */
   @override
   Future<void> close() {
     _presentationSubscription?.cancel();

@@ -34,6 +34,9 @@ class BookletComponentBloc
     });
   }
 
+  /*
+   * Construct BookletComponentBloc
+   */
   BookletComponentBloc({this.bookletRepository})
       : super(BookletComponentUninitialized()) {
     on<FetchBookletComponent>((event, emit) {
@@ -44,6 +47,9 @@ class BookletComponentBloc
     });
   }
 
+  /*
+   * Close the BookletComponentBloc
+   */
   @override
   Future<void> close() {
     _bookletSubscription?.cancel();

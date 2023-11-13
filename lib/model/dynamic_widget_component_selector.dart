@@ -31,7 +31,13 @@ import 'dynamic_widget_list_event.dart';
 import 'dynamic_widget_list_state.dart';
 import 'dynamic_widget_model.dart';
 
+/* 
+ * DynamicWidgetComponentSelector is a component selector for DynamicWidget, allowing to select a DynamicWidget component
+ */
 class DynamicWidgetComponentSelector extends ComponentSelector {
+  /* 
+   * createSelectWidget creates the widget
+   */
   @override
   Widget createSelectWidget(BuildContext context, AppModel app,
       int privilegeLevel, double height, SelectComponent selected, editor) {
@@ -41,7 +47,7 @@ class DynamicWidgetComponentSelector extends ComponentSelector {
         eliudQuery: getComponentSelectorQuery(0, app.documentID),
         dynamicWidgetRepository: dynamicWidgetRepository(appId: appId)!,
       )..add(LoadDynamicWidgetList()),
-      child: SelectDynamicWidgetWidget(
+      child: _SelectDynamicWidgetWidget(
           app: app,
           height: height,
           containerPrivilege: privilegeLevel,
@@ -51,28 +57,30 @@ class DynamicWidgetComponentSelector extends ComponentSelector {
   }
 }
 
-class SelectDynamicWidgetWidget extends StatefulWidget {
+/* 
+ * _SelectDynamicWidgetWidget 
+ */
+class _SelectDynamicWidgetWidget extends StatefulWidget {
   final AppModel app;
   final double height;
   final SelectComponent selected;
   final int containerPrivilege;
   final ComponentEditorConstructor editorConstructor;
 
-  const SelectDynamicWidgetWidget(
-      {super.key,
-      required this.app,
+  const _SelectDynamicWidgetWidget(
+      {required this.app,
       required this.containerPrivilege,
       required this.height,
       required this.selected,
       required this.editorConstructor});
 
   @override
-  State<SelectDynamicWidgetWidget> createState() {
+  State<_SelectDynamicWidgetWidget> createState() {
     return _SelectDynamicWidgetWidgetState();
   }
 }
 
-class _SelectDynamicWidgetWidgetState extends State<SelectDynamicWidgetWidget>
+class _SelectDynamicWidgetWidgetState extends State<_SelectDynamicWidgetWidget>
     with TickerProviderStateMixin {
   TabController? _privilegeTabController;
   final List<String> _privilegeItems = ['No', 'L1', 'L2', 'Owner'];

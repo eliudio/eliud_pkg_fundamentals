@@ -25,12 +25,21 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/tools/firestore/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
+/* 
+ * TutorialFirestore is the firestore implementation of TutorialRepository
+ */
 class TutorialFirestore implements TutorialRepository {
+  /* 
+   * transform a map into an entity
+   */
   @override
   TutorialEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     return TutorialEntity.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
+  /* 
+   * add an entity to the repository
+   */
   @override
   Future<TutorialEntity> addEntity(String documentID, TutorialEntity value) {
     return tutorialCollection
@@ -39,6 +48,9 @@ class TutorialFirestore implements TutorialRepository {
         .then((_) => value);
   }
 
+  /* 
+   * Update an entity
+   */
   @override
   Future<TutorialEntity> updateEntity(String documentID, TutorialEntity value) {
     return tutorialCollection
@@ -47,6 +59,9 @@ class TutorialFirestore implements TutorialRepository {
         .then((_) => value);
   }
 
+  /* 
+   * Add a model to the repository
+   */
   @override
   Future<TutorialModel> add(TutorialModel value) {
     return tutorialCollection
@@ -55,11 +70,17 @@ class TutorialFirestore implements TutorialRepository {
         .then((_) => value);
   }
 
+  /* 
+   * Delete a model
+   */
   @override
   Future<void> delete(TutorialModel value) {
     return tutorialCollection.doc(value.documentID).delete();
   }
 
+  /* 
+   * Update a model
+   */
   @override
   Future<TutorialModel> update(TutorialModel value) {
     return tutorialCollection
@@ -79,6 +100,9 @@ class TutorialFirestore implements TutorialRepository {
         appId: appId);
   }
 
+  /* 
+   * Retrieve an entity from the repository with id
+   */
   @override
   Future<TutorialEntity?> getEntity(String? id,
       {Function(Exception)? onError}) async {
@@ -97,6 +121,9 @@ class TutorialFirestore implements TutorialRepository {
     return null;
   }
 
+  /* 
+   * Retrieve an model from the repository with id
+   */
   @override
   Future<TutorialModel?> get(String? id, {Function(Exception)? onError}) async {
     try {
@@ -114,6 +141,9 @@ class TutorialFirestore implements TutorialRepository {
     return null;
   }
 
+  /* 
+   * Listen to the repository using a query. Retrieve models
+   */
   @override
   StreamSubscription<List<TutorialModel?>> listen(TutorialModelTrigger trigger,
       {String? orderBy,
@@ -144,6 +174,9 @@ class TutorialFirestore implements TutorialRepository {
     });
   }
 
+  /* 
+   * Listen to the repository using a query. Retrieve models and linked models
+   */
   @override
   StreamSubscription<List<TutorialModel?>> listenWithDetails(
       TutorialModelTrigger trigger,
@@ -175,6 +208,9 @@ class TutorialFirestore implements TutorialRepository {
     });
   }
 
+  /* 
+   * Listen to 1 document in the repository
+   */
   @override
   StreamSubscription<TutorialModel?> listenTo(
       String documentId, TutorialChanged changed,
@@ -194,6 +230,9 @@ class TutorialFirestore implements TutorialRepository {
     return theStream;
   }
 
+  /* 
+   * Retrieve values/models from the repository
+   */
   @override
   Stream<List<TutorialModel?>> values(
       {String? orderBy,
@@ -223,6 +262,9 @@ class TutorialFirestore implements TutorialRepository {
     return values;
   }
 
+  /* 
+   * Retrieve values/models, including linked models, from the repository
+   */
   @override
   Stream<List<TutorialModel?>> valuesWithDetails(
       {String? orderBy,
@@ -252,6 +294,9 @@ class TutorialFirestore implements TutorialRepository {
     return values;
   }
 
+  /* 
+   * Retrieve values/models from the repository
+   */
   @override
   Future<List<TutorialModel?>> valuesList(
       {String? orderBy,
@@ -282,6 +327,9 @@ class TutorialFirestore implements TutorialRepository {
     return values;
   }
 
+  /* 
+   * Retrieve values/models, including linked models, from the repository
+   */
   @override
   Future<List<TutorialModel?>> valuesListWithDetails(
       {String? orderBy,
@@ -312,9 +360,15 @@ class TutorialFirestore implements TutorialRepository {
     return values;
   }
 
+  /* 
+   * Flush the repository
+   */
   @override
   void flush() {}
 
+  /* 
+   * Delete all entries in the repository
+   */
   @override
   Future<void> deleteAll() {
     return tutorialCollection.get().then((snapshot) {
@@ -324,16 +378,25 @@ class TutorialFirestore implements TutorialRepository {
     });
   }
 
+  /* 
+   * Retrieve the subcollection of this repository
+   */
   @override
   dynamic getSubCollection(String documentId, String name) {
     return tutorialCollection.doc(documentId).collection(name);
   }
 
+  /* 
+   * Retrieve a timestamp
+   */
   @override
   String? timeStampToString(dynamic timeStamp) {
     return firestoreTimeStampToString(timeStamp);
   }
 
+  /* 
+   * change 1 a fieldvalue for 1 document  
+   */
   @override
   Future<TutorialModel?> changeValue(
       String documentId, String fieldName, num changeByThisValue) {

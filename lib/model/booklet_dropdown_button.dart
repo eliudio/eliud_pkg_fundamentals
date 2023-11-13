@@ -33,6 +33,9 @@ typedef BookletChanged = Function(
   int? privilegeLevel,
 );
 
+/* 
+ * BookletDropdownButtonWidget is the drop down widget to allow to select an instance of Booklet
+ */
 class BookletDropdownButtonWidget extends StatefulWidget {
   final AppModel app;
   final int? privilegeLevel;
@@ -40,6 +43,9 @@ class BookletDropdownButtonWidget extends StatefulWidget {
   final BookletChanged? trigger;
   final bool? optional;
 
+  /* 
+   * construct a BookletDropdownButtonWidget
+   */
   BookletDropdownButtonWidget(
       {required this.app,
       this.privilegeLevel,
@@ -48,18 +54,21 @@ class BookletDropdownButtonWidget extends StatefulWidget {
       this.optional,
       super.key});
 
+  /* 
+   * create state of BookletDropdownButtonWidget
+   */
   @override
   State<StatefulWidget> createState() {
-    return BookletDropdownButtonWidgetState(value);
+    return _BookletDropdownButtonWidgetState(value);
   }
 }
 
-class BookletDropdownButtonWidgetState
+class _BookletDropdownButtonWidgetState
     extends State<BookletDropdownButtonWidget> {
   BookletListBloc? bloc;
   String? value;
 
-  BookletDropdownButtonWidgetState(this.value);
+  _BookletDropdownButtonWidgetState(this.value);
 
   @override
   void didChangeDependencies() {
@@ -73,7 +82,7 @@ class BookletDropdownButtonWidgetState
     super.dispose();
   }
 
-  List<Widget> widgets(BookletModel value) {
+  List<Widget> _widgets(BookletModel value) {
     var app = widget.app;
     var widgets = <Widget>[];
     widgets.add(value.description != null
@@ -130,7 +139,7 @@ class BookletDropdownButtonWidgetState
                   height: 100.0,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: widgets(element),
+                    children: _widgets(element),
                   ),
                 )));
           }

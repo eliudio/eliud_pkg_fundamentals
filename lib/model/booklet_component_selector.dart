@@ -31,7 +31,13 @@ import 'booklet_list_event.dart';
 import 'booklet_list_state.dart';
 import 'booklet_model.dart';
 
+/* 
+ * BookletComponentSelector is a component selector for Booklet, allowing to select a Booklet component
+ */
 class BookletComponentSelector extends ComponentSelector {
+  /* 
+   * createSelectWidget creates the widget
+   */
   @override
   Widget createSelectWidget(BuildContext context, AppModel app,
       int privilegeLevel, double height, SelectComponent selected, editor) {
@@ -41,7 +47,7 @@ class BookletComponentSelector extends ComponentSelector {
         eliudQuery: getComponentSelectorQuery(0, app.documentID),
         bookletRepository: bookletRepository(appId: appId)!,
       )..add(LoadBookletList()),
-      child: SelectBookletWidget(
+      child: _SelectBookletWidget(
           app: app,
           height: height,
           containerPrivilege: privilegeLevel,
@@ -51,28 +57,30 @@ class BookletComponentSelector extends ComponentSelector {
   }
 }
 
-class SelectBookletWidget extends StatefulWidget {
+/* 
+ * _SelectBookletWidget 
+ */
+class _SelectBookletWidget extends StatefulWidget {
   final AppModel app;
   final double height;
   final SelectComponent selected;
   final int containerPrivilege;
   final ComponentEditorConstructor editorConstructor;
 
-  const SelectBookletWidget(
-      {super.key,
-      required this.app,
+  const _SelectBookletWidget(
+      {required this.app,
       required this.containerPrivilege,
       required this.height,
       required this.selected,
       required this.editorConstructor});
 
   @override
-  State<SelectBookletWidget> createState() {
+  State<_SelectBookletWidget> createState() {
     return _SelectBookletWidgetState();
   }
 }
 
-class _SelectBookletWidgetState extends State<SelectBookletWidget>
+class _SelectBookletWidgetState extends State<_SelectBookletWidget>
     with TickerProviderStateMixin {
   TabController? _privilegeTabController;
   final List<String> _privilegeItems = ['No', 'L1', 'L2', 'Owner'];

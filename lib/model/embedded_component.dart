@@ -76,6 +76,9 @@ tutorialEntrysList(app, context, value, trigger) =>
     EmbeddedComponentFactory.tutorialEntrysList(app, context, value, trigger);
 
 class EmbeddedComponentFactory {
+/* 
+ * documentItemsList function to construct a list of DocumentItemModel
+ */
   static Widget documentItemsList(AppModel app, BuildContext context,
       List<DocumentItemModel> values, DocumentItemListChanged trigger) {
     DocumentItemInMemoryRepository inMemoryRepository =
@@ -95,6 +98,9 @@ class EmbeddedComponentFactory {
     );
   }
 
+/* 
+ * linksList function to construct a list of LinkModel
+ */
   static Widget linksList(AppModel app, BuildContext context,
       List<LinkModel> values, LinkListChanged trigger) {
     LinkInMemoryRepository inMemoryRepository = LinkInMemoryRepository(
@@ -113,6 +119,9 @@ class EmbeddedComponentFactory {
     );
   }
 
+/* 
+ * listedItemsList function to construct a list of ListedItemModel
+ */
   static Widget listedItemsList(AppModel app, BuildContext context,
       List<ListedItemModel> values, ListedItemListChanged trigger) {
     ListedItemInMemoryRepository inMemoryRepository =
@@ -132,6 +141,9 @@ class EmbeddedComponentFactory {
     );
   }
 
+/* 
+ * sectionsList function to construct a list of SectionModel
+ */
   static Widget sectionsList(AppModel app, BuildContext context,
       List<SectionModel> values, SectionListChanged trigger) {
     SectionInMemoryRepository inMemoryRepository = SectionInMemoryRepository(
@@ -150,6 +162,9 @@ class EmbeddedComponentFactory {
     );
   }
 
+/* 
+ * tutorialEntrysList function to construct a list of TutorialEntryModel
+ */
   static Widget tutorialEntrysList(AppModel app, BuildContext context,
       List<TutorialEntryModel> values, TutorialEntryListChanged trigger) {
     TutorialEntryInMemoryRepository inMemoryRepository =
@@ -170,11 +185,17 @@ class EmbeddedComponentFactory {
   }
 }
 
+/* 
+ * DocumentItemInMemoryRepository is an in memory implementation of DocumentItemRepository
+ */
 class DocumentItemInMemoryRepository implements DocumentItemRepository {
   final List<DocumentItemModel> items;
   final DocumentItemListChanged trigger;
   Stream<List<DocumentItemModel>>? theValues;
 
+  /* 
+     * Construct the DocumentItemInMemoryRepository
+     */
   DocumentItemInMemoryRepository(this.trigger, this.items) {
     List<List<DocumentItemModel>> myList = <List<DocumentItemModel>>[];
     myList.add(items);
@@ -192,18 +213,27 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
     return -1;
   }
 
+  /* 
+     * Add an entity
+     */
   @override
   Future<DocumentItemEntity> addEntity(
       String documentID, DocumentItemEntity value) {
     throw Exception('Not implemented');
   }
 
+  /* 
+     * Update an entity
+     */
   @override
   Future<DocumentItemEntity> updateEntity(
       String documentID, DocumentItemEntity value) {
     throw Exception('Not implemented');
   }
 
+  /* 
+     * Update a model
+     */
   @override
   Future<DocumentItemModel> add(DocumentItemModel value) {
     items.add(value.copyWith(documentID: newRandomKey()));
@@ -211,6 +241,9 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
     return Future.value(value);
   }
 
+  /* 
+     * Delete a model
+     */
   @override
   Future<void> delete(DocumentItemModel value) {
     int index = _index(value.documentID);
@@ -219,6 +252,9 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
     return Future.value();
   }
 
+  /* 
+     * Update a model
+     */
   @override
   Future<DocumentItemModel> update(DocumentItemModel value) {
     int index = _index(value.documentID);
@@ -229,6 +265,9 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
     return Future.value(value);
   }
 
+  /* 
+     * Get a model
+     */
   @override
   Future<DocumentItemModel> get(String? id, {Function(Exception)? onError}) {
     int index = _index(id!);
@@ -237,6 +276,9 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
     return completer.future;
   }
 
+  /* 
+     * Retrieve to a list of DocumentItemModel base on a query
+     */
   @override
   Stream<List<DocumentItemModel>> values(
       {String? orderBy,
@@ -249,6 +291,9 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
     return theValues!;
   }
 
+  /* 
+     * Retrieve to a list of DocumentItemModel, including linked models base on a query
+     */
   @override
   Stream<List<DocumentItemModel>> valuesWithDetails(
       {String? orderBy,
@@ -261,6 +306,9 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
     return theValues!;
   }
 
+  /* 
+     * Subscribe to a list of DocumentItemModel base on a query
+     */
   @override
   StreamSubscription<List<DocumentItemModel>> listen(trigger,
       {String? orderBy,
@@ -272,6 +320,9 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
     return theValues!.listen((theList) => trigger(theList));
   }
 
+  /* 
+     * Subscribe to a list of DocumentItemModel, including linked models, base on a query
+     */
   @override
   StreamSubscription<List<DocumentItemModel>> listenWithDetails(trigger,
       {String? orderBy,
@@ -283,9 +334,15 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
     return theValues!.listen((theList) => trigger(theList));
   }
 
+  /* 
+     * Flush the repository
+     */
   @override
   void flush() {}
 
+  /* 
+     * Retrieve the list of models
+     */
   @override
   Future<List<DocumentItemModel>> valuesList(
       {String? orderBy,
@@ -310,16 +367,25 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
     return Future.value(items);
   }
 
+  /* 
+     * Retrieve a subcollection of this collection
+     */
   @override
   getSubCollection(String documentId, String name) {
     throw UnimplementedError();
   }
 
+  /* 
+   * Retrieve a timestamp
+   */
   @override
   String timeStampToString(timeStamp) {
     throw UnimplementedError();
   }
 
+  /* 
+   * Subscribe to 1 document / 1 model
+   */
   @override
   StreamSubscription<DocumentItemModel> listenTo(
       String documentId, DocumentItemChanged changed,
@@ -349,11 +415,17 @@ class DocumentItemInMemoryRepository implements DocumentItemRepository {
   Future<void> deleteAll() async {}
 }
 
+/* 
+ * LinkInMemoryRepository is an in memory implementation of LinkRepository
+ */
 class LinkInMemoryRepository implements LinkRepository {
   final List<LinkModel> items;
   final LinkListChanged trigger;
   Stream<List<LinkModel>>? theValues;
 
+  /* 
+     * Construct the LinkInMemoryRepository
+     */
   LinkInMemoryRepository(this.trigger, this.items) {
     List<List<LinkModel>> myList = <List<LinkModel>>[];
     myList.add(items);
@@ -371,16 +443,25 @@ class LinkInMemoryRepository implements LinkRepository {
     return -1;
   }
 
+  /* 
+     * Add an entity
+     */
   @override
   Future<LinkEntity> addEntity(String documentID, LinkEntity value) {
     throw Exception('Not implemented');
   }
 
+  /* 
+     * Update an entity
+     */
   @override
   Future<LinkEntity> updateEntity(String documentID, LinkEntity value) {
     throw Exception('Not implemented');
   }
 
+  /* 
+     * Update a model
+     */
   @override
   Future<LinkModel> add(LinkModel value) {
     items.add(value.copyWith(documentID: newRandomKey()));
@@ -388,6 +469,9 @@ class LinkInMemoryRepository implements LinkRepository {
     return Future.value(value);
   }
 
+  /* 
+     * Delete a model
+     */
   @override
   Future<void> delete(LinkModel value) {
     int index = _index(value.documentID);
@@ -396,6 +480,9 @@ class LinkInMemoryRepository implements LinkRepository {
     return Future.value();
   }
 
+  /* 
+     * Update a model
+     */
   @override
   Future<LinkModel> update(LinkModel value) {
     int index = _index(value.documentID);
@@ -406,6 +493,9 @@ class LinkInMemoryRepository implements LinkRepository {
     return Future.value(value);
   }
 
+  /* 
+     * Get a model
+     */
   @override
   Future<LinkModel> get(String? id, {Function(Exception)? onError}) {
     int index = _index(id!);
@@ -414,6 +504,9 @@ class LinkInMemoryRepository implements LinkRepository {
     return completer.future;
   }
 
+  /* 
+     * Retrieve to a list of LinkModel base on a query
+     */
   @override
   Stream<List<LinkModel>> values(
       {String? orderBy,
@@ -426,6 +519,9 @@ class LinkInMemoryRepository implements LinkRepository {
     return theValues!;
   }
 
+  /* 
+     * Retrieve to a list of LinkModel, including linked models base on a query
+     */
   @override
   Stream<List<LinkModel>> valuesWithDetails(
       {String? orderBy,
@@ -438,6 +534,9 @@ class LinkInMemoryRepository implements LinkRepository {
     return theValues!;
   }
 
+  /* 
+     * Subscribe to a list of LinkModel base on a query
+     */
   @override
   StreamSubscription<List<LinkModel>> listen(trigger,
       {String? orderBy,
@@ -449,6 +548,9 @@ class LinkInMemoryRepository implements LinkRepository {
     return theValues!.listen((theList) => trigger(theList));
   }
 
+  /* 
+     * Subscribe to a list of LinkModel, including linked models, base on a query
+     */
   @override
   StreamSubscription<List<LinkModel>> listenWithDetails(trigger,
       {String? orderBy,
@@ -460,9 +562,15 @@ class LinkInMemoryRepository implements LinkRepository {
     return theValues!.listen((theList) => trigger(theList));
   }
 
+  /* 
+     * Flush the repository
+     */
   @override
   void flush() {}
 
+  /* 
+     * Retrieve the list of models
+     */
   @override
   Future<List<LinkModel>> valuesList(
       {String? orderBy,
@@ -487,16 +595,25 @@ class LinkInMemoryRepository implements LinkRepository {
     return Future.value(items);
   }
 
+  /* 
+     * Retrieve a subcollection of this collection
+     */
   @override
   getSubCollection(String documentId, String name) {
     throw UnimplementedError();
   }
 
+  /* 
+   * Retrieve a timestamp
+   */
   @override
   String timeStampToString(timeStamp) {
     throw UnimplementedError();
   }
 
+  /* 
+   * Subscribe to 1 document / 1 model
+   */
   @override
   StreamSubscription<LinkModel> listenTo(String documentId, LinkChanged changed,
       {LinkErrorHandler? errorHandler}) {
@@ -523,11 +640,17 @@ class LinkInMemoryRepository implements LinkRepository {
   Future<void> deleteAll() async {}
 }
 
+/* 
+ * ListedItemInMemoryRepository is an in memory implementation of ListedItemRepository
+ */
 class ListedItemInMemoryRepository implements ListedItemRepository {
   final List<ListedItemModel> items;
   final ListedItemListChanged trigger;
   Stream<List<ListedItemModel>>? theValues;
 
+  /* 
+     * Construct the ListedItemInMemoryRepository
+     */
   ListedItemInMemoryRepository(this.trigger, this.items) {
     List<List<ListedItemModel>> myList = <List<ListedItemModel>>[];
     myList.add(items);
@@ -545,18 +668,27 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
     return -1;
   }
 
+  /* 
+     * Add an entity
+     */
   @override
   Future<ListedItemEntity> addEntity(
       String documentID, ListedItemEntity value) {
     throw Exception('Not implemented');
   }
 
+  /* 
+     * Update an entity
+     */
   @override
   Future<ListedItemEntity> updateEntity(
       String documentID, ListedItemEntity value) {
     throw Exception('Not implemented');
   }
 
+  /* 
+     * Update a model
+     */
   @override
   Future<ListedItemModel> add(ListedItemModel value) {
     items.add(value.copyWith(documentID: newRandomKey()));
@@ -564,6 +696,9 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
     return Future.value(value);
   }
 
+  /* 
+     * Delete a model
+     */
   @override
   Future<void> delete(ListedItemModel value) {
     int index = _index(value.documentID);
@@ -572,6 +707,9 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
     return Future.value();
   }
 
+  /* 
+     * Update a model
+     */
   @override
   Future<ListedItemModel> update(ListedItemModel value) {
     int index = _index(value.documentID);
@@ -582,6 +720,9 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
     return Future.value(value);
   }
 
+  /* 
+     * Get a model
+     */
   @override
   Future<ListedItemModel> get(String? id, {Function(Exception)? onError}) {
     int index = _index(id!);
@@ -590,6 +731,9 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
     return completer.future;
   }
 
+  /* 
+     * Retrieve to a list of ListedItemModel base on a query
+     */
   @override
   Stream<List<ListedItemModel>> values(
       {String? orderBy,
@@ -602,6 +746,9 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
     return theValues!;
   }
 
+  /* 
+     * Retrieve to a list of ListedItemModel, including linked models base on a query
+     */
   @override
   Stream<List<ListedItemModel>> valuesWithDetails(
       {String? orderBy,
@@ -614,6 +761,9 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
     return theValues!;
   }
 
+  /* 
+     * Subscribe to a list of ListedItemModel base on a query
+     */
   @override
   StreamSubscription<List<ListedItemModel>> listen(trigger,
       {String? orderBy,
@@ -625,6 +775,9 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
     return theValues!.listen((theList) => trigger(theList));
   }
 
+  /* 
+     * Subscribe to a list of ListedItemModel, including linked models, base on a query
+     */
   @override
   StreamSubscription<List<ListedItemModel>> listenWithDetails(trigger,
       {String? orderBy,
@@ -636,9 +789,15 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
     return theValues!.listen((theList) => trigger(theList));
   }
 
+  /* 
+     * Flush the repository
+     */
   @override
   void flush() {}
 
+  /* 
+     * Retrieve the list of models
+     */
   @override
   Future<List<ListedItemModel>> valuesList(
       {String? orderBy,
@@ -663,16 +822,25 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
     return Future.value(items);
   }
 
+  /* 
+     * Retrieve a subcollection of this collection
+     */
   @override
   getSubCollection(String documentId, String name) {
     throw UnimplementedError();
   }
 
+  /* 
+   * Retrieve a timestamp
+   */
   @override
   String timeStampToString(timeStamp) {
     throw UnimplementedError();
   }
 
+  /* 
+   * Subscribe to 1 document / 1 model
+   */
   @override
   StreamSubscription<ListedItemModel> listenTo(
       String documentId, ListedItemChanged changed,
@@ -701,11 +869,17 @@ class ListedItemInMemoryRepository implements ListedItemRepository {
   Future<void> deleteAll() async {}
 }
 
+/* 
+ * SectionInMemoryRepository is an in memory implementation of SectionRepository
+ */
 class SectionInMemoryRepository implements SectionRepository {
   final List<SectionModel> items;
   final SectionListChanged trigger;
   Stream<List<SectionModel>>? theValues;
 
+  /* 
+     * Construct the SectionInMemoryRepository
+     */
   SectionInMemoryRepository(this.trigger, this.items) {
     List<List<SectionModel>> myList = <List<SectionModel>>[];
     myList.add(items);
@@ -723,16 +897,25 @@ class SectionInMemoryRepository implements SectionRepository {
     return -1;
   }
 
+  /* 
+     * Add an entity
+     */
   @override
   Future<SectionEntity> addEntity(String documentID, SectionEntity value) {
     throw Exception('Not implemented');
   }
 
+  /* 
+     * Update an entity
+     */
   @override
   Future<SectionEntity> updateEntity(String documentID, SectionEntity value) {
     throw Exception('Not implemented');
   }
 
+  /* 
+     * Update a model
+     */
   @override
   Future<SectionModel> add(SectionModel value) {
     items.add(value.copyWith(documentID: newRandomKey()));
@@ -740,6 +923,9 @@ class SectionInMemoryRepository implements SectionRepository {
     return Future.value(value);
   }
 
+  /* 
+     * Delete a model
+     */
   @override
   Future<void> delete(SectionModel value) {
     int index = _index(value.documentID);
@@ -748,6 +934,9 @@ class SectionInMemoryRepository implements SectionRepository {
     return Future.value();
   }
 
+  /* 
+     * Update a model
+     */
   @override
   Future<SectionModel> update(SectionModel value) {
     int index = _index(value.documentID);
@@ -758,6 +947,9 @@ class SectionInMemoryRepository implements SectionRepository {
     return Future.value(value);
   }
 
+  /* 
+     * Get a model
+     */
   @override
   Future<SectionModel> get(String? id, {Function(Exception)? onError}) {
     int index = _index(id!);
@@ -766,6 +958,9 @@ class SectionInMemoryRepository implements SectionRepository {
     return completer.future;
   }
 
+  /* 
+     * Retrieve to a list of SectionModel base on a query
+     */
   @override
   Stream<List<SectionModel>> values(
       {String? orderBy,
@@ -778,6 +973,9 @@ class SectionInMemoryRepository implements SectionRepository {
     return theValues!;
   }
 
+  /* 
+     * Retrieve to a list of SectionModel, including linked models base on a query
+     */
   @override
   Stream<List<SectionModel>> valuesWithDetails(
       {String? orderBy,
@@ -790,6 +988,9 @@ class SectionInMemoryRepository implements SectionRepository {
     return theValues!;
   }
 
+  /* 
+     * Subscribe to a list of SectionModel base on a query
+     */
   @override
   StreamSubscription<List<SectionModel>> listen(trigger,
       {String? orderBy,
@@ -801,6 +1002,9 @@ class SectionInMemoryRepository implements SectionRepository {
     return theValues!.listen((theList) => trigger(theList));
   }
 
+  /* 
+     * Subscribe to a list of SectionModel, including linked models, base on a query
+     */
   @override
   StreamSubscription<List<SectionModel>> listenWithDetails(trigger,
       {String? orderBy,
@@ -812,9 +1016,15 @@ class SectionInMemoryRepository implements SectionRepository {
     return theValues!.listen((theList) => trigger(theList));
   }
 
+  /* 
+     * Flush the repository
+     */
   @override
   void flush() {}
 
+  /* 
+     * Retrieve the list of models
+     */
   @override
   Future<List<SectionModel>> valuesList(
       {String? orderBy,
@@ -839,16 +1049,25 @@ class SectionInMemoryRepository implements SectionRepository {
     return Future.value(items);
   }
 
+  /* 
+     * Retrieve a subcollection of this collection
+     */
   @override
   getSubCollection(String documentId, String name) {
     throw UnimplementedError();
   }
 
+  /* 
+   * Retrieve a timestamp
+   */
   @override
   String timeStampToString(timeStamp) {
     throw UnimplementedError();
   }
 
+  /* 
+   * Subscribe to 1 document / 1 model
+   */
   @override
   StreamSubscription<SectionModel> listenTo(
       String documentId, SectionChanged changed,
@@ -877,11 +1096,17 @@ class SectionInMemoryRepository implements SectionRepository {
   Future<void> deleteAll() async {}
 }
 
+/* 
+ * TutorialEntryInMemoryRepository is an in memory implementation of TutorialEntryRepository
+ */
 class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
   final List<TutorialEntryModel> items;
   final TutorialEntryListChanged trigger;
   Stream<List<TutorialEntryModel>>? theValues;
 
+  /* 
+     * Construct the TutorialEntryInMemoryRepository
+     */
   TutorialEntryInMemoryRepository(this.trigger, this.items) {
     List<List<TutorialEntryModel>> myList = <List<TutorialEntryModel>>[];
     myList.add(items);
@@ -899,18 +1124,27 @@ class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
     return -1;
   }
 
+  /* 
+     * Add an entity
+     */
   @override
   Future<TutorialEntryEntity> addEntity(
       String documentID, TutorialEntryEntity value) {
     throw Exception('Not implemented');
   }
 
+  /* 
+     * Update an entity
+     */
   @override
   Future<TutorialEntryEntity> updateEntity(
       String documentID, TutorialEntryEntity value) {
     throw Exception('Not implemented');
   }
 
+  /* 
+     * Update a model
+     */
   @override
   Future<TutorialEntryModel> add(TutorialEntryModel value) {
     items.add(value.copyWith(documentID: newRandomKey()));
@@ -918,6 +1152,9 @@ class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
     return Future.value(value);
   }
 
+  /* 
+     * Delete a model
+     */
   @override
   Future<void> delete(TutorialEntryModel value) {
     int index = _index(value.documentID);
@@ -926,6 +1163,9 @@ class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
     return Future.value();
   }
 
+  /* 
+     * Update a model
+     */
   @override
   Future<TutorialEntryModel> update(TutorialEntryModel value) {
     int index = _index(value.documentID);
@@ -936,6 +1176,9 @@ class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
     return Future.value(value);
   }
 
+  /* 
+     * Get a model
+     */
   @override
   Future<TutorialEntryModel> get(String? id, {Function(Exception)? onError}) {
     int index = _index(id!);
@@ -944,6 +1187,9 @@ class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
     return completer.future;
   }
 
+  /* 
+     * Retrieve to a list of TutorialEntryModel base on a query
+     */
   @override
   Stream<List<TutorialEntryModel>> values(
       {String? orderBy,
@@ -956,6 +1202,9 @@ class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
     return theValues!;
   }
 
+  /* 
+     * Retrieve to a list of TutorialEntryModel, including linked models base on a query
+     */
   @override
   Stream<List<TutorialEntryModel>> valuesWithDetails(
       {String? orderBy,
@@ -968,6 +1217,9 @@ class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
     return theValues!;
   }
 
+  /* 
+     * Subscribe to a list of TutorialEntryModel base on a query
+     */
   @override
   StreamSubscription<List<TutorialEntryModel>> listen(trigger,
       {String? orderBy,
@@ -979,6 +1231,9 @@ class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
     return theValues!.listen((theList) => trigger(theList));
   }
 
+  /* 
+     * Subscribe to a list of TutorialEntryModel, including linked models, base on a query
+     */
   @override
   StreamSubscription<List<TutorialEntryModel>> listenWithDetails(trigger,
       {String? orderBy,
@@ -990,9 +1245,15 @@ class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
     return theValues!.listen((theList) => trigger(theList));
   }
 
+  /* 
+     * Flush the repository
+     */
   @override
   void flush() {}
 
+  /* 
+     * Retrieve the list of models
+     */
   @override
   Future<List<TutorialEntryModel>> valuesList(
       {String? orderBy,
@@ -1017,16 +1278,25 @@ class TutorialEntryInMemoryRepository implements TutorialEntryRepository {
     return Future.value(items);
   }
 
+  /* 
+     * Retrieve a subcollection of this collection
+     */
   @override
   getSubCollection(String documentId, String name) {
     throw UnimplementedError();
   }
 
+  /* 
+   * Retrieve a timestamp
+   */
   @override
   String timeStampToString(timeStamp) {
     throw UnimplementedError();
   }
 
+  /* 
+   * Subscribe to 1 document / 1 model
+   */
   @override
   StreamSubscription<TutorialEntryModel> listenTo(
       String documentId, TutorialEntryChanged changed,

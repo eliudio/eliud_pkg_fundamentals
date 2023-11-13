@@ -31,7 +31,13 @@ import 'divider_list_event.dart';
 import 'divider_list_state.dart';
 import 'divider_model.dart';
 
+/* 
+ * DividerComponentSelector is a component selector for Divider, allowing to select a Divider component
+ */
 class DividerComponentSelector extends ComponentSelector {
+  /* 
+   * createSelectWidget creates the widget
+   */
   @override
   Widget createSelectWidget(BuildContext context, AppModel app,
       int privilegeLevel, double height, SelectComponent selected, editor) {
@@ -41,7 +47,7 @@ class DividerComponentSelector extends ComponentSelector {
         eliudQuery: getComponentSelectorQuery(0, app.documentID),
         dividerRepository: dividerRepository(appId: appId)!,
       )..add(LoadDividerList()),
-      child: SelectDividerWidget(
+      child: _SelectDividerWidget(
           app: app,
           height: height,
           containerPrivilege: privilegeLevel,
@@ -51,28 +57,30 @@ class DividerComponentSelector extends ComponentSelector {
   }
 }
 
-class SelectDividerWidget extends StatefulWidget {
+/* 
+ * _SelectDividerWidget 
+ */
+class _SelectDividerWidget extends StatefulWidget {
   final AppModel app;
   final double height;
   final SelectComponent selected;
   final int containerPrivilege;
   final ComponentEditorConstructor editorConstructor;
 
-  const SelectDividerWidget(
-      {super.key,
-      required this.app,
+  const _SelectDividerWidget(
+      {required this.app,
       required this.containerPrivilege,
       required this.height,
       required this.selected,
       required this.editorConstructor});
 
   @override
-  State<SelectDividerWidget> createState() {
+  State<_SelectDividerWidget> createState() {
     return _SelectDividerWidgetState();
   }
 }
 
-class _SelectDividerWidgetState extends State<SelectDividerWidget>
+class _SelectDividerWidgetState extends State<_SelectDividerWidget>
     with TickerProviderStateMixin {
   TabController? _privilegeTabController;
   final List<String> _privilegeItems = ['No', 'L1', 'L2', 'Owner'];

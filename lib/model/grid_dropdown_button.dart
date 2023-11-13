@@ -33,6 +33,9 @@ typedef GridChanged = Function(
   int? privilegeLevel,
 );
 
+/* 
+ * GridDropdownButtonWidget is the drop down widget to allow to select an instance of Grid
+ */
 class GridDropdownButtonWidget extends StatefulWidget {
   final AppModel app;
   final int? privilegeLevel;
@@ -40,6 +43,9 @@ class GridDropdownButtonWidget extends StatefulWidget {
   final GridChanged? trigger;
   final bool? optional;
 
+  /* 
+   * construct a GridDropdownButtonWidget
+   */
   GridDropdownButtonWidget(
       {required this.app,
       this.privilegeLevel,
@@ -48,17 +54,20 @@ class GridDropdownButtonWidget extends StatefulWidget {
       this.optional,
       super.key});
 
+  /* 
+   * create state of GridDropdownButtonWidget
+   */
   @override
   State<StatefulWidget> createState() {
-    return GridDropdownButtonWidgetState(value);
+    return _GridDropdownButtonWidgetState(value);
   }
 }
 
-class GridDropdownButtonWidgetState extends State<GridDropdownButtonWidget> {
+class _GridDropdownButtonWidgetState extends State<GridDropdownButtonWidget> {
   GridListBloc? bloc;
   String? value;
 
-  GridDropdownButtonWidgetState(this.value);
+  _GridDropdownButtonWidgetState(this.value);
 
   @override
   void didChangeDependencies() {
@@ -72,7 +81,7 @@ class GridDropdownButtonWidgetState extends State<GridDropdownButtonWidget> {
     super.dispose();
   }
 
-  List<Widget> widgets(GridModel value) {
+  List<Widget> _widgets(GridModel value) {
     var app = widget.app;
     var widgets = <Widget>[];
     widgets.add(value.description != null
@@ -128,7 +137,7 @@ class GridDropdownButtonWidgetState extends State<GridDropdownButtonWidget> {
                   height: 100.0,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: widgets(element),
+                    children: _widgets(element),
                   ),
                 )));
           }

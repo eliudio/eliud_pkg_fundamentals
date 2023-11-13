@@ -33,6 +33,9 @@ typedef DividerChanged = Function(
   int? privilegeLevel,
 );
 
+/* 
+ * DividerDropdownButtonWidget is the drop down widget to allow to select an instance of Divider
+ */
 class DividerDropdownButtonWidget extends StatefulWidget {
   final AppModel app;
   final int? privilegeLevel;
@@ -40,6 +43,9 @@ class DividerDropdownButtonWidget extends StatefulWidget {
   final DividerChanged? trigger;
   final bool? optional;
 
+  /* 
+   * construct a DividerDropdownButtonWidget
+   */
   DividerDropdownButtonWidget(
       {required this.app,
       this.privilegeLevel,
@@ -48,18 +54,21 @@ class DividerDropdownButtonWidget extends StatefulWidget {
       this.optional,
       super.key});
 
+  /* 
+   * create state of DividerDropdownButtonWidget
+   */
   @override
   State<StatefulWidget> createState() {
-    return DividerDropdownButtonWidgetState(value);
+    return _DividerDropdownButtonWidgetState(value);
   }
 }
 
-class DividerDropdownButtonWidgetState
+class _DividerDropdownButtonWidgetState
     extends State<DividerDropdownButtonWidget> {
   DividerListBloc? bloc;
   String? value;
 
-  DividerDropdownButtonWidgetState(this.value);
+  _DividerDropdownButtonWidgetState(this.value);
 
   @override
   void didChangeDependencies() {
@@ -73,7 +82,7 @@ class DividerDropdownButtonWidgetState
     super.dispose();
   }
 
-  List<Widget> widgets(DividerModel value) {
+  List<Widget> _widgets(DividerModel value) {
     var app = widget.app;
     var widgets = <Widget>[];
     widgets.add(value.description != null
@@ -130,7 +139,7 @@ class DividerDropdownButtonWidgetState
                   height: 100.0,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: widgets(element),
+                    children: _widgets(element),
                   ),
                 )));
           }

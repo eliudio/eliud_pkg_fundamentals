@@ -33,6 +33,9 @@ typedef SimpleTextChanged = Function(
   int? privilegeLevel,
 );
 
+/* 
+ * SimpleTextDropdownButtonWidget is the drop down widget to allow to select an instance of SimpleText
+ */
 class SimpleTextDropdownButtonWidget extends StatefulWidget {
   final AppModel app;
   final int? privilegeLevel;
@@ -40,6 +43,9 @@ class SimpleTextDropdownButtonWidget extends StatefulWidget {
   final SimpleTextChanged? trigger;
   final bool? optional;
 
+  /* 
+   * construct a SimpleTextDropdownButtonWidget
+   */
   SimpleTextDropdownButtonWidget(
       {required this.app,
       this.privilegeLevel,
@@ -48,18 +54,21 @@ class SimpleTextDropdownButtonWidget extends StatefulWidget {
       this.optional,
       super.key});
 
+  /* 
+   * create state of SimpleTextDropdownButtonWidget
+   */
   @override
   State<StatefulWidget> createState() {
-    return SimpleTextDropdownButtonWidgetState(value);
+    return _SimpleTextDropdownButtonWidgetState(value);
   }
 }
 
-class SimpleTextDropdownButtonWidgetState
+class _SimpleTextDropdownButtonWidgetState
     extends State<SimpleTextDropdownButtonWidget> {
   SimpleTextListBloc? bloc;
   String? value;
 
-  SimpleTextDropdownButtonWidgetState(this.value);
+  _SimpleTextDropdownButtonWidgetState(this.value);
 
   @override
   void didChangeDependencies() {
@@ -73,7 +82,7 @@ class SimpleTextDropdownButtonWidgetState
     super.dispose();
   }
 
-  List<Widget> widgets(SimpleTextModel value) {
+  List<Widget> _widgets(SimpleTextModel value) {
     var app = widget.app;
     var widgets = <Widget>[];
     widgets.add(value.description != null
@@ -130,7 +139,7 @@ class SimpleTextDropdownButtonWidgetState
                   height: 100.0,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: widgets(element),
+                    children: _widgets(element),
                   ),
                 )));
           }

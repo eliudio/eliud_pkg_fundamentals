@@ -25,14 +25,23 @@ import 'abstract_repository_singleton.dart';
 import 'package:eliud_core/core/widgets/alert_widget.dart';
 import 'package:eliud_core/model/app_model.dart';
 
+/*
+ * AbstractDecoratedContentComponent is the base class to extend / implement in case you need to implement a component
+ */
 abstract class AbstractDecoratedContentComponent extends StatelessWidget {
   static String componentName = "decoratedContents";
   final AppModel app;
   final String decoratedContentId;
 
+  /*
+   * Construct AbstractDecoratedContentComponent
+   */
   AbstractDecoratedContentComponent(
       {super.key, required this.app, required this.decoratedContentId});
 
+  /*
+   * build the component
+   */
   @override
   Widget build(BuildContext context) {
     return BlocProvider<DecoratedContentComponentBloc>(
@@ -69,5 +78,8 @@ abstract class AbstractDecoratedContentComponent extends StatelessWidget {
     });
   }
 
+  /*
+   * Implement this method to provide your widget
+   */
   Widget yourWidget(BuildContext context, DecoratedContentModel value);
 }

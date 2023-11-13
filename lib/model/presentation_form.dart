@@ -62,7 +62,7 @@ class PresentationForm extends StatelessWidget {
           appId,
           formAction: formAction,
         )..add(InitialisePresentationFormEvent(value: value)),
-        child: MyPresentationForm(
+        child: _MyPresentationForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     }
@@ -72,7 +72,7 @@ class PresentationForm extends StatelessWidget {
           appId,
           formAction: formAction,
         )..add(InitialisePresentationFormNoLoadEvent(value: value)),
-        child: MyPresentationForm(
+        child: _MyPresentationForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     } else {
@@ -91,26 +91,26 @@ class PresentationForm extends StatelessWidget {
             )..add((formAction == FormAction.updateAction
                 ? InitialisePresentationFormEvent(value: value)
                 : InitialiseNewPresentationFormEvent())),
-            child: MyPresentationForm(
+            child: _MyPresentationForm(
                 app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
 }
 
-class MyPresentationForm extends StatefulWidget {
+class _MyPresentationForm extends StatefulWidget {
   final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MyPresentationForm({required this.app, this.formAction, this.submitAction});
+  _MyPresentationForm({required this.app, this.formAction, this.submitAction});
 
   @override
-  State<MyPresentationForm> createState() =>
+  State<_MyPresentationForm> createState() =>
       _MyPresentationFormState(formAction);
 }
 
-class _MyPresentationFormState extends State<MyPresentationForm> {
+class _MyPresentationFormState extends State<_MyPresentationForm> {
   final FormAction? formAction;
   late PresentationFormBloc _myFormBloc;
 

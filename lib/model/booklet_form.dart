@@ -61,7 +61,7 @@ class BookletForm extends StatelessWidget {
           appId,
           formAction: formAction,
         )..add(InitialiseBookletFormEvent(value: value)),
-        child: MyBookletForm(
+        child: _MyBookletForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     }
@@ -71,7 +71,7 @@ class BookletForm extends StatelessWidget {
           appId,
           formAction: formAction,
         )..add(InitialiseBookletFormNoLoadEvent(value: value)),
-        child: MyBookletForm(
+        child: _MyBookletForm(
             app: app, submitAction: submitAction, formAction: formAction),
       );
     } else {
@@ -90,25 +90,25 @@ class BookletForm extends StatelessWidget {
             )..add((formAction == FormAction.updateAction
                 ? InitialiseBookletFormEvent(value: value)
                 : InitialiseNewBookletFormEvent())),
-            child: MyBookletForm(
+            child: _MyBookletForm(
                 app: app, submitAction: submitAction, formAction: formAction),
           ));
     }
   }
 }
 
-class MyBookletForm extends StatefulWidget {
+class _MyBookletForm extends StatefulWidget {
   final AppModel app;
   final FormAction? formAction;
   final ActionModel? submitAction;
 
-  MyBookletForm({required this.app, this.formAction, this.submitAction});
+  _MyBookletForm({required this.app, this.formAction, this.submitAction});
 
   @override
-  State<MyBookletForm> createState() => _MyBookletFormState(formAction);
+  State<_MyBookletForm> createState() => _MyBookletFormState(formAction);
 }
 
-class _MyBookletFormState extends State<MyBookletForm> {
+class _MyBookletFormState extends State<_MyBookletForm> {
   final FormAction? formAction;
   late BookletFormBloc _myFormBloc;
 

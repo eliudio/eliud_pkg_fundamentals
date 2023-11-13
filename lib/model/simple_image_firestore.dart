@@ -25,12 +25,21 @@ import 'package:eliud_core/tools/query/query_tools.dart';
 import 'package:eliud_core/tools/firestore/firestore_tools.dart';
 import 'package:eliud_core/tools/common_tools.dart';
 
+/* 
+ * SimpleImageFirestore is the firestore implementation of SimpleImageRepository
+ */
 class SimpleImageFirestore implements SimpleImageRepository {
+  /* 
+   * transform a map into an entity
+   */
   @override
   SimpleImageEntity? fromMap(Object? o, {Map<String, String>? newDocumentIds}) {
     return SimpleImageEntity.fromMap(o, newDocumentIds: newDocumentIds);
   }
 
+  /* 
+   * add an entity to the repository
+   */
   @override
   Future<SimpleImageEntity> addEntity(
       String documentID, SimpleImageEntity value) {
@@ -40,6 +49,9 @@ class SimpleImageFirestore implements SimpleImageRepository {
         .then((_) => value);
   }
 
+  /* 
+   * Update an entity
+   */
   @override
   Future<SimpleImageEntity> updateEntity(
       String documentID, SimpleImageEntity value) {
@@ -49,6 +61,9 @@ class SimpleImageFirestore implements SimpleImageRepository {
         .then((_) => value);
   }
 
+  /* 
+   * Add a model to the repository
+   */
   @override
   Future<SimpleImageModel> add(SimpleImageModel value) {
     return simpleImageCollection
@@ -57,11 +72,17 @@ class SimpleImageFirestore implements SimpleImageRepository {
         .then((_) => value);
   }
 
+  /* 
+   * Delete a model
+   */
   @override
   Future<void> delete(SimpleImageModel value) {
     return simpleImageCollection.doc(value.documentID).delete();
   }
 
+  /* 
+   * Update a model
+   */
   @override
   Future<SimpleImageModel> update(SimpleImageModel value) {
     return simpleImageCollection
@@ -81,6 +102,9 @@ class SimpleImageFirestore implements SimpleImageRepository {
         appId: appId);
   }
 
+  /* 
+   * Retrieve an entity from the repository with id
+   */
   @override
   Future<SimpleImageEntity?> getEntity(String? id,
       {Function(Exception)? onError}) async {
@@ -99,6 +123,9 @@ class SimpleImageFirestore implements SimpleImageRepository {
     return null;
   }
 
+  /* 
+   * Retrieve an model from the repository with id
+   */
   @override
   Future<SimpleImageModel?> get(String? id,
       {Function(Exception)? onError}) async {
@@ -117,6 +144,9 @@ class SimpleImageFirestore implements SimpleImageRepository {
     return null;
   }
 
+  /* 
+   * Listen to the repository using a query. Retrieve models
+   */
   @override
   StreamSubscription<List<SimpleImageModel?>> listen(
       SimpleImageModelTrigger trigger,
@@ -148,6 +178,9 @@ class SimpleImageFirestore implements SimpleImageRepository {
     });
   }
 
+  /* 
+   * Listen to the repository using a query. Retrieve models and linked models
+   */
   @override
   StreamSubscription<List<SimpleImageModel?>> listenWithDetails(
       SimpleImageModelTrigger trigger,
@@ -179,6 +212,9 @@ class SimpleImageFirestore implements SimpleImageRepository {
     });
   }
 
+  /* 
+   * Listen to 1 document in the repository
+   */
   @override
   StreamSubscription<SimpleImageModel?> listenTo(
       String documentId, SimpleImageChanged changed,
@@ -198,6 +234,9 @@ class SimpleImageFirestore implements SimpleImageRepository {
     return theStream;
   }
 
+  /* 
+   * Retrieve values/models from the repository
+   */
   @override
   Stream<List<SimpleImageModel?>> values(
       {String? orderBy,
@@ -227,6 +266,9 @@ class SimpleImageFirestore implements SimpleImageRepository {
     return values;
   }
 
+  /* 
+   * Retrieve values/models, including linked models, from the repository
+   */
   @override
   Stream<List<SimpleImageModel?>> valuesWithDetails(
       {String? orderBy,
@@ -256,6 +298,9 @@ class SimpleImageFirestore implements SimpleImageRepository {
     return values;
   }
 
+  /* 
+   * Retrieve values/models from the repository
+   */
   @override
   Future<List<SimpleImageModel?>> valuesList(
       {String? orderBy,
@@ -286,6 +331,9 @@ class SimpleImageFirestore implements SimpleImageRepository {
     return values;
   }
 
+  /* 
+   * Retrieve values/models, including linked models, from the repository
+   */
   @override
   Future<List<SimpleImageModel?>> valuesListWithDetails(
       {String? orderBy,
@@ -316,9 +364,15 @@ class SimpleImageFirestore implements SimpleImageRepository {
     return values;
   }
 
+  /* 
+   * Flush the repository
+   */
   @override
   void flush() {}
 
+  /* 
+   * Delete all entries in the repository
+   */
   @override
   Future<void> deleteAll() {
     return simpleImageCollection.get().then((snapshot) {
@@ -328,16 +382,25 @@ class SimpleImageFirestore implements SimpleImageRepository {
     });
   }
 
+  /* 
+   * Retrieve the subcollection of this repository
+   */
   @override
   dynamic getSubCollection(String documentId, String name) {
     return simpleImageCollection.doc(documentId).collection(name);
   }
 
+  /* 
+   * Retrieve a timestamp
+   */
   @override
   String? timeStampToString(dynamic timeStamp) {
     return firestoreTimeStampToString(timeStamp);
   }
 
+  /* 
+   * change 1 a fieldvalue for 1 document  
+   */
   @override
   Future<SimpleImageModel?> changeValue(
       String documentId, String fieldName, num changeByThisValue) {
