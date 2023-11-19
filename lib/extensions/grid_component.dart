@@ -1,11 +1,11 @@
 import 'package:eliud_core/core/widgets/alert_widget.dart';
-import 'package:eliud_core/model/app_model.dart';
+import 'package:eliud_core_model/model/app_model.dart';
 import 'package:eliud_core/tools/component/component_constructor.dart';
 import 'package:eliud_core/tools/grid_view_helper.dart';
 import 'package:eliud_core/core/registry.dart';
-import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
-import 'package:eliud_pkg_fundamentals/model/grid_component.dart';
-import 'package:eliud_pkg_fundamentals/model/grid_model.dart';
+import 'package:eliud_pkg_fundamentals_model/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals_model/model/grid_component.dart';
+import 'package:eliud_pkg_fundamentals_model/model/grid_model.dart';
 import 'package:flutter/material.dart';
 
 class GridComponentConstructorDefault implements ComponentConstructor {
@@ -29,7 +29,7 @@ class GridComponent extends AbstractGridComponent {
   @override
   Widget yourWidget(BuildContext context, GridModel? value) {
     var components = value!.bodyComponents!
-        .map((model) => Registry.registry()!
+        .map((model) => Apis.apis()
             .component(context, app, model.componentName!, model.componentId!))
         .toList();
     if (components.isNotEmpty) {

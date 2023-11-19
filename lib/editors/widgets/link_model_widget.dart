@@ -1,12 +1,12 @@
 import 'package:eliud_core/core/registry.dart';
-import 'package:eliud_core/model/app_model.dart';
-import 'package:eliud_core/style/frontend/has_container.dart';
-import 'package:eliud_core/style/frontend/has_dialog_field.dart';
-import 'package:eliud_core/style/frontend/has_divider.dart';
-import 'package:eliud_core/style/frontend/has_list_tile.dart';
-import 'package:eliud_core/style/frontend/has_text.dart';
+import 'package:eliud_core_model/model/app_model.dart';
+import 'package:eliud_core_model/style/frontend/has_container.dart';
+import 'package:eliud_core_model/style/frontend/has_dialog_field.dart';
+import 'package:eliud_core_model/style/frontend/has_divider.dart';
+import 'package:eliud_core_model/style/frontend/has_list_tile.dart';
+import 'package:eliud_core_model/style/frontend/has_text.dart';
 import 'package:eliud_core/tools/widgets/header_widget.dart';
-import 'package:eliud_pkg_fundamentals/model/link_model.dart';
+import 'package:eliud_pkg_fundamentals_model/model/link_model.dart';
 import 'package:flutter/material.dart';
 
 typedef LinkModelCallback = void Function(LinkModel documentItemModel);
@@ -83,7 +83,7 @@ class _LinkModelWidgetState extends State<LinkModelWidget> {
                 title: text(
                     widget.app, context, widget.documentItemModel.documentID)),
           ]),
-      Registry.registry()!.openSelectActionWidget(
+      Apis.apis().openSelectActionWidget(
           app: widget.app,
           action: widget.documentItemModel.action,
           label: 'Action',

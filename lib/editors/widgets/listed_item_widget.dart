@@ -1,14 +1,14 @@
 import 'package:eliud_core/core/registry.dart';
-import 'package:eliud_core/model/app_model.dart';
-import 'package:eliud_core/style/frontend/has_container.dart';
-import 'package:eliud_core/style/frontend/has_dialog_field.dart';
-import 'package:eliud_core/style/frontend/has_divider.dart';
-import 'package:eliud_core/style/frontend/has_list_tile.dart';
-import 'package:eliud_core/style/frontend/has_text.dart';
+import 'package:eliud_core_model/model/app_model.dart';
+import 'package:eliud_core_model/style/frontend/has_container.dart';
+import 'package:eliud_core_model/style/frontend/has_dialog_field.dart';
+import 'package:eliud_core_model/style/frontend/has_divider.dart';
+import 'package:eliud_core_model/style/frontend/has_list_tile.dart';
+import 'package:eliud_core_model/style/frontend/has_text.dart';
 import 'package:eliud_core/tools/widgets/header_widget.dart';
 import 'package:eliud_core/tools/widgets/platform_medium_widget.dart';
 import 'package:eliud_core/tools/widgets/pos_size_widget.dart';
-import 'package:eliud_pkg_fundamentals/model/listed_item_model.dart';
+import 'package:eliud_pkg_fundamentals_model/model/listed_item_model.dart';
 import 'package:flutter/material.dart';
 
 typedef ListedItemModelCallback = void Function(
@@ -105,7 +105,7 @@ class _ListedItemModelWidgetState extends State<ListedItemModelWidget> {
         app: widget.app,
         posSizeModel: widget.listedItemModel.posSize!,
       ),
-      Registry.registry()!.openSelectActionWidget(
+      Apis.apis().openSelectActionWidget(
           app: widget.app,
           action: widget.listedItemModel.action,
           label: 'action',

@@ -1,14 +1,14 @@
 import 'package:eliud_core/core/navigate/router.dart' as er;
-import 'package:eliud_core/model/app_model.dart';
+import 'package:eliud_core_model/model/app_model.dart';
 import 'package:eliud_core/model/platform_medium_model.dart';
-import 'package:eliud_core/style/frontend/has_button.dart';
-import 'package:eliud_core/style/frontend/has_text.dart';
+import 'package:eliud_core_model/style/frontend/has_button.dart';
+import 'package:eliud_core_model/style/frontend/has_text.dart';
 import 'package:eliud_core/tools/component/component_constructor.dart';
-import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
-import 'package:eliud_pkg_fundamentals/model/booklet_component.dart';
-import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
-import 'package:eliud_pkg_fundamentals/model/section_model.dart';
-import 'package:eliud_pkg_fundamentals/tools/document_processor_extended.dart';
+import 'package:eliud_pkg_fundamentals_model/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals_model/model/booklet_component.dart';
+import 'package:eliud_pkg_fundamentals_model/model/booklet_model.dart';
+import 'package:eliud_pkg_fundamentals_model/model/section_model.dart';
+import 'package:eliud_pkg_fundamentals_model/tools/document_processor_extended.dart';
 import 'package:flutter/material.dart';
 
 class BookletComponentConstructorDefault implements ComponentConstructor {

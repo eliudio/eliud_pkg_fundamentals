@@ -1,10 +1,10 @@
-import 'package:eliud_core/model/app_model.dart';
+import 'package:eliud_core_model/model/app_model.dart';
 import 'package:eliud_core/tools/component/component_constructor.dart';
 import 'package:eliud_core/core/registry.dart';
 import 'package:eliud_core/tools/screen_size.dart';
-import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
-import 'package:eliud_pkg_fundamentals/model/decorated_content_component.dart';
-import 'package:eliud_pkg_fundamentals/model/decorated_content_model.dart';
+import 'package:eliud_pkg_fundamentals_model/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals_model/model/decorated_content_component.dart';
+import 'package:eliud_pkg_fundamentals_model/model/decorated_content_model.dart';
 import 'package:flutter/material.dart';
 
 class DecoratedContentComponentConstructorDefault
@@ -30,9 +30,9 @@ class DecoratedContentComponent extends AbstractDecoratedContentComponent {
 
   @override
   Widget yourWidget(BuildContext context, DecoratedContentModel? value) {
-    var contents = Registry.registry()!.component(
+    var contents = Apis.apis().component(
         context, app, value!.contentComponentName!, value.contentComponentId!);
-    var image = Registry.registry()!.component(context, app,
+    var image = Apis.apis().component(context, app,
         value.decoratingComponentName!, value.decoratingComponentId!);
     var percentageImageVisible = value.percentageDecorationVisible ?? .5;
 

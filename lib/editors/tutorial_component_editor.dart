@@ -1,25 +1,25 @@
 import 'package:eliud_core/core/blocs/access/state/access_determined.dart';
 import 'package:eliud_core/core/blocs/access/state/access_state.dart';
 import 'package:eliud_core/core/registry.dart';
-import 'package:eliud_core/style/frontend/has_dialog_field.dart';
+import 'package:eliud_core_model/style/frontend/has_dialog_field.dart';
 import 'package:eliud_core/tools/screen_size.dart';
 import 'package:eliud_pkg_fundamentals/editors/widgets/tutorial_item_widget.dart';
-import 'package:eliud_pkg_fundamentals/model/tutorial_entry_model.dart';
+import 'package:eliud_pkg_fundamentals_model/model/tutorial_entry_model.dart';
 import 'package:flutter/material.dart';
 import 'package:eliud_core/model/model_export.dart';
-import 'package:eliud_core/style/frontend/has_button.dart';
-import 'package:eliud_core/style/frontend/has_container.dart';
-import 'package:eliud_core/style/frontend/has_dialog.dart';
-import 'package:eliud_core/style/frontend/has_divider.dart';
-import 'package:eliud_core/style/frontend/has_list_tile.dart';
-import 'package:eliud_core/style/frontend/has_progress_indicator.dart';
-import 'package:eliud_core/style/frontend/has_text.dart';
-import 'package:eliud_core/tools/component/component_spec.dart';
-import 'package:eliud_core/tools/random.dart';
+import 'package:eliud_core_model/style/frontend/has_button.dart';
+import 'package:eliud_core_model/style/frontend/has_container.dart';
+import 'package:eliud_core_model/style/frontend/has_dialog.dart';
+import 'package:eliud_core_model/style/frontend/has_divider.dart';
+import 'package:eliud_core_model/style/frontend/has_list_tile.dart';
+import 'package:eliud_core_model/style/frontend/has_progress_indicator.dart';
+import 'package:eliud_core_model/style/frontend/has_text.dart';
+import 'package:eliud_core_model/tools/component/component_spec.dart';
+import 'package:eliud_core_model/tools/etc/random.dart';
 import 'package:eliud_core/tools/widgets/condition_simple_widget.dart';
 import 'package:eliud_core/tools/widgets/header_widget.dart';
-import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
-import 'package:eliud_pkg_fundamentals/model/tutorial_model.dart';
+import 'package:eliud_pkg_fundamentals_model/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals_model/model/tutorial_model.dart';
 import 'package:eliud_core/package/access_rights.dart';
 import 'package:eliud_core/core/blocs/access/access_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -345,7 +345,7 @@ class _TutorialComponentEditorState extends State<TutorialComponentEditor> {
       return popupMenuButton<int>(widget.app, context,
           child: Icon(Icons.add),
           itemBuilder: (context) => [
-                if (Registry.registry()!.getMediumApi().hasCamera())
+                if (Apis.apis().getMediumApi().hasCamera())
                   popupMenuItem(
                     widget.app,
                     context,
@@ -361,7 +361,7 @@ class _TutorialComponentEditorState extends State<TutorialComponentEditor> {
               ],
           onSelected: (value) async {
             if (value == 0) {
-              Registry.registry()!.getMediumApi().takePhoto(
+              Apis.apis().getMediumApi().takePhoto(
                   context,
                   widget.app,
                   () => PlatformMediumAccessRights(
@@ -370,7 +370,7 @@ class _TutorialComponentEditorState extends State<TutorialComponentEditor> {
                   _photoUploading,
                   allowCrop: false);
             } else if (value == 1) {
-              Registry.registry()!.getMediumApi().uploadPhoto(
+              Apis.apis().getMediumApi().uploadPhoto(
                   context,
                   widget.app,
                   () => PlatformMediumAccessRights(

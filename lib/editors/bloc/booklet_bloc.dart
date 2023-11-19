@@ -1,12 +1,12 @@
 import 'package:eliud_core/core/editor/ext_editor_base_bloc/ext_editor_base_bloc.dart';
-import 'package:eliud_core/model/storage_conditions_model.dart';
-import 'package:eliud_core/tools/component/component_spec.dart';
-import 'package:eliud_core/tools/random.dart';
-import 'package:eliud_pkg_fundamentals/model/abstract_repository_singleton.dart';
-import 'package:eliud_pkg_fundamentals/model/booklet_model.dart';
-import 'package:eliud_pkg_fundamentals/model/section_model.dart';
+import 'package:eliud_core_model/model/storage_conditions_model.dart';
+import 'package:eliud_core_model/tools/component/component_spec.dart';
+import 'package:eliud_core_model/tools/etc/random.dart';
+import 'package:eliud_pkg_fundamentals_model/model/abstract_repository_singleton.dart';
+import 'package:eliud_pkg_fundamentals_model/model/booklet_model.dart';
+import 'package:eliud_pkg_fundamentals_model/model/section_model.dart';
 
-import '../../model/booklet_entity.dart';
+import 'package:eliud_pkg_fundamentals_model/model/booklet_entity.dart';
 
 class BookletBloc
     extends ExtEditorBaseBloc<BookletModel, SectionModel, BookletEntity> {

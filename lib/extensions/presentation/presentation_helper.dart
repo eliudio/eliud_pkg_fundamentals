@@ -1,6 +1,6 @@
 import 'package:eliud_core/model/platform_medium_model.dart';
 import 'package:eliud_core/tools/screen_size.dart';
-import 'package:eliud_pkg_fundamentals/model/presentation_model.dart';
+import 'package:eliud_pkg_fundamentals_model/model/presentation_model.dart';
 import 'package:flutter/cupertino.dart';
 
 // todo: merge bookelt and presentation
