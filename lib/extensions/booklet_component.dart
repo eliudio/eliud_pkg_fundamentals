@@ -1,9 +1,9 @@
 import 'package:eliud_core/core/navigate/router.dart' as er;
-import 'package:eliud_core_model/model/app_model.dart';
-import 'package:eliud_core/model/platform_medium_model.dart';
-import 'package:eliud_core_model/style/frontend/has_button.dart';
-import 'package:eliud_core_model/style/frontend/has_text.dart';
-import 'package:eliud_core/tools/component/component_constructor.dart';
+import 'package:eliud_core_main/model/app_model.dart';
+import 'package:eliud_core_main/model/platform_medium_model.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_button.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_text.dart';
+import 'package:eliud_core_main/apis/registryapi/component/component_constructor.dart';
 import 'package:eliud_pkg_fundamentals_model/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals_model/model/booklet_component.dart';
 import 'package:eliud_pkg_fundamentals_model/model/booklet_model.dart';

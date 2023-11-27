@@ -1,14 +1,14 @@
 import 'dart:math';
 
 import 'package:eliud_core/core/navigate/router.dart' as er;
-import 'package:eliud_core_model/model/app_model.dart';
-import 'package:eliud_core_model/model/background_model.dart';
-import 'package:eliud_core/model/member_model.dart';
-import 'package:eliud_core/model/platform_medium_model.dart';
-import 'package:eliud_core/model/pos_size_model.dart';
-import 'package:eliud_core/tools/action/action_model.dart';
-import 'package:eliud_core/tools/etc.dart';
-import 'package:eliud_core/tools/screen_size.dart';
+import 'package:eliud_core/tools/etc/etc.dart';
+import 'package:eliud_core_main/model/app_model.dart';
+import 'package:eliud_core_main/model/background_model.dart';
+import 'package:eliud_core_main/model/member_model.dart';
+import 'package:eliud_core_main/model/platform_medium_model.dart';
+import 'package:eliud_core_main/model/pos_size_model.dart';
+import 'package:eliud_core_main/apis/action_api/action_model.dart';
+import 'package:eliud_core_helpers/etc/screen_size.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/carousel/gf_carousel.dart';
 

@@ -1,9 +1,9 @@
-import 'package:eliud_core/core/blocs/access/access_bloc.dart';
-import 'package:eliud_core/core/blocs/access/state/access_determined.dart';
-import 'package:eliud_core/core/blocs/access/state/access_state.dart';
-import 'package:eliud_core_model/model/app_model.dart';
-import 'package:eliud_core_model/style/frontend/has_progress_indicator.dart';
-import 'package:eliud_core/tools/component/component_constructor.dart';
+import 'package:eliud_core/access/access_bloc.dart';
+import 'package:eliud_core/access/state/access_determined.dart';
+import 'package:eliud_core/access/state/access_state.dart';
+import 'package:eliud_core_main/model/app_model.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_progress_indicator.dart';
+import 'package:eliud_core_main/apis/registryapi/component/component_constructor.dart';
 import 'package:eliud_pkg_fundamentals_model/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals_model/model/document_component.dart';
 import 'package:eliud_pkg_fundamentals_model/model/document_model.dart';

@@ -1,6 +1,6 @@
-import 'package:eliud_core_model/model/app_model.dart';
-import 'package:eliud_core_model/style/frontend/has_dialog.dart';
-import 'package:eliud_core_model/tools/component/component_spec.dart';
+import 'package:eliud_core_main/model/app_model.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_dialog.dart';
+import 'package:eliud_core_main/apis/registryapi/component/component_spec.dart';
 import 'package:flutter/material.dart';
 
 class DecoratedContentComponentEditorConstructor

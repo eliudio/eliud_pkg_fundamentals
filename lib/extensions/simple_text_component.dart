@@ -1,6 +1,6 @@
-import 'package:eliud_core_model/model/app_model.dart';
-import 'package:eliud_core_model/style/frontend/has_text.dart';
-import 'package:eliud_core/tools/component/component_constructor.dart';
+import 'package:eliud_core_main/model/app_model.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_text.dart';
+import 'package:eliud_core_main/apis/registryapi/component/component_constructor.dart';
 import 'package:eliud_pkg_fundamentals_model/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals_model/model/simple_text_component.dart';
 import 'package:eliud_pkg_fundamentals_model/model/simple_text_model.dart';

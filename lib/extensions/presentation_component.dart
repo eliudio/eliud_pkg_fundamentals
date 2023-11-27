@@ -1,6 +1,6 @@
-import 'package:eliud_core_model/model/app_model.dart';
-import 'package:eliud_core/tools/component/component_constructor.dart';
-import 'package:eliud_core/core/registry.dart';
+import 'package:eliud_core_main/apis/apis.dart';
+import 'package:eliud_core_main/model/app_model.dart';
+import 'package:eliud_core_main/apis/registryapi/component/component_constructor.dart';
 import 'package:eliud_pkg_fundamentals/extensions/presentation/presentation_helper.dart';
 import 'package:eliud_pkg_fundamentals_model/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals_model/model/presentation_component.dart';
@@ -39,7 +39,7 @@ class PresentationComponent extends AbstractPresentationComponent {
   @override
   Widget yourWidget(BuildContext context, PresentationModel? value) {
     var widgets = value!.bodyComponents!
-        .map((model) => Apis.apis().component(
+        .map((model) => Apis.apis().getRegistryApi().component(
             context, app, model.componentName!, model.componentId!,
             parameters: parameters))
         .toList();

@@ -1,27 +1,27 @@
-import 'package:eliud_core/core/blocs/access/state/access_determined.dart';
-import 'package:eliud_core/core/blocs/access/state/access_state.dart';
-import 'package:eliud_core/core/registry.dart';
-import 'package:eliud_core_model/model/app_model.dart';
-import 'package:eliud_core_model/model/storage_conditions_model.dart';
-import 'package:eliud_core_model/style/frontend/has_container.dart';
-import 'package:eliud_core_model/style/frontend/has_dialog.dart';
-import 'package:eliud_core_model/style/frontend/has_dialog_field.dart';
-import 'package:eliud_core_model/style/frontend/has_list_tile.dart';
-import 'package:eliud_core_model/style/frontend/has_progress_indicator.dart';
-import 'package:eliud_core_model/style/frontend/has_text.dart';
-import 'package:eliud_core_model/tools/component/component_spec.dart';
-import 'package:eliud_core_model/tools/etc/random.dart';
-import 'package:eliud_core/tools/widgets/condition_simple_widget.dart';
-import 'package:eliud_core/tools/widgets/header_widget.dart';
+import 'package:eliud_core/access/state/access_determined.dart';
+import 'package:eliud_core/access/state/access_state.dart';
+import 'package:eliud_core_main/model/app_model.dart';
+import 'package:eliud_core_main/model/storage_conditions_model.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_container.dart';
+import 'package:eliud_core_main/apis/apis.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_dialog.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_dialog_field.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_list_tile.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_progress_indicator.dart';
+import 'package:eliud_core_main/apis/style/frontend/has_text.dart';
+import 'package:eliud_core_main/apis/registryapi/component/component_spec.dart';
+import 'package:eliud_core_helpers/etc/random.dart';
+import 'package:eliud_core/core/widgets/helper_widgets/condition_simple_widget.dart';
+import 'package:eliud_core/core/widgets/helper_widgets/header_widget.dart';
 import 'package:eliud_pkg_fundamentals_model/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals_model/model/simple_image_model.dart';
 import 'package:flutter/material.dart';
-import 'package:eliud_core/core/blocs/access/access_bloc.dart';
+import 'package:eliud_core/access/access_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:eliud_core/core/editor/editor_base_bloc/editor_base_bloc.dart';
-import 'package:eliud_core/core/editor/editor_base_bloc/editor_base_event.dart';
-import 'package:eliud_core/core/editor/editor_base_bloc/editor_base_state.dart';
+import 'package:eliud_core_main/editor/editor_base_bloc/editor_base_bloc.dart';
+import 'package:eliud_core_main/editor/editor_base_bloc/editor_base_event.dart';
+import 'package:eliud_core_main/editor/editor_base_bloc/editor_base_state.dart';
 
 import 'package:eliud_pkg_fundamentals_model/model/simple_image_entity.dart';
 
@@ -177,9 +177,7 @@ class _SimpleImageComponentEditorState
                       collapsible: true,
                       collapsed: true,
                       children: [
-                        Apis.apis()
-                            .getMediumApi()
-                            .getPlatformPhotoWidget(
+                        Apis.apis().getMediumApi().getPlatformPhotoWidget(
                               context: context,
                               feedbackFunction: (mediumModel) {
                                 setState(() {

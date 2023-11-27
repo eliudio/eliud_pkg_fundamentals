@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:eliud_core/core/editor/ext_editor_base_bloc/ext_editor_base_event.dart';
-import 'package:eliud_core/core/editor/ext_editor_base_bloc/ext_editor_base_state.dart';
+import 'package:eliud_core_main/editor/ext_editor_base_bloc/ext_editor_base_event.dart';
+import 'package:eliud_core_main/editor/ext_editor_base_bloc/ext_editor_base_state.dart';
 import 'package:eliud_pkg_fundamentals_model/model/link_model.dart';
 import 'package:eliud_pkg_fundamentals_model/model/section_model.dart';
 
