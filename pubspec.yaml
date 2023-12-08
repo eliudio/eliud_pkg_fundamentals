@@ -18,6 +18,8 @@ dependencies:
     path: ../eliud_core_helpers
   eliud_core_model:
     path: ../eliud_core_model
+  eliud_core_main:
+    path: ../eliud_core_main
   eliud_pkg_medium:
     path: ../eliud_pkg_medium
   eliud_pkg_fundamentals_model:

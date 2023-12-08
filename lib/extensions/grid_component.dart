@@ -1,5 +1,5 @@
+import 'package:eliud_core_main/tools/etc/grid_view_helper.dart';
 import 'package:eliud_core_main/widgets/alert_widget.dart';
-import 'package:eliud_core/tools/etc/grid_view_helper.dart';
 import 'package:eliud_core_main/model/app_model.dart';
 import 'package:eliud_core_main/apis/registryapi/component/component_constructor.dart';
 import 'package:eliud_pkg_fundamentals_model/model/abstract_repository_singleton.dart';

@@ -1,6 +1,6 @@
-import 'package:eliud_core/tools/etc/etc.dart';
 import 'package:eliud_core_main/model/app_model.dart';
 import 'package:eliud_core_main/apis/registryapi/component/component_constructor.dart';
+import 'package:eliud_core_main/tools/etc/etc.dart';
 import 'package:eliud_pkg_fundamentals_model/model/abstract_repository_singleton.dart';
 import 'package:eliud_pkg_fundamentals_model/model/divider_component.dart';
 import 'package:eliud_pkg_fundamentals_model/model/divider_model.dart';
