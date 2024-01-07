@@ -43,7 +43,12 @@ class PresentationComponent extends AbstractPresentationComponent {
             context, app, model.componentName!, model.componentId!,
             parameters: parameters))
         .toList();
-    return PlatformPresentationHelper.makeContainingTable(context, widgets, value.image,
-        value.imagePositionRelative, value.imageAlignment, value.imageWidth);
+    return PlatformPresentationHelper.makeContainingTable(
+        context,
+        widgets,
+        value.image,
+        value.imagePositionRelative,
+        value.imageAlignment,
+        value.imageWidth);
   }
 }

@@ -1,6 +1,7 @@
 import 'package:eliud_core/access/access_bloc.dart';
 import 'package:eliud_core_main/apis/wizard_api/new_app_wizard_info.dart';
 import 'package:eliud_core/eliud.dart';
+import 'package:eliud_core_main/apis/apis.dart';
 import 'package:eliud_core_model/model/access_model.dart';
 import 'package:eliud_core_main/model/app_model.dart';
 import 'package:eliud_core_main/model/member_model.dart';
@@ -82,7 +83,7 @@ abstract class FundamentalsPackage extends Package {
     );
 
     // wizards
-    NewAppWizardRegistry.registry().register(FaderPageWizard());
+    Apis.apis().getWizardApi().register(FaderPageWizard());
 
     AbstractRepositorySingleton.singleton = RepositorySingleton();
   }
