@@ -1,0 +1,62 @@
+Decay in thor
+
+How compared to MUREX?
+
+Breakdown
+
+Share graph please
+
+4pm -> 4pm next day
+breakdown 24 hours
+- ny 5pm t_payroll- : this ny 5pm befor edayroll -> PNL impact 1  = New york decay (10PM london)
+- ny 5pm t_payroll+ : this ny 5pm after edayroll -> PNL impact 2 (10PM london)
+- tokyo 3pm -> PNL impact 4
+- New york 10 AM -> PNL impact 5
+- 4pm londn next day-> PNL impact 6 - full day decay
+
+
+screenshot thor please
+
+decay = 24 decay
+mxg decay = using same settings as murex to mimick
+
+
+
+the issue
+
+
+vanilla trades New York decay should be around 30% of the full day decay, but this is not the case on wednesday
+
+
+What I need
+
+1) Share graph please
+2) Screenshot thor please
+
+*** Wednesday to Thursday table -> problem
+
+1) -19682.26 for the New York decay
+2) -21,172.43 for the 24h decay
+
+The 1) should be 25% of 2) because 1) is the move from 4PM to 10PM, which is 6 hours, which is 25% of 24h
+
+However, we have the system date change in NY 5pm post dateroll, which is included in the 24h decay, 5699.76
+We can consider 2) to be -21,172.43 - 5,699.76 = -26872.19
+So reasnable New York decau should be -26872.19 / 4 = -6718.0475
+
+*** Rolling from Thursday to Friday
+
+there this "rule" is the case, 
+1) -2711.65
+2) -8990.47
+
+Minus 3404.40 = -12394.87
+
+25% of that number is -3098.7185
+
+The NY 5PM decay is 2711.65, which is reasonably close to -3098.7185
+
+Example trade 124299054
+
+
+
